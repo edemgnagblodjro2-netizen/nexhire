@@ -362,6 +362,7 @@
       <button class="tab-btn admin-only hidden" data-tab="audit"    role="tab" data-i18n="app.tab.audit">Audit</button>
       <button class="tab-btn"        data-tab="stats"    role="tab" data-i18n="app.tab.stats">Statistiques</button>
       <button class="tab-btn"        data-tab="parc-it"  role="tab" data-i18n="app.tab.parc">Parc IT</button>
+      <button class="tab-btn"        data-tab="optim"    role="tab" data-i18n="app.tab.optim">Optimisation IA</button>
       <button class="tab-btn admin-only hidden" data-tab="team"     role="tab" data-i18n="app.tab.team">Équipe</button>
       <button class="tab-btn"        data-tab="settings" role="tab" data-i18n="app.tab.settings">Paramètres</button>
     </div>
@@ -998,6 +999,175 @@
           </div>
           <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
           <p id="dm-error" class="form-error hidden"></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- ── OPTIMISATION IA ───────────────────────────────────────────────── -->
+    <section id="tab-optim" class="tab-content hidden" role="tabpanel">
+      <div class="section-header">
+        <h2 data-i18n="optim.title">Optimisation IA</h2>
+        <button class="btn btn-primary btn-sm" onclick="runAIAnalysis()" id="optim-analyze-btn" data-i18n="optim.analyze">Analyser avec l'IA</button>
+      </div>
+
+      <!-- Sub-nav -->
+      <div class="parc-tabs" role="tablist">
+        <button class="parc-tab-btn active" data-optim="dashboard"  onclick="switchOptimTab('dashboard')"  data-i18n="optim.tab.dashboard">Tableau de bord</button>
+        <button class="parc-tab-btn"        data-optim="licenses"   onclick="switchOptimTab('licenses')"   data-i18n="optim.tab.licenses">Licences inutilisées</button>
+        <button class="parc-tab-btn"        data-optim="duplicates" onclick="switchOptimTab('duplicates')" data-i18n="optim.tab.duplicates">Outils en doublon</button>
+        <button class="parc-tab-btn"        data-optim="contracts"  onclick="switchOptimTab('contracts')"  data-i18n="optim.tab.contracts">Contrats</button>
+        <button class="parc-tab-btn"        data-optim="processes"  onclick="switchOptimTab('processes')"  data-i18n="optim.tab.processes">Processus RH</button>
+        <button class="parc-tab-btn"        data-optim="aiplan"     onclick="switchOptimTab('aiplan')"     data-i18n="optim.tab.aiplan">Plan IA</button>
+      </div>
+
+      <!-- Dashboard -->
+      <div id="optim-dashboard" class="parc-content">
+        <div class="optim-hero-grid">
+          <!-- Score d'efficacité -->
+          <div class="optim-score-card">
+            <h3 data-i18n="optim.score.title">Score d'efficacité organisationnelle</h3>
+            <div class="score-gauge-wrap">
+              <div class="score-circle-outer">
+                <div class="score-circle" id="score-circle-main">
+                  <span id="score-val-main">—</span>
+                </div>
+              </div>
+              <div class="score-dimensions">
+                <div class="score-dim"><span data-i18n="optim.score.sw">Logiciels</span><div class="score-dim-bar-wrap"><div class="score-dim-bar" id="sdim-software"></div></div><span id="sdim-sw-val">—</span></div>
+                <div class="score-dim"><span data-i18n="optim.score.lic">Licences</span><div class="score-dim-bar-wrap"><div class="score-dim-bar" id="sdim-licenses"></div></div><span id="sdim-lic-val">—</span></div>
+                <div class="score-dim"><span data-i18n="optim.score.infra">Infrastructure</span><div class="score-dim-bar-wrap"><div class="score-dim-bar" id="sdim-infra"></div></div><span id="sdim-infra-val">—</span></div>
+                <div class="score-dim"><span data-i18n="optim.score.proc">Processus</span><div class="score-dim-bar-wrap"><div class="score-dim-bar" id="sdim-process"></div></div><span id="sdim-proc-val">—</span></div>
+              </div>
+            </div>
+          </div>
+          <!-- Économies identifiées -->
+          <div class="optim-savings-card">
+            <h3 data-i18n="optim.savings.title">Économies identifiées</h3>
+            <div class="savings-total" id="savings-total">—</div>
+            <div class="savings-breakdown" id="savings-breakdown"></div>
+          </div>
+        </div>
+        <!-- Top opportunités -->
+        <h3 style="margin:24px 0 12px;font-size:.95rem;font-weight:700;color:var(--navy)" data-i18n="optim.top">10 meilleures opportunités</h3>
+        <div id="optim-top-opps"></div>
+      </div>
+
+      <!-- Licences inutilisées -->
+      <div id="optim-licenses" class="parc-content hidden">
+        <p class="section-desc" data-i18n="optim.lic.desc">Licences avec un taux d'utilisation inférieur à 80%. Réduire ces licences génère des économies immédiates.</p>
+        <div id="optim-lic-table"></div>
+      </div>
+
+      <!-- Outils en doublon -->
+      <div id="optim-duplicates" class="parc-content hidden">
+        <p class="section-desc" data-i18n="optim.dup.desc">Catégories d'applications où plusieurs outils font la même chose — consolider sur une solution unique.</p>
+        <div id="optim-dup-list"></div>
+      </div>
+
+      <!-- Contrats -->
+      <div id="optim-contracts" class="parc-content hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <div class="controls-inline">
+            <select id="contract-renew-filter" onchange="loadContracts()">
+              <option value="">Tous les contrats</option>
+              <option value="30">Renouvellement &lt;30j</option>
+              <option value="90">Renouvellement &lt;90j</option>
+              <option value="180">Renouvellement &lt;180j</option>
+            </select>
+            <select id="contract-cat-filter" onchange="loadContracts()">
+              <option value="">Toutes catégories</option>
+              <option value="telecom">Télécommunications</option>
+              <option value="software">Logiciels</option>
+              <option value="hardware">Matériel</option>
+              <option value="services">Services</option>
+              <option value="cloud">Cloud</option>
+              <option value="facilities">Installations</option>
+            </select>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="openContractModal()" data-i18n="optim.contract.add">+ Contrat</button>
+        </div>
+        <div id="contracts-table-wrap"><p class="muted" data-i18n="loading">Chargement…</p></div>
+      </div>
+
+      <!-- Processus RH -->
+      <div id="optim-processes" class="parc-content hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <p class="section-desc" style="margin:0" data-i18n="optim.proc.desc">Processus manuels identifiés dans l'organisation et leur potentiel d'automatisation.</p>
+          <button class="btn btn-primary btn-sm" onclick="openProcessModal()" data-i18n="optim.proc.add">+ Processus</button>
+        </div>
+        <div id="processes-table-wrap"><p class="muted" data-i18n="loading">Chargement…</p></div>
+      </div>
+
+      <!-- Plan IA -->
+      <div id="optim-aiplan" class="parc-content hidden">
+        <div class="ai-plan-form" style="margin-bottom:20px">
+          <div class="controls-inline" style="flex-wrap:wrap;gap:10px">
+            <input id="ai-question" type="text" style="flex:1;min-width:280px;padding:9px 14px;border:1px solid #cbd5e1;border-radius:8px;font-size:.9rem" placeholder="Comment réduire nos dépenses IT de 10% sans affecter les opérations ?" />
+            <button class="btn btn-primary btn-sm" onclick="runAIAnalysis()" data-i18n="optim.analyze">Analyser</button>
+          </div>
+        </div>
+        <div id="ai-plan-result">
+          <p class="muted" style="padding:20px;text-align:center" data-i18n="optim.aiplan.hint">Posez une question pour générer un plan d'économies personnalisé avec l'IA.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal Contrat -->
+    <div id="contract-modal" class="modal-backdrop hidden">
+      <div class="modal-card" style="max-width:560px">
+        <button class="modal-close" onclick="closeParcModal('contract-modal')">✕</button>
+        <h3 id="contract-modal-title">Contrat</h3>
+        <input type="hidden" id="cm-id" />
+        <form id="contract-modal-form" class="settings-form" style="display:grid;gap:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Fournisseur *</span><input id="cm-vendor" type="text" required placeholder="Bell Canada" /></label>
+            <label class="auth-label"><span>Catégorie</span><select id="cm-cat"><option value="telecom">Télécommunications</option><option value="software">Logiciels</option><option value="hardware">Matériel</option><option value="services">Services</option><option value="cloud">Cloud</option><option value="facilities">Installations</option><option value="other">Autre</option></select></label>
+          </div>
+          <label class="auth-label"><span>Description</span><input id="cm-desc" type="text" /></label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Valeur annuelle ($) *</span><input id="cm-value" type="number" step="0.01" required value="0" /></label>
+            <label class="auth-label"><span>Devise</span><select id="cm-currency"><option value="CAD">CAD</option><option value="USD">USD</option><option value="EUR">EUR</option></select></label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Début</span><input id="cm-start" type="date" /></label>
+            <label class="auth-label"><span>Fin</span><input id="cm-end" type="date" /></label>
+            <label class="auth-label"><span>Renouvellement *</span><input id="cm-renewal" type="date" /></label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Potentiel négo. (%)</span><input id="cm-negot" type="number" step="0.1" min="0" max="100" value="0" /></label>
+            <label class="auth-label"><span>Statut</span><select id="cm-status"><option value="active">Actif</option><option value="under_negotiation">En négociation</option><option value="expired">Expiré</option><option value="cancelled">Annulé</option></select></label>
+            <label class="auth-label"><span>Département</span><select id="cm-dept"><option value="">— Aucun —</option></select></label>
+          </div>
+          <label class="auth-label" style="flex-direction:row;align-items:center;gap:8px;padding-top:4px"><input id="cm-autorenew" type="checkbox" /> <span>Renouvellement automatique</span></label>
+          <label class="auth-label"><span>Notes</span><input id="cm-notes" type="text" /></label>
+          <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
+          <p id="cm-error" class="form-error hidden"></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal Processus RH -->
+    <div id="process-modal" class="modal-backdrop hidden">
+      <div class="modal-card" style="max-width:500px">
+        <button class="modal-close" onclick="closeParcModal('process-modal')">✕</button>
+        <h3 id="proc-modal-title">Processus RH</h3>
+        <input type="hidden" id="pm-id" />
+        <form id="process-modal-form" class="settings-form" style="display:grid;gap:10px">
+          <label class="auth-label"><span>Nom du processus *</span><input id="pm-name" type="text" required placeholder="Traitement des factures" /></label>
+          <label class="auth-label"><span>Description</span><input id="pm-desc" type="text" /></label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Taille d'équipe</span><input id="pm-team" type="number" min="1" value="1" /></label>
+            <label class="auth-label"><span>Heures manuelles/mois</span><input id="pm-hours" type="number" step="0.5" min="0" value="0" /></label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Potentiel automation (%)</span><input id="pm-auto" type="number" min="0" max="100" value="0" /></label>
+            <label class="auth-label"><span>Coût horaire ($)</span><input id="pm-hourly" type="number" step="0.01" value="50" /></label>
+            <label class="auth-label"><span>Statut</span><select id="pm-status"><option value="manual">Manuel</option><option value="semi_automated">Semi-automatisé</option><option value="automated">Automatisé</option></select></label>
+          </div>
+          <label class="auth-label"><span>Département</span><select id="pm-dept"><option value="">— Aucun —</option></select></label>
+          <label class="auth-label"><span>Notes</span><input id="pm-notes" type="text" /></label>
+          <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
+          <p id="pm-error" class="form-error hidden"></p>
         </form>
       </div>
     </div>

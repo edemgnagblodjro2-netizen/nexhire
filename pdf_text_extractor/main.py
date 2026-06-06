@@ -34,6 +34,9 @@ from routes_budget           import router as budget_router
 from routes_licenses         import router as licenses_router
 from routes_servers          import router as servers_router
 from routes_apps             import router as apps_router
+from routes_optimization     import router as optimization_router
+from routes_contracts        import router as contracts_router
+from routes_workforce        import router as workforce_router
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -109,6 +112,9 @@ def create_app(
     app.include_router(licenses_router)
     app.include_router(servers_router)
     app.include_router(apps_router)
+    app.include_router(optimization_router)
+    app.include_router(contracts_router)
+    app.include_router(workforce_router)
     app.state.storage = storage or DocumentStore.from_env()
     app.state.assistant = assistant or AssistantService.from_env()
 

@@ -122,6 +122,22 @@ const T = {
     'sa.title':'Comptes de service','sa.add':'+ Créer','sa.name':'Nom','sa.role':'Rôle',
     'sa.desc':'Tokens longue durée non liés à un compte utilisateur.',
     'dept.title':'Départements','dept.add':'+ Département','dept.name':'Nom','dept.budget':'Budget annuel ($)',
+    'app.tab.optim':'Optimisation IA',
+    'optim.title':'Optimisation IA','optim.analyze':'Analyser avec l\'IA',
+    'optim.tab.dashboard':'Tableau de bord','optim.tab.licenses':'Licences inutilisées',
+    'optim.tab.duplicates':'Outils en doublon','optim.tab.contracts':'Contrats',
+    'optim.tab.processes':'Processus RH','optim.tab.aiplan':'Plan IA',
+    'optim.score.title':'Score d\'efficacité organisationnelle',
+    'optim.score.sw':'Logiciels','optim.score.lic':'Licences',
+    'optim.score.infra':'Infrastructure','optim.score.proc':'Processus',
+    'optim.savings.title':'Économies identifiées',
+    'optim.top':'10 meilleures opportunités',
+    'optim.lic.desc':'Licences avec utilisation < 80% — économies immédiates possibles.',
+    'optim.dup.desc':'Catégories d\'outils en doublon — consolidation recommandée.',
+    'optim.contract.add':'+ Contrat',
+    'optim.proc.desc':'Processus manuels et leur potentiel d\'automatisation.',
+    'optim.proc.add':'+ Processus',
+    'optim.aiplan.hint':'Posez une question pour générer un plan d\'économies personnalisé.',
   },
   en: {
     'nav.features':'Features','nav.pricing':'Pricing','nav.connectors':'Connectors',
@@ -234,6 +250,22 @@ const T = {
     'sa.title':'Service Accounts','sa.add':'+ Create','sa.name':'Name','sa.role':'Role',
     'sa.desc':'Long-lived tokens not tied to a user account.',
     'dept.title':'Departments','dept.add':'+ Department','dept.name':'Name','dept.budget':'Annual budget ($)',
+    'app.tab.optim':'AI Optimization',
+    'optim.title':'AI Optimization','optim.analyze':'Analyze with AI',
+    'optim.tab.dashboard':'Dashboard','optim.tab.licenses':'Unused Licenses',
+    'optim.tab.duplicates':'Duplicate Tools','optim.tab.contracts':'Contracts',
+    'optim.tab.processes':'HR Processes','optim.tab.aiplan':'AI Plan',
+    'optim.score.title':'Organizational Efficiency Score',
+    'optim.score.sw':'Software','optim.score.lic':'Licenses',
+    'optim.score.infra':'Infrastructure','optim.score.proc':'Processes',
+    'optim.savings.title':'Identified Savings',
+    'optim.top':'Top 10 Opportunities',
+    'optim.lic.desc':'Licenses with < 80% utilization — immediate savings possible.',
+    'optim.dup.desc':'Duplicate tool categories — consolidation recommended.',
+    'optim.contract.add':'+ Contract',
+    'optim.proc.desc':'Manual processes and their automation potential.',
+    'optim.proc.add':'+ Process',
+    'optim.aiplan.hint':'Ask a question to generate a personalized savings plan.',
   },
 };
 
@@ -499,6 +531,7 @@ function loadActiveTab() {
   if (state.tab === "settings")   loadSettings();
   if (state.tab === "team")       loadTeam();
   if (state.tab === "parc-it")    loadParcIT();
+  if (state.tab === "optim")      loadOptimization();
 }
 
 // ── Quota indicator ────────────────────────────────────────────────────────
@@ -2015,4 +2048,331 @@ async function loadSettings() {
 function _fmt(v) {
   if (v == null) return "0.00";
   return Number(v).toLocaleString("fr-CA", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// OPTIMISATION IA
+// ═══════════════════════════════════════════════════════════════════════════
+
+let _optimTab = "dashboard";
+const OPTIM_ICONS = { license: "🔑", duplicate: "📋", contract: "📄", process: "⚙️" };
+
+function switchOptimTab(name) {
+  _optimTab = name;
+  document.querySelectorAll("[data-optim]").forEach(b => b.classList.toggle("active", b.dataset.optim === name));
+  document.querySelectorAll("#tab-optim .parc-content").forEach(el => el.classList.add("hidden"));
+  const el = $(`optim-${name}`);
+  if (el) el.classList.remove("hidden");
+  _loadOptimSection(name);
+}
+
+async function loadOptimization() {
+  await _populateOptimDeptSelects();
+  switchOptimTab(_optimTab);
+}
+
+function _loadOptimSection(name) {
+  if (name === "dashboard")  _loadOptimDashboard();
+  if (name === "licenses")   _loadUnusedLicenses();
+  if (name === "duplicates") _loadDuplicateTools();
+  if (name === "contracts")  loadContracts();
+  if (name === "processes")  loadProcesses();
+}
+
+async function _populateOptimDeptSelects() {
+  try {
+    const depts = await apiCall("/api/departments");
+    const opt = `<option value="">— Aucun —</option>` + depts.map(d => `<option value="${d.id}">${esc(d.name)}</option>`).join("");
+    [$("cm-dept"), $("pm-dept")].forEach(sel => { if (sel) sel.innerHTML = opt; });
+  } catch (_) {}
+}
+
+async function _loadOptimDashboard() {
+  try {
+    const data = await apiCall("/api/optimization/overview");
+
+    // Efficiency score
+    const score = data.efficiency_score || {};
+    const overall = score.overall || 0;
+    const circle = $("score-circle-main");
+    if (circle) {
+      circle.style.setProperty("--pct", overall);
+      $("score-val-main").textContent = overall.toFixed(0);
+    }
+    _setScoreDim("software",    score.software    ?? 0, "sdim-sw-val");
+    _setScoreDim("licenses",    score.licenses    ?? 0, "sdim-lic-val");
+    _setScoreDim("infra",       score.infrastructure ?? 0, "sdim-infra-val");
+    _setScoreDim("process",     score.process     ?? 0, "sdim-proc-val");
+
+    // Savings
+    const s = data.savings || {};
+    if ($("savings-total")) $("savings-total").textContent = `${_fmt(s.total)} $`;
+    if ($("savings-breakdown")) $("savings-breakdown").innerHTML = [
+      { label: "Licences",       val: s.licenses  },
+      { label: "Logiciels",      val: s.software  },
+      { label: "Contrats",       val: s.contracts },
+      { label: "Processus",      val: s.processes },
+    ].map(r => `<div class="savings-row"><span class="savings-row-label">${r.label}</span><span class="savings-row-val">${_fmt(r.val)} $</span></div>`).join("");
+
+    // Top opportunities
+    const opps = data.top_opportunities || [];
+    const wrap = $("optim-top-opps");
+    if (wrap) {
+      if (!opps.length) { wrap.innerHTML = `<p class="muted">Ajoutez des licences, applications et contrats pour voir les opportunités d'économies.</p>`; }
+      else wrap.innerHTML = opps.map(o => `
+        <div class="opp-card">
+          <div class="opp-icon ${o.type}">${OPTIM_ICONS[o.type] || "💡"}</div>
+          <div class="opp-body">
+            <div class="opp-title">${esc(o.title)}</div>
+            <div class="opp-meta">Confiance : ${o.confidence}%</div>
+          </div>
+          <div class="opp-savings">
+            <div class="opp-savings-val">${_fmt(o.savings)} $</div>
+            <div class="opp-confidence">économies/an</div>
+          </div>
+        </div>`).join("");
+    }
+  } catch (e) { console.error(e); }
+}
+
+function _setScoreDim(id, val, lblId) {
+  const bar = $(`sdim-${id}`);
+  if (bar) bar.style.width = val + "%";
+  const lbl = $(lblId);
+  if (lbl) lbl.textContent = val.toFixed(0) + "%";
+}
+
+async function _loadUnusedLicenses() {
+  const wrap = $("optim-lic-table");
+  try {
+    const lics = await apiCall("/api/optimization/unused-licenses");
+    if (!lics.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucune licence sous-utilisée détectée. Excellent !</p>`; return; }
+    wrap.innerHTML = `<table class="data-table"><thead><tr><th>Produit</th><th>Fournisseur</th><th>Qté totale</th><th>Assignées</th><th>Utilisation</th><th>Coût/unité</th><th>Économies/an</th><th>Confiance</th><th>Département</th></tr></thead><tbody>` +
+      lics.map(l => {
+        const pct = l.usage_pct;
+        const color = pct < 30 ? "#dc2626" : pct < 60 ? "#d97706" : "#2563eb";
+        return `<tr>
+          <td><strong>${esc(l.product_name)}</strong></td>
+          <td>${esc(l.vendor||"—")}</td>
+          <td>${l.quantity}</td>
+          <td>${l.assigned_count}</td>
+          <td style="color:${color};font-weight:700">${pct}%</td>
+          <td>${_fmt(l.cost_per_unit)}</td>
+          <td style="color:#15803d;font-weight:700">${_fmt(l.annual_savings_potential)} $</td>
+          <td><span class="badge ${l.confidence>=90?"badge-active":l.confidence>=75?"badge-expiring":"badge-idle"}">${l.confidence}%</span></td>
+          <td>${esc(l.department||"—")}</td>
+        </tr>`;
+      }).join("") + `</tbody></table>`;
+  } catch (e) { wrap.innerHTML = `<p class="muted">${e.message}</p>`; }
+}
+
+async function _loadDuplicateTools() {
+  const wrap = $("optim-dup-list");
+  try {
+    const dups = await apiCall("/api/optimization/duplicate-tools");
+    if (!dups.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucun doublon détecté dans vos applications IT.</p>`; return; }
+    wrap.innerHTML = dups.map(d => `
+      <div class="opp-card" style="flex-direction:column;align-items:stretch">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+          <div class="opp-icon duplicate">📋</div>
+          <div class="opp-body">
+            <div class="opp-title">${d.tool_count} outils — catégorie : <strong>${esc(d.category)}</strong></div>
+            <div class="opp-meta">${esc(d.recommendation)}</div>
+          </div>
+          <div class="opp-savings">
+            <div class="opp-savings-val">${_fmt(d.annual_savings_potential)} $</div>
+            <div class="opp-confidence">économies/an · confiance ${d.confidence}%</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          ${d.tools.map(t => `<span class="badge badge-idle">${esc(t.name)}${t.monthly_cost > 0 ? ` — ${_fmt(t.monthly_cost)}$/mois` : ""}</span>`).join("")}
+        </div>
+      </div>`).join("");
+  } catch (e) { wrap.innerHTML = `<p class="muted">${e.message}</p>`; }
+}
+
+// ── Contrats ──────────────────────────────────────────────────────────────────
+async function loadContracts() {
+  const wrap = $("contracts-table-wrap");
+  const renewing = $("contract-renew-filter")?.value || "";
+  const cat      = $("contract-cat-filter")?.value   || "";
+  try {
+    const url = `/api/contracts?${renewing ? `renewing=${renewing}&` : ""}${cat ? `status=active&` : ""}`;
+    let contracts = await apiCall(url);
+    if (cat) contracts = contracts.filter(c => c.category === cat);
+    if (!contracts.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucun contrat enregistré.</p>`; return; }
+    wrap.innerHTML = `<table class="data-table"><thead><tr><th>Fournisseur</th><th>Catégorie</th><th>Valeur annuelle</th><th>Renouvellement</th><th>Potentiel négo.</th><th>Économies</th><th>Statut</th><th>Dép.</th><th></th></tr></thead><tbody>` +
+      contracts.map(c => {
+        const urgCls = c.urgency === "critical" ? "badge-expired" : c.urgency === "warning" ? "badge-expiring" : "badge-active";
+        const daysLbl = c.days_to_renewal != null ? (c.days_to_renewal <= 0 ? "Expiré" : `${c.days_to_renewal}j`) : c.renewal_date || "—";
+        const stLbl = { active:"Actif", expired:"Expiré", cancelled:"Annulé", under_negotiation:"En négociation" };
+        return `<tr>
+          <td><strong>${esc(c.vendor)}</strong>${c.description ? `<br><span class="sa-meta">${esc(c.description)}</span>` : ""}</td>
+          <td>${esc(c.category||"—")}</td>
+          <td>${_fmt(c.annual_value)} ${c.currency}</td>
+          <td><span class="badge ${urgCls}">${daysLbl}</span></td>
+          <td>${c.negotiation_potential||0}%</td>
+          <td style="color:#15803d;font-weight:700">${_fmt(c.potential_savings)} $</td>
+          <td><span class="badge ${c.status==="active"?"badge-active":"badge-idle"}">${stLbl[c.status]||c.status}</span></td>
+          <td>${esc((c.department)||"—")}</td>
+          <td><button class="btn-icon" onclick="editContract('${c.id}')">✎</button> <button class="btn-icon btn-deactivate" onclick="deleteContract('${c.id}')">✕</button></td>
+        </tr>`;
+      }).join("") + `</tbody></table>`;
+  } catch (e) { wrap.innerHTML = `<p class="muted">${e.message}</p>`; }
+}
+
+function openContractModal(c = null) {
+  $("cm-id").value = c?.id || "";
+  $("cm-vendor").value   = c?.vendor        || "";
+  $("cm-cat").value      = c?.category      || "other";
+  $("cm-desc").value     = c?.description   || "";
+  $("cm-value").value    = c?.annual_value  || 0;
+  $("cm-currency").value = c?.currency      || "CAD";
+  $("cm-start").value    = c?.start_date    || "";
+  $("cm-end").value      = c?.end_date      || "";
+  $("cm-renewal").value  = c?.renewal_date  || "";
+  $("cm-negot").value    = c?.negotiation_potential || 0;
+  $("cm-status").value   = c?.status        || "active";
+  $("cm-autorenew").checked = c?.auto_renew || false;
+  $("cm-notes").value    = c?.notes         || "";
+  $("cm-dept").value     = c?.department_id || "";
+  $("cm-error").classList.add("hidden");
+  $("contract-modal").classList.remove("hidden");
+}
+async function editContract(id) {
+  try { const all = await apiCall("/api/contracts"); const c = all.find(x => x.id === id); if (c) openContractModal(c); } catch(_) { openContractModal({id}); }
+}
+async function deleteContract(id) {
+  if (!confirm("Supprimer ce contrat ?")) return;
+  try { await apiCall(`/api/contracts/${id}`, "DELETE"); loadContracts(); } catch(e) { alert(e.message); }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  $("contract-modal-form")?.addEventListener("submit", async e => {
+    e.preventDefault();
+    const id = $("cm-id").value;
+    const body = { vendor:$("cm-vendor").value, category:$("cm-cat").value, description:$("cm-desc").value||null,
+      annual_value:+$("cm-value").value, currency:$("cm-currency").value,
+      start_date:$("cm-start").value||null, end_date:$("cm-end").value||null, renewal_date:$("cm-renewal").value||null,
+      negotiation_potential:+$("cm-negot").value, status:$("cm-status").value,
+      auto_renew:$("cm-autorenew").checked, department_id:$("cm-dept").value||null, notes:$("cm-notes").value||null };
+    try {
+      if (id) await apiCall(`/api/contracts/${id}`, "PATCH", body);
+      else    await apiCall("/api/contracts", "POST", body);
+      closeParcModal("contract-modal"); loadContracts();
+    } catch(ex) { const err=$("cm-error"); err.textContent=ex.message||"Erreur"; err.classList.remove("hidden"); }
+  });
+});
+
+// ── Processus RH ─────────────────────────────────────────────────────────────
+async function loadProcesses() {
+  const wrap = $("processes-table-wrap");
+  try {
+    const procs = await apiCall("/api/workforce");
+    if (!procs.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucun processus enregistré.</p>`; return; }
+    const totalSavings = procs.reduce((s, p) => s + (p.annual_savings_potential||0), 0);
+    wrap.innerHTML = `<div style="padding:12px 0 16px;font-size:.85rem;color:var(--navy-light)">Total économies potentielles : <strong style="color:#15803d">${_fmt(totalSavings)} $/an</strong> · ${procs.reduce((s,p) => s + (p.automatable_hours_monthly||0), 0).toFixed(0)}h automatisables/mois</div>` +
+      `<table class="data-table"><thead><tr><th>Processus</th><th>Équipe</th><th>Heures/mois</th><th>Automation pot.</th><th>H. automatisables</th><th>Coût horaire</th><th>Économies/an</th><th>Statut</th><th>Dép.</th><th></th></tr></thead><tbody>` +
+      procs.map(p => {
+        const stMap = { manual:"badge-expired", semi_automated:"badge-expiring", automated:"badge-active" };
+        const stLbl = { manual:"Manuel", semi_automated:"Semi-auto", automated:"Automatisé" };
+        return `<tr>
+          <td><strong>${esc(p.name)}</strong>${p.description ? `<br><span class="sa-meta">${esc(p.description)}</span>` : ""}</td>
+          <td>${p.team_size}</td>
+          <td>${p.manual_hours_per_month}h</td>
+          <td style="color:${p.automation_potential>=60?"#15803d":"#d97706"};font-weight:700">${p.automation_potential}%</td>
+          <td>${p.automatable_hours_monthly}h</td>
+          <td>${_fmt(p.hourly_cost)} $</td>
+          <td style="color:#15803d;font-weight:700">${_fmt(p.annual_savings_potential)} $</td>
+          <td><span class="badge ${stMap[p.status]||"badge-idle"}">${stLbl[p.status]||p.status}</span></td>
+          <td>${esc((p.department)||"—")}</td>
+          <td><button class="btn-icon" onclick="editProcess('${p.id}')">✎</button> <button class="btn-icon btn-deactivate" onclick="deleteProcess('${p.id}')">✕</button></td>
+        </tr>`;
+      }).join("") + `</tbody></table>`;
+  } catch (e) { wrap.innerHTML = `<p class="muted">${e.message}</p>`; }
+}
+
+function openProcessModal(p = null) {
+  $("pm-id").value = p?.id || "";
+  $("pm-name").value   = p?.name                   || "";
+  $("pm-desc").value   = p?.description             || "";
+  $("pm-team").value   = p?.team_size               || 1;
+  $("pm-hours").value  = p?.manual_hours_per_month  || 0;
+  $("pm-auto").value   = p?.automation_potential    || 0;
+  $("pm-hourly").value = p?.hourly_cost             || 50;
+  $("pm-status").value = p?.status                  || "manual";
+  $("pm-dept").value   = p?.department_id           || "";
+  $("pm-notes").value  = p?.notes                   || "";
+  $("pm-error").classList.add("hidden");
+  $("process-modal").classList.remove("hidden");
+}
+async function editProcess(id) {
+  try { const all = await apiCall("/api/workforce"); const p = all.find(x => x.id === id); if (p) openProcessModal(p); } catch(_) { openProcessModal({id}); }
+}
+async function deleteProcess(id) {
+  if (!confirm("Supprimer ce processus ?")) return;
+  try { await apiCall(`/api/workforce/${id}`, "DELETE"); loadProcesses(); } catch(e) { alert(e.message); }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  $("process-modal-form")?.addEventListener("submit", async e => {
+    e.preventDefault();
+    const id = $("pm-id").value;
+    const body = { name:$("pm-name").value, description:$("pm-desc").value||null,
+      team_size:+$("pm-team").value, manual_hours_per_month:+$("pm-hours").value,
+      automation_potential:+$("pm-auto").value, hourly_cost:+$("pm-hourly").value,
+      status:$("pm-status").value, department_id:$("pm-dept").value||null, notes:$("pm-notes").value||null };
+    try {
+      if (id) await apiCall(`/api/workforce/${id}`, "PATCH", body);
+      else    await apiCall("/api/workforce", "POST", body);
+      closeParcModal("process-modal"); loadProcesses();
+    } catch(ex) { const err=$("pm-error"); err.textContent=ex.message||"Erreur"; err.classList.remove("hidden"); }
+  });
+});
+
+// ── Plan IA ───────────────────────────────────────────────────────────────────
+async function runAIAnalysis() {
+  const btn = $("optim-analyze-btn");
+  const question = $("ai-question")?.value || "Comment réduire nos dépenses IT de 10% sans affecter les opérations ?";
+  const resultWrap = $("ai-plan-result");
+
+  // Switch to AI plan tab
+  switchOptimTab("aiplan");
+
+  if (btn) { btn.disabled = true; btn.textContent = "Analyse en cours…"; }
+  if (resultWrap) resultWrap.innerHTML = `<div style="padding:40px;text-align:center"><div class="spinner" style="margin:auto"></div><p class="muted" style="margin-top:12px">Analyse de vos données IT…</p></div>`;
+
+  try {
+    const lang = _lang || "fr";
+    const enc  = encodeURIComponent(question);
+    const data = await apiCall(`/api/optimization/analyze?question=${enc}&language=${lang}`, "POST");
+    const a    = data.analysis || {};
+
+    if (resultWrap) resultWrap.innerHTML = `
+      <div class="ai-plan-card">
+        ${!data.success ? `<p class="badge badge-expiring" style="margin-bottom:12px">Analyse basée sur les règles (IA indisponible)</p>` : ""}
+        <div class="ai-plan-summary">${esc(a.summary || "")}</div>
+        <div class="ai-plan-total">${_fmt(a.total_potential_savings)} $</div>
+        <div class="ai-plan-confidence">Confiance : ${a.confidence||0}%</div>
+        <div class="ai-steps">
+          ${(a.steps||[]).map(s => `
+            <div class="ai-step">
+              <div class="ai-step-num">${s.step}</div>
+              <div class="ai-step-body">
+                <div class="ai-step-action">${esc(s.action||"")}</div>
+                <div class="ai-step-meta">
+                  <span class="badge ${s.impact==="high"?"impact-high":s.impact==="medium"?"impact-medium":"impact-low"} badge">${s.impact||"—"}</span>
+                  &nbsp;${esc(s.timeline||"")}
+                  &nbsp;·&nbsp;<span class="ai-step-savings">${_fmt(s.savings||0)} $ économisés</span>
+                </div>
+              </div>
+            </div>`).join("")}
+        </div>
+        ${a.insights?.length ? `<div class="ai-insights"><ul>${a.insights.map(i => `<li>${esc(i)}</li>`).join("")}</ul></div>` : ""}
+      </div>`;
+  } catch (ex) {
+    if (resultWrap) resultWrap.innerHTML = `<p class="muted" style="padding:20px">Erreur : ${esc(ex.message || "Analyse échouée.")}</p>`;
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = T[_lang]["optim.analyze"] || "Analyser avec l'IA"; }
+  }
 }
