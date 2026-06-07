@@ -71,6 +71,26 @@ def _get_or_create_customer(org_id: str, org_name: str, email: str) -> str:
     return cid
 
 
+# ── GET /api/billing/debug (admin only) ──────────────────────────────────────
+
+@router.get("/debug")
+def billing_debug(user: CurrentUser = Depends(require_min_role("admin"))):
+    """Diagnostic — vérifie quelles variables Stripe sont présentes (sans révéler les valeurs)."""
+    def _masked(val: str) -> str:
+        return val[:8] + "****" if val and len(val) > 8 else ("(vide)" if not val else val)
+
+    key      = os.environ.get("STRIPE_SECRET_KEY", "")
+    monthly  = os.environ.get("STRIPE_PRICE_MONTHLY", "")
+    annual   = os.environ.get("STRIPE_PRICE_ANNUAL", "")
+    webhook  = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
+    return {
+        "STRIPE_SECRET_KEY":     {"set": bool(key),     "preview": _masked(key)},
+        "STRIPE_PRICE_MONTHLY":  {"set": bool(monthly),  "preview": _masked(monthly)},
+        "STRIPE_PRICE_ANNUAL":   {"set": bool(annual),   "preview": _masked(annual)},
+        "STRIPE_WEBHOOK_SECRET": {"set": bool(webhook),  "preview": _masked(webhook)},
+    }
+
+
 # ── GET /api/billing/status ───────────────────────────────────────────────────
 
 @router.get("/status")
