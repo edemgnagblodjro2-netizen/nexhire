@@ -10,6 +10,9 @@ const state = {
   docId: null,
 };
 
+// ── Helpers globaux ────────────────────────────────────────────────────────
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
 // ── i18n ───────────────────────────────────────────────────────────────────
 const T = {
   fr: {
@@ -827,7 +830,6 @@ function renderAgentResult(data) {
 
 // Formatter — converts plain AI text with markdown-like patterns into clean HTML
 function _formatAnswer(text) {
-  const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
   const lines = text.split("\n");
   let html = "";
   let inUl = false, inOl = false;
@@ -2221,7 +2223,7 @@ async function loadBudget() {
           const period = e.month ? `${e.year}-${String(e.month).padStart(2,"0")}` : String(e.year);
           const var_ = (e.allocated||0) - (e.actual||0);
           const varColor = var_ >= 0 ? "color:#15803d" : "color:#dc2626";
-          const deptName = e.departments?.name || "—";
+          const deptName = e.department_name || "—";
           return `<tr>
             <td><span class="badge badge-active">${esc(e.category.toUpperCase())}</span></td>
             <td>${esc(e.label||"")}</td><td>${period}</td>
@@ -2269,7 +2271,7 @@ async function loadLicenses() {
         const st = l.computed_status;
         const badgeCls = st === "expired" ? "badge-expired" : st === "expiring_soon" ? "badge-expiring" : "badge-active";
         const stLabel  = st === "expired" ? "Expirée" : st === "expiring_soon" ? `Expire dans ${l.days_to_expiry}j` : st === "expiring_medium" ? `${l.days_to_expiry}j` : "Active";
-        const deptName = l.departments?.name || "—";
+        const deptName = l.department_name || "—";
         return `<tr class="${st==="expired"?"row-inactive":""}">
           <td><strong>${esc(l.product_name)}</strong></td>
           <td>${esc(l.vendor||"—")}</td>
@@ -2300,7 +2302,7 @@ async function loadServers() {
         const stLbl = { active:"Actif", idle:"Inactif", to_decommission:"À décom.", decommissioned:"Décom." };
         const pingInfo = s.last_ping_at ? `${s.idle_days}j` : "Jamais";
         const spec = [s.cpu_cores ? `${s.cpu_cores}c` : null, s.ram_gb ? `${s.ram_gb}Go` : null, s.storage_gb ? `${s.storage_gb}Go` : null].filter(Boolean).join(" / ") || "—";
-        const deptName = s.departments?.name || "—";
+        const deptName = s.department_name || "—";
         return `<tr class="${s.status==="decommissioned"?"row-inactive":""}">
           <td><strong>${esc(s.hostname)}</strong></td>
           <td>${esc(s.ip_address||"—")}</td>
@@ -2331,7 +2333,7 @@ async function loadApps() {
         const stMap = { active:"badge-active", unused:"badge-unused", decommissioned:"badge-expired" };
         const stLbl = { active:"Active", unused:"Inutilisée", decommissioned:"Décom." };
         const unusedInfo = a.days_unused !== null ? `${a.days_unused}j sans usage` : "—";
-        const deptName = a.departments?.name || "—";
+        const deptName = a.department_name || "—";
         return `<tr class="${a.status!=="active"?"row-inactive":""}">
           <td><strong>${esc(a.name)}</strong>${a.url ? ` <a href="${esc(a.url)}" target="_blank" style="font-size:.75rem;color:var(--indigo)">↗</a>` : ""}</td>
           <td>${esc(a.vendor||"—")}</td>
