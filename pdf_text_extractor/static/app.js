@@ -463,9 +463,22 @@ function showApp() {
   } else if (params.get("tab")) {
     switchTab(params.get("tab"));
     window.history.replaceState({}, "", "/");
+  } else {
+    const hash = window.location.hash.slice(1);
+    if (hash) {
+      const [tab, subtab] = hash.split("/");
+      if (subtab && tab === "parc-it") _parcTab  = subtab;
+      if (subtab && tab === "optim")   _optimTab = subtab;
+      state.tab = tab;
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === tab));
+      document.querySelectorAll(".tab-content").forEach(s => s.classList.toggle("hidden", s.id !== `tab-${tab}`));
+      history.replaceState({ tab, parc: tab === "parc-it" ? subtab : undefined, optim: tab === "optim" ? subtab : undefined }, "", `#${hash}`);
+      loadActiveTab();
+    } else {
+      loadActiveTab();
+    }
   }
 
-  loadActiveTab();
   loadDeptDashboard();
 }
 
@@ -714,8 +727,20 @@ function switchTab(name) {
   state.tab = name;
   document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === name));
   document.querySelectorAll(".tab-content").forEach(s => s.classList.toggle("hidden", s.id !== `tab-${name}`));
+  history.pushState({ tab: name }, "", `#${name}`);
   loadActiveTab();
 }
+
+window.addEventListener("popstate", (e) => {
+  const s = e.state;
+  if (!s || !s.tab) return;
+  state.tab = s.tab;
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === s.tab));
+  document.querySelectorAll(".tab-content").forEach(sec => sec.classList.toggle("hidden", sec.id !== `tab-${s.tab}`));
+  if (s.parc)  _parcTab  = s.parc;
+  if (s.optim) _optimTab = s.optim;
+  loadActiveTab();
+});
 
 function loadActiveTab() {
   const loaders = {
@@ -2147,18 +2172,19 @@ let _parcTab = "overview";
 let _parcBudgetChart = null;
 let _parcForecastChart = null;
 
-function switchParcTab(name) {
+function switchParcTab(name, push = true) {
   _parcTab = name;
   document.querySelectorAll(".parc-tab-btn").forEach(b => b.classList.toggle("active", b.dataset.parc === name));
   document.querySelectorAll(".parc-content").forEach(el => el.classList.add("hidden"));
   const el = $(`parc-${name}`);
   if (el) el.classList.remove("hidden");
+  if (push) history.pushState({ tab: "parc-it", parc: name }, "", `#parc-it/${name}`);
   _loadParcSection(name);
 }
 
 async function loadParcIT() {
   await _populateDeptSelects();
-  switchParcTab(_parcTab);
+  switchParcTab(_parcTab, false);
 }
 
 function _loadParcSection(name) {
@@ -2775,12 +2801,13 @@ async function confirmInitDepts() {
 let _optimTab = "dashboard";
 const OPTIM_ICONS = { license: "🔑", duplicate: "📋", contract: "📄", process: "⚙️" };
 
-function switchOptimTab(name) {
+function switchOptimTab(name, push = true) {
   _optimTab = name;
   document.querySelectorAll("[data-optim]").forEach(b => b.classList.toggle("active", b.dataset.optim === name));
   document.querySelectorAll("#tab-optim .parc-content").forEach(el => el.classList.add("hidden"));
   const el = $(`optim-${name}`);
   if (el) el.classList.remove("hidden");
+  if (push) history.pushState({ tab: "optim", optim: name }, "", `#optim/${name}`);
   _loadOptimSection(name);
 }
 
@@ -2795,7 +2822,7 @@ async function loadOptimization() {
     badge.textContent = SECTOR_BADGE_LABELS[type] || type;
     badge.classList.remove("hidden");
   }
-  switchOptimTab(_optimTab);
+  switchOptimTab(_optimTab, false);
 }
 
 function _loadOptimSection(name) {
