@@ -475,22 +475,27 @@ $("trial-dismiss")?.addEventListener("click", () => {
 // ── Setup readiness banner ────────────────────────────────────────────────
 let _readinessData = null;
 
+function _isCheckOk(v) {
+  return v === "set" || String(v).startsWith("ok");
+}
+
 async function loadReadiness() {
   const isAdmin = ["admin", "owner"].includes(state.user?.role);
   if (!isAdmin) return;
   try {
     const d = await apiCall("/api/readiness");
     _readinessData = d;
-    const missing = Object.entries(d.checks || {})
-      .filter(([, v]) => typeof v === "string" && v.startsWith("MISSING"))
-      .map(([k]) => k);
-    if (missing.length > 0) {
-      const names = missing.map(k => k.replace("table_", "")).join(", ");
-      const txt = $("setup-banner-text");
-      if (txt) txt.textContent = `Tables manquantes : ${names}. Exécutez les scripts SQL pour activer toutes les fonctionnalités.`;
-      $("setup-banner")?.classList.remove("hidden");
-    } else {
+    if (d.ready) {
       $("setup-banner")?.classList.add("hidden");
+    } else {
+      const bad = Object.entries(d.checks || {})
+        .filter(([, v]) => !_isCheckOk(v))
+        .map(([k]) => k.replace("table_", ""));
+      const txt = $("setup-banner-text");
+      if (txt) txt.textContent = bad.length
+        ? `Problème détecté : ${bad.join(", ")}. Vérifiez les scripts SQL et les variables d'env.`
+        : "Configuration incomplète — cliquez pour vérifier.";
+      $("setup-banner")?.classList.remove("hidden");
     }
   } catch { /* silent */ }
 }
@@ -503,12 +508,10 @@ async function checkReadinessNow() {
     _readinessData = d;
     if (checks) {
       checks.textContent = Object.entries(d.checks || {})
-        .map(([k, v]) => `${v === "ok" || v === "set" || String(v).startsWith("ok") ? "✅" : "❌"} ${k}: ${v}`)
+        .map(([k, v]) => `${_isCheckOk(v) ? "✅" : "❌"} ${k}: ${v}`)
         .join("\n");
     }
-    const missing = Object.entries(d.checks || {})
-      .filter(([, v]) => typeof v === "string" && v.startsWith("MISSING"));
-    if (missing.length === 0) {
+    if (d.ready) {
       $("setup-banner")?.classList.add("hidden");
       alert("✅ Toutes les tables sont prêtes. Actualisez la page pour recharger.");
     }
