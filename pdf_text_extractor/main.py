@@ -190,8 +190,8 @@ def create_app(
                 try:
                     sb.table(tbl).select("id").limit(1).execute()
                     checks[f"table_{tbl}"] = "ok"
-                except Exception:
-                    checks[f"table_{tbl}"] = "MISSING — exécuter phase9/10 SQL"
+                except Exception as tbl_exc:
+                    checks[f"table_{tbl}"] = f"ERR: {type(tbl_exc).__name__}: {tbl_exc}"
         except Exception as exc:
             checks["db"] = f"error: {type(exc).__name__}: {exc}"
         ok = all(v == "set" for k, v in checks.items() if k not in ("db_orgs","db_users","db")) \
