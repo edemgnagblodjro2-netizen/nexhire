@@ -464,7 +464,6 @@ function showApp() {
 
   loadActiveTab();
   loadDeptDashboard();
-  loadReadiness();
 }
 
 // Trial banner dismiss

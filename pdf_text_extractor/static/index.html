@@ -341,42 +341,6 @@
 <!-- ═══════════════════════════════════════ APP ════════════════════════════ -->
 <div id="view-app" class="hidden">
 
-  <!-- Setup readiness banner (admin only, tables manquantes) -->
-  <div id="setup-banner" class="setup-app-banner hidden" role="alert">
-    <span>⚠️</span>
-    <span id="setup-banner-text">Les tables entreprise ne sont pas encore configurées.</span>
-    <button class="btn btn-warning btn-sm" onclick="openSetupModal()">Voir le guide →</button>
-    <button class="dismiss" id="setup-banner-dismiss" title="Fermer">✕</button>
-  </div>
-
-  <!-- Setup guide modal -->
-  <div id="setup-modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
-    <div class="modal-box" style="max-width:560px">
-      <div class="modal-header">
-        <h3>⚙️ Configuration initiale requise</h3>
-        <button class="modal-close" onclick="closeSetupModal()">✕</button>
-      </div>
-      <div class="modal-body" style="font-size:.9rem;line-height:1.7">
-        <p>Certaines tables entreprise ne sont pas encore créées dans Supabase. Exécutez ces fichiers SQL <strong>dans l'ordre</strong> dans le <strong>Supabase SQL Editor</strong> de votre projet :</p>
-        <ol style="margin:12px 0 12px 20px;padding:0">
-          <li style="margin-bottom:6px"><code>phase9_enterprise.sql</code> — départements, budgets, licences, serveurs, apps IT, comptes de service</li>
-          <li style="margin-bottom:6px"><code>phase10_optimization.sql</code> — contrats, processus RH</li>
-          <li style="margin-bottom:6px"><code>phase11_sector.sql</code> — type d'organisation (org_type)</li>
-          <li style="margin-bottom:6px"><code>phase12_dept_types.sql</code> — type de département (dept_type)</li>
-          <li style="margin-bottom:6px"><code>phase13_connectors.sql</code> — table connecteurs OAuth / API-key</li>
-        </ol>
-        <p style="color:var(--slate);margin-top:8px;font-size:.82rem">
-          <strong>Tables partiellement créées ?</strong> Exécutez uniquement <code>fix_missing_tables.sql</code> pour créer <code>servers</code> et <code>workforce_processes</code> sans retoucher les autres tables.
-        </p>
-        <p style="color:var(--slate);font-size:.82rem">Ces fichiers se trouvent dans le dossier <code>pdf_text_extractor/</code> du projet. Une fois exécutés, actualisez la page.</p>
-        <div id="setup-checks" style="margin-top:12px;background:var(--surface2);border-radius:8px;padding:12px;font-family:monospace;font-size:.78rem;white-space:pre-wrap;max-height:180px;overflow-y:auto"></div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-outline" onclick="checkReadinessNow()">↻ Revérifier maintenant</button>
-        <button class="btn btn-primary" onclick="closeSetupModal()">Fermer</button>
-      </div>
-    </div>
-  </div>
 
   <!-- Trial banner -->
   <div id="trial-banner" class="trial-app-banner hidden">
