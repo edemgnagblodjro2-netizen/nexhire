@@ -43,7 +43,7 @@ def list_all_orgs(user: CurrentUser = Depends(_superadmin)):
                  FROM users u
                  WHERE u.organization_id = o.id)                                         AS user_count,
                 (SELECT COUNT(*)
-                 FROM audit_log al
+                 FROM audit_logss al
                  WHERE al.organization_id = o.id
                    AND al.action = 'agent_query'
                    AND al.created_at >= date_trunc('month', now()))                      AS queries_month,
@@ -76,7 +76,7 @@ def global_metrics(user: CurrentUser = Depends(_superadmin)):
         total_users = (row(cur) or {}).get("n", 0)
 
         cur.execute("""
-            SELECT COUNT(*) AS n FROM audit_log
+            SELECT COUNT(*) AS n FROM audit_logs
             WHERE action = 'agent_query'
               AND created_at >= date_trunc('month', now())
         """)
