@@ -171,7 +171,7 @@ def create_app(
 
     @app.get("/api/readiness")
     def readiness():
-        """Vérifie la connexion DB et les variables d'env critiques (sans valeurs)."""
+        """Vérifie les variables d'env et la connexion DB."""
         import os
         checks: dict = {}
         for var in ["SUPABASE_URL", "SUPABASE_ANON_KEY", "SUPABASE_SERVICE_ROLE_KEY",
@@ -181,21 +181,12 @@ def create_app(
             from supabase_client import service_client
             sb = service_client()
             sb.table("organizations").select("id").limit(1).execute()
-            checks["db_orgs"] = "ok"
-            res = sb.table("users").select("id", count="exact").execute()
-            checks["db_users"] = f"ok ({res.count} rows)" if res.count is not None else f"ok ({len(res.data)} rows)"
-            # Tables enterprise : marquées ok si la connexion DB fonctionne
-            for tbl in ["departments","budget_entries","licenses","servers","it_applications",
-                        "service_accounts","contracts","workforce_processes","connectors"]:
-                checks[f"table_{tbl}"] = "ok"
+            checks["db"] = "ok"
         except Exception as exc:
             checks["db"] = f"error: {type(exc).__name__}: {exc}"
-        def _check_ok(k: str, v: str) -> bool:
-            if k.startswith("table_") or k in ("db_orgs", "db_users"):
-                return v.startswith("ok")
-            return v == "set"
-        ok = all(_check_ok(k, v) for k, v in checks.items() if k != "db")
-        return {"ready": ok, "checks": checks}
+        env_ok = all(v == "set" for k, v in checks.items() if k != "db")
+        db_ok  = checks.get("db", "").startswith("ok")
+        return {"ready": env_ok and db_ok, "checks": checks}
 
     @app.post(
         "/api/documents",
