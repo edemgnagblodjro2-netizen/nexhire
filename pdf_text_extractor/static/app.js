@@ -502,11 +502,9 @@ const CONNECTORS = {
     help_url: "https://api.sap.com/",
     help_label: "SAP API Hub",
     fields: [
-      { id: "api_url",    label: "URL de l'API SAP *",  placeholder: "https://<host>:<port>/sap/opu/odata/sap/" },
-      { id: "client_id",  label: "Client ID (OAuth SAP)", placeholder: "client_id" },
-      { id: "client_secret", label: "Client Secret",    placeholder: "••••••••",  type: "password" },
-      { id: "username",   label: "Utilisateur SAP",     placeholder: "sapuser" },
-      { id: "password",   label: "Mot de passe SAP",    placeholder: "••••••••",  type: "password" },
+      { id: "api_url",  label: "URL de l'API SAP *", placeholder: "https://<host>:<port>/sap/opu/odata/sap/" },
+      { id: "username", label: "Utilisateur SAP *",  placeholder: "sapuser" },
+      { id: "password", label: "Mot de passe SAP *", placeholder: "••••••••", type: "password" },
     ],
   },
   workday: {

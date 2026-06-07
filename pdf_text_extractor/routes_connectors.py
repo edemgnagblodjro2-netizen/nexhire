@@ -224,7 +224,7 @@ def remove_connector_department(
 
 # Champs obligatoires par connecteur (validation minimale)
 _REQUIRED_FIELDS: dict[str, list[str]] = {
-    "sap":      ["api_url"],
+    "sap":      ["api_url", "username", "password"],
     "workday":  ["tenant_url", "client_id", "client_secret"],
     "autotask": ["username", "api_key", "zone_url"],
 }
