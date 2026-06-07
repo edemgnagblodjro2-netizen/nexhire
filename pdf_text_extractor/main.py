@@ -194,8 +194,11 @@ def create_app(
                     checks[f"table_{tbl}"] = f"ERR: {type(tbl_exc).__name__}: {tbl_exc}"
         except Exception as exc:
             checks["db"] = f"error: {type(exc).__name__}: {exc}"
-        ok = all(v == "set" for k, v in checks.items() if k not in ("db_orgs","db_users","db")) \
-             and "ok" in checks.get("db_orgs","") and "ok" in checks.get("db_users","")
+        def _check_ok(k: str, v: str) -> bool:
+            if k.startswith("table_") or k in ("db_orgs", "db_users"):
+                return v.startswith("ok")
+            return v == "set"
+        ok = all(_check_ok(k, v) for k, v in checks.items() if k != "db")
         return {"ready": ok, "checks": checks}
 
     @app.post(
