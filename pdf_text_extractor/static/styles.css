@@ -1839,6 +1839,97 @@ tbody tr:hover { background: var(--blue-pale); }
   .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
   .footer-top { grid-template-columns: 1fr 1fr; }
 }
+/* ── Dashboard exécutif Organisation ────────────────────────────────────── */
+.exec-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+.exec-kpi-loading { display: flex; align-items: center; justify-content: center; padding: 40px; }
+.exec-kpi-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow .15s;
+}
+.exec-kpi-card:hover { box-shadow: var(--shadow); }
+.exec-kpi-card.highlight { border-color: #86efac; background: linear-gradient(135deg,#f0fdf4,#fff); }
+.exec-kpi-card.exec-kpi-warn { border-color: #fca5a5; background: linear-gradient(135deg,#fef2f2,#fff); }
+.exec-kpi-icon { font-size: 1.6rem; line-height: 1; flex-shrink: 0; }
+.exec-kpi-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.exec-kpi-val { font-size: 1.3rem; font-weight: 800; color: var(--navy); line-height: 1.2; }
+.exec-kpi-label { font-size: .78rem; color: var(--slate); font-weight: 600; text-transform: uppercase; letter-spacing: .03em; }
+.exec-kpi-sub { font-size: .75rem; color: var(--slate); }
+
+.exec-section-title {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: .85rem; font-weight: 700; color: var(--navy);
+  text-transform: uppercase; letter-spacing: .05em;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border);
+}
+.exec-legend { display: flex; align-items: center; gap: 12px; font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--slate); }
+.badge-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 4px; }
+.badge-dot.green  { background: #22c55e; }
+.badge-dot.yellow { background: #f59e0b; }
+.badge-dot.red    { background: #ef4444; }
+
+.exec-dept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+.exec-dept-card {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  cursor: pointer;
+  transition: box-shadow .15s, transform .1s;
+}
+.exec-dept-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+.exec-dept-green  { border-left: 4px solid #22c55e; }
+.exec-dept-yellow { border-left: 4px solid #f59e0b; }
+.exec-dept-red    { border-left: 4px solid #ef4444; }
+
+.exec-dept-head { display: flex; align-items: center; gap: 10px; }
+.exec-dept-icon { font-size: 1.5rem; flex-shrink: 0; }
+.exec-dept-titles { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.exec-dept-name { font-weight: 700; font-size: .92rem; color: var(--navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.exec-dept-type { font-size: .72rem; color: var(--slate); }
+
+.exec-health-badge {
+  padding: 3px 9px; border-radius: 999px;
+  font-size: .7rem; font-weight: 700; white-space: nowrap; flex-shrink: 0;
+}
+.exec-health-green  { background: #dcfce7; color: #15803d; }
+.exec-health-yellow { background: #fef9c3; color: #92400e; }
+.exec-health-red    { background: #fee2e2; color: #991b1b; }
+
+.exec-score-bar-wrap {
+  height: 5px; background: var(--border); border-radius: 999px; overflow: hidden;
+}
+.exec-score-bar { height: 100%; border-radius: 999px; transition: width .4s ease; }
+
+.exec-dept-metrics {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  font-size: .75rem; color: var(--slate);
+}
+
+@media (max-width: 640px) {
+  .exec-kpi-grid  { grid-template-columns: 1fr 1fr; }
+  .exec-dept-grid { grid-template-columns: 1fr; }
+}
+
 /* ── Tableau de bord département (Phase 12) ─────────────────────────────── */
 .dept-dashboard {
   background: #fff;

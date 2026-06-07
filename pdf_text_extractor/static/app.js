@@ -716,6 +716,7 @@ function loadActiveTab() {
   const loaders = {
     "agent":      loadDeptDashboard,  // rafraîchit le dashboard département
     "connectors": loadConnectors,
+    "org":        loadExecutiveDashboard,
     "audit":      loadAudit,
     "stats":      loadAnalytics,
     "settings":   loadSettings,
@@ -985,6 +986,130 @@ async function sendRating(score) {
   try {
     await apiCall("/api/analytics/rate", "POST", { audit_id: auditId, score });
   } catch { /* silent */ }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ORGANISATION — DASHBOARD EXÉCUTIF
+// ═══════════════════════════════════════════════════════════════════════════
+
+const _HEALTH_LABELS = { green: "Sain", yellow: "Attention", red: "À risque" };
+const _HEALTH_EMOJI  = { green: "🟢",   yellow: "🟡",        red: "🔴"       };
+
+async function loadExecutiveDashboard() {
+  const kpiGrid  = $("exec-kpi-grid");
+  const deptGrid = $("exec-dept-grid");
+  if (!kpiGrid || !deptGrid) return;
+
+  kpiGrid.innerHTML  = `<div class="exec-kpi-loading"><div class="spinner" style="margin:auto"></div></div>`;
+  deptGrid.innerHTML = `<p class="muted">Chargement…</p>`;
+
+  let data;
+  try {
+    data = await apiCall("/api/dashboard/executive");
+  } catch (e) {
+    kpiGrid.innerHTML  = `<p class="error-text">Impossible de charger le dashboard : ${e.message}</p>`;
+    deptGrid.innerHTML = "";
+    return;
+  }
+
+  const k = data.kpis || {};
+  const lang = state.lang || "fr";
+
+  // ── KPIs globaux ────────────────────────────────────────────────────────
+  const fmtCAD = v => (v || 0).toLocaleString("fr-CA", { style: "currency", currency: "CAD", maximumFractionDigits: 0 });
+  const fmtPct = v => `${(v || 0).toFixed(1)} %`;
+
+  const budgetPct = k.budget_pct || 0;
+  const budgetColor = budgetPct >= 95 ? "#ef4444" : budgetPct >= 80 ? "#f59e0b" : "#22c55e";
+
+  kpiGrid.innerHTML = `
+    <div class="exec-kpi-card">
+      <div class="exec-kpi-icon">💰</div>
+      <div class="exec-kpi-body">
+        <div class="exec-kpi-val">${fmtCAD(k.budget_spent)}</div>
+        <div class="exec-kpi-label">Dépenses totales</div>
+        <div class="exec-kpi-sub" style="color:${budgetColor}">${fmtPct(budgetPct)} du budget consommé</div>
+      </div>
+    </div>
+    <div class="exec-kpi-card">
+      <div class="exec-kpi-icon">🏦</div>
+      <div class="exec-kpi-body">
+        <div class="exec-kpi-val">${fmtCAD(k.budget_total)}</div>
+        <div class="exec-kpi-label">Budget total</div>
+        <div class="exec-kpi-sub">${fmtCAD(k.budget_total - k.budget_spent)} restant</div>
+      </div>
+    </div>
+    <div class="exec-kpi-card highlight">
+      <div class="exec-kpi-icon">💡</div>
+      <div class="exec-kpi-body">
+        <div class="exec-kpi-val" style="color:#22c55e">${fmtCAD(k.savings_potential)}</div>
+        <div class="exec-kpi-label">Économies potentielles</div>
+        <div class="exec-kpi-sub">Identifiées par l'IA</div>
+      </div>
+    </div>
+    <div class="exec-kpi-card ${k.depts_at_risk > 0 ? "exec-kpi-warn" : ""}">
+      <div class="exec-kpi-icon">⚠️</div>
+      <div class="exec-kpi-body">
+        <div class="exec-kpi-val">${k.depts_at_risk || 0}</div>
+        <div class="exec-kpi-label">Départements à risque</div>
+        <div class="exec-kpi-sub">sur ${k.depts_total || 0} départements</div>
+      </div>
+    </div>
+    <div class="exec-kpi-card ${k.contracts_due > 0 ? "exec-kpi-warn" : ""}">
+      <div class="exec-kpi-icon">📋</div>
+      <div class="exec-kpi-body">
+        <div class="exec-kpi-val">${k.contracts_due || 0}</div>
+        <div class="exec-kpi-label">Contrats à renouveler</div>
+        <div class="exec-kpi-sub">dans les 90 prochains jours</div>
+      </div>
+    </div>`;
+
+  // ── Grille santé départements ────────────────────────────────────────────
+  const depts = data.departments || [];
+  if (depts.length === 0) {
+    deptGrid.innerHTML = `<p class="muted" style="padding:16px 0">Aucun département créé. Allez dans <strong>Équipe → Départements</strong> pour en ajouter.</p>`;
+    return;
+  }
+
+  deptGrid.innerHTML = depts.map(d => {
+    const badge  = d.badge || "green";
+    const score  = d.score || 0;
+    const budPct = d.budget_pct !== null && d.budget_pct !== undefined ? `${d.budget_pct} %` : "—";
+    return `
+      <div class="exec-dept-card exec-dept-${badge}" onclick="openDeptDetail('${d.id}','${d.name.replace(/'/g,"\\'")}')">
+        <div class="exec-dept-head">
+          <span class="exec-dept-icon">${d.icon}</span>
+          <div class="exec-dept-titles">
+            <span class="exec-dept-name">${d.name}</span>
+            <span class="exec-dept-type">${_deptTypeLabel(d.dept_type)}</span>
+          </div>
+          <span class="exec-health-badge exec-health-${badge}">${_HEALTH_EMOJI[badge]} ${_HEALTH_LABELS[badge]}</span>
+        </div>
+        <div class="exec-score-bar-wrap">
+          <div class="exec-score-bar" style="width:${score}%;background:${badge === 'green' ? '#22c55e' : badge === 'yellow' ? '#f59e0b' : '#ef4444'}"></div>
+        </div>
+        <div class="exec-dept-metrics">
+          <span>👤 ${d.members} membre${d.members !== 1 ? "s" : ""}</span>
+          <span>📱 ${d.apps} app${d.apps !== 1 ? "s" : ""}</span>
+          <span>💰 ${budPct} budget</span>
+        </div>
+      </div>`;
+  }).join("");
+}
+
+function _deptTypeLabel(t) {
+  const labels = {
+    finance:"Finance", hr:"Ressources Humaines", it:"Technologies de l'information",
+    legal:"Juridique", operations:"Opérations", marketing:"Marketing / Communications",
+    direction:"Direction générale", approvisionnement:"Approvisionnement", general:"Général",
+  };
+  return labels[t] || t;
+}
+
+function openDeptDetail(deptId, deptName) {
+  // Ouvre un panel ou redirige vers l'onglet équipe sur ce département
+  // Pour l'instant on peut filtrer l'onglet équipe
+  switchTab("team");
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

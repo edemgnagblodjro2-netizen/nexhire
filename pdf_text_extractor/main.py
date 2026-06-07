@@ -68,6 +68,7 @@ from routes_apps             import router as apps_router
 from routes_optimization     import router as optimization_router
 from routes_contracts        import router as contracts_router
 from routes_workforce        import router as workforce_router
+from routes_dashboard        import router as dashboard_router
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -144,6 +145,7 @@ def create_app(
     app.include_router(servers_router)
     app.include_router(apps_router)
     app.include_router(optimization_router)
+    app.include_router(dashboard_router)
     app.include_router(contracts_router)
     app.include_router(workforce_router)
     app.state.storage = storage or DocumentStore.from_env()
