@@ -28,9 +28,10 @@ STRIPE_API = "https://api.stripe.com/v1"
 
 def _stripe(method: str, path: str, data: dict | None = None) -> dict:
     """Appel Stripe simple via httpx."""
-    if not STRIPE_SECRET_KEY:
+    key = os.environ.get("STRIPE_SECRET_KEY", "") or STRIPE_SECRET_KEY
+    if not key:
         raise HTTPException(status_code=503, detail="Billing non configuré (STRIPE_SECRET_KEY manquant).")
-    headers = {"Authorization": f"Bearer {STRIPE_SECRET_KEY}"}
+    headers = {"Authorization": f"Bearer {key}"}
     with httpx.Client(timeout=15) as client:
         if method == "GET":
             resp = client.get(f"{STRIPE_API}{path}", headers=headers, params=data)
@@ -75,6 +76,8 @@ def _get_or_create_customer(org_id: str, org_name: str, email: str) -> str:
 @router.get("/status")
 def billing_status(user: CurrentUser = Depends(require_min_role("user"))):
     """Retourne l'état de l'abonnement de l'organisation."""
+    # Relecture dynamique pour prendre en compte les mises à jour d'env sans redémarrage
+    live_key = os.environ.get("STRIPE_SECRET_KEY", "") or STRIPE_SECRET_KEY
     with get_db() as cur:
         cur.execute(
             """SELECT subscription_status, subscription_plan, subscription_end,
@@ -88,7 +91,9 @@ def billing_status(user: CurrentUser = Depends(require_min_role("user"))):
         "plan":        r.get("subscription_plan", "trial"),
         "ends_at":     r.get("subscription_end"),
         "has_stripe":  bool(r.get("stripe_customer_id")),
-        "stripe_configured": bool(STRIPE_SECRET_KEY),
+        "stripe_configured": bool(live_key),
+        "price_monthly_set": bool(os.environ.get("STRIPE_PRICE_MONTHLY", "") or STRIPE_PRICE_MONTHLY),
+        "price_annual_set":  bool(os.environ.get("STRIPE_PRICE_ANNUAL", "") or STRIPE_PRICE_ANNUAL),
     }
 
 
@@ -103,7 +108,9 @@ def create_checkout(
     user: CurrentUser = Depends(require_min_role("owner")),
 ):
     """Crée une session Stripe Checkout et retourne l'URL de paiement."""
-    price_id = STRIPE_PRICE_MONTHLY if payload.plan == "monthly" else STRIPE_PRICE_ANNUAL
+    live_monthly = os.environ.get("STRIPE_PRICE_MONTHLY", "") or STRIPE_PRICE_MONTHLY
+    live_annual  = os.environ.get("STRIPE_PRICE_ANNUAL",  "") or STRIPE_PRICE_ANNUAL
+    price_id = live_monthly if payload.plan == "monthly" else live_annual
     if not price_id:
         raise HTTPException(status_code=503, detail=f"Prix Stripe non configuré pour le plan {payload.plan}.")
 
