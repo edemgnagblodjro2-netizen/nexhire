@@ -37,11 +37,11 @@ def _dept_health(sb, org_id: str, dept_id: str) -> dict:
     """Calcule un score de santé (0-100) pour un département."""
     scores: list[float] = []
 
-    # 1. Budget
+    # 1. Budget (colonnes réelles : allocated / actual)
     budgets = _safe(sb, "budget_entries", org_id, dept_id)
     if budgets:
-        total_budget = sum(float(b.get("amount", 0)) for b in budgets if b.get("type") == "budget")
-        total_spent  = sum(float(b.get("amount", 0)) for b in budgets if b.get("type") == "expense")
+        total_budget = sum(float(b.get("allocated", 0)) for b in budgets)
+        total_spent  = sum(float(b.get("actual", 0))    for b in budgets)
         pct = (total_spent / total_budget * 100) if total_budget > 0 else 0
         budget_score = 100 if pct <= 75 else (80 if pct <= 90 else (50 if pct <= 100 else 20))
         scores.append(budget_score)
@@ -97,8 +97,8 @@ def executive_dashboard(user: CurrentUser = Depends(require_min_role("admin"))):
     # ── KPIs globaux ──────────────────────────────────────────────────────────
     try:
         all_budgets = _safe(sb, "budget_entries", org_id)
-        total_budget = sum(float(b.get("amount", 0)) for b in all_budgets if b.get("type") == "budget")
-        total_spent  = sum(float(b.get("amount", 0)) for b in all_budgets if b.get("type") == "expense")
+        total_budget = sum(float(b.get("allocated", 0)) for b in all_budgets)
+        total_spent  = sum(float(b.get("actual", 0))    for b in all_budgets)
     except Exception:
         total_budget = total_spent = 0.0
 
@@ -181,8 +181,8 @@ def executive_dashboard(user: CurrentUser = Depends(require_min_role("admin"))):
         budget_pct = None
         dept_budgets = _safe(sb, "budget_entries", org_id, dept_id)
         if dept_budgets:
-            db = sum(float(b.get("amount", 0)) for b in dept_budgets if b.get("type") == "budget")
-            ds = sum(float(b.get("amount", 0)) for b in dept_budgets if b.get("type") == "expense")
+            db = sum(float(b.get("allocated", 0)) for b in dept_budgets)
+            ds = sum(float(b.get("actual", 0))    for b in dept_budgets)
             budget_pct = round(ds / db * 100, 1) if db > 0 else None
 
         departments.append({
@@ -258,8 +258,8 @@ def department_detail(
     apps       = _safe(sb, "it_applications",      org_id, dept_id)
     servers    = _safe(sb, "servers",              org_id, dept_id)
 
-    budget_total = sum(float(b.get("amount", 0)) for b in budgets if b.get("type") == "budget")
-    budget_spent = sum(float(b.get("amount", 0)) for b in budgets if b.get("type") == "expense")
+    budget_total = sum(float(b.get("allocated", 0)) for b in budgets)
+    budget_spent = sum(float(b.get("actual", 0))    for b in budgets)
 
     total_lic   = sum(int(l.get("quantity", 0)) for l in licenses)
     used_lic    = sum(int(l.get("assigned_count", 0)) for l in licenses)
