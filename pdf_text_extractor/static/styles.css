@@ -1879,11 +1879,50 @@ tbody tr:hover { background: var(--blue-pale); }
 .badge-dot.yellow { background: #f59e0b; }
 .badge-dot.red    { background: #ef4444; }
 
-.exec-dept-grid {
+/* Ancien grid — conservé pour compatibilité interne */
+.exec-dept-grid { display: none; }
+
+/* ── Accordéons Santé des départements ───────────────────────────────────── */
+.dept-acc-wrap {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-top: 12px;
+}
+.dept-acc-hd {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--surface);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: .92rem;
+  font-weight: 700;
+  color: var(--navy);
+  border-left: 4px solid var(--acc-color, #818cf8);
+  transition: background .15s;
+}
+.dept-acc-hd:hover { background: #f8fafc; }
+.dept-acc-title { flex: 1; }
+.dept-acc-count {
+  font-size: .72rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 999px;
+}
+.dept-acc-chevron { font-size: .8rem; color: var(--slate); margin-left: 4px; }
+.dept-acc-body {
+  padding: 16px;
+  background: #fafbff;
+  border-top: 1px solid var(--border);
+  transition: all .2s ease;
+}
+.dept-acc-closed { display: none; }
+.exec-dept-grid-inner {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-  margin-top: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
 }
 .exec-dept-card {
   background: var(--surface);
@@ -1926,8 +1965,8 @@ tbody tr:hover { background: var(--blue-pale); }
 }
 
 @media (max-width: 640px) {
-  .exec-kpi-grid  { grid-template-columns: 1fr 1fr; }
-  .exec-dept-grid { grid-template-columns: 1fr; }
+  .exec-kpi-grid         { grid-template-columns: 1fr 1fr; }
+  .exec-dept-grid-inner  { grid-template-columns: 1fr; }
 }
 
 /* ── Tableau de bord département (Phase 12) ─────────────────────────────── */

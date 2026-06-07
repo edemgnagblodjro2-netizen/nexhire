@@ -1068,37 +1068,62 @@ async function loadExecutiveDashboard() {
       </div>
     </div>`;
 
-  // ── Grille santé départements ────────────────────────────────────────────
+  // ── Accordéons santé par groupe ─────────────────────────────────────────
   const depts = data.departments || [];
   if (depts.length === 0) {
     deptGrid.innerHTML = `<p class="muted" style="padding:16px 0">Aucun département créé. Allez dans <strong>Équipe → Départements</strong> pour en ajouter.</p>`;
     return;
   }
 
-  deptGrid.innerHTML = depts.map(d => {
-    const badge  = d.badge || "green";
-    const score  = d.score || 0;
-    const budPct = d.budget_pct !== null && d.budget_pct !== undefined ? `${d.budget_pct} %` : "—";
-    return `
-      <div class="exec-dept-card exec-dept-${badge}" onclick="openDeptDetail('${d.id}','${d.name.replace(/'/g,"\\'")}')">
-        <div class="exec-dept-head">
-          <span class="exec-dept-icon">${d.icon}</span>
-          <div class="exec-dept-titles">
-            <span class="exec-dept-name">${d.name}</span>
-            <span class="exec-dept-type">${_deptTypeLabel(d.dept_type)}</span>
-          </div>
-          <span class="exec-health-badge exec-health-${badge}">${_HEALTH_EMOJI[badge]} ${_HEALTH_LABELS[badge]}</span>
+  const groups = [
+    { key: "red",    emoji: "🔴", label: "À risque",  color: "#ef4444", open: true,  depts: [] },
+    { key: "yellow", emoji: "🟡", label: "Attention", color: "#f59e0b", open: true,  depts: [] },
+    { key: "green",  emoji: "🟢", label: "Sain",      color: "#22c55e", open: false, depts: [] },
+  ];
+  depts.forEach(d => { const g = groups.find(g => g.key === (d.badge || "green")); if (g) g.depts.push(d); });
+
+  deptGrid.innerHTML = groups.filter(g => g.depts.length > 0).map(g => `
+    <div class="dept-acc-wrap">
+      <button class="dept-acc-hd" onclick="toggleDeptAcc(this)" aria-expanded="${g.open}" style="--acc-color:${g.color}">
+        <span class="dept-acc-title">${g.emoji} ${g.label}</span>
+        <span class="dept-acc-count" style="background:${g.color}20;color:${g.color}">${g.depts.length} département${g.depts.length > 1 ? "s" : ""}</span>
+        <span class="dept-acc-chevron">${g.open ? "▲" : "▼"}</span>
+      </button>
+      <div class="dept-acc-body${g.open ? "" : " dept-acc-closed"}">
+        <div class="exec-dept-grid-inner">
+          ${g.depts.map(d => {
+            const score  = d.score || 0;
+            const budPct = d.budget_pct !== null && d.budget_pct !== undefined ? `${d.budget_pct} %` : "—";
+            return `
+              <div class="exec-dept-card exec-dept-${g.key}" onclick="openDeptDetail('${d.id}','${d.name.replace(/'/g,"\\'")}')">
+                <div class="exec-dept-head">
+                  <span class="exec-dept-icon">${d.icon}</span>
+                  <div class="exec-dept-titles">
+                    <span class="exec-dept-name">${esc(d.name)}</span>
+                    <span class="exec-dept-type">${esc(_deptTypeLabel(d.dept_type))}</span>
+                  </div>
+                </div>
+                <div class="exec-score-bar-wrap">
+                  <div class="exec-score-bar" style="width:${score}%;background:${g.color}"></div>
+                </div>
+                <div class="exec-dept-metrics">
+                  <span>👤 ${d.members} membre${d.members !== 1 ? "s" : ""}</span>
+                  <span>📱 ${d.apps} app${d.apps !== 1 ? "s" : ""}</span>
+                  <span>💰 ${budPct} budget</span>
+                </div>
+              </div>`;
+          }).join("")}
         </div>
-        <div class="exec-score-bar-wrap">
-          <div class="exec-score-bar" style="width:${score}%;background:${badge === 'green' ? '#22c55e' : badge === 'yellow' ? '#f59e0b' : '#ef4444'}"></div>
-        </div>
-        <div class="exec-dept-metrics">
-          <span>👤 ${d.members} membre${d.members !== 1 ? "s" : ""}</span>
-          <span>📱 ${d.apps} app${d.apps !== 1 ? "s" : ""}</span>
-          <span>💰 ${budPct} budget</span>
-        </div>
-      </div>`;
-  }).join("");
+      </div>
+    </div>`).join("");
+}
+
+function toggleDeptAcc(btn) {
+  const body = btn.nextElementSibling;
+  const open = btn.getAttribute("aria-expanded") === "true";
+  btn.setAttribute("aria-expanded", String(!open));
+  btn.querySelector(".dept-acc-chevron").textContent = open ? "▼" : "▲";
+  body.classList.toggle("dept-acc-closed", open);
 }
 
 function _deptTypeLabel(t) {
