@@ -35,18 +35,54 @@ def _load_config(org_id: str) -> dict | None:
         return None
 
 
-def _get_access_token(cfg: dict) -> str:
-    """Obtient un access_token Workday via OAuth2 client_credentials."""
-    tenant      = cfg.get("tenant", "")
-    client_id   = cfg.get("client_id", "")
-    client_secret = cfg.get("client_secret", "")
-    token_url   = f"https://{tenant}.workday.com/ccx/oauth2/{tenant}/token"
+def _token_url(cfg: dict) -> str:
+    """Construit l'URL du token OAuth2 Workday depuis tenant_url ou tenant."""
+    tenant_url = cfg.get("tenant_url", "")
+    tenant     = cfg.get("tenant", "")
+    if tenant_url:
+        # https://wd3-impl-services1.workday.com/ccx/service/<tenant>
+        # → https://wd3-impl-services1.workday.com/ccx/oauth2/<tenant>/token
+        import re
+        m = re.match(r"(https?://[^/]+)/ccx/service/([^/?]+)", tenant_url)
+        if m:
+            return f"{m.group(1)}/ccx/oauth2/{m.group(2)}/token"
+    return f"https://wd5-services1.workday.com/ccx/oauth2/{tenant}/token"
 
-    resp = httpx.post(
-        token_url,
-        data={"grant_type": "client_credentials", "client_id": client_id, "client_secret": client_secret},
-        timeout=15,
-    )
+
+def _api_base(cfg: dict) -> str:
+    """Construit la base URL REST Workday."""
+    tenant_url = cfg.get("tenant_url", "")
+    tenant     = cfg.get("tenant", "")
+    if tenant_url:
+        import re
+        m = re.match(r"(https?://[^/]+)/ccx/service/([^/?]+)", tenant_url)
+        if m:
+            return f"{m.group(1)}/ccx/api/v1/{m.group(2)}"
+    return f"https://wd5-services1.workday.com/ccx/api/v1/{tenant}"
+
+
+def _get_access_token(cfg: dict) -> str:
+    """Obtient un access_token Workday — refresh_token si disponible, sinon client_credentials."""
+    client_id     = cfg.get("client_id", "")
+    client_secret = cfg.get("client_secret", "")
+    refresh_token = cfg.get("refresh_token", "")
+    url = _token_url(cfg)
+
+    if refresh_token:
+        data = {
+            "grant_type":    "refresh_token",
+            "client_id":     client_id,
+            "client_secret": client_secret,
+            "refresh_token": refresh_token,
+        }
+    else:
+        data = {
+            "grant_type":    "client_credentials",
+            "client_id":     client_id,
+            "client_secret": client_secret,
+        }
+
+    resp = httpx.post(url, data=data, timeout=15)
     resp.raise_for_status()
     return resp.json()["access_token"]
 
@@ -73,8 +109,7 @@ def query_workday(
 
 
 def _real_query(cfg: dict, category: str, department: str | None, period: str) -> dict:
-    tenant  = cfg.get("tenant", "")
-    base    = f"https://{tenant}.workday.com/ccx/api/v1/{tenant}"
+    base    = _api_base(cfg)
     token   = _get_access_token(cfg)
     headers = {"Authorization": f"Bearer {token}", "Accept": "application/json"}
 
