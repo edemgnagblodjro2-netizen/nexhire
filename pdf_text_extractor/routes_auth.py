@@ -97,10 +97,13 @@ def login(payload: LoginPayload, request: Request, background: BackgroundTasks):
 
 @router.get("/me")
 def me(user: CurrentUser = Depends(get_current_user)):
+    import os
+    superadmin_emails = {e.strip().lower() for e in os.environ.get("SUPERADMIN_EMAILS", "").split(",") if e.strip()}
     return {
         "id": user.id,
         "email": user.email,
         "organization_id": user.organization_id,
         "role": user.role,
         "subscription_status": user.subscription_status,
+        "is_superadmin": bool(user.email and user.email.lower() in superadmin_emails),
     }

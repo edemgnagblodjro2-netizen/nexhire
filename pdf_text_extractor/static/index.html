@@ -364,6 +364,7 @@
       <button class="tab-btn admin-only hidden" data-tab="org"          role="tab">🏛️ Organisation</button>
       <button class="tab-btn admin-only hidden" data-tab="audit"        role="tab" data-i18n="app.tab.audit">Audit</button>
       <button class="tab-btn admin-only hidden" data-tab="marketplace"  role="tab">🏪 Marketplace</button>
+      <button class="tab-btn hidden" id="superadmin-tab-btn" data-tab="superadmin" role="tab">🛡️ Super Admin</button>
       <button class="tab-btn"        data-tab="stats"      role="tab" data-i18n="app.tab.stats">Statistiques</button>
       <button class="tab-btn"        data-tab="parc-it"    role="tab" data-i18n="app.tab.parc">Parc IT</button>
       <button class="tab-btn"        data-tab="optim"      role="tab" data-i18n="app.tab.optim">Optimisation IA</button>
@@ -1494,6 +1495,48 @@
       <div id="marketplace-grid" class="marketplace-grid"></div>
     </section>
 
+    <!-- ═══════════════ SUPER ADMIN ═══════════════ -->
+    <section id="tab-superadmin" class="tab-content hidden" role="tabpanel">
+      <div class="section-header">
+        <div>
+          <h2>🛡️ Super Admin — NexHire</h2>
+          <p class="muted" style="margin-top:4px;font-size:.88rem">Vue globale de toutes les organisations clientes.</p>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="loadSuperAdmin()">↺ Actualiser</button>
+      </div>
+
+      <!-- Métriques globales -->
+      <div class="kpi-grid" id="sa-metrics" style="margin-bottom:24px">
+        <div class="kpi-card"><div class="kpi-value" id="sa-total-orgs">—</div><div class="kpi-label">Organisations</div></div>
+        <div class="kpi-card"><div class="kpi-value" id="sa-active">—</div><div class="kpi-label">Premium actifs</div></div>
+        <div class="kpi-card"><div class="kpi-value" id="sa-trialing">—</div><div class="kpi-label">En essai</div></div>
+        <div class="kpi-card"><div class="kpi-value" id="sa-users">—</div><div class="kpi-label">Utilisateurs total</div></div>
+        <div class="kpi-card"><div class="kpi-value" id="sa-queries">—</div><div class="kpi-label">Requêtes IA ce mois</div></div>
+      </div>
+
+      <!-- Table des organisations -->
+      <div class="table-wrap">
+        <table class="data-table" id="sa-orgs-table">
+          <thead>
+            <tr>
+              <th>Organisation</th>
+              <th>Statut</th>
+              <th>Plan</th>
+              <th>Utilisateurs</th>
+              <th>Requêtes/mois</th>
+              <th>Connecteurs</th>
+              <th>Stripe</th>
+              <th>Créée le</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="sa-orgs-body">
+            <tr><td colspan="9" class="muted" style="text-align:center;padding:24px">Chargement…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
   </main>
 </div>
 
@@ -1512,6 +1555,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="/static/app.js?v=20260608"></script>
+<script src="/static/app.js?v=20260609"></script>
 </body>
 </html>

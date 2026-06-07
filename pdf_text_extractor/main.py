@@ -72,6 +72,7 @@ from routes_dashboard        import router as dashboard_router
 from routes_billing          import router as billing_router
 from routes_sso              import router as sso_router
 from routes_webhooks         import router as webhooks_router
+from routes_superadmin       import router as superadmin_router
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -154,6 +155,7 @@ def create_app(
     app.include_router(billing_router)
     app.include_router(sso_router)
     app.include_router(webhooks_router)
+    app.include_router(superadmin_router)
     app.state.storage = storage or DocumentStore.from_env()
     app.state.assistant = assistant or AssistantService.from_env()
 

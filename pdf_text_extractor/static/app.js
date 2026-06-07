@@ -721,6 +721,10 @@ function showApp() {
   const isAdmin = ["admin", "owner"].includes(u?.role);
   document.querySelectorAll(".admin-only").forEach(el => el.classList.toggle("hidden", !isAdmin));
 
+  // Super-admin tab
+  const saBtn = $("superadmin-tab-btn");
+  if (saBtn) saBtn.classList.toggle("hidden", !u?.is_superadmin);
+
   // Trial banner
   if (u?.subscription_status === "trialing") {
     const banner = $("trial-banner");
@@ -1046,6 +1050,7 @@ function loadActiveTab() {
     "parc-it":     loadParcIT,
     "optim":       loadOptimization,
     "marketplace": buildMarketplace,
+    "superadmin":  loadSuperAdmin,
   };
   const fn = loaders[state.tab];
   if (fn) Promise.resolve().then(() => fn()).catch(err => console.warn(`[${state.tab}] load error:`, err));
@@ -4331,6 +4336,77 @@ function closeLegal() {
   const modal = $("legal-modal");
   if (modal) modal.classList.add("hidden");
   document.body.style.overflow = "";
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SUPER ADMIN PANEL
+// ═══════════════════════════════════════════════════════════════════════════
+
+async function loadSuperAdmin() {
+  try {
+    const [metrics, orgs] = await Promise.all([
+      apiCall("/api/superadmin/metrics"),
+      apiCall("/api/superadmin/orgs"),
+    ]);
+
+    // KPI
+    $("sa-total-orgs").textContent = metrics.total_orgs ?? "—";
+    $("sa-active").textContent     = metrics.active      ?? "—";
+    $("sa-trialing").textContent   = metrics.trialing    ?? "—";
+    $("sa-users").textContent      = metrics.total_users ?? "—";
+    $("sa-queries").textContent    = metrics.queries_month ?? "—";
+
+    // Table
+    const tbody = $("sa-orgs-body");
+    if (!orgs.length) {
+      tbody.innerHTML = `<tr><td colspan="9" class="muted" style="text-align:center;padding:24px">Aucune organisation.</td></tr>`;
+      return;
+    }
+
+    const statusBadge = s => {
+      const colors = { active:"#16a34a", trialing:"#d97706", cancelled:"#dc2626", suspended:"#6b7280", past_due:"#dc2626" };
+      return `<span style="background:${colors[s]||'#6b7280'};color:#fff;padding:2px 8px;border-radius:12px;font-size:.75rem;font-weight:600">${s}</span>`;
+    };
+
+    tbody.innerHTML = orgs.map(o => `
+      <tr>
+        <td><strong>${_esc(o.name)}</strong><br><span class="muted" style="font-size:.78rem">${_esc(o.slug||'')}</span></td>
+        <td>${statusBadge(o.subscription_status||'unknown')}</td>
+        <td>${o.subscription_plan||'—'}</td>
+        <td style="text-align:center">${o.user_count??0}</td>
+        <td style="text-align:center">${o.queries_month??0}</td>
+        <td style="text-align:center">${o.connector_count??0}</td>
+        <td style="font-size:.75rem;color:${o.stripe_customer_id?'#16a34a':'#94a3b8'}">${o.stripe_customer_id?'✓ Stripe':'—'}</td>
+        <td style="font-size:.78rem">${(o.created_at||'').slice(0,10)}</td>
+        <td>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button class="btn btn-sm" style="background:#16a34a;color:#fff;padding:3px 10px;font-size:.75rem"
+              onclick="saSetStatus('${o.id}','active')">Activer</button>
+            <button class="btn btn-sm" style="background:#d97706;color:#fff;padding:3px 10px;font-size:.75rem"
+              onclick="saSetStatus('${o.id}','trialing')">Trial</button>
+            <button class="btn btn-sm" style="background:#dc2626;color:#fff;padding:3px 10px;font-size:.75rem"
+              onclick="saSetStatus('${o.id}','suspended')">Suspendre</button>
+          </div>
+        </td>
+      </tr>
+    `).join("");
+  } catch (ex) {
+    $("sa-orgs-body").innerHTML = `<tr><td colspan="9" style="color:#dc2626;text-align:center;padding:16px">${ex.message}</td></tr>`;
+  }
+}
+
+function _esc(s) {
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+async function saSetStatus(orgId, status) {
+  if (!confirm(`Changer le statut de cette organisation en "${status}" ?`)) return;
+  try {
+    await apiCall(`/api/superadmin/orgs/${orgId}/status`, "PATCH", { status });
+    await loadSuperAdmin();
+  } catch (ex) {
+    alert(ex.message);
+  }
 }
 
 // Close on backdrop click
