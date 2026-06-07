@@ -1246,6 +1246,13 @@ function buildConnectorCard(type, meta, info) {
   const statusText  = isConnected ? (isOAuth ? "OAuth ✓" : "Connecté") : "Déconnecté";
   const badgeCls    = isConnected ? (isOAuth ? "badge-oauth" : "badge-connected") : "badge-disconnected";
 
+  const depts = info?.departments || [];
+  const deptBadges = depts.length
+    ? `<div class="connector-dept-badges">${depts.map(d => `<span class="connector-dept-badge">${esc(d.name)}</span>`).join("")}</div>`
+    : isConnected
+      ? `<div class="connector-dept-badges"><span class="connector-dept-badge org-wide">🌐 Accès org-wide</span></div>`
+      : "";
+
   card.innerHTML = `
     <div class="connector-head">
       <div class="connector-icon" style="background:${meta.color}">${meta.icon}</div>
@@ -1257,6 +1264,7 @@ function buildConnectorCard(type, meta, info) {
     </div>
     ${connectedAt ? `<p class="connector-meta">Connecté depuis le ${connectedAt}</p>` : ""}
     ${info?.last_error ? `<p class="connector-error">${info.last_error}</p>` : ""}
+    ${deptBadges}
     <div class="connector-footer">
       <span class="connector-method-tag">${methodBadge}</span>
       ${meta.help_url ? `<a class="connector-help-link" href="${meta.help_url}" target="_blank" rel="noopener">${meta.help_label || "Documentation"} ↗</a>` : ""}
@@ -1265,6 +1273,7 @@ function buildConnectorCard(type, meta, info) {
   const actions = document.createElement("div");
   actions.className = "connector-actions";
 
+  const isAdmin = ["admin","owner"].includes(state.user?.role);
   if (isConnected) {
     const disconnBtn = document.createElement("button");
     disconnBtn.className = "btn-disconnect";
@@ -1279,6 +1288,14 @@ function buildConnectorCard(type, meta, info) {
       reauth.style.marginLeft = "8px";
       reauth.addEventListener("click", () => doOAuthStart(type, reauth));
       actions.appendChild(reauth);
+    }
+
+    if (isAdmin) {
+      const accessBtn = document.createElement("button");
+      accessBtn.className = "btn-access-dept";
+      accessBtn.textContent = "🔒 Accès département";
+      accessBtn.addEventListener("click", () => openConnectorDeptModal(type, meta.label, info?.departments || []));
+      actions.appendChild(accessBtn);
     }
   } else if (isOAuth) {
     const btn = document.createElement("button");
@@ -1301,6 +1318,84 @@ function buildConnectorCard(type, meta, info) {
   }
   card.appendChild(actions);
   return card;
+}
+
+async function openConnectorDeptModal(type, label, currentDepts) {
+  let modal = $("connector-dept-modal");
+  if (modal) modal.remove();
+
+  modal = document.createElement("div");
+  modal.id = "connector-dept-modal";
+  modal.className = "modal-overlay";
+  modal.innerHTML = `
+    <div class="modal-box" style="max-width:520px">
+      <div class="modal-header">
+        <h3>🔒 Accès département — ${esc(label)}</h3>
+        <button class="modal-close" onclick="$('connector-dept-modal').remove()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="muted" style="font-size:.82rem;margin-bottom:12px">
+          Sans restriction : accès <strong>org-wide</strong>.<br>
+          Avec départements : accès réservé aux membres listés + admins.
+        </p>
+        <div id="cdm-dept-list" style="display:flex;flex-wrap:wrap;gap:8px;min-height:36px;margin-bottom:16px">
+          <span class="muted" style="font-size:.8rem">Chargement…</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <select id="cdm-dept-select" class="form-control" style="flex:1">
+            <option value="">— Ajouter un département —</option>
+          </select>
+          <button class="btn btn-primary btn-sm" onclick="_cdmAdd('${type}')">Ajouter</button>
+        </div>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener("click", e => { if (e.target === modal) modal.remove(); });
+
+  await _cdmRefresh(type, currentDepts);
+
+  try {
+    const depts = await apiCall("/api/departments");
+    const sel = $("cdm-dept-select");
+    if (sel) sel.innerHTML = `<option value="">— Ajouter un département —</option>` +
+      depts.map(d => `<option value="${d.id}">${esc(d.name)}</option>`).join("");
+  } catch (_) {}
+}
+
+async function _cdmRefresh(type, depts) {
+  const list = $("cdm-dept-list");
+  if (!list) return;
+  try {
+    const assigned = depts || await apiCall(`/api/connectors/${type}/departments`);
+    if (!assigned.length) {
+      list.innerHTML = `<span class="connector-dept-badge org-wide">🌐 Accès org-wide (aucune restriction)</span>`;
+      return;
+    }
+    list.innerHTML = assigned.map(d => `
+      <span class="connector-dept-badge removable">
+        ${esc(d.name)}
+        <button onclick="_cdmRemove('${type}','${d.id}')" title="Retirer" style="background:none;border:none;cursor:pointer;padding:0 2px;font-size:.9em">✕</button>
+      </span>`).join("");
+  } catch (_) {}
+}
+
+async function _cdmAdd(type) {
+  const sel = $("cdm-dept-select");
+  if (!sel?.value) return;
+  try {
+    await apiCall(`/api/connectors/${type}/departments/${sel.value}`, "POST");
+    sel.value = "";
+    await _cdmRefresh(type, null);
+    loadConnectors();
+  } catch (e) { alert(e.message); }
+}
+
+async function _cdmRemove(type, deptId) {
+  try {
+    await apiCall(`/api/connectors/${type}/departments/${deptId}`, "DELETE");
+    await _cdmRefresh(type, null);
+    loadConnectors();
+  } catch (e) { alert(e.message); }
 }
 
 async function doOAuthStart(type, btn) {

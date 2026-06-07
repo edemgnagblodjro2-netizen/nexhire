@@ -9,7 +9,7 @@ from audit import AuditEvent, client_ip, log_audit
 from auth import CurrentUser
 from crypto import encrypt
 from db import get_db, rows, row
-from rbac import require_active_subscription, require_min_role
+from rbac import ROLE_RANK, require_active_subscription, require_min_role
 
 VALID_TYPES = frozenset({
     "microsoft_365", "salesforce", "servicenow", "jira", "sap", "workday",
@@ -32,17 +32,90 @@ def _now() -> str:
     return datetime.now(UTC).isoformat()
 
 
+def _is_admin(user: CurrentUser) -> bool:
+    return ROLE_RANK.get(user.role, 0) >= 3 or user.is_service_account
+
+
+def _connector_id_or_404(connector_type: str, org_id: str) -> str:
+    with get_db() as cur:
+        cur.execute(
+            "SELECT id FROM connectors WHERE organization_id = %s AND connector_type = %s LIMIT 1",
+            (org_id, connector_type),
+        )
+        result = row(cur)
+    if not result:
+        raise HTTPException(status_code=404, detail="Connecteur introuvable ou non connecté.")
+    return result["id"]
+
+
 @router.get("")
 def list_connectors(user: CurrentUser = Depends(require_min_role("user"))):
-    """Liste tous les connecteurs de l'organisation."""
+    """Liste les connecteurs accessibles à l'utilisateur.
+
+    - Admin/owner : tous les connecteurs + leurs départements assignés.
+    - Membre : connecteurs sans restriction (org-wide) OU assignés à ses départements.
+    """
+    if _is_admin(user):
+        # Jointure pour récupérer les départements assignés à chaque connecteur
+        with get_db() as cur:
+            cur.execute(
+                """
+                SELECT c.id, c.connector_type, c.status,
+                       c.connected_at, c.last_error, c.updated_at,
+                       d.id   AS dept_id,
+                       d.name AS dept_name
+                FROM connectors c
+                LEFT JOIN connector_departments cd ON cd.connector_id = c.id
+                LEFT JOIN departments d ON d.id = cd.department_id
+                WHERE c.organization_id = %s
+                ORDER BY c.connector_type, d.name
+                """,
+                (user.organization_id,),
+            )
+            raw = rows(cur)
+
+        # Grouper les départements par connecteur
+        result: dict[str, dict] = {}
+        for r in raw:
+            ct = r["connector_type"]
+            if ct not in result:
+                result[ct] = {
+                    "id": r["id"], "connector_type": ct,
+                    "status": r["status"], "connected_at": r["connected_at"],
+                    "last_error": r["last_error"], "updated_at": r["updated_at"],
+                    "departments": [],
+                }
+            if r["dept_id"]:
+                result[ct]["departments"].append({"id": r["dept_id"], "name": r["dept_name"]})
+        return list(result.values())
+
+    # Membres : récupérer leurs départements
+    with get_db() as cur:
+        cur.execute(
+            "SELECT department_id FROM department_members WHERE user_id = %s",
+            (user.id,),
+        )
+        dept_ids = [r["department_id"] for r in rows(cur)]
+
     with get_db() as cur:
         cur.execute(
             """
-            SELECT id, connector_type, status, connected_at, last_error, updated_at
-            FROM connectors
-            WHERE organization_id = %s
+            SELECT DISTINCT c.id, c.connector_type, c.status,
+                            c.connected_at, c.last_error, c.updated_at
+            FROM connectors c
+            WHERE c.organization_id = %s
+              AND (
+                  NOT EXISTS (
+                      SELECT 1 FROM connector_departments WHERE connector_id = c.id
+                  )
+                  OR EXISTS (
+                      SELECT 1 FROM connector_departments
+                      WHERE connector_id = c.id
+                        AND department_id = ANY(%s)
+                  )
+              )
             """,
-            (user.organization_id,),
+            (user.organization_id, dept_ids or []),
         )
         return rows(cur)
 
@@ -69,6 +142,79 @@ def connector_status(
         return {"connector_type": connector_type, "status": "disconnected"}
     return result
 
+
+# ── Gestion des accès par département ─────────────────────────────────────────
+
+@router.get("/{connector_type}/departments")
+def list_connector_departments(
+    connector_type: str,
+    user: CurrentUser = Depends(require_min_role("admin")),
+):
+    """Retourne les départements autorisés pour ce connecteur."""
+    _check_type(connector_type)
+    connector_id = _connector_id_or_404(connector_type, user.organization_id)
+    with get_db() as cur:
+        cur.execute(
+            """
+            SELECT d.id, d.name, d.dept_type
+            FROM connector_departments cd
+            JOIN departments d ON d.id = cd.department_id
+            WHERE cd.connector_id = %s
+            ORDER BY d.name
+            """,
+            (connector_id,),
+        )
+        return rows(cur)
+
+
+@router.post("/{connector_type}/departments/{dept_id}", status_code=201)
+def add_connector_department(
+    connector_type: str,
+    dept_id: str,
+    user: CurrentUser = Depends(require_min_role("admin")),
+):
+    """Autorise un département à accéder à ce connecteur."""
+    _check_type(connector_type)
+    connector_id = _connector_id_or_404(connector_type, user.organization_id)
+
+    # Vérifier que le département appartient à la même organisation
+    with get_db() as cur:
+        cur.execute(
+            "SELECT id FROM departments WHERE id = %s AND organization_id = %s LIMIT 1",
+            (dept_id, user.organization_id),
+        )
+        if not row(cur):
+            raise HTTPException(status_code=404, detail="Département introuvable.")
+
+    with get_db() as cur:
+        cur.execute(
+            """
+            INSERT INTO connector_departments (connector_id, department_id)
+            VALUES (%s, %s)
+            ON CONFLICT DO NOTHING
+            """,
+            (connector_id, dept_id),
+        )
+    return {"connector_type": connector_type, "department_id": dept_id, "status": "added"}
+
+
+@router.delete("/{connector_type}/departments/{dept_id}", status_code=204)
+def remove_connector_department(
+    connector_type: str,
+    dept_id: str,
+    user: CurrentUser = Depends(require_min_role("admin")),
+):
+    """Retire l'accès d'un département à ce connecteur."""
+    _check_type(connector_type)
+    connector_id = _connector_id_or_404(connector_type, user.organization_id)
+    with get_db() as cur:
+        cur.execute(
+            "DELETE FROM connector_departments WHERE connector_id = %s AND department_id = %s",
+            (connector_id, dept_id),
+        )
+
+
+# ── Connexion / Déconnexion ────────────────────────────────────────────────────
 
 @router.post("/{connector_type}/connect", status_code=status.HTTP_200_OK)
 def connect(
