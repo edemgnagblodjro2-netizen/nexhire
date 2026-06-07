@@ -142,6 +142,12 @@ const T = {
     'optim.proc.desc':'Processus manuels et leur potentiel d\'automatisation.',
     'optim.proc.add':'+ Processus',
     'optim.aiplan.hint':'Posez une question pour générer un plan d\'économies personnalisé.',
+    'app.tab.marketplace':'Marketplace',
+    'settings.webhooks.title':'Notifications Slack / Teams','settings.webhooks.desc':'Envoyez des notifications automatiques sur un canal Slack ou Teams quand un événement survient.',
+    'settings.webhooks.slack':'URL Webhook Slack','settings.webhooks.teams':'URL Webhook Teams',
+    'settings.webhooks.events':'Événements','settings.webhooks.save':'Enregistrer','settings.webhooks.test':'Envoyer un test','settings.webhooks.delete':'Supprimer',
+    'settings.report.title':'Rapport mensuel','settings.report.desc':'Envoyez un rapport mensuel d\'activité par courriel aux admins de l\'organisation.',
+    'settings.report.send':'Envoyer le rapport maintenant',
   },
   en: {
     'nav.features':'Features','nav.pricing':'Pricing','nav.connectors':'Connectors',
@@ -270,6 +276,143 @@ const T = {
     'optim.proc.desc':'Manual processes and their automation potential.',
     'optim.proc.add':'+ Process',
     'optim.aiplan.hint':'Ask a question to generate a personalized savings plan.',
+    'app.tab.marketplace':'Marketplace',
+    'settings.webhooks.title':'Slack / Teams Notifications','settings.webhooks.desc':'Send automatic notifications to a Slack or Teams channel when an event occurs.',
+    'settings.webhooks.slack':'Slack Webhook URL','settings.webhooks.teams':'Teams Webhook URL',
+    'settings.webhooks.events':'Events','settings.webhooks.save':'Save','settings.webhooks.test':'Send test','settings.webhooks.delete':'Delete',
+    'settings.report.title':'Monthly Report','settings.report.desc':'Send a monthly activity report by email to the organization admins.',
+    'settings.report.send':'Send report now',
+  },
+  es: {
+    'nav.features':'Funcionalidades','nav.pricing':'Precios','nav.connectors':'Conectores',
+    'nav.login':'Iniciar sesión','nav.trial':'Prueba gratuita 14 días',
+    'hero.eyebrow':'Inteligencia artificial · Bilingüe FR/EN',
+    'hero.title':'Un asistente IA para <em>todos</em> tus sistemas',
+    'hero.sub':'Nexhire conecta tus herramientas — Microsoft 365, Salesforce, Jira, ServiceNow, SAP, Workday — en un único agente conversacional inteligente para tus equipos.',
+    'hero.cta':'Empezar prueba gratuita','hero.login':'Iniciar sesión',
+    'hero.trust1':'14 días gratis','hero.trust2':'Sin tarjeta requerida','hero.trust3':'Bilingüe FR / EN',
+    'hero.demo.q':'¿Incidentes críticos + correos no leídos + presupuesto?',
+    'hero.demo.a1':'3 incidentes críticos abiertos','hero.demo.a2':'2 correos prioritarios',
+    'hero.demo.a3':'Presupuesto junio 2026 — 93,7% consumido',
+    'strip.label':'Conectores disponibles',
+    'feat.label':'Por qué Nexhire','feat.title':'Todo lo que su organización necesita',
+    'feat.sub':'Un agente de IA que consulta todos sus sistemas en tiempo real y responde en francés o inglés.',
+    'feat1.title':'6 conectores integrados','feat1.desc':'Microsoft 365, Salesforce, Jira, ServiceNow, SAP y Workday — conectados en pocos clics via OAuth seguro.',
+    'feat2.title':'Agente IA conversacional','feat2.desc':'Haga preguntas en lenguaje natural. El agente consulta los sistemas correctos automáticamente y sintetiza los resultados.',
+    'feat3.title':'Seguridad empresarial','feat3.desc':'Tokens OAuth cifrados Fernet, JWT ES256, registro de auditoría inmutable y control de acceso por rol (RBAC).',
+    'feat4.title':'Bilingüe FR / EN','feat4.desc':'Interfaz y respuestas del agente disponibles en francés e inglés, adaptado para organizaciones canadienses.',
+    'feat5.title':'Análisis de documentos','feat5.desc':'Suba PDFs — políticas, licitaciones, informes — y haga preguntas directamente sobre su contenido.',
+    'feat6.title':'Registro de auditoría completo','feat6.desc':'Cada consulta, conexión y acción se registra con IP, usuario, fuente y resultado — de solo anexar.',
+    'price.label':'Precios simples','price.title':'Empieza gratis. Paga cuando estés listo.',
+    'price.sub':'14 días de prueba completa incluidos, sin tarjeta de crédito.',
+    'price.trial':'14 días de prueba gratuita','price.trial.desc':'— acceso completo a todos los conectores y funcionalidades. Sin tarjeta requerida.',
+    'price.monthly':'Mensual','price.monthly.unit':'/mes',
+    'price.f1':'9 conectores (M365, Zendesk, Autotask…)','price.f2':'Agente IA — 1.000 consultas / mes',
+    'price.f3':'Análisis de documentos PDF ilimitado','price.f4':'Registro de auditoría completo',
+    'price.f5':'Soporte por correo prioritario','price.f6':'Bilingüe FR / EN',
+    'price.cta':'Empezar prueba','price.monthly.note':'Sin compromiso · Cancela en cualquier momento',
+    'price.best':'🏆 Mejor valor — ahorra 198 $','price.annual':'Anual','price.annual.unit':'/año',
+    'price.annual.saving':'Equivale a 82,50 $ / mes — ahorra 2 meses gratis',
+    'price.annual.f1':'Todo el plan Mensual incluido','price.annual.f2':'Agente IA — 12.000 consultas / año',
+    'price.annual.f3':'Acceso prioritario a nuevos conectores','price.annual.f4':'Informe de uso mensual',
+    'price.annual.f5':'Soporte telefónico dedicado','price.annual.f6':'Onboarding personalizado',
+    'price.annual.note':'Facturado anualmente · Cancela en cualquier momento',
+    'footer.desc':'Un asistente IA empresarial para organizaciones canadienses — bilingüe, seguro, multi-conector.',
+    'footer.product':'Producto','footer.support':'Soporte','footer.legal':'Legal',
+    'footer.features':'Funcionalidades','footer.connectors':'Conectores','footer.pricing':'Precios',
+    'footer.docs':'Documentación','footer.help':'Centro de ayuda','footer.contact':'Contacto',
+    'footer.terms':'Términos de uso','footer.privacy':'Política de privacidad','footer.security':'Seguridad',
+    'footer.copyright':'© 2026 Nexhire Inc. Todos los derechos reservados.','footer.tagline':'Diseñado para organizaciones canadienses 🍁',
+    'auth.back':'← Volver al inicio','auth.login.title':'Iniciar sesión','auth.login.sub':'Accede a tu espacio Nexhire.',
+    'auth.email':'Correo electrónico','auth.email.ph':'tu@organizacion.ca','auth.password':'Contraseña',
+    'auth.login.btn':'Iniciar sesión','auth.login.switch':'¿Aún no tienes cuenta?','auth.login.switch.link':'Prueba gratuita 14 días',
+    'auth.signup.title':'Crear cuenta','auth.signup.sub':'14 días de prueba gratuita — sin tarjeta requerida.',
+    'auth.org':'Nombre de la organización','auth.fname':'Nombre','auth.lname':'Apellido',
+    'auth.password.new':'Contraseña (mín. 8 caracteres)','auth.signup.btn':'Crear mi cuenta gratuita',
+    'auth.signup.switch':'¿Ya tienes cuenta?','auth.signup.switch.link':'Iniciar sesión',
+    'app.trial':'Tu prueba gratuita termina pronto.','app.trial.cta':'Pasar a Premium — 99 $/mes',
+    'app.tab.agent':'Asistente IA','app.tab.connectors':'Conectores','app.tab.documents':'Documentos','app.tab.audit':'Auditoría','app.tab.settings':'Configuración',
+    'app.tab.stats':'Estadísticas','app.tab.team':'Equipo','app.tab.parc':'Activos TI','app.tab.optim':'Optimización IA','app.tab.marketplace':'Marketplace',
+    'app.logout':'Cerrar sesión','app.notif.title':'Notificaciones',
+    'agent.title':'Haz tu pregunta','agent.mode.ent':'Empresa','agent.mode.mun':'Municipal / Organismo','agent.mode.rec':'Reclutamiento',
+    'agent.chip1':'Incidentes + proyectos + presupuesto','agent.chip2':'Correos no leídos','agent.chip3':'Contratos a renovar','agent.chip4':'Plantilla RRHH','agent.chip5':'Presupuesto del mes',
+    'agent.placeholder':'Ej.: Muéstrame los incidentes críticos y los correos no leídos relacionados con la interrupción de esta mañana.',
+    'agent.send':'Enviar al agente','agent.loading':'El agente analiza tus sistemas conectados…','agent.tools':'Herramientas utilizadas',
+    'conn.title':'Conectores empresariales','conn.refresh':'↻ Actualizar',
+    'conn.desc':'Conecta tus sistemas para que el agente pueda consultarlos en tiempo real. Los tokens OAuth se cifran (Fernet) antes de almacenarse.',
+    'docs.title':'Análisis de documentos PDF','docs.upload.title':'Subir un PDF','docs.upload.label':'Elegir un archivo PDF',
+    'docs.upload.btn':'Extraer texto','docs.summary.title':'Resumen IA','docs.summary.btn':'Generar resumen',
+    'docs.summary.empty':'Sube un PDF para activar el resumen.','docs.chat.title':'Chat sobre el documento',
+    'docs.chat.placeholder':'Ej.: ¿Cuál es el proceso de compras?','docs.chat.send':'Enviar',
+    'docs.chat.init':'Haz una pregunta después de subir el archivo. Ask in French or English.',
+    'docs.preview.title':'Vista previa del texto extraído','docs.preview.empty':'Ningún documento subido.',
+    'audit.title':'Registro de auditoría','audit.refresh':'↻ Actualizar',
+    'export.label':'Descargar este informe:',
+    'rating.label':'¿Esta respuesta te fue útil?','rating.thanks':'¡Gracias por tu opinión!',
+    'stats.title':'Estadísticas de uso',
+    'stats.queries':'Consultas','stats.score':'Satisfacción media','stats.rated':'Respuestas valoradas','stats.util':'Usuarios activos',
+    'stats.chart.daily':'Actividad diaria','stats.chart.connectors':'Conectores usados','stats.chart.sat':'Distribución de satisfacción',
+    'team.title':'Gestión del equipo','team.invite.btn':'+ Invitar miembro',
+    'team.desc':'Los miembros invitados se unen a tu organización y comparten la cuota mensual de consultas.',
+    'team.pending':'Invitaciones pendientes',
+    'team.invite.title':'Invitar un miembro','team.invite.desc':'Se generará un enlace de invitación válido por 7 días.',
+    'team.invite.role':'Rol','team.role.user':'Usuario','team.role.manager':'Manager','team.role.admin':'Admin',
+    'team.invite.generate':'Generar enlace','team.invite.ready':'Enlace listo — cópialo y compártelo:',
+    'team.invite.copy':'Copiar','team.invite.copied':'¡Enlace copiado!',
+    'auth.invite.joining':'Te unes a esta organización como',
+    'settings.title':'Configuración',
+    'settings.profile.title':'Información de cuenta',
+    'settings.fullname':'Nombre completo','settings.email.label':'Correo electrónico',
+    'settings.org':'Organización','settings.member.since':'Miembro desde',
+    'settings.save':'Guardar','settings.saved':'Perfil actualizado.',
+    'settings.password.title':'Seguridad',
+    'settings.pwd.current':'Contraseña actual','settings.pwd.new':'Nueva contraseña',
+    'settings.pwd.confirm':'Confirmar nueva contraseña',
+    'settings.pwd.btn':'Cambiar contraseña','settings.pwd.success':'Contraseña cambiada con éxito.',
+    'settings.pwd.mismatch':'Las dos contraseñas no coinciden.',
+    'settings.sso.title':'Autenticación SSO',
+    'settings.sso.inactive':'SSO no configurado','settings.sso.active':'SSO activo ✓',
+    'settings.sso.desc':'El inicio de sesión único (SSO) vía SAML 2.0 u OpenID Connect permite a tu equipo iniciar sesión con las credenciales de tu organización.',
+    'settings.sso.cta':'Activar SSO — contactar soporte',
+    'settings.sso.active.msg':'SSO activo — tus usuarios inician sesión a través de tu proveedor de identidad.',
+    'settings.plan.title':'Suscripción','settings.plan.manage':'Gestionar suscripción',
+    'settings.webhooks.title':'Notificaciones Slack / Teams','settings.webhooks.desc':'Envía notificaciones automáticas a un canal Slack o Teams cuando ocurre un evento.',
+    'settings.webhooks.slack':'URL Webhook Slack','settings.webhooks.teams':'URL Webhook Teams',
+    'settings.webhooks.events':'Eventos','settings.webhooks.save':'Guardar','settings.webhooks.test':'Enviar prueba','settings.webhooks.delete':'Eliminar',
+    'settings.report.title':'Informe mensual','settings.report.desc':'Envía un informe mensual de actividad por correo a los admins de la organización.',
+    'settings.report.send':'Enviar informe ahora',
+    'loading':'Cargando…',
+    'app.tab.parc':'Activos TI',
+    'parc.title':'Activos TI','parc.dept.all':'Todos los departamentos',
+    'parc.tab.overview':'Vista general','parc.tab.budget':'Presupuesto',
+    'parc.tab.licenses':'Licencias','parc.tab.servers':'Servidores','parc.tab.apps':'Aplicaciones',
+    'parc.kpi.budget':'Presupuesto usado','parc.kpi.lic':'Licencias expiran <30d',
+    'parc.kpi.srv':'Servidores a decomisionar','parc.kpi.apps':'Aplicaciones sin uso',
+    'parc.chart.budget':'Presupuesto por categoría','parc.chart.forecast':'Previsión 3 meses',
+    'parc.all':'Todo','parc.budget.add':'+ Entrada','parc.budget.label':'Etiqueta',
+    'parc.budget.allocated':'Asignado ($)','parc.budget.actual':'Real ($)',
+    'parc.lic.add':'+ Licencia','parc.lic.expiring30':'Expiran <30d','parc.lic.expiring90':'Expiran <90d',
+    'parc.srv.add':'+ Servidor','parc.srv.active':'Activos','parc.srv.idle':'Inactivos','parc.srv.decom':'A decomisionar',
+    'parc.app.add':'+ Aplicación','parc.app.active':'Activas','parc.app.unused':'Sin uso','parc.app.decom':'Decomisionadas',
+    'sa.title':'Cuentas de servicio','sa.add':'+ Crear','sa.name':'Nombre','sa.role':'Rol',
+    'sa.desc':'Tokens de larga duración no vinculados a una cuenta de usuario.',
+    'dept.title':'Departamentos','dept.add':'+ Departamento','dept.name':'Nombre','dept.budget':'Presupuesto anual ($)',
+    'app.tab.optim':'Optimización IA',
+    'optim.title':'Optimización IA','optim.analyze':'Analizar con IA',
+    'optim.tab.dashboard':'Panel','optim.tab.licenses':'Licencias sin uso',
+    'optim.tab.duplicates':'Herramientas duplicadas','optim.tab.contracts':'Contratos',
+    'optim.tab.processes':'Procesos RRHH','optim.tab.aiplan':'Plan IA',
+    'optim.score.title':'Puntuación de eficiencia organizacional',
+    'optim.score.sw':'Software','optim.score.lic':'Licencias',
+    'optim.score.infra':'Infraestructura','optim.score.proc':'Procesos',
+    'optim.savings.title':'Ahorros identificados',
+    'optim.top':'10 mejores oportunidades',
+    'optim.lic.desc':'Licencias con uso < 80% — ahorros inmediatos posibles.',
+    'optim.dup.desc':'Categorías de herramientas duplicadas — consolidación recomendada.',
+    'optim.contract.add':'+ Contrato',
+    'optim.proc.desc':'Procesos manuales y su potencial de automatización.',
+    'optim.proc.add':'+ Proceso',
+    'optim.aiplan.hint':'Haz una pregunta para generar un plan de ahorro personalizado.',
   },
 };
 
@@ -279,8 +422,9 @@ function setLang(l) {
   _lang = l;
   localStorage.setItem("nexhire_lang", l);
   document.getElementById("html-root").lang = l;
-  // Update all lang toggle buttons
-  document.querySelectorAll(".lang-btn").forEach(b => { b.textContent = l === "fr" ? "EN" : "FR"; });
+  // Cycle FR→EN→ES: button shows the NEXT language
+  const nextLang = l === "fr" ? "EN" : l === "en" ? "ES" : "FR";
+  document.querySelectorAll(".lang-btn").forEach(b => { b.textContent = nextLang; });
   _updateLangLabel();
   // Sync agent-lang and doc-lang selects
   const al = document.getElementById("agent-lang"); if (al) al.value = l;
@@ -308,8 +452,8 @@ function setLang(l) {
 }
 
 function toggleLang() {
-  setLang(_lang === "fr" ? "en" : "fr");
-  if (state.token) loadActiveTab(); // rafraîchit les labels dynamiques
+  setLang(_lang === "fr" ? "en" : _lang === "en" ? "es" : "fr");
+  if (state.token) loadActiveTab();
 }
 
 // ── Connector metadata ─────────────────────────────────────────────────────
@@ -625,6 +769,7 @@ function showApp() {
   }
 
   loadDeptDashboard();
+  _updateWorkspaceBar();
 }
 
 // Trial banner dismiss
@@ -726,7 +871,10 @@ function closeUserMenu() {
 }
 function _updateLangLabel() {
   const lbl = $("user-menu-lang-label");
-  if (lbl) lbl.textContent = _lang === "fr" ? "Switch to English" : "Passer en français";
+  if (!lbl) return;
+  if (_lang === "fr")  lbl.textContent = "Switch to English";
+  else if (_lang === "en") lbl.textContent = "Cambiar a Español";
+  else                 lbl.textContent = "Passer en français";
 }
 // Ferme le menu si on clique en dehors
 document.addEventListener("click", e => {
@@ -889,15 +1037,16 @@ window.addEventListener("popstate", (e) => {
 
 function loadActiveTab() {
   const loaders = {
-    "agent":      loadDeptDashboard,  // rafraîchit le dashboard département
-    "connectors": loadConnectors,
-    "org":        loadExecutiveDashboard,
-    "audit":      loadAudit,
-    "stats":      loadAnalytics,
-    "settings":   loadSettings,
-    "team":       loadTeam,
-    "parc-it":    loadParcIT,
-    "optim":      loadOptimization,
+    "agent":       loadDeptDashboard,  // rafraîchit le dashboard département
+    "connectors":  loadConnectors,
+    "org":         loadExecutiveDashboard,
+    "audit":       loadAudit,
+    "stats":       loadAnalytics,
+    "settings":    loadSettings,
+    "team":        loadTeam,
+    "parc-it":     loadParcIT,
+    "optim":       loadOptimization,
+    "marketplace": buildMarketplace,
   };
   const fn = loaders[state.tab];
   if (fn) Promise.resolve().then(() => fn()).catch(err => console.warn(`[${state.tab}] load error:`, err));
@@ -2062,22 +2211,224 @@ async function loadSettings() {
     }
 
     // Plan
-    const planBadge = $("plan-badge");
     const planDesc  = $("plan-desc");
     const plans = {
-      trialing:  { label: "Essai gratuit",   desc: "14 jours d'accès complet — aucune carte requise.", cls: "plan-trial" },
-      active:    { label: "Premium actif",   desc: "Accès complet à tous les connecteurs et fonctionnalités.", cls: "plan-active" },
-      canceled:  { label: "Annulé",          desc: "Votre abonnement est annulé. Contactez-nous pour le réactiver.", cls: "plan-inactive" },
-      suspended: { label: "Suspendu",        desc: "L'accès est suspendu. Contactez le support.", cls: "plan-inactive" },
+      trialing:  { desc: "14 jours d'accès complet — aucune carte requise." },
+      active:    { desc: "Accès complet à tous les connecteurs et fonctionnalités." },
+      canceled:  { desc: "Votre abonnement est annulé. Contactez-nous pour le réactiver." },
+      cancelled: { desc: "Votre abonnement est annulé. Contactez-nous pour le réactiver." },
+      suspended: { desc: "L'accès est suspendu. Contactez le support." },
+      past_due:  { desc: "Mettez à jour votre mode de paiement pour continuer." },
     };
-    const pl = plans[p.subscription_status] || { label: p.subscription_status || "—", desc: "", cls: "" };
-    planBadge.textContent = pl.label;
-    planBadge.className = `plan-badge ${pl.cls}`;
-    planDesc.textContent = pl.desc;
+    const pl = plans[p.subscription_status] || { desc: "" };
+    if (planDesc) planDesc.textContent = pl.desc;
+
+    // SSO config form (admin only)
+    await _loadSSOConfig();
   } catch (ex) {
     console.error("Settings load error:", ex.message);
   }
   loadServiceAccounts();
+  await _loadBillingStatus();
+  await _loadWebhookConfig();
+}
+
+async function _loadBillingStatus() {
+  try {
+    const b = await apiCall("/api/billing/status");
+    const subscribeWrap = $("billing-subscribe-wrap");
+    const portalBtn     = $("billing-portal-btn");
+    const billingBadge  = $("billing-status-badge");
+
+    if (billingBadge) {
+      const labels = { active:"Premium actif", trialing:"Essai gratuit", canceled:"Annulé", past_due:"Paiement en retard", cancelled:"Annulé" };
+      billingBadge.textContent = labels[b.status] || b.status || "—";
+      billingBadge.className = "plan-badge " + (b.status === "active" ? "plan-active" : b.status === "trialing" ? "plan-trial" : "plan-inactive");
+    }
+
+    // Affiche les boutons selon l'état
+    if (b.status === "active" && b.has_stripe) {
+      if (subscribeWrap) subscribeWrap.classList.add("hidden");
+      if (portalBtn)     portalBtn.classList.remove("hidden");
+    } else if (b.stripe_configured) {
+      if (subscribeWrap) subscribeWrap.classList.remove("hidden");
+      if (portalBtn && b.has_stripe) portalBtn.classList.remove("hidden");
+    } else {
+      // Stripe pas encore configuré — affiche lien contact
+      if (subscribeWrap) subscribeWrap.innerHTML = `<p class="muted" style="font-size:.82rem">Pour souscrire, contactez-nous à <a href="mailto:contact@nexhire.ca">contact@nexhire.ca</a>.</p>`;
+    }
+  } catch (_) {}
+}
+
+async function subscribeStripe(plan) {
+  const btn = $(`stripe-btn-${plan}`);
+  if (btn) { btn.disabled = true; btn.textContent = "Redirection…"; }
+  try {
+    const res = await apiCall("/api/billing/checkout", "POST", { plan });
+    window.location.href = res.checkout_url;
+  } catch (e) {
+    if (btn) { btn.disabled = false; btn.textContent = plan === "monthly" ? "Mensuel — 99 $/mois" : "Annuel — 990 $/an"; }
+    alert(e.message || "Erreur Stripe.");
+  }
+}
+
+async function openBillingPortal() {
+  const btn = $("billing-portal-btn");
+  if (btn) { btn.disabled = true; btn.textContent = "Ouverture…"; }
+  try {
+    const res = await apiCall("/api/billing/portal", "POST");
+    window.open(res.portal_url, "_blank");
+  } catch (e) {
+    alert(e.message || "Portail indisponible.");
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = "Gérer l'abonnement"; }
+  }
+}
+
+// ── Webhooks Slack/Teams (admin) ──────────────────────────────────────────────
+
+async function _loadWebhookConfig() {
+  const isAdmin = ["admin", "owner"].includes(state.user?.role);
+  if (!isAdmin) return;
+  try {
+    const cfg = await apiCall("/api/webhooks/config");
+    const slackInput = $("wh-slack-url");
+    const teamsInput = $("wh-teams-url");
+    if (slackInput) slackInput.value = cfg.slack_url || "";
+    if (teamsInput) teamsInput.value = cfg.teams_url || "";
+    const events = cfg.events || [];
+    ["member", "license", "budget", "subscription"].forEach(k => {
+      const el = $(`wh-ev-${k}`);
+      if (el) el.checked = events.includes(el.value);
+    });
+    const delBtn = $("wh-delete-btn");
+    if (delBtn && (cfg.slack_url || cfg.teams_url)) delBtn.classList.remove("hidden");
+  } catch (_) {}
+}
+
+async function saveWebhookConfig(e) {
+  e.preventDefault();
+  const msg = $("wh-msg");
+  const whIds = ["wh-ev-member","wh-ev-license","wh-ev-budget","wh-ev-subscription"];
+  const events = whIds.filter(id => $(`${id}`)?.checked).map(id => $(`${id}`).value);
+  try {
+    await apiCall("/api/webhooks/config", "POST", {
+      slack_url: $("wh-slack-url")?.value || null,
+      teams_url: $("wh-teams-url")?.value || null,
+      events,
+    });
+    if (msg) { msg.textContent = "✓ Configuration sauvegardée."; msg.classList.remove("hidden"); }
+    const delBtn = $("wh-delete-btn");
+    if (delBtn) delBtn.classList.remove("hidden");
+    setTimeout(() => msg?.classList.add("hidden"), 3000);
+  } catch (err) {
+    if (msg) { msg.textContent = err.message || "Erreur."; msg.style.color = "var(--error)"; msg.classList.remove("hidden"); }
+  }
+}
+
+async function testWebhook() {
+  const msg = $("wh-msg");
+  try {
+    const res = await apiCall("/api/webhooks/test", "POST");
+    if (msg) {
+      msg.textContent = `✓ Test envoyé sur : ${(res.sent || []).join(", ")}`;
+      msg.style.color = "var(--success)";
+      msg.classList.remove("hidden");
+    }
+    setTimeout(() => msg?.classList.add("hidden"), 4000);
+  } catch (err) {
+    if (msg) { msg.textContent = err.message || "Erreur."; msg.style.color = "var(--error)"; msg.classList.remove("hidden"); }
+  }
+}
+
+async function deleteWebhookConfig() {
+  if (!confirm("Supprimer la configuration webhook ?")) return;
+  try {
+    await apiCall("/api/webhooks/config", "DELETE");
+    ["wh-slack-url","wh-teams-url"].forEach(id => { const el = $(id); if (el) el.value = ""; });
+    const delBtn = $("wh-delete-btn");
+    if (delBtn) delBtn.classList.add("hidden");
+    const msg = $("wh-msg");
+    if (msg) { msg.textContent = "Webhook supprimé."; msg.style.color = "var(--slate)"; msg.classList.remove("hidden"); }
+    setTimeout(() => $("wh-msg")?.classList.add("hidden"), 3000);
+  } catch (err) { alert(err.message); }
+}
+
+// ── Rapport mensuel ───────────────────────────────────────────────────────────
+
+async function sendMonthlyReport() {
+  const btn = $("report-send-btn");
+  const msg = $("report-msg");
+  if (btn) { btn.disabled = true; btn.textContent = "Envoi…"; }
+  try {
+    const res = await apiCall("/api/webhooks/reports/monthly", "POST");
+    if (msg) { msg.textContent = `✓ Rapport envoyé à ${res.to}.`; msg.classList.remove("hidden"); }
+  } catch (err) {
+    if (msg) { msg.textContent = err.message || "Erreur."; msg.style.color = "var(--error)"; msg.classList.remove("hidden"); }
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = "Envoyer le rapport maintenant"; }
+  }
+}
+
+// ── SSO Config (admin) ────────────────────────────────────────────────────────
+async function _loadSSOConfig() {
+  const isAdmin = ["admin", "owner"].includes(state.user?.role);
+  const form = $("sso-config-form");
+  if (!form || !isAdmin) return;
+  form.classList.remove("hidden");
+
+  try {
+    const cfg = await apiCall("/api/sso/config");
+    if (cfg.configured) {
+      $("sso-provider-select").value = cfg.provider || "microsoft";
+      if ($("sso-client-id"))  $("sso-client-id").value   = cfg.client_id  || "";
+      if ($("sso-tenant-id"))  $("sso-tenant-id").value   = cfg.tenant_id  || "";
+      if ($("sso-client-secret")) $("sso-client-secret").value = "";  // jamais pré-rempli
+      const badge = $("sso-badge");
+      const txt   = $("sso-status-text");
+      if (badge) { badge.classList.replace("inactive", "active"); }
+      if (txt)   txt.textContent = "SSO actif ✓";
+      if ($("sso-delete-btn")) $("sso-delete-btn").classList.remove("hidden");
+    }
+    _updateSSOTenantVisibility();
+  } catch (_) {}
+}
+
+function _updateSSOTenantVisibility() {
+  const provider = $("sso-provider-select")?.value;
+  const tenantRow = $("sso-tenant-row");
+  if (tenantRow) tenantRow.classList.toggle("hidden", provider === "google");
+}
+
+$("sso-provider-select")?.addEventListener("change", _updateSSOTenantVisibility);
+
+async function saveSSOConfig(e) {
+  e.preventDefault();
+  const btn = $("sso-save-btn");
+  if (btn) { btn.disabled = true; btn.textContent = "Enregistrement…"; }
+  try {
+    await apiCall("/api/sso/config", "POST", {
+      provider:      $("sso-provider-select")?.value,
+      client_id:     $("sso-client-id")?.value?.trim(),
+      client_secret: $("sso-client-secret")?.value?.trim(),
+      tenant_id:     $("sso-tenant-id")?.value?.trim() || null,
+    });
+    $("sso-save-success")?.classList.remove("hidden");
+    setTimeout(() => $("sso-save-success")?.classList.add("hidden"), 4000);
+    await _loadSSOConfig();
+  } catch (ex) {
+    alert(ex.message || "Erreur lors de la configuration SSO.");
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = "Enregistrer"; }
+  }
+}
+
+async function deleteSSOConfig() {
+  if (!confirm("Supprimer la configuration SSO ? Les utilisateurs ne pourront plus se connecter via SSO.")) return;
+  try {
+    await apiCall("/api/sso/config", "DELETE");
+    location.reload();
+  } catch (e) { alert(e.message); }
 }
 
 // Profile form submit
@@ -3484,6 +3835,191 @@ function _updateAgentChips(deptType) {
   });
 }
 
+// ── Workspace Marketplace ────────────────────────────────────────────────────
+const WORKSPACE_TEMPLATES = [
+  {
+    id: "finance", icon: "💰", color: "#16a34a", dept_type: "finance",
+    name: { fr: "Finance Workspace",       en: "Finance Workspace" },
+    desc: { fr: "Budgets, prévisions financières, contrats fournisseurs et comptabilité centralisée.", en: "Budget management, financial forecasts, vendor contracts, and centralized accounting." },
+    connectors: ["quickbooks", "netsuite", "microsoft_365", "hubspot"],
+  },
+  {
+    id: "hr", icon: "👥", color: "#7c3aed", dept_type: "hr",
+    name: { fr: "RH Workspace",            en: "HR Workspace" },
+    desc: { fr: "Recrutement, absences, performance et conformité RH dans un seul espace.", en: "Recruitment, leave management, performance, and HR compliance in one place." },
+    connectors: ["bamboohr", "adp", "microsoft_365", "slack"],
+  },
+  {
+    id: "it", icon: "💻", color: "#2563eb", dept_type: "it",
+    name: { fr: "IT Workspace",            en: "IT Workspace" },
+    desc: { fr: "Incidents, licences, inventaire matériel et cybersécurité — tout sous contrôle.", en: "Incidents, software licenses, hardware inventory, and cybersecurity in one dashboard." },
+    connectors: ["servicenow", "intune", "crowdstrike", "aws"],
+  },
+  {
+    id: "operations", icon: "⚙️", color: "#d97706", dept_type: "operations",
+    name: { fr: "Operations Workspace",    en: "Operations Workspace" },
+    desc: { fr: "Projets, ticketing, processus opérationnels et suivi de livraison unifiés.", en: "Projects, ticketing, operational processes, and delivery tracking unified." },
+    connectors: ["asana", "monday", "clickup", "jira"],
+  },
+  {
+    id: "legal", icon: "⚖️", color: "#dc2626", dept_type: "legal",
+    name: { fr: "Juridique Workspace",     en: "Legal Workspace" },
+    desc: { fr: "Contrats actifs, conformité, obligations réglementaires et risques légaux.", en: "Active contracts, compliance, regulatory obligations, and legal risks." },
+    connectors: ["salesforce", "microsoft_365", "servicenow"],
+  },
+  {
+    id: "direction", icon: "🏛️", color: "#1e293b", dept_type: "direction",
+    name: { fr: "Executive Workspace",     en: "Executive Workspace" },
+    desc: { fr: "Vue consolidée de l'organisation : performance globale, coûts, projets et ressources.", en: "Consolidated org view: overall performance, costs, projects, and resources." },
+    connectors: ["microsoft_365", "salesforce", "hubspot", "slack"],
+  },
+  {
+    id: "approvisionnement", icon: "🛒", color: "#0891b2", dept_type: "approvisionnement",
+    name: { fr: "Procurement Workspace",   en: "Procurement Workspace" },
+    desc: { fr: "Appels d'offres, gestion fournisseurs, contrats d'achat et suivi des économies.", en: "RFPs, vendor management, purchase contracts, and savings tracking." },
+    connectors: ["netsuite", "sap", "workday", "microsoft_365"],
+  },
+  {
+    id: "municipal", icon: "🏙️", color: "#0f766e", dept_type: "operations",
+    name: { fr: "Municipal Workspace",     en: "Municipal Workspace" },
+    desc: { fr: "Conçu pour les villes et organismes publics : services aux citoyens, finances municipales.", en: "Built for cities and public bodies: citizen services, municipal finance, public works." },
+    connectors: ["microsoft_365", "servicenow", "zendesk", "jira"],
+  },
+  {
+    id: "hospital", icon: "🏥", color: "#9333ea", dept_type: "hr",
+    name: { fr: "Hospital Workspace",      en: "Hospital Workspace" },
+    desc: { fr: "Approvisionnement médical, RH cliniques, dossiers et conformité santé centralisés.", en: "Medical procurement, clinical HR, records, and healthcare compliance centralized." },
+    connectors: ["microsoft_365", "bamboohr", "servicenow", "netsuite"],
+  },
+];
+
+let _marketplaceBuilt = false;
+let _installedWorkspaces = new Set();
+
+async function buildMarketplace() {
+  if (_marketplaceBuilt) return;
+  _marketplaceBuilt = true;
+
+  const grid = $("marketplace-grid");
+  if (!grid) return;
+
+  const lang = document.documentElement.lang === "en" ? "en" : "fr";
+
+  // Fetch existing departments to mark already-installed types
+  try {
+    const depts = await apiCall("/api/departments");
+    (depts || []).forEach(d => { if (d.dept_type) _installedWorkspaces.add(d.dept_type); });
+  } catch (_) {}
+
+  grid.innerHTML = WORKSPACE_TEMPLATES.map(tpl => {
+    const isInstalled = _installedWorkspaces.has(tpl.dept_type);
+    const connBadges  = tpl.connectors.map(c => {
+      const label = CONNECTORS[c]?.label || c;
+      return `<span class="marketplace-conn-badge">${esc(label)}</span>`;
+    }).join("");
+    return `
+    <div class="marketplace-card">
+      <div class="marketplace-card-header">
+        <div class="marketplace-icon" style="background:${tpl.color}20;color:${tpl.color}">${tpl.icon}</div>
+        <div>
+          <div class="marketplace-card-title">${esc(tpl.name[lang] || tpl.name.fr)}</div>
+          ${isInstalled ? `<div class="marketplace-installed">✓ ${lang === "en" ? "Installed" : "Installé"}</div>` : `<div class="marketplace-card-badge">${lang === "en" ? "Available" : "Disponible"}</div>`}
+        </div>
+      </div>
+      <div class="marketplace-card-desc">${esc(tpl.desc[lang] || tpl.desc.fr)}</div>
+      <div class="marketplace-connectors">${connBadges}</div>
+      <div class="marketplace-card-footer">
+        <span style="font-size:.75rem;color:var(--slate)">${tpl.connectors.length} ${lang === "en" ? "connectors" : "connecteurs"}</span>
+        ${isInstalled
+          ? `<button class="btn btn-outline btn-sm" onclick="switchTab('org')">${lang === "en" ? "Manage" : "Gérer"}</button>`
+          : `<button class="btn btn-primary btn-sm" onclick="installWorkspace('${tpl.id}')" id="install-${tpl.id}">${lang === "en" ? "Install" : "Installer"}</button>`
+        }
+      </div>
+    </div>`;
+  }).join("");
+}
+
+async function installWorkspace(templateId) {
+  const tpl  = WORKSPACE_TEMPLATES.find(t => t.id === templateId);
+  if (!tpl) return;
+  const lang = document.documentElement.lang === "en" ? "en" : "fr";
+  const btn  = $(`install-${templateId}`);
+  if (btn) { btn.disabled = true; btn.textContent = lang === "en" ? "Installing…" : "Installation…"; }
+
+  try {
+    await apiCall("/api/departments", "POST", {
+      name: tpl.name.fr,
+      description: tpl.desc.fr,
+      dept_type: tpl.dept_type,
+      annual_budget: 0,
+      currency: "CAD",
+    });
+    _installedWorkspaces.add(tpl.dept_type);
+    _marketplaceBuilt = false;
+    buildMarketplace();
+    _updateWorkspaceBar();
+  } catch (e) {
+    if (btn) { btn.disabled = false; btn.textContent = lang === "en" ? "Install" : "Installer"; }
+    alert(e.message || "Erreur lors de l'installation.");
+  }
+}
+
+// ── Workspace bar ─────────────────────────────────────────────────────────────
+async function _updateWorkspaceBar() {
+  const bar   = $("workspace-bar");
+  const dot   = $("ws-dot");
+  const label = $("ws-label");
+  const chips = $("ws-chips");
+  if (!bar) return;
+
+  const isAdmin = ["admin", "owner"].includes(state.user?.role);
+  const lang    = document.documentElement.lang === "en" ? "en" : "fr";
+
+  const _typeConfig = {
+    finance:           { icon: "💰", color: "#16a34a", label: { fr: "Finance",           en: "Finance" } },
+    hr:                { icon: "👥", color: "#7c3aed", label: { fr: "Ressources Humaines", en: "Human Resources" } },
+    it:                { icon: "💻", color: "#2563eb", label: { fr: "Technologies de l'information", en: "IT" } },
+    legal:             { icon: "⚖️", color: "#dc2626", label: { fr: "Juridique",          en: "Legal" } },
+    operations:        { icon: "⚙️", color: "#d97706", label: { fr: "Opérations",         en: "Operations" } },
+    marketing:         { icon: "📣", color: "#db2777", label: { fr: "Marketing",           en: "Marketing" } },
+    approvisionnement: { icon: "🛒", color: "#0891b2", label: { fr: "Approvisionnement",   en: "Procurement" } },
+    direction:         { icon: "🏛️", color: "#1e293b", label: { fr: "Direction",           en: "Executive" } },
+    general:           { icon: "📊", color: "#64748b", label: { fr: "Général",             en: "General" } },
+  };
+
+  if (isAdmin) {
+    // Admin: load all departments and show chips
+    try {
+      const depts = await apiCall("/api/departments");
+      if (!depts || !depts.length) { bar.classList.add("hidden"); return; }
+
+      if (dot)   { dot.style.background = "#818CF8"; }
+      if (label) { label.textContent = lang === "en" ? "All Workspaces" : "Tous les Workspaces"; }
+
+      if (chips) {
+        chips.innerHTML = depts.map(d => {
+          const cfg = _typeConfig[d.dept_type] || _typeConfig.general;
+          return `<span class="ws-chip" style="background:${cfg.color}" title="${esc(d.name)}"
+                        onclick="switchTab('org')">${cfg.icon} ${esc(d.name)}</span>`;
+        }).join("");
+      }
+
+      bar.classList.remove("hidden");
+    } catch (_) {
+      bar.classList.add("hidden");
+    }
+  } else if (state.deptType) {
+    // Regular user: show their workspace
+    const cfg = _typeConfig[state.deptType] || _typeConfig.general;
+    if (dot)   { dot.style.background = cfg.color; }
+    if (label) { label.textContent = `${cfg.icon} Workspace ${cfg.label[lang] || cfg.label.fr}`; }
+    if (chips) { chips.innerHTML = ""; }
+    bar.classList.remove("hidden");
+  } else {
+    bar.classList.add("hidden");
+  }
+}
+
 // ── Tableau de bord département (Phase 12) ────────────────────────────────────
 async function loadDeptDashboard() {
   const section = $("dept-dashboard-section");
@@ -3521,6 +4057,7 @@ async function loadDeptDashboard() {
       state.deptType = d.dept_type;
       _updateAgentChips(d.dept_type);
     }
+    _updateWorkspaceBar();
 
     // CTA button — navigate to the recommended tab
     if (cta && d.primary_tab) {
@@ -3603,3 +4140,187 @@ async function runAIAnalysis() {
     if (btn) { btn.disabled = false; btn.textContent = T[_lang]["optim.analyze"] || "Analyser avec l'IA"; }
   }
 }
+
+// ── Legal modals (CGU / Privacy / Security) ──────────────────────────────────
+const _LEGAL_CONTENT = {
+  cgu: {
+    title: { fr: "Conditions d'utilisation", en: "Terms of Service" },
+    body: { fr: `
+<h4>1. Acceptation des conditions</h4>
+<p>En accédant à NexHire Enterprise Assistant ("le Service"), vous acceptez les présentes Conditions d'utilisation. Si vous n'acceptez pas ces conditions, vous ne devez pas utiliser le Service.</p>
+<h4>2. Description du Service</h4>
+<p>NexHire est une plateforme SaaS d'intelligence artificielle qui connecte vos systèmes d'entreprise (Microsoft 365, Salesforce, Jira, etc.) à un agent conversationnel bilingue français/anglais. Le Service est destiné aux organisations canadiennes.</p>
+<h4>3. Compte et accès</h4>
+<p>Vous êtes responsable de la confidentialité de vos identifiants de connexion. Vous vous engagez à notifier immédiatement NexHire de toute utilisation non autorisée de votre compte. Chaque organisation bénéficie d'un essai gratuit de 14 jours, après quoi un abonnement payant est requis.</p>
+<h4>4. Utilisation acceptable</h4>
+<p>Vous acceptez de ne pas : (a) utiliser le Service à des fins illégales ; (b) tenter de compromettre la sécurité du Service ; (c) revendre ou redistribuer l'accès au Service sans autorisation écrite.</p>
+<h4>5. Données et confidentialité</h4>
+<p>NexHire traite vos données conformément à sa Politique de confidentialité. Les tokens d'accès OAuth sont chiffrés (Fernet AES-128) avant tout stockage. NexHire ne stocke ni ne lit le contenu de vos systèmes connectés au-delà de ce qui est nécessaire pour répondre à vos questions.</p>
+<h4>6. Propriété intellectuelle</h4>
+<p>Le Service, incluant son interface, son code et sa documentation, est la propriété exclusive de Nexhire Inc. Vous bénéficiez d'une licence d'utilisation limitée, non exclusive et non transférable.</p>
+<h4>7. Limitation de responsabilité</h4>
+<p>NexHire ne peut être tenu responsable des dommages indirects, consécutifs ou accessoires résultant de l'utilisation du Service. La responsabilité totale de NexHire est limitée au montant payé par l'organisation au cours des 3 derniers mois.</p>
+<h4>8. Résiliation</h4>
+<p>Vous pouvez résilier votre abonnement à tout moment. NexHire se réserve le droit de suspendre ou de résilier l'accès en cas de violation des présentes conditions.</p>
+<h4>9. Modifications</h4>
+<p>NexHire peut modifier ces conditions avec un préavis de 30 jours. L'utilisation continue du Service après notification constitue une acceptation des nouvelles conditions.</p>
+<h4>10. Droit applicable</h4>
+<p>Les présentes conditions sont régies par les lois de la province de Québec et les lois fédérales du Canada. Tout litige sera soumis à la juridiction exclusive des tribunaux de Montréal, Québec.</p>
+<p style="margin-top:20px;color:var(--slate);font-size:.82rem">Dernière mise à jour : Juin 2026 · contact@nexhire.ca</p>
+    `, en: `
+<h4>1. Acceptance of Terms</h4>
+<p>By accessing NexHire Enterprise Assistant ("the Service"), you agree to these Terms of Service. If you do not accept these terms, you must not use the Service.</p>
+<h4>2. Service Description</h4>
+<p>NexHire is an AI SaaS platform that connects your enterprise systems (Microsoft 365, Salesforce, Jira, etc.) to a bilingual French/English conversational agent. The Service is designed for Canadian organizations.</p>
+<h4>3. Account and Access</h4>
+<p>You are responsible for the confidentiality of your login credentials. You agree to immediately notify NexHire of any unauthorized use of your account. Each organization receives a 14-day free trial, after which a paid subscription is required.</p>
+<h4>4. Acceptable Use</h4>
+<p>You agree not to: (a) use the Service for illegal purposes; (b) attempt to compromise the security of the Service; (c) resell or redistribute access to the Service without written authorization.</p>
+<h4>5. Data and Privacy</h4>
+<p>NexHire processes your data in accordance with its Privacy Policy. OAuth access tokens are encrypted (Fernet AES-128) before storage. NexHire does not store or read your connected systems' content beyond what is necessary to answer your questions.</p>
+<h4>6. Intellectual Property</h4>
+<p>The Service, including its interface, code, and documentation, is the exclusive property of Nexhire Inc. You receive a limited, non-exclusive, non-transferable license to use the Service.</p>
+<h4>7. Limitation of Liability</h4>
+<p>NexHire shall not be liable for indirect, consequential, or incidental damages arising from the use of the Service. NexHire's total liability is limited to the amount paid by the organization in the past 3 months.</p>
+<h4>8. Termination</h4>
+<p>You may cancel your subscription at any time. NexHire reserves the right to suspend or terminate access in case of violation of these terms.</p>
+<h4>9. Modifications</h4>
+<p>NexHire may modify these terms with 30 days notice. Continued use of the Service after notification constitutes acceptance of the new terms.</p>
+<h4>10. Governing Law</h4>
+<p>These terms are governed by the laws of the Province of Quebec and federal laws of Canada. Any dispute will be submitted to the exclusive jurisdiction of the courts of Montreal, Quebec.</p>
+<p style="margin-top:20px;color:var(--slate);font-size:.82rem">Last updated: June 2026 · contact@nexhire.ca</p>
+    `},
+  },
+  privacy: {
+    title: { fr: "Politique de confidentialité", en: "Privacy Policy" },
+    body: { fr: `
+<h4>1. Responsable du traitement</h4>
+<p>Nexhire Inc., société enregistrée au Québec, Canada, est responsable du traitement des données personnelles collectées via le Service.</p>
+<h4>2. Données collectées</h4>
+<ul>
+<li><strong>Données de compte :</strong> adresse courriel, nom complet, nom de l'organisation</li>
+<li><strong>Données d'utilisation :</strong> requêtes posées à l'agent IA, connecteurs utilisés, actions effectuées (journal d'audit)</li>
+<li><strong>Données techniques :</strong> adresse IP, navigateur, timestamps de connexion</li>
+<li><strong>Tokens OAuth :</strong> chiffrés Fernet — jamais lisibles en clair par NexHire</li>
+</ul>
+<h4>3. Finalités du traitement</h4>
+<p>Les données sont utilisées pour : fournir le Service, améliorer la qualité des réponses de l'agent IA, assurer la sécurité et la conformité réglementaire, facturer les abonnements.</p>
+<h4>4. Conformité à la Loi 25 (Québec)</h4>
+<p>NexHire est conforme à la Loi modernisant des dispositions législatives en matière de protection des renseignements personnels (Loi 25). Vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Pour exercer ces droits : <strong>privacy@nexhire.ca</strong>.</p>
+<h4>5. Sous-traitants</h4>
+<ul>
+<li><strong>Supabase (PostgreSQL)</strong> — hébergement de la base de données (Canada/USA)</li>
+<li><strong>Render</strong> — hébergement de l'application</li>
+<li><strong>OpenAI</strong> — traitement des questions par l'IA (les questions sont transmises mais jamais stockées par OpenAI à des fins d'entraînement si configuré en mode API)</li>
+<li><strong>Stripe</strong> — gestion des paiements et abonnements</li>
+</ul>
+<h4>6. Conservation des données</h4>
+<p>Les données sont conservées pendant la durée de l'abonnement actif + 12 mois après résiliation. Le journal d'audit est conservé 7 ans conformément aux obligations légales canadiennes.</p>
+<h4>7. Cookies</h4>
+<p>NexHire n'utilise pas de cookies publicitaires ou de traçage tiers. Seul un token d'authentification (stocké en mémoire locale) est utilisé pour maintenir votre session.</p>
+<h4>8. Transferts internationaux</h4>
+<p>Certaines données peuvent transiter via des serveurs situés aux États-Unis (OpenAI, Stripe). Ces transferts sont encadrés par des clauses contractuelles types conformes aux standards internationaux.</p>
+<h4>9. Contact</h4>
+<p>Pour toute question relative à vos données personnelles : <strong>privacy@nexhire.ca</strong> ou en écrivant à Nexhire Inc., Montréal, Québec, Canada.</p>
+<p style="margin-top:20px;color:var(--slate);font-size:.82rem">Dernière mise à jour : Juin 2026</p>
+    `, en: `
+<h4>1. Data Controller</h4>
+<p>Nexhire Inc., a company registered in Quebec, Canada, is the controller of personal data collected through the Service.</p>
+<h4>2. Data Collected</h4>
+<ul>
+<li><strong>Account data:</strong> email address, full name, organization name</li>
+<li><strong>Usage data:</strong> questions asked to the AI agent, connectors used, actions performed (audit log)</li>
+<li><strong>Technical data:</strong> IP address, browser, connection timestamps</li>
+<li><strong>OAuth tokens:</strong> Fernet-encrypted — never readable in plain text by NexHire</li>
+</ul>
+<h4>3. Processing Purposes</h4>
+<p>Data is used to: provide the Service, improve AI agent response quality, ensure security and regulatory compliance, process subscription billing.</p>
+<h4>4. Quebec Law 25 Compliance</h4>
+<p>NexHire complies with Quebec's Act respecting the protection of personal information in the private sector (Law 25). You have the right to access, rectify, and delete your data. To exercise these rights: <strong>privacy@nexhire.ca</strong>.</p>
+<h4>5. Sub-processors</h4>
+<ul>
+<li><strong>Supabase (PostgreSQL)</strong> — database hosting (Canada/USA)</li>
+<li><strong>Render</strong> — application hosting</li>
+<li><strong>OpenAI</strong> — AI question processing (questions are transmitted but not stored by OpenAI for training when using the API)</li>
+<li><strong>Stripe</strong> — payment and subscription management</li>
+</ul>
+<h4>6. Data Retention</h4>
+<p>Data is retained for the duration of the active subscription + 12 months after cancellation. Audit logs are retained for 7 years in compliance with Canadian legal requirements.</p>
+<h4>7. Cookies</h4>
+<p>NexHire does not use advertising or third-party tracking cookies. Only an authentication token (stored in local memory) is used to maintain your session.</p>
+<h4>8. International Transfers</h4>
+<p>Some data may transit through servers located in the United States (OpenAI, Stripe). These transfers are governed by standard contractual clauses compliant with international standards.</p>
+<h4>9. Contact</h4>
+<p>For any questions regarding your personal data: <strong>privacy@nexhire.ca</strong> or by writing to Nexhire Inc., Montreal, Quebec, Canada.</p>
+<p style="margin-top:20px;color:var(--slate);font-size:.82rem">Last updated: June 2026</p>
+    `},
+  },
+  security: {
+    title: { fr: "Sécurité", en: "Security" },
+    body: { fr: `
+<h4>Notre engagement sécurité</h4>
+<p>NexHire a été conçu avec la sécurité entreprise dès la première ligne de code. Voici les mécanismes en place :</p>
+<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:.85rem">
+<tr style="background:var(--blue-pale)"><th style="padding:8px;text-align:left">Mécanisme</th><th style="padding:8px;text-align:left">Détail</th></tr>
+<tr><td style="padding:8px;border-top:1px solid var(--border)">Authentification</td><td style="padding:8px;border-top:1px solid var(--border)">JWT ES256 (courbe elliptique) — tokens signés, non falsifiables</td></tr>
+<tr><td style="padding:8px;border-top:1px solid var(--border)">Tokens OAuth</td><td style="padding:8px;border-top:1px solid var(--border)">Chiffrés Fernet (AES-128-CBC + HMAC) avant tout stockage</td></tr>
+<tr><td style="padding:8px;border-top:1px solid var(--border)">Mots de passe</td><td style="padding:8px;border-top:1px solid var(--border)">Hashés bcrypt — jamais stockés en clair</td></tr>
+<tr><td style="padding:8px;border-top:1px solid var(--border)">Base de données</td><td style="padding:8px;border-top:1px solid var(--border)">SSL obligatoire (sslmode=require) — Supabase PostgreSQL</td></tr>
+<tr><td style="padding:8px;border-top:1px solid var(--border)">RBAC</td><td style="padding:8px;border-top:1px solid var(--border)">4 niveaux de rôles vérifiés à chaque requête API</td></tr>
+<tr><td style="padding:8px;border-top:1px solid var(--border)">Audit log</td><td style="padding:8px;border-top:1px solid var(--border)">Immuable, append-only — chaque action tracée avec IP et timestamp</td></tr>
+<tr><td style="padding:8px;border-top:1px solid var(--border)">Session</td><td style="padding:8px;border-top:1px solid var(--border)">Expiration automatique + auto-logout sur inactivité</td></tr>
+<tr><td style="padding:8px;border-top:1px solid var(--border)">Isolation données</td><td style="padding:8px;border-top:1px solid var(--border)">Chaque organisation est isolée — aucun accès croisé possible</td></tr>
+</table>
+<h4>Signaler une vulnérabilité</h4>
+<p>Si vous découvrez une vulnérabilité de sécurité, contactez-nous immédiatement à <strong>security@nexhire.ca</strong>. Nous nous engageons à répondre dans les 24 heures.</p>
+<h4>Conformité</h4>
+<p>NexHire est conçu pour satisfaire les exigences de : Loi 25 (Québec), ISO 27001 (en cours de certification), SOC 2 Type II (en cours).</p>
+<p style="margin-top:20px;color:var(--slate);font-size:.82rem">Pour toute question de sécurité : security@nexhire.ca</p>
+    `, en: `
+<h4>Our Security Commitment</h4>
+<p>NexHire was designed with enterprise security from the first line of code. Here are the mechanisms in place:</p>
+<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:.85rem">
+<tr style="background:var(--blue-pale)"><th style="padding:8px;text-align:left">Mechanism</th><th style="padding:8px;text-align:left">Detail</th></tr>
+<tr><td style="padding:8px;border-top:1px solid var(--border)">Authentication</td><td style="padding:8px;border-top:1px solid var(--border)">JWT ES256 (elliptic curve) — signed tokens, unforgeable</td></tr>
+<tr><td style="padding:8px;border-top:1px solid var(--border)">OAuth Tokens</td><td style="padding:8px;border-top:1px solid var(--border)">Fernet-encrypted (AES-128-CBC + HMAC) before any storage</td></tr>
+<tr><td style="padding:8px;border-top:1px solid var(--border)">Passwords</td><td style="padding:8px;border-top:1px solid var(--border)">bcrypt-hashed — never stored in plain text</td></tr>
+<tr><td style="padding:8px;border-top:1px solid var(--border)">Database</td><td style="padding:8px;border-top:1px solid var(--border)">SSL required (sslmode=require) — Supabase PostgreSQL</td></tr>
+<tr><td style="padding:8px;border-top:1px solid var(--border)">RBAC</td><td style="padding:8px;border-top:1px solid var(--border)">4 role levels verified on every API request</td></tr>
+<tr><td style="padding:8px;border-top:1px solid var(--border)">Audit log</td><td style="padding:8px;border-top:1px solid var(--border)">Immutable, append-only — every action tracked with IP and timestamp</td></tr>
+<tr><td style="padding:8px;border-top:1px solid var(--border)">Session</td><td style="padding:8px;border-top:1px solid var(--border)">Automatic expiry + auto-logout on inactivity</td></tr>
+<tr><td style="padding:8px;border-top:1px solid var(--border)">Data isolation</td><td style="padding:8px;border-top:1px solid var(--border)">Each organization is isolated — no cross-access possible</td></tr>
+</table>
+<h4>Report a Vulnerability</h4>
+<p>If you discover a security vulnerability, contact us immediately at <strong>security@nexhire.ca</strong>. We commit to responding within 24 hours.</p>
+<h4>Compliance</h4>
+<p>NexHire is designed to meet requirements of: Quebec Law 25, ISO 27001 (certification in progress), SOC 2 Type II (in progress).</p>
+<p style="margin-top:20px;color:var(--slate);font-size:.82rem">Security questions: security@nexhire.ca</p>
+    `},
+  },
+};
+
+function openLegal(key) {
+  const docLang = document.documentElement.lang;
+  const lang    = docLang === "en" || docLang === "es" ? "en" : "fr";
+  const content = _LEGAL_CONTENT[key];
+  if (!content) return;
+  const modal = $("legal-modal");
+  const title = $("legal-modal-title");
+  const body  = $("legal-modal-body");
+  if (!modal) return;
+  if (title) title.textContent = content.title[lang] || content.title.fr;
+  if (body)  body.innerHTML   = content.body[lang]  || content.body.fr;
+  modal.classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+}
+
+function closeLegal() {
+  const modal = $("legal-modal");
+  if (modal) modal.classList.add("hidden");
+  document.body.style.overflow = "";
+}
+
+// Close on backdrop click
+document.addEventListener("click", e => {
+  if (e.target?.id === "legal-modal") closeLegal();
+});

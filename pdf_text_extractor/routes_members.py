@@ -172,6 +172,26 @@ def invite_member(
 
     token = inv.get("token", "")
 
+    # Envoie l'email d'invitation (non-bloquant)
+    try:
+        from email_service import send_invite_email
+        with get_db() as cur:
+            cur.execute(
+                "SELECT o.name AS org_name, u.full_name FROM organizations o, users u "
+                "WHERE o.id = %s AND u.id = %s LIMIT 1",
+                (user.organization_id, user.id),
+            )
+            meta = row(cur) or {}
+        send_invite_email(
+            to_email=str(payload.email),
+            org_name=meta.get("org_name", "votre organisation"),
+            role=payload.role,
+            invite_token=token,
+            invited_by_name=meta.get("full_name") or user.email or "Un administrateur",
+        )
+    except Exception:
+        pass  # email non-bloquant
+
     return {
         "ok":         True,
         "token":      token,

@@ -257,9 +257,9 @@
         <div class="footer-col">
           <h4 data-i18n="footer.legal">Légal</h4>
           <ul>
-            <li><a href="#" data-i18n="footer.terms">Conditions d'utilisation</a></li>
-            <li><a href="#" data-i18n="footer.privacy">Politique de confidentialité</a></li>
-            <li><a href="#" data-i18n="footer.security">Sécurité</a></li>
+            <li><a href="#" onclick="openLegal('cgu');return false" data-i18n="footer.terms">Conditions d'utilisation</a></li>
+            <li><a href="#" onclick="openLegal('privacy');return false" data-i18n="footer.privacy">Politique de confidentialité</a></li>
+            <li><a href="#" onclick="openLegal('security');return false" data-i18n="footer.security">Sécurité</a></li>
           </ul>
         </div>
       </div>
@@ -360,8 +360,9 @@
       <button class="tab-btn active" data-tab="agent"      role="tab" data-i18n="app.tab.agent">Assistant IA</button>
       <button class="tab-btn"        data-tab="connectors" role="tab" data-i18n="app.tab.connectors">Connecteurs</button>
       <button class="tab-btn"        data-tab="documents"  role="tab" data-i18n="app.tab.documents">Documents</button>
-      <button class="tab-btn admin-only hidden" data-tab="org"    role="tab">🏛️ Organisation</button>
-      <button class="tab-btn admin-only hidden" data-tab="audit"  role="tab" data-i18n="app.tab.audit">Audit</button>
+      <button class="tab-btn admin-only hidden" data-tab="org"          role="tab">🏛️ Organisation</button>
+      <button class="tab-btn admin-only hidden" data-tab="audit"        role="tab" data-i18n="app.tab.audit">Audit</button>
+      <button class="tab-btn admin-only hidden" data-tab="marketplace"  role="tab">🏪 Marketplace</button>
       <button class="tab-btn"        data-tab="stats"      role="tab" data-i18n="app.tab.stats">Statistiques</button>
       <button class="tab-btn"        data-tab="parc-it"    role="tab" data-i18n="app.tab.parc">Parc IT</button>
       <button class="tab-btn"        data-tab="optim"      role="tab" data-i18n="app.tab.optim">Optimisation IA</button>
@@ -416,6 +417,19 @@
       </div>
     </div>
   </nav>
+
+  <!-- Workspace bar -->
+  <div id="workspace-bar" class="workspace-bar hidden">
+    <div class="workspace-bar-inner">
+      <div class="workspace-current">
+        <span class="workspace-dot" id="ws-dot"></span>
+        <span id="ws-label">Workspace</span>
+      </div>
+      <div class="workspace-chips" id="ws-chips"></div>
+      <button class="btn btn-outline btn-sm ws-marketplace-btn admin-only hidden"
+              onclick="switchTab('marketplace')">🏪 Marketplace</button>
+    </div>
+  </div>
 
   <!-- Main content -->
   <main class="app-main">
@@ -773,28 +787,114 @@
               <span id="sso-status-text" data-i18n="settings.sso.inactive">SSO non configuré</span>
             </div>
             <p class="settings-desc" data-i18n="settings.sso.desc">
-              L'authentification unique (SSO) via SAML 2.0 ou OpenID Connect permet à vos collaborateurs
-              de se connecter avec les identifiants de votre organisation (Microsoft Entra ID, Okta, Google Workspace…).
+              Connectez votre fournisseur d'identité (Microsoft Entra ID, Google Workspace, Okta) via OpenID Connect.
+              Vos collaborateurs se connecteront avec leurs identifiants d'entreprise.
             </p>
-            <button class="btn btn-outline btn-sm" id="sso-cta-btn" onclick="window.location.href='mailto:contact@nexhire.ca?subject=Activation SSO'" data-i18n="settings.sso.cta">
-              Activer le SSO — contacter le support
-            </button>
             <div id="sso-active-info" class="hidden">
-              <p class="form-success" data-i18n="settings.sso.active.msg">SSO actif — vos utilisateurs se connectent via votre fournisseur d'identité.</p>
+              <p class="form-success">SSO actif — vos utilisateurs se connectent via votre fournisseur d'identité.</p>
             </div>
           </div>
+
+          <!-- Formulaire de config SSO (admin only) -->
+          <form id="sso-config-form" class="settings-form hidden" onsubmit="saveSSOConfig(event)" style="margin-top:16px;border-top:1px solid var(--border);padding-top:16px">
+            <label class="auth-label">
+              <span>Fournisseur d'identité</span>
+              <select id="sso-provider-select" onchange="_updateSSOTenantVisibility()">
+                <option value="microsoft">Microsoft Entra ID (Azure AD)</option>
+                <option value="google">Google Workspace</option>
+                <option value="okta">Okta</option>
+              </select>
+            </label>
+            <label class="auth-label" id="sso-tenant-row">
+              <span>Tenant ID / Domain</span>
+              <input id="sso-tenant-id" type="text" placeholder="votre-tenant.onmicrosoft.com ou subdomain Okta" />
+            </label>
+            <label class="auth-label">
+              <span>Client ID (Application ID)</span>
+              <input id="sso-client-id" type="text" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" required />
+            </label>
+            <label class="auth-label">
+              <span>Client Secret</span>
+              <input id="sso-client-secret" type="password" placeholder="••••••••••••" required />
+            </label>
+            <p style="font-size:.78rem;color:var(--slate);margin:4px 0 12px">
+              URL de callback à configurer dans votre IdP :
+              <code style="background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:.75rem">/api/sso/callback</code>
+            </p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button type="submit" class="btn btn-primary btn-sm" id="sso-save-btn">Enregistrer</button>
+              <button type="button" class="btn btn-outline btn-sm hidden" id="sso-delete-btn" onclick="deleteSSOConfig()" style="color:#dc2626;border-color:#dc2626">Supprimer</button>
+            </div>
+            <p id="sso-save-success" class="form-success hidden" style="margin-top:8px">Configuration SSO enregistrée.</p>
+          </form>
         </div>
 
         <!-- Abonnement -->
         <div class="settings-card">
           <h3 data-i18n="settings.plan.title">Abonnement</h3>
-          <div class="plan-badge-wrap">
-            <div class="plan-badge" id="plan-badge">—</div>
+          <div class="plan-badge-wrap" style="margin-bottom:12px">
+            <div class="plan-badge" id="billing-status-badge">—</div>
             <p class="settings-desc" id="plan-desc"></p>
           </div>
-          <button class="btn btn-outline btn-sm" onclick="alert('Contactez-nous à contact@nexhire.ca pour gérer votre abonnement.')" data-i18n="settings.plan.manage">
+
+          <!-- Boutons Stripe -->
+          <div id="billing-subscribe-wrap" style="display:flex;flex-direction:column;gap:10px">
+            <p class="settings-desc" style="margin:0 0 8px">Choisissez votre plan pour continuer après la période d'essai :</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button id="stripe-btn-monthly" class="btn btn-primary btn-sm" onclick="subscribeStripe('monthly')">
+                Mensuel — 99 $/mois
+              </button>
+              <button id="stripe-btn-annual" class="btn btn-outline btn-sm" onclick="subscribeStripe('annual')" style="border-color:#16a34a;color:#16a34a">
+                Annuel — 990 $/an <span style="font-size:.75em;background:#dcfce7;color:#166534;padding:1px 6px;border-radius:8px;margin-left:4px">-2 mois</span>
+              </button>
+            </div>
+          </div>
+          <button id="billing-portal-btn" class="btn btn-outline btn-sm hidden" onclick="openBillingPortal()">
             Gérer l'abonnement
           </button>
+        </div>
+
+        <!-- Webhooks Slack / Teams (admin only) -->
+        <div class="settings-card admin-only hidden">
+          <h3 data-i18n="settings.webhooks.title">Notifications Slack / Teams</h3>
+          <p class="settings-desc" data-i18n="settings.webhooks.desc">Envoyez des notifications automatiques sur un canal Slack ou Teams quand un événement survient.</p>
+          <form id="webhooks-form" class="settings-form" onsubmit="saveWebhookConfig(event)">
+            <label class="auth-label">
+              <span data-i18n="settings.webhooks.slack">URL Webhook Slack</span>
+              <input id="wh-slack-url" type="url" class="auth-input"
+                     placeholder="https://hooks.slack.com/services/…"
+                     style="font-size:.82rem" />
+            </label>
+            <label class="auth-label">
+              <span data-i18n="settings.webhooks.teams">URL Webhook Teams</span>
+              <input id="wh-teams-url" type="url" class="auth-input"
+                     placeholder="https://…webhook.office.com/webhookb2/…"
+                     style="font-size:.82rem" />
+            </label>
+            <div>
+              <p style="font-size:.8rem;font-weight:600;color:var(--navy);margin:0 0 6px" data-i18n="settings.webhooks.events">Événements</p>
+              <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;margin-bottom:4px"><input type="checkbox" id="wh-ev-member" value="member_join" checked> Nouveau membre</label>
+              <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;margin-bottom:4px"><input type="checkbox" id="wh-ev-license" value="license_expiry" checked> Licence expirante</label>
+              <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;margin-bottom:4px"><input type="checkbox" id="wh-ev-budget" value="budget_alert" checked> Alerte budget</label>
+              <label style="display:flex;align-items:center;gap:8px;font-size:.85rem"><input type="checkbox" id="wh-ev-subscription" value="subscription"> Abonnement</label>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button type="submit" class="btn btn-primary btn-sm" data-i18n="settings.webhooks.save">Enregistrer</button>
+              <button type="button" class="btn btn-outline btn-sm" onclick="testWebhook()" data-i18n="settings.webhooks.test">Envoyer un test</button>
+              <button type="button" id="wh-delete-btn" class="btn btn-sm hidden"
+                      style="background:var(--error-bg);color:var(--error);border:none"
+                      onclick="deleteWebhookConfig()" data-i18n="settings.webhooks.delete">Supprimer</button>
+            </div>
+            <div id="wh-msg" class="hidden" style="font-size:.83rem;color:var(--success)"></div>
+          </form>
+        </div>
+
+        <!-- Rapport mensuel (admin only) -->
+        <div class="settings-card admin-only hidden">
+          <h3 data-i18n="settings.report.title">Rapport mensuel</h3>
+          <p class="settings-desc" data-i18n="settings.report.desc">Envoyez un rapport mensuel d'activité par courriel aux admins de l'organisation.</p>
+          <button id="report-send-btn" class="btn btn-primary btn-sm" onclick="sendMonthlyReport()" data-i18n="settings.report.send">Envoyer le rapport maintenant</button>
+          <div id="report-msg" class="hidden" style="font-size:.83rem;margin-top:10px;color:var(--success)"></div>
         </div>
 
         <!-- Comptes de service (admin only) -->
@@ -1380,10 +1480,37 @@
       </div>
     </section>
 
+    <!-- ── MARKETPLACE ─────────────────────────────────────────────────────── -->
+    <section id="tab-marketplace" class="tab-content hidden admin-only" role="tabpanel">
+      <div class="section-header">
+        <div>
+          <h2>🏪 Workspace Marketplace</h2>
+          <p class="muted" style="margin-top:4px;font-size:.88rem">
+            Installez des espaces de travail préconfigurés pour vos départements. Chaque workspace inclut les connecteurs recommandés et un tableau de bord IA spécialisé.
+          </p>
+        </div>
+      </div>
+      <div id="marketplace-grid" class="marketplace-grid"></div>
+    </section>
+
   </main>
 </div>
 
+<!-- ═══════════════════════════ LEGAL MODALS ═══════════════════════════════ -->
+<div id="legal-modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+  <div class="modal-box" style="max-width:680px;max-height:82vh;display:flex;flex-direction:column">
+    <div class="modal-header">
+      <h3 id="legal-modal-title">Conditions d'utilisation</h3>
+      <button class="modal-close" onclick="closeLegal()">✕</button>
+    </div>
+    <div class="modal-body" id="legal-modal-body" style="overflow-y:auto;flex:1;font-size:.88rem;line-height:1.7"></div>
+    <div class="modal-footer" style="justify-content:flex-end">
+      <button class="btn btn-primary btn-sm" onclick="closeLegal()">Fermer</button>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="/static/app.js?v=20260610"></script>
+<script src="/static/app.js?v=20260611"></script>
 </body>
 </html>

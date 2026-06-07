@@ -1041,6 +1041,24 @@ def _call_tool(name: str, arguments: dict[str, Any], org_id: str | None = None) 
                 return _fn(query=arguments.get("query", ""), org_id=org_id,
                            object_type=arguments.get("object_type", "all"),
                            limit=arguments.get("limit", 5))
+            if name == "query_sap":
+                from sap_service import query_sap as _fn
+                return _fn(category=arguments.get("category", "budget"),
+                           period=arguments.get("period", "current_month"),
+                           department=arguments.get("department"),
+                           org_id=org_id)
+            if name == "query_workday":
+                from workday_service import query_workday as _fn
+                return _fn(category=arguments.get("category", "headcount"),
+                           department=arguments.get("department"),
+                           period=arguments.get("period", "current"),
+                           org_id=org_id)
+            if name == "search_autotask":
+                from autotask_service import search_autotask as _fn
+                return _fn(query=arguments.get("query", ""), type=arguments.get("type", "all"),
+                           status=arguments.get("status", "all"),
+                           limit=arguments.get("limit", 5),
+                           org_id=org_id)
         except Exception:
             pass  # fallback vers mock
 
