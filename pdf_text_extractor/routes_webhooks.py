@@ -114,7 +114,7 @@ def send_monthly_report_endpoint(
             """SELECT COUNT(*) AS total_queries,
                       ROUND(AVG(rating)::NUMERIC, 1) AS avg_rating,
                       COUNT(DISTINCT user_id) AS active_users
-               FROM audit_log
+               FROM audit_logs
                WHERE organization_id = %s
                  AND action = 'agent_query'
                  AND created_at >= date_trunc('month', now())""",
