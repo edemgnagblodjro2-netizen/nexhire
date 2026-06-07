@@ -4,10 +4,11 @@
 
 // ── State ──────────────────────────────────────────────────────────────────
 const state = {
-  token: null,
-  user:  null,
-  tab:   "agent",
-  docId: null,
+  token:    null,
+  user:     null,
+  tab:      "agent",
+  docId:    null,
+  deptType: null,
 };
 
 // ── Helpers globaux ────────────────────────────────────────────────────────
@@ -387,6 +388,150 @@ const CONNECTORS = {
       { id: "username",   label: "Nom d'utilisateur *", placeholder: "user@domain.com" },
       { id: "api_key",    label: "Clé API secrète *",   placeholder: "••••••••",  type: "password" },
       { id: "zone_url",   label: "Zone URL *",           placeholder: "https://webservices24.autotask.net" },
+    ],
+  },
+
+  // ── Collaboration ──────────────────────────────────────────────────────────
+  google_workspace: {
+    label: "Google Workspace", icon: "G", color: "#4285f4", method: "oauth",
+    desc: "Gmail, Google Drive, Agenda, Meet, Google Docs — alternative à Microsoft 365",
+    help_url: "https://console.cloud.google.com/",
+    help_label: "Google Cloud Console",
+  },
+  slack: {
+    label: "Slack", icon: "SL", color: "#4a154b", method: "oauth",
+    desc: "Messages, canaux, fichiers partagés, alertes d'équipe",
+    help_url: "https://api.slack.com/apps",
+    help_label: "Slack Apps Dashboard",
+  },
+
+  // ── Ressources Humaines ───────────────────────────────────────────────────
+  bamboohr: {
+    label: "BambooHR", icon: "BH", color: "#73c41d", method: "apikey",
+    desc: "Effectifs, congés, onboarding, évaluations de performance, roulement",
+    help_url: "https://documentation.bamboohr.com/docs/getting-started",
+    help_label: "BambooHR API",
+    niche: true,
+    niche_label: "Ressources Humaines",
+    fields: [
+      { id: "subdomain", label: "Sous-domaine BambooHR *", placeholder: "monentreprise" },
+      { id: "api_key",   label: "Clé API *",               placeholder: "••••••••", type: "password" },
+    ],
+  },
+  adp: {
+    label: "ADP Workforce Now", icon: "AP", color: "#d22630", method: "apikey",
+    desc: "Paie, effectifs, avantages sociaux, absences, gestion du temps",
+    help_url: "https://developers.adp.com/",
+    help_label: "ADP Developer Portal",
+    niche: true,
+    niche_label: "Ressources Humaines",
+    fields: [
+      { id: "client_id",     label: "Client ID *",     placeholder: "client_id" },
+      { id: "client_secret", label: "Client Secret *", placeholder: "••••••••", type: "password" },
+      { id: "org_oid",       label: "Organization OID", placeholder: "G3349XXXXXXXXXXXX" },
+    ],
+  },
+
+  // ── Gestion de projets ────────────────────────────────────────────────────
+  asana: {
+    label: "Asana", icon: "AS", color: "#f06a6a", method: "apikey",
+    desc: "Tâches, projets, équipes, jalons, rapports d'avancement",
+    help_url: "https://app.asana.com/0/my-apps",
+    help_label: "Asana My Apps",
+    niche: true,
+    niche_label: "Gestion de projets",
+    fields: [
+      { id: "api_key", label: "Personal Access Token *", placeholder: "1/••••••••", type: "password" },
+    ],
+  },
+  monday: {
+    label: "Monday.com", icon: "MO", color: "#ff3d57", method: "apikey",
+    desc: "Tableaux, éléments, automatisations, suivi de projets et opérations",
+    help_url: "https://developer.monday.com/apps/docs/authentication",
+    help_label: "Monday Developer",
+    niche: true,
+    niche_label: "Gestion de projets",
+    fields: [
+      { id: "api_key", label: "API Token *", placeholder: "eyJhbGciOi…", type: "password" },
+    ],
+  },
+  clickup: {
+    label: "ClickUp", icon: "CU", color: "#7b68ee", method: "apikey",
+    desc: "Tâches, espaces, objectifs, time tracking, documents",
+    help_url: "https://clickup.com/api/developer-portal/authentication/",
+    help_label: "ClickUp API",
+    niche: true,
+    niche_label: "Gestion de projets",
+    fields: [
+      { id: "api_key", label: "Personal API Token *", placeholder: "pk_••••••••", type: "password" },
+    ],
+  },
+
+  // ── Finance & Comptabilité ────────────────────────────────────────────────
+  quickbooks: {
+    label: "QuickBooks Online", icon: "QB", color: "#2ca01c", method: "oauth",
+    desc: "Facturation, dépenses, comptes, bilan, rapport P&L, clients",
+    help_url: "https://developer.intuit.com/app/developer/appdetail",
+    help_label: "Intuit Developer",
+    niche: true,
+    niche_label: "Finance & Comptabilité",
+  },
+  netsuite: {
+    label: "NetSuite ERP", icon: "NS", color: "#009cde", method: "apikey",
+    desc: "Finances, stocks, commandes, fournisseurs, rapports consolidés",
+    help_url: "https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/section_4636720383.html",
+    help_label: "NetSuite REST API",
+    niche: true,
+    niche_label: "Finance & Comptabilité",
+    fields: [
+      { id: "account_id",    label: "Account ID *",    placeholder: "1234567" },
+      { id: "consumer_key",  label: "Consumer Key *",  placeholder: "••••••••", type: "password" },
+      { id: "consumer_secret", label: "Consumer Secret *", placeholder: "••••••••", type: "password" },
+      { id: "token_id",      label: "Token ID *",      placeholder: "••••••••", type: "password" },
+      { id: "token_secret",  label: "Token Secret *",  placeholder: "••••••••", type: "password" },
+    ],
+  },
+
+  // ── IT & Sécurité ─────────────────────────────────────────────────────────
+  intune: {
+    label: "Microsoft Intune", icon: "IN", color: "#0078d4", method: "apikey",
+    desc: "Gestion des appareils, conformité, mises à jour, politiques IT, inventaire",
+    help_url: "https://learn.microsoft.com/en-us/mem/intune/developer/intune-graph-apis",
+    help_label: "Intune Graph API",
+    niche: true,
+    niche_label: "IT & Sécurité",
+    fields: [
+      { id: "tenant_id",     label: "Tenant ID (Azure AD) *", placeholder: "xxxxxxxx-xxxx-xxxx-xxxx" },
+      { id: "client_id",     label: "Client ID *",            placeholder: "xxxxxxxx-xxxx-xxxx-xxxx" },
+      { id: "client_secret", label: "Client Secret *",        placeholder: "••••••••", type: "password" },
+    ],
+  },
+  crowdstrike: {
+    label: "CrowdStrike Falcon", icon: "CS", color: "#e8202a", method: "apikey",
+    desc: "Détections de menaces, alertes cybersécurité, appareils à risque, vulnérabilités",
+    help_url: "https://falcon.crowdstrike.com/documentation/",
+    help_label: "CrowdStrike API Docs",
+    niche: true,
+    niche_label: "IT & Sécurité",
+    fields: [
+      { id: "client_id",     label: "Client ID *",     placeholder: "••••••••" },
+      { id: "client_secret", label: "Client Secret *", placeholder: "••••••••", type: "password" },
+      { id: "base_url",      label: "Base URL",        placeholder: "https://api.crowdstrike.com" },
+    ],
+  },
+
+  // ── Cloud ─────────────────────────────────────────────────────────────────
+  aws: {
+    label: "Amazon Web Services", icon: "AW", color: "#ff9900", method: "apikey",
+    desc: "Coûts cloud, instances EC2, S3, RDS, Lambda — Cost Explorer + CloudWatch",
+    help_url: "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html",
+    help_label: "AWS Access Keys",
+    niche: true,
+    niche_label: "Cloud",
+    fields: [
+      { id: "access_key_id",     label: "Access Key ID *",     placeholder: "AKIAIOSFODNN7EXAMPLE" },
+      { id: "secret_access_key", label: "Secret Access Key *", placeholder: "••••••••", type: "password" },
+      { id: "region",            label: "Région AWS",          placeholder: "ca-central-1" },
     ],
   },
 };
@@ -811,7 +956,7 @@ $("agent-form").addEventListener("submit", async e => {
   $("agent-loading").classList.remove("hidden");
   try {
     const data = await apiCall("/api/agent/query", "POST", {
-      question: q,
+      question:       q,
       assistant_mode: $("agent-mode").value,
       language:       $("agent-lang").value,
     });
@@ -3265,6 +3410,80 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// ── Chips de l'agent IA adaptées au type de département ──────────────────────
+const _DEPT_CHIPS = {
+  finance: [
+    { fr: "Factures en retard de paiement ce mois-ci",                       en: "Overdue invoices this month" },
+    { fr: "Dépassements budgétaires par département",                         en: "Budget overruns by department" },
+    { fr: "Contrats fournisseurs à renouveler dans 90 jours",                 en: "Supplier contracts expiring in 90 days" },
+    { fr: "Dépenses cloud AWS et Azure du mois",                              en: "AWS and Azure cloud spend this month" },
+    { fr: "Prévisions de trésorerie pour le prochain trimestre",              en: "Cash flow forecast for next quarter" },
+  ],
+  hr: [
+    { fr: "Postes vacants et recrutements en cours",                          en: "Open positions and active recruitments" },
+    { fr: "Absences et congés prévus cette semaine",                          en: "Absences and leave scheduled this week" },
+    { fr: "Évaluations de performance en attente",                            en: "Pending performance reviews" },
+    { fr: "Taux de roulement des 6 derniers mois",                            en: "Turnover rate over the last 6 months" },
+    { fr: "Onboarding des nouveaux employés — tâches en retard",              en: "New employee onboarding — overdue tasks" },
+  ],
+  it: [
+    { fr: "Incidents critiques ouverts et non assignés",                      en: "Open critical incidents unassigned" },
+    { fr: "Licences logicielles expirant dans les 30 jours",                  en: "Software licenses expiring in 30 days" },
+    { fr: "Appareils non conformes aux politiques IT",                        en: "Devices non-compliant with IT policies" },
+    { fr: "Coûts cloud du mois et optimisations possibles",                   en: "Cloud costs this month and optimizations" },
+    { fr: "Alertes cybersécurité critiques des 7 derniers jours",             en: "Critical cybersecurity alerts last 7 days" },
+  ],
+  operations: [
+    { fr: "Projets en retard avec blocages identifiés",                       en: "Late projects with identified blockers" },
+    { fr: "Tâches critiques non assignées cette semaine",                     en: "Critical unassigned tasks this week" },
+    { fr: "Processus manuels à fort potentiel d'automatisation",              en: "Manual processes with automation potential" },
+    { fr: "Commandes fournisseurs en attente de livraison",                   en: "Supplier orders pending delivery" },
+    { fr: "Score d'efficacité opérationnelle et économies potentielles",      en: "Operational efficiency score and savings" },
+  ],
+  marketing: [
+    { fr: "Performance des campagnes en cours",                               en: "Performance of active campaigns" },
+    { fr: "Leads entrants cette semaine — statut et priorité",                en: "Incoming leads this week — status and priority" },
+    { fr: "Contrats clients à renouveler prochainement",                      en: "Client contracts up for renewal" },
+    { fr: "Pipeline commercial et opportunités à risque",                     en: "Sales pipeline and at-risk opportunities" },
+    { fr: "Activité récente dans le CRM — nouveaux contacts",                 en: "Recent CRM activity — new contacts" },
+  ],
+  direction: [
+    { fr: "Santé globale de l'organisation — risques et alertes",             en: "Organization health — risks and alerts" },
+    { fr: "Économies potentielles identifiées ce mois-ci",                    en: "Potential savings identified this month" },
+    { fr: "Performance financière : budget vs réel par département",          en: "Financial performance: budget vs actual by department" },
+    { fr: "Incidents critiques + emails prioritaires + projets en retard",    en: "Critical incidents + priority emails + late projects" },
+    { fr: "Quels sont les 3 principaux risques opérationnels actuels ?",      en: "What are the top 3 current operational risks?" },
+  ],
+  legal: [
+    { fr: "Contrats avec clauses de renouvellement tacite ce trimestre",      en: "Contracts with auto-renewal clauses this quarter" },
+    { fr: "Obligations réglementaires à date limite imminente",               en: "Regulatory obligations with imminent deadlines" },
+    { fr: "Fournisseurs avec contrats à renégocier",                          en: "Vendors with contracts to renegotiate" },
+    { fr: "Risques juridiques identifiés dans les contrats actifs",           en: "Legal risks identified in active contracts" },
+    { fr: "État de la conformité organisationnelle",                          en: "Organizational compliance status" },
+  ],
+  approvisionnement: [
+    { fr: "Fournisseurs en doublon — consolidation possible",                 en: "Duplicate vendors — consolidation possible" },
+    { fr: "Contrats à fort potentiel de renégociation",                       en: "Contracts with high renegotiation potential" },
+    { fr: "Commandes en attente et délais de livraison",                      en: "Pending orders and delivery timelines" },
+    { fr: "Économies identifiées sur les achats ce trimestre",                en: "Procurement savings identified this quarter" },
+    { fr: "Top fournisseurs par volume de dépenses",                          en: "Top vendors by spend volume" },
+  ],
+};
+
+function _updateAgentChips(deptType) {
+  const chips = _DEPT_CHIPS[deptType];
+  if (!chips) return;
+  const lang = document.documentElement.lang === "en" ? "en" : "fr";
+  document.querySelectorAll(".prompt-chip").forEach((btn, i) => {
+    if (!chips[i]) return;
+    const text = chips[i][lang] || chips[i].fr;
+    btn.dataset.promptFr = chips[i].fr;
+    btn.dataset.promptEn = chips[i].en;
+    btn.dataset.prompt   = chips[i][lang] || chips[i].fr;
+    btn.textContent      = text;
+  });
+}
+
 // ── Tableau de bord département (Phase 12) ────────────────────────────────────
 async function loadDeptDashboard() {
   const section = $("dept-dashboard-section");
@@ -3296,6 +3515,12 @@ async function loadDeptDashboard() {
     if (icon)  icon.textContent  = d.icon  || "📊";
     if (label) label.textContent = d.label || "Mon département";
     if (name)  name.textContent  = d.dept_name || "";
+
+    // Mémorise le type de département pour l'agent IA
+    if (d.dept_type) {
+      state.deptType = d.dept_type;
+      _updateAgentChips(d.dept_type);
+    }
 
     // CTA button — navigate to the recommended tab
     if (cta && d.primary_tab) {

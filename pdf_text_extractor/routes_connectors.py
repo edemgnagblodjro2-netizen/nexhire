@@ -12,8 +12,14 @@ from db import get_db, rows, row
 from rbac import ROLE_RANK, require_active_subscription, require_min_role
 
 VALID_TYPES = frozenset({
-    "microsoft_365", "salesforce", "servicenow", "jira", "sap", "workday",
-    "zendesk", "autotask", "hubspot",
+    # OAuth
+    "microsoft_365", "salesforce", "servicenow", "jira",
+    "zendesk", "hubspot", "google_workspace", "slack", "quickbooks",
+    # API Key / Credentials
+    "sap", "workday", "autotask",
+    "bamboohr", "adp",
+    "asana", "monday", "clickup",
+    "aws", "netsuite", "intune", "crowdstrike",
 })
 
 router = APIRouter(prefix="/api/connectors", tags=["connectors"])

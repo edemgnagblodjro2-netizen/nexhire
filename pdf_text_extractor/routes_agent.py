@@ -40,22 +40,92 @@ class AgentQueryResponse(BaseModel):
     audit_id: str | None = None
 
 
-def _connected_connectors(organization_id: str) -> list[str]:
-    """Retourne les types de connecteurs actifs pour l'organisation."""
+def _connected_connectors_for_user(user: CurrentUser) -> list[str]:
+    """Retourne les connecteurs actifs filtrés selon les droits département de l'utilisateur.
+
+    - Admins/owners : voient tous les connecteurs.
+    - Autres : connecteurs org-wide (sans restriction) + connecteurs de leurs départements.
+    - Dégradation gracieuse si connector_departments n'existe pas encore.
+    """
+    is_admin = user.role in ("admin", "owner")
+    try:
+        with get_db() as cur:
+            if is_admin:
+                cur.execute(
+                    "SELECT connector_type FROM connectors WHERE organization_id = %s AND status = 'connected'",
+                    (user.organization_id,),
+                )
+                return [r["connector_type"] for r in rows(cur)]
+
+            # Récupère les départements de l'utilisateur
+            cur.execute(
+                "SELECT department_id FROM department_members WHERE user_id = %s",
+                (user.id,),
+            )
+            dept_ids = [r["department_id"] for r in rows(cur)]
+
+            if not dept_ids:
+                # Pas de département → connecteurs org-wide seulement (sans restriction)
+                cur.execute(
+                    """
+                    SELECT DISTINCT c.connector_type
+                    FROM connectors c
+                    WHERE c.organization_id = %s AND c.status = 'connected'
+                      AND NOT EXISTS (
+                          SELECT 1 FROM connector_departments cd WHERE cd.connector_id = c.id
+                      )
+                    """,
+                    (user.organization_id,),
+                )
+            else:
+                # Connecteurs org-wide OU assignés à l'un de ses départements
+                cur.execute(
+                    """
+                    SELECT DISTINCT c.connector_type
+                    FROM connectors c
+                    WHERE c.organization_id = %s AND c.status = 'connected'
+                      AND (
+                          NOT EXISTS (SELECT 1 FROM connector_departments cd WHERE cd.connector_id = c.id)
+                          OR EXISTS (
+                              SELECT 1 FROM connector_departments cd
+                              WHERE cd.connector_id = c.id AND cd.department_id = ANY(%s)
+                          )
+                      )
+                    """,
+                    (user.organization_id, dept_ids),
+                )
+            return [r["connector_type"] for r in rows(cur)]
+    except Exception:
+        # Table connector_departments pas encore créée → retourne tout
+        try:
+            with get_db() as cur:
+                cur.execute(
+                    "SELECT connector_type FROM connectors WHERE organization_id = %s AND status = 'connected'",
+                    (user.organization_id,),
+                )
+                return [r["connector_type"] for r in rows(cur)]
+        except Exception:
+            return []
+
+
+def _get_user_dept_type(user_id: str) -> str | None:
+    """Retourne le type du premier département de l'utilisateur, ou None."""
     try:
         with get_db() as cur:
             cur.execute(
                 """
-                SELECT connector_type
-                FROM connectors
-                WHERE organization_id = %s AND status = 'connected'
+                SELECT d.dept_type
+                FROM department_members dm
+                JOIN departments d ON d.id = dm.department_id
+                WHERE dm.user_id = %s
+                LIMIT 1
                 """,
-                (organization_id,),
+                (user_id,),
             )
-            result = rows(cur)
-        return [r["connector_type"] for r in result]
+            r = row(cur)
+        return r["dept_type"] if r else None
     except Exception:
-        return []
+        return None
 
 
 @router.post("/query", response_model=AgentQueryResponse)
@@ -68,13 +138,13 @@ def agent_query(
 ):
     """Pose une question en langage naturel.
 
-    L'agent consulte automatiquement les connecteurs actifs de l'organisation,
-    synthétise les résultats et retourne une réponse structurée avec les sources.
+    L'agent consulte automatiquement les connecteurs actifs autorisés pour le département
+    de l'utilisateur, synthétise les résultats et retourne une réponse structurée.
     """
-    # Vérifie le quota mensuel et incrémente le compteur (HTTP 429 si dépassé).
     check_and_consume_query(user.organization_id, user.subscription_status)
 
-    connectors = _connected_connectors(user.organization_id)
+    connectors = _connected_connectors_for_user(user)
+    dept_type  = _get_user_dept_type(user.id)
 
     try:
         result: AgentResponse = run_agent(
@@ -83,6 +153,7 @@ def agent_query(
             language=payload.language,
             connected_connectors=connectors if connectors else None,
             org_id=user.organization_id,
+            dept_type=dept_type,
         )
     except RuntimeError as exc:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=str(exc)) from exc

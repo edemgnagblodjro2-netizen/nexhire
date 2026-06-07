@@ -243,6 +243,257 @@ TOOL_DEFINITIONS: list[dict] = [
             },
         },
     },
+    {
+        "type": "function",
+        "function": {
+            "name": "search_google_workspace",
+            "description": (
+                "Recherche dans Google Workspace : Gmail, Google Drive, Agenda, Meet. "
+                "Utile pour : emails non lus, fichiers partagés, réunions à venir."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string", "description": "Termes de recherche"},
+                    "source": {"type": "string", "enum": ["gmail", "drive", "calendar", "all"], "default": "all"},
+                    "limit": {"type": "integer", "default": 5},
+                },
+                "required": ["query"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "search_slack",
+            "description": (
+                "Recherche des messages, canaux et fichiers dans Slack. "
+                "Utile pour : décisions en attente, alertes équipe, communication interne."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string", "description": "Mots-clés"},
+                    "channel": {"type": "string", "description": "Nom du canal (optionnel)"},
+                    "limit": {"type": "integer", "default": 5},
+                },
+                "required": ["query"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "query_bamboohr",
+            "description": (
+                "Interroge BambooHR pour les données RH : effectifs, congés, onboarding, performance. "
+                "Utile pour : postes vacants, taux de roulement, absences, évaluations en attente."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "category": {
+                        "type": "string",
+                        "enum": ["headcount", "leave", "onboarding", "performance", "turnover"],
+                        "default": "headcount",
+                    },
+                    "department": {"type": "string", "description": "Département (optionnel)"},
+                },
+                "required": ["category"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "query_adp",
+            "description": (
+                "Interroge ADP Workforce pour la paie, les effectifs et les avantages sociaux. "
+                "Utile pour : masse salariale, absences, cotisations retraite."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "category": {
+                        "type": "string",
+                        "enum": ["payroll", "headcount", "leave", "benefits"],
+                        "default": "payroll",
+                    },
+                    "period": {"type": "string", "default": "current_month"},
+                },
+                "required": ["category"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "search_asana",
+            "description": (
+                "Recherche des tâches et projets dans Asana. "
+                "Utile pour : tâches en retard, projets actifs, charge de travail des équipes."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string"},
+                    "status": {"type": "string", "enum": ["active", "completed", "overdue", "all"], "default": "all"},
+                    "limit": {"type": "integer", "default": 5},
+                },
+                "required": ["query"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "search_monday",
+            "description": (
+                "Recherche des éléments et tableaux dans Monday.com. "
+                "Utile pour : projets à risque, éléments en retard, suivi opérationnel."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string"},
+                    "board": {"type": "string", "description": "Nom du tableau (optionnel)"},
+                    "status": {"type": "string", "default": "all"},
+                    "limit": {"type": "integer", "default": 5},
+                },
+                "required": ["query"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "search_clickup",
+            "description": (
+                "Recherche des tâches et espaces dans ClickUp. "
+                "Utile pour : tâches critiques bloquées, objectifs de l'équipe, deadlines."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string"},
+                    "status": {"type": "string", "enum": ["open", "in_progress", "done", "overdue", "all"], "default": "all"},
+                    "limit": {"type": "integer", "default": 5},
+                },
+                "required": ["query"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "query_quickbooks",
+            "description": (
+                "Interroge QuickBooks pour la comptabilité : factures, dépenses, bilans, clients. "
+                "Utile pour : factures impayées, dépenses du mois, trésorerie, rentabilité."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "category": {
+                        "type": "string",
+                        "enum": ["invoices", "expenses", "accounts", "profit_loss", "customers"],
+                        "default": "invoices",
+                    },
+                    "period": {"type": "string", "default": "current_month"},
+                },
+                "required": ["category"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "query_aws",
+            "description": (
+                "Interroge AWS Cost Explorer et EC2 pour les coûts cloud et instances. "
+                "Utile pour : facture AWS du mois, instances sous-utilisées, optimisation cloud."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "category": {
+                        "type": "string",
+                        "enum": ["costs", "instances", "s3", "lambda", "all"],
+                        "default": "costs",
+                    },
+                    "period": {"type": "string", "default": "current_month"},
+                },
+                "required": ["category"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "query_netsuite",
+            "description": (
+                "Interroge NetSuite ERP pour les finances, stocks et opérations. "
+                "Utile pour : revenus, stocks critiques, commandes en attente, fournisseurs."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "category": {
+                        "type": "string",
+                        "enum": ["financials", "inventory", "orders", "vendors", "employees"],
+                        "default": "financials",
+                    },
+                    "period": {"type": "string", "default": "current_month"},
+                },
+                "required": ["category"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "query_intune",
+            "description": (
+                "Interroge Microsoft Intune pour la gestion des appareils : conformité, mises à jour, inventaire. "
+                "Utile pour : appareils non conformes, mises à jour critiques, politiques IT."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "category": {
+                        "type": "string",
+                        "enum": ["devices", "compliance", "updates", "policies", "apps"],
+                        "default": "devices",
+                    },
+                    "status": {"type": "string", "enum": ["compliant", "non_compliant", "all"], "default": "all"},
+                },
+                "required": ["category"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "search_crowdstrike",
+            "description": (
+                "Recherche des alertes et détections dans CrowdStrike Falcon. "
+                "Utile pour : menaces actives, incidents cybersécurité, machines à risque."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string", "description": "Type de menace ou hôte ciblé"},
+                    "severity": {
+                        "type": "string",
+                        "enum": ["critical", "high", "medium", "low", "all"],
+                        "default": "all",
+                    },
+                    "limit": {"type": "integer", "default": 5},
+                },
+                "required": ["query"],
+            },
+        },
+    },
 ]
 
 
@@ -610,6 +861,123 @@ def _mock_autotask(query: str, type: str = "all", status: str = "all", limit: in
     return data[:limit]
 
 
+def _mock_google_workspace(query: str, source: str = "all", limit: int = 5) -> list[dict]:
+    return [
+        {"id": "msg_001", "type": "email", "expéditeur": "pdg@client.ca", "sujet": "Re: Réunion Q3 — budget annuel", "date": "2026-06-06", "statut": "Non lu"},
+        {"id": "file_002", "type": "drive", "nom": "Budget 2026-2027 v3.xlsx", "modifié_par": "Finance", "date": "2026-06-05"},
+        {"id": "meet_003", "type": "calendar", "titre": "Comité de direction mensuel", "date": "2026-06-10", "participants": 8},
+        {"id": "msg_004", "type": "email", "expéditeur": "rh@organisation.ca", "sujet": "Politique congés été 2026 — mise à jour", "date": "2026-06-04", "statut": "Lu"},
+    ][:limit]
+
+
+def _mock_slack(query: str, channel: str | None = None, limit: int = 5) -> list[dict]:
+    return [
+        {"canal": "#direction", "auteur": "Marie T.", "message": "Le rapport d'audit Q2 est prêt pour révision.", "date": "2026-06-06T14:30:00Z"},
+        {"canal": "#it-support", "auteur": "Jean P.", "message": "⚠️ Certificat SSL du portail RH expire demain — action requise.", "date": "2026-06-06T10:15:00Z"},
+        {"canal": "#finances", "auteur": "Sophie L.", "message": "Dépassement budgétaire Azure détecté : +15% au-dessus du plafond mensuel.", "date": "2026-06-05T16:45:00Z"},
+        {"canal": "#general", "auteur": "Paul D.", "message": "Rappel : réunion budget annuel vendredi 09h00 salle A.", "date": "2026-06-05T09:00:00Z"},
+    ][:limit]
+
+
+def _mock_bamboohr(category: str, department: str | None = None) -> dict:
+    mocks = {
+        "headcount":   {"total_employés": 142, "actifs": 138, "en_congé": 4, "postes_vacants": 7, "nouveaux_30j": 3},
+        "leave":       {"congés_approuvés_semaine": 12, "maladies_semaine": 3, "congés_en_attente": 8},
+        "onboarding":  {"nouveaux_employés": 3, "completions_onboarding": 2, "tâches_en_retard": 5},
+        "performance": {"évaluations_en_attente": 23, "score_moyen": 4.1, "évaluations_complétées": 89},
+        "turnover":    {"taux_roulement_annuel": "8.5%", "départs_ytd": 12, "départs_involontaires": 3},
+    }
+    return mocks.get(category, {"message": f"Catégorie BambooHR '{category}' non disponible en mode simulé."})
+
+
+def _mock_adp(category: str, period: str = "current_month") -> dict:
+    mocks = {
+        "payroll":   {"masse_salariale_brute": "1 245 000 CAD", "nb_employés_payés": 138, "charges_patronales": "186 750 CAD", "période": period},
+        "headcount": {"total": 142, "temps_plein": 118, "temps_partiel": 20, "contractuels": 4},
+        "leave":     {"soldes_vacances_cumulés": "4 230 jours", "absences_mois": 47},
+        "benefits":  {"inscriptions_assurance": 135, "cotisations_retraite_total": "62 400 CAD"},
+    }
+    return mocks.get(category, {"message": f"Catégorie ADP '{category}' non disponible en mode simulé."})
+
+
+def _mock_asana(query: str, status: str = "all", limit: int = 5) -> list[dict]:
+    return [
+        {"id": "T-1001", "titre": "Lancement nouveau portail client", "projet": "Digital Transformation Q3", "statut": "En cours", "assigné": "Marie C.", "échéance": "2026-06-30", "priorité": "Haute"},
+        {"id": "T-1002", "titre": "Revue des contrats fournisseurs TI", "projet": "Optimisation Achats", "statut": "En retard", "assigné": "Jean T.", "échéance": "2026-06-01", "priorité": "Critique"},
+        {"id": "T-1003", "titre": "Formation équipe sur nouveaux outils", "projet": "Onboarding Tools", "statut": "À faire", "assigné": "RH", "échéance": "2026-06-20", "priorité": "Normale"},
+        {"id": "T-1004", "titre": "Audit de conformité SOC 2", "projet": "Sécurité & Conformité", "statut": "En cours", "assigné": "Paul D.", "échéance": "2026-07-15", "priorité": "Haute"},
+    ][:limit]
+
+
+def _mock_monday(query: str, board: str | None = None, status: str = "all", limit: int = 5) -> list[dict]:
+    return [
+        {"tableau": "Projets 2026", "item": "Migration infrastructure Azure", "statut": "En cours", "propriétaire": "IT", "date_fin": "2026-07-15"},
+        {"tableau": "Suivi Clients", "item": "Renouvellement contrat ABC Corp", "statut": "À risque", "propriétaire": "Ventes", "date_fin": "2026-06-30"},
+        {"tableau": "Marketing Q3", "item": "Campagne LinkedIn B2B", "statut": "Planifié", "propriétaire": "Marketing", "date_fin": "2026-07-01"},
+        {"tableau": "Projets 2026", "item": "Déploiement NexHire — Phase 2", "statut": "En retard", "propriétaire": "IT", "date_fin": "2026-06-10"},
+    ][:limit]
+
+
+def _mock_clickup(query: str, status: str = "all", limit: int = 5) -> list[dict]:
+    return [
+        {"id": "CU-001", "titre": "Audit sécurité infrastructure", "espace": "IT Operations", "statut": "En cours", "assigné": "Paul D.", "priorité": "Urgente", "échéance": "2026-06-12"},
+        {"id": "CU-002", "titre": "Rapport annuel RH 2026", "espace": "Ressources Humaines", "statut": "À faire", "assigné": "Sarah M.", "priorité": "Haute", "échéance": "2026-06-25"},
+        {"id": "CU-003", "titre": "Déploiement patch sécurité serveurs", "espace": "IT Operations", "statut": "Bloqué", "assigné": "Marc L.", "priorité": "Critique", "échéance": "2026-06-08"},
+    ][:limit]
+
+
+def _mock_quickbooks(category: str, period: str = "current_month") -> dict:
+    mocks = {
+        "invoices":    {"factures_envoyées": 47, "montant_total": "234 500 CAD", "en_attente_paiement": 12, "en_retard": 3, "valeur_retard": "28 400 CAD"},
+        "expenses":    {"dépenses_total": "89 300 CAD", "catégories_top": ["Logiciels: 32 000$", "Déplacements: 18 200$", "Bureau: 12 500$"]},
+        "accounts":    {"actif_courant": "1 450 000 CAD", "passif_courant": "380 000 CAD", "trésorerie": "290 000 CAD"},
+        "profit_loss": {"revenus": "485 000 CAD", "dépenses": "312 000 CAD", "bénéfice_net": "173 000 CAD", "marge": "35.7%"},
+        "customers":   {"clients_actifs": 84, "revenu_moyen_client": "5 773 CAD", "clients_en_retard": 7},
+    }
+    return mocks.get(category, {"message": f"Catégorie QuickBooks '{category}' non disponible en mode simulé."})
+
+
+def _mock_aws(category: str, period: str = "current_month") -> dict:
+    mocks = {
+        "costs":     {"coût_total": "28 450 USD", "variation_mois": "+12%", "top_services": ["EC2: 12 300$", "S3: 4 200$", "RDS: 3 800$", "Lambda: 1 200$"], "alerte": "Dépassement budget de 15%"},
+        "instances": {"total_ec2": 34, "actives": 28, "arrêtées": 6, "optimisation": "4 instances sous-utilisées — économie estimée 1 800 USD/mois"},
+        "s3":        {"buckets": 12, "stockage_total": "4.7 TB", "coût_stockage": "182 USD/mois"},
+        "lambda":    {"invocations_mois": "2.4M", "erreurs": "0.12%", "coût": "48 USD"},
+        "all":       {"coût_total": "28 450 USD", "instances_actives": 28, "alertes": 2, "optimisations_disponibles": 4},
+    }
+    return mocks.get(category, mocks["all"])
+
+
+def _mock_netsuite(category: str, period: str = "current_month") -> dict:
+    mocks = {
+        "financials": {"revenus": "1 234 000 CAD", "coûts": "876 000 CAD", "ebitda": "358 000 CAD", "période": period},
+        "inventory":  {"articles_total": 1847, "valeur_stock": "432 000 CAD", "ruptures": 12, "surstock": 45},
+        "orders":     {"commandes_ouvertes": 67, "valeur": "189 000 CAD", "en_retard": 8},
+        "vendors":    {"fournisseurs_actifs": 42, "factures_attente": 23, "montant_dû": "94 500 CAD"},
+        "employees":  {"effectif": 142, "masse_salariale": "1 245 000 CAD"},
+    }
+    return mocks.get(category, {"message": f"Catégorie NetSuite '{category}' non disponible en mode simulé."})
+
+
+def _mock_intune(category: str, status: str = "all") -> dict:
+    mocks = {
+        "devices":    {"total": 187, "windows": 142, "mac": 31, "mobile": 14, "non_conformes": 9},
+        "compliance": {"conformes": 178, "non_conformes": 9, "pourcentage": "95.2%", "problèmes_top": ["BitLocker désactivé: 5", "Antivirus obsolète: 3", "OS non à jour: 1"]},
+        "updates":    {"en_attente": 34, "critiques": 6, "déploiements_actifs": 2},
+        "policies":   {"politiques_actives": 18, "conflits": 1, "appareils_non_conformes": 9},
+        "apps":       {"apps_déployées": 47, "installations_échouées": 3, "apps_obsolètes": 8},
+    }
+    return mocks.get(category, mocks["devices"])
+
+
+def _mock_crowdstrike(query: str, severity: str = "all", limit: int = 5) -> list[dict]:
+    return [
+        {"id": "DET-2847", "titre": "Tentative de mouvement latéral détectée", "sévérité": "Critique", "hôte": "WRK-0142", "statut": "En cours", "détecté": "2026-06-06T03:12:00Z"},
+        {"id": "DET-2841", "titre": "Exécution de script PowerShell suspect", "sévérité": "Haute", "hôte": "SRV-DB01", "statut": "Résolu", "détecté": "2026-06-05T22:45:00Z"},
+        {"id": "DET-2835", "titre": "Connexion depuis IP inhabituelle (géolocalisation étrangère)", "sévérité": "Moyenne", "hôte": "USR-sarah.m", "statut": "Résolu", "détecté": "2026-06-05T14:30:00Z"},
+    ][:limit]
+
+
 def _mock_hubspot(query: str, object_type: str = "all", limit: int = 5) -> list[dict]:
     data = [
         {"type": "deal", "nom": "Ville de Québec — Expansion licences", "valeur": "180 000 $", "étape": "Proposition envoyée", "probabilité": "70 %", "contact": "Directeur TI", "fermeture_prévue": "2026-07-31"},
@@ -678,15 +1046,27 @@ def _call_tool(name: str, arguments: dict[str, Any], org_id: str | None = None) 
 
     # Mocks (démo / connecteur non configuré)
     handlers = {
-        "search_servicenow":    lambda a: _mock_servicenow(**a),
-        "search_jira":          lambda a: _mock_jira(**a),
-        "query_sap":            lambda a: _mock_sap(**a),
-        "search_microsoft_365": lambda a: _mock_microsoft_365(**a),
-        "search_salesforce":    lambda a: _mock_salesforce(**a),
-        "query_workday":        lambda a: _mock_workday(**a),
-        "search_zendesk":       lambda a: _mock_zendesk(**a),
-        "search_autotask":      lambda a: _mock_autotask(**a),
-        "search_hubspot":       lambda a: _mock_hubspot(**a),
+        "search_servicenow":      lambda a: _mock_servicenow(**a),
+        "search_jira":            lambda a: _mock_jira(**a),
+        "query_sap":              lambda a: _mock_sap(**a),
+        "search_microsoft_365":   lambda a: _mock_microsoft_365(**a),
+        "search_salesforce":      lambda a: _mock_salesforce(**a),
+        "query_workday":          lambda a: _mock_workday(**a),
+        "search_zendesk":         lambda a: _mock_zendesk(**a),
+        "search_autotask":        lambda a: _mock_autotask(**a),
+        "search_hubspot":         lambda a: _mock_hubspot(**a),
+        "search_google_workspace": lambda a: _mock_google_workspace(**a),
+        "search_slack":           lambda a: _mock_slack(**a),
+        "query_bamboohr":         lambda a: _mock_bamboohr(**a),
+        "query_adp":              lambda a: _mock_adp(**a),
+        "search_asana":           lambda a: _mock_asana(**a),
+        "search_monday":          lambda a: _mock_monday(**a),
+        "search_clickup":         lambda a: _mock_clickup(**a),
+        "query_quickbooks":       lambda a: _mock_quickbooks(**a),
+        "query_aws":              lambda a: _mock_aws(**a),
+        "query_netsuite":         lambda a: _mock_netsuite(**a),
+        "query_intune":           lambda a: _mock_intune(**a),
+        "search_crowdstrike":     lambda a: _mock_crowdstrike(**a),
     }
     handler = handlers.get(name)
     if not handler:
@@ -715,6 +1095,7 @@ def run_agent(
     language: str = "fr",
     connected_connectors: list[str] | None = None,
     org_id: str | None = None,
+    dept_type: str | None = None,
 ) -> AgentResponse:
     """Boucle agent en deux passes :
     1. LLM choisit quels outils appeler (function calling).
@@ -733,15 +1114,27 @@ def run_agent(
 
     # Filtrer les outils selon les connecteurs actifs
     connector_tool_map = {
-        "microsoft_365": "search_microsoft_365",
-        "salesforce":    "search_salesforce",
-        "servicenow":    "search_servicenow",
-        "jira":          "search_jira",
-        "sap":           "query_sap",
-        "workday":       "query_workday",
-        "zendesk":       "search_zendesk",
-        "autotask":      "search_autotask",
-        "hubspot":       "search_hubspot",
+        "microsoft_365":   "search_microsoft_365",
+        "salesforce":      "search_salesforce",
+        "servicenow":      "search_servicenow",
+        "jira":            "search_jira",
+        "sap":             "query_sap",
+        "workday":         "query_workday",
+        "zendesk":         "search_zendesk",
+        "autotask":        "search_autotask",
+        "hubspot":         "search_hubspot",
+        "google_workspace": "search_google_workspace",
+        "slack":           "search_slack",
+        "bamboohr":        "query_bamboohr",
+        "adp":             "query_adp",
+        "asana":           "search_asana",
+        "monday":          "search_monday",
+        "clickup":         "search_clickup",
+        "quickbooks":      "query_quickbooks",
+        "aws":             "query_aws",
+        "netsuite":        "query_netsuite",
+        "intune":          "query_intune",
+        "crowdstrike":     "search_crowdstrike",
     }
     if connected_connectors is not None:
         active_tools = {connector_tool_map[c] for c in connected_connectors if c in connector_tool_map}
@@ -754,10 +1147,24 @@ def run_agent(
         tools = tools + INTERNAL_TOOL_DEFINITIONS
 
     lang_name = "français" if language == "fr" else "English"
+
+    _dept_context = {
+        "finance":          "Tu es spécialisé Finance. Priorise budgets, factures, contrats, prévisions financières et coûts.",
+        "hr":               "Tu es spécialisé Ressources Humaines. Priorise effectifs, congés, recrutement, performance et roulement.",
+        "it":               "Tu es spécialisé Technologies de l'information. Priorise incidents, licences, inventaire, cybersécurité et cloud.",
+        "legal":            "Tu es spécialisé Juridique. Priorise contrats, conformité, risques légaux et obligations réglementaires.",
+        "operations":       "Tu es spécialisé Opérations. Priorise processus, projets, livraisons, qualité et efficacité opérationnelle.",
+        "marketing":        "Tu es spécialisé Marketing. Priorise campagnes, leads, opportunités commerciales et performance CRM.",
+        "direction":        "Tu es un conseiller exécutif. Fournis une vue consolidée de l'organisation : santé globale, risques, économies et décisions stratégiques.",
+        "approvisionnement":"Tu es spécialisé Approvisionnement. Priorise contrats fournisseurs, économies, appels d'offres et gestion des achats.",
+    }
+    dept_hint = _dept_context.get(dept_type or "", "")
+
     system_prompt = (
         f"Tu es NexHire Enterprise Assistant, un employé virtuel intelligent. "
         f"Réponds toujours en {lang_name}. "
-        "Tu as accès à des outils connectés aux systèmes de l'organisation. "
+        + (f"{dept_hint} " if dept_hint else "")
+        + "Tu as accès à des outils connectés aux systèmes de l'organisation. "
         "Appelle les outils nécessaires pour répondre à la question, puis synthétise "
         "une réponse claire et structurée. Si plusieurs systèmes sont pertinents, "
         "consulte-les tous. Indique toujours les sources utilisées."
