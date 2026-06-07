@@ -608,6 +608,15 @@ def create_department(
     payload: DeptPayload,
     user: CurrentUser = Depends(require_min_role("admin")),
 ):
+    # Vérifie l'unicité du nom dans l'organisation
+    with get_db() as cur:
+        cur.execute(
+            "SELECT id FROM departments WHERE organization_id = %s AND LOWER(name) = LOWER(%s) LIMIT 1",
+            (user.organization_id, payload.name.strip()),
+        )
+        if row(cur):
+            raise HTTPException(409, f"Un département « {payload.name} » existe déjà dans cette organisation.")
+
     try:
         with get_db() as cur:
             cur.execute(
@@ -615,7 +624,7 @@ def create_department(
                    VALUES (%s, %s, %s, %s, %s, %s) RETURNING *""",
                 (
                     user.organization_id,
-                    payload.name,
+                    payload.name.strip(),
                     payload.description,
                     payload.annual_budget,
                     payload.currency,
@@ -623,6 +632,8 @@ def create_department(
                 ),
             )
             return row(cur)
+    except HTTPException:
+        raise
     except Exception as ex:
         msg = str(ex)
         if "does not exist" in msg or "relation" in msg:

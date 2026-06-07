@@ -3949,7 +3949,7 @@ async function installWorkspace(templateId) {
   try {
     await apiCall("/api/departments", "POST", {
       name: tpl.name.fr,
-      description: tpl.desc.fr,
+      description: tpl.desc?.fr || "",
       dept_type: tpl.dept_type,
       annual_budget: 0,
       currency: "CAD",
@@ -3960,7 +3960,14 @@ async function installWorkspace(templateId) {
     _updateWorkspaceBar();
   } catch (e) {
     if (btn) { btn.disabled = false; btn.textContent = lang === "en" ? "Install" : "Installer"; }
-    alert(e.message || "Erreur lors de l'installation.");
+    // 409 = déjà installé : marquer comme tel silencieusement
+    if (e.message?.includes("existe déjà") || e.status === 409) {
+      _installedWorkspaces.add(tpl.dept_type);
+      _marketplaceBuilt = false;
+      buildMarketplace();
+    } else {
+      alert(e.message || "Erreur lors de l'installation.");
+    }
   }
 }
 
@@ -3997,7 +4004,14 @@ async function _updateWorkspaceBar() {
       if (label) { label.textContent = lang === "en" ? "All Workspaces" : "Tous les Workspaces"; }
 
       if (chips) {
-        chips.innerHTML = depts.map(d => {
+        // Déduplication par nom (insensible à la casse)
+        const seen = new Set();
+        const unique = depts.filter(d => {
+          const k = (d.name || "").toLowerCase();
+          if (seen.has(k)) return false;
+          seen.add(k); return true;
+        });
+        chips.innerHTML = unique.map(d => {
           const cfg = _typeConfig[d.dept_type] || _typeConfig.general;
           return `<span class="ws-chip" style="background:${cfg.color}" title="${esc(d.name)}"
                         onclick="switchTab('org')">${cfg.icon} ${esc(d.name)}</span>`;
