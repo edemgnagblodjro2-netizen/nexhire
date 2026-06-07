@@ -102,19 +102,23 @@ def executive_dashboard(user: CurrentUser = Depends(require_min_role("admin"))):
     except Exception:
         total_budget = total_spent = 0.0
 
-    # Économies potentielles (réutilise la logique optimisation)
+    # Économies potentielles — calcul rapide sans appeler l'optimisation (évite timeout)
     total_savings = 0.0
     try:
-        from routes_optimization import (
-            _unused_licenses, _duplicate_tools, _contracts_at_risk, _process_waste
-        )
-        savings_data = (
-            sum(l["annual_savings_potential"] for l in _unused_licenses(org_id))
-            + sum(d["annual_savings_potential"] for d in _duplicate_tools(org_id))
-            + sum(c.get("potential_savings", 0) for c in _contracts_at_risk(org_id))
-            + sum(p.get("annual_savings_potential", 0) for p in _process_waste(org_id))
-        )
-        total_savings = round(savings_data, 0)
+        lics = _safe(sb, "licenses", org_id)
+        for l in lics:
+            qty  = int(l.get("quantity") or 0)
+            asgn = int(l.get("assigned_count") or 0)
+            cost = float(l.get("cost_per_unit") or 0)
+            if qty > 0 and asgn / qty < 0.8:
+                mul = 12 if l.get("billing_cycle") == "monthly" else 1
+                total_savings += (qty - asgn) * cost * mul
+        procs = _safe(sb, "workforce_processes", org_id)
+        for p in procs:
+            total_savings += (float(p.get("manual_hours_per_month") or 0)
+                              * float(p.get("automation_potential") or 0) / 100
+                              * float(p.get("hourly_cost") or 50) * 12)
+        total_savings = round(total_savings, 0)
     except Exception:
         pass
 
@@ -138,7 +142,7 @@ def executive_dashboard(user: CurrentUser = Depends(require_min_role("admin"))):
     try:
         depts_raw = (
             sb.table("departments")
-            .select("id, name, dept_type")
+            .select("*")
             .eq("organization_id", org_id)
             .order("name")
             .execute().data or []

@@ -68,8 +68,11 @@ def list_apps(
         q = q.eq("department_id", dept_id)
     if status:
         q = q.eq("status", status)
-    res = q.order("name").execute()
-    return [_enrich_app(a) for a in (res.data or [])]
+    try:
+        res = q.order("name").execute()
+        return [_enrich_app(a) for a in (res.data or [])]
+    except Exception:
+        return []
 
 
 @router.post("", status_code=201)

@@ -71,8 +71,11 @@ def list_servers(
         q = q.eq("department_id", dept_id)
     if status:
         q = q.eq("status", status)
-    res = q.order("hostname").execute()
-    return [_enrich_server(s) for s in (res.data or [])]
+    try:
+        res = q.order("hostname").execute()
+        return [_enrich_server(s) for s in (res.data or [])]
+    except Exception:
+        return []
 
 
 @router.post("", status_code=201)

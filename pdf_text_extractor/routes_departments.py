@@ -455,8 +455,11 @@ def initialize_departments(
     tmpl = DEPT_TEMPLATES.get(org_type, DEPT_TEMPLATES["entreprise"])
     sb = service_client()
 
-    # Mise à jour du type d'org
-    sb.table("organizations").update({"org_type": org_type}).eq("id", user.organization_id).execute()
+    # Mise à jour du type d'org (colonne optionnelle — phase11)
+    try:
+        sb.table("organizations").update({"org_type": org_type}).eq("id", user.organization_id).execute()
+    except Exception:
+        pass
 
     # Évite les doublons : noms déjà existants
     existing = sb.table("departments").select("name").eq("organization_id", user.organization_id).execute()

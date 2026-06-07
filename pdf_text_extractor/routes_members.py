@@ -63,14 +63,17 @@ def list_invitations(user: CurrentUser = Depends(require_min_role("user"))):
     _require_admin(user)
     sb = service_client()
     from datetime import datetime, timezone
-    res = sb.table("pending_invitations") \
-        .select("id, email, role, expires_at, used_at, created_at") \
-        .eq("org_id", user.organization_id) \
-        .is_("used_at", "null") \
-        .gte("expires_at", datetime.now(timezone.utc).isoformat()) \
-        .order("created_at", desc=True) \
-        .execute()
-    return {"invitations": res.data or []}
+    try:
+        res = sb.table("pending_invitations") \
+            .select("id, email, role, expires_at, used_at, created_at") \
+            .eq("org_id", user.organization_id) \
+            .is_("used_at", "null") \
+            .gte("expires_at", datetime.now(timezone.utc).isoformat()) \
+            .order("created_at", desc=True) \
+            .execute()
+        return {"invitations": res.data or []}
+    except Exception:
+        return {"invitations": []}
 
 
 # ── Invite ─────────────────────────────────────────────────────────────────

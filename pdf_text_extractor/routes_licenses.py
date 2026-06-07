@@ -96,8 +96,11 @@ def list_licenses(
         today_iso = date.today().isoformat()
         q = q.gte("expiration_date", today_iso).lte("expiration_date", cutoff)
 
-    res = q.order("expiration_date").execute()
-    return [_enrich_license(r) for r in (res.data or [])]
+    try:
+        res = q.order("expiration_date").execute()
+        return [_enrich_license(r) for r in (res.data or [])]
+    except Exception:
+        return []
 
 
 @router.post("", status_code=201)
