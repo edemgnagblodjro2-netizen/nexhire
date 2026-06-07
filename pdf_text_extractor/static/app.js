@@ -2241,17 +2241,25 @@ async function _loadParcOverview() {
       options: { responsive: true, plugins: { legend: { display: true } }, scales: { y: { beginAtZero: true } } },
     });
 
-    // Forecast chart
+    // Forecast chart — masqué si toutes les valeurs sont nulles
     const fc = summary.forecast || [];
-    if (_parcForecastChart) _parcForecastChart.destroy();
-    _parcForecastChart = new Chart($("parc-forecast-chart"), {
-      type: "line",
-      data: {
-        labels: fc.map(f => f.period),
-        datasets: [{ label: "Prévision", data: fc.map(f => f.predicted), borderColor: "#818cf8", backgroundColor: "rgba(129,140,248,.15)", fill: true, tension: .3 }],
-      },
-      options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } },
-    });
+    const forecastPanel = $("parc-forecast-chart")?.closest(".chart-panel");
+    const hasForecasts  = fc.some(f => f.predicted > 0);
+    if (forecastPanel) forecastPanel.style.display = hasForecasts ? "" : "none";
+    if (hasForecasts) {
+      if (_parcForecastChart) _parcForecastChart.destroy();
+      _parcForecastChart = new Chart($("parc-forecast-chart"), {
+        type: "line",
+        data: {
+          labels: fc.map(f => f.period),
+          datasets: [{ label: "Prévision", data: fc.map(f => f.predicted), borderColor: "#818cf8", backgroundColor: "rgba(129,140,248,.15)", fill: true, tension: .3 }],
+        },
+        options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } },
+      });
+    } else if (_parcForecastChart) {
+      _parcForecastChart.destroy();
+      _parcForecastChart = null;
+    }
   } catch (e) { console.error(e); }
 }
 
