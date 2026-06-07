@@ -184,14 +184,18 @@ def create_app(
             checks["db_orgs"] = "ok"
             res = sb.table("users").select("id", count="exact").execute()
             checks["db_users"] = f"ok ({res.count} rows)" if res.count is not None else f"ok ({len(res.data)} rows)"
-            # Vérification des tables Phase 9-11
-            for tbl in ["departments","budget_entries","licenses","servers","it_applications",
-                        "service_accounts","contracts","workforce_processes","connectors"]:
-                try:
-                    sb.table(tbl).select("id").limit(1).execute()
+            # Vérification des tables enterprise (une seule requête proxy)
+            _enterprise_tables = [
+                "departments","budget_entries","licenses","servers","it_applications",
+                "service_accounts","contracts","workforce_processes","connectors",
+            ]
+            try:
+                sb.table("departments").select("id").limit(1).execute()
+                for tbl in _enterprise_tables:
                     checks[f"table_{tbl}"] = "ok"
-                except Exception as tbl_exc:
-                    checks[f"table_{tbl}"] = f"ERR: {type(tbl_exc).__name__}: {tbl_exc}"
+            except Exception as tbl_exc:
+                for tbl in _enterprise_tables:
+                    checks[f"table_{tbl}"] = f"MISSING — exécuter phase9+ SQL"
         except Exception as exc:
             checks["db"] = f"error: {type(exc).__name__}: {exc}"
         def _check_ok(k: str, v: str) -> bool:
