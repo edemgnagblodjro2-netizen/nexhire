@@ -178,9 +178,10 @@ def create_app(
                     "FERNET_KEYS", "OPENAI_API_KEY"]:
             checks[var] = "set" if os.environ.get(var) else "MISSING"
         try:
-            from supabase_client import service_client
-            sb = service_client()
-            sb.table("organizations").select("id").limit(1).execute()
+            from db import get_db, row as db_row
+            with get_db() as cur:
+                cur.execute("SELECT id FROM organizations LIMIT 1")
+                db_row(cur)
             checks["db"] = "ok"
         except Exception as exc:
             checks["db"] = f"error: {type(exc).__name__}: {exc}"

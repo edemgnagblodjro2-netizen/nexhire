@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 
 from auth import CurrentUser
 from rbac import require_min_role
-from supabase_client import service_client
+from db import get_db, rows, row
 
 router = APIRouter(prefix="/api/settings", tags=["settings"])
 
@@ -26,23 +26,36 @@ class PasswordChange(BaseModel):
 @router.get("/profile")
 def get_profile(user: CurrentUser = Depends(require_min_role("user"))):
     """Retourne le profil complet : infos utilisateur + organisation."""
-    sb = service_client()
 
     # Utilisateur
-    user_row = sb.table("users").select("full_name, email, role, created_at").eq("id", user.id).single().execute()
-    u = user_row.data or {}
+    with get_db() as cur:
+        cur.execute(
+            "SELECT full_name, email, role, created_at FROM users WHERE id = %s LIMIT 1",
+            (user.id,),
+        )
+        u = row(cur) or {}
 
     # Organisation
     org: dict = {}
     if user.organization_id:
-        org_row = sb.table("organizations").select("name, slug, created_at, org_type").eq("id", user.organization_id).single().execute()
-        org = org_row.data or {}
+        with get_db() as cur:
+            cur.execute(
+                "SELECT name, slug, created_at, org_type FROM organizations WHERE id = %s LIMIT 1",
+                (user.organization_id,),
+            )
+            org = row(cur) or {}
 
     # SSO (vérifie si un connecteur SAML/OIDC est configuré)
     sso_enabled = False
     try:
-        sso_res = sb.table("connectors").select("id").eq("organization_id", user.organization_id).eq("connector_type", "sso").eq("status", "connected").limit(1).execute()
-        sso_enabled = bool(sso_res.data)
+        with get_db() as cur:
+            cur.execute(
+                """SELECT id FROM connectors
+                   WHERE organization_id = %s AND connector_type = 'sso' AND status = 'connected'
+                   LIMIT 1""",
+                (user.organization_id,),
+            )
+            sso_enabled = bool(rows(cur))
     except Exception:
         pass
 
@@ -67,8 +80,11 @@ def update_profile(
     user: CurrentUser = Depends(require_min_role("user")),
 ):
     """Met à jour le nom complet de l'utilisateur."""
-    sb = service_client()
-    sb.table("users").update({"full_name": payload.full_name}).eq("id", user.id).execute()
+    with get_db() as cur:
+        cur.execute(
+            "UPDATE users SET full_name = %s WHERE id = %s",
+            (payload.full_name, user.id),
+        )
     return {"ok": True, "full_name": payload.full_name}
 
 
@@ -80,8 +96,7 @@ def change_password(
     user: CurrentUser = Depends(require_min_role("user")),
 ):
     """Change le mot de passe après vérification du mot de passe actuel."""
-    sb = service_client()
-    from supabase_client import anon_client
+    from supabase_client import anon_client, service_client
 
     # 1. Vérifie le mot de passe actuel en essayant de se connecter
     try:
@@ -95,6 +110,7 @@ def change_password(
 
     # 2. Applique le nouveau mot de passe via l'API admin (service role)
     try:
+        sb = service_client()
         sb.auth.admin.update_user_by_id(user.id, {"password": payload.new_password})
     except Exception as exc:
         raise HTTPException(status_code=500, detail=f"Impossible de changer le mot de passe : {exc}") from exc

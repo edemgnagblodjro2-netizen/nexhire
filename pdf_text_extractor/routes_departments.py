@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 
 from auth import CurrentUser
 from rbac import ROLE_RANK, require_min_role
-from supabase_client import service_client
+from db import get_db, rows, row
 
 router = APIRouter(prefix="/api/departments", tags=["departments"])
 
@@ -143,20 +143,29 @@ class AddMemberPayload(BaseModel):
 def dept_dashboard(user: CurrentUser = Depends(require_min_role("user"))):
     """Tableau de bord personnalisé selon le type de département de l'utilisateur."""
     try:
-        sb = service_client()
         org_id = user.organization_id
 
         # Trouve le département principal de l'utilisateur
         dept_type, dept_name, dept_id = "general", None, None
         if not user.is_service_account:
             try:
-                dm = sb.table("department_members").select("department_id").eq("user_id", user.id).limit(1).execute()
-                if dm.data:
-                    dept_id = dm.data[0]["department_id"]
-                    row = sb.table("departments").select("name, dept_type").eq("id", dept_id).limit(1).execute()
-                    if row.data:
-                        dept_name = row.data[0].get("name")
-                        dept_type = row.data[0].get("dept_type") or "general"
+                with get_db() as cur:
+                    cur.execute(
+                        "SELECT department_id FROM department_members WHERE user_id = %s LIMIT 1",
+                        (user.id,),
+                    )
+                    dm = row(cur)
+                if dm:
+                    dept_id = dm["department_id"]
+                    with get_db() as cur:
+                        cur.execute(
+                            "SELECT name, dept_type FROM departments WHERE id = %s LIMIT 1",
+                            (dept_id,),
+                        )
+                        dept_row = row(cur)
+                    if dept_row:
+                        dept_name = dept_row.get("name")
+                        dept_type = dept_row.get("dept_type") or "general"
             except Exception:
                 pass  # tables pas encore créées → vue générale
 
@@ -166,7 +175,7 @@ def dept_dashboard(user: CurrentUser = Depends(require_min_role("user"))):
             dept_type = "direction"
 
         cfg  = DEPT_TYPE_CONFIG.get(dept_type, DEPT_TYPE_CONFIG["general"])
-        kpis = _build_kpis(sb, org_id, dept_id, cfg["kpis"])
+        kpis = _build_kpis(org_id, dept_id, cfg["kpis"])
 
         return {
             "dept_type":    dept_type,
@@ -185,15 +194,23 @@ def dept_dashboard(user: CurrentUser = Depends(require_min_role("user"))):
                 "primary_tab": "optim", "primary_subtab": "dashboard", "kpis": []}
 
 
-def _q(sb, table: str, org_id: str, dept_id: str | None):
-    """Retourne un query builder filtré par org et optionnellement par département."""
-    q = sb.table(table).select("*").eq("organization_id", org_id)
-    if dept_id:
-        q = q.eq("department_id", dept_id)
-    return q
+def _q_fetch(table: str, org_id: str, dept_id: str | None) -> list[dict]:
+    """Exécute un SELECT * filtré par org et optionnellement par département."""
+    with get_db() as cur:
+        if dept_id:
+            cur.execute(
+                f"SELECT * FROM {table} WHERE organization_id = %s AND department_id = %s",
+                (org_id, dept_id),
+            )
+        else:
+            cur.execute(
+                f"SELECT * FROM {table} WHERE organization_id = %s",
+                (org_id,),
+            )
+        return rows(cur)
 
 
-def _build_kpis(sb, org_id: str, dept_id: str | None, kpi_keys: list[str]) -> list[dict]:
+def _build_kpis(org_id: str, dept_id: str | None, kpi_keys: list[str]) -> list[dict]:
     from datetime import date, timedelta
 
     today   = date.today()
@@ -202,34 +219,61 @@ def _build_kpis(sb, org_id: str, dept_id: str | None, kpi_keys: list[str]) -> li
 
     def _apps():
         if "apps" not in cache:
-            cache["apps"] = _q(sb, "it_applications", org_id, dept_id).execute().data or []
+            try:
+                cache["apps"] = _q_fetch("it_applications", org_id, dept_id)
+            except Exception:
+                cache["apps"] = []
         return cache["apps"]
 
     def _lics():
         if "lics" not in cache:
-            cache["lics"] = _q(sb, "licenses", org_id, dept_id).execute().data or []
+            try:
+                cache["lics"] = _q_fetch("licenses", org_id, dept_id)
+            except Exception:
+                cache["lics"] = []
         return cache["lics"]
 
     def _srvs():
         if "srvs" not in cache:
-            cache["srvs"] = _q(sb, "servers", org_id, dept_id).execute().data or []
+            try:
+                cache["srvs"] = _q_fetch("servers", org_id, dept_id)
+            except Exception:
+                cache["srvs"] = []
         return cache["srvs"]
 
     def _procs():
         if "procs" not in cache:
-            try: cache["procs"] = _q(sb, "workforce_processes", org_id, dept_id).execute().data or []
-            except Exception: cache["procs"] = []
+            try:
+                cache["procs"] = _q_fetch("workforce_processes", org_id, dept_id)
+            except Exception:
+                cache["procs"] = []
         return cache["procs"]
 
     def _contracts():
         if "contracts" not in cache:
-            try: cache["contracts"] = _q(sb, "contracts", org_id, dept_id).execute().data or []
-            except Exception: cache["contracts"] = []
+            try:
+                cache["contracts"] = _q_fetch("contracts", org_id, dept_id)
+            except Exception:
+                cache["contracts"] = []
         return cache["contracts"]
 
     def _budget():
         if "budget" not in cache:
-            cache["budget"] = _q(sb, "budget_entries", org_id, dept_id).eq("year", today.year).execute().data or []
+            try:
+                with get_db() as cur:
+                    if dept_id:
+                        cur.execute(
+                            "SELECT * FROM budget_entries WHERE organization_id = %s AND department_id = %s AND year = %s",
+                            (org_id, dept_id, today.year),
+                        )
+                    else:
+                        cur.execute(
+                            "SELECT * FROM budget_entries WHERE organization_id = %s AND year = %s",
+                            (org_id, today.year),
+                        )
+                    cache["budget"] = rows(cur)
+            except Exception:
+                cache["budget"] = []
         return cache["budget"]
 
     for key in kpi_keys:
@@ -371,8 +415,18 @@ def _build_kpis(sb, org_id: str, dept_id: str | None, kpi_keys: list[str]) -> li
                     "sub": "libérables", "icon": "🔓", "color": "#16a34a"})
 
             elif key == "efficiency_score":
-                apps = sb.table("it_applications").select("status, monthly_cost").eq("organization_id", org_id).execute().data or []
-                lics = sb.table("licenses").select("quantity, assigned_count").eq("organization_id", org_id).execute().data or []
+                with get_db() as cur:
+                    cur.execute(
+                        "SELECT status, monthly_cost FROM it_applications WHERE organization_id = %s",
+                        (org_id,),
+                    )
+                    apps = rows(cur)
+                with get_db() as cur:
+                    cur.execute(
+                        "SELECT quantity, assigned_count FROM licenses WHERE organization_id = %s",
+                        (org_id,),
+                    )
+                    lics = rows(cur)
                 tot_app = sum(float(a.get("monthly_cost") or 0) for a in apps if a.get("status") != "decommissioned")
                 usd_app = sum(float(a.get("monthly_cost") or 0) for a in apps if a.get("status") == "unused")
                 sw = max(0, 100 - (usd_app / tot_app * 100 if tot_app > 0 else 0))
@@ -453,58 +507,82 @@ def initialize_departments(
 ):
     """Crée en masse les départements prédéfinis pour le type d'organisation sélectionné."""
     tmpl = DEPT_TEMPLATES.get(org_type, DEPT_TEMPLATES["entreprise"])
-    sb = service_client()
 
     # Mise à jour du type d'org (colonne optionnelle — phase11)
     try:
-        sb.table("organizations").update({"org_type": org_type}).eq("id", user.organization_id).execute()
+        with get_db() as cur:
+            cur.execute(
+                "UPDATE organizations SET org_type = %s WHERE id = %s",
+                (org_type, user.organization_id),
+            )
     except Exception:
         pass
 
     # Évite les doublons : noms déjà existants
-    existing = sb.table("departments").select("name").eq("organization_id", user.organization_id).execute()
-    existing_names = {r["name"].lower() for r in (existing.data or [])}
+    with get_db() as cur:
+        cur.execute(
+            "SELECT name FROM departments WHERE organization_id = %s",
+            (user.organization_id,),
+        )
+        existing_names = {r["name"].lower() for r in rows(cur)}
 
     created = []
     for dept in tmpl:
         if dept["name"].lower() in existing_names:
             continue
-        res = sb.table("departments").insert({
-            "organization_id": user.organization_id,
-            "name":            dept["name"],
-            "description":     dept.get("description"),
-            "annual_budget":   0,
-            "currency":        "CAD",
-        }).execute()
-        created.append(res.data[0])
+        with get_db() as cur:
+            cur.execute(
+                """INSERT INTO departments (organization_id, name, description, annual_budget, currency)
+                   VALUES (%s, %s, %s, %s, %s) RETURNING *""",
+                (
+                    user.organization_id,
+                    dept["name"],
+                    dept.get("description"),
+                    0,
+                    "CAD",
+                ),
+            )
+            created.append(row(cur))
 
     return {"created": len(created), "skipped": len(tmpl) - len(created), "departments": created}
 
 
 @router.get("")
 def list_departments(user: CurrentUser = Depends(require_min_role("user"))):
-    sb = service_client()
-    q = (
-        sb.table("departments")
-        .select("*")
-        .eq("organization_id", user.organization_id)
-        .order("name")
-    )
-
     is_admin = ROLE_RANK.get(user.role, 0) >= 3 or user.is_service_account
-    if not is_admin:
-        dm = sb.table("department_members").select("department_id").eq("user_id", user.id).execute()
-        ids = [r["department_id"] for r in (dm.data or [])]
+
+    if is_admin:
+        with get_db() as cur:
+            cur.execute(
+                "SELECT * FROM departments WHERE organization_id = %s ORDER BY name",
+                (user.organization_id,),
+            )
+            depts = rows(cur)
+    else:
+        with get_db() as cur:
+            cur.execute(
+                "SELECT department_id FROM department_members WHERE user_id = %s",
+                (user.id,),
+            )
+            ids = [r["department_id"] for r in rows(cur)]
         if not ids:
             return []
-        q = q.in_("id", ids)
-
-    res = q.execute()
-    depts = res.data or []
+        placeholders = ",".join(["%s"] * len(ids))
+        with get_db() as cur:
+            cur.execute(
+                f"SELECT * FROM departments WHERE organization_id = %s AND id IN ({placeholders}) ORDER BY name",
+                (user.organization_id, *ids),
+            )
+            depts = rows(cur)
 
     for d in depts:
-        cnt = sb.table("department_members").select("user_id", count="exact").eq("department_id", d["id"]).execute()
-        d["member_count"] = cnt.count or 0
+        with get_db() as cur:
+            cur.execute(
+                "SELECT COUNT(*) AS cnt FROM department_members WHERE department_id = %s",
+                (d["id"],),
+            )
+            cnt_row = row(cur)
+        d["member_count"] = cnt_row["cnt"] if cnt_row else 0
 
     return depts
 
@@ -514,17 +592,21 @@ def create_department(
     payload: DeptPayload,
     user: CurrentUser = Depends(require_min_role("admin")),
 ):
-    sb = service_client()
     try:
-        res = sb.table("departments").insert({
-            "organization_id": user.organization_id,
-            "name": payload.name,
-            "description": payload.description,
-            "annual_budget": payload.annual_budget,
-            "currency": payload.currency,
-            "dept_type": payload.dept_type,
-        }).execute()
-        return res.data[0]
+        with get_db() as cur:
+            cur.execute(
+                """INSERT INTO departments (organization_id, name, description, annual_budget, currency, dept_type)
+                   VALUES (%s, %s, %s, %s, %s, %s) RETURNING *""",
+                (
+                    user.organization_id,
+                    payload.name,
+                    payload.description,
+                    payload.annual_budget,
+                    payload.currency,
+                    payload.dept_type,
+                ),
+            )
+            return row(cur)
     except Exception as ex:
         msg = str(ex)
         if "does not exist" in msg or "relation" in msg:
@@ -538,16 +620,22 @@ def update_department(
     payload: DeptPayload,
     user: CurrentUser = Depends(require_min_role("admin")),
 ):
-    sb = service_client()
-    _dept_or_404(sb, dept_id, user.organization_id)
-    res = sb.table("departments").update({
-        "name": payload.name,
-        "description": payload.description,
-        "annual_budget": payload.annual_budget,
-        "currency": payload.currency,
-        "dept_type": payload.dept_type,
-    }).eq("id", dept_id).execute()
-    return res.data[0]
+    _dept_or_404(dept_id, user.organization_id)
+    with get_db() as cur:
+        cur.execute(
+            """UPDATE departments
+               SET name = %s, description = %s, annual_budget = %s, currency = %s, dept_type = %s
+               WHERE id = %s RETURNING *""",
+            (
+                payload.name,
+                payload.description,
+                payload.annual_budget,
+                payload.currency,
+                payload.dept_type,
+                dept_id,
+            ),
+        )
+        return row(cur)
 
 
 @router.delete("/{dept_id}", status_code=204)
@@ -555,9 +643,9 @@ def delete_department(
     dept_id: str,
     user: CurrentUser = Depends(require_min_role("owner")),
 ):
-    sb = service_client()
-    _dept_or_404(sb, dept_id, user.organization_id)
-    sb.table("departments").delete().eq("id", dept_id).execute()
+    _dept_or_404(dept_id, user.organization_id)
+    with get_db() as cur:
+        cur.execute("DELETE FROM departments WHERE id = %s", (dept_id,))
 
 
 @router.get("/{dept_id}/members")
@@ -565,15 +653,16 @@ def list_dept_members(
     dept_id: str,
     user: CurrentUser = Depends(require_min_role("admin")),
 ):
-    sb = service_client()
-    _dept_or_404(sb, dept_id, user.organization_id)
-    res = (
-        sb.table("department_members")
-        .select("*, users(id, full_name, email, role)")
-        .eq("department_id", dept_id)
-        .execute()
-    )
-    return res.data or []
+    _dept_or_404(dept_id, user.organization_id)
+    with get_db() as cur:
+        cur.execute(
+            """SELECT dm.*, u.id AS u_id, u.full_name, u.email, u.role
+               FROM department_members dm
+               JOIN users u ON u.id = dm.user_id
+               WHERE dm.department_id = %s""",
+            (dept_id,),
+        )
+        return rows(cur)
 
 
 @router.post("/{dept_id}/members", status_code=201)
@@ -582,20 +671,26 @@ def add_dept_member(
     payload: AddMemberPayload,
     user: CurrentUser = Depends(require_min_role("admin")),
 ):
-    sb = service_client()
-    _dept_or_404(sb, dept_id, user.organization_id)
+    _dept_or_404(dept_id, user.organization_id)
 
-    check = sb.table("users").select("organization_id").eq("id", payload.user_id).limit(1).execute()
-    rows = check.data or []
-    if not rows or rows[0].get("organization_id") != user.organization_id:
+    with get_db() as cur:
+        cur.execute(
+            "SELECT organization_id FROM users WHERE id = %s LIMIT 1",
+            (payload.user_id,),
+        )
+        check = rows(cur)
+    if not check or check[0].get("organization_id") != user.organization_id:
         raise HTTPException(status_code=400, detail="Utilisateur introuvable dans cette organisation.")
 
-    res = sb.table("department_members").upsert({
-        "user_id": payload.user_id,
-        "department_id": dept_id,
-        "role": payload.role,
-    }).execute()
-    return res.data[0]
+    with get_db() as cur:
+        cur.execute(
+            """INSERT INTO department_members (user_id, department_id, role)
+               VALUES (%s, %s, %s)
+               ON CONFLICT (user_id, department_id) DO UPDATE SET role = EXCLUDED.role
+               RETURNING *""",
+            (payload.user_id, dept_id, payload.role),
+        )
+        return row(cur)
 
 
 @router.delete("/{dept_id}/members/{member_id}", status_code=204)
@@ -604,20 +699,21 @@ def remove_dept_member(
     member_id: str,
     user: CurrentUser = Depends(require_min_role("admin")),
 ):
-    sb = service_client()
-    _dept_or_404(sb, dept_id, user.organization_id)
-    sb.table("department_members").delete().eq("department_id", dept_id).eq("user_id", member_id).execute()
+    _dept_or_404(dept_id, user.organization_id)
+    with get_db() as cur:
+        cur.execute(
+            "DELETE FROM department_members WHERE department_id = %s AND user_id = %s",
+            (dept_id, member_id),
+        )
 
 
-def _dept_or_404(sb, dept_id: str, organization_id: str) -> dict:
-    res = (
-        sb.table("departments")
-        .select("id")
-        .eq("id", dept_id)
-        .eq("organization_id", organization_id)
-        .limit(1)
-        .execute()
-    )
-    if not (res.data or []):
+def _dept_or_404(dept_id: str, organization_id: str) -> dict:
+    with get_db() as cur:
+        cur.execute(
+            "SELECT id FROM departments WHERE id = %s AND organization_id = %s LIMIT 1",
+            (dept_id, organization_id),
+        )
+        result = row(cur)
+    if not result:
         raise HTTPException(status_code=404, detail="Département introuvable.")
-    return res.data[0]
+    return result

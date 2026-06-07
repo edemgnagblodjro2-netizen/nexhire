@@ -6,8 +6,8 @@ from pydantic import BaseModel, Field
 from agent_service import AgentResponse, run_agent
 from audit import AuditEvent, client_ip, log_audit, log_audit_sync
 from auth import CurrentUser
+from db import get_db, rows, row
 from rbac import require_active_subscription, require_min_role
-from supabase_client import service_client
 from usage import check_and_consume_query
 
 router = APIRouter(prefix="/api/agent", tags=["agent"])
@@ -16,9 +16,10 @@ router = APIRouter(prefix="/api/agent", tags=["agent"])
 @router.get("/quota")
 def get_quota(user: CurrentUser = Depends(require_min_role("user"))):
     """Retourne l'utilisation des requêtes du mois en cours pour l'organisation."""
-    sb = service_client()
-    res = sb.rpc("get_org_quota", {"p_org_id": user.organization_id}).execute()
-    data = res.data if isinstance(res.data, dict) else {}
+    with get_db() as cur:
+        cur.execute("SELECT get_org_quota(%s) AS result", (user.organization_id,))
+        r = row(cur)
+    data = r["result"] if r and isinstance(r.get("result"), dict) else {}
     return {
         "used":   data.get("used", 0),
         "limit":  data.get("limit", 1000),
@@ -42,15 +43,17 @@ class AgentQueryResponse(BaseModel):
 def _connected_connectors(organization_id: str) -> list[str]:
     """Retourne les types de connecteurs actifs pour l'organisation."""
     try:
-        sb = service_client()
-        res = (
-            sb.table("connectors")
-            .select("connector_type")
-            .eq("organization_id", organization_id)
-            .eq("status", "connected")
-            .execute()
-        )
-        return [row["connector_type"] for row in (res.data or [])]
+        with get_db() as cur:
+            cur.execute(
+                """
+                SELECT connector_type
+                FROM connectors
+                WHERE organization_id = %s AND status = 'connected'
+                """,
+                (organization_id,),
+            )
+            result = rows(cur)
+        return [r["connector_type"] for r in result]
     except Exception:
         return []
 

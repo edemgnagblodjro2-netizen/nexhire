@@ -6,8 +6,8 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, Field
 
 from auth import CurrentUser
+from db import get_db, row, rows
 from rbac import ROLE_RANK, require_min_role
-from supabase_client import service_client
 
 router = APIRouter(prefix="/api/licenses", tags=["licenses"])
 
@@ -32,9 +32,12 @@ class LicensePayload(BaseModel):
 def _allowed_dept_ids(user: CurrentUser) -> list[str] | None:
     if ROLE_RANK.get(user.role, 0) >= 3 or user.is_service_account:
         return None
-    sb = service_client()
-    res = sb.table("department_members").select("department_id").eq("user_id", user.id).execute()
-    return [r["department_id"] for r in (res.data or [])]
+    with get_db() as cur:
+        cur.execute(
+            "SELECT department_id FROM department_members WHERE user_id = %s",
+            (user.id,),
+        )
+        return [r["department_id"] for r in rows(cur)]
 
 
 def _enrich_license(lic: dict) -> dict:
@@ -45,7 +48,7 @@ def _enrich_license(lic: dict) -> dict:
 
     if exp:
         try:
-            exp_date = date.fromisoformat(exp)
+            exp_date = date.fromisoformat(str(exp))
             days = (exp_date - today).days
             lic["days_to_expiry"] = days
             if days < 0:
@@ -65,11 +68,23 @@ def _enrich_license(lic: dict) -> dict:
 
     if ren:
         try:
-            lic["days_to_renewal"] = (date.fromisoformat(ren) - today).days
+            lic["days_to_renewal"] = (date.fromisoformat(str(ren)) - today).days
         except ValueError:
             lic["days_to_renewal"] = None
 
     return lic
+
+
+def _lic_or_404(lic_id: str, organization_id: str) -> dict:
+    with get_db() as cur:
+        cur.execute(
+            "SELECT id FROM licenses WHERE id = %s AND organization_id = %s LIMIT 1",
+            (lic_id, organization_id),
+        )
+        result = row(cur)
+    if not result:
+        raise HTTPException(status_code=404, detail="Licence introuvable.")
+    return result
 
 
 @router.get("")
@@ -78,27 +93,40 @@ def list_licenses(
     expiring_days: int | None = Query(None, ge=1, le=365),
     user: CurrentUser = Depends(require_min_role("user")),
 ):
-    sb = service_client()
-    q = (
-        sb.table("licenses")
-        .select("*, departments(name)")
-        .eq("organization_id", user.organization_id)
-    )
     allowed = _allowed_dept_ids(user)
+    if allowed is not None and not allowed:
+        return []
+
+    conditions = ["l.organization_id = %s"]
+    params: list = [user.organization_id]
+
     if allowed is not None:
-        if not allowed:
-            return []
-        q = q.in_("department_id", allowed)
+        conditions.append("l.department_id = ANY(%s)")
+        params.append(allowed)
     if dept_id:
-        q = q.eq("department_id", dept_id)
+        conditions.append("l.department_id = %s")
+        params.append(dept_id)
     if expiring_days is not None:
         cutoff = (date.today() + timedelta(days=expiring_days)).isoformat()
         today_iso = date.today().isoformat()
-        q = q.gte("expiration_date", today_iso).lte("expiration_date", cutoff)
+        conditions.append("l.expiration_date >= %s")
+        params.append(today_iso)
+        conditions.append("l.expiration_date <= %s")
+        params.append(cutoff)
 
+    where = " AND ".join(conditions)
+    sql = f"""
+        SELECT l.*, d.name AS department_name
+        FROM licenses l
+        LEFT JOIN departments d ON l.department_id = d.id
+        WHERE {where}
+        ORDER BY l.expiration_date
+    """
     try:
-        res = q.order("expiration_date").execute()
-        return [_enrich_license(r) for r in (res.data or [])]
+        with get_db() as cur:
+            cur.execute(sql, params)
+            result = rows(cur)
+        return [_enrich_license(r) for r in result]
     except Exception:
         return []
 
@@ -108,25 +136,37 @@ def create_license(
     payload: LicensePayload,
     user: CurrentUser = Depends(require_min_role("manager")),
 ):
-    sb = service_client()
-    res = sb.table("licenses").insert({
-        "organization_id":  user.organization_id,
-        "department_id":    payload.department_id,
-        "application_id":   payload.application_id,
-        "product_name":     payload.product_name,
-        "vendor":           payload.vendor,
-        "license_type":     payload.license_type,
-        "quantity":         payload.quantity,
-        "assigned_count":   payload.assigned_count,
-        "cost_per_unit":    payload.cost_per_unit,
-        "billing_cycle":    payload.billing_cycle,
-        "purchase_date":    payload.purchase_date,
-        "expiration_date":  payload.expiration_date,
-        "renewal_date":     payload.renewal_date,
-        "auto_renew":       payload.auto_renew,
-        "notes":            payload.notes,
-    }).execute()
-    return _enrich_license(res.data[0])
+    with get_db() as cur:
+        cur.execute(
+            """
+            INSERT INTO licenses (
+                organization_id, department_id, application_id, product_name,
+                vendor, license_type, quantity, assigned_count, cost_per_unit,
+                billing_cycle, purchase_date, expiration_date, renewal_date,
+                auto_renew, notes
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            RETURNING *
+            """,
+            (
+                user.organization_id,
+                payload.department_id,
+                payload.application_id,
+                payload.product_name,
+                payload.vendor,
+                payload.license_type,
+                payload.quantity,
+                payload.assigned_count,
+                payload.cost_per_unit,
+                payload.billing_cycle,
+                payload.purchase_date,
+                payload.expiration_date,
+                payload.renewal_date,
+                payload.auto_renew,
+                payload.notes,
+            ),
+        )
+        result = row(cur)
+    return _enrich_license(result)
 
 
 @router.patch("/{lic_id}")
@@ -135,25 +175,38 @@ def update_license(
     payload: LicensePayload,
     user: CurrentUser = Depends(require_min_role("manager")),
 ):
-    sb = service_client()
-    _lic_or_404(sb, lic_id, user.organization_id)
-    res = sb.table("licenses").update({
-        "department_id":    payload.department_id,
-        "application_id":   payload.application_id,
-        "product_name":     payload.product_name,
-        "vendor":           payload.vendor,
-        "license_type":     payload.license_type,
-        "quantity":         payload.quantity,
-        "assigned_count":   payload.assigned_count,
-        "cost_per_unit":    payload.cost_per_unit,
-        "billing_cycle":    payload.billing_cycle,
-        "purchase_date":    payload.purchase_date,
-        "expiration_date":  payload.expiration_date,
-        "renewal_date":     payload.renewal_date,
-        "auto_renew":       payload.auto_renew,
-        "notes":            payload.notes,
-    }).eq("id", lic_id).execute()
-    return _enrich_license(res.data[0])
+    _lic_or_404(lic_id, user.organization_id)
+    with get_db() as cur:
+        cur.execute(
+            """
+            UPDATE licenses SET
+                department_id = %s, application_id = %s, product_name = %s,
+                vendor = %s, license_type = %s, quantity = %s, assigned_count = %s,
+                cost_per_unit = %s, billing_cycle = %s, purchase_date = %s,
+                expiration_date = %s, renewal_date = %s, auto_renew = %s, notes = %s
+            WHERE id = %s
+            RETURNING *
+            """,
+            (
+                payload.department_id,
+                payload.application_id,
+                payload.product_name,
+                payload.vendor,
+                payload.license_type,
+                payload.quantity,
+                payload.assigned_count,
+                payload.cost_per_unit,
+                payload.billing_cycle,
+                payload.purchase_date,
+                payload.expiration_date,
+                payload.renewal_date,
+                payload.auto_renew,
+                payload.notes,
+                lic_id,
+            ),
+        )
+        result = row(cur)
+    return _enrich_license(result)
 
 
 @router.delete("/{lic_id}", status_code=204)
@@ -161,13 +214,6 @@ def delete_license(
     lic_id: str,
     user: CurrentUser = Depends(require_min_role("admin")),
 ):
-    sb = service_client()
-    _lic_or_404(sb, lic_id, user.organization_id)
-    sb.table("licenses").delete().eq("id", lic_id).execute()
-
-
-def _lic_or_404(sb, lic_id: str, organization_id: str) -> dict:
-    res = sb.table("licenses").select("id").eq("id", lic_id).eq("organization_id", organization_id).limit(1).execute()
-    if not (res.data or []):
-        raise HTTPException(status_code=404, detail="Licence introuvable.")
-    return res.data[0]
+    _lic_or_404(lic_id, user.organization_id)
+    with get_db() as cur:
+        cur.execute("DELETE FROM licenses WHERE id = %s", (lic_id,))

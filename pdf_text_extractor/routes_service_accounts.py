@@ -8,8 +8,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
 
 from auth import CurrentUser
+from db import get_db, rows, row
 from rbac import ROLE_RANK, require_min_role
-from supabase_client import service_client
 
 router = APIRouter(prefix="/api/service-accounts", tags=["service-accounts"])
 
@@ -28,15 +28,18 @@ class UpdateSAPayload(BaseModel):
 
 @router.get("")
 def list_service_accounts(user: CurrentUser = Depends(require_min_role("admin"))):
-    sb = service_client()
-    res = (
-        sb.table("service_accounts")
-        .select("id, name, description, role, token_prefix, created_at, last_used_at, is_active")
-        .eq("organization_id", user.organization_id)
-        .order("created_at", desc=True)
-        .execute()
-    )
-    return res.data or []
+    with get_db() as cur:
+        cur.execute(
+            """
+            SELECT id, name, description, role, token_prefix,
+                   created_at, last_used_at, is_active
+            FROM service_accounts
+            WHERE organization_id = %s
+            ORDER BY created_at DESC
+            """,
+            (user.organization_id,),
+        )
+        return rows(cur)
 
 
 @router.post("", status_code=201)
@@ -48,20 +51,29 @@ def create_service_account(
     token_hash = hashlib.sha256(token.encode()).hexdigest()
     token_prefix = token[:12]
 
-    sb = service_client()
-    res = sb.table("service_accounts").insert({
-        "organization_id": user.organization_id,
-        "name": payload.name,
-        "description": payload.description,
-        "role": payload.role,
-        "token_hash": token_hash,
-        "token_prefix": token_prefix,
-        "created_by": None if user.is_service_account else user.id,
-    }).execute()
+    with get_db() as cur:
+        cur.execute(
+            """
+            INSERT INTO service_accounts (
+                organization_id, name, description, role,
+                token_hash, token_prefix, created_by
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s)
+            RETURNING *
+            """,
+            (
+                user.organization_id,
+                payload.name,
+                payload.description,
+                payload.role,
+                token_hash,
+                token_prefix,
+                None if user.is_service_account else user.id,
+            ),
+        )
+        result = row(cur)
 
-    row = res.data[0]
     # Token affiché une seule fois — jamais stocké en clair
-    return {**row, "token": token}
+    return {**result, "token": token}
 
 
 @router.patch("/{sa_id}")
@@ -70,8 +82,7 @@ def update_service_account(
     payload: UpdateSAPayload,
     user: CurrentUser = Depends(require_min_role("admin")),
 ):
-    sb = service_client()
-    _sa_or_404(sb, sa_id, user.organization_id)
+    _sa_or_404(sa_id, user.organization_id)
 
     updates: dict = {}
     if payload.name is not None:
@@ -84,8 +95,15 @@ def update_service_account(
     if not updates:
         raise HTTPException(status_code=400, detail="Aucun champ à mettre à jour.")
 
-    res = sb.table("service_accounts").update(updates).eq("id", sa_id).execute()
-    return res.data[0]
+    set_clause = ", ".join(f"{k} = %s" for k in updates)
+    values = list(updates.values()) + [sa_id]
+
+    with get_db() as cur:
+        cur.execute(
+            f"UPDATE service_accounts SET {set_clause} WHERE id = %s RETURNING *",
+            values,
+        )
+        return row(cur)
 
 
 @router.delete("/{sa_id}", status_code=204)
@@ -93,20 +111,18 @@ def delete_service_account(
     sa_id: str,
     user: CurrentUser = Depends(require_min_role("owner")),
 ):
-    sb = service_client()
-    _sa_or_404(sb, sa_id, user.organization_id)
-    sb.table("service_accounts").delete().eq("id", sa_id).execute()
+    _sa_or_404(sa_id, user.organization_id)
+    with get_db() as cur:
+        cur.execute("DELETE FROM service_accounts WHERE id = %s", (sa_id,))
 
 
-def _sa_or_404(sb, sa_id: str, organization_id: str) -> dict:
-    res = (
-        sb.table("service_accounts")
-        .select("id")
-        .eq("id", sa_id)
-        .eq("organization_id", organization_id)
-        .limit(1)
-        .execute()
-    )
-    if not (res.data or []):
+def _sa_or_404(sa_id: str, organization_id: str) -> dict:
+    with get_db() as cur:
+        cur.execute(
+            "SELECT id FROM service_accounts WHERE id = %s AND organization_id = %s LIMIT 1",
+            (sa_id, organization_id),
+        )
+        result = row(cur)
+    if not result:
         raise HTTPException(status_code=404, detail="Service account introuvable.")
-    return res.data[0]
+    return result

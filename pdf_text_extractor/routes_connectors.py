@@ -8,8 +8,8 @@ from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request,
 from audit import AuditEvent, client_ip, log_audit
 from auth import CurrentUser
 from crypto import encrypt
+from db import get_db, rows, row
 from rbac import require_active_subscription, require_min_role
-from supabase_client import service_client
 
 VALID_TYPES = frozenset({
     "microsoft_365", "salesforce", "servicenow", "jira", "sap", "workday",
@@ -35,14 +35,16 @@ def _now() -> str:
 @router.get("")
 def list_connectors(user: CurrentUser = Depends(require_min_role("user"))):
     """Liste tous les connecteurs de l'organisation."""
-    sb = service_client()
-    res = (
-        sb.table("connectors")
-        .select("id, connector_type, status, connected_at, last_error, updated_at")
-        .eq("organization_id", user.organization_id)
-        .execute()
-    )
-    return res.data or []
+    with get_db() as cur:
+        cur.execute(
+            """
+            SELECT id, connector_type, status, connected_at, last_error, updated_at
+            FROM connectors
+            WHERE organization_id = %s
+            """,
+            (user.organization_id,),
+        )
+        return rows(cur)
 
 
 @router.get("/{connector_type}/status")
@@ -52,18 +54,20 @@ def connector_status(
 ):
     """Statut d'un connecteur spécifique."""
     _check_type(connector_type)
-    sb = service_client()
-    res = (
-        sb.table("connectors")
-        .select("id, connector_type, status, connected_at, last_error, updated_at")
-        .eq("organization_id", user.organization_id)
-        .eq("connector_type", connector_type)
-        .limit(1)
-        .execute()
-    )
-    if not res.data:
+    with get_db() as cur:
+        cur.execute(
+            """
+            SELECT id, connector_type, status, connected_at, last_error, updated_at
+            FROM connectors
+            WHERE organization_id = %s AND connector_type = %s
+            LIMIT 1
+            """,
+            (user.organization_id, connector_type),
+        )
+        result = row(cur)
+    if not result:
         return {"connector_type": connector_type, "status": "disconnected"}
-    return res.data[0]
+    return result
 
 
 @router.post("/{connector_type}/connect", status_code=status.HTTP_200_OK)
@@ -76,36 +80,41 @@ def connect(
 ):
     """Simule la connexion (option B : stocke {"simulated": true} chiffré Fernet)."""
     _check_type(connector_type)
-    sb = service_client()
     creds = encrypt(json.dumps({"simulated": True}))
     now = _now()
 
-    existing = (
-        sb.table("connectors")
-        .select("id")
-        .eq("organization_id", user.organization_id)
-        .eq("connector_type", connector_type)
-        .limit(1)
-        .execute()
-    )
+    with get_db() as cur:
+        cur.execute(
+            "SELECT id FROM connectors WHERE organization_id = %s AND connector_type = %s LIMIT 1",
+            (user.organization_id, connector_type),
+        )
+        existing = row(cur)
 
-    if existing.data:
-        sb.table("connectors").update({
-            "status": "connected",
-            "encrypted_credentials": creds,
-            "connected_at": now,
-            "last_error": None,
-            "updated_at": now,
-        }).eq("id", existing.data[0]["id"]).execute()
+    if existing:
+        with get_db() as cur:
+            cur.execute(
+                """
+                UPDATE connectors SET
+                    status = %s,
+                    encrypted_credentials = %s,
+                    connected_at = %s,
+                    last_error = NULL,
+                    updated_at = %s
+                WHERE id = %s
+                """,
+                ("connected", creds, now, now, existing["id"]),
+            )
     else:
-        sb.table("connectors").insert({
-            "organization_id": user.organization_id,
-            "connector_type": connector_type,
-            "status": "connected",
-            "encrypted_credentials": creds,
-            "connected_at": now,
-            "updated_at": now,
-        }).execute()
+        with get_db() as cur:
+            cur.execute(
+                """
+                INSERT INTO connectors (
+                    organization_id, connector_type, status,
+                    encrypted_credentials, connected_at, updated_at
+                ) VALUES (%s, %s, %s, %s, %s, %s)
+                """,
+                (user.organization_id, connector_type, "connected", creds, now, now),
+            )
 
     background.add_task(log_audit, AuditEvent(
         action="connector_connect",
@@ -129,14 +138,19 @@ def disconnect(
 ):
     """Déconnecte et efface les credentials chiffrés."""
     _check_type(connector_type)
-    sb = service_client()
 
-    sb.table("connectors").update({
-        "status": "disconnected",
-        "encrypted_credentials": None,
-        "connected_at": None,
-        "updated_at": _now(),
-    }).eq("organization_id", user.organization_id).eq("connector_type", connector_type).execute()
+    with get_db() as cur:
+        cur.execute(
+            """
+            UPDATE connectors SET
+                status = %s,
+                encrypted_credentials = NULL,
+                connected_at = NULL,
+                updated_at = %s
+            WHERE organization_id = %s AND connector_type = %s
+            """,
+            ("disconnected", _now(), user.organization_id, connector_type),
+        )
 
     background.add_task(log_audit, AuditEvent(
         action="connector_disconnect",

@@ -4,8 +4,8 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, Field
 
 from auth import CurrentUser
+from db import get_db, rows, row
 from rbac import ROLE_RANK, require_min_role
-from supabase_client import service_client
 
 router = APIRouter(prefix="/api/workforce", tags=["workforce"])
 
@@ -25,9 +25,12 @@ class ProcessPayload(BaseModel):
 def _allowed_dept_ids(user: CurrentUser) -> list[str] | None:
     if ROLE_RANK.get(user.role, 0) >= 3 or user.is_service_account:
         return None
-    sb = service_client()
-    res = sb.table("department_members").select("department_id").eq("user_id", user.id).execute()
-    return [r["department_id"] for r in (res.data or [])]
+    with get_db() as cur:
+        cur.execute(
+            "SELECT department_id FROM department_members WHERE user_id = %s",
+            (user.id,),
+        )
+        return [r["department_id"] for r in rows(cur)]
 
 
 def _enrich(p: dict) -> dict:
@@ -46,70 +49,119 @@ def list_processes(
     status:  str | None = Query(None),
     user:    CurrentUser = Depends(require_min_role("user")),
 ):
-    sb = service_client()
-    q = (
-        sb.table("workforce_processes")
-        .select("*, departments(name)")
-        .eq("organization_id", user.organization_id)
-    )
     allowed = _allowed_dept_ids(user)
+    if allowed is not None and not allowed:
+        return []
+
+    conditions = ["wp.organization_id = %s"]
+    params: list = [user.organization_id]
+
     if allowed is not None:
-        if not allowed:
-            return []
-        q = q.in_("department_id", allowed)
+        conditions.append("wp.department_id = ANY(%s)")
+        params.append(allowed)
+
     if dept_id:
-        q = q.eq("department_id", dept_id)
+        conditions.append("wp.department_id = %s")
+        params.append(dept_id)
+
     if status:
-        q = q.eq("status", status)
-    res = q.order("name").execute()
-    return [_enrich(p) for p in (res.data or [])]
+        conditions.append("wp.status = %s")
+        params.append(status)
+
+    where_clause = " AND ".join(conditions)
+    sql = f"""
+        SELECT wp.*, d.name AS department_name
+        FROM workforce_processes wp
+        LEFT JOIN departments d ON d.id = wp.department_id
+        WHERE {where_clause}
+        ORDER BY wp.name
+    """
+
+    with get_db() as cur:
+        cur.execute(sql, params)
+        result = rows(cur)
+
+    return [_enrich(p) for p in result]
 
 
 @router.post("", status_code=201)
 def create_process(payload: ProcessPayload, user: CurrentUser = Depends(require_min_role("manager"))):
-    sb = service_client()
-    res = sb.table("workforce_processes").insert({
-        "organization_id":        user.organization_id,
-        "department_id":          payload.department_id,
-        "name":                   payload.name,
-        "description":            payload.description,
-        "team_size":              payload.team_size,
-        "manual_hours_per_month": payload.manual_hours_per_month,
-        "automation_potential":   payload.automation_potential,
-        "hourly_cost":            payload.hourly_cost,
-        "status":                 payload.status,
-        "notes":                  payload.notes,
-    }).execute()
-    return _enrich(res.data[0])
+    with get_db() as cur:
+        cur.execute(
+            """
+            INSERT INTO workforce_processes (
+                organization_id, department_id, name, description,
+                team_size, manual_hours_per_month, automation_potential,
+                hourly_cost, status, notes
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            RETURNING *
+            """,
+            (
+                user.organization_id,
+                payload.department_id,
+                payload.name,
+                payload.description,
+                payload.team_size,
+                payload.manual_hours_per_month,
+                payload.automation_potential,
+                payload.hourly_cost,
+                payload.status,
+                payload.notes,
+            ),
+        )
+        result = row(cur)
+    return _enrich(result)
 
 
 @router.patch("/{proc_id}")
-def update_process(proc_id: str, payload: ProcessPayload, user: CurrentUser = Depends(require_min_role("manager"))):
-    sb = service_client()
-    _or_404(sb, proc_id, user.organization_id)
-    res = sb.table("workforce_processes").update({
-        "department_id":          payload.department_id,
-        "name":                   payload.name,
-        "description":            payload.description,
-        "team_size":              payload.team_size,
-        "manual_hours_per_month": payload.manual_hours_per_month,
-        "automation_potential":   payload.automation_potential,
-        "hourly_cost":            payload.hourly_cost,
-        "status":                 payload.status,
-        "notes":                  payload.notes,
-    }).eq("id", proc_id).execute()
-    return _enrich(res.data[0])
+def update_process(
+    proc_id: str,
+    payload: ProcessPayload,
+    user: CurrentUser = Depends(require_min_role("manager")),
+):
+    _or_404(proc_id, user.organization_id)
+    with get_db() as cur:
+        cur.execute(
+            """
+            UPDATE workforce_processes SET
+                department_id = %s, name = %s, description = %s,
+                team_size = %s, manual_hours_per_month = %s,
+                automation_potential = %s, hourly_cost = %s,
+                status = %s, notes = %s
+            WHERE id = %s
+            RETURNING *
+            """,
+            (
+                payload.department_id,
+                payload.name,
+                payload.description,
+                payload.team_size,
+                payload.manual_hours_per_month,
+                payload.automation_potential,
+                payload.hourly_cost,
+                payload.status,
+                payload.notes,
+                proc_id,
+            ),
+        )
+        result = row(cur)
+    return _enrich(result)
 
 
 @router.delete("/{proc_id}", status_code=204)
 def delete_process(proc_id: str, user: CurrentUser = Depends(require_min_role("admin"))):
-    sb = service_client()
-    _or_404(sb, proc_id, user.organization_id)
-    sb.table("workforce_processes").delete().eq("id", proc_id).execute()
+    _or_404(proc_id, user.organization_id)
+    with get_db() as cur:
+        cur.execute("DELETE FROM workforce_processes WHERE id = %s", (proc_id,))
 
 
-def _or_404(sb, proc_id: str, org_id: str) -> dict:
-    res = sb.table("workforce_processes").select("id").eq("id", proc_id).eq("organization_id", org_id).limit(1).execute()
-    if not (res.data or []):
+def _or_404(proc_id: str, org_id: str) -> dict:
+    with get_db() as cur:
+        cur.execute(
+            "SELECT id FROM workforce_processes WHERE id = %s AND organization_id = %s LIMIT 1",
+            (proc_id, org_id),
+        )
+        result = row(cur)
+    if not result:
         raise HTTPException(status_code=404, detail="Processus introuvable.")
-    return res.data[0]
+    return result

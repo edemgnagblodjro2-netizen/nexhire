@@ -18,8 +18,8 @@ from fastapi.responses import RedirectResponse
 from audit import AuditEvent, client_ip, log_audit
 from auth import CurrentUser
 from crypto import decrypt, encrypt
+from db import get_db, rows, row
 from rbac import require_active_subscription, require_min_role
-from supabase_client import service_client
 
 router = APIRouter(prefix="/api/connectors", tags=["connectors-oauth"])
 
@@ -112,10 +112,10 @@ def _parse_state(state: str) -> dict:
 
 # ── Upsert helper ─────────────────────────────────────────────────────────────
 
-def _upsert_connector(sb, org_id: str, connector_type: str, credentials: dict, extra: dict | None = None):
+def _upsert_connector(org_id: str, connector_type: str, credentials: dict, extra: dict | None = None):
     encrypted = encrypt(json.dumps(credentials))
     now = datetime.now(UTC).isoformat()
-    payload = {
+    payload_fields = {
         "status":                "connected",
         "encrypted_credentials": encrypted,
         "connected_at":          now,
@@ -123,22 +123,36 @@ def _upsert_connector(sb, org_id: str, connector_type: str, credentials: dict, e
         "updated_at":            now,
         **(extra or {}),
     }
-    existing = (
-        sb.table("connectors")
-        .select("id")
-        .eq("organization_id", org_id)
-        .eq("connector_type", connector_type)
-        .limit(1)
-        .execute()
-    )
-    if existing.data:
-        sb.table("connectors").update(payload).eq("id", existing.data[0]["id"]).execute()
+
+    with get_db() as cur:
+        cur.execute(
+            """
+            SELECT id FROM connectors
+            WHERE organization_id = %s AND connector_type = %s
+            LIMIT 1
+            """,
+            (org_id, connector_type),
+        )
+        existing = row(cur)
+
+    if existing:
+        # Build SET clause dynamically
+        set_parts = ", ".join(f"{k} = %s" for k in payload_fields)
+        values = list(payload_fields.values()) + [existing["id"]]
+        with get_db() as cur:
+            cur.execute(
+                f"UPDATE connectors SET {set_parts} WHERE id = %s",
+                values,
+            )
     else:
-        sb.table("connectors").insert({
-            "organization_id": org_id,
-            "connector_type":  connector_type,
-            **payload,
-        }).execute()
+        all_fields = {"organization_id": org_id, "connector_type": connector_type, **payload_fields}
+        cols = ", ".join(all_fields.keys())
+        placeholders = ", ".join(["%s"] * len(all_fields))
+        with get_db() as cur:
+            cur.execute(
+                f"INSERT INTO connectors ({cols}) VALUES ({placeholders})",
+                list(all_fields.values()),
+            )
 
 
 # ── Generic OAuth start ───────────────────────────────────────────────────────
@@ -267,8 +281,7 @@ def oauth_callback(
     if connector_type == "salesforce" and "instance_url" in tokens:
         credentials["instance_url"] = tokens["instance_url"]
 
-    sb = service_client()
-    _upsert_connector(sb, org_id, connector_type, credentials)
+    _upsert_connector(org_id, connector_type, credentials)
 
     background.add_task(log_audit, AuditEvent(
         action="connector_connect",
@@ -309,8 +322,7 @@ def save_credentials(
     if not creds:
         raise HTTPException(400, "Toutes les credentials sont vides.")
 
-    sb = service_client()
-    _upsert_connector(sb, user.organization_id, connector_type, creds)
+    _upsert_connector(user.organization_id, connector_type, creds)
 
     background.add_task(log_audit, AuditEvent(
         action="connector_connect",
@@ -332,19 +344,19 @@ def refresh_token_if_needed(connector_type: str, org_id: str) -> dict | None:
     if connector_type not in _OAUTH_CFG and connector_type != "servicenow":
         return None
     try:
-        sb = service_client()
-        row = (
-            sb.table("connectors")
-            .select("encrypted_credentials")
-            .eq("organization_id", org_id)
-            .eq("connector_type", connector_type)
-            .eq("status", "connected")
-            .limit(1)
-            .execute()
-        )
-        if not row.data:
+        with get_db() as cur:
+            cur.execute(
+                """
+                SELECT encrypted_credentials FROM connectors
+                WHERE organization_id = %s AND connector_type = %s AND status = 'connected'
+                LIMIT 1
+                """,
+                (org_id, connector_type),
+            )
+            r = row(cur)
+        if not r:
             return None
-        creds = json.loads(decrypt(row.data[0]["encrypted_credentials"]))
+        creds = json.loads(decrypt(r["encrypted_credentials"]))
         expires_at = datetime.fromisoformat(creds.get("expires_at", "2000-01-01T00:00:00+00:00"))
         if expires_at > datetime.now(UTC) + timedelta(minutes=5):
             return creds  # still valid
@@ -369,7 +381,7 @@ def refresh_token_if_needed(connector_type: str, org_id: str) -> dict | None:
         creds["expires_at"] = (
             datetime.now(UTC) + timedelta(seconds=tokens.get("expires_in", 3600))
         ).isoformat()
-        _upsert_connector(sb, org_id, connector_type, creds)
+        _upsert_connector(org_id, connector_type, creds)
         return creds
     except Exception:
         return None

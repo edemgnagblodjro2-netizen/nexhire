@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, Field
 
 from auth import CurrentUser
+from db import get_db, row, rows
 from rbac import ROLE_RANK, require_min_role
-from supabase_client import service_client
 
 router = APIRouter(prefix="/api/servers", tags=["servers"])
 
@@ -31,9 +31,12 @@ class ServerPayload(BaseModel):
 def _allowed_dept_ids(user: CurrentUser) -> list[str] | None:
     if ROLE_RANK.get(user.role, 0) >= 3 or user.is_service_account:
         return None
-    sb = service_client()
-    res = sb.table("department_members").select("department_id").eq("user_id", user.id).execute()
-    return [r["department_id"] for r in (res.data or [])]
+    with get_db() as cur:
+        cur.execute(
+            "SELECT department_id FROM department_members WHERE user_id = %s",
+            (user.id,),
+        )
+        return [r["department_id"] for r in rows(cur)]
 
 
 def _enrich_server(srv: dict) -> dict:
@@ -41,7 +44,7 @@ def _enrich_server(srv: dict) -> dict:
     ping = srv.get("last_ping_at")
     if ping:
         try:
-            last = datetime.fromisoformat(ping.replace("Z", "+00:00"))
+            last = datetime.fromisoformat(str(ping).replace("Z", "+00:00"))
             srv["idle_days"] = (datetime.now(timezone.utc) - last).days
         except ValueError:
             srv["idle_days"] = None
@@ -50,30 +53,54 @@ def _enrich_server(srv: dict) -> dict:
     return srv
 
 
+def _srv_or_404(server_id: str, organization_id: str) -> dict:
+    with get_db() as cur:
+        cur.execute(
+            "SELECT id FROM servers WHERE id = %s AND organization_id = %s LIMIT 1",
+            (server_id, organization_id),
+        )
+        result = row(cur)
+    if not result:
+        raise HTTPException(status_code=404, detail="Serveur introuvable.")
+    return result
+
+
 @router.get("")
 def list_servers(
     dept_id: str | None = Query(None),
     status: str | None = Query(None),
     user: CurrentUser = Depends(require_min_role("user")),
 ):
-    sb = service_client()
-    q = (
-        sb.table("servers")
-        .select("*, departments(name)")
-        .eq("organization_id", user.organization_id)
-    )
     allowed = _allowed_dept_ids(user)
+    if allowed is not None and not allowed:
+        return []
+
+    conditions = ["s.organization_id = %s"]
+    params: list = [user.organization_id]
+
     if allowed is not None:
-        if not allowed:
-            return []
-        q = q.in_("department_id", allowed)
+        conditions.append("s.department_id = ANY(%s)")
+        params.append(allowed)
     if dept_id:
-        q = q.eq("department_id", dept_id)
+        conditions.append("s.department_id = %s")
+        params.append(dept_id)
     if status:
-        q = q.eq("status", status)
+        conditions.append("s.status = %s")
+        params.append(status)
+
+    where = " AND ".join(conditions)
+    sql = f"""
+        SELECT s.*, d.name AS department_name
+        FROM servers s
+        LEFT JOIN departments d ON s.department_id = d.id
+        WHERE {where}
+        ORDER BY s.hostname
+    """
     try:
-        res = q.order("hostname").execute()
-        return [_enrich_server(s) for s in (res.data or [])]
+        with get_db() as cur:
+            cur.execute(sql, params)
+            result = rows(cur)
+        return [_enrich_server(s) for s in result]
     except Exception:
         return []
 
@@ -83,24 +110,35 @@ def create_server(
     payload: ServerPayload,
     user: CurrentUser = Depends(require_min_role("admin")),
 ):
-    sb = service_client()
-    res = sb.table("servers").insert({
-        "organization_id": user.organization_id,
-        "department_id":   payload.department_id,
-        "hostname":        payload.hostname,
-        "ip_address":      payload.ip_address,
-        "environment":     payload.environment,
-        "os":              payload.os,
-        "cpu_cores":       payload.cpu_cores,
-        "ram_gb":          payload.ram_gb,
-        "storage_gb":      payload.storage_gb,
-        "location":        payload.location,
-        "status":          payload.status,
-        "last_ping_at":    payload.last_ping_at,
-        "monthly_cost":    payload.monthly_cost,
-        "notes":           payload.notes,
-    }).execute()
-    return _enrich_server(res.data[0])
+    with get_db() as cur:
+        cur.execute(
+            """
+            INSERT INTO servers (
+                organization_id, department_id, hostname, ip_address,
+                environment, os, cpu_cores, ram_gb, storage_gb,
+                location, status, last_ping_at, monthly_cost, notes
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            RETURNING *
+            """,
+            (
+                user.organization_id,
+                payload.department_id,
+                payload.hostname,
+                payload.ip_address,
+                payload.environment,
+                payload.os,
+                payload.cpu_cores,
+                payload.ram_gb,
+                payload.storage_gb,
+                payload.location,
+                payload.status,
+                payload.last_ping_at,
+                payload.monthly_cost,
+                payload.notes,
+            ),
+        )
+        result = row(cur)
+    return _enrich_server(result)
 
 
 @router.patch("/{server_id}")
@@ -109,24 +147,37 @@ def update_server(
     payload: ServerPayload,
     user: CurrentUser = Depends(require_min_role("admin")),
 ):
-    sb = service_client()
-    _srv_or_404(sb, server_id, user.organization_id)
-    res = sb.table("servers").update({
-        "department_id":   payload.department_id,
-        "hostname":        payload.hostname,
-        "ip_address":      payload.ip_address,
-        "environment":     payload.environment,
-        "os":              payload.os,
-        "cpu_cores":       payload.cpu_cores,
-        "ram_gb":          payload.ram_gb,
-        "storage_gb":      payload.storage_gb,
-        "location":        payload.location,
-        "status":          payload.status,
-        "last_ping_at":    payload.last_ping_at,
-        "monthly_cost":    payload.monthly_cost,
-        "notes":           payload.notes,
-    }).eq("id", server_id).execute()
-    return _enrich_server(res.data[0])
+    _srv_or_404(server_id, user.organization_id)
+    with get_db() as cur:
+        cur.execute(
+            """
+            UPDATE servers SET
+                department_id = %s, hostname = %s, ip_address = %s,
+                environment = %s, os = %s, cpu_cores = %s, ram_gb = %s,
+                storage_gb = %s, location = %s, status = %s,
+                last_ping_at = %s, monthly_cost = %s, notes = %s
+            WHERE id = %s
+            RETURNING *
+            """,
+            (
+                payload.department_id,
+                payload.hostname,
+                payload.ip_address,
+                payload.environment,
+                payload.os,
+                payload.cpu_cores,
+                payload.ram_gb,
+                payload.storage_gb,
+                payload.location,
+                payload.status,
+                payload.last_ping_at,
+                payload.monthly_cost,
+                payload.notes,
+                server_id,
+            ),
+        )
+        result = row(cur)
+    return _enrich_server(result)
 
 
 @router.patch("/{server_id}/ping")
@@ -135,11 +186,15 @@ def ping_server(
     user: CurrentUser = Depends(require_min_role("admin")),
 ):
     """Met à jour last_ping_at à maintenant."""
-    sb = service_client()
-    _srv_or_404(sb, server_id, user.organization_id)
+    _srv_or_404(server_id, user.organization_id)
     now = datetime.now(timezone.utc).isoformat()
-    res = sb.table("servers").update({"last_ping_at": now}).eq("id", server_id).execute()
-    return _enrich_server(res.data[0])
+    with get_db() as cur:
+        cur.execute(
+            "UPDATE servers SET last_ping_at = %s WHERE id = %s RETURNING *",
+            (now, server_id),
+        )
+        result = row(cur)
+    return _enrich_server(result)
 
 
 @router.delete("/{server_id}", status_code=204)
@@ -147,13 +202,6 @@ def delete_server(
     server_id: str,
     user: CurrentUser = Depends(require_min_role("admin")),
 ):
-    sb = service_client()
-    _srv_or_404(sb, server_id, user.organization_id)
-    sb.table("servers").delete().eq("id", server_id).execute()
-
-
-def _srv_or_404(sb, server_id: str, organization_id: str) -> dict:
-    res = sb.table("servers").select("id").eq("id", server_id).eq("organization_id", organization_id).limit(1).execute()
-    if not (res.data or []):
-        raise HTTPException(status_code=404, detail="Serveur introuvable.")
-    return res.data[0]
+    _srv_or_404(server_id, user.organization_id)
+    with get_db() as cur:
+        cur.execute("DELETE FROM servers WHERE id = %s", (server_id,))

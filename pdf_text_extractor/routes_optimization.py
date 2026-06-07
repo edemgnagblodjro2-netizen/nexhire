@@ -7,8 +7,8 @@ from datetime import date, timedelta
 from fastapi import APIRouter, Depends, Query
 
 from auth import CurrentUser
+from db import get_db, rows, row
 from rbac import require_min_role
-from supabase_client import service_client
 
 router = APIRouter(prefix="/api/optimization", tags=["optimization"])
 
@@ -83,9 +83,13 @@ async def ai_analyze(
     effective_type = org_type
     if effective_type == "entreprise":
         try:
-            sb = service_client()
-            res = sb.table("organizations").select("org_type").eq("id", user.organization_id).limit(1).execute()
-            effective_type = ((res.data or [{}])[0].get("org_type") or "entreprise")
+            with get_db() as cur:
+                cur.execute(
+                    "SELECT org_type FROM organizations WHERE id = %s LIMIT 1",
+                    (user.organization_id,),
+                )
+                r = row(cur)
+            effective_type = (r.get("org_type") or "entreprise") if r else "entreprise"
         except Exception:
             pass
     return await _ai_cost_analysis(user.organization_id, question, language, effective_type)
@@ -94,14 +98,17 @@ async def ai_analyze(
 # ── Analysis helpers ──────────────────────────────────────────────────────────
 
 def _unused_licenses(org_id: str) -> list[dict]:
-    sb = service_client()
-    lics = (
-        sb.table("licenses")
-        .select("*, departments(name)")
-        .eq("organization_id", org_id)
-        .execute()
-        .data or []
-    )
+    with get_db() as cur:
+        cur.execute(
+            """
+            SELECT l.*, d.name AS department_name
+            FROM licenses l
+            LEFT JOIN departments d ON d.id = l.department_id
+            WHERE l.organization_id = %s
+            """,
+            (org_id,),
+        )
+        lics = rows(cur)
     result = []
     for l in lics:
         qty      = float(l.get("quantity") or 1)
@@ -125,22 +132,23 @@ def _unused_licenses(org_id: str) -> list[dict]:
             "cost_per_unit":           cost,
             "billing_cycle":           l.get("billing_cycle"),
             "annual_savings_potential": round(savings, 2),
-            "department":              (l.get("departments") or {}).get("name"),
+            "department":              l.get("department_name"),
             "confidence":              95 if usage_pct < 30 else 80 if usage_pct < 60 else 65,
         })
     return sorted(result, key=lambda x: -x["annual_savings_potential"])
 
 
 def _duplicate_tools(org_id: str) -> list[dict]:
-    sb = service_client()
-    apps = (
-        sb.table("it_applications")
-        .select("id, name, category, vendor, monthly_cost, user_count, status")
-        .eq("organization_id", org_id)
-        .neq("status", "decommissioned")
-        .execute()
-        .data or []
-    )
+    with get_db() as cur:
+        cur.execute(
+            """
+            SELECT id, name, category, vendor, monthly_cost, user_count, status
+            FROM it_applications
+            WHERE organization_id = %s AND status != 'decommissioned'
+            """,
+            (org_id,),
+        )
+        apps = rows(cur)
     by_cat: dict[str, list] = {}
     for a in apps:
         cat = (a.get("category") or "autre").lower()
@@ -167,30 +175,34 @@ def _duplicate_tools(org_id: str) -> list[dict]:
 
 
 def _contracts_at_risk(org_id: str) -> list[dict]:
-    sb = service_client()
     today  = date.today()
     cutoff = (today + timedelta(days=180)).isoformat()
     try:
-        res = (
-            sb.table("contracts")
-            .select("*, departments(name)")
-            .eq("organization_id", org_id)
-            .eq("status", "active")
-            .lte("renewal_date", cutoff)
-            .gte("renewal_date", today.isoformat())
-            .order("renewal_date")
-            .execute()
-        )
+        with get_db() as cur:
+            cur.execute(
+                """
+                SELECT c.*, d.name AS department_name
+                FROM contracts c
+                LEFT JOIN departments d ON d.id = c.department_id
+                WHERE c.organization_id = %s
+                  AND c.status = 'active'
+                  AND c.renewal_date <= %s
+                  AND c.renewal_date >= %s
+                ORDER BY c.renewal_date
+                """,
+                (org_id, cutoff, today.isoformat()),
+            )
+            data = rows(cur)
     except Exception:
         return []
     result = []
-    for c in (res.data or []):
-        ren  = date.fromisoformat(c["renewal_date"])
+    for c in data:
+        ren  = date.fromisoformat(c["renewal_date"]) if isinstance(c["renewal_date"], str) else c["renewal_date"]
         days = (ren - today).days
         pot  = float(c.get("annual_value") or 0) * float(c.get("negotiation_potential") or 0) / 100
         result.append({
-            **{k: v for k, v in c.items() if k != "departments"},
-            "department":       (c.get("departments") or {}).get("name"),
+            **{k: v for k, v in c.items() if k != "department_name"},
+            "department":       c.get("department_name"),
             "days_to_renewal":  days,
             "potential_savings": round(pot, 2),
             "confidence":       80,
@@ -199,25 +211,29 @@ def _contracts_at_risk(org_id: str) -> list[dict]:
 
 
 def _process_waste(org_id: str) -> list[dict]:
-    sb = service_client()
     try:
-        res = (
-            sb.table("workforce_processes")
-            .select("*, departments(name)")
-            .eq("organization_id", org_id)
-            .execute()
-        )
+        with get_db() as cur:
+            cur.execute(
+                """
+                SELECT p.*, d.name AS department_name
+                FROM workforce_processes p
+                LEFT JOIN departments d ON d.id = p.department_id
+                WHERE p.organization_id = %s
+                """,
+                (org_id,),
+            )
+            data = rows(cur)
     except Exception:
         return []
     result = []
-    for p in (res.data or []):
+    for p in data:
         hours  = float(p.get("manual_hours_per_month") or 0)
         auto   = float(p.get("automation_potential") or 0) / 100
         hourly = float(p.get("hourly_cost") or 50)
         savings = hours * auto * hourly * 12
         result.append({
-            **{k: v for k, v in p.items() if k != "departments"},
-            "department":                  (p.get("departments") or {}).get("name"),
+            **{k: v for k, v in p.items() if k != "department_name"},
+            "department":                  p.get("department_name"),
             "automatable_hours_monthly":   round(hours * auto, 1),
             "annual_savings_potential":    round(savings, 2),
             "confidence":                  70,
@@ -226,23 +242,36 @@ def _process_waste(org_id: str) -> list[dict]:
 
 
 def _efficiency_score(org_id: str) -> dict:
-    sb = service_client()
-
     # Software utilization
-    apps = sb.table("it_applications").select("status, monthly_cost").eq("organization_id", org_id).execute().data or []
+    with get_db() as cur:
+        cur.execute(
+            "SELECT status, monthly_cost FROM it_applications WHERE organization_id = %s",
+            (org_id,),
+        )
+        apps = rows(cur)
     tot_app    = sum(float(a.get("monthly_cost") or 0) for a in apps if a.get("status") != "decommissioned")
     unused_app = sum(float(a.get("monthly_cost") or 0) for a in apps if a.get("status") == "unused")
     sw_score   = max(0.0, min(100.0, 100 - (unused_app / tot_app * 100 if tot_app > 0 else 0)))
 
     # License utilization
-    lics         = sb.table("licenses").select("quantity, assigned_count").eq("organization_id", org_id).execute().data or []
+    with get_db() as cur:
+        cur.execute(
+            "SELECT quantity, assigned_count FROM licenses WHERE organization_id = %s",
+            (org_id,),
+        )
+        lics = rows(cur)
     tot_seats    = sum(int(l.get("quantity") or 0) for l in lics)
     used_seats   = sum(int(l.get("assigned_count") or 0) for l in lics)
     lic_score    = (used_seats / tot_seats * 100) if tot_seats > 0 else 80.0
 
     # Infrastructure
     try:
-        srvs = sb.table("servers").select("status").eq("organization_id", org_id).execute().data or []
+        with get_db() as cur:
+            cur.execute(
+                "SELECT status FROM servers WHERE organization_id = %s",
+                (org_id,),
+            )
+            srvs = rows(cur)
     except Exception:
         srvs = []
     tot_srvs    = len(srvs)
@@ -251,7 +280,12 @@ def _efficiency_score(org_id: str) -> dict:
 
     # Process efficiency
     try:
-        procs = sb.table("workforce_processes").select("automation_potential, status").eq("organization_id", org_id).execute().data or []
+        with get_db() as cur:
+            cur.execute(
+                "SELECT automation_potential, status FROM workforce_processes WHERE organization_id = %s",
+                (org_id,),
+            )
+            procs = rows(cur)
     except Exception:
         procs = []
     if procs:
@@ -343,11 +377,27 @@ async def _ai_cost_analysis(org_id: str, question: str, language: str, org_type:
     try:
         from openai import OpenAI
         client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", ""))
-        sb = service_client()
 
-        apps   = sb.table("it_applications").select("name,category,vendor,status,monthly_cost,user_count").eq("organization_id", org_id).execute().data or []
-        lics   = sb.table("licenses").select("product_name,vendor,quantity,assigned_count,cost_per_unit,billing_cycle").eq("organization_id", org_id).execute().data or []
-        budget = sb.table("budget_entries").select("category,allocated,actual,year").eq("organization_id", org_id).execute().data or []
+        with get_db() as cur:
+            cur.execute(
+                "SELECT name, category, vendor, status, monthly_cost, user_count FROM it_applications WHERE organization_id = %s",
+                (org_id,),
+            )
+            apps = rows(cur)
+
+        with get_db() as cur:
+            cur.execute(
+                "SELECT product_name, vendor, quantity, assigned_count, cost_per_unit, billing_cycle FROM licenses WHERE organization_id = %s",
+                (org_id,),
+            )
+            lics = rows(cur)
+
+        with get_db() as cur:
+            cur.execute(
+                "SELECT category, allocated, actual, year FROM budget_entries WHERE organization_id = %s",
+                (org_id,),
+            )
+            budget = rows(cur)
 
         context = _build_context(apps, lics, budget, org_type)
         lang_str = "French" if language == "fr" else "English"

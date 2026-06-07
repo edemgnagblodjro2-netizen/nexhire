@@ -4,6 +4,7 @@ python-multipart
 pypdf
 openai
 supabase>=2.0.0
+psycopg2-binary>=2.9
 python-dotenv
 cryptography
 PyJWT[crypto]

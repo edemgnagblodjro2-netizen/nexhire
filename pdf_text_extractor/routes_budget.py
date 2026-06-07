@@ -6,8 +6,8 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, Field
 
 from auth import CurrentUser
+from db import get_db, row, rows
 from rbac import ROLE_RANK, require_min_role
-from supabase_client import service_client
 
 router = APIRouter(prefix="/api/budget", tags=["budget"])
 
@@ -28,9 +28,12 @@ def _allowed_dept_ids(user: CurrentUser) -> list[str] | None:
     """None = pas de filtre dept (admin/owner/service). Liste vide = aucun accès."""
     if ROLE_RANK.get(user.role, 0) >= 3 or user.is_service_account:
         return None
-    sb = service_client()
-    res = sb.table("department_members").select("department_id").eq("user_id", user.id).execute()
-    return [r["department_id"] for r in (res.data or [])]
+    with get_db() as cur:
+        cur.execute(
+            "SELECT department_id FROM department_members WHERE user_id = %s",
+            (user.id,),
+        )
+        return [r["department_id"] for r in rows(cur)]
 
 
 def _check_dept_access(user: CurrentUser, dept_id: str | None):
@@ -38,17 +41,30 @@ def _check_dept_access(user: CurrentUser, dept_id: str | None):
         return
     if ROLE_RANK.get(user.role, 0) >= 3 or user.is_service_account:
         return
-    sb = service_client()
-    res = (
-        sb.table("department_members")
-        .select("user_id")
-        .eq("user_id", user.id)
-        .eq("department_id", dept_id)
-        .limit(1)
-        .execute()
-    )
-    if not (res.data or []):
+    with get_db() as cur:
+        cur.execute(
+            """
+            SELECT user_id FROM department_members
+            WHERE user_id = %s AND department_id = %s
+            LIMIT 1
+            """,
+            (user.id, dept_id),
+        )
+        result = row(cur)
+    if not result:
         raise HTTPException(status_code=403, detail="Accès au département refusé.")
+
+
+def _entry_or_404(entry_id: str, organization_id: str) -> dict:
+    with get_db() as cur:
+        cur.execute(
+            "SELECT * FROM budget_entries WHERE id = %s AND organization_id = %s LIMIT 1",
+            (entry_id, organization_id),
+        )
+        result = row(cur)
+    if not result:
+        raise HTTPException(status_code=404, detail="Entrée budgétaire introuvable.")
+    return result
 
 
 @router.get("")
@@ -58,25 +74,37 @@ def list_budget_entries(
     category: str | None = Query(None),
     user: CurrentUser = Depends(require_min_role("user")),
 ):
-    sb = service_client()
-    q = (
-        sb.table("budget_entries")
-        .select("*, departments(name)")
-        .eq("organization_id", user.organization_id)
-    )
     allowed = _allowed_dept_ids(user)
+    if allowed is not None and not allowed:
+        return []
+
+    conditions = ["b.organization_id = %s"]
+    params: list = [user.organization_id]
+
     if allowed is not None:
-        if not allowed:
-            return []
-        q = q.in_("department_id", allowed)
+        conditions.append("b.department_id = ANY(%s)")
+        params.append(allowed)
     if dept_id:
-        q = q.eq("department_id", dept_id)
+        conditions.append("b.department_id = %s")
+        params.append(dept_id)
     if year:
-        q = q.eq("year", year)
+        conditions.append("b.year = %s")
+        params.append(year)
     if category:
-        q = q.eq("category", category)
-    res = q.order("year", desc=True).order("month", desc=True).execute()
-    return res.data or []
+        conditions.append("b.category = %s")
+        params.append(category)
+
+    where = " AND ".join(conditions)
+    sql = f"""
+        SELECT b.*, d.name AS department_name
+        FROM budget_entries b
+        LEFT JOIN departments d ON b.department_id = d.id
+        WHERE {where}
+        ORDER BY b.year DESC, b.month DESC
+    """
+    with get_db() as cur:
+        cur.execute(sql, params)
+        return rows(cur)
 
 
 @router.post("", status_code=201)
@@ -85,20 +113,30 @@ def create_budget_entry(
     user: CurrentUser = Depends(require_min_role("manager")),
 ):
     _check_dept_access(user, payload.department_id)
-    sb = service_client()
-    res = sb.table("budget_entries").insert({
-        "organization_id": user.organization_id,
-        "department_id": payload.department_id,
-        "category": payload.category,
-        "label": payload.label,
-        "year": payload.year,
-        "month": payload.month,
-        "allocated": payload.allocated,
-        "actual": payload.actual,
-        "currency": payload.currency,
-        "notes": payload.notes,
-    }).execute()
-    return res.data[0]
+    with get_db() as cur:
+        cur.execute(
+            """
+            INSERT INTO budget_entries (
+                organization_id, department_id, category, label,
+                year, month, allocated, actual, currency, notes
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            RETURNING *
+            """,
+            (
+                user.organization_id,
+                payload.department_id,
+                payload.category,
+                payload.label,
+                payload.year,
+                payload.month,
+                payload.allocated,
+                payload.actual,
+                payload.currency,
+                payload.notes,
+            ),
+        )
+        result = row(cur)
+    return result
 
 
 @router.patch("/{entry_id}")
@@ -107,21 +145,33 @@ def update_budget_entry(
     payload: BudgetPayload,
     user: CurrentUser = Depends(require_min_role("manager")),
 ):
-    sb = service_client()
-    entry = _entry_or_404(sb, entry_id, user.organization_id)
+    entry = _entry_or_404(entry_id, user.organization_id)
     _check_dept_access(user, entry.get("department_id"))
-    res = sb.table("budget_entries").update({
-        "department_id": payload.department_id,
-        "category": payload.category,
-        "label": payload.label,
-        "year": payload.year,
-        "month": payload.month,
-        "allocated": payload.allocated,
-        "actual": payload.actual,
-        "currency": payload.currency,
-        "notes": payload.notes,
-    }).eq("id", entry_id).execute()
-    return res.data[0]
+    with get_db() as cur:
+        cur.execute(
+            """
+            UPDATE budget_entries SET
+                department_id = %s, category = %s, label = %s,
+                year = %s, month = %s, allocated = %s,
+                actual = %s, currency = %s, notes = %s
+            WHERE id = %s
+            RETURNING *
+            """,
+            (
+                payload.department_id,
+                payload.category,
+                payload.label,
+                payload.year,
+                payload.month,
+                payload.allocated,
+                payload.actual,
+                payload.currency,
+                payload.notes,
+                entry_id,
+            ),
+        )
+        result = row(cur)
+    return result
 
 
 @router.delete("/{entry_id}", status_code=204)
@@ -129,9 +179,9 @@ def delete_budget_entry(
     entry_id: str,
     user: CurrentUser = Depends(require_min_role("admin")),
 ):
-    sb = service_client()
-    _entry_or_404(sb, entry_id, user.organization_id)
-    sb.table("budget_entries").delete().eq("id", entry_id).execute()
+    _entry_or_404(entry_id, user.organization_id)
+    with get_db() as cur:
+        cur.execute("DELETE FROM budget_entries WHERE id = %s", (entry_id,))
 
 
 @router.get("/summary")
@@ -141,25 +191,31 @@ def budget_summary(
     user: CurrentUser = Depends(require_min_role("user")),
 ):
     """Budget alloué vs réel par catégorie + prévision linéaire 3 mois."""
-    sb = service_client()
     current_year = year or datetime.now().year
 
-    q = (
-        sb.table("budget_entries")
-        .select("category, year, month, allocated, actual, currency, department_id")
-        .eq("organization_id", user.organization_id)
-        .eq("year", current_year)
-    )
     allowed = _allowed_dept_ids(user)
-    if allowed is not None:
-        if not allowed:
-            return _empty_summary(current_year)
-        q = q.in_("department_id", allowed)
-    if dept_id:
-        q = q.eq("department_id", dept_id)
+    if allowed is not None and not allowed:
+        return _empty_summary(current_year)
 
-    res = q.execute()
-    entries = res.data or []
+    conditions = ["b.organization_id = %s", "b.year = %s"]
+    params: list = [user.organization_id, current_year]
+
+    if allowed is not None:
+        conditions.append("b.department_id = ANY(%s)")
+        params.append(allowed)
+    if dept_id:
+        conditions.append("b.department_id = %s")
+        params.append(dept_id)
+
+    where = " AND ".join(conditions)
+    sql = f"""
+        SELECT b.category, b.year, b.month, b.allocated, b.actual, b.currency, b.department_id
+        FROM budget_entries b
+        WHERE {where}
+    """
+    with get_db() as cur:
+        cur.execute(sql, params)
+        entries = rows(cur)
 
     by_cat: dict[str, dict] = {}
     monthly: dict[int, float] = {}
@@ -219,10 +275,3 @@ def _linear_forecast(values: list[float], periods: int = 3) -> list[float]:
 
 def _empty_summary(year: int) -> dict:
     return {"year": year, "by_category": [], "monthly_actual": [0]*12, "total": {"allocated": 0, "actual": 0, "variance": 0, "utilization_pct": 0}, "forecast": []}
-
-
-def _entry_or_404(sb, entry_id: str, organization_id: str) -> dict:
-    res = sb.table("budget_entries").select("*").eq("id", entry_id).eq("organization_id", organization_id).limit(1).execute()
-    if not (res.data or []):
-        raise HTTPException(status_code=404, detail="Entrée budgétaire introuvable.")
-    return res.data[0]

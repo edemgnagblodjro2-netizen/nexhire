@@ -8,7 +8,7 @@ import jwt
 from jwt import PyJWKClient
 from fastapi import Header, HTTPException, status
 
-from supabase_client import service_client
+from db import get_db, row as db_row, rows as db_rows
 
 SUPABASE_URL = os.getenv("SUPABASE_URL", "")
 SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET", "")
@@ -82,27 +82,24 @@ def _extract_bearer(authorization: str | None) -> str:
 
 
 def _resolve_service_account(token: str) -> CurrentUser:
-    """Résout un token svc_* en CurrentUser sans passer par Supabase Auth."""
     import hashlib
     from datetime import datetime, timezone
 
     token_hash = hashlib.sha256(token.encode()).hexdigest()
-    sb = service_client()
-    res = (
-        sb.table("service_accounts")
-        .select("id, organization_id, role, is_active")
-        .eq("token_hash", token_hash)
-        .limit(1)
-        .execute()
-    )
-    rows = res.data or []
-    if not rows or not rows[0].get("is_active"):
+    with get_db() as cur:
+        cur.execute(
+            "SELECT id, organization_id, role, is_active FROM service_accounts WHERE token_hash = %s LIMIT 1",
+            (token_hash,),
+        )
+        sa = db_row(cur)
+    if not sa or not sa.get("is_active"):
         raise HTTPException(status_code=401, detail="Service account invalide ou révoqué.")
-    sa = rows[0]
     try:
-        sb.table("service_accounts").update(
-            {"last_used_at": datetime.now(timezone.utc).isoformat()}
-        ).eq("id", sa["id"]).execute()
+        with get_db() as cur:
+            cur.execute(
+                "UPDATE service_accounts SET last_used_at = %s WHERE id = %s",
+                (datetime.now(timezone.utc), sa["id"]),
+            )
     except Exception:
         pass
     return CurrentUser(
@@ -116,7 +113,6 @@ def _resolve_service_account(token: str) -> CurrentUser:
 
 
 def get_current_user(authorization: str | None = Header(default=None)) -> CurrentUser:
-    """Dépendance FastAPI : identité vérifiée + profil applicatif (rôle, org)."""
     raw = _extract_bearer(authorization)
     if raw.startswith("svc_"):
         return _resolve_service_account(raw)
@@ -126,30 +122,33 @@ def get_current_user(authorization: str | None = Header(default=None)) -> Curren
     if not sub:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Jeton incomplet.")
 
-    sb = service_client()
-
-    # SECURITY DEFINER bypasse l'RLS indépendamment du format de clé Supabase.
-    res = sb.rpc("get_user_profile_by_id", {"p_user_id": sub}).execute()
-    rows = res.data or []
-    if not rows:
+    with get_db() as cur:
+        cur.execute("SELECT * FROM get_user_profile_by_id(%s)", (sub,))
+        profile_rows = db_rows(cur)
+    if not profile_rows:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Profil utilisateur introuvable.")
-    row = rows[0]
+    profile = profile_rows[0]
 
-    if row.get("is_active") is False:
+    if profile.get("is_active") is False:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Compte désactivé. Contactez votre administrateur.",
         )
 
     org_status = None
-    if row.get("organization_id"):
-        org_res = sb.rpc("get_org_status", {"p_org_id": row["organization_id"]}).execute()
-        org_status = org_res.data if isinstance(org_res.data, str) else None
+    if profile.get("organization_id"):
+        try:
+            with get_db() as cur:
+                cur.execute("SELECT get_org_status(%s) AS status", (profile["organization_id"],))
+                r = db_row(cur)
+                org_status = r["status"] if r else None
+        except Exception:
+            pass
 
     return CurrentUser(
-        id=row["id"],
-        email=row.get("email") or email,
-        organization_id=row.get("organization_id"),
-        role=row.get("role") or "user",
+        id=profile["id"],
+        email=profile.get("email") or email,
+        organization_id=profile.get("organization_id"),
+        role=profile.get("role") or "user",
         subscription_status=org_status,
     )

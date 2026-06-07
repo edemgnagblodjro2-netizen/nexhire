@@ -6,8 +6,8 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, Field
 
 from auth import CurrentUser
+from db import get_db, rows, row
 from rbac import ROLE_RANK, require_min_role
-from supabase_client import service_client
 
 router = APIRouter(prefix="/api/contracts", tags=["contracts"])
 
@@ -31,16 +31,19 @@ class ContractPayload(BaseModel):
 def _allowed_dept_ids(user: CurrentUser) -> list[str] | None:
     if ROLE_RANK.get(user.role, 0) >= 3 or user.is_service_account:
         return None
-    sb = service_client()
-    res = sb.table("department_members").select("department_id").eq("user_id", user.id).execute()
-    return [r["department_id"] for r in (res.data or [])]
+    with get_db() as cur:
+        cur.execute(
+            "SELECT department_id FROM department_members WHERE user_id = %s",
+            (user.id,),
+        )
+        return [r["department_id"] for r in rows(cur)]
 
 
 def _enrich(c: dict) -> dict:
     ren = c.get("renewal_date")
     if ren:
         try:
-            days = (date.fromisoformat(ren) - date.today()).days
+            days = (date.fromisoformat(str(ren)) - date.today()).days
             c["days_to_renewal"] = days
             c["urgency"] = "critical" if days <= 30 else "warning" if days <= 90 else "ok"
         except ValueError:
@@ -49,7 +52,9 @@ def _enrich(c: dict) -> dict:
     else:
         c["days_to_renewal"] = None
         c["urgency"] = "ok"
-    c["potential_savings"] = round(float(c.get("annual_value") or 0) * float(c.get("negotiation_potential") or 0) / 100, 2)
+    c["potential_savings"] = round(
+        float(c.get("annual_value") or 0) * float(c.get("negotiation_potential") or 0) / 100, 2
+    )
     return c
 
 
@@ -60,81 +65,136 @@ def list_contracts(
     renewing: int | None = Query(None, description="Filtre : renouvellement dans N jours"),
     user:     CurrentUser = Depends(require_min_role("user")),
 ):
-    sb = service_client()
-    q = (
-        sb.table("contracts")
-        .select("*, departments(name)")
-        .eq("organization_id", user.organization_id)
-    )
     allowed = _allowed_dept_ids(user)
+    if allowed is not None and not allowed:
+        return []
+
+    # Construction de la requête avec filtres dynamiques
+    conditions = ["c.organization_id = %s"]
+    params: list = [user.organization_id]
+
     if allowed is not None:
-        if not allowed:
-            return []
-        q = q.in_("department_id", allowed)
+        conditions.append("c.department_id = ANY(%s)")
+        params.append(allowed)
+
     if dept_id:
-        q = q.eq("department_id", dept_id)
+        conditions.append("c.department_id = %s")
+        params.append(dept_id)
+
     if status:
-        q = q.eq("status", status)
+        conditions.append("c.status = %s")
+        params.append(status)
+
     if renewing is not None:
         cutoff = (date.today() + timedelta(days=renewing)).isoformat()
-        q = q.lte("renewal_date", cutoff).gte("renewal_date", date.today().isoformat())
-    res = q.order("renewal_date").execute()
-    return [_enrich(c) for c in (res.data or [])]
+        today_iso = date.today().isoformat()
+        conditions.append("c.renewal_date <= %s")
+        params.append(cutoff)
+        conditions.append("c.renewal_date >= %s")
+        params.append(today_iso)
+
+    where_clause = " AND ".join(conditions)
+    sql = f"""
+        SELECT c.*, d.name AS department_name
+        FROM contracts c
+        LEFT JOIN departments d ON d.id = c.department_id
+        WHERE {where_clause}
+        ORDER BY c.renewal_date
+    """
+
+    with get_db() as cur:
+        cur.execute(sql, params)
+        result = rows(cur)
+
+    return [_enrich(c) for c in result]
 
 
 @router.post("", status_code=201)
 def create_contract(payload: ContractPayload, user: CurrentUser = Depends(require_min_role("manager"))):
-    sb = service_client()
-    res = sb.table("contracts").insert({
-        "organization_id":       user.organization_id,
-        "department_id":         payload.department_id,
-        "vendor":                payload.vendor,
-        "description":           payload.description,
-        "category":              payload.category,
-        "annual_value":          payload.annual_value,
-        "currency":              payload.currency,
-        "start_date":            payload.start_date,
-        "end_date":              payload.end_date,
-        "renewal_date":          payload.renewal_date,
-        "auto_renew":            payload.auto_renew,
-        "negotiation_potential": payload.negotiation_potential,
-        "status":                payload.status,
-        "notes":                 payload.notes,
-    }).execute()
-    return _enrich(res.data[0])
+    with get_db() as cur:
+        cur.execute(
+            """
+            INSERT INTO contracts (
+                organization_id, department_id, vendor, description, category,
+                annual_value, currency, start_date, end_date, renewal_date,
+                auto_renew, negotiation_potential, status, notes
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            RETURNING *
+            """,
+            (
+                user.organization_id,
+                payload.department_id,
+                payload.vendor,
+                payload.description,
+                payload.category,
+                payload.annual_value,
+                payload.currency,
+                payload.start_date,
+                payload.end_date,
+                payload.renewal_date,
+                payload.auto_renew,
+                payload.negotiation_potential,
+                payload.status,
+                payload.notes,
+            ),
+        )
+        result = row(cur)
+    return _enrich(result)
 
 
 @router.patch("/{contract_id}")
-def update_contract(contract_id: str, payload: ContractPayload, user: CurrentUser = Depends(require_min_role("manager"))):
-    sb = service_client()
-    _or_404(sb, "contracts", contract_id, user.organization_id)
-    res = sb.table("contracts").update({
-        "department_id":         payload.department_id,
-        "vendor":                payload.vendor,
-        "description":           payload.description,
-        "category":              payload.category,
-        "annual_value":          payload.annual_value,
-        "currency":              payload.currency,
-        "start_date":            payload.start_date,
-        "end_date":              payload.end_date,
-        "renewal_date":          payload.renewal_date,
-        "auto_renew":            payload.auto_renew,
-        "negotiation_potential": payload.negotiation_potential,
-        "status":                payload.status,
-        "notes":                 payload.notes,
-    }).eq("id", contract_id).execute()
-    return _enrich(res.data[0])
+def update_contract(
+    contract_id: str,
+    payload: ContractPayload,
+    user: CurrentUser = Depends(require_min_role("manager")),
+):
+    _or_404("contracts", contract_id, user.organization_id)
+    with get_db() as cur:
+        cur.execute(
+            """
+            UPDATE contracts SET
+                department_id = %s, vendor = %s, description = %s, category = %s,
+                annual_value = %s, currency = %s, start_date = %s, end_date = %s,
+                renewal_date = %s, auto_renew = %s, negotiation_potential = %s,
+                status = %s, notes = %s
+            WHERE id = %s
+            RETURNING *
+            """,
+            (
+                payload.department_id,
+                payload.vendor,
+                payload.description,
+                payload.category,
+                payload.annual_value,
+                payload.currency,
+                payload.start_date,
+                payload.end_date,
+                payload.renewal_date,
+                payload.auto_renew,
+                payload.negotiation_potential,
+                payload.status,
+                payload.notes,
+                contract_id,
+            ),
+        )
+        result = row(cur)
+    return _enrich(result)
 
 
 @router.delete("/{contract_id}", status_code=204)
 def delete_contract(contract_id: str, user: CurrentUser = Depends(require_min_role("admin"))):
-    sb = service_client()
-    _or_404(sb, "contracts", contract_id, user.organization_id)
-    sb.table("contracts").delete().eq("id", contract_id).execute()
+    _or_404("contracts", contract_id, user.organization_id)
+    with get_db() as cur:
+        cur.execute("DELETE FROM contracts WHERE id = %s", (contract_id,))
 
 
-def _or_404(sb, table: str, row_id: str, org_id: str) -> dict:
-    res = sb.table(table).select("id").eq("id", row_id).eq("organization_id", org_id).limit(1).execute()
-    if not (res.data or []):
+def _or_404(table: str, row_id: str, org_id: str) -> dict:
+    with get_db() as cur:
+        cur.execute(
+            f"SELECT id FROM {table} WHERE id = %s AND organization_id = %s LIMIT 1",
+            (row_id, org_id),
+        )
+        result = row(cur)
+    if not result:
         raise HTTPException(status_code=404, detail="Enregistrement introuvable.")
-    return res.data[0]
+    return result

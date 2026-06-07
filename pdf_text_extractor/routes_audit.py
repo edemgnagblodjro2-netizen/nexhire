@@ -3,8 +3,8 @@ from __future__ import annotations
 from fastapi import APIRouter, Depends, Query
 
 from auth import CurrentUser
+from db import get_db, rows
 from rbac import require_min_role
-from supabase_client import service_client
 
 router = APIRouter(prefix="/api/audit", tags=["audit"])
 
@@ -20,30 +20,41 @@ def list_audit_logs(
 ):
     """Logs d'audit de l'organisation — lecture seule, admin+.
     Retourne les entrées de la plus récente à la plus ancienne."""
-    sb = service_client()
 
-    q = (
-        sb.table("audit_logs")
-        .select(
-            "id, action, query, connector, success, ip_address, "
-            "http_status, resource_ids, error_detail, user_id, created_at"
-        )
-        .eq("organization_id", user.organization_id)
-        .order("created_at", desc=True)
-        .range(offset, offset + limit - 1)
-    )
+    # Build dynamic WHERE clauses
+    conditions = ["organization_id = %s"]
+    params: list = [user.organization_id]
 
     if action is not None:
-        q = q.eq("action", action)
+        conditions.append("action = %s")
+        params.append(action)
     if connector is not None:
-        q = q.eq("connector", connector)
+        conditions.append("connector = %s")
+        params.append(connector)
     if success is not None:
-        q = q.eq("success", success)
+        conditions.append("success = %s")
+        params.append(success)
 
-    res = q.execute()
+    where = " AND ".join(conditions)
+    params.extend([limit, offset])
+
+    with get_db() as cur:
+        cur.execute(
+            f"""
+            SELECT id, action, query, connector, success, ip_address,
+                   http_status, resource_ids, error_detail, user_id, created_at
+            FROM audit_logs
+            WHERE {where}
+            ORDER BY created_at DESC
+            LIMIT %s OFFSET %s
+            """,
+            params,
+        )
+        logs = rows(cur)
+
     return {
-        "total": len(res.data or []),
+        "total": len(logs),
         "offset": offset,
         "limit": limit,
-        "logs": res.data or [],
+        "logs": logs,
     }
