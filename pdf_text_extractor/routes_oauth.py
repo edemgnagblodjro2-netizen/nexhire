@@ -1,7 +1,7 @@
 """OAuth 2.0 — Authorization Code Flow pour les connecteurs d'entreprise.
 
 Connecteurs OAuth complets : microsoft_365, salesforce, servicenow, jira,
-                              zendesk, hubspot
+                              zendesk, hubspot, google_workspace, slack, quickbooks
 Connecteurs API-key         : sap, workday, autotask  (via /api/connectors/{type}/credentials)
 """
 from __future__ import annotations
@@ -73,6 +73,36 @@ _OAUTH_CFG: dict[str, dict] = {
         "client_id_env":     "HUBSPOT_CLIENT_ID",
         "client_secret_env": "HUBSPOT_CLIENT_SECRET",
         "redirect_uri_env":  "HUBSPOT_REDIRECT_URI",
+    },
+    "google_workspace": {
+        "auth_url":  "https://accounts.google.com/o/oauth2/v2/auth",
+        "token_url": "https://oauth2.googleapis.com/token",
+        "scopes":    "openid email profile "
+                     "https://www.googleapis.com/auth/drive.readonly "
+                     "https://www.googleapis.com/auth/gmail.readonly "
+                     "https://www.googleapis.com/auth/calendar.readonly "
+                     "https://www.googleapis.com/auth/admin.directory.user.readonly",
+        "client_id_env":     "GOOGLE_CLIENT_ID",
+        "client_secret_env": "GOOGLE_CLIENT_SECRET",
+        "redirect_uri_env":  "GOOGLE_REDIRECT_URI",
+        "extra_params": {"access_type": "offline", "prompt": "consent"},
+    },
+    "slack": {
+        "auth_url":  "https://slack.com/oauth/v2/authorize",
+        "token_url": "https://slack.com/api/oauth.v2.access",
+        "scopes":    "channels:read channels:history files:read users:read "
+                     "team:read search:read",
+        "client_id_env":     "SLACK_CLIENT_ID",
+        "client_secret_env": "SLACK_CLIENT_SECRET",
+        "redirect_uri_env":  "SLACK_REDIRECT_URI",
+    },
+    "quickbooks": {
+        "auth_url":  "https://appcenter.intuit.com/connect/oauth2",
+        "token_url": "https://oauth.platform.intuit.com/oauth2/v1/tokens/bearer",
+        "scopes":    "com.intuit.quickbooks.accounting",
+        "client_id_env":     "QUICKBOOKS_CLIENT_ID",
+        "client_secret_env": "QUICKBOOKS_CLIENT_SECRET",
+        "redirect_uri_env":  "QUICKBOOKS_REDIRECT_URI",
     },
 }
 
@@ -243,6 +273,7 @@ def oauth_callback(
     state:             str        = Query(default=None),
     error:             str | None = Query(default=None),
     error_description: str | None = Query(default=None),
+    realmId:           str | None = Query(default=None),
 ):
     if error or not code or not state:
         return RedirectResponse(url=f"/?oauth_error={error or 'missing_params'}", status_code=302)
@@ -280,6 +311,12 @@ def oauth_callback(
     # Salesforce also returns instance_url for API calls
     if connector_type == "salesforce" and "instance_url" in tokens:
         credentials["instance_url"] = tokens["instance_url"]
+    # QuickBooks realmId (company ID) arrives as a query param, not in the token
+    if connector_type == "quickbooks" and realmId:
+        credentials["realm_id"] = realmId
+    # Slack v2: bot token is under access_token but authed_user has a separate user token
+    if connector_type == "slack" and "authed_user" in tokens:
+        credentials["authed_user_token"] = tokens["authed_user"].get("access_token", "")
 
     _upsert_connector(org_id, connector_type, credentials)
 
