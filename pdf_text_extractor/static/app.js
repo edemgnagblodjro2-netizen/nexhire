@@ -1290,13 +1290,6 @@ function buildConnectorCard(type, meta, info) {
       actions.appendChild(reauth);
     }
 
-    if (isAdmin) {
-      const accessBtn = document.createElement("button");
-      accessBtn.className = "btn-access-dept";
-      accessBtn.textContent = "🔒 Accès département";
-      accessBtn.addEventListener("click", () => openConnectorDeptModal(type, meta.label, info?.departments || []));
-      actions.appendChild(accessBtn);
-    }
   } else if (isOAuth) {
     const btn = document.createElement("button");
     btn.className = "btn-connect real";
@@ -1316,6 +1309,15 @@ function buildConnectorCard(type, meta, info) {
     btn.addEventListener("click", () => doConnect(type, btn));
     actions.appendChild(btn);
   }
+
+  if (isAdmin) {
+    const accessBtn = document.createElement("button");
+    accessBtn.className = "btn-access-dept";
+    accessBtn.textContent = "🔒 Accès département";
+    accessBtn.addEventListener("click", () => openConnectorDeptModal(type, meta.label, info?.departments || []));
+    actions.appendChild(accessBtn);
+  }
+
   card.appendChild(actions);
   return card;
 }
