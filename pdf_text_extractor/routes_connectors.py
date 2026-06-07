@@ -222,6 +222,109 @@ def remove_connector_department(
 
 # ── Connexion / Déconnexion ────────────────────────────────────────────────────
 
+# Champs obligatoires par connecteur (validation minimale)
+_REQUIRED_FIELDS: dict[str, list[str]] = {
+    "sap":      ["api_url"],
+    "workday":  ["tenant_url", "client_id", "client_secret"],
+    "autotask": ["username", "api_key", "zone_url"],
+}
+
+
+@router.post("/{connector_type}/credentials", status_code=status.HTTP_200_OK)
+async def save_credentials(
+    connector_type: str,
+    request: Request,
+    background: BackgroundTasks,
+    user: CurrentUser = Depends(require_min_role("admin")),
+    _active: CurrentUser = Depends(require_active_subscription),
+):
+    """Enregistre les credentials réels d'un connecteur (chiffrés Fernet)."""
+    _check_type(connector_type)
+    payload: dict = await request.json()
+
+    # Validation minimale des champs obligatoires
+    required = _REQUIRED_FIELDS.get(connector_type, [])
+    missing = [f for f in required if not payload.get(f, "").strip()]
+    if missing:
+        raise HTTPException(
+            status_code=422,
+            detail=f"Champs manquants : {', '.join(missing)}",
+        )
+
+    # Nettoyage + normalisation des champs selon le connecteur
+    creds: dict = {k: v.strip() for k, v in payload.items() if isinstance(v, str) and v.strip()}
+
+    if connector_type == "sap":
+        creds["instance_url"] = creds.pop("api_url", creds.get("instance_url", ""))
+
+    elif connector_type == "workday":
+        # Extrait le nom du tenant depuis l'URL si besoin
+        tenant_url = creds.get("tenant_url", "")
+        if not creds.get("tenant") and tenant_url:
+            # https://<tenant>.workday.com/... ou https://wd3-impl.workday.com/ccx/service/<tenant>
+            import re
+            m = re.search(r"workday\.com/ccx/service/([^/]+)", tenant_url)
+            if m:
+                creds["tenant"] = m.group(1)
+            else:
+                m2 = re.match(r"https?://([^.]+)\.workday\.com", tenant_url)
+                if m2:
+                    creds["tenant"] = m2.group(1)
+
+    elif connector_type == "autotask":
+        # Renomme api_key → secret (nom attendu par autotask_service)
+        if "api_key" in creds:
+            creds["secret"] = creds.pop("api_key")
+        # Extrait le numéro de zone depuis l'URL (ex: https://webservices24.autotask.net → 24)
+        zone_url = creds.get("zone_url", "")
+        if zone_url and not creds.get("zone"):
+            import re
+            m = re.search(r"webservices(\d+)", zone_url)
+            creds["zone"] = m.group(1) if m else "4"
+
+    encrypted = encrypt(json.dumps(creds))
+    now = _now()
+
+    with get_db() as cur:
+        cur.execute(
+            "SELECT id FROM connectors WHERE organization_id = %s AND connector_type = %s LIMIT 1",
+            (user.organization_id, connector_type),
+        )
+        existing = row(cur)
+
+    if existing:
+        with get_db() as cur:
+            cur.execute(
+                """UPDATE connectors SET
+                       status = 'connected',
+                       encrypted_credentials = %s,
+                       connected_at = %s,
+                       last_error = NULL,
+                       updated_at = %s
+                   WHERE id = %s""",
+                (encrypted, now, now, existing["id"]),
+            )
+    else:
+        with get_db() as cur:
+            cur.execute(
+                """INSERT INTO connectors
+                       (organization_id, connector_type, status, encrypted_credentials, connected_at, updated_at)
+                   VALUES (%s, %s, 'connected', %s, %s, %s)""",
+                (user.organization_id, connector_type, encrypted, now, now),
+            )
+
+    background.add_task(log_audit, AuditEvent(
+        action="connector_credentials_saved",
+        query=connector_type,
+        organization_id=user.organization_id,
+        user_id=user.id,
+        connector=connector_type,
+        ip_address=client_ip(request),
+        http_status=200,
+    ))
+    return {"connector_type": connector_type, "status": "connected"}
+
+
 @router.post("/{connector_type}/connect", status_code=status.HTTP_200_OK)
 def connect(
     connector_type: str,
@@ -230,7 +333,7 @@ def connect(
     user: CurrentUser = Depends(require_min_role("admin")),
     _active: CurrentUser = Depends(require_active_subscription),
 ):
-    """Simule la connexion (option B : stocke {"simulated": true} chiffré Fernet)."""
+    """Simule la connexion (stocke {"simulated": true} chiffré Fernet)."""
     _check_type(connector_type)
     creds = encrypt(json.dumps({"simulated": True}))
     now = _now()

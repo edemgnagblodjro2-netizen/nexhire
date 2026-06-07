@@ -62,7 +62,7 @@ def query_sap(
     """
     cfg = _load_config(org_id) if org_id else None
     if cfg:
-        base_url = cfg.get("instance_url", "").rstrip("/")
+        base_url = (cfg.get("instance_url") or cfg.get("api_url", "")).rstrip("/")
         try:
             return _real_query(cfg, base_url, category, period, department)
         except Exception:

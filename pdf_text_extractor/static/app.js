@@ -529,9 +529,10 @@ const CONNECTORS = {
     niche: true,
     niche_label: "Fournisseurs de services gérés (MSP)",
     fields: [
-      { id: "username",   label: "Nom d'utilisateur *", placeholder: "user@domain.com" },
-      { id: "api_key",    label: "Clé API secrète *",   placeholder: "••••••••",  type: "password" },
-      { id: "zone_url",   label: "Zone URL *",           placeholder: "https://webservices24.autotask.net" },
+      { id: "username",             label: "Nom d'utilisateur *",       placeholder: "user@domain.com" },
+      { id: "api_key",              label: "Clé API secrète *",         placeholder: "••••••••",  type: "password" },
+      { id: "api_integration_code", label: "Code d'intégration API *",  placeholder: "Code généré dans Admin > API" },
+      { id: "zone_url",             label: "Zone URL *",                placeholder: "https://webservices24.autotask.net" },
     ],
   },
 

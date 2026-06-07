@@ -43,12 +43,16 @@ def _headers(cfg: dict) -> dict:
     return {
         "ApiIntegrationCode": cfg.get("api_integration_code", ""),
         "UserName":           cfg.get("username", ""),
-        "Secret":             cfg.get("secret", ""),
+        "Secret":             cfg.get("secret") or cfg.get("api_key", ""),
         "Content-Type":       "application/json",
     }
 
 
 def _base_url(cfg: dict) -> str:
+    # Supporte zone_url complet (https://webservices24.autotask.net) ou numéro seul
+    zone_url = cfg.get("zone_url", "")
+    if zone_url.startswith("http"):
+        return zone_url.rstrip("/") + "/ATServicesRest/v1.0"
     zone = cfg.get("zone", DEFAULT_ZONE)
     return AUTOTASK_BASE.format(zone=zone)
 
