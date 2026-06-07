@@ -134,9 +134,25 @@ class DeptPayload(BaseModel):
     dept_type: str = "general"
 
 
+HIERARCHY_TITLES = [
+    "Direction Générale",
+    "Vice-président / Directeur Exécutif",
+    "Directeur de Département",
+    "Gestionnaire / Chef d'équipe",
+    "Superviseur",
+    "Employé",
+]
+TITLE_LEVEL: dict[str, int] = {t: i + 1 for i, t in enumerate(HIERARCHY_TITLES)}
+
+
 class AddMemberPayload(BaseModel):
     user_id: str
     role: str = Field("member", pattern="^(member|manager)$")
+
+
+class TitlePayload(BaseModel):
+    title: str | None = None
+    hierarchy_level: int | None = Field(None, ge=1, le=6)
 
 
 @router.get("/dashboard")
@@ -656,13 +672,39 @@ def list_dept_members(
     _dept_or_404(dept_id, user.organization_id)
     with get_db() as cur:
         cur.execute(
-            """SELECT dm.*, u.id AS u_id, u.full_name, u.email, u.role
+            """SELECT dm.user_id, dm.role, dm.title, dm.hierarchy_level,
+                      u.id AS u_id, u.full_name, u.email, u.role AS org_role, u.is_active
                FROM department_members dm
                JOIN users u ON u.id = dm.user_id
-               WHERE dm.department_id = %s""",
+               WHERE dm.department_id = %s
+               ORDER BY COALESCE(dm.hierarchy_level, 6), u.full_name""",
             (dept_id,),
         )
         return rows(cur)
+
+
+@router.patch("/{dept_id}/members/{member_id}/title")
+def update_member_title(
+    dept_id: str,
+    member_id: str,
+    payload: TitlePayload,
+    user: CurrentUser = Depends(require_min_role("admin")),
+):
+    """Met à jour le titre et/ou le niveau hiérarchique d'un membre dans un département."""
+    _dept_or_404(dept_id, user.organization_id)
+    level = payload.hierarchy_level or TITLE_LEVEL.get(payload.title or "", 6)
+    with get_db() as cur:
+        cur.execute(
+            """UPDATE department_members
+               SET title = %s, hierarchy_level = %s
+               WHERE department_id = %s AND user_id = %s
+               RETURNING *""",
+            (payload.title, level, dept_id, member_id),
+        )
+        result = row(cur)
+    if not result:
+        raise HTTPException(status_code=404, detail="Membre introuvable dans ce département.")
+    return result
 
 
 @router.post("/{dept_id}/members", status_code=201)

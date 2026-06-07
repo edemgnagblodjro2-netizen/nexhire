@@ -1715,9 +1715,21 @@ async function loadAudit() {
 const ROLE_COLORS = { owner:"#0f172a", admin:"#6366f1", manager:"#0ea5e9", user:"#64748b" };
 const ROLE_LABELS_FR = { owner:"Owner", admin:"Admin", manager:"Manager", user:"Utilisateur" };
 
+const HIERARCHY_TITLES = [
+  "Direction Générale",
+  "Vice-président / Directeur Exécutif",
+  "Directeur de Département",
+  "Gestionnaire / Chef d'équipe",
+  "Superviseur",
+  "Employé",
+];
+const HIERARCHY_COLORS = ["#7c3aed","#2563eb","#0891b2","#16a34a","#d97706","#64748b"];
+const HIERARCHY_ICONS  = ["🏛️","🎯","🗂️","👔","🔍","👤"];
+
 async function loadTeam() {
   await Promise.all([_loadMembers(), _loadPendingInvitations()]);
   loadDepartments();
+  loadOrgChart();
 }
 
 async function _loadMembers() {
@@ -2760,6 +2772,70 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ── Départements ──────────────────────────────────────────────────────────────
+// ── Organigramme ──────────────────────────────────────────────────────────────
+
+async function loadOrgChart() {
+  const wrap = $("orgchart-wrap");
+  if (!wrap) return;
+  wrap.innerHTML = `<p class="muted">Chargement…</p>`;
+  try {
+    const depts = await apiCall("/api/members/orgchart");
+    if (!depts.length) {
+      wrap.innerHTML = `<p class="muted">Aucun département configuré.</p>`;
+      return;
+    }
+    const DEPT_ICONS = { finance:"💰",hr:"👥",it:"💻",legal:"⚖️",operations:"⚙️",marketing:"📣",direction:"🏛️",approvisionnement:"📦",general:"🏢" };
+    wrap.innerHTML = depts.map(dept => {
+      const icon = DEPT_ICONS[dept.dept_type] || "🏢";
+      const members = dept.members || [];
+      if (!members.length) return `
+        <div class="org-dept-block">
+          <div class="org-dept-hd">${icon} ${esc(dept.name)} <span class="org-dept-count muted">— aucun membre</span></div>
+        </div>`;
+
+      const rows = members.map(m => {
+        const lvl   = (m.hierarchy_level || 6) - 1;
+        const color = HIERARCHY_COLORS[lvl] || "#64748b";
+        const hicon = HIERARCHY_ICONS[lvl] || "👤";
+        const initials = (m.full_name || m.email || "?").slice(0,2).toUpperCase();
+        const isAdmin = ["admin","owner"].includes(state.user?.role);
+        return `
+          <div class="org-member-row" style="--lvl:${lvl};--color:${color}">
+            <div class="org-member-indent"></div>
+            <div class="org-member-av" style="background:${color}22;color:${color}">${initials}</div>
+            <div class="org-member-info">
+              <span class="org-member-name">${esc(m.full_name || m.email)}</span>
+              <span class="org-member-title" style="color:${color}">${hicon} ${esc(m.title)}</span>
+            </div>
+            ${isAdmin ? `
+              <select class="org-title-select" onchange="setMemberTitle('${dept.id}','${m.id}',this.value)"
+                      title="Changer le titre">
+                ${HIERARCHY_TITLES.map((t,i) => `<option value="${t}" ${t===m.title?"selected":""}>${t}</option>`).join("")}
+              </select>` : ""}
+          </div>`;
+      }).join("");
+
+      return `
+        <div class="org-dept-block">
+          <div class="org-dept-hd" onclick="this.nextElementSibling.classList.toggle('hidden')">
+            ${icon} ${esc(dept.name)}
+            <span class="org-dept-count">${members.length} membre${members.length>1?"s":""}</span>
+            <span class="org-chevron">▾</span>
+          </div>
+          <div class="org-members-list">${rows}</div>
+        </div>`;
+    }).join("");
+  } catch(e) {
+    wrap.innerHTML = `<p class="muted">Erreur : ${esc(e.message)}</p>`;
+  }
+}
+
+async function setMemberTitle(deptId, memberId, title) {
+  try {
+    await apiCall(`/api/departments/${deptId}/members/${memberId}/title`, "PATCH", { title });
+  } catch(e) { alert(e.message); }
+}
+
 async function loadDepartments() {
   const wrap = $("dept-list-wrap");
   if (!wrap) return;

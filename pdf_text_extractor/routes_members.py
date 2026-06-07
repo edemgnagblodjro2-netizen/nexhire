@@ -12,6 +12,15 @@ router = APIRouter(prefix="/api/members", tags=["members"])
 
 ROLE_LABELS = {"user": "Utilisateur", "manager": "Manager", "admin": "Admin", "owner": "Owner"}
 
+HIERARCHY_TITLES = [
+    "Direction Générale",
+    "Vice-président / Directeur Exécutif",
+    "Directeur de Département",
+    "Gestionnaire / Chef d'équipe",
+    "Superviseur",
+    "Employé",
+]
+
 
 # ── Models ─────────────────────────────────────────────────────────────────
 
@@ -41,6 +50,46 @@ def _same_org(user: CurrentUser, target_id: str) -> dict:
     if not result:
         raise HTTPException(status_code=404, detail="Membre introuvable.")
     return result
+
+
+# ── Organigramme ───────────────────────────────────────────────────────────
+
+@router.get("/orgchart")
+def org_chart(user: CurrentUser = Depends(require_min_role("user"))):
+    """Retourne la structure hiérarchique de l'organisation par département."""
+    with get_db() as cur:
+        cur.execute(
+            """
+            SELECT d.id AS dept_id, d.name AS dept_name, d.dept_type,
+                   dm.user_id, dm.title, dm.hierarchy_level,
+                   u.full_name, u.email, u.role AS org_role, u.is_active
+            FROM departments d
+            LEFT JOIN department_members dm ON dm.department_id = d.id
+            LEFT JOIN users u ON u.id = dm.user_id
+            WHERE d.organization_id = %s
+            ORDER BY d.name, COALESCE(dm.hierarchy_level, 6), u.full_name
+            """,
+            (user.organization_id,),
+        )
+        raw = rows(cur)
+
+    depts: dict[str, dict] = {}
+    for r in raw:
+        did = r["dept_id"]
+        if did not in depts:
+            depts[did] = {"id": did, "name": r["dept_name"],
+                          "dept_type": r["dept_type"], "members": []}
+        if r["user_id"]:
+            depts[did]["members"].append({
+                "id":              r["user_id"],
+                "full_name":       r["full_name"],
+                "email":           r["email"],
+                "title":           r["title"] or HIERARCHY_TITLES[5],
+                "hierarchy_level": r["hierarchy_level"] or 6,
+                "org_role":        r["org_role"],
+                "is_active":       r["is_active"],
+            })
+    return list(depts.values())
 
 
 # ── List members ───────────────────────────────────────────────────────────
