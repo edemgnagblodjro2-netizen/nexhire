@@ -16,10 +16,7 @@ declare
 begin
 
 -- ── 0. Organisation cible ────────────────────────────────────────────────
-select id into v_org from public.organizations order by created_at limit 1;
-if v_org is null then
-  raise exception 'Aucune organisation trouvée. Créez-en une via l''interface avant de lancer ce script.';
-end if;
+v_org := '98ca562e-ca2d-4d99-8579-04ee0d36349f'::uuid;
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- 1. DÉPARTEMENTS (5 — profils variés pour le dashboard)
