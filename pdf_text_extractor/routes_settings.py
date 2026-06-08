@@ -51,11 +51,11 @@ def get_profile(user: CurrentUser = Depends(require_min_role("user"))):
         with get_db() as cur:
             cur.execute(
                 """SELECT id FROM connectors
-                   WHERE organization_id = %s AND connector_type = 'sso' AND status = 'connected'
+                   WHERE organization_id = %s AND connector_type LIKE 'sso_%' AND status = 'connected'
                    LIMIT 1""",
                 (user.organization_id,),
             )
-            sso_enabled = bool(rows(cur))
+            sso_enabled = bool(row(cur))
     except Exception:
         pass
 
