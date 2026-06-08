@@ -20,6 +20,7 @@ VALID_TYPES = frozenset({
     "bamboohr", "adp",
     "asana", "monday", "clickup",
     "aws", "netsuite", "intune", "crowdstrike",
+    "epicor",
 })
 
 router = APIRouter(prefix="/api/connectors", tags=["connectors"])

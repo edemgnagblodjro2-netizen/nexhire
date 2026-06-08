@@ -815,6 +815,21 @@ const CONNECTORS = {
       { id: "token_secret",  label: "Token Secret *",  placeholder: "••••••••", type: "password" },
     ],
   },
+  epicor: {
+    label: "Epicor ERP", icon: "EP", color: "#c8102e", method: "apikey",
+    desc: "Finance, fabrication, stocks, achats, commandes clients, chaîne d'approvisionnement — ERP de référence pour les PME et ETI industrielles canadiennes",
+    help_url: "https://epicor.com/en-ca/resources/",
+    help_label: "Epicor API Docs",
+    niche: true,
+    niche_label: "Finance & Comptabilité",
+    fields: [
+      { id: "api_url",    label: "URL de l'API *",      placeholder: "https://votreserveur/api/v1/" },
+      { id: "username",  label: "Utilisateur *",        placeholder: "epicor_user" },
+      { id: "password",  label: "Mot de passe *",       placeholder: "••••••••", type: "password" },
+      { id: "api_key",   label: "API Key (optionnel)",  placeholder: "••••••••", type: "password" },
+      { id: "company_id", label: "Company ID *",        placeholder: "EPIC06" },
+    ],
+  },
 
   // ── IT & Sécurité ─────────────────────────────────────────────────────────
   intune: {
@@ -3228,6 +3243,7 @@ const APP_CATALOG = [
   {name:"Oracle ERP Cloud",             vendor:"Oracle",              category:"cloud",    group:"ERP"},
   {name:"Microsoft Dynamics 365",       vendor:"Microsoft",           category:"saas",     group:"ERP"},
   {name:"NetSuite",                     vendor:"Oracle",              category:"saas",     group:"ERP"},
+  {name:"Epicor ERP",                   vendor:"Epicor",              category:"on-prem",  group:"ERP"},
   {name:"Infor CloudSuite",             vendor:"Infor",               category:"cloud",    group:"ERP"},
   {name:"Sage Intacct",                 vendor:"Sage",                category:"saas",     group:"ERP"},
   // Comptabilité
@@ -4384,6 +4400,13 @@ const _DEPT_CHIPS = {
     { fr: "Économies identifiées sur les achats ce trimestre",                en: "Procurement savings identified this quarter" },
     { fr: "Top fournisseurs par volume de dépenses",                          en: "Top vendors by spend volume" },
   ],
+  manufacturing: [
+    { fr: "Ordres de production en cours et taux d'avancement",              en: "Active production orders and completion rates" },
+    { fr: "Stock critique — ruptures imminentes",                             en: "Critical stock — imminent stockouts" },
+    { fr: "Délais fournisseurs et commandes en retard",                       en: "Supplier lead times and late orders" },
+    { fr: "Coût de production par unité ce mois-ci",                         en: "Production cost per unit this month" },
+    { fr: "Taux de rebut et non-conformités qualité",                        en: "Scrap rate and quality non-conformances" },
+  ],
 };
 
 function _updateAgentChips(deptType) {
@@ -4443,6 +4466,12 @@ const WORKSPACE_TEMPLATES = [
     name: { fr: "Procurement Workspace",   en: "Procurement Workspace" },
     desc: { fr: "Appels d'offres, gestion fournisseurs, contrats d'achat et suivi des économies.", en: "RFPs, vendor management, purchase contracts, and savings tracking." },
     connectors: ["netsuite", "sap", "workday", "microsoft_365"],
+  },
+  {
+    id: "manufacturing", icon: "🏭", color: "#c8102e", dept_type: "manufacturing",
+    name: { fr: "Manufacturing Workspace",  en: "Manufacturing Workspace" },
+    desc: { fr: "Fabrication, stocks, ordres de production, achats et chaîne d'approvisionnement pour les PME et ETI industrielles canadiennes.", en: "Manufacturing, inventory, production orders, procurement, and supply chain for Canadian industrial SMEs." },
+    connectors: ["epicor", "netsuite", "sap", "microsoft_365"],
   },
   {
     id: "municipal", icon: "🏙️", color: "#0f766e", dept_type: "operations",
