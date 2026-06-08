@@ -1973,23 +1973,45 @@ footer {
 
 @media (max-width: 640px) {
   /* Landing — réduire padding horizontal pour éviter overflow */
-  .eip-stats-banner  { padding: 32px 16px 24px; }
-  .eip-stat-item     { padding: 10px 16px; }
-  .eip-stat-divider  { display: none; }
+  .eip-stats-banner       { padding: 32px 16px 24px; }
+  .eip-stat-item          { padding: 10px 16px; }
+  .eip-stat-divider       { display: none; }
   .eip-flow-section,
   .exec-demo-section,
-  .ws-section,
+  .eip-workspaces-section,
   .uc-section,
   .int-section,
   .sec-section,
-  .roi-section       { padding-left: 16px; padding-right: 16px; }
-  .demo-stage        { padding: 24px 16px; }
-  .contact-section   { padding: 60px 16px; }
-  .contact-inner     { grid-template-columns: 1fr; gap: 32px; }
-  .contact-row       { grid-template-columns: 1fr; }
-  .contact-form-card { padding: 24px 16px; }
-  .demo-exec-grid    { grid-template-columns: 1fr 1fr; }
-  .land-nav          { padding: 10px 12px; }
+  .roi-section,
+  .demo-section           { padding-left: 16px; padding-right: 16px; }
+
+  /* Executive Dashboard — 1 colonne */
+  .exec-demo-wrap         { grid-template-columns: 1fr; padding: 20px 16px; gap: 24px; }
+  .exec-kpi-grid          { grid-template-columns: 1fr 1fr; }
+
+  /* Workspaces — 2 colonnes puis 1 */
+  .workspaces-grid        { grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* ROI — 2 colonnes */
+  .roi-grid               { grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* Demo player */
+  .demo-stage             { padding: 24px 16px; }
+  .demo-exec-grid         { grid-template-columns: 1fr 1fr; }
+
+  /* Contact */
+  .contact-section        { padding: 60px 16px; }
+  .contact-inner          { grid-template-columns: 1fr; gap: 32px; }
+  .contact-row            { grid-template-columns: 1fr; }
+  .contact-form-card      { padding: 24px 16px; }
+
+  .land-nav               { padding: 10px 12px; }
+}
+
+@media (max-width: 400px) {
+  .workspaces-grid        { grid-template-columns: 1fr; }
+  .roi-grid               { grid-template-columns: 1fr; }
+  .exec-kpi-grid          { grid-template-columns: 1fr; }
 }
 
 /* ── Quota pill ──────────────────────────────────────────────────────────── */
