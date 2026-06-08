@@ -1998,18 +1998,31 @@ footer {
   .eip-flow-section,
   .exec-demo-section,
   .eip-workspaces-section,
-  .uc-section,
-  .int-section,
-  .sec-section,
+  .use-cases-section,
+  .integrations-section,
+  .security-section,
   .roi-section,
   .demo-section           { padding-left: 16px; padding-right: 16px; }
 
   /* Executive Dashboard — 1 colonne */
   .exec-demo-wrap         { grid-template-columns: 1fr; padding: 20px 16px; gap: 24px; }
   .exec-kpi-grid          { grid-template-columns: 1fr 1fr; }
+  .exec-recommendations   { width: 100%; }
+  .exec-rec-item          { font-size: .8rem; padding: 12px 12px; flex-wrap: wrap; }
 
   /* Workspaces — 2 colonnes puis 1 */
   .workspaces-grid        { grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* Use Cases — 2 colonnes */
+  .use-cases-grid         { grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* Integrations — 2 colonnes */
+  .integrations-grid      { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .integration-item       { padding: 10px 12px; font-size: .8rem; }
+  .integrations-tagline   { flex-direction: column; gap: 8px; align-items: center; }
+
+  /* Security — 2 colonnes */
+  .security-grid          { grid-template-columns: 1fr 1fr; gap: 16px; }
 
   /* ROI — 2 colonnes */
   .roi-grid               { grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -2031,6 +2044,9 @@ footer {
   .workspaces-grid        { grid-template-columns: 1fr; }
   .roi-grid               { grid-template-columns: 1fr; }
   .exec-kpi-grid          { grid-template-columns: 1fr; }
+  .use-cases-grid         { grid-template-columns: 1fr; }
+  .integrations-grid      { grid-template-columns: 1fr 1fr; }
+  .security-grid          { grid-template-columns: 1fr; }
 }
 
 /* ── Quota pill ──────────────────────────────────────────────────────────── */
