@@ -57,7 +57,7 @@ from routes_connectors import router as connectors_router
 from routes_oauth import router as oauth_router
 from routes_reports import router as reports_router
 from routes_analytics        import router as analytics_router
-from routes_settings         import router as settings_router
+from routes_settings         import router as settings_router, public_router as public_router
 from routes_members          import router as members_router
 from routes_service_accounts import router as sa_router
 from routes_departments      import router as departments_router
@@ -141,6 +141,7 @@ def create_app(
     app.include_router(reports_router)
     app.include_router(analytics_router)
     app.include_router(settings_router)
+    app.include_router(public_router)
     app.include_router(members_router)
     app.include_router(sa_router)
     app.include_router(departments_router)

@@ -1841,6 +1841,155 @@ async function _doOAuthStartWithBody(type, btn, body) {
   }
 }
 
+// ── Demo Player ───────────────────────────────────────────────────────────
+
+(function initDemoPlayer() {
+  const TOTAL = 12;
+  const SLIDE_MS = 5000;
+  let current = 0;
+  let playing = true;
+  let timer = null;
+  let elapsed = 0;
+  let tickInterval = null;
+
+  function getSlides() { return document.querySelectorAll('#demo-stage .demo-slide'); }
+  function getDots()   { return document.querySelectorAll('#demo-slide-dots .demo-sdot'); }
+
+  function goTo(idx) {
+    const slides = getSlides();
+    const dots   = getDots();
+    if (!slides.length) return;
+    slides[current]?.classList.add('demo-slide-hidden');
+    dots[current]?.classList.remove('active');
+    current = ((idx % TOTAL) + TOTAL) % TOTAL;
+    slides[current]?.classList.remove('demo-slide-hidden');
+    dots[current]?.classList.add('active');
+    elapsed = 0;
+    updateUI();
+    if (current === 3) animateSavings();
+  }
+
+  function updateUI() {
+    const fill = document.getElementById('demo-fill');
+    const time = document.getElementById('demo-time');
+    if (fill) fill.style.width = ((elapsed / SLIDE_MS) * 100) + '%';
+    if (time) {
+      const totalSec = current * 5 + Math.floor(elapsed / 1000);
+      const m = Math.floor(totalSec / 60), s = totalSec % 60;
+      time.textContent = `${m}:${s.toString().padStart(2,'0')} / 1:00`;
+    }
+  }
+
+  function startTimer() {
+    clearInterval(timer);
+    clearInterval(tickInterval);
+    const startTime = Date.now() - elapsed;
+    tickInterval = setInterval(() => {
+      elapsed = Date.now() - startTime;
+      if (elapsed >= SLIDE_MS) {
+        elapsed = 0;
+        goTo(current + 1);
+        if (!playing) { clearInterval(tickInterval); return; }
+        startTimer();
+      }
+      updateUI();
+    }, 50);
+  }
+
+  function pause() {
+    playing = false;
+    clearInterval(timer);
+    clearInterval(tickInterval);
+    const btn = document.getElementById('demo-play');
+    if (btn) btn.textContent = '▶';
+  }
+
+  function play() {
+    playing = true;
+    const btn = document.getElementById('demo-play');
+    if (btn) btn.textContent = '⏸';
+    startTimer();
+  }
+
+  function animateSavings() {
+    const el = document.getElementById('demo-kpi-savings');
+    if (!el) return;
+    const target = 2846217;
+    const dur = 1800;
+    const start = Date.now();
+    const step = () => {
+      const p = Math.min((Date.now() - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = '$' + Math.floor(eased * target).toLocaleString('en-CA');
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const playBtn = document.getElementById('demo-play');
+    const prevBtn = document.getElementById('demo-prev');
+    const nextBtn = document.getElementById('demo-next');
+    const track   = document.querySelector('.demo-progress-track');
+    const dots    = getDots();
+
+    if (!playBtn) return;
+
+    playBtn.addEventListener('click', () => playing ? pause() : play());
+    prevBtn?.addEventListener('click', () => { goTo(current - 1); if (playing) startTimer(); });
+    nextBtn?.addEventListener('click', () => { goTo(current + 1); if (playing) startTimer(); });
+
+    dots.forEach((d, i) => d.addEventListener('click', () => { goTo(i); if (playing) startTimer(); }));
+
+    track?.addEventListener('click', e => {
+      const pct = e.offsetX / track.offsetWidth;
+      const idx = Math.floor(pct * TOTAL);
+      goTo(idx);
+      if (playing) startTimer();
+    });
+
+    // Auto-start when player scrolls into view
+    const observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !playing) play();
+      else if (!entries[0].isIntersecting) pause();
+    }, { threshold: 0.3 });
+    const player = document.getElementById('demo-player');
+    if (player) observer.observe(player);
+
+    play();
+  });
+})();
+
+// ── Contact form ──────────────────────────────────────────────────────────
+
+async function submitContact(e) {
+  e.preventDefault();
+  const btn = document.getElementById('cf-btn');
+  const err = document.getElementById('cf-error');
+  const name    = document.getElementById('cf-name')?.value.trim();
+  const company = document.getElementById('cf-company')?.value.trim();
+  const email   = document.getElementById('cf-email')?.value.trim();
+  const message = document.getElementById('cf-message')?.value.trim();
+  if (!name || !company || !email) return;
+  btn.disabled = true;
+  btn.textContent = 'Envoi en cours…';
+  err.classList.add('hidden');
+  try {
+    await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, company, email, message }),
+    });
+    document.getElementById('contact-form-wrap').querySelector('form').classList.add('hidden');
+    document.getElementById('contact-success').classList.remove('hidden');
+  } catch {
+    err.textContent = 'Erreur réseau. Réessayez ou contactez-nous par courriel.';
+    err.classList.remove('hidden');
+    btn.disabled = false;
+    btn.textContent = 'Demander une démonstration →';
+  }
+}
+
 // ── Credential modal (API Key connectors) ─────────────────────────────────
 
 function openCredModal(type, meta) {

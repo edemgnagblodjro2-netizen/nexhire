@@ -21,7 +21,7 @@
   <meta name="twitter:description" content="Connect your systems. Detect savings. Reduce risk. Optimize every department." />
   <meta name="twitter:image"       content="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&h=630&q=80" />
 
-  <link rel="stylesheet" href="/static/styles.css?v=20260608b" />
+  <link rel="stylesheet" href="/static/styles.css?v=20260608c" />
 </head>
 <body>
 
@@ -40,8 +40,9 @@
     <div class="land-nav-links">
       <a href="#workspaces">Espaces de travail</a>
       <a href="#features" data-i18n="nav.features">Fonctionnalités</a>
+      <a href="#demo">Démo</a>
       <a href="#pricing"  data-i18n="nav.pricing">Tarifs</a>
-      <a href="#connectors" data-i18n="nav.connectors">Connecteurs</a>
+      <a href="#contact">Contact</a>
     </div>
     <div class="land-nav-cta">
       <button class="lang-btn" id="lang-btn-land" onclick="toggleLang()">EN</button>
@@ -489,6 +490,244 @@
           </div>
           <button class="btn btn-primary" onclick="showAuth('signup')" data-i18n="price.cta">Commencer l'essai</button>
           <p class="price-trial" data-i18n="price.annual.note">Facturé annuellement · Annulez à tout moment</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Demo Section -->
+  <section class="demo-section" id="demo">
+    <div class="section-center" style="text-align:center">
+      <span class="section-label">Démo interactive</span>
+      <h2 class="section-title">Voyez EIP en action</h2>
+      <p class="section-sub" style="margin-bottom:48px">60 secondes pour comprendre comment EIP transforme votre organisation.</p>
+
+      <div class="demo-player" id="demo-player">
+        <!-- Window chrome -->
+        <div class="demo-chrome">
+          <div class="demo-chrome-dots">
+            <div class="demo-cdot" style="background:#ef4444"></div>
+            <div class="demo-cdot" style="background:#f59e0b"></div>
+            <div class="demo-cdot" style="background:#22c55e"></div>
+          </div>
+          <div class="demo-chrome-title">⚡ NexHire EIP — Enterprise Intelligence Platform</div>
+          <div></div>
+        </div>
+
+        <!-- Slides -->
+        <div class="demo-stage" id="demo-stage">
+
+          <div class="demo-slide" data-slide="0">
+            <div class="demo-slide-num">01 / 12</div>
+            <div class="demo-big-icon">⚡</div>
+            <div class="demo-slide-headline">Enterprise Intelligence Platform</div>
+            <div class="demo-slide-sub">Connect. Detect. Optimize. Decide.</div>
+            <div class="demo-pill-row">
+              <span>Microsoft 365</span><span>SAP</span><span>Salesforce</span><span>ServiceNow</span><span>Workday</span><span>Jira</span>
+            </div>
+          </div>
+
+          <div class="demo-slide demo-slide-hidden" data-slide="1">
+            <div class="demo-slide-num">02 / 12</div>
+            <div class="demo-big-icon demo-icon-red">⚠️</div>
+            <div class="demo-slide-headline">Le défi</div>
+            <div class="demo-slide-sub" style="max-width:520px">Vos données sont dispersées dans <strong style="color:#ef4444">17 systèmes différents</strong>.<br>Les dirigeants manquent de visibilité. Les coûts cachés s'accumulent.</div>
+            <div class="demo-silos-row">
+              <div class="demo-silo">M365</div><div class="demo-silo-sep">↔</div>
+              <div class="demo-silo">SAP</div><div class="demo-silo-sep">↔</div>
+              <div class="demo-silo">Salesforce</div><div class="demo-silo-sep">↔</div>
+              <div class="demo-silo demo-silo-more">+14 autres…</div>
+            </div>
+          </div>
+
+          <div class="demo-slide demo-slide-hidden" data-slide="2">
+            <div class="demo-slide-num">03 / 12</div>
+            <div class="demo-big-icon">🔗</div>
+            <div class="demo-slide-headline">La solution EIP</div>
+            <div class="demo-slide-sub">Un seul assistant IA connecté à tous vos systèmes.<br>Centralise, analyse et recommande en temps réel.</div>
+            <div class="demo-check-list">
+              <div class="demo-check-item"><span class="demo-check-green">✓</span> Centraliser les données de l'organisation</div>
+              <div class="demo-check-item"><span class="demo-check-green">✓</span> Identifier les économies potentielles</div>
+              <div class="demo-check-item"><span class="demo-check-green">✓</span> Générer des tableaux de bord exécutifs</div>
+            </div>
+          </div>
+
+          <div class="demo-slide demo-slide-hidden" data-slide="3">
+            <div class="demo-slide-num">04 / 12</div>
+            <div class="demo-kpi-hero">
+              <div class="demo-kpi-num demo-kpi-green" id="demo-kpi-savings">$0</div>
+              <div class="demo-kpi-label">Économies potentielles identifiées</div>
+            </div>
+            <div class="demo-slide-sub" style="margin-top:8px">Détectées en moins de 48 heures après connexion.</div>
+            <div class="demo-check-list demo-check-row">
+              <div class="demo-check-item"><span class="demo-check-green">✓</span> 23 licences inutilisées</div>
+              <div class="demo-check-item"><span class="demo-check-green">✓</span> 5 contrats à renégocier</div>
+              <div class="demo-check-item"><span class="demo-check-green">✓</span> 8 processus à optimiser</div>
+            </div>
+          </div>
+
+          <div class="demo-slide demo-slide-hidden" data-slide="4">
+            <div class="demo-slide-num">05 / 12</div>
+            <div class="demo-big-icon">🖥️</div>
+            <div class="demo-slide-headline">Licences inutilisées détectées</div>
+            <div class="demo-license-grid">
+              <div class="demo-license-card"><div class="demo-lic-num">23</div><div class="demo-lic-label">Licences inactives</div></div>
+              <div class="demo-license-card demo-license-green"><div class="demo-lic-num">$41,400</div><div class="demo-lic-label">Économie/an</div></div>
+            </div>
+            <div class="demo-slide-sub" style="margin-top:16px">Microsoft 365 · Adobe CC · Salesforce · Zoom · Slack</div>
+          </div>
+
+          <div class="demo-slide demo-slide-hidden" data-slide="5">
+            <div class="demo-slide-num">06 / 12</div>
+            <div class="demo-big-icon">📄</div>
+            <div class="demo-slide-headline">Analyse des contrats</div>
+            <div class="demo-license-grid">
+              <div class="demo-license-card"><div class="demo-lic-num">47</div><div class="demo-lic-label">Contrats analysés</div></div>
+              <div class="demo-license-card demo-license-green"><div class="demo-lic-num">$340,000</div><div class="demo-lic-label">Économies potentielles</div></div>
+            </div>
+            <div class="demo-slide-sub" style="margin-top:16px">5 contrats à renégocier · 3 fournisseurs en doublon · 2 contrats expirés</div>
+          </div>
+
+          <div class="demo-slide demo-slide-hidden" data-slide="6">
+            <div class="demo-slide-num">07 / 12</div>
+            <div class="demo-big-icon">🤖</div>
+            <div class="demo-slide-headline">Optimiser les processus</div>
+            <div class="demo-license-grid">
+              <div class="demo-license-card"><div class="demo-lic-num">14</div><div class="demo-lic-label">Workflows à automatiser</div></div>
+              <div class="demo-license-card demo-license-purple"><div class="demo-lic-num">2,400h</div><div class="demo-lic-label">Économisées/an</div></div>
+            </div>
+            <div class="demo-slide-sub" style="margin-top:16px">Approbations · Onboarding RH · Rapports · Commandes fournisseurs</div>
+          </div>
+
+          <div class="demo-slide demo-slide-hidden" data-slide="7">
+            <div class="demo-slide-num">08 / 12</div>
+            <div class="demo-big-icon">📊</div>
+            <div class="demo-slide-headline">Dashboard Exécutif</div>
+            <div class="demo-exec-grid">
+              <div class="demo-exec-kpi"><div class="demo-exec-val">50M$</div><div class="demo-exec-lab">Budget</div></div>
+              <div class="demo-exec-kpi"><div class="demo-exec-val" style="color:#f59e0b">92.6%</div><div class="demo-exec-lab">Consommé</div></div>
+              <div class="demo-exec-kpi"><div class="demo-exec-val" style="color:#10b981">89%</div><div class="demo-exec-lab">Efficacité</div></div>
+              <div class="demo-exec-kpi"><div class="demo-exec-val" style="color:#ef4444">3</div><div class="demo-exec-lab">Risques</div></div>
+            </div>
+            <div class="demo-slide-sub" style="margin-top:16px">Disponible en temps réel. Pour les dirigeants.</div>
+          </div>
+
+          <div class="demo-slide demo-slide-hidden" data-slide="8">
+            <div class="demo-slide-num">09 / 12</div>
+            <div class="demo-big-icon">🎯</div>
+            <div class="demo-slide-headline">Recommandations Stratégiques IA</div>
+            <div class="demo-rec-list">
+              <div class="demo-rec-item"><span>→</span> Réduire les dépenses de <strong>5.7%</strong></div>
+              <div class="demo-rec-item"><span>→</span> Consolider <strong>3 plateformes CRM</strong></div>
+              <div class="demo-rec-item"><span>→</span> Automatiser <strong>14 workflows</strong> d'approbation</div>
+              <div class="demo-rec-item"><span>→</span> Renégocier <strong>5 contrats fournisseurs</strong> clés</div>
+            </div>
+          </div>
+
+          <div class="demo-slide demo-slide-hidden" data-slide="9">
+            <div class="demo-slide-num">10 / 12</div>
+            <div class="demo-big-icon">🔒</div>
+            <div class="demo-slide-headline">Sécurité Entreprise</div>
+            <div class="demo-check-list">
+              <div class="demo-check-item"><span class="demo-check-blue">✓</span> OAuth 2.0 · JWT ES256</div>
+              <div class="demo-check-item"><span class="demo-check-blue">✓</span> RBAC · Audit Logs immuables</div>
+              <div class="demo-check-item"><span class="demo-check-blue">✓</span> Chiffrement Fernet AES-128</div>
+              <div class="demo-check-item"><span class="demo-check-blue">✓</span> Architecture Multi-Tenant</div>
+            </div>
+            <div class="demo-slide-sub" style="margin-top:16px">Vos données restent les vôtres.</div>
+          </div>
+
+          <div class="demo-slide demo-slide-hidden" data-slide="10">
+            <div class="demo-slide-num">11 / 12</div>
+            <div class="demo-kpi-hero">
+              <div class="demo-kpi-num demo-kpi-gold">239,580%</div>
+              <div class="demo-kpi-label">Retour sur investissement</div>
+            </div>
+            <div class="demo-roi-grid">
+              <div class="demo-roi-item"><span>Investissement</span><strong>1,188$/an</strong></div>
+              <div class="demo-roi-sep">→</div>
+              <div class="demo-roi-item demo-roi-green"><span>Économies</span><strong>$2,846,217</strong></div>
+            </div>
+          </div>
+
+          <div class="demo-slide demo-slide-hidden" data-slide="11">
+            <div class="demo-slide-num">12 / 12</div>
+            <div class="demo-vision-logo">⚡ NexHire EIP</div>
+            <div class="demo-vision-headline">Le cerveau opérationnel de votre organisation.</div>
+            <div class="demo-slide-sub">Un seul assistant IA pour vos données, vos processus et vos équipes.</div>
+            <button class="btn btn-primary btn-lg" onclick="showAuth('signup')" style="margin-top:24px;font-size:.9rem">Commencer l'essai gratuit →</button>
+          </div>
+
+        </div><!-- /demo-stage -->
+
+        <!-- Controls -->
+        <div class="demo-controls">
+          <div class="demo-progress-track">
+            <div class="demo-progress-fill" id="demo-fill"></div>
+          </div>
+          <div class="demo-controls-row">
+            <button class="demo-ctrl-btn" id="demo-prev">◀</button>
+            <button class="demo-ctrl-btn demo-ctrl-play" id="demo-play">⏸</button>
+            <button class="demo-ctrl-btn" id="demo-next">▶</button>
+            <span class="demo-time-label" id="demo-time">0:05 / 1:00</span>
+            <div class="demo-slide-dots" id="demo-slide-dots">
+              <span class="demo-sdot active"></span>
+              <span class="demo-sdot"></span><span class="demo-sdot"></span><span class="demo-sdot"></span>
+              <span class="demo-sdot"></span><span class="demo-sdot"></span><span class="demo-sdot"></span>
+              <span class="demo-sdot"></span><span class="demo-sdot"></span><span class="demo-sdot"></span>
+              <span class="demo-sdot"></span><span class="demo-sdot"></span>
+            </div>
+          </div>
+        </div>
+      </div><!-- /demo-player -->
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact-section" id="contact">
+    <div class="contact-inner">
+      <div class="contact-left">
+        <span class="section-label" style="color:rgba(255,255,255,.45)">Parlons de votre projet</span>
+        <h2 style="color:#fff;font-size:2rem;margin:16px 0">Prêt à transformer votre organisation ?</h2>
+        <p style="color:#94a3b8;font-size:.95rem;line-height:1.7;margin-bottom:32px">
+          Notre équipe vous contacte sous 24h pour une démonstration personnalisée de NexHire EIP avec vos propres systèmes.
+        </p>
+        <div class="contact-benefits">
+          <div class="contact-benefit"><span>⚡</span><span>Démo personnalisée avec vos connecteurs</span></div>
+          <div class="contact-benefit"><span>🎯</span><span>Analyse des économies potentielles pour votre org</span></div>
+          <div class="contact-benefit"><span>🔒</span><span>Aucun accès à vos données sans votre autorisation</span></div>
+          <div class="contact-benefit"><span>🍁</span><span>Support bilingue FR / EN · Équipe canadienne</span></div>
+        </div>
+      </div>
+      <div class="contact-right">
+        <div class="contact-form-card" id="contact-form-wrap">
+          <form id="contact-form" onsubmit="submitContact(event)">
+            <div class="contact-row">
+              <label class="auth-label">
+                <span>Prénom &amp; Nom *</span>
+                <input id="cf-name" type="text" placeholder="Marie Tremblay" required />
+              </label>
+              <label class="auth-label">
+                <span>Organisation *</span>
+                <input id="cf-company" type="text" placeholder="Ville de Montréal" required />
+              </label>
+            </div>
+            <label class="auth-label">
+              <span>Adresse courriel *</span>
+              <input id="cf-email" type="email" placeholder="marie@organisation.ca" required />
+            </label>
+            <label class="auth-label">
+              <span>Message (optionnel)</span>
+              <textarea id="cf-message" rows="3" placeholder="Décrivez brièvement votre besoin…" style="resize:vertical;font-family:inherit;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);font-size:.9rem;color:var(--navy);width:100%;box-sizing:border-box"></textarea>
+            </label>
+            <button type="submit" class="auth-submit" id="cf-btn">Demander une démonstration →</button>
+            <p id="cf-error" class="form-error hidden"></p>
+          </form>
+          <div id="contact-success" class="hidden" style="text-align:center;padding:40px 20px">
+            <div style="font-size:3rem;margin-bottom:16px">✅</div>
+            <h3 style="color:var(--navy);margin-bottom:8px">Message envoyé !</h3>
+            <p style="color:var(--slate)">Notre équipe vous contacte sous 24 heures.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1847,6 +2086,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="/static/app.js?v=20260608b"></script>
+<script src="/static/app.js?v=20260608c"></script>
 </body>
 </html>

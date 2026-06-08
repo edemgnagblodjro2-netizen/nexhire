@@ -998,6 +998,131 @@ footer {
 .roi-card-value { font-size: 1.5rem; font-weight: 900; color: var(--navy); letter-spacing: -.02em; }
 .roi-card-value span { font-size: .85rem; font-weight: 600; color: var(--slate); }
 
+/* ── Demo Player ─────────────────────────────────────────────────────────── */
+.demo-section { padding: 80px 40px; background: #f8faff; }
+.demo-player {
+  max-width: 860px;
+  margin: 0 auto;
+  background: #080d1a;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.06);
+}
+.demo-chrome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: #0f1628;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.demo-chrome-dots { display: flex; gap: 7px; }
+.demo-cdot { width: 12px; height: 12px; border-radius: 50%; }
+.demo-chrome-title { font-size: .78rem; color: #64748b; font-weight: 600; letter-spacing: .02em; }
+
+.demo-stage { min-height: 380px; display: flex; align-items: center; justify-content: center; padding: 32px 40px; position: relative; overflow: hidden; }
+
+.demo-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px 48px;
+  opacity: 1;
+  transition: opacity .6s ease, transform .6s ease;
+}
+.demo-slide-hidden { opacity: 0; pointer-events: none; transform: translateY(12px); }
+
+.demo-slide-num { font-size: .68rem; color: #334155; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 16px; }
+.demo-big-icon { font-size: 3rem; margin-bottom: 16px; }
+.demo-icon-red { filter: grayscale(0); }
+.demo-slide-headline { font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 900; color: #e2e8f0; letter-spacing: -.02em; line-height: 1.2; margin-bottom: 12px; }
+.demo-slide-sub { font-size: .92rem; color: #64748b; line-height: 1.6; max-width: 600px; }
+
+.demo-pill-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+.demo-pill-row span { background: rgba(129,140,248,.15); color: #818CF8; font-size: .75rem; font-weight: 700; padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(129,140,248,.25); }
+
+.demo-silos-row { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+.demo-silo { background: rgba(239,68,68,.12); border: 1px solid rgba(239,68,68,.25); color: #fca5a5; font-size: .78rem; font-weight: 700; padding: 6px 12px; border-radius: 8px; }
+.demo-silo-sep { color: #334155; font-size: .78rem; }
+.demo-silo-more { background: rgba(100,116,139,.12); border-color: rgba(100,116,139,.25); color: #64748b; }
+
+.demo-check-list { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; text-align: left; }
+.demo-check-row { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.demo-check-item { display: flex; align-items: center; gap: 10px; font-size: .88rem; color: #94a3b8; }
+.demo-check-green { color: #10b981; font-weight: 800; font-size: 1rem; }
+.demo-check-blue  { color: #818CF8; font-weight: 800; font-size: 1rem; }
+
+.demo-kpi-hero { margin: 8px 0 4px; }
+.demo-kpi-num { font-size: clamp(2.4rem,5vw,3.6rem); font-weight: 900; letter-spacing: -.03em; line-height: 1; }
+.demo-kpi-green { color: #10b981; }
+.demo-kpi-gold  { color: #f59e0b; }
+.demo-kpi-label { font-size: .78rem; color: #475569; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-top: 8px; }
+
+.demo-license-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; width: 100%; max-width: 400px; }
+.demo-license-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 16px; }
+.demo-license-green  { border-color: rgba(16,185,129,.3); background: rgba(16,185,129,.08); }
+.demo-license-purple { border-color: rgba(129,140,248,.3); background: rgba(129,140,248,.08); }
+.demo-lic-num { font-size: 1.6rem; font-weight: 900; color: #e2e8f0; }
+.demo-license-green .demo-lic-num  { color: #10b981; }
+.demo-license-purple .demo-lic-num { color: #818CF8; }
+.demo-lic-label { font-size: .7rem; color: #64748b; margin-top: 4px; font-weight: 600; }
+
+.demo-exec-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-top: 20px; width: 100%; max-width: 500px; }
+.demo-exec-kpi { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07); border-radius: 10px; padding: 14px 8px; }
+.demo-exec-val { font-size: 1.2rem; font-weight: 900; color: #e2e8f0; }
+.demo-exec-lab { font-size: .62rem; color: #475569; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; margin-top: 4px; }
+
+.demo-rec-list { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; text-align: left; max-width: 460px; width: 100%; }
+.demo-rec-item { display: flex; align-items: flex-start; gap: 10px; font-size: .9rem; color: #94a3b8; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06); border-radius: 8px; padding: 10px 14px; }
+.demo-rec-item span { color: #818CF8; font-weight: 800; flex-shrink: 0; }
+.demo-rec-item strong { color: #c7d2fe; }
+
+.demo-roi-grid { display: flex; align-items: center; gap: 16px; margin-top: 20px; flex-wrap: wrap; justify-content: center; }
+.demo-roi-item { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 16px 24px; text-align: center; }
+.demo-roi-green { border-color: rgba(16,185,129,.3); background: rgba(16,185,129,.08); }
+.demo-roi-item span { display: block; font-size: .68rem; color: #475569; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; }
+.demo-roi-item strong { font-size: 1.3rem; color: #e2e8f0; font-weight: 900; }
+.demo-roi-green strong { color: #10b981; }
+.demo-roi-sep { font-size: 1.4rem; color: #334155; }
+
+.demo-vision-logo { font-size: 1.3rem; font-weight: 900; color: #818CF8; margin-bottom: 16px; letter-spacing: -.01em; }
+.demo-vision-headline { font-size: clamp(1.3rem,2.5vw,1.8rem); font-weight: 900; color: #e2e8f0; max-width: 560px; margin-bottom: 12px; line-height: 1.3; }
+
+.demo-controls { background: #0a1120; border-top: 1px solid rgba(255,255,255,.06); padding: 12px 20px 16px; }
+.demo-progress-track { height: 3px; background: rgba(255,255,255,.08); border-radius: 2px; overflow: hidden; margin-bottom: 10px; cursor: pointer; }
+.demo-progress-fill { height: 100%; background: linear-gradient(90deg,#818CF8,#6366f1); border-radius: 2px; width: 0%; transition: width .3s linear; }
+.demo-controls-row { display: flex; align-items: center; gap: 12px; }
+.demo-ctrl-btn { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); color: #94a3b8; font-size: .85rem; border-radius: 6px; padding: 4px 10px; cursor: pointer; transition: background .15s; min-height: auto; box-shadow: none; }
+.demo-ctrl-btn:hover { background: rgba(255,255,255,.12); color: #fff; }
+.demo-ctrl-play { background: rgba(129,140,248,.2); border-color: rgba(129,140,248,.4); color: #818CF8; }
+.demo-time-label { font-size: .72rem; color: #475569; font-weight: 600; margin-left: 4px; }
+.demo-slide-dots { display: flex; gap: 4px; margin-left: auto; }
+.demo-sdot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.15); transition: background .2s, transform .2s; cursor: pointer; }
+.demo-sdot.active { background: #818CF8; transform: scale(1.3); }
+
+/* ── Contact Section ─────────────────────────────────────────────────────── */
+.contact-section {
+  padding: 80px 40px;
+  background: linear-gradient(135deg, #0f172a 0%, #1a2744 100%);
+}
+.contact-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+.contact-benefits { display: flex; flex-direction: column; gap: 16px; }
+.contact-benefit { display: flex; align-items: flex-start; gap: 12px; font-size: .9rem; color: #94a3b8; line-height: 1.5; }
+.contact-benefit span:first-child { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+.contact-form-card { background: #fff; border-radius: 20px; padding: 36px; box-shadow: 0 20px 60px rgba(0,0,0,.3); display: flex; flex-direction: column; gap: 16px; }
+.contact-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
 /* ════════════════════════════════════════════════════════════════════════════
    AUTH PAGES
    ════════════════════════════════════════════════════════════════════════════ */

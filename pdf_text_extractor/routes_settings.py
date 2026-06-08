@@ -1,14 +1,16 @@
-"""Paramètres utilisateur — profil, mot de passe, SSO."""
+"""Paramètres utilisateur — profil, mot de passe, SSO + formulaire contact public."""
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, EmailStr, Field
 
 from auth import CurrentUser
 from rbac import require_min_role
 from db import get_db, rows, row
+import email_service
 
-router = APIRouter(prefix="/api/settings", tags=["settings"])
+router        = APIRouter(prefix="/api/settings", tags=["settings"])
+public_router = APIRouter(tags=["public"])
 
 
 # ── Models ─────────────────────────────────────────────────────────────────
@@ -23,6 +25,33 @@ class OrgUpdate(BaseModel):
 class PasswordChange(BaseModel):
     current_password: str = Field(..., min_length=1)
     new_password:     str = Field(..., min_length=8)
+
+class ContactRequest(BaseModel):
+    name:    str = Field(..., min_length=1, max_length=200)
+    company: str = Field(..., min_length=1, max_length=200)
+    email:   EmailStr
+    message: str = Field("", max_length=2000)
+
+
+# ── Contact public (no auth) ───────────────────────────────────────────────
+
+@public_router.post("/api/contact")
+def contact_form(payload: ContactRequest):
+    html = f"""
+    <h2 style="color:#818CF8">Nouveau contact EIP — NexHire</h2>
+    <table style="border-collapse:collapse;font-family:Arial,sans-serif">
+      <tr><td style="padding:8px 16px 8px 0;color:#64748b;font-weight:600">Nom</td><td>{payload.name}</td></tr>
+      <tr><td style="padding:8px 16px 8px 0;color:#64748b;font-weight:600">Organisation</td><td>{payload.company}</td></tr>
+      <tr><td style="padding:8px 16px 8px 0;color:#64748b;font-weight:600">Email</td><td><a href="mailto:{payload.email}">{payload.email}</a></td></tr>
+      <tr><td style="padding:8px 16px 8px 0;color:#64748b;font-weight:600;vertical-align:top">Message</td><td>{payload.message or "(aucun)"}</td></tr>
+    </table>
+    """
+    email_service._send(
+        "edemgnagblodjro2@gmail.com",
+        f"EIP — Nouveau contact : {payload.name} ({payload.company})",
+        html,
+    )
+    return {"status": "ok"}
 
 
 # ── Profile ────────────────────────────────────────────────────────────────
