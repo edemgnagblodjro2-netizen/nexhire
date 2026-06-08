@@ -356,6 +356,8 @@
     <div class="nav-brand">
       <div class="brand-mark">N</div>
       <span>Nex<span style="color:#818CF8">hire</span></span>
+      <span class="org-logo-sep hidden" id="org-logo-sep">|</span>
+      <img id="org-logo-topnav" class="org-logo-topnav hidden" alt="Logo organisation" />
     </div>
     <div class="nav-tabs" role="tablist">
       <button class="tab-btn active" data-tab="agent"      role="tab" data-i18n="app.tab.agent">Assistant IA</button>
@@ -739,6 +741,25 @@
               <span data-i18n="settings.org">Organisation</span>
               <input id="sp-org" type="text" disabled style="opacity:.6;cursor:not-allowed" />
             </label>
+            <!-- Logo organisation (admin/owner seulement) -->
+            <div id="org-logo-section" class="hidden">
+              <label class="auth-label">
+                <span>Logo de l'organisation (URL)</span>
+                <input id="sp-logo-url" type="url" placeholder="https://votre-site.com/logo.png" />
+              </label>
+              <div id="sp-logo-preview-wrap" class="hidden" style="margin:-4px 0 8px">
+                <img id="sp-logo-preview" alt="Aperçu logo" style="max-height:48px;max-width:180px;border-radius:6px;border:1px solid var(--border);padding:4px;background:#fff" />
+              </div>
+              <label class="auth-label">
+                <span>Couleur de marque</span>
+                <div style="display:flex;gap:8px;align-items:center">
+                  <input id="sp-brand-color" type="color" value="#818CF8" style="width:44px;height:34px;border:1px solid var(--border);border-radius:6px;cursor:pointer;padding:2px" />
+                  <span id="sp-brand-color-val" style="font-size:.8rem;color:var(--slate)">#818CF8</span>
+                </div>
+              </label>
+              <button type="button" class="btn btn-outline btn-sm" onclick="saveOrgBranding()" id="sp-org-save-btn">Enregistrer le branding</button>
+              <p id="sp-org-success" class="form-success hidden" style="margin-top:6px">Branding mis à jour.</p>
+            </div>
             <label class="auth-label">
               <span>Type d'organisation</span>
               <select id="sp-org-type" onchange="saveOrgType(this.value)">
@@ -1555,6 +1576,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="/static/app.js?v=20260607b"></script>
+<script src="/static/app.js?v=20260607c"></script>
 </body>
 </html>

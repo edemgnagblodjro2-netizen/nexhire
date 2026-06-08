@@ -2197,6 +2197,19 @@ async function loadSettings() {
     if ($("sp-org-type")) $("sp-org-type").value = p.org_type || "entreprise";
     state.orgType = p.org_type || "entreprise";
 
+    // Logo & branding
+    const isAdmin = ["admin", "owner"].includes(p.role);
+    const orgLogoSection = $("org-logo-section");
+    if (orgLogoSection && isAdmin) orgLogoSection.classList.remove("hidden");
+    if (p.logo_url) {
+      if ($("sp-logo-url")) $("sp-logo-url").value = p.logo_url;
+      _showLogoPreview(p.logo_url);
+      _applyOrgLogo(p.logo_url);
+    }
+    if (p.brand_color) {
+      if ($("sp-brand-color")) { $("sp-brand-color").value = p.brand_color; $("sp-brand-color-val").textContent = p.brand_color; }
+    }
+
     // SSO
     const badge = $("sso-badge");
     const txt   = $("sso-status-text");
@@ -2433,6 +2446,53 @@ async function deleteSSOConfig() {
     await apiCall("/api/sso/config", "DELETE");
     location.reload();
   } catch (e) { alert(e.message); }
+}
+
+// ── Org branding helpers ──────────────────────────────────────────────────────
+
+function _showLogoPreview(url) {
+  const preview = $("sp-logo-preview");
+  const wrap    = $("sp-logo-preview-wrap");
+  if (!preview || !wrap) return;
+  if (url) { preview.src = url; wrap.classList.remove("hidden"); }
+  else      { wrap.classList.add("hidden"); }
+}
+
+function _applyOrgLogo(url) {
+  const img = $("org-logo-topnav");
+  const sep = $("org-logo-sep");
+  if (!img) return;
+  if (url) {
+    img.src = url;
+    img.classList.remove("hidden");
+    sep?.classList.remove("hidden");
+  } else {
+    img.classList.add("hidden");
+    sep?.classList.add("hidden");
+  }
+}
+
+$("sp-logo-url")?.addEventListener("input", e => _showLogoPreview(e.target.value.trim()));
+$("sp-brand-color")?.addEventListener("input", e => {
+  if ($("sp-brand-color-val")) $("sp-brand-color-val").textContent = e.target.value;
+});
+
+async function saveOrgBranding() {
+  const btn = $("sp-org-save-btn");
+  const suc = $("sp-org-success");
+  if (btn) { btn.disabled = true; btn.textContent = "Enregistrement…"; }
+  try {
+    const logo_url    = $("sp-logo-url")?.value.trim() || null;
+    const brand_color = $("sp-brand-color")?.value || null;
+    await apiCall("/api/settings/org", "PATCH", { logo_url, brand_color });
+    _applyOrgLogo(logo_url || "");
+    suc?.classList.remove("hidden");
+    setTimeout(() => suc?.classList.add("hidden"), 3000);
+  } catch (ex) {
+    alert(ex.message || "Erreur lors de la sauvegarde du branding.");
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = "Enregistrer le branding"; }
+  }
 }
 
 // Profile form submit

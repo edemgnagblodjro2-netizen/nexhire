@@ -16,6 +16,10 @@ router = APIRouter(prefix="/api/settings", tags=["settings"])
 class ProfileUpdate(BaseModel):
     full_name: str = Field(..., min_length=1, max_length=255)
 
+class OrgUpdate(BaseModel):
+    logo_url:    str | None = Field(None, max_length=2048)
+    brand_color: str | None = Field(None, pattern=r"^#[0-9a-fA-F]{6}$")
+
 class PasswordChange(BaseModel):
     current_password: str = Field(..., min_length=1)
     new_password:     str = Field(..., min_length=8)
@@ -40,7 +44,7 @@ def get_profile(user: CurrentUser = Depends(require_min_role("user"))):
     if user.organization_id:
         with get_db() as cur:
             cur.execute(
-                "SELECT name, slug, created_at, org_type FROM organizations WHERE id = %s LIMIT 1",
+                "SELECT name, slug, created_at, org_type, logo_url, brand_color FROM organizations WHERE id = %s LIMIT 1",
                 (user.organization_id,),
             )
             org = row(cur) or {}
@@ -71,6 +75,8 @@ def get_profile(user: CurrentUser = Depends(require_min_role("user"))):
         "org_type":            org.get("org_type") or "entreprise",
         "sso_enabled":         sso_enabled,
         "subscription_status": user.subscription_status,
+        "logo_url":            org.get("logo_url") or "",
+        "brand_color":         org.get("brand_color") or "#818CF8",
     }
 
 
@@ -86,6 +92,27 @@ def update_profile(
             (payload.full_name, user.id),
         )
     return {"ok": True, "full_name": payload.full_name}
+
+
+# ── Org branding (admin/owner only) ───────────────────────────────────────
+
+@router.patch("/org")
+def update_org(
+    payload: OrgUpdate,
+    user: CurrentUser = Depends(require_min_role("admin")),
+):
+    """Met à jour le logo et la couleur de marque de l'organisation."""
+    fields, values = [], []
+    if payload.logo_url is not None:
+        fields.append("logo_url = %s"); values.append(payload.logo_url or None)
+    if payload.brand_color is not None:
+        fields.append("brand_color = %s"); values.append(payload.brand_color)
+    if not fields:
+        return {"ok": True}
+    values.append(user.organization_id)
+    with get_db() as cur:
+        cur.execute(f"UPDATE organizations SET {', '.join(fields)} WHERE id = %s", values)
+    return {"ok": True}
 
 
 # ── Password ───────────────────────────────────────────────────────────────

@@ -655,6 +655,20 @@ footer {
   padding: 3px 12px 3px 3px;
   color: #fff;
 }
+.org-logo-sep {
+  color: rgba(255,255,255,.35);
+  font-weight: 300;
+  font-size: 1.1rem;
+  margin: 0 2px;
+}
+.org-logo-topnav {
+  max-height: 26px;
+  max-width: 100px;
+  object-fit: contain;
+  border-radius: 4px;
+  background: #fff;
+  padding: 2px 4px;
+}
 .brand-mark {
   width: 30px; height: 30px;
   border-radius: 8px;
