@@ -21,7 +21,7 @@
   <meta name="twitter:description" content="Connect your systems. Detect savings. Reduce risk. Optimize every department." />
   <meta name="twitter:image"       content="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&h=630&q=80" />
 
-  <link rel="stylesheet" href="/static/styles.css?v=20260608c" />
+  <link rel="stylesheet" href="/static/styles.css?v=20260608d" />
 </head>
 <body>
 
@@ -38,14 +38,20 @@
       </div>
     </div>
     <div class="land-nav-links">
-      <a href="#workspaces">Espaces de travail</a>
+      <a href="#workspaces" data-i18n="land.nav.workspaces">Espaces de travail</a>
       <a href="#features" data-i18n="nav.features">Fonctionnalités</a>
-      <a href="#demo">Démo</a>
+      <a href="#demo" data-i18n="land.nav.demo">Démo</a>
       <a href="#pricing"  data-i18n="nav.pricing">Tarifs</a>
-      <a href="#contact">Contact</a>
+      <a href="#contact" data-i18n="land.nav.contact">Contact</a>
     </div>
     <div class="land-nav-cta">
-      <button class="lang-btn" id="lang-btn-land" onclick="toggleLang()">EN</button>
+      <div class="lang-switcher">
+        <button class="lang-sw-btn" data-lang="en" onclick="setLang('en')">EN</button>
+        <span class="lang-sw-pipe">|</span>
+        <button class="lang-sw-btn lang-sw-active" data-lang="fr" onclick="setLang('fr')">FR</button>
+        <span class="lang-sw-pipe">|</span>
+        <button class="lang-sw-btn" data-lang="es" onclick="setLang('es')">ES</button>
+      </div>
       <button class="btn btn-outline btn-sm" onclick="showAuth('login')" data-i18n="nav.login">Se connecter</button>
       <button class="btn btn-primary btn-sm" onclick="showAuth('signup')" data-i18n="nav.trial">Essai gratuit 14 jours</button>
     </div>
@@ -108,33 +114,33 @@
     <div class="eip-stats-inner">
       <div class="eip-stat-item">
         <div class="eip-stat-value">$2,846,217</div>
-        <div class="eip-stat-label">Potential Savings Identified</div>
+        <div class="eip-stat-label" data-i18n="land.stats.s1.lbl">Potential Savings Identified</div>
       </div>
       <div class="eip-stat-divider"></div>
       <div class="eip-stat-item">
         <div class="eip-stat-value">89%</div>
-        <div class="eip-stat-label">Organizational Efficiency Score</div>
+        <div class="eip-stat-label" data-i18n="land.stats.s2.lbl">Organizational Efficiency Score</div>
       </div>
       <div class="eip-stat-divider"></div>
       <div class="eip-stat-item">
         <div class="eip-stat-value">17</div>
-        <div class="eip-stat-label">Connected Systems</div>
+        <div class="eip-stat-label" data-i18n="land.stats.s3.lbl">Connected Systems</div>
       </div>
       <div class="eip-stat-divider"></div>
       <div class="eip-stat-item eip-stat-risk">
         <div class="eip-stat-value">3</div>
-        <div class="eip-stat-label">Critical Risks Detected</div>
+        <div class="eip-stat-label" data-i18n="land.stats.s4.lbl">Critical Risks Detected</div>
       </div>
     </div>
-    <p class="eip-stats-tagline">Cette plateforme ne fait pas que répondre à des questions. <strong>Elle trouve de l'argent.</strong></p>
+    <p class="eip-stats-tagline" data-i18n-html="land.stats.tag">Cette plateforme ne fait pas que répondre à des questions. <strong>Elle trouve de l'argent.</strong></p>
   </div>
 
   <!-- What EIP Sees -->
   <section class="eip-flow-section" id="features">
     <div class="section-center">
-      <span class="section-label">Intelligence Engine</span>
-      <h2 class="section-title">What EIP Sees</h2>
-      <p class="section-sub">EIP ne remplace pas vos systèmes. EIP les comprend.</p>
+      <span class="section-label" data-i18n="land.flow.label">Intelligence Engine</span>
+      <h2 class="section-title" data-i18n="land.flow.title">What EIP Sees</h2>
+      <p class="section-sub" data-i18n="land.flow.sub">EIP ne remplace pas vos systèmes. EIP les comprend.</p>
       <div class="eip-flow-grid">
         <div class="eip-flow-sources">
           <div class="eip-flow-source"><div class="eip-conn-icon" style="background:#0078d4">M</div><span>Microsoft 365</span></div>
@@ -162,10 +168,10 @@
           </div>
         </div>
         <div class="eip-flow-outputs">
-          <div class="eip-flow-output" style="border-color:#10b981;background:linear-gradient(135deg,#f0fdf4,#dcfce7)"><span>💰</span><span>Savings Identified</span></div>
-          <div class="eip-flow-output" style="border-color:#818CF8;background:linear-gradient(135deg,#f0f4ff,#e0e7ff)"><span>📊</span><span>Recommendations</span></div>
-          <div class="eip-flow-output" style="border-color:#ef4444;background:linear-gradient(135deg,#fff5f5,#fee2e2)"><span>⚠️</span><span>Risk Detection</span></div>
-          <div class="eip-flow-output" style="border-color:#f59e0b;background:linear-gradient(135deg,#fffbeb,#fef3c7)"><span>🤖</span><span>Automation</span></div>
+          <div class="eip-flow-output" style="border-color:#10b981;background:linear-gradient(135deg,#f0fdf4,#dcfce7)"><span>💰</span><span data-i18n="land.flow.out1">Savings Identified</span></div>
+          <div class="eip-flow-output" style="border-color:#818CF8;background:linear-gradient(135deg,#f0f4ff,#e0e7ff)"><span>📊</span><span data-i18n="land.flow.out2">Recommendations</span></div>
+          <div class="eip-flow-output" style="border-color:#ef4444;background:linear-gradient(135deg,#fff5f5,#fee2e2)"><span>⚠️</span><span data-i18n="land.flow.out3">Risk Detection</span></div>
+          <div class="eip-flow-output" style="border-color:#f59e0b;background:linear-gradient(135deg,#fffbeb,#fef3c7)"><span>🤖</span><span data-i18n="land.flow.out4">Automation</span></div>
         </div>
       </div>
     </div>
@@ -174,35 +180,35 @@
   <!-- Executive Dashboard Demo -->
   <section class="exec-demo-section">
     <div class="section-center">
-      <span class="section-label">Pour les dirigeants</span>
-      <h2 class="section-title">Executive Dashboard</h2>
-      <p class="section-sub">Ce que voit un CEO en ouvrant NexHire EIP chaque matin.</p>
+      <span class="section-label" data-i18n="land.exec.label">Pour les dirigeants</span>
+      <h2 class="section-title" data-i18n="land.exec.title">Executive Dashboard</h2>
+      <p class="section-sub" data-i18n="land.exec.sub">Ce que voit un CEO en ouvrant NexHire EIP chaque matin.</p>
       <div class="exec-demo-wrap">
         <div class="exec-kpi-grid">
           <div class="exec-kpi-card">
-            <div class="exec-kpi-label">Budget Total</div>
+            <div class="exec-kpi-label" data-i18n="land.exec.kpi1">Budget Total</div>
             <div class="exec-kpi-value">50M$</div>
             <div class="exec-kpi-bar"><div class="exec-kpi-fill" style="width:92.6%"></div></div>
-            <div class="exec-kpi-sub">92.6% consommé</div>
+            <div class="exec-kpi-sub" data-i18n="land.exec.kpi1.sub">92.6% consommé</div>
           </div>
           <div class="exec-kpi-card">
-            <div class="exec-kpi-label">Current Spend</div>
+            <div class="exec-kpi-label" data-i18n="land.exec.kpi2">Current Spend</div>
             <div class="exec-kpi-value">46.3M$</div>
-            <div class="exec-kpi-sub">vs 44.1M$ an dernier</div>
+            <div class="exec-kpi-sub" data-i18n="land.exec.kpi2.sub">vs 44.1M$ an dernier</div>
           </div>
           <div class="exec-kpi-card exec-kpi-green-card">
-            <div class="exec-kpi-label">Potential Savings</div>
+            <div class="exec-kpi-label" data-i18n="land.exec.kpi3">Potential Savings</div>
             <div class="exec-kpi-value" style="color:#16a34a">2.8M$</div>
-            <div class="exec-kpi-sub">détectés par EIP ✓</div>
+            <div class="exec-kpi-sub" data-i18n="land.exec.kpi3.sub">détectés par EIP ✓</div>
           </div>
           <div class="exec-kpi-card">
-            <div class="exec-kpi-label">Efficiency Score</div>
+            <div class="exec-kpi-label" data-i18n="land.exec.kpi4">Efficiency Score</div>
             <div class="exec-kpi-value" style="color:#818CF8">89%</div>
-            <div class="exec-kpi-sub">+4pts vs mois passé</div>
+            <div class="exec-kpi-sub" data-i18n="land.exec.kpi4.sub">+4pts vs mois passé</div>
           </div>
         </div>
         <div class="exec-recommendations">
-          <div class="exec-rec-title">Top Recommendations</div>
+          <div class="exec-rec-title" data-i18n="land.exec.rec.title">Top Recommendations</div>
           <div class="exec-rec-item"><span class="exec-rec-dot" style="background:#16a34a"></span><div><strong>Retire 23 unused licenses</strong><span> — économie $41,400/an</span></div></div>
           <div class="exec-rec-item"><span class="exec-rec-dot" style="background:#818CF8"></span><div><strong>Consolidate CRM platforms</strong><span> — économie $180,000/an</span></div></div>
           <div class="exec-rec-item"><span class="exec-rec-dot" style="background:#f59e0b"></span><div><strong>Automate approval workflows</strong><span> — gain 2,400h/an</span></div></div>
@@ -215,49 +221,49 @@
   <!-- Workspaces -->
   <section class="eip-workspaces-section" id="workspaces">
     <div class="section-center">
-      <span class="section-label">Intelligence par département</span>
-      <h2 class="section-title">Espaces de travail intelligents</h2>
-      <p class="section-sub">Chaque département dispose de son propre espace IA, alimenté par ses systèmes spécifiques.</p>
+      <span class="section-label" data-i18n="land.ws.label">Intelligence par département</span>
+      <h2 class="section-title" data-i18n="land.ws.title">Espaces de travail intelligents</h2>
+      <p class="section-sub" data-i18n="land.ws.sub">Chaque département dispose de son propre espace IA, alimenté par ses systèmes spécifiques.</p>
       <div class="workspaces-grid">
         <div class="workspace-card">
           <div class="workspace-icon" style="background:linear-gradient(135deg,#818CF8,#6366f1)">👥</div>
-          <h3>HR Workspace</h3>
+          <h3 data-i18n="land.ws.hr.name">HR Workspace</h3>
           <ul class="workspace-list">
-            <li>Recrutement &amp; onboarding</li>
-            <li>Paie &amp; avantages</li>
-            <li>Absences &amp; congés</li>
-            <li>Formation &amp; développement</li>
+            <li data-i18n="land.ws.hr.1">Recrutement &amp; onboarding</li>
+            <li data-i18n="land.ws.hr.2">Paie &amp; avantages</li>
+            <li data-i18n="land.ws.hr.3">Absences &amp; congés</li>
+            <li data-i18n="land.ws.hr.4">Formation &amp; développement</li>
           </ul>
         </div>
         <div class="workspace-card">
           <div class="workspace-icon" style="background:linear-gradient(135deg,#10b981,#059669)">💰</div>
-          <h3>Finance Workspace</h3>
+          <h3 data-i18n="land.ws.fin.name">Finance Workspace</h3>
           <ul class="workspace-list">
-            <li>Budget &amp; prévisions</li>
-            <li>Contrats &amp; fournisseurs</li>
-            <li>Dépenses &amp; charges</li>
-            <li>Rapports financiers</li>
+            <li data-i18n="land.ws.fin.1">Budget &amp; prévisions</li>
+            <li data-i18n="land.ws.fin.2">Contrats &amp; fournisseurs</li>
+            <li data-i18n="land.ws.fin.3">Dépenses &amp; charges</li>
+            <li data-i18n="land.ws.fin.4">Rapports financiers</li>
           </ul>
         </div>
         <div class="workspace-card">
           <div class="workspace-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706)">🖥️</div>
-          <h3>IT Workspace</h3>
+          <h3 data-i18n="land.ws.it.name">IT Workspace</h3>
           <ul class="workspace-list">
-            <li>Actifs &amp; inventaire</li>
-            <li>Licences logicielles</li>
-            <li>Tickets &amp; incidents</li>
-            <li>Cybersécurité</li>
+            <li data-i18n="land.ws.it.1">Actifs &amp; inventaire</li>
+            <li data-i18n="land.ws.it.2">Licences logicielles</li>
+            <li data-i18n="land.ws.it.3">Tickets &amp; incidents</li>
+            <li data-i18n="land.ws.it.4">Cybersécurité</li>
           </ul>
         </div>
         <div class="workspace-card workspace-featured">
-          <div class="workspace-badge">Pour les dirigeants</div>
+          <div class="workspace-badge" data-i18n="land.ws.exec.badge">Pour les dirigeants</div>
           <div class="workspace-icon" style="background:linear-gradient(135deg,#0f172a,#1e293b)">🎯</div>
-          <h3>Executive Workspace</h3>
+          <h3 data-i18n="land.ws.exec.name">Executive Workspace</h3>
           <ul class="workspace-list">
-            <li>Performance globale</li>
-            <li>Économies détectées</li>
-            <li>Risques opérationnels</li>
-            <li>Prévisions stratégiques</li>
+            <li data-i18n="land.ws.exec.1">Performance globale</li>
+            <li data-i18n="land.ws.exec.2">Économies détectées</li>
+            <li data-i18n="land.ws.exec.3">Risques opérationnels</li>
+            <li data-i18n="land.ws.exec.4">Prévisions stratégiques</li>
           </ul>
         </div>
       </div>
@@ -267,28 +273,28 @@
   <!-- Use Cases -->
   <section class="use-cases-section">
     <div class="section-center">
-      <span class="section-label">Cas d'utilisation</span>
-      <h2 class="section-title">How organizations use EIP</h2>
-      <p class="section-sub">Des questions concrètes. Des réponses en secondes. Depuis tous vos systèmes à la fois.</p>
+      <span class="section-label" data-i18n="land.uc.label">Cas d'utilisation</span>
+      <h2 class="section-title" data-i18n="land.uc.title">How organizations use EIP</h2>
+      <p class="section-sub" data-i18n="land.uc.sub">Des questions concrètes. Des réponses en secondes. Depuis tous vos systèmes à la fois.</p>
       <div class="use-cases-grid">
         <div class="use-case-card">
           <div class="use-case-role">CEO</div>
-          <div class="use-case-q">"Where can we reduce costs by 5%?"</div>
+          <div class="use-case-q" data-i18n="land.uc.ceo.q">"Where can we reduce costs by 5%?"</div>
           <div class="use-case-systems">SAP · Workday · Salesforce</div>
         </div>
         <div class="use-case-card">
           <div class="use-case-role" style="background:linear-gradient(135deg,#10b981,#059669)">CFO</div>
-          <div class="use-case-q">"Which contracts should be renegotiated?"</div>
+          <div class="use-case-q" data-i18n="land.uc.cfo.q">"Which contracts should be renegotiated?"</div>
           <div class="use-case-systems">SAP · Microsoft 365 · ServiceNow</div>
         </div>
         <div class="use-case-card">
           <div class="use-case-role" style="background:linear-gradient(135deg,#f59e0b,#d97706)">CIO</div>
-          <div class="use-case-q">"Which licenses are underutilized?"</div>
+          <div class="use-case-q" data-i18n="land.uc.cio.q">"Which licenses are underutilized?"</div>
           <div class="use-case-systems">Microsoft 365 · Jira · ServiceNow</div>
         </div>
         <div class="use-case-card">
           <div class="use-case-role" style="background:linear-gradient(135deg,#818CF8,#6366f1)">HR Director</div>
-          <div class="use-case-q">"Which teams are at risk of turnover?"</div>
+          <div class="use-case-q" data-i18n="land.uc.hr.q">"Which teams are at risk of turnover?"</div>
           <div class="use-case-systems">Workday · Microsoft 365 · Jira</div>
         </div>
       </div>
@@ -298,12 +304,12 @@
   <!-- Trusted Enterprise Integrations -->
   <div class="integrations-section" id="connectors">
     <div class="section-center">
-      <span class="section-label">Intégrations certifiées</span>
-      <h2 class="section-title">Connect to your existing systems in minutes</h2>
+      <span class="section-label" data-i18n="land.int.label">Intégrations certifiées</span>
+      <h2 class="section-title" data-i18n="land.int.title">Connect to your existing systems in minutes</h2>
       <div class="integrations-tagline">
-        <span>No migration required.</span>
-        <span>No infrastructure changes.</span>
-        <span>No disruption to your operations.</span>
+        <span data-i18n="land.int.tag1">No migration required.</span>
+        <span data-i18n="land.int.tag2">No infrastructure changes.</span>
+        <span data-i18n="land.int.tag3">No disruption to your operations.</span>
       </div>
       <div class="integrations-grid">
         <div class="integration-item"><span class="integration-check">✓</span><div class="conn-icon" style="background:#0078d4">M</div><span>Microsoft 365</span></div>
@@ -325,33 +331,33 @@
   <!-- Enterprise Security -->
   <section class="security-section">
     <div class="section-center">
-      <span class="section-label" style="color:rgba(255,255,255,.45)">Confiance &amp; conformité</span>
-      <h2 class="section-title" style="color:#fff">Enterprise Security</h2>
-      <p class="section-sub" style="color:rgba(255,255,255,.55);margin-bottom:48px">Conçu pour les organisations qui ne font aucun compromis sur la sécurité.</p>
+      <span class="section-label" style="color:rgba(255,255,255,.45)" data-i18n="land.sec.label">Confiance &amp; conformité</span>
+      <h2 class="section-title" style="color:#fff" data-i18n="land.sec.title">Enterprise Security</h2>
+      <p class="section-sub" style="color:rgba(255,255,255,.55);margin-bottom:48px" data-i18n="land.sec.sub">Conçu pour les organisations qui ne font aucun compromis sur la sécurité.</p>
       <div class="security-grid">
         <div class="security-item">
           <span class="security-check">✓</span>
-          <div><strong>OAuth 2.0</strong><p>Authentification standard industrie pour tous les connecteurs</p></div>
+          <div><strong data-i18n="land.sec.1.name">OAuth 2.0</strong><p data-i18n="land.sec.1.desc">Authentification standard industrie pour tous les connecteurs</p></div>
         </div>
         <div class="security-item">
           <span class="security-check">✓</span>
-          <div><strong>Role-Based Access Control</strong><p>Permissions granulaires : user, manager, admin, owner</p></div>
+          <div><strong data-i18n="land.sec.2.name">Role-Based Access Control</strong><p data-i18n="land.sec.2.desc">Permissions granulaires : user, manager, admin, owner</p></div>
         </div>
         <div class="security-item">
           <span class="security-check">✓</span>
-          <div><strong>Immutable Audit Logs</strong><p>Chaque action tracée avec IP, utilisateur et timestamp</p></div>
+          <div><strong data-i18n="land.sec.3.name">Immutable Audit Logs</strong><p data-i18n="land.sec.3.desc">Chaque action tracée avec IP, utilisateur et timestamp</p></div>
         </div>
         <div class="security-item">
           <span class="security-check">✓</span>
-          <div><strong>Encrypted Credentials</strong><p>Tokens et clés API chiffrés Fernet AES-128 au repos</p></div>
+          <div><strong data-i18n="land.sec.4.name">Encrypted Credentials</strong><p data-i18n="land.sec.4.desc">Tokens et clés API chiffrés Fernet AES-128 au repos</p></div>
         </div>
         <div class="security-item">
           <span class="security-check">✓</span>
-          <div><strong>Multi-Tenant Architecture</strong><p>Isolation complète des données par organisation</p></div>
+          <div><strong data-i18n="land.sec.5.name">Multi-Tenant Architecture</strong><p data-i18n="land.sec.5.desc">Isolation complète des données par organisation</p></div>
         </div>
         <div class="security-item">
           <span class="security-check">✓</span>
-          <div><strong>Bilingual FR / EN</strong><p>Interface et réponses disponibles en français et anglais</p></div>
+          <div><strong data-i18n="land.sec.6.name">Bilingual FR / EN</strong><p data-i18n="land.sec.6.desc">Interface et réponses disponibles en français et anglais</p></div>
         </div>
       </div>
     </div>
@@ -360,33 +366,33 @@
   <!-- ROI Calculator -->
   <section class="roi-section">
     <div class="section-center" style="text-align:center">
-      <span class="section-label">Retour sur investissement</span>
-      <h2 class="section-title">Calculate your ROI</h2>
-      <p class="section-sub" style="margin-bottom:48px">Basé sur les économies moyennes détectées pour une organisation de 200–500 employés.</p>
+      <span class="section-label" data-i18n="land.roi.label">Retour sur investissement</span>
+      <h2 class="section-title" data-i18n="land.roi.title">Calculate your ROI</h2>
+      <p class="section-sub" style="margin-bottom:48px" data-i18n="land.roi.sub">Basé sur les économies moyennes détectées pour une organisation de 200–500 employés.</p>
       <div class="roi-grid">
         <div class="roi-card">
           <div class="roi-card-icon">💳</div>
-          <div class="roi-card-label">Investment in EIP</div>
+          <div class="roi-card-label" data-i18n="land.roi.1.lbl">Investment in EIP</div>
           <div class="roi-card-value">99$<span>/month</span></div>
         </div>
         <div class="roi-card">
           <div class="roi-card-icon">📅</div>
-          <div class="roi-card-label">Annual Cost</div>
+          <div class="roi-card-label" data-i18n="land.roi.2.lbl">Annual Cost</div>
           <div class="roi-card-value">1,188$</div>
         </div>
         <div class="roi-card roi-card-green">
           <div class="roi-card-icon">💰</div>
-          <div class="roi-card-label">Potential Savings</div>
+          <div class="roi-card-label" data-i18n="land.roi.3.lbl">Potential Savings</div>
           <div class="roi-card-value" style="color:#16a34a">$2,846,217</div>
         </div>
         <div class="roi-card roi-card-gold">
           <div class="roi-card-icon">🚀</div>
-          <div class="roi-card-label">ROI</div>
+          <div class="roi-card-label" data-i18n="land.roi.4.lbl">ROI</div>
           <div class="roi-card-value" style="color:#d97706">239,580%</div>
         </div>
       </div>
-      <p style="font-size:.78rem;color:var(--slate-light);margin-top:20px">* Chiffres à titre illustratif. Les résultats réels varient selon l'organisation.</p>
-      <button class="btn btn-primary btn-lg" onclick="showAuth('signup')" style="margin-top:36px">Commencer l'essai gratuit — 14 jours</button>
+      <p style="font-size:.78rem;color:var(--slate-light);margin-top:20px" data-i18n="land.roi.disclaimer">* Chiffres à titre illustratif. Les résultats réels varient selon l'organisation.</p>
+      <button class="btn btn-primary btn-lg" onclick="showAuth('signup')" style="margin-top:36px" data-i18n="land.roi.cta">Commencer l'essai gratuit — 14 jours</button>
     </div>
   </section>
 
@@ -498,9 +504,9 @@
   <!-- Demo Section -->
   <section class="demo-section" id="demo">
     <div class="section-center" style="text-align:center">
-      <span class="section-label">Démo interactive</span>
-      <h2 class="section-title">Voyez EIP en action</h2>
-      <p class="section-sub" style="margin-bottom:48px">60 secondes pour comprendre comment EIP transforme votre organisation.</p>
+      <span class="section-label" data-i18n="land.demo.label">Démo interactive</span>
+      <h2 class="section-title" data-i18n="land.demo.title">Voyez EIP en action</h2>
+      <p class="section-sub" style="margin-bottom:48px" data-i18n="land.demo.sub">60 secondes pour comprendre comment EIP transforme votre organisation.</p>
 
       <div class="demo-player" id="demo-player">
         <!-- Window chrome -->
@@ -687,16 +693,16 @@
   <section class="contact-section" id="contact">
     <div class="contact-inner">
       <div class="contact-left">
-        <span class="section-label" style="color:rgba(255,255,255,.45)">Parlons de votre projet</span>
-        <h2 style="color:#fff;font-size:2rem;margin:16px 0">Prêt à transformer votre organisation ?</h2>
-        <p style="color:#94a3b8;font-size:.95rem;line-height:1.7;margin-bottom:32px">
+        <span class="section-label" style="color:rgba(255,255,255,.45)" data-i18n="land.contact.label">Parlons de votre projet</span>
+        <h2 style="color:#fff;font-size:2rem;margin:16px 0" data-i18n="land.contact.title">Prêt à transformer votre organisation ?</h2>
+        <p style="color:#94a3b8;font-size:.95rem;line-height:1.7;margin-bottom:32px" data-i18n="land.contact.sub">
           Notre équipe vous contacte sous 24h pour une démonstration personnalisée de NexHire EIP avec vos propres systèmes.
         </p>
         <div class="contact-benefits">
-          <div class="contact-benefit"><span>⚡</span><span>Démo personnalisée avec vos connecteurs</span></div>
-          <div class="contact-benefit"><span>🎯</span><span>Analyse des économies potentielles pour votre org</span></div>
-          <div class="contact-benefit"><span>🔒</span><span>Aucun accès à vos données sans votre autorisation</span></div>
-          <div class="contact-benefit"><span>🍁</span><span>Support bilingue FR / EN · Équipe canadienne</span></div>
+          <div class="contact-benefit"><span>⚡</span><span data-i18n="land.contact.b1">Démo personnalisée avec vos connecteurs</span></div>
+          <div class="contact-benefit"><span>🎯</span><span data-i18n="land.contact.b2">Analyse des économies potentielles pour votre org</span></div>
+          <div class="contact-benefit"><span>🔒</span><span data-i18n="land.contact.b3">Aucun accès à vos données sans votre autorisation</span></div>
+          <div class="contact-benefit"><span>🍁</span><span data-i18n="land.contact.b4">Support bilingue FR / EN · Équipe canadienne</span></div>
         </div>
       </div>
       <div class="contact-right">
@@ -704,29 +710,29 @@
           <form id="contact-form" onsubmit="submitContact(event)">
             <div class="contact-row">
               <label class="auth-label">
-                <span>Prénom &amp; Nom *</span>
-                <input id="cf-name" type="text" placeholder="Marie Tremblay" required />
+                <span data-i18n="land.contact.f.name">Prénom &amp; Nom *</span>
+                <input id="cf-name" type="text" placeholder="Marie Tremblay" required data-i18n-placeholder="land.contact.f.ph.name" />
               </label>
               <label class="auth-label">
-                <span>Organisation *</span>
-                <input id="cf-company" type="text" placeholder="Ville de Montréal" required />
+                <span data-i18n="land.contact.f.org">Organisation *</span>
+                <input id="cf-company" type="text" placeholder="Ville de Montréal" required data-i18n-placeholder="land.contact.f.ph.org" />
               </label>
             </div>
             <label class="auth-label">
-              <span>Adresse courriel *</span>
-              <input id="cf-email" type="email" placeholder="marie@organisation.ca" required />
+              <span data-i18n="land.contact.f.email">Adresse courriel *</span>
+              <input id="cf-email" type="email" placeholder="marie@organisation.ca" required data-i18n-placeholder="land.contact.f.ph.email" />
             </label>
             <label class="auth-label">
-              <span>Message (optionnel)</span>
-              <textarea id="cf-message" rows="3" placeholder="Décrivez brièvement votre besoin…" style="resize:vertical;font-family:inherit;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);font-size:.9rem;color:var(--navy);width:100%;box-sizing:border-box"></textarea>
+              <span data-i18n="land.contact.f.msg">Message (optionnel)</span>
+              <textarea id="cf-message" rows="3" placeholder="Décrivez brièvement votre besoin…" data-i18n-placeholder="land.contact.f.ph.msg" style="resize:vertical;font-family:inherit;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);font-size:.9rem;color:var(--navy);width:100%;box-sizing:border-box"></textarea>
             </label>
-            <button type="submit" class="auth-submit" id="cf-btn">Demander une démonstration →</button>
+            <button type="submit" class="auth-submit" id="cf-btn" data-i18n="land.contact.f.submit">Demander une démonstration →</button>
             <p id="cf-error" class="form-error hidden"></p>
           </form>
           <div id="contact-success" class="hidden" style="text-align:center;padding:40px 20px">
             <div style="font-size:3rem;margin-bottom:16px">✅</div>
-            <h3 style="color:var(--navy);margin-bottom:8px">Message envoyé !</h3>
-            <p style="color:var(--slate)">Notre équipe vous contacte sous 24 heures.</p>
+            <h3 style="color:var(--navy);margin-bottom:8px" data-i18n="land.contact.success.title">Message envoyé !</h3>
+            <p style="color:var(--slate)" data-i18n="land.contact.success.sub">Notre équipe vous contacte sous 24 heures.</p>
           </div>
         </div>
       </div>
@@ -865,7 +871,10 @@
   <nav class="topnav">
     <div class="nav-brand">
       <div class="brand-mark">N</div>
-      <span>Nex<span style="color:#818CF8">hire</span></span>
+      <div style="display:flex;flex-direction:column;line-height:1.1">
+        <span>Nex<span style="color:#818CF8">hire</span> <span class="eip-badge" style="font-size:.55rem;padding:1px 5px;vertical-align:middle">EIP</span></span>
+        <span style="font-size:.55rem;color:rgba(255,255,255,.45);font-weight:400;letter-spacing:.03em">Enterprise Intelligence Platform</span>
+      </div>
       <span class="org-logo-sep hidden" id="org-logo-sep">|</span>
       <img id="org-logo-topnav" class="org-logo-topnav hidden" alt="Logo organisation" />
     </div>
@@ -2086,6 +2095,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="/static/app.js?v=20260608c"></script>
+<script src="/static/app.js?v=20260608d"></script>
 </body>
 </html>

@@ -418,6 +418,38 @@ button[type="submit"] { @extend .btn; @extend .btn-primary; width: 100%; }
 .topnav .lang-btn { color: #fff; border-color: rgba(255,255,255,.3); }
 .topnav .lang-btn:hover { background: rgba(255,255,255,.12); color: #fff; }
 
+/* ── Lang switcher (EN | FR | ES compact group) ─────────────────────────── */
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--blue-pale);
+  border: 1.5px solid var(--blue-light);
+  border-radius: 8px;
+  padding: 2px 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.lang-sw-btn {
+  font-size: .76rem;
+  font-weight: 700;
+  color: var(--slate);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 4px 8px;
+  min-height: auto;
+  min-width: 32px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background .15s, color .15s;
+  letter-spacing: .04em;
+  line-height: 1;
+}
+.lang-sw-btn:hover { color: var(--blue); }
+.lang-sw-btn.lang-sw-active { background: var(--blue); color: #fff; }
+.lang-sw-pipe { color: var(--blue-light); font-size: .65rem; user-select: none; padding: 0 1px; }
+
 /* ── Pricing section ─────────────────────────────────────────────────────── */
 .pricing {
   padding: 96px 40px;
