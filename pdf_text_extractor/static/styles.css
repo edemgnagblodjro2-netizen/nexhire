@@ -369,7 +369,7 @@ button[type="submit"] { @extend .btn; @extend .btn-primary; width: 100%; }
   margin-bottom: 12px;
   color: var(--navy);
 }
-.section-sub { font-size: 1.05rem; margin-bottom: 56px; max-width: 560px; }
+.section-sub { font-size: 1.05rem; margin: 0 auto 56px; max-width: 560px; text-align: center; }
 .features-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
