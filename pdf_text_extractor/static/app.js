@@ -176,7 +176,7 @@ const T = {
     'land.ws.exec.3':"Risques opérationnels",'land.ws.exec.4':"Prévisions stratégiques",
     'land.uc.label':"Cas d'utilisation",'land.uc.title':"How organizations use EIP",
     'land.uc.sub':"Des questions concrètes. Des réponses en secondes. Depuis tous vos systèmes à la fois.",
-    'land.uc.ceo.q':'"Where can we reduce costs by 5%?"','land.uc.cfo.q':'"Which contracts should be renegotiated?"',
+    'land.uc.ceo.q':'"Where can we reduce costs by 5%?"','land.uc.cfo.q':'"We pay for Salesforce AND HubSpot. Which to keep?"',
     'land.uc.cio.q':'"Which licenses are underutilized?"','land.uc.hr.q':'"Which teams are at risk of turnover?"',
     'land.int.label':"Intégrations certifiées",'land.int.title':"Connect to your existing systems in minutes",
     'land.int.tag1':"No migration required.",'land.int.tag2':"No infrastructure changes.",'land.int.tag3':"No disruption to your operations.",
@@ -370,7 +370,7 @@ const T = {
     'land.ws.exec.3':"Operational risks",'land.ws.exec.4':"Strategic forecasts",
     'land.uc.label':"Use cases",'land.uc.title':"How organizations use EIP",
     'land.uc.sub':"Concrete questions. Answers in seconds. From all your systems at once.",
-    'land.uc.ceo.q':'"Where can we reduce costs by 5%?"','land.uc.cfo.q':'"Which contracts should be renegotiated?"',
+    'land.uc.ceo.q':'"Where can we reduce costs by 5%?"','land.uc.cfo.q':'"We pay for Salesforce AND HubSpot. Which to keep?"',
     'land.uc.cio.q':'"Which licenses are underutilized?"','land.uc.hr.q':'"Which teams are at risk of turnover?"',
     'land.int.label':"Certified integrations",'land.int.title':"Connect to your existing systems in minutes",
     'land.int.tag1':"No migration required.",'land.int.tag2':"No infrastructure changes.",'land.int.tag3':"No disruption to your operations.",
@@ -561,7 +561,7 @@ const T = {
     'land.ws.exec.3':"Riesgos operacionales",'land.ws.exec.4':"Previsiones estratégicas",
     'land.uc.label':"Casos de uso",'land.uc.title':"How organizations use EIP",
     'land.uc.sub':"Preguntas concretas. Respuestas en segundos. Desde todos tus sistemas a la vez.",
-    'land.uc.ceo.q':'"¿Dónde podemos reducir costos un 5%?"','land.uc.cfo.q':'"¿Qué contratos deberían renegociarse?"',
+    'land.uc.ceo.q':'"¿Dónde podemos reducir costos un 5%?"','land.uc.cfo.q':'"Pagamos Salesforce Y HubSpot. ¿Cuál conservar?"',
     'land.uc.cio.q':'"¿Qué licencias están infrautilizadas?"','land.uc.hr.q':'"¿Qué equipos están en riesgo de rotación?"',
     'land.int.label':"Integraciones certificadas",'land.int.title':"Conecta con tus sistemas existentes en minutos",
     'land.int.tag1':"Sin migración requerida.",'land.int.tag2':"Sin cambios de infraestructura.",'land.int.tag3':"Sin interrupción de operaciones.",
@@ -2025,7 +2025,7 @@ async function _doOAuthStartWithBody(type, btn, body) {
 // ── Demo Player ───────────────────────────────────────────────────────────
 
 (function initDemoPlayer() {
-  const TOTAL = 12;
+  const TOTAL = 13;
   const SLIDE_MS = 5000;
   let current = 0;
   let playing = true;
@@ -2057,7 +2057,7 @@ async function _doOAuthStartWithBody(type, btn, body) {
     if (time) {
       const totalSec = current * 5 + Math.floor(elapsed / 1000);
       const m = Math.floor(totalSec / 60), s = totalSec % 60;
-      time.textContent = `${m}:${s.toString().padStart(2,'0')} / 1:00`;
+      time.textContent = `${m}:${s.toString().padStart(2,'0')} / 1:05`;
     }
   }
 
