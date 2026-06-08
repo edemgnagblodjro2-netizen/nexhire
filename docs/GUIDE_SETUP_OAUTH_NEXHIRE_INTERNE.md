@@ -46,20 +46,24 @@ M365_REDIRECT_URI  = https://agenthub.nexhire.ca/api/connectors/oauth/callback
 
 ---
 
-## 2. Salesforce CRM
+## 2. Salesforce CRM ✅
 
 **Variables Render :** `SF_CLIENT_ID` · `SF_CLIENT_SECRET` · `SF_REDIRECT_URI`
 
-**Étapes :**
-1. Crée un compte développeur Salesforce gratuit sur [developer.salesforce.com](https://developer.salesforce.com/signup)
-2. Connecte-toi → **Setup → App Manager → New Connected App**
-3. Remplis :
-   - Connected App Name : `NexHire`
-   - Coche **Enable OAuth Settings**
+> ⚠️ Salesforce Developer Edition est gratuit et permanent (pas de limite 30 jours) : [developer.salesforce.com/signup](https://developer.salesforce.com/signup). Ne pas confondre avec l'essai commercial 30 jours.
+
+**Étapes (nouvelle interface — External Client App) :**
+1. Connecte-toi → **Setup → Apps → External Client Apps → External Client App Manager → New**
+2. Remplis :
+   - External Client App Name : `NexHire EIP`
+   - API Name : `NexHire_EIP`
+   - Contact Email : ton email
+   - Distribution State : `Local`
+3. Active **Enable OAuth** → remplis :
    - Callback URL : `https://agenthub.nexhire.ca/api/connectors/oauth/callback`
-   - Scopes : `api`, `refresh_token / offline access`, `openid`, `profile`, `email`
-4. **Save** → attends 2-10 minutes
-5. App Manager → NexHire → **View** → note **Consumer Key** et **Consumer Secret**
+   - OAuth Scopes → sélectionne : `Manage user data via APIs (api)` + `Perform requests at any time (refresh_token, offline_access)`
+   - Flows → coche : **Enable Authorization Code and Credentials Flow** uniquement
+4. **Save** → onglet **Settings** → note **Consumer Key** et **Consumer Secret**
 
 **Dans Render :**
 ```
@@ -150,7 +154,7 @@ JIRA_REDIRECT_URI  = https://agenthub.nexhire.ca/api/connectors/oauth/callback
 **Variables Render :** `HUBSPOT_CLIENT_ID` · `HUBSPOT_CLIENT_SECRET` · `HUBSPOT_REDIRECT_URI`
 
 **Étapes :**
-1. Va sur [developers.hubspot.com](https://developers.hubspot.com/) → **Create app**
+1. Va sur [developers.hubspot.com](p/) → **Create app**
 2. Onglet **Auth** :
    - Redirect URLs : `https://agenthub.nexhire.ca/api/connectors/oauth/callback`
    - Scopes : `crm.objects.contacts.read`, `crm.objects.deals.read`, `crm.objects.companies.read`, `tickets`
@@ -216,14 +220,17 @@ SLACK_REDIRECT_URI  = https://agenthub.nexhire.ca/api/connectors/oauth/callback
 
 ---
 
-## 9. QuickBooks Online
+## 9. QuickBooks Online ✅
 
 **Variables Render :** `QUICKBOOKS_CLIENT_ID` · `QUICKBOOKS_CLIENT_SECRET` · `QUICKBOOKS_REDIRECT_URI`
 
 **Étapes :**
 1. Va sur [developer.intuit.com](https://developer.intuit.com) → **Create an app → QuickBooks Online and Payments**
-2. **Keys & credentials → Production** → Redirect URIs : `https://agenthub.nexhire.ca/api/connectors/oauth/callback`
-3. Note **Client ID** et **Client Secret**
+2. Scope : `com.intuit.quickbooks.accounting`
+3. **Keys & credentials** → Redirect URIs : ajoute `https://agenthub.nexhire.ca/api/connectors/oauth/callback` (garde le playground Intuit en parallèle)
+4. Host domain : `agenthub.nexhire.ca` · Launch/Disconnect/Reconnect URL : `https://agenthub.nexhire.ca`
+5. Catégories : `Accounting` + `Business Insights` · Industries : `None of the above`
+6. Note **Client ID** et **Client Secret**
 
 **Dans Render :**
 ```
@@ -254,14 +261,15 @@ QUICKBOOKS_REDIRECT_URI  = https://agenthub.nexhire.ca/api/connectors/oauth/call
 
 ## Ordre recommandé
 
-1. **Google Workspace** — en cours ✍️
-2. **Jira / Confluence** — ~10 min
-3. **HubSpot** — ~10 min
-4. **Slack** — ~10 min
-5. **Zendesk** — ~15 min
-6. **Salesforce** — ~15 min
-7. **QuickBooks** — ~15 min
-8. **ServiceNow** — au cas par cas avec chaque client (modal)
+1. **Microsoft 365** — ✅ fait
+2. **Salesforce** — ✅ fait (2026-06-08)
+3. **QuickBooks** — ✅ fait (2026-06-08)
+4. **Google Workspace** — en cours ✍️
+5. **Jira / Confluence** — ~10 min
+6. **HubSpot** — ~10 min
+7. **Slack** — ~10 min
+8. **Zendesk** — ✅ per-client (modal, aucune variable Render)
+9. **ServiceNow** — ✅ per-client (modal, aucune variable Render)
 
 ---
 
