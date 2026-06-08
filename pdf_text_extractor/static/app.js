@@ -2453,20 +2453,55 @@ async function loadAudit() {
     const logs = resp.logs || [];
     if (!logs.length) { wrap.innerHTML = "<p class='muted' style='padding:20px'>Aucun événement enregistré.</p>"; return; }
     const table = document.createElement("table");
+    table.className = "data-table";
     table.innerHTML = `
-      <thead><tr><th>Date</th><th>Action</th><th>Utilisateur</th><th>Connecteur</th><th>Statut</th><th>IP</th></tr></thead>
-      <tbody>${logs.map(l => `<tr>
+      <thead><tr><th>Date</th><th>Action</th><th>Utilisateur</th><th>Connecteur</th><th>Statut</th><th>IP</th><th></th></tr></thead>
+      <tbody>${logs.map((l,i) => `<tr style="cursor:pointer" onclick="openAuditDetail(${i})" title="Voir les détails">
         <td>${l.created_at ? new Date(l.created_at).toLocaleString("fr-CA") : "—"}</td>
-        <td>${l.action || "—"}</td>
-        <td>${l.user_id ? l.user_id.slice(0,8)+"…" : "—"}</td>
-        <td>${l.connector || "—"}</td>
-        <td class="${l.success !== false ? "badge-ok" : "badge-fail"}">${l.success !== false ? "✓" : "✗"}</td>
-        <td>${l.ip_address || "—"}</td>
+        <td>${esc(l.action || "—")}</td>
+        <td style="font-size:.78rem;color:var(--slate)">${l.user_id ? l.user_id.slice(0,8)+"…" : "—"}</td>
+        <td>${esc(l.connector || "—")}</td>
+        <td><span class="badge ${l.success !== false ? "badge-active" : "badge-expired"}">${l.success !== false ? "✓ OK" : "✗ Erreur"}</span></td>
+        <td style="font-size:.78rem;color:var(--slate)">${esc(l.ip_address || "—")}</td>
+        <td style="color:var(--slate);font-size:.8rem">›</td>
       </tr>`).join("")}</tbody>`;
     wrap.innerHTML = ""; wrap.appendChild(table);
+    window._auditLogs = logs;
   } catch (ex) {
     wrap.innerHTML = `<p class='error-text' style='padding:20px'>Erreur : ${ex.message}</p>`;
   }
+}
+
+function openAuditDetail(idx) {
+  const l = (window._auditLogs || [])[idx];
+  if (!l) return;
+  const row = (label, value) => value
+    ? `<div style="display:grid;grid-template-columns:160px 1fr;gap:8px;padding:8px 0;border-bottom:1px solid var(--border)">
+        <span style="font-weight:700;color:var(--slate);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em">${label}</span>
+        <span style="word-break:break-all">${value}</span>
+       </div>`
+    : "";
+  let meta = "";
+  if (l.metadata && typeof l.metadata === "object") {
+    try { meta = JSON.stringify(l.metadata, null, 2); } catch(_) { meta = String(l.metadata); }
+  }
+  $("audit-detail-body").innerHTML = [
+    row("Date",        l.created_at ? new Date(l.created_at).toLocaleString("fr-CA") : null),
+    row("Action",      l.action),
+    row("Utilisateur", l.user_id),
+    row("Email",       l.user_email),
+    row("Organisation",l.organization_id),
+    row("Connecteur",  l.connector),
+    row("Requête",     l.query ? `<em>${esc(l.query)}</em>` : null),
+    row("Statut HTTP", l.http_status),
+    row("Succès",      l.success !== undefined ? (l.success !== false ? "✓ Oui" : "✗ Non") : null),
+    row("Erreur",      l.error_detail ? `<span style="color:#dc2626">${esc(l.error_detail)}</span>` : null),
+    row("IP",          l.ip_address),
+    row("Source",      l.source),
+    row("Ressources",  l.resource_ids?.length ? l.resource_ids.join(", ") : null),
+    row("Métadonnées", meta ? `<pre style="font-size:.75rem;background:var(--bg);padding:8px;border-radius:6px;overflow-x:auto;margin:0">${esc(meta)}</pre>` : null),
+  ].filter(Boolean).join("");
+  $("audit-detail-modal").classList.remove("hidden");
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

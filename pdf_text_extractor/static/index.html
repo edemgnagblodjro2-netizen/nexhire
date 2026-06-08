@@ -1162,10 +1162,20 @@
         <h2 data-i18n="audit.title">Journal d'audit</h2>
         <button class="btn btn-outline btn-sm" id="refresh-audit" data-i18n="audit.refresh">↻ Actualiser</button>
       </div>
+      <p class="muted" style="font-size:.82rem;margin-bottom:12px">Cliquez sur une ligne pour voir les détails complets.</p>
       <div id="audit-wrap" class="table-wrap">
         <p class="muted" style="padding:20px" data-i18n="loading">Chargement…</p>
       </div>
     </section>
+
+    <!-- Audit detail modal -->
+    <div id="audit-detail-modal" class="modal-backdrop hidden" onclick="if(event.target===this)this.classList.add('hidden')">
+      <div class="modal-card" style="max-width:600px">
+        <button class="modal-close" onclick="$('audit-detail-modal').classList.add('hidden')">✕</button>
+        <h3 style="margin-bottom:16px">Détails de l'événement</h3>
+        <div id="audit-detail-body" style="display:grid;gap:8px;font-size:.88rem"></div>
+      </div>
+    </div>
 
     <!-- ── ÉQUIPE ────────────────────────────────────────────────────────── -->
     <section id="tab-team" class="tab-content hidden admin-only" role="tabpanel">
