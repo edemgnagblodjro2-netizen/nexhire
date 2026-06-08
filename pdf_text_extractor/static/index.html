@@ -917,7 +917,7 @@
       <div class="section-header">
         <h2 data-i18n="parc.title">Parc IT</h2>
         <div class="controls-inline">
-          <select id="parc-dept-select" onchange="loadParcIT()">
+          <select id="parc-dept-select" onchange="_loadParcSection(_parcTab)">
             <option value="" data-i18n="parc.dept.all">Tous les départements</option>
           </select>
           <button class="btn btn-outline btn-sm" onclick="loadParcIT()" data-i18n="conn.refresh">↻ Actualiser</button>
@@ -1555,6 +1555,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="/static/app.js?v=20260609"></script>
+<script src="/static/app.js?v=20260607b"></script>
 </body>
 </html>

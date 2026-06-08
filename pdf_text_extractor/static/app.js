@@ -2205,13 +2205,13 @@ async function loadSettings() {
     if (p.sso_enabled) {
       badge.classList.replace("inactive", "active");
       txt.textContent = T[_lang]["settings.sso.active"] || "SSO actif ✓";
-      cta.classList.add("hidden");
-      info.classList.remove("hidden");
+      cta?.classList.add("hidden");
+      info?.classList.remove("hidden");
     } else {
       badge.classList.remove("active"); badge.classList.add("inactive");
       txt.textContent = T[_lang]["settings.sso.inactive"] || "SSO non configuré";
-      cta.classList.remove("hidden");
-      info.classList.add("hidden");
+      cta?.classList.remove("hidden");
+      info?.classList.add("hidden");
     }
 
     // Plan
