@@ -1,6 +1,12 @@
 # Guide interne — Configuration OAuth NexHire (à faire une seule fois)
 
-Ce guide est pour l'équipe NexHire. Pour chaque connecteur OAuth, tu dois enregistrer **une seule application OAuth** chez le fournisseur. Tous tes clients partageront ensuite cette app — ils cliquent "Connecter", se connectent avec leur compte, et c'est fini.
+Ce guide est pour l'équipe NexHire. Il y a deux catégories de connecteurs OAuth :
+
+**Catégorie A — App NexHire partagée (tu enregistres une fois, tous les clients partagent) :**
+Microsoft 365, Salesforce, Jira, HubSpot, Google Workspace, Slack, QuickBooks
+
+**Catégorie B — App per-client (chaque client enregistre sa propre app OAuth chez lui) :**
+ServiceNow, Zendesk → aucune variable Render nécessaire, l'admin NexHire entre les credentials dans un modal au moment de la connexion.
 
 **URL de callback à utiliser partout :**
 ```
@@ -72,29 +78,33 @@ SF_REDIRECT_URI  = https://nexhire.ca/api/connectors/oauth/callback
 
 ---
 
-## 3. ServiceNow
+## 3. ServiceNow — Catégorie B (per-client, aucune variable Render)
 
-> ⚠️ **Limitation multi-tenant** : ServiceNow nécessite une instance unique par client (ex. `client.service-now.com`). La configuration actuelle supporte **un seul client ServiceNow à la fois** via `SNOW_INSTANCE_URL`. Pour plusieurs clients, une évolution de l'architecture sera nécessaire.
+> ✅ **Multi-tenant natif** : chaque client enregistre sa propre app OAuth sur son instance ServiceNow. L'admin NexHire entre les credentials dans un modal au moment de connecter. Aucune variable Render à configurer.
 
-**Variables Render :** `SNOW_CLIENT_ID` · `SNOW_CLIENT_SECRET` · `SNOW_INSTANCE_URL` · `SNOW_REDIRECT_URI`
-
-**Étapes (à faire chez le client, sur son instance ServiceNow) :**
-1. Le client te donne accès à son instance ServiceNow avec un compte admin
-2. Dans ServiceNow : barre de recherche → **Application Registry → New**
-3. Choisis **Create an OAuth API endpoint for external clients**
-4. Remplis :
+**Ce que le client doit faire (une fois sur son instance ServiceNow) :**
+1. Dans ServiceNow : barre de recherche → **Application Registry → New**
+2. Choisir **Create an OAuth API endpoint for external clients**
+3. Remplir :
    - Name : `NexHire`
    - Redirect URL : `https://nexhire.ca/api/connectors/oauth/callback`
-   - Clique **Submit**
-5. Ouvre l'entrée créée → note **Client ID** (auto-généré) et **Client Secret**
+   - Cliquer **Submit**
+4. Ouvrir l'entrée créée → noter **Client ID** (auto-généré) et **Client Secret**
+5. Fournir à NexHire : URL de l'instance + Client ID + Client Secret
 
-**Dans Render (à mettre à jour pour chaque client ServiceNow) :**
-```
-SNOW_CLIENT_ID     = <Client ID>
-SNOW_CLIENT_SECRET = <Client Secret>
-SNOW_INSTANCE_URL  = https://<client>.service-now.com
-SNOW_REDIRECT_URI  = https://nexhire.ca/api/connectors/oauth/callback
-```
+**Ce que l'admin NexHire fait dans l'interface :**
+1. Aller dans NexHire → onglet **Connecteurs** → ServiceNow
+2. Cliquer **Connecter via OAuth**
+3. Un modal s'ouvre — remplir les 3 champs fournis par le client :
+   ```
+   URL de l'instance   : https://votreclient.service-now.com
+   Client ID           : <Client ID>
+   Client Secret       : ••••••••
+   ```
+4. Cliquer **Connecter via OAuth →** → le client est redirigé vers ServiceNow pour s'authentifier
+5. Après authentification → connecteur actif ✓
+
+**Variables Render : aucune requise pour ServiceNow.**
 
 ---
 
@@ -127,25 +137,30 @@ JIRA_REDIRECT_URI  = https://nexhire.ca/api/connectors/oauth/callback
 
 ---
 
-## 5. Zendesk
+## 5. Zendesk — Catégorie B (per-client, 3 variables Render partagées)
 
-> ⚠️ **Limitation multi-tenant** : `ZENDESK_SUBDOMAIN` est une variable globale — un seul sous-domaine Zendesk à la fois. Pour plusieurs clients Zendesk, évolution requise.
+> ✅ **Multi-tenant natif** : NexHire enregistre une app OAuth Zendesk une seule fois. Le sous-domaine du client est saisi dans un prompt au moment de la connexion.
 
-**Variables Render :** `ZENDESK_CLIENT_ID` · `ZENDESK_CLIENT_SECRET` · `ZENDESK_REDIRECT_URI` · `ZENDESK_SUBDOMAIN`
+**Étapes NexHire (une seule fois) :**
+1. Crée un compte Zendesk développeur ou utilise une sandbox : [zendesk.com/register](https://www.zendesk.com/register/)
+2. Dans Zendesk Admin Center → **Apps and integrations → APIs → OAuth Clients → Add OAuth client**
+3. Client name : `NexHire`
+4. Redirect URLs : `https://nexhire.ca/api/connectors/oauth/callback`
+5. Clique **Save** → note **Unique identifier** et **Secret**
 
-**Étapes (à faire chez le client, sur son compte Zendesk) :**
-1. Dans Zendesk Admin Center → **Apps and integrations → APIs → OAuth Clients → Add OAuth client**
-2. Client name : `NexHire`
-3. Redirect URL : `https://nexhire.ca/api/connectors/oauth/callback`
-4. Clique **Save** → note le **Unique identifier** et le **Secret**
-
-**Dans Render (à mettre à jour pour chaque client Zendesk) :**
+**Dans Render (une seule fois, app NexHire partagée) :**
 ```
-ZENDESK_CLIENT_ID     = <Unique identifier>
-ZENDESK_CLIENT_SECRET = <Secret>
-ZENDESK_SUBDOMAIN     = <sous-domaine du client, ex. "votreclient">
+ZENDESK_CLIENT_ID     = <Unique identifier de ton app NexHire Zendesk>
+ZENDESK_CLIENT_SECRET = <Secret de ton app NexHire Zendesk>
 ZENDESK_REDIRECT_URI  = https://nexhire.ca/api/connectors/oauth/callback
 ```
+
+**Ce que l'admin NexHire fait pour chaque client :**
+1. NexHire → **Connecteurs** → Zendesk → **Connecter via OAuth**
+2. Un prompt demande le sous-domaine du client (ex. `monentreprise` si l'URL est `monentreprise.zendesk.com`)
+3. Le client s'authentifie → connecteur actif ✓
+
+> Note : `ZENDESK_SUBDOMAIN` n'est plus une variable Render — il est entré au moment de la connexion.
 
 ---
 
@@ -267,17 +282,17 @@ QUICKBOOKS_REDIRECT_URI  = https://nexhire.ca/api/connectors/oauth/callback
 
 ## Récapitulatif — Variables à ajouter dans Render
 
-| Connecteur | Variables à créer |
-|---|---|
-| Microsoft 365 | `M365_CLIENT_ID`, `M365_CLIENT_SECRET`, `M365_REDIRECT_URI` |
-| Salesforce | `SF_CLIENT_ID`, `SF_CLIENT_SECRET`, `SF_REDIRECT_URI` |
-| ServiceNow | `SNOW_CLIENT_ID`, `SNOW_CLIENT_SECRET`, `SNOW_INSTANCE_URL`, `SNOW_REDIRECT_URI` |
-| Jira / Confluence | `JIRA_CLIENT_ID`, `JIRA_CLIENT_SECRET`, `JIRA_REDIRECT_URI` |
-| Zendesk | `ZENDESK_CLIENT_ID`, `ZENDESK_CLIENT_SECRET`, `ZENDESK_SUBDOMAIN`, `ZENDESK_REDIRECT_URI` |
-| HubSpot | `HUBSPOT_CLIENT_ID`, `HUBSPOT_CLIENT_SECRET`, `HUBSPOT_REDIRECT_URI` |
-| Google Workspace | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI` |
-| Slack | `SLACK_CLIENT_ID`, `SLACK_CLIENT_SECRET`, `SLACK_REDIRECT_URI` |
-| QuickBooks Online | `QUICKBOOKS_CLIENT_ID`, `QUICKBOOKS_CLIENT_SECRET`, `QUICKBOOKS_REDIRECT_URI` |
+| Connecteur | Catégorie | Variables Render |
+|---|---|---|
+| Microsoft 365 | A — App partagée | `M365_CLIENT_ID`, `M365_CLIENT_SECRET`, `M365_REDIRECT_URI` |
+| Salesforce | A — App partagée | `SF_CLIENT_ID`, `SF_CLIENT_SECRET`, `SF_REDIRECT_URI` |
+| Jira / Confluence | A — App partagée | `JIRA_CLIENT_ID`, `JIRA_CLIENT_SECRET`, `JIRA_REDIRECT_URI` |
+| HubSpot | A — App partagée | `HUBSPOT_CLIENT_ID`, `HUBSPOT_CLIENT_SECRET`, `HUBSPOT_REDIRECT_URI` |
+| Google Workspace | A — App partagée | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI` |
+| Slack | A — App partagée | `SLACK_CLIENT_ID`, `SLACK_CLIENT_SECRET`, `SLACK_REDIRECT_URI` |
+| QuickBooks Online | A — App partagée | `QUICKBOOKS_CLIENT_ID`, `QUICKBOOKS_CLIENT_SECRET`, `QUICKBOOKS_REDIRECT_URI` |
+| Zendesk | A — App partagée (subdomain per-client via UI) | `ZENDESK_CLIENT_ID`, `ZENDESK_CLIENT_SECRET`, `ZENDESK_REDIRECT_URI` |
+| ServiceNow | **B — Per-client** | ❌ Aucune variable Render — credentials saisis dans le modal |
 
 **Valeur `REDIRECT_URI` pour tous :** `https://nexhire.ca/api/connectors/oauth/callback`
 
@@ -294,7 +309,8 @@ Commence par les connecteurs les plus demandés :
 5. **Slack** — communication d'équipe universelle
 6. **Salesforce** — grandes entreprises
 7. **QuickBooks** — PME comptabilité
-8. **ServiceNow / Zendesk** — au cas par cas avec chaque client
+8. **ServiceNow** — au cas par cas, credentials saisis dans le modal NexHire
+9. **Zendesk** — app NexHire partagée, sous-domaine entré par l'admin au moment de connecter
 
 ---
 
