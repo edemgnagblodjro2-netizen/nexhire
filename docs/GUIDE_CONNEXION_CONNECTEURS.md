@@ -26,9 +26,9 @@ Pour ces connecteurs, **aucune configuration IT n'est requise**. L'administrateu
 
 ---
 
-## Connecteurs avec une information supplémentaire
+## Connecteurs avec configuration préalable
 
-Pour ces connecteurs, la connexion est également en 1 clic, mais NexHire a besoin de **l'URL ou du sous-domaine de votre instance** (unique par entreprise).
+Pour ces connecteurs, votre équipe IT doit effectuer une **configuration unique** avant la connexion.
 
 ---
 
@@ -36,13 +36,29 @@ Pour ces connecteurs, la connexion est également en 1 clic, mais NexHire a beso
 
 **Ce que NexHire accède :** Incidents, Changements, CMDB, SLA, Demandes de service.
 
-**Ce que vous nous fournissez :** L'URL de votre instance ServiceNow.
+**Étape 1 — Votre équipe IT configure une application OAuth dans ServiceNow (une seule fois) :**
 
-```
-Exemple : https://votreentreprise.service-now.com
-```
+1. Dans ServiceNow, dans la barre de recherche en haut → tapez **Application Registry** → ouvrez-le
+2. Cliquez **New** → choisissez **Create an OAuth API endpoint for external clients**
+3. Remplissez :
+   - **Name :** `NexHire`
+   - **Redirect URL :** `https://nexhire.ca/api/connectors/oauth/callback`
+4. Cliquez **Submit**
+5. Ouvrez l'entrée créée → notez :
+   - **Client ID** (généré automatiquement)
+   - **Client Secret** (cliquez sur le cadenas pour l'afficher)
 
-Ensuite : cliquez "Connecter" dans NexHire → connexion avec votre compte ServiceNow.
+**Étape 2 — Transmettez à votre gestionnaire de compte NexHire :**
+
+| Information | Exemple |
+|---|---|
+| URL de votre instance ServiceNow | `https://votreentreprise.service-now.com` |
+| Client ID | `abc123def456...` |
+| Client Secret | (à transmettre de façon sécurisée) |
+
+**Étape 3 — Connexion :**
+
+Votre gestionnaire NexHire entre ces informations dans le portail → un lien d'authentification vous est envoyé → vous vous connectez avec votre compte ServiceNow → connecteur actif.
 
 ---
 
@@ -170,7 +186,7 @@ Toutes les credentials sont chiffrées (AES-128) avant d'être stockées et ne s
 | Google Workspace | Connexion directe (approbation admin Google si restreint) |
 | Slack | Connexion directe (admin Slack requis) |
 | QuickBooks Online | Connexion directe |
-| ServiceNow | Fournir l'URL d'instance + connexion directe |
+| **ServiceNow** | **IT crée une app OAuth dans ServiceNow → fournir URL + Client ID + Secret** |
 | Zendesk | Fournir le sous-domaine + connexion directe |
 | SAP | Saisir URL API + utilisateur + mot de passe dans NexHire |
 | Workday | Saisir Tenant URL + Client ID + Secret dans NexHire |
@@ -183,4 +199,6 @@ Toutes les credentials sont chiffrées (AES-128) avant d'être stockées et ne s
 
 ---
 
+> **Sécurité :** Toutes les credentials sont chiffrées (Fernet AES-128) avant d'être stockées. Elles ne sont jamais affichées en clair dans l'interface NexHire.
+>
 > **Questions ?** Contactez votre gestionnaire de compte NexHire.
