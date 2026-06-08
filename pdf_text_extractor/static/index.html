@@ -3,25 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Nexhire — Enterprise Assistant IA</title>
-  <meta name="description" content="Un seul assistant IA pour tous vos systèmes d'entreprise : Microsoft 365, Salesforce, Jira, ServiceNow, SAP, Workday." />
+  <title>Nexhire EIP — Enterprise Intelligence Platform</title>
+  <meta name="description" content="Nexhire EIP connecte tous vos systèmes d'entreprise, détecte les économies cachées et réduit les risques opérationnels grâce à l'IA." />
 
   <!-- Open Graph / social sharing -->
   <meta property="og:type"        content="website" />
-  <meta property="og:title"       content="Nexhire — Enterprise Assistant IA" />
-  <meta property="og:description" content="Un seul assistant IA pour tous vos systèmes — Microsoft 365, Salesforce, Jira, ServiceNow, SAP, Workday. Bilingue FR/EN." />
+  <meta property="og:title"       content="Nexhire EIP — Enterprise Intelligence Platform" />
+  <meta property="og:description" content="Connect your systems. Detect savings. Reduce risk. Optimize every department. Microsoft 365, SAP, Salesforce, ServiceNow, Workday, Jira." />
   <meta property="og:image"       content="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&h=630&q=80" />
   <meta property="og:image:width"  content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:site_name"   content="Nexhire" />
+  <meta property="og:site_name"   content="Nexhire EIP" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image" />
-  <meta name="twitter:title"       content="Nexhire — Enterprise Assistant IA" />
-  <meta name="twitter:description" content="Un seul assistant IA pour tous vos systèmes d'entreprise. Bilingue FR/EN." />
+  <meta name="twitter:title"       content="Nexhire EIP — Enterprise Intelligence Platform" />
+  <meta name="twitter:description" content="Connect your systems. Detect savings. Reduce risk. Optimize every department." />
   <meta name="twitter:image"       content="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&h=630&q=80" />
 
-  <link rel="stylesheet" href="/static/styles.css?v=20260616" />
+  <link rel="stylesheet" href="/static/styles.css?v=20260608b" />
 </head>
 <body>
 
@@ -32,11 +32,15 @@
   <nav class="land-nav">
     <div class="nav-brand">
       <div class="brand-mark">N</div>
-      <span>Nex<span style="color:#818CF8">hire</span></span>
+      <div style="display:flex;flex-direction:column;line-height:1.1">
+        <span>Nex<span style="color:#818CF8">hire</span> <span class="eip-badge">EIP</span></span>
+        <span style="font-size:.62rem;color:var(--slate-light);font-weight:500;letter-spacing:.04em">Enterprise Intelligence Platform</span>
+      </div>
     </div>
     <div class="land-nav-links">
-      <a href="#features"   data-i18n="nav.features">Fonctionnalités</a>
-      <a href="#pricing"    data-i18n="nav.pricing">Tarifs</a>
+      <a href="#workspaces">Espaces de travail</a>
+      <a href="#features" data-i18n="nav.features">Fonctionnalités</a>
+      <a href="#pricing"  data-i18n="nav.pricing">Tarifs</a>
       <a href="#connectors" data-i18n="nav.connectors">Connecteurs</a>
     </div>
     <div class="land-nav-cta">
@@ -46,7 +50,7 @@
     </div>
   </nav>
 
-  <!-- Hero avec diaporama -->
+  <!-- Hero -->
   <section class="hero" id="hero-slider">
     <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1920&q=80')"></div>
     <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=80')"></div>
@@ -59,8 +63,12 @@
     </div>
     <div class="hero-inner">
       <div>
-        <h1 data-i18n-html="hero.title">Un assistant IA pour <em>tous</em> vos systèmes</h1>
-        <div class="hero-actions">
+        <div class="hero-eyebrow"><span></span>Enterprise Intelligence Platform</div>
+        <h1>Connect your systems.<br><em>Detect savings. Reduce risk.</em><br>Optimize every department.</h1>
+        <p class="hero-sub" style="color:rgba(255,255,255,.78);font-size:1rem;margin-bottom:12px;line-height:1.7">
+          Microsoft 365 &bull; SAP &bull; Salesforce &bull; ServiceNow &bull; Workday &bull; Jira
+        </p>
+        <div class="hero-actions" style="margin-top:28px">
           <button class="btn btn-primary btn-lg" onclick="showAuth('signup')" data-i18n="hero.cta">Commencer l'essai gratuit</button>
           <button class="btn btn-outline btn-lg" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.25);color:#fff" onclick="showAuth('login')" data-i18n="hero.login">Se connecter</button>
         </div>
@@ -70,8 +78,6 @@
           <span data-i18n="hero.trust3">Bilingue FR / EN</span>
         </div>
       </div>
-
-      <!-- Dashboard preview -->
       <div class="hero-visual">
         <div class="dash-preview">
           <div class="dash-bar">
@@ -80,15 +86,15 @@
             <div class="dash-dot" style="background:#22c55e"></div>
           </div>
           <div class="dash-body">
-            <div class="dash-msg q" data-i18n="hero.demo.q">Incidents critiques + emails non lus + budget ?</div>
+            <div class="dash-msg q">Incidents critiques + emails non lus + budget ?</div>
             <div class="dash-msg src">🔍 Sources : ServiceNow · Microsoft 365 · SAP</div>
             <div class="dash-msg a">
-              <strong style="font-size:.82rem;color:#818CF8" data-i18n="hero.demo.a1">3 incidents critiques ouverts</strong><br>
+              <strong style="font-size:.82rem;color:#818CF8">3 incidents critiques ouverts</strong><br>
               INC0012847 — Panne serveur DB-01 (non assigné)<br>
               INC0012839 — Certificat SSL expiré portail RH<br><br>
-              <strong style="font-size:.82rem;color:#818CF8" data-i18n="hero.demo.a2">2 emails prioritaires</strong><br>
+              <strong style="font-size:.82rem;color:#818CF8">2 emails prioritaires</strong><br>
               PDG@client.ca — Renouvellement contrat Q3 ✉️<br><br>
-              <strong style="font-size:.82rem;color:#818CF8" data-i18n="hero.demo.a3">Budget juin 2026 — 93,7% consommé</strong>
+              <strong style="font-size:.82rem;color:#818CF8">Budget juin 2026 — 93,7% consommé</strong>
             </div>
           </div>
         </div>
@@ -96,38 +102,307 @@
     </div>
   </section>
 
-  <!-- Connectors strip -->
-  <div class="connectors-strip" id="connectors">
-    <div class="connectors-strip-inner">
-      <p data-i18n="strip.label">Connecteurs disponibles</p>
-      <div class="conn-pill"><div class="conn-icon" style="background:#0078d4">M</div>Microsoft 365</div>
-      <div class="conn-pill"><div class="conn-icon" style="background:#00a1e0">SF</div>Salesforce</div>
-      <div class="conn-pill"><div class="conn-icon" style="background:#62d2cc">SN</div>ServiceNow</div>
-      <div class="conn-pill"><div class="conn-icon" style="background:#0052cc">J</div>Jira</div>
-      <div class="conn-pill"><div class="conn-icon" style="background:#0070b8">S</div>SAP</div>
-      <div class="conn-pill"><div class="conn-icon" style="background:#f78b1f">W</div>Workday</div>
-      <div class="conn-pill"><div class="conn-icon" style="background:#00b7c5">ZD</div>Zendesk</div>
-      <div class="conn-pill"><div class="conn-icon" style="background:#007dc6">AT</div>Autotask</div>
-      <div class="conn-pill"><div class="conn-icon" style="background:#ff7a59">HS</div>HubSpot</div>
+  <!-- Executive Intelligence Banner -->
+  <div class="eip-stats-banner">
+    <div class="eip-stats-inner">
+      <div class="eip-stat-item">
+        <div class="eip-stat-value">$2,846,217</div>
+        <div class="eip-stat-label">Potential Savings Identified</div>
+      </div>
+      <div class="eip-stat-divider"></div>
+      <div class="eip-stat-item">
+        <div class="eip-stat-value">89%</div>
+        <div class="eip-stat-label">Organizational Efficiency Score</div>
+      </div>
+      <div class="eip-stat-divider"></div>
+      <div class="eip-stat-item">
+        <div class="eip-stat-value">17</div>
+        <div class="eip-stat-label">Connected Systems</div>
+      </div>
+      <div class="eip-stat-divider"></div>
+      <div class="eip-stat-item eip-stat-risk">
+        <div class="eip-stat-value">3</div>
+        <div class="eip-stat-label">Critical Risks Detected</div>
+      </div>
+    </div>
+    <p class="eip-stats-tagline">Cette plateforme ne fait pas que répondre à des questions. <strong>Elle trouve de l'argent.</strong></p>
+  </div>
+
+  <!-- What EIP Sees -->
+  <section class="eip-flow-section" id="features">
+    <div class="section-center">
+      <span class="section-label">Intelligence Engine</span>
+      <h2 class="section-title">What EIP Sees</h2>
+      <p class="section-sub">EIP ne remplace pas vos systèmes. EIP les comprend.</p>
+      <div class="eip-flow-grid">
+        <div class="eip-flow-sources">
+          <div class="eip-flow-source"><div class="eip-conn-icon" style="background:#0078d4">M</div><span>Microsoft 365</span></div>
+          <div class="eip-flow-source"><div class="eip-conn-icon" style="background:#0070b8">S</div><span>SAP</span></div>
+          <div class="eip-flow-source"><div class="eip-conn-icon" style="background:#00a1e0">SF</div><span>Salesforce</span></div>
+          <div class="eip-flow-source"><div class="eip-conn-icon" style="background:#62d2cc">SN</div><span>ServiceNow</span></div>
+          <div class="eip-flow-source"><div class="eip-conn-icon" style="background:#f78b1f">W</div><span>Workday</span></div>
+          <div class="eip-flow-source"><div class="eip-conn-icon" style="background:#0052cc">J</div><span>Jira</span></div>
+        </div>
+        <div class="eip-flow-center">
+          <div class="eip-flow-connectors">
+            <div class="eip-flow-line"></div>
+            <div class="eip-flow-line"></div>
+            <div class="eip-flow-line"></div>
+          </div>
+          <div class="eip-engine-box">
+            <div class="eip-engine-glow"></div>
+            <div class="eip-engine-icon">⚡</div>
+            <div class="eip-engine-label">EIP Intelligence Engine</div>
+          </div>
+          <div class="eip-flow-connectors">
+            <div class="eip-flow-line eip-line-right"></div>
+            <div class="eip-flow-line eip-line-right"></div>
+            <div class="eip-flow-line eip-line-right"></div>
+          </div>
+        </div>
+        <div class="eip-flow-outputs">
+          <div class="eip-flow-output" style="border-color:#10b981;background:linear-gradient(135deg,#f0fdf4,#dcfce7)"><span>💰</span><span>Savings Identified</span></div>
+          <div class="eip-flow-output" style="border-color:#818CF8;background:linear-gradient(135deg,#f0f4ff,#e0e7ff)"><span>📊</span><span>Recommendations</span></div>
+          <div class="eip-flow-output" style="border-color:#ef4444;background:linear-gradient(135deg,#fff5f5,#fee2e2)"><span>⚠️</span><span>Risk Detection</span></div>
+          <div class="eip-flow-output" style="border-color:#f59e0b;background:linear-gradient(135deg,#fffbeb,#fef3c7)"><span>🤖</span><span>Automation</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Executive Dashboard Demo -->
+  <section class="exec-demo-section">
+    <div class="section-center">
+      <span class="section-label">Pour les dirigeants</span>
+      <h2 class="section-title">Executive Dashboard</h2>
+      <p class="section-sub">Ce que voit un CEO en ouvrant NexHire EIP chaque matin.</p>
+      <div class="exec-demo-wrap">
+        <div class="exec-kpi-grid">
+          <div class="exec-kpi-card">
+            <div class="exec-kpi-label">Budget Total</div>
+            <div class="exec-kpi-value">50M$</div>
+            <div class="exec-kpi-bar"><div class="exec-kpi-fill" style="width:92.6%"></div></div>
+            <div class="exec-kpi-sub">92.6% consommé</div>
+          </div>
+          <div class="exec-kpi-card">
+            <div class="exec-kpi-label">Current Spend</div>
+            <div class="exec-kpi-value">46.3M$</div>
+            <div class="exec-kpi-sub">vs 44.1M$ an dernier</div>
+          </div>
+          <div class="exec-kpi-card exec-kpi-green-card">
+            <div class="exec-kpi-label">Potential Savings</div>
+            <div class="exec-kpi-value" style="color:#16a34a">2.8M$</div>
+            <div class="exec-kpi-sub">détectés par EIP ✓</div>
+          </div>
+          <div class="exec-kpi-card">
+            <div class="exec-kpi-label">Efficiency Score</div>
+            <div class="exec-kpi-value" style="color:#818CF8">89%</div>
+            <div class="exec-kpi-sub">+4pts vs mois passé</div>
+          </div>
+        </div>
+        <div class="exec-recommendations">
+          <div class="exec-rec-title">Top Recommendations</div>
+          <div class="exec-rec-item"><span class="exec-rec-dot" style="background:#16a34a"></span><div><strong>Retire 23 unused licenses</strong><span> — économie $41,400/an</span></div></div>
+          <div class="exec-rec-item"><span class="exec-rec-dot" style="background:#818CF8"></span><div><strong>Consolidate CRM platforms</strong><span> — économie $180,000/an</span></div></div>
+          <div class="exec-rec-item"><span class="exec-rec-dot" style="background:#f59e0b"></span><div><strong>Automate approval workflows</strong><span> — gain 2,400h/an</span></div></div>
+          <div class="exec-rec-item"><span class="exec-rec-dot" style="background:#0078d4"></span><div><strong>Renegotiate vendor contracts</strong><span> — économie $340,000</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Workspaces -->
+  <section class="eip-workspaces-section" id="workspaces">
+    <div class="section-center">
+      <span class="section-label">Intelligence par département</span>
+      <h2 class="section-title">Espaces de travail intelligents</h2>
+      <p class="section-sub">Chaque département dispose de son propre espace IA, alimenté par ses systèmes spécifiques.</p>
+      <div class="workspaces-grid">
+        <div class="workspace-card">
+          <div class="workspace-icon" style="background:linear-gradient(135deg,#818CF8,#6366f1)">👥</div>
+          <h3>HR Workspace</h3>
+          <ul class="workspace-list">
+            <li>Recrutement &amp; onboarding</li>
+            <li>Paie &amp; avantages</li>
+            <li>Absences &amp; congés</li>
+            <li>Formation &amp; développement</li>
+          </ul>
+        </div>
+        <div class="workspace-card">
+          <div class="workspace-icon" style="background:linear-gradient(135deg,#10b981,#059669)">💰</div>
+          <h3>Finance Workspace</h3>
+          <ul class="workspace-list">
+            <li>Budget &amp; prévisions</li>
+            <li>Contrats &amp; fournisseurs</li>
+            <li>Dépenses &amp; charges</li>
+            <li>Rapports financiers</li>
+          </ul>
+        </div>
+        <div class="workspace-card">
+          <div class="workspace-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706)">🖥️</div>
+          <h3>IT Workspace</h3>
+          <ul class="workspace-list">
+            <li>Actifs &amp; inventaire</li>
+            <li>Licences logicielles</li>
+            <li>Tickets &amp; incidents</li>
+            <li>Cybersécurité</li>
+          </ul>
+        </div>
+        <div class="workspace-card workspace-featured">
+          <div class="workspace-badge">Pour les dirigeants</div>
+          <div class="workspace-icon" style="background:linear-gradient(135deg,#0f172a,#1e293b)">🎯</div>
+          <h3>Executive Workspace</h3>
+          <ul class="workspace-list">
+            <li>Performance globale</li>
+            <li>Économies détectées</li>
+            <li>Risques opérationnels</li>
+            <li>Prévisions stratégiques</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Cases -->
+  <section class="use-cases-section">
+    <div class="section-center">
+      <span class="section-label">Cas d'utilisation</span>
+      <h2 class="section-title">How organizations use EIP</h2>
+      <p class="section-sub">Des questions concrètes. Des réponses en secondes. Depuis tous vos systèmes à la fois.</p>
+      <div class="use-cases-grid">
+        <div class="use-case-card">
+          <div class="use-case-role">CEO</div>
+          <div class="use-case-q">"Where can we reduce costs by 5%?"</div>
+          <div class="use-case-systems">SAP · Workday · Salesforce</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-role" style="background:linear-gradient(135deg,#10b981,#059669)">CFO</div>
+          <div class="use-case-q">"Which contracts should be renegotiated?"</div>
+          <div class="use-case-systems">SAP · Microsoft 365 · ServiceNow</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-role" style="background:linear-gradient(135deg,#f59e0b,#d97706)">CIO</div>
+          <div class="use-case-q">"Which licenses are underutilized?"</div>
+          <div class="use-case-systems">Microsoft 365 · Jira · ServiceNow</div>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-role" style="background:linear-gradient(135deg,#818CF8,#6366f1)">HR Director</div>
+          <div class="use-case-q">"Which teams are at risk of turnover?"</div>
+          <div class="use-case-systems">Workday · Microsoft 365 · Jira</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trusted Enterprise Integrations -->
+  <div class="integrations-section" id="connectors">
+    <div class="section-center">
+      <span class="section-label">Intégrations certifiées</span>
+      <h2 class="section-title">Connect to your existing systems in minutes</h2>
+      <div class="integrations-tagline">
+        <span>No migration required.</span>
+        <span>No infrastructure changes.</span>
+        <span>No disruption to your operations.</span>
+      </div>
+      <div class="integrations-grid">
+        <div class="integration-item"><span class="integration-check">✓</span><div class="conn-icon" style="background:#0078d4">M</div><span>Microsoft 365</span></div>
+        <div class="integration-item"><span class="integration-check">✓</span><div class="conn-icon" style="background:#0070b8">S</div><span>SAP</span></div>
+        <div class="integration-item"><span class="integration-check">✓</span><div class="conn-icon" style="background:#00a1e0">SF</div><span>Salesforce</span></div>
+        <div class="integration-item"><span class="integration-check">✓</span><div class="conn-icon" style="background:#62d2cc">SN</div><span>ServiceNow</span></div>
+        <div class="integration-item"><span class="integration-check">✓</span><div class="conn-icon" style="background:#f78b1f">W</div><span>Workday</span></div>
+        <div class="integration-item"><span class="integration-check">✓</span><div class="conn-icon" style="background:#0052cc">J</div><span>Jira / Confluence</span></div>
+        <div class="integration-item"><span class="integration-check">✓</span><div class="conn-icon" style="background:#4285f4">G</div><span>Google Workspace</span></div>
+        <div class="integration-item"><span class="integration-check">✓</span><div class="conn-icon" style="background:#ff7a59">HS</div><span>HubSpot</span></div>
+        <div class="integration-item"><span class="integration-check">✓</span><div class="conn-icon" style="background:#00b7c5">ZD</div><span>Zendesk</span></div>
+        <div class="integration-item"><span class="integration-check">✓</span><div class="conn-icon" style="background:#4a154b">SL</div><span>Slack</span></div>
+        <div class="integration-item"><span class="integration-check">✓</span><div class="conn-icon" style="background:#2ca01c">QB</div><span>QuickBooks</span></div>
+        <div class="integration-item"><span class="integration-check">✓</span><div class="conn-icon" style="background:#007dc6">AT</div><span>Autotask / Datto</span></div>
+      </div>
     </div>
   </div>
 
-  <!-- Features -->
-  <section class="features" id="features">
+  <!-- Enterprise Security -->
+  <section class="security-section">
     <div class="section-center">
-      <span class="section-label" data-i18n="feat.label">Pourquoi Nexhire</span>
+      <span class="section-label" style="color:rgba(255,255,255,.45)">Confiance &amp; conformité</span>
+      <h2 class="section-title" style="color:#fff">Enterprise Security</h2>
+      <p class="section-sub" style="color:rgba(255,255,255,.55);margin-bottom:48px">Conçu pour les organisations qui ne font aucun compromis sur la sécurité.</p>
+      <div class="security-grid">
+        <div class="security-item">
+          <span class="security-check">✓</span>
+          <div><strong>OAuth 2.0</strong><p>Authentification standard industrie pour tous les connecteurs</p></div>
+        </div>
+        <div class="security-item">
+          <span class="security-check">✓</span>
+          <div><strong>Role-Based Access Control</strong><p>Permissions granulaires : user, manager, admin, owner</p></div>
+        </div>
+        <div class="security-item">
+          <span class="security-check">✓</span>
+          <div><strong>Immutable Audit Logs</strong><p>Chaque action tracée avec IP, utilisateur et timestamp</p></div>
+        </div>
+        <div class="security-item">
+          <span class="security-check">✓</span>
+          <div><strong>Encrypted Credentials</strong><p>Tokens et clés API chiffrés Fernet AES-128 au repos</p></div>
+        </div>
+        <div class="security-item">
+          <span class="security-check">✓</span>
+          <div><strong>Multi-Tenant Architecture</strong><p>Isolation complète des données par organisation</p></div>
+        </div>
+        <div class="security-item">
+          <span class="security-check">✓</span>
+          <div><strong>Bilingual FR / EN</strong><p>Interface et réponses disponibles en français et anglais</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROI Calculator -->
+  <section class="roi-section">
+    <div class="section-center" style="text-align:center">
+      <span class="section-label">Retour sur investissement</span>
+      <h2 class="section-title">Calculate your ROI</h2>
+      <p class="section-sub" style="margin-bottom:48px">Basé sur les économies moyennes détectées pour une organisation de 200–500 employés.</p>
+      <div class="roi-grid">
+        <div class="roi-card">
+          <div class="roi-card-icon">💳</div>
+          <div class="roi-card-label">Investment in EIP</div>
+          <div class="roi-card-value">99$<span>/month</span></div>
+        </div>
+        <div class="roi-card">
+          <div class="roi-card-icon">📅</div>
+          <div class="roi-card-label">Annual Cost</div>
+          <div class="roi-card-value">1,188$</div>
+        </div>
+        <div class="roi-card roi-card-green">
+          <div class="roi-card-icon">💰</div>
+          <div class="roi-card-label">Potential Savings</div>
+          <div class="roi-card-value" style="color:#16a34a">$2,846,217</div>
+        </div>
+        <div class="roi-card roi-card-gold">
+          <div class="roi-card-icon">🚀</div>
+          <div class="roi-card-label">ROI</div>
+          <div class="roi-card-value" style="color:#d97706">239,580%</div>
+        </div>
+      </div>
+      <p style="font-size:.78rem;color:var(--slate-light);margin-top:20px">* Chiffres à titre illustratif. Les résultats réels varient selon l'organisation.</p>
+      <button class="btn btn-primary btn-lg" onclick="showAuth('signup')" style="margin-top:36px">Commencer l'essai gratuit — 14 jours</button>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="section-center">
+      <span class="section-label" data-i18n="feat.label">Pourquoi Nexhire EIP</span>
       <h2 class="section-title" data-i18n="feat.title">Tout ce dont votre organisation a besoin</h2>
       <p class="section-sub" data-i18n="feat.sub">Un seul agent IA qui interroge tous vos systèmes en temps réel et vous répond en français ou en anglais.</p>
       <div class="features-grid">
-
         <div class="feat-card">
           <div class="feat-img">
             <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=600&h=320&q=80" alt="Connecteurs intégrés" loading="lazy" />
           </div>
-          <h3 data-i18n="feat1.title">6 connecteurs intégrés</h3>
-          <p data-i18n="feat1.desc">Microsoft 365, Salesforce, Jira, ServiceNow, SAP et Workday — connectés en quelques clics via OAuth sécurisé.</p>
+          <h3>12 connecteurs intégrés</h3>
+          <p>Microsoft 365, Salesforce, Jira, ServiceNow, SAP, Workday, Slack, HubSpot et plus — connectés via OAuth sécurisé.</p>
         </div>
-
         <div class="feat-card">
           <div class="feat-img">
             <img src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&w=600&h=320&q=80" alt="Agent IA conversationnel" loading="lazy" />
@@ -135,7 +410,6 @@
           <h3 data-i18n="feat2.title">Agent IA conversationnel</h3>
           <p data-i18n="feat2.desc">Posez vos questions en langage naturel. L'agent consulte les bons systèmes automatiquement et synthétise les résultats.</p>
         </div>
-
         <div class="feat-card">
           <div class="feat-img">
             <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=600&h=320&q=80" alt="Sécurité entreprise" loading="lazy" />
@@ -143,7 +417,6 @@
           <h3 data-i18n="feat3.title">Sécurité entreprise</h3>
           <p data-i18n="feat3.desc">Tokens OAuth chiffrés Fernet, JWT ES256, audit log immuable et contrôle d'accès par rôle (RBAC).</p>
         </div>
-
         <div class="feat-card">
           <div class="feat-img">
             <img src="https://images.unsplash.com/photo-1527269534026-c86f4009eace?auto=format&fit=crop&w=600&h=320&q=80" alt="Bilingue FR/EN" loading="lazy" />
@@ -151,7 +424,6 @@
           <h3 data-i18n="feat4.title">Bilingue FR / EN</h3>
           <p data-i18n="feat4.desc">Interface et réponses de l'agent disponibles en français et en anglais, adapté aux organisations canadiennes.</p>
         </div>
-
         <div class="feat-card">
           <div class="feat-img">
             <img src="https://images.unsplash.com/photo-1568234928966-359c35dd8327?auto=format&fit=crop&w=600&h=320&q=80" alt="Analyse de documents" loading="lazy" />
@@ -159,7 +431,6 @@
           <h3 data-i18n="feat5.title">Analyse de documents</h3>
           <p data-i18n="feat5.desc">Téléversez des PDF — politiques, appels d'offres, rapports — et posez des questions directement sur leur contenu.</p>
         </div>
-
         <div class="feat-card">
           <div class="feat-img">
             <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&h=320&q=80" alt="Journal d'audit" loading="lazy" />
@@ -167,7 +438,6 @@
           <h3 data-i18n="feat6.title">Journal d'audit complet</h3>
           <p data-i18n="feat6.desc">Chaque requête, connexion et action est tracée avec l'IP, l'utilisateur, la source et le résultat — append-only.</p>
         </div>
-
       </div>
     </div>
   </section>
@@ -178,7 +448,6 @@
       <span class="section-label" data-i18n="price.label">Tarifs simples</span>
       <h2 class="section-title" data-i18n="price.title">Commencez gratuitement. Payez quand vous êtes prêt.</h2>
       <p class="section-sub" style="margin:0 auto 40px" data-i18n="price.sub">14 jours d'essai complet inclus, sans carte de crédit.</p>
-
       <div class="trial-banner" style="justify-content:center">
         <span class="trial-icon">🎁</span>
         <div>
@@ -186,7 +455,6 @@
           <span data-i18n="price.trial.desc"> — accès complet à tous les connecteurs et fonctionnalités. Aucune carte requise.</span>
         </div>
       </div>
-
       <div class="pricing-grid">
         <div class="price-card">
           <div>
@@ -194,7 +462,7 @@
             <div class="price-amount"><sup>$</sup>99<sub data-i18n="price.monthly.unit">/mois</sub></div>
           </div>
           <div class="price-features">
-            <div class="price-feat" data-i18n="price.f1">9 connecteurs (M365, Salesforce, Zendesk…)</div>
+            <div class="price-feat" data-i18n="price.f1">12 connecteurs (M365, SAP, Salesforce…)</div>
             <div class="price-feat" data-i18n="price.f2">Agent IA — 1 000 requêtes / mois</div>
             <div class="price-feat" data-i18n="price.f3">Analyse de documents PDF illimitée</div>
             <div class="price-feat" data-i18n="price.f4">Journal d'audit complet</div>
@@ -204,7 +472,6 @@
           <button class="btn btn-outline" onclick="showAuth('signup')" data-i18n="price.cta">Commencer l'essai</button>
           <p class="price-trial" data-i18n="price.monthly.note">Sans engagement · Annulez à tout moment</p>
         </div>
-
         <div class="price-card featured">
           <div class="price-badge" data-i18n="price.best">🏆 Meilleure valeur — économisez 198 $</div>
           <div>
@@ -234,13 +501,17 @@
         <div class="footer-brand">
           <div class="nav-brand" style="color:#fff">
             <div class="brand-mark">N</div>
-            <span>Nex<span style="color:#818CF8">hire</span></span>
+            <div style="display:flex;flex-direction:column;line-height:1.1">
+              <span>Nex<span style="color:#818CF8">hire</span> <span class="eip-badge" style="font-size:.6rem;padding:1px 6px">EIP</span></span>
+              <span style="font-size:.6rem;color:#475569;letter-spacing:.04em">Enterprise Intelligence Platform</span>
+            </div>
           </div>
-          <p data-i18n="footer.desc">Un assistant IA enterprise pour les organisations canadiennes — bilingue, sécurisé, multi-connecteurs.</p>
+          <p data-i18n="footer.desc">La plateforme d'intelligence enterprise pour les organisations canadiennes — bilingue, sécurisée, multi-connecteurs.</p>
         </div>
         <div class="footer-col">
           <h4 data-i18n="footer.product">Produit</h4>
           <ul>
+            <li><a href="#workspaces">Espaces de travail</a></li>
             <li><a href="#features"   data-i18n="footer.features">Fonctionnalités</a></li>
             <li><a href="#connectors" data-i18n="footer.connectors">Connecteurs</a></li>
             <li><a href="#pricing"    data-i18n="footer.pricing">Tarifs</a></li>
@@ -257,7 +528,7 @@
         <div class="footer-col">
           <h4 data-i18n="footer.legal">Légal</h4>
           <ul>
-            <li><a href="#" onclick="openLegal('cgu');return false" data-i18n="footer.terms">Conditions d'utilisation</a></li>
+            <li><a href="#" onclick="openLegal('cgu');return false"     data-i18n="footer.terms">Conditions d'utilisation</a></li>
             <li><a href="#" onclick="openLegal('privacy');return false" data-i18n="footer.privacy">Politique de confidentialité</a></li>
             <li><a href="#" onclick="openLegal('security');return false" data-i18n="footer.security">Sécurité</a></li>
           </ul>
@@ -1576,6 +1847,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="/static/app.js?v=20260608a"></script>
+<script src="/static/app.js?v=20260608b"></script>
 </body>
 </html>
