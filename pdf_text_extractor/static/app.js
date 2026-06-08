@@ -4880,13 +4880,24 @@ async function loadSuperAdmin() {
     // Table
     const tbody = $("sa-orgs-body");
     if (!orgs.length) {
-      tbody.innerHTML = `<tr><td colspan="9" class="muted" style="text-align:center;padding:24px">Aucune organisation.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="10" class="muted" style="text-align:center;padding:24px">Aucune organisation.</td></tr>`;
       return;
     }
 
     const statusBadge = s => {
       const colors = { active:"#16a34a", trialing:"#d97706", cancelled:"#dc2626", suspended:"#6b7280", past_due:"#dc2626" };
       return `<span style="background:${colors[s]||'#6b7280'};color:#fff;padding:2px 8px;border-radius:12px;font-size:.75rem;font-weight:600">${s}</span>`;
+    };
+
+    const trialCell = o => {
+      if (o.subscription_status !== "trialing") return `<td style="color:#94a3b8;font-size:.78rem;text-align:center">—</td>`;
+      const created = new Date(o.created_at);
+      const expires = new Date(created.getTime() + 14 * 86400000);
+      const now = new Date();
+      const daysLeft = Math.ceil((expires - now) / 86400000);
+      if (daysLeft < 0)  return `<td style="font-size:.78rem;text-align:center"><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-weight:600">Expiré</span></td>`;
+      if (daysLeft <= 3) return `<td style="font-size:.78rem;text-align:center"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:12px;font-weight:600">${daysLeft}j</span></td>`;
+      return `<td style="font-size:.78rem;text-align:center"><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-weight:600">${daysLeft}j</span></td>`;
     };
 
     tbody.innerHTML = orgs.map(o => `
@@ -4899,6 +4910,7 @@ async function loadSuperAdmin() {
         <td style="text-align:center">${o.connector_count??0}</td>
         <td style="font-size:.75rem;color:${o.stripe_customer_id?'#16a34a':'#94a3b8'}">${o.stripe_customer_id?'✓ Stripe':'—'}</td>
         <td style="font-size:.78rem">${(o.created_at||'').slice(0,10)}</td>
+        ${trialCell(o)}
         <td>
           <div style="display:flex;gap:6px;flex-wrap:wrap">
             <button class="btn btn-sm" style="background:#16a34a;color:#fff;padding:3px 10px;font-size:.75rem"
@@ -4912,7 +4924,7 @@ async function loadSuperAdmin() {
       </tr>
     `).join("");
   } catch (ex) {
-    $("sa-orgs-body").innerHTML = `<tr><td colspan="9" style="color:#dc2626;text-align:center;padding:16px">${ex.message}</td></tr>`;
+    $("sa-orgs-body").innerHTML = `<tr><td colspan="10" style="color:#dc2626;text-align:center;padding:16px">${ex.message}</td></tr>`;
   }
 }
 
