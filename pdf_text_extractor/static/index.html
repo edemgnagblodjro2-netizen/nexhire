@@ -1649,12 +1649,44 @@
     <div id="server-modal" class="modal-backdrop hidden">
       <div class="modal-card" style="max-width:560px">
         <button class="modal-close" onclick="closeParcModal('server-modal')">✕</button>
-        <h3 id="srv-modal-title">Serveur</h3>
+        <h3 id="srv-modal-title">Équipement</h3>
         <input type="hidden" id="sm-id" />
         <form id="server-modal-form" class="settings-form" style="display:grid;gap:10px">
+          <label class="auth-label"><span>Type d'équipement *</span>
+            <select id="sm-device-type">
+              <optgroup label="Infrastructure réseau">
+                <option value="server">🖥 Serveur</option>
+                <option value="switch">🔀 Switch réseau</option>
+                <option value="router">📡 Routeur</option>
+                <option value="firewall">🛡 Pare-feu</option>
+              </optgroup>
+              <optgroup label="Postes de travail">
+                <option value="laptop">💻 Ordinateur portable (Laptop)</option>
+                <option value="desktop">🖥 Ordinateur de bureau (Desktop)</option>
+                <option value="tablet">📱 Tablette</option>
+                <option value="phone_mobile">📞 Téléphone mobile</option>
+                <option value="phone_ip">☎ Téléphone IP</option>
+              </optgroup>
+              <optgroup label="Accessoires">
+                <option value="docking_station">🔌 Station d'accueil (Docking Station)</option>
+                <option value="monitor">🖵 Écran / Moniteur</option>
+                <option value="printer">🖨 Imprimante</option>
+                <option value="scanner">🔍 Scanner</option>
+                <option value="cable_network">🌐 Câble réseau</option>
+                <option value="cable_hdmi">📺 Câble HDMI</option>
+                <option value="cable_vga">📺 Câble VGA</option>
+                <option value="cable_displayport">📺 Câble DisplayPort</option>
+                <option value="usb_key">💾 Clé USB</option>
+                <option value="usb_adapter">🔌 Adaptateur USB</option>
+                <option value="charger">🔋 Chargeur téléphone employé</option>
+                <option value="ups">⚡ Onduleur (UPS)</option>
+                <option value="other">📦 Autre</option>
+              </optgroup>
+            </select>
+          </label>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <label class="auth-label"><span>Hôte *</span><input id="sm-hostname" type="text" required placeholder="srv-prod-01" /></label>
-            <label class="auth-label"><span>IP</span><input id="sm-ip" type="text" placeholder="192.168.1.10" /></label>
+            <label class="auth-label"><span>Nom / Hôte *</span><input id="sm-hostname" type="text" required placeholder="laptop-marie-01" /></label>
+            <label class="auth-label"><span>IP / N° de série</span><input id="sm-ip" type="text" placeholder="192.168.1.10 ou SN123456" /></label>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
             <label class="auth-label"><span>Environnement</span><select id="sm-env"><option value="production">Production</option><option value="staging">Staging</option><option value="development">Développement</option><option value="test">Test</option><option value="backup">Sauvegarde</option></select></label>

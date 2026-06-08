@@ -14,6 +14,7 @@ router = APIRouter(prefix="/api/servers", tags=["servers"])
 
 class ServerPayload(BaseModel):
     department_id: str | None = None
+    device_type: str = "server"
     hostname: str = Field(..., min_length=1)
     ip_address: str | None = None
     environment: str = "production"
@@ -114,15 +115,16 @@ def create_server(
         cur.execute(
             """
             INSERT INTO servers (
-                organization_id, department_id, hostname, ip_address,
+                organization_id, department_id, device_type, hostname, ip_address,
                 environment, os, cpu_cores, ram_gb, storage_gb,
                 location, status, last_ping_at, monthly_cost, notes
-            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             RETURNING *
             """,
             (
                 user.organization_id,
                 payload.department_id,
+                payload.device_type,
                 payload.hostname,
                 payload.ip_address,
                 payload.environment,
@@ -152,7 +154,7 @@ def update_server(
         cur.execute(
             """
             UPDATE servers SET
-                department_id = %s, hostname = %s, ip_address = %s,
+                department_id = %s, device_type = %s, hostname = %s, ip_address = %s,
                 environment = %s, os = %s, cpu_cores = %s, ram_gb = %s,
                 storage_gb = %s, location = %s, status = %s,
                 last_ping_at = %s, monthly_cost = %s, notes = %s
@@ -161,6 +163,7 @@ def update_server(
             """,
             (
                 payload.department_id,
+                payload.device_type,
                 payload.hostname,
                 payload.ip_address,
                 payload.environment,

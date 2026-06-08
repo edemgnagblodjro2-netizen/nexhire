@@ -3484,22 +3484,26 @@ async function loadServers() {
   try {
     const url = `/api/servers?${deptId ? `dept_id=${deptId}&` : ""}${status ? `status=${status}` : ""}`;
     const srvs = await apiCall(url);
-    if (!srvs.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucun serveur enregistré.</p>`; return; }
-    wrap.innerHTML = `<table class="data-table"><thead><tr><th>Hôte</th><th>IP</th><th>Env.</th><th>OS</th><th>CPU/RAM/Stockage</th><th>Emplacement</th><th>Dernier ping</th><th>Statut</th><th>Coût/mois</th><th>Dép.</th><th></th></tr></thead><tbody>` +
+    const _deviceLabel = { server:"🖥 Serveur", switch:"🔀 Switch", router:"📡 Routeur", firewall:"🛡 Pare-feu",
+      laptop:"💻 Laptop", desktop:"🖥 Desktop", tablet:"📱 Tablette", phone_mobile:"📞 Tél. mobile", phone_ip:"☎ Tél. IP",
+      docking_station:"🔌 Docking", monitor:"🖵 Écran", printer:"🖨 Imprimante", scanner:"🔍 Scanner",
+      cable_network:"🌐 Câble réseau", cable_hdmi:"📺 HDMI", cable_vga:"📺 VGA", cable_displayport:"📺 DisplayPort",
+      usb_key:"💾 Clé USB", usb_adapter:"🔌 Adapt. USB", charger:"🔋 Chargeur", ups:"⚡ UPS", other:"📦 Autre" };
+    if (!srvs.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucun équipement enregistré.</p>`; return; }
+    wrap.innerHTML = `<table class="data-table"><thead><tr><th>Type</th><th>Nom / Hôte</th><th>IP / N° série</th><th>Env.</th><th>OS / Spec</th><th>Emplacement</th><th>Statut</th><th>Coût/mois</th><th>Dép.</th><th></th></tr></thead><tbody>` +
       srvs.map(s => {
         const stMap = { active:"badge-active", idle:"badge-idle", to_decommission:"badge-decom", decommissioned:"badge-expired" };
         const stLbl = { active:"Actif", idle:"Inactif", to_decommission:"À décom.", decommissioned:"Décom." };
-        const pingInfo = s.last_ping_at ? `${s.idle_days}j` : "Jamais";
-        const spec = [s.cpu_cores ? `${s.cpu_cores}c` : null, s.ram_gb ? `${s.ram_gb}Go` : null, s.storage_gb ? `${s.storage_gb}Go` : null].filter(Boolean).join(" / ") || "—";
+        const spec = [s.cpu_cores ? `${s.cpu_cores}c` : null, s.ram_gb ? `${s.ram_gb}Go` : null, s.storage_gb ? `${s.storage_gb}Go` : null].filter(Boolean).join(" / ") || (s.os || "—");
         const deptName = s.department_name || "—";
+        const typeLabel = _deviceLabel[s.device_type || "server"] || s.device_type || "Serveur";
         return `<tr class="${s.status==="decommissioned"?"row-inactive":""}">
+          <td style="white-space:nowrap;font-size:.82rem">${typeLabel}</td>
           <td><strong>${esc(s.hostname)}</strong></td>
-          <td>${esc(s.ip_address||"—")}</td>
-          <td>${esc(s.environment||"—")}</td>
-          <td>${esc(s.os||"—")}</td>
-          <td>${spec}</td>
+          <td style="font-size:.78rem;color:var(--slate)">${esc(s.ip_address||"—")}</td>
+          <td style="font-size:.78rem">${esc(s.environment||"—")}</td>
+          <td style="font-size:.78rem">${spec}</td>
           <td>${esc(s.location||"—")}</td>
-          <td>${pingInfo}</td>
           <td><span class="badge ${stMap[s.status]||"badge-idle"}">${stLbl[s.status]||s.status}</span></td>
           <td>${_fmt(s.monthly_cost)}</td>
           <td>${esc(deptName)}</td>
@@ -3592,7 +3596,7 @@ document.addEventListener("DOMContentLoaded", () => {
   $("server-modal-form")?.addEventListener("submit", async e => {
     e.preventDefault();
     const id = $("sm-id").value;
-    const body = { hostname:$("sm-hostname").value, ip_address:$("sm-ip").value||null,
+    const body = { device_type:$("sm-device-type").value, hostname:$("sm-hostname").value, ip_address:$("sm-ip").value||null,
       environment:$("sm-env").value, status:$("sm-status").value, os:$("sm-os").value||null,
       cpu_cores:$("sm-cpu").value ? +$("sm-cpu").value : null, ram_gb:$("sm-ram").value ? +$("sm-ram").value : null,
       storage_gb:$("sm-storage").value ? +$("sm-storage").value : null,
@@ -3665,6 +3669,7 @@ async function deleteLicense(id) {
 
 function openServerModal(srv = null) {
   $("sm-id").value = srv?.id || "";
+  $("sm-device-type").value = srv?.device_type || "server";
   $("sm-hostname").value = srv?.hostname  || "";
   $("sm-ip").value       = srv?.ip_address || "";
   $("sm-env").value      = srv?.environment || "production";
