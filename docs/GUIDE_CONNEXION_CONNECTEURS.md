@@ -42,7 +42,7 @@ Pour ces connecteurs, votre équipe IT doit effectuer une **configuration unique
 2. Cliquez **New** → choisissez **Create an OAuth API endpoint for external clients**
 3. Remplissez :
    - **Name :** `NexHire`
-   - **Redirect URL :** `https://nexhire.ca/api/connectors/oauth/callback`
+   - **Redirect URL :** `https://agenthub.nexhire.ca/api/connectors/oauth/callback`
 4. Cliquez **Submit**
 5. Ouvrez l'entrée créée → notez :
    - **Client ID** (généré automatiquement)

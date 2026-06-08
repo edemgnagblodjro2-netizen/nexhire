@@ -24,6 +24,7 @@ from rbac import require_active_subscription, require_min_role
 router = APIRouter(prefix="/api/connectors", tags=["connectors-oauth"])
 
 _STATE_TTL = 10  # minutes
+APP_URL = os.environ.get("APP_URL", "https://agenthub.nexhire.ca")
 
 # ── Config des connecteurs OAuth ──────────────────────────────────────────────
 
@@ -54,16 +55,6 @@ _OAUTH_CFG: dict[str, dict] = {
         "client_secret_env": "JIRA_CLIENT_SECRET",
         "redirect_uri_env":  "JIRA_REDIRECT_URI",
         "extra_params": {"audience": "api.atlassian.com", "prompt": "consent"},
-    },
-    "zendesk": {
-        # token_url built dynamically from ZENDESK_SUBDOMAIN
-        "auth_url_tpl":   "https://{subdomain}.zendesk.com/oauth/authorizations/new",
-        "token_url_tpl":  "https://{subdomain}.zendesk.com/oauth/tokens",
-        "scopes":         "read",
-        "client_id_env":     "ZENDESK_CLIENT_ID",
-        "client_secret_env": "ZENDESK_CLIENT_SECRET",
-        "redirect_uri_env":  "ZENDESK_REDIRECT_URI",
-        "subdomain_env":     "ZENDESK_SUBDOMAIN",
     },
     "hubspot": {
         "auth_url":  "https://app.hubspot.com/oauth/authorize",
@@ -201,10 +192,28 @@ def _resolve_cfg(connector_type: str, state_extra: dict | None = None) -> dict:
         return {
             "client_id":     client_id,
             "client_secret": client_secret,
-            "redirect_uri":  os.environ.get("SNOW_REDIRECT_URI", f"{APP_URL}/api/connectors/oauth/callback"),
+            "redirect_uri":  f"{APP_URL}/api/connectors/oauth/callback",
             "auth_url":      f"{instance_url}/oauth_auth.do",
             "token_url":     f"{instance_url}/oauth_token.do",
             "scopes":        _SNOW_OAUTH["scopes"],
+            "extra_params":  {},
+        }
+
+    if connector_type == "zendesk":
+        # Per-org: each client registers NexHire in their own Zendesk instance
+        se            = state_extra or {}
+        subdomain     = (se.get("zendesk_subdomain") or os.environ.get("ZENDESK_SUBDOMAIN", "")).strip().rstrip("/")
+        client_id     = se.get("zendesk_client_id")    or os.environ.get("ZENDESK_CLIENT_ID", "")
+        client_secret = se.get("zendesk_client_secret") or os.environ.get("ZENDESK_CLIENT_SECRET", "")
+        if not subdomain or not client_id:
+            raise HTTPException(503, "Credentials Zendesk manquants (subdomain + Client ID requis).")
+        return {
+            "client_id":     client_id,
+            "client_secret": client_secret,
+            "redirect_uri":  f"{APP_URL}/api/connectors/oauth/callback",
+            "auth_url":      f"https://{subdomain}.zendesk.com/oauth/authorizations/new",
+            "token_url":     f"https://{subdomain}.zendesk.com/oauth/tokens",
+            "scopes":        "read",
             "extra_params":  {},
         }
 
@@ -250,7 +259,7 @@ def oauth_start(
       ServiceNow : {snow_instance_url, snow_client_id, snow_client_secret}
       Zendesk    : {zendesk_subdomain}
     """
-    if connector_type not in _OAUTH_CFG and connector_type != "servicenow":
+    if connector_type not in _OAUTH_CFG and connector_type not in ("servicenow", "zendesk"):
         raise HTTPException(422, f"OAuth non supporté pour : {connector_type}")
     if not user.organization_id:
         raise HTTPException(400, "Compte non rattaché à une organisation.")
@@ -260,8 +269,9 @@ def oauth_start(
     if connector_type == "servicenow":
         for k in ("snow_instance_url", "snow_client_id", "snow_client_secret"):
             if body.get(k): extra[k] = body[k]
-    if connector_type == "zendesk" and body.get("zendesk_subdomain"):
-        extra["zendesk_subdomain"] = body["zendesk_subdomain"]
+    if connector_type == "zendesk":
+        for k in ("zendesk_subdomain", "zendesk_client_id", "zendesk_client_secret"):
+            if body.get(k): extra[k] = body[k]
 
     c = _resolve_cfg(connector_type, state_extra=extra)
     state = _make_state(user.organization_id, user.id, connector_type, extra=extra if extra else None)
@@ -396,7 +406,7 @@ def save_credentials(
 
 def refresh_token_if_needed(connector_type: str, org_id: str) -> dict | None:
     """Refreshes the OAuth access token if expired. Returns updated credentials or None."""
-    if connector_type not in _OAUTH_CFG and connector_type != "servicenow":
+    if connector_type not in _OAUTH_CFG and connector_type not in ("servicenow", "zendesk"):
         return None
     try:
         with get_db() as cur:

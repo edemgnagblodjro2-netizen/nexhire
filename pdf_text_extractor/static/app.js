@@ -1706,9 +1706,9 @@ async function doOAuthStart(type, btn) {
     return _doOAuthStartWithBody(type, btn, creds);
   }
   if (type === "zendesk") {
-    const sub = prompt("Entrez votre sous-domaine Zendesk :\n(ex. : monentreprise  si l'URL est monentreprise.zendesk.com)");
-    if (!sub || !sub.trim()) return;
-    return _doOAuthStartWithBody(type, btn, { zendesk_subdomain: sub.trim() });
+    const creds = await _promptZendeskCredentials();
+    if (!creds) return;
+    return _doOAuthStartWithBody(type, btn, creds);
   }
   return _doOAuthStartWithBody(type, btn, {});
 }
@@ -1741,7 +1741,7 @@ function _promptSnowCredentials() {
           </label>
           <p style="font-size:.75rem;color:var(--slate);margin:8px 0 16px">
             URL de callback à configurer dans ServiceNow :<br>
-            <code style="background:var(--surface2);padding:2px 6px;border-radius:4px">https://nexhire.ca/api/connectors/oauth/callback</code>
+            <code style="background:var(--surface2);padding:2px 6px;border-radius:4px">https://agenthub.nexhire.ca/api/connectors/oauth/callback</code>
           </p>
           <div style="display:flex;gap:8px">
             <button id="snow-modal-ok"  class="btn btn-primary btn-sm">Connecter via OAuth →</button>
@@ -1766,6 +1766,64 @@ function _promptSnowCredentials() {
       }
       cleanup();
       resolve({ snow_instance_url: instance_url, snow_client_id: client_id, snow_client_secret: client_secret });
+    };
+    cancel.onclick = () => { cleanup(); resolve(null); };
+  });
+}
+
+function _promptZendeskCredentials() {
+  return new Promise(resolve => {
+    let modal = $("zdsk-cred-modal");
+    if (!modal) {
+      modal = document.createElement("div");
+      modal.id = "zdsk-cred-modal";
+      modal.className = "modal-overlay";
+      modal.setAttribute("role", "dialog");
+      modal.innerHTML = `
+        <div class="modal-box" style="max-width:440px">
+          <h3 style="margin:0 0 16px;color:var(--navy)">🔧 Connexion Zendesk</h3>
+          <p style="font-size:.85rem;color:var(--slate);margin:0 0 16px">
+            Zendesk utilise votre propre application OAuth. Entrez les credentials que votre client a configurés sur son instance.
+          </p>
+          <label class="auth-label">
+            <span>Sous-domaine *</span>
+            <input id="zdsk-modal-sub" type="text" placeholder="monentreprise  (de monentreprise.zendesk.com)" />
+          </label>
+          <label class="auth-label">
+            <span>Client ID (Unique identifier) *</span>
+            <input id="zdsk-modal-cid" type="text" placeholder="Unique identifier enregistré dans Zendesk" />
+          </label>
+          <label class="auth-label">
+            <span>Client Secret *</span>
+            <input id="zdsk-modal-csec" type="password" placeholder="••••••••" />
+          </label>
+          <p style="font-size:.75rem;color:var(--slate);margin:8px 0 16px">
+            URL de callback à configurer dans Zendesk :<br>
+            <code style="background:var(--surface2);padding:2px 6px;border-radius:4px">https://agenthub.nexhire.ca/api/connectors/oauth/callback</code>
+          </p>
+          <div style="display:flex;gap:8px">
+            <button id="zdsk-modal-ok" class="btn btn-primary btn-sm">Connecter via OAuth →</button>
+            <button id="zdsk-modal-cancel" class="btn btn-outline btn-sm">Annuler</button>
+          </div>
+        </div>`;
+      document.body.appendChild(modal);
+    }
+    modal.classList.remove("hidden");
+    $("zdsk-modal-sub").focus();
+
+    const ok     = $("zdsk-modal-ok");
+    const cancel = $("zdsk-modal-cancel");
+    const cleanup = () => { modal.classList.add("hidden"); ok.onclick = null; cancel.onclick = null; };
+
+    ok.onclick = () => {
+      const subdomain     = $("zdsk-modal-sub")?.value.trim();
+      const client_id     = $("zdsk-modal-cid")?.value.trim();
+      const client_secret = $("zdsk-modal-csec")?.value.trim();
+      if (!subdomain || !client_id || !client_secret) {
+        alert("Tous les champs sont requis."); return;
+      }
+      cleanup();
+      resolve({ zendesk_subdomain: subdomain, zendesk_client_id: client_id, zendesk_client_secret: client_secret });
     };
     cancel.onclick = () => { cleanup(); resolve(null); };
   });
