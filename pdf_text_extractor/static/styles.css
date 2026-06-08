@@ -3042,11 +3042,13 @@ tbody tr:hover { background: var(--blue-pale); transition: background .12s; }
 
 /* Workspace bar mobile */
 @media (max-width: 640px) {
-  .workspace-bar { padding: 0 12px; height: auto; min-height: 36px; }
-  .workspace-bar-inner { flex-wrap: wrap; gap: 4px; padding: 6px 0; height: auto; }
-  .workspace-chips { flex-wrap: wrap; gap: 4px; }
-  .ws-chip { font-size: .7rem; padding: 2px 8px; }
-  .ws-marketplace-btn { font-size: .72rem; padding: 3px 8px; }
+  .workspace-bar { padding: 0; height: auto; min-height: 36px; }
+  .workspace-bar-inner { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 6px; padding: 6px 12px; height: auto; width: 100%; }
+  .workspace-bar-inner::-webkit-scrollbar { display: none; }
+  .workspace-chips { flex-wrap: nowrap; gap: 4px; }
+  .ws-chip { font-size: .7rem; padding: 2px 8px; white-space: nowrap; flex-shrink: 0; }
+  .ws-marketplace-btn { font-size: .72rem; padding: 3px 8px; white-space: nowrap; flex-shrink: 0; }
+  .workspace-current { flex-shrink: 0; }
 }
 
 /* Agent send button + chips mobile */
