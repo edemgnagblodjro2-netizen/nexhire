@@ -1699,10 +1699,83 @@ async function _cdmRemove(type, deptId) {
 }
 
 async function doOAuthStart(type, btn) {
+  // ServiceNow et Zendesk nécessitent des credentials per-org avant le OAuth
+  if (type === "servicenow") {
+    const creds = await _promptSnowCredentials();
+    if (!creds) return;
+    return _doOAuthStartWithBody(type, btn, creds);
+  }
+  if (type === "zendesk") {
+    const sub = prompt("Entrez votre sous-domaine Zendesk :\n(ex. : monentreprise  si l'URL est monentreprise.zendesk.com)");
+    if (!sub || !sub.trim()) return;
+    return _doOAuthStartWithBody(type, btn, { zendesk_subdomain: sub.trim() });
+  }
+  return _doOAuthStartWithBody(type, btn, {});
+}
+
+function _promptSnowCredentials() {
+  return new Promise(resolve => {
+    let modal = $("snow-cred-modal");
+    if (!modal) {
+      modal = document.createElement("div");
+      modal.id = "snow-cred-modal";
+      modal.className = "modal-overlay";
+      modal.setAttribute("role", "dialog");
+      modal.innerHTML = `
+        <div class="modal-box" style="max-width:440px">
+          <h3 style="margin:0 0 16px;color:var(--navy)">🔧 Connexion ServiceNow</h3>
+          <p style="font-size:.85rem;color:var(--slate);margin:0 0 16px">
+            ServiceNow utilise votre propre application OAuth. Entrez les credentials que votre client a configurés sur son instance.
+          </p>
+          <label class="auth-label">
+            <span>URL de l'instance *</span>
+            <input id="snow-modal-url" type="url" placeholder="https://votreclient.service-now.com" />
+          </label>
+          <label class="auth-label">
+            <span>Client ID *</span>
+            <input id="snow-modal-cid" type="text" placeholder="Client ID enregistré dans ServiceNow" />
+          </label>
+          <label class="auth-label">
+            <span>Client Secret *</span>
+            <input id="snow-modal-csec" type="password" placeholder="••••••••" />
+          </label>
+          <p style="font-size:.75rem;color:var(--slate);margin:8px 0 16px">
+            URL de callback à configurer dans ServiceNow :<br>
+            <code style="background:var(--surface2);padding:2px 6px;border-radius:4px">https://nexhire.ca/api/connectors/oauth/callback</code>
+          </p>
+          <div style="display:flex;gap:8px">
+            <button id="snow-modal-ok"  class="btn btn-primary btn-sm">Connecter via OAuth →</button>
+            <button id="snow-modal-cancel" class="btn btn-outline btn-sm">Annuler</button>
+          </div>
+        </div>`;
+      document.body.appendChild(modal);
+    }
+    modal.classList.remove("hidden");
+    $("snow-modal-url").focus();
+
+    const ok     = $("snow-modal-ok");
+    const cancel = $("snow-modal-cancel");
+    const cleanup = () => { modal.classList.add("hidden"); ok.onclick = null; cancel.onclick = null; };
+
+    ok.onclick = () => {
+      const instance_url    = $("snow-modal-url")?.value.trim();
+      const client_id       = $("snow-modal-cid")?.value.trim();
+      const client_secret   = $("snow-modal-csec")?.value.trim();
+      if (!instance_url || !client_id || !client_secret) {
+        alert("Tous les champs sont requis."); return;
+      }
+      cleanup();
+      resolve({ snow_instance_url: instance_url, snow_client_id: client_id, snow_client_secret: client_secret });
+    };
+    cancel.onclick = () => { cleanup(); resolve(null); };
+  });
+}
+
+async function _doOAuthStartWithBody(type, btn, body) {
   const origText = btn.textContent;
   btn.disabled = true; btn.textContent = "Redirection OAuth…";
   try {
-    const data = await apiCall(`/api/connectors/${type}/oauth/start`, "POST");
+    const data = await apiCall(`/api/connectors/${type}/oauth/start`, "POST", body);
     window.location.href = data.authorization_url;
   } catch (ex) {
     btn.disabled = false; btn.textContent = origText;

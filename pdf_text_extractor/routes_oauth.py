@@ -120,12 +120,13 @@ _APIKEY_TYPES = frozenset({"sap", "workday", "autotask"})
 
 # ── CSRF state helpers ────────────────────────────────────────────────────────
 
-def _make_state(org_id: str, user_id: str, connector: str) -> str:
+def _make_state(org_id: str, user_id: str, connector: str, extra: dict | None = None) -> str:
     payload = json.dumps({
         "org_id":     org_id,
         "user_id":    user_id,
         "connector":  connector,
         "expires_at": (datetime.now(UTC) + timedelta(minutes=_STATE_TTL)).isoformat(),
+        **(extra or {}),
     })
     return encrypt(payload)
 
@@ -187,17 +188,20 @@ def _upsert_connector(org_id: str, connector_type: str, credentials: dict, extra
 
 # ── Generic OAuth start ───────────────────────────────────────────────────────
 
-def _resolve_cfg(connector_type: str) -> dict:
-    """Returns (client_id, client_secret, redirect_uri, auth_url, token_url, scopes, extra)."""
+def _resolve_cfg(connector_type: str, state_extra: dict | None = None) -> dict:
+    """Returns OAuth config. state_extra carries per-org credentials for ServiceNow/Zendesk."""
     if connector_type == "servicenow":
-        instance_url = os.environ.get("SNOW_INSTANCE_URL", "").rstrip("/")
-        client_id    = os.environ.get("SNOW_CLIENT_ID", "")
+        # Per-org: credentials come from state (passed by frontend) or env fallback
+        se           = state_extra or {}
+        instance_url = (se.get("snow_instance_url") or os.environ.get("SNOW_INSTANCE_URL", "")).rstrip("/")
+        client_id    = se.get("snow_client_id")    or os.environ.get("SNOW_CLIENT_ID", "")
+        client_secret= se.get("snow_client_secret") or os.environ.get("SNOW_CLIENT_SECRET", "")
         if not client_id or not instance_url:
-            raise HTTPException(503, "SNOW_CLIENT_ID / SNOW_INSTANCE_URL non configurés.")
+            raise HTTPException(503, "Credentials ServiceNow manquants (instance URL + Client ID requis).")
         return {
             "client_id":     client_id,
-            "client_secret": os.environ.get("SNOW_CLIENT_SECRET", ""),
-            "redirect_uri":  os.environ.get("SNOW_REDIRECT_URI", ""),
+            "client_secret": client_secret,
+            "redirect_uri":  os.environ.get("SNOW_REDIRECT_URI", f"{APP_URL}/api/connectors/oauth/callback"),
             "auth_url":      f"{instance_url}/oauth_auth.do",
             "token_url":     f"{instance_url}/oauth_token.do",
             "scopes":        _SNOW_OAUTH["scopes"],
@@ -213,9 +217,10 @@ def _resolve_cfg(connector_type: str) -> dict:
         raise HTTPException(503, f"{cfg['client_id_env']} non configuré sur le serveur.")
 
     if "subdomain_env" in cfg:
-        sub = os.environ.get(cfg["subdomain_env"], "")
+        # Zendesk: subdomain per-org from state, or global env fallback
+        sub = (state_extra or {}).get("zendesk_subdomain") or os.environ.get(cfg["subdomain_env"], "")
         if not sub:
-            raise HTTPException(503, f"{cfg['subdomain_env']} non configuré sur le serveur.")
+            raise HTTPException(503, "Sous-domaine Zendesk manquant.")
         auth_url  = cfg["auth_url_tpl"].format(subdomain=sub)
         token_url = cfg["token_url_tpl"].format(subdomain=sub)
     else:
@@ -236,17 +241,30 @@ def _resolve_cfg(connector_type: str) -> dict:
 @router.post("/{connector_type}/oauth/start")
 def oauth_start(
     connector_type: str,
+    body: dict = Body(default={}),
     user: CurrentUser = Depends(require_min_role("admin")),
     _active: CurrentUser = Depends(require_active_subscription),
 ):
-    """Retourne l'URL d'autorisation OAuth pour le connecteur demandé."""
+    """Retourne l'URL d'autorisation OAuth pour le connecteur demandé.
+    Pour ServiceNow et Zendesk, le body peut contenir les credentials per-org :
+      ServiceNow : {snow_instance_url, snow_client_id, snow_client_secret}
+      Zendesk    : {zendesk_subdomain}
+    """
     if connector_type not in _OAUTH_CFG and connector_type != "servicenow":
         raise HTTPException(422, f"OAuth non supporté pour : {connector_type}")
     if not user.organization_id:
         raise HTTPException(400, "Compte non rattaché à une organisation.")
 
-    c = _resolve_cfg(connector_type)
-    state = _make_state(user.organization_id, user.id, connector_type)
+    # Extrait les extras per-org pour ServiceNow / Zendesk
+    extra: dict = {}
+    if connector_type == "servicenow":
+        for k in ("snow_instance_url", "snow_client_id", "snow_client_secret"):
+            if body.get(k): extra[k] = body[k]
+    if connector_type == "zendesk" and body.get("zendesk_subdomain"):
+        extra["zendesk_subdomain"] = body["zendesk_subdomain"]
+
+    c = _resolve_cfg(connector_type, state_extra=extra)
+    state = _make_state(user.organization_id, user.id, connector_type, extra=extra if extra else None)
     params: dict = {
         "client_id":     c["client_id"],
         "response_type": "code",
@@ -283,7 +301,7 @@ def oauth_callback(
     org_id         = state_data["org_id"]
     user_id        = state_data["user_id"]
 
-    c = _resolve_cfg(connector_type)
+    c = _resolve_cfg(connector_type, state_extra=state_data)
 
     try:
         resp = httpx.post(c["token_url"], data={
