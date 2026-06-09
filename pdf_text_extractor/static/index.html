@@ -6,6 +6,20 @@
   <title>Nexhire EIP — Enterprise Intelligence Platform</title>
   <meta name="description" content="Nexhire EIP connecte tous vos systèmes d'entreprise, détecte les économies cachées et réduit les risques opérationnels grâce à l'IA." />
 
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="NexHire" />
+  <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="/static/icons/icon-152.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/static/icons/icon-192.png" />
+  <link rel="icon" type="image/svg+xml" href="/static/icons/icon.svg" />
+  <!-- Splash screens iOS -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
   <!-- Open Graph / social sharing -->
   <meta property="og:type"        content="website" />
   <meta property="og:title"       content="Nexhire EIP — Enterprise Intelligence Platform" />
@@ -2484,6 +2498,39 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="/static/app.js?v=20260609i"></script>
+<script src="/static/app.js?v=20260609j"></script>
+<script>
+  // Service Worker registration
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js", { scope: "/" })
+        .then((reg) => {
+          reg.addEventListener("updatefound", () => {
+            const newSW = reg.installing;
+            newSW?.addEventListener("statechange", () => {
+              if (newSW.state === "installed" && navigator.serviceWorker.controller) {
+                // Nouvelle version disponible — notif discrète
+                const bar = document.createElement("div");
+                bar.style.cssText = "position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:#1e293b;color:#fff;padding:10px 20px;border-radius:8px;font-size:.85rem;z-index:9999;display:flex;gap:12px;align-items:center;box-shadow:0 4px 12px rgba(0,0,0,.3)";
+                bar.innerHTML = '<span>Mise à jour disponible</span><button onclick="location.reload()" style="background:#6366f1;color:#fff;border:none;padding:4px 12px;border-radius:6px;cursor:pointer;font-size:.8rem">Actualiser</button>';
+                document.body.appendChild(bar);
+              }
+            });
+          });
+        })
+        .catch((err) => console.warn("SW registration failed:", err));
+    });
+  }
+
+  // PWA shortcut handling
+  const _pwaShortcut = new URLSearchParams(location.search).get("shortcut");
+  if (_pwaShortcut) {
+    history.replaceState({}, "", "/");
+    window.addEventListener("app:ready", () => {
+      if (_pwaShortcut === "agent") switchTab("agent");
+      else if (_pwaShortcut === "dashboard") switchTab("eid");
+    }, { once: true });
+  }
+</script>
 </body>
 </html>

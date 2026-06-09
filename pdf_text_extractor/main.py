@@ -172,6 +172,25 @@ def create_app(
     )
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
+    @app.get("/sw.js")
+    def service_worker():
+        return FileResponse(
+            STATIC_DIR / "sw.js",
+            media_type="application/javascript",
+            headers={
+                "Service-Worker-Allowed": "/",
+                "Cache-Control": "no-store, max-age=0",
+            },
+        )
+
+    @app.get("/manifest.json")
+    def web_manifest():
+        return FileResponse(
+            STATIC_DIR / "manifest.json",
+            media_type="application/manifest+json",
+            headers={"Cache-Control": "public, max-age=86400"},
+        )
+
     @app.get("/")
     def portal():
         return FileResponse(

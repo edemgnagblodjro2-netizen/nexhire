@@ -1,0 +1,47 @@
+{
+  "name": "NexHire EIP",
+  "short_name": "NexHire",
+  "description": "Enterprise Intelligence Platform — IA, optimisation et connecteurs pour votre organisation.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "lang": "fr",
+  "categories": ["business", "productivity"],
+  "icons": [
+    { "src": "/static/icons/icon-72.png",   "sizes": "72x72",   "type": "image/png" },
+    { "src": "/static/icons/icon-96.png",   "sizes": "96x96",   "type": "image/png" },
+    { "src": "/static/icons/icon-128.png",  "sizes": "128x128", "type": "image/png" },
+    { "src": "/static/icons/icon-144.png",  "sizes": "144x144", "type": "image/png" },
+    { "src": "/static/icons/icon-152.png",  "sizes": "152x152", "type": "image/png" },
+    { "src": "/static/icons/icon-192.png",  "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/static/icons/icon-384.png",  "sizes": "384x384", "type": "image/png" },
+    { "src": "/static/icons/icon-512.png",  "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/static/icons/icon.svg",      "sizes": "any",     "type": "image/svg+xml", "purpose": "any maskable" }
+  ],
+  "screenshots": [
+    {
+      "src": "/static/icons/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Dashboard NexHire"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Agent IA",
+      "short_name": "Agent",
+      "description": "Poser une question à l'agent IA",
+      "url": "/?shortcut=agent",
+      "icons": [{ "src": "/static/icons/icon-96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Tableau de bord",
+      "short_name": "Dashboard",
+      "url": "/?shortcut=dashboard",
+      "icons": [{ "src": "/static/icons/icon-96.png", "sizes": "96x96" }]
+    }
+  ]
+}
