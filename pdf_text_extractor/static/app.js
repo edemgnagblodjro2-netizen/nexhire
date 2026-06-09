@@ -898,6 +898,38 @@ function showAuth(mode = "login") {
   if (mode === "signup") { $("signup-error").classList.add("hidden"); $("signup-success").classList.add("hidden"); $("signup-org").focus(); }
 }
 
+function _showSplash(orgName) {
+  const splash = $("splash-screen");
+  if (!splash) return;
+  const orgEl = $("splash-org-name");
+  if (orgEl && orgName) orgEl.textContent = orgName;
+  else if (orgEl) orgEl.style.display = "none";
+
+  // Génère des particules flottantes
+  const container = $("splash-particles");
+  if (container) {
+    container.innerHTML = "";
+    for (let i = 0; i < 18; i++) {
+      const p = document.createElement("div");
+      p.className = "splash-particle";
+      const size = 4 + Math.random() * 10;
+      p.style.cssText = [
+        `width:${size}px`, `height:${size}px`,
+        `left:${Math.random() * 100}%`,
+        `animation-duration:${4 + Math.random() * 6}s`,
+        `animation-delay:${Math.random() * 4}s`,
+      ].join(";");
+      container.appendChild(p);
+    }
+  }
+
+  splash.classList.remove("hidden", "splash-exit");
+  setTimeout(() => {
+    splash.classList.add("splash-exit");
+    setTimeout(() => splash.classList.add("hidden"), 800);
+  }, 5500);
+}
+
 function showApp() {
   $("view-landing").classList.add("hidden");
   $("view-auth").classList.add("hidden");
@@ -969,6 +1001,14 @@ function showApp() {
 
   loadDeptDashboard();
   _updateWorkspaceBar();
+
+  // Splash screen — uniquement à la connexion (pas au rechargement de page)
+  if (!sessionStorage.getItem("nx_splash_shown")) {
+    sessionStorage.setItem("nx_splash_shown", "1");
+    _showSplash(state.user?.organization_name || state.orgName || "");
+  }
+
+  window.dispatchEvent(new Event("app:ready"));
 }
 
 // Trial banner dismiss
