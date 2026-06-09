@@ -83,7 +83,7 @@ DEPT_TYPE_CONFIG: dict[str, dict] = {
     "finance": {
         "label": "Finance / Comptabilité", "icon": "💰", "color": "#16a34a",
         "kpis": ["budget_used", "budget_forecast_gap", "contracts_expiring_60", "contracts_savings"],
-        "primary_tab": "parc-it", "primary_subtab": "budget",
+        "primary_tab": "optim", "primary_subtab": "licenses",
     },
     "hr": {
         "label": "Ressources Humaines", "icon": "👥", "color": "#7c3aed",
@@ -105,11 +105,6 @@ DEPT_TYPE_CONFIG: dict[str, dict] = {
         "kpis": ["processes_count", "automatable_hours", "operations_savings", "efficiency_score"],
         "primary_tab": "optim", "primary_subtab": "processes",
     },
-    "marketing": {
-        "label": "Marketing / Communications", "icon": "📣", "color": "#db2777",
-        "kpis": ["apps_count", "duplicate_categories", "unused_apps", "monthly_app_cost"],
-        "primary_tab": "parc-it", "primary_subtab": "apps",
-    },
     "approvisionnement": {
         "label": "Approvisionnement / Achats", "icon": "🛒", "color": "#0891b2",
         "kpis": ["contracts_active", "contracts_expiring_60", "negotiation_savings", "contracts_savings"],
@@ -129,7 +124,7 @@ DEPT_TYPE_CONFIG: dict[str, dict] = {
     "comptabilite": {
         "label": "Comptabilité", "icon": "🧾", "color": "#0f766e",
         "kpis": ["budget_used", "budget_forecast_gap", "contracts_expiring_60", "contracts_savings"],
-        "primary_tab": "parc-it", "primary_subtab": "budget",
+        "primary_tab": "optim", "primary_subtab": "licenses",
     },
     "sales": {
         "label": "Ventes / Commerciaux", "icon": "💼", "color": "#ea580c",
@@ -144,7 +139,7 @@ DEPT_TYPE_CONFIG: dict[str, dict] = {
     "rd": {
         "label": "R&D", "icon": "🔬", "color": "#7c3aed",
         "kpis": ["apps_count", "monthly_app_cost", "unused_licenses_count", "contracts_active"],
-        "primary_tab": "parc-it", "primary_subtab": "apps",
+        "primary_tab": "optim", "primary_subtab": "licenses",
     },
     "qualite": {
         "label": "Assurance qualité", "icon": "✅", "color": "#16a34a",
@@ -154,7 +149,7 @@ DEPT_TYPE_CONFIG: dict[str, dict] = {
     "digitalisation": {
         "label": "Digitalisation", "icon": "⚡", "color": "#818CF8",
         "kpis": ["apps_count", "unused_apps", "monthly_app_cost", "license_savings"],
-        "primary_tab": "parc-it", "primary_subtab": "apps",
+        "primary_tab": "optim", "primary_subtab": "licenses",
     },
     "logistique": {
         "label": "Logistique", "icon": "🚚", "color": "#92400e",
@@ -174,7 +169,7 @@ DEPT_TYPE_CONFIG: dict[str, dict] = {
     "communication": {
         "label": "Communication", "icon": "📢", "color": "#db2777",
         "kpis": ["apps_count", "monthly_app_cost", "duplicate_categories", "unused_apps"],
-        "primary_tab": "parc-it", "primary_subtab": "apps",
+        "primary_tab": "optim", "primary_subtab": "licenses",
     },
     "manufacturing": {
         "label": "Fabrication / Production", "icon": "🏭", "color": "#c8102e",
@@ -185,7 +180,7 @@ DEPT_TYPE_CONFIG: dict[str, dict] = {
     "admin_hospitalier": {
         "label": "Administration hospitalière", "icon": "🏥", "color": "#9333ea",
         "kpis": ["budget_used", "budget_forecast_gap", "contracts_active", "contracts_expiring_60"],
-        "primary_tab": "parc-it", "primary_subtab": "budget",
+        "primary_tab": "optim", "primary_subtab": "dashboard",
     },
     "direction_medicale": {
         "label": "Direction médicale", "icon": "🩺", "color": "#0891b2",
@@ -200,17 +195,17 @@ DEPT_TYPE_CONFIG: dict[str, dict] = {
     "pharmacie": {
         "label": "Pharmacie", "icon": "💉", "color": "#7c3aed",
         "kpis": ["apps_count", "contracts_active", "contracts_expiring_60", "budget_used"],
-        "primary_tab": "parc-it", "primary_subtab": "budget",
+        "primary_tab": "optim", "primary_subtab": "licenses",
     },
     "laboratoires": {
         "label": "Laboratoires", "icon": "🔬", "color": "#2563eb",
         "kpis": ["apps_count", "unused_licenses_count", "contracts_active", "budget_used"],
-        "primary_tab": "parc-it", "primary_subtab": "apps",
+        "primary_tab": "optim", "primary_subtab": "licenses",
     },
     "imagerie": {
         "label": "Imagerie médicale", "icon": "🖥️", "color": "#d97706",
         "kpis": ["apps_count", "monthly_app_cost", "contracts_active", "budget_used"],
-        "primary_tab": "parc-it", "primary_subtab": "apps",
+        "primary_tab": "optim", "primary_subtab": "licenses",
     },
     "service_patients": {
         "label": "Service aux patients", "icon": "🛏️", "color": "#0891b2",

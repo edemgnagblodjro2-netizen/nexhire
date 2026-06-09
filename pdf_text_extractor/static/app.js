@@ -1649,7 +1649,7 @@ function toggleDeptAcc(btn) {
 function _deptTypeLabel(t) {
   const labels = {
     finance:"Finance", hr:"Ressources Humaines", it:"Technologies de l'information",
-    legal:"Juridique", operations:"Opérations", marketing:"Marketing / Communications",
+    legal:"Juridique", operations:"Opérations", communication:"Communication",
     direction:"Direction générale", approvisionnement:"Approvisionnement", general:"Général",
   };
   return labels[t] || t;
@@ -3935,7 +3935,7 @@ async function loadOrgChart() {
       wrap.innerHTML = `<p class="muted">Aucun département configuré.</p>`;
       return;
     }
-    const DEPT_ICONS = { finance:"💰",hr:"👥",it:"💻",legal:"⚖️",operations:"⚙️",marketing:"📣",direction:"🏛️",approvisionnement:"📦",general:"🏢" };
+    const DEPT_ICONS = { finance:"💰",hr:"👥",it:"💻",legal:"⚖️",operations:"⚙️",communication:"📢",direction:"🏛️",approvisionnement:"📦",general:"🏢" };
     wrap.innerHTML = depts.map(dept => {
       const icon = DEPT_ICONS[dept.dept_type] || "🏢";
       const members = dept.members || [];
@@ -4069,7 +4069,7 @@ async function loadDepartments() {
       wrap.innerHTML = `<p class="muted">Aucun département. Cliquez sur <strong>⚡ Initialiser par secteur</strong> pour en créer automatiquement.</p>`;
       return;
     }
-    const DEPT_TYPE_ICONS = { finance:"💰", hr:"👥", it:"🖥️", legal:"⚖️", operations:"⚙️", marketing:"📣", direction:"🏛️", approvisionnement:"📦", general:"🏢" };
+    const DEPT_TYPE_ICONS = { finance:"💰", hr:"👥", it:"🖥️", legal:"⚖️", operations:"⚙️", communication:"📢", direction:"🏛️", approvisionnement:"📦", general:"🏢" };
     wrap.innerHTML = depts.map(d => `
       <div class="dept-card">
         <div class="dept-card-name">
@@ -4528,15 +4528,6 @@ const _DEPT_CHIPS = {
     { fr: "Quels membres de l'équipe sont surchargés et quelles tâches peuvent être redistribuées ?", en: "Which team members are overloaded and which tasks can be redistributed?" },
     { fr: "Quels processus opérationnels causent le plus de retards ou de retravail ?", en: "Which operational processes cause the most delays or rework?" },
     { fr: "Quel est le statut des projets en cours — actifs, terminés, en attente, annulés ?", en: "What is the status of ongoing projects — active, completed, on hold, cancelled?" },
-  ],
-
-  // ── Marketing ────────────────────────────────────────────────────────────
-  marketing: [
-    { fr: "Quelle est la performance des campagnes actives — impressions, clics, conversions, coût ?", en: "What is the performance of active campaigns — impressions, clicks, conversions, cost?" },
-    { fr: "Quels leads entrants cette semaine n'ont pas encore été qualifiés ou assignés ?", en: "Which incoming leads this week have not been qualified or assigned yet?" },
-    { fr: "Quel est le budget marketing consommé vs alloué ce mois et par canal ?", en: "What is the marketing budget consumed vs allocated this month and by channel?" },
-    { fr: "Quelles opportunités CRM sont sans suivi depuis plus de 7 jours ?", en: "Which CRM opportunities have had no follow-up in over 7 days?" },
-    { fr: "Quel est le coût d'acquisition client et le ROI des campagnes ce trimestre ?", en: "What is the customer acquisition cost and campaign ROI this quarter?" },
   ],
 
   // ── Direction générale ────────────────────────────────────────────────────
@@ -5078,8 +5069,8 @@ const _NAME_TO_DEPT_TYPE = {
   // Opérations
   opérations: "operations", operations: "operations",
   "gestion de projet": "operations", "opérations & logistique": "operations",
-  // Marketing
-  marketing: "marketing", "marketing & communications": "marketing", communication: "communication",
+  // Marketing → redirige vers communication
+  marketing: "communication", "marketing & communications": "communication", communication: "communication",
   // Ventes
   ventes: "sales", commerciaux: "sales", sales: "sales",
   // Direction
@@ -5206,15 +5197,6 @@ const _OPTIM_DEPT_LABELS = {
     processes:  { btn: "Processus d'achat",           desc: "Appels d'offres, validations et réception — étapes à optimiser." },
     dims:    ["Outils achats", "Contrats fournisseurs", "Stocks", "Processus"],
     savings: ["Contrats", "Outils", "Stocks", "Processus"],
-  },
-  // ── Marketing ─────────────────────────────────────────────────────────────
-  marketing: {
-    licenses:   { btn: "Outils marketing inutilisés", desc: "Plateformes et abonnements marketing peu ou pas utilisés." },
-    duplicates: { btn: "Campagnes en doublon",         desc: "Segments ou canaux ciblés plusieurs fois sans coordination." },
-    contracts:  { btn: "Contrats agences",             desc: "" },
-    processes:  { btn: "Processus marketing",          desc: "Workflows de création, validation et publication à automatiser." },
-    dims:    ["Outils marketing", "Licences", "Infrastructure", "Campagnes"],
-    savings: ["Licences", "Outils", "Contrats agences", "Campagnes"],
   },
   communication: {
     licenses:   { btn: "Outils comm. inutilisés",   desc: "Abonnements communication et médias sous-utilisés." },
@@ -5426,7 +5408,7 @@ function activateWorkspace(deptId, deptType, deptName) {
   const tpl = WORKSPACE_TEMPLATES.find(t => t.dept_type === resolvedType);
   const cfg = {
     finance: "💰", comptabilite: "🧾", hr: "👥", it: "💻", legal: "⚖️",
-    operations: "⚙️", marketing: "📣", sales: "💼", approvisionnement: "🛒",
+    operations: "⚙️", sales: "💼", approvisionnement: "🛒",
     direction: "🏛️", manufacturing: "🏭", communication: "📢", support: "🎧",
     rd: "🔬", qualite: "✅", digitalisation: "⚡", logistique: "🚚",
     audit: "🔍", compliance: "🛡️",
@@ -5495,7 +5477,6 @@ async function _updateWorkspaceBar() {
     it:                { icon: "💻", color: "#2563eb", label: { fr: "Technologies de l'information", en: "IT" } },
     legal:             { icon: "⚖️", color: "#dc2626", label: { fr: "Juridique",          en: "Legal" } },
     operations:        { icon: "⚙️", color: "#d97706", label: { fr: "Opérations",         en: "Operations" } },
-    marketing:         { icon: "📣", color: "#db2777", label: { fr: "Marketing",           en: "Marketing" } },
     approvisionnement: { icon: "🛒", color: "#0891b2", label: { fr: "Approvisionnement",   en: "Procurement" } },
     direction:         { icon: "🏛️", color: "#1e293b", label: { fr: "Direction",           en: "Executive" } },
     manufacturing:     { icon: "🏭", color: "#c8102e", label: { fr: "Fabrication",              en: "Manufacturing" } },
@@ -5676,7 +5657,6 @@ const _OPTIM_QUESTION_HINTS = {
   digital:        "Comment accélérer l'adoption des outils digitaux et maximiser le ROI ?",
   digitalisation: "Comment mesurer et améliorer le ROI de notre transformation digitale ?",
   procurement:    "Comment optimiser nos achats et réduire les coûts fournisseurs ?",
-  marketing:      "Comment maximiser le ROI de nos campagnes et réduire les outils inutilisés ?",
   communication:  "Comment rationaliser nos outils de communication et réduire les coûts médias ?",
   sales:          "Comment accélérer le cycle de vente et réduire les outils CRM sous-utilisés ?",
   legal:          "Comment optimiser les processus juridiques et réduire les coûts de conformité ?",
