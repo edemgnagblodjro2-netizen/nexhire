@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json as _json
+
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, Field
 
@@ -1062,6 +1064,59 @@ def remove_dept_member(
             "DELETE FROM department_members WHERE department_id = %s AND user_id = %s",
             (dept_id, member_id),
         )
+
+
+# ── KPI Snapshots ─────────────────────────────────────────────────────────────
+
+class KpiSnapshotPayload(BaseModel):
+    kpis: list[dict] = Field(default_factory=list)
+    health_score: int | None = None
+    dept_type: str | None = None
+    dept_name: str | None = None
+
+
+@router.post("/{dept_id}/snapshot", status_code=200)
+def save_kpi_snapshot(
+    dept_id: str,
+    payload: KpiSnapshotPayload,
+    user: CurrentUser = Depends(require_min_role("user")),
+):
+    with get_db() as cur:
+        cur.execute("SELECT id FROM departments WHERE id = %s AND organization_id = %s LIMIT 1",
+                    (dept_id, user.organization_id))
+        if not row(cur):
+            raise HTTPException(404, "Département introuvable.")
+        cur.execute(
+            """INSERT INTO kpi_snapshots (org_id, dept_id, dept_type, dept_name, snapshot_date, kpis, health_score)
+               VALUES (%s, %s, %s, %s, CURRENT_DATE, %s, %s)
+               ON CONFLICT (dept_id, snapshot_date) DO UPDATE
+               SET kpis = EXCLUDED.kpis, health_score = EXCLUDED.health_score""",
+            (user.organization_id, dept_id, payload.dept_type, payload.dept_name,
+             _json.dumps(payload.kpis), payload.health_score),
+        )
+    return {"ok": True}
+
+
+@router.get("/{dept_id}/history")
+def get_kpi_history(
+    dept_id: str,
+    days: int = Query(default=90, ge=7, le=365),
+    user: CurrentUser = Depends(require_min_role("user")),
+):
+    with get_db() as cur:
+        cur.execute("SELECT id FROM departments WHERE id = %s AND organization_id = %s LIMIT 1",
+                    (dept_id, user.organization_id))
+        if not row(cur):
+            raise HTTPException(404, "Département introuvable.")
+        cur.execute(
+            """SELECT snapshot_date::text AS date, health_score, kpis
+               FROM kpi_snapshots
+               WHERE dept_id = %s AND snapshot_date >= CURRENT_DATE - (%s * INTERVAL '1 day')
+               ORDER BY snapshot_date ASC""",
+            (dept_id, days),
+        )
+        return [{"date": r["date"], "health_score": r["health_score"], "kpis": r["kpis"]}
+                for r in rows(cur)]
 
 
 def _dept_or_404(dept_id: str, organization_id: str) -> dict:

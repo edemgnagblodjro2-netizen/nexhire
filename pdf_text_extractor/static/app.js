@@ -5646,6 +5646,9 @@ async function loadDeptDashboard(deptId = null) {
     _activeDeptId = d.dept_id || deptId || null;
     loadDeptExternalContractors(_activeDeptId);
 
+    // Enregistre snapshot KPI quotidien (silencieux)
+    _recordKpiSnapshot(_activeDeptId, d.kpis, _deptHealthScore(d.kpis), d.dept_type, d.dept_name);
+
     // Vue agrégée Direction Générale (uniquement si direction sans workspace actif)
     const aggWrap = $("direction-aggregate-wrap");
     if (d.dept_type === "direction" && !_activeWorkspaceDeptType) {
@@ -6116,13 +6119,20 @@ async function loadDirectionAggregate() {
       },
       options: {
         responsive: true,
-        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.parsed.y + "%" } } },
+        onClick: (_evt, elements) => {
+          if (elements.length) openKpiTrendModal(_aggData[elements[0].index]);
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => ctx.parsed.y + "% — cliquez pour la tendance" } },
+        },
         scales: {
           y: { min: 0, max: 100, ticks: { color: "#64748b", callback: v => v + "%" }, grid: { color: "#1e293b" } },
           x: { ticks: { color: "#64748b", maxRotation: 35 }, grid: { display: false } },
         },
       },
     });
+    barEl.style.cursor = "pointer";
   }
 
   // ── Donut chart — répartition santé ───────────────────────────────────────
@@ -6200,6 +6210,97 @@ async function loadDirectionAggregate() {
       </div>
     `).join("") : "") +
     (!critDepts.length && !warnDepts.length ? `<div class="eid-list-row" style="color:#4ade80">✅ Aucun risque critique détecté</div>` : "");
+}
+
+// ── KPI Trend Modal ───────────────────────────────────────────────────────────
+async function openKpiTrendModal(dept) {
+  if (!dept) return;
+  const modal = $("kpi-trend-modal");
+  if (!modal) return;
+
+  $("kpi-trend-title").textContent = `${dept.icon || "📊"} ${esc(dept.dept_name || dept.dept_type)} — Tendance`;
+  modal.classList.remove("hidden");
+
+  const wrap = $("kpi-trend-chart-wrap");
+  wrap.innerHTML = `<div style="text-align:center;padding:48px 0"><div class="spinner" style="margin:auto"></div><p class="muted" style="margin-top:12px">Chargement de l'historique…</p></div>`;
+  $("kpi-trend-kpis").innerHTML = "";
+
+  let history = [];
+  try { history = await apiCall(`/api/departments/${dept.dept_id}/history?days=90`); } catch {}
+
+  if (!history.length) {
+    wrap.innerHTML = `
+      <div style="text-align:center;padding:40px 20px">
+        <div style="font-size:2.5rem;margin-bottom:12px">📈</div>
+        <p style="font-weight:600;color:var(--navy)">Pas encore d'historique pour ce département</p>
+        <p class="muted" style="font-size:.83rem;margin-top:6px">Les tendances apparaîtront automatiquement à mesure que les données s'accumulent jour après jour.</p>
+      </div>`;
+    // Show today's KPIs as a preview
+    if (dept.kpis?.length) {
+      $("kpi-trend-kpis").innerHTML = dept.kpis.map(k => _kpiChip(k)).join("");
+    }
+    return;
+  }
+
+  wrap.innerHTML = `<canvas id="kpi-trend-chart"></canvas>`;
+  if (window._eidTrendChart) window._eidTrendChart.destroy();
+  window._eidTrendChart = new Chart(document.getElementById("kpi-trend-chart"), {
+    type: "line",
+    data: {
+      labels: history.map(h => h.date),
+      datasets: [{
+        label: "Score santé (%)",
+        data: history.map(h => h.health_score ?? 0),
+        borderColor: "#818CF8",
+        backgroundColor: "rgba(129,140,248,.15)",
+        fill: true,
+        tension: 0.4,
+        pointRadius: 4,
+        pointHoverRadius: 7,
+        pointBackgroundColor: "#818CF8",
+      }],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => "Score : " + ctx.parsed.y + "%" } },
+      },
+      scales: {
+        y: { min: 0, max: 100, ticks: { color: "#64748b", callback: v => v + "%" }, grid: { color: "#f1f5f9" } },
+        x: { ticks: { color: "#64748b" }, grid: { display: false } },
+      },
+    },
+  });
+
+  // Latest KPI chips
+  const latest = history[history.length - 1];
+  if (latest?.kpis?.length) {
+    $("kpi-trend-kpis").innerHTML = latest.kpis.map(k => _kpiChip(k)).join("");
+  }
+}
+
+function _kpiChip(k) {
+  const color = k.color || "#1e293b";
+  return '<div style="flex:1;min-width:130px;background:var(--bg-light);border:1px solid var(--border);border-radius:8px;padding:8px 12px">'
+    + '<div style="font-size:.75rem;color:var(--slate)">' + esc(k.label) + "</div>"
+    + '<div style="font-weight:700;color:' + color + ';font-size:.9rem">' + esc(k.value) + "</div>"
+    + "</div>";
+}
+
+function closeKpiTrendModal() {
+  const m = $("kpi-trend-modal");
+  if (m) m.classList.add("hidden");
+  if (window._eidTrendChart) { window._eidTrendChart.destroy(); window._eidTrendChart = null; }
+}
+
+async function _recordKpiSnapshot(deptId, kpis, healthScore, deptType, deptName) {
+  if (!deptId || !kpis?.length) return;
+  try {
+    await apiCall(`/api/departments/${deptId}/snapshot`, "POST", {
+      kpis, health_score: healthScore, dept_type: deptType, dept_name: deptName,
+    });
+  } catch {}
 }
 
 function printDirectionReport() {

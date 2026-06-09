@@ -2104,6 +2104,18 @@
       </div>
     </div>
 
+    <!-- ── MODAL TENDANCE KPI ──────────────────────────────────────────────── -->
+    <div id="kpi-trend-modal" class="modal-backdrop hidden" onclick="if(event.target===this)closeKpiTrendModal()">
+      <div class="modal-card" style="max-width:700px;width:96%">
+        <button class="modal-close" onclick="closeKpiTrendModal()">✕</button>
+        <h3 id="kpi-trend-title" style="margin-bottom:16px">Tendance</h3>
+        <div id="kpi-trend-chart-wrap" style="position:relative;min-height:260px">
+          <canvas id="kpi-trend-chart"></canvas>
+        </div>
+        <div id="kpi-trend-kpis" style="margin-top:16px;display:flex;flex-wrap:wrap;gap:8px"></div>
+      </div>
+    </div>
+
     <!-- ── MODAL COLLABORATEUR EXTERNE ────────────────────────────────────── -->
     <div id="contractor-modal" class="modal-backdrop hidden">
       <div class="modal-card" style="max-width:560px;max-height:90vh;overflow-y:auto">
