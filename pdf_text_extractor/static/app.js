@@ -4719,12 +4719,13 @@ async function runAIAnalysis() {
     const enc     = encodeURIComponent(question);
     const data    = await apiCall(`/api/optimization/analyze?question=${enc}&language=${lang}&org_type=${orgType}`, "POST");
     const a    = data.analysis || {};
+    const computedTotal = (a.steps||[]).reduce((sum, s) => sum + (s.savings||0), 0);
 
     if (resultWrap) resultWrap.innerHTML = `
       <div class="ai-plan-card">
         ${!data.success ? `<p class="badge badge-expiring" style="margin-bottom:12px">Analyse basée sur les règles (IA indisponible)</p>` : ""}
         <div class="ai-plan-summary">${esc(a.summary || "")}</div>
-        <div class="ai-plan-total">${_fmt(a.total_potential_savings)} $</div>
+        <div class="ai-plan-total">${_fmt(computedTotal)} $</div>
         <div class="ai-plan-confidence">Confiance : ${a.confidence||0}%</div>
         <div class="ai-steps">
           ${(a.steps||[]).map(s => `
