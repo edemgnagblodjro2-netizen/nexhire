@@ -4344,68 +4344,125 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ── Chips de l'agent IA adaptées au type de département ──────────────────────
 const _DEPT_CHIPS = {
+
+  // ── Finance ────────────────────────────────────────────────────────────────
+  // Comptabilité, trésorerie, budgets, factures, prévisions financières
   finance: [
-    { fr: "Factures en retard de paiement ce mois-ci",                       en: "Overdue invoices this month" },
-    { fr: "Dépassements budgétaires par département",                         en: "Budget overruns by department" },
-    { fr: "Contrats fournisseurs à renouveler dans 90 jours",                 en: "Supplier contracts expiring in 90 days" },
-    { fr: "Dépenses cloud AWS et Azure du mois",                              en: "AWS and Azure cloud spend this month" },
-    { fr: "Prévisions de trésorerie pour le prochain trimestre",              en: "Cash flow forecast for next quarter" },
+    { fr: "Quelles factures fournisseurs sont en retard de paiement ?",                en: "Which supplier invoices are overdue?" },
+    { fr: "Budget vs réel par département ce trimestre",                               en: "Budget vs actual by department this quarter" },
+    { fr: "Quels contrats fournisseurs arrivent à échéance dans 90 jours ?",           en: "Which supplier contracts expire in 90 days?" },
+    { fr: "Prévisions de trésorerie pour le prochain trimestre",                       en: "Cash flow forecast for next quarter" },
+    { fr: "Quels postes de dépenses dépassent le budget alloué ce mois ?",             en: "Which expense lines exceed the allocated budget this month?" },
   ],
+
+  // ── Ressources humaines ────────────────────────────────────────────────────
+  // Recrutement, absences, paie, performance, onboarding, rétention
   hr: [
-    { fr: "Postes vacants et recrutements en cours",                          en: "Open positions and active recruitments" },
-    { fr: "Absences et congés prévus cette semaine",                          en: "Absences and leave scheduled this week" },
-    { fr: "Évaluations de performance en attente",                            en: "Pending performance reviews" },
-    { fr: "Taux de roulement des 6 derniers mois",                            en: "Turnover rate over the last 6 months" },
-    { fr: "Onboarding des nouveaux employés — tâches en retard",              en: "New employee onboarding — overdue tasks" },
+    { fr: "Quels postes sont vacants et depuis combien de temps ?",                    en: "Which positions are open and for how long?" },
+    { fr: "Quelles absences et congés sont prévus cette semaine ?",                    en: "What absences and leaves are scheduled this week?" },
+    { fr: "Quelles évaluations de performance sont en attente de complétion ?",        en: "Which performance reviews are pending completion?" },
+    { fr: "Quel est le taux de roulement du personnel ces 6 derniers mois ?",          en: "What is the staff turnover rate over the last 6 months?" },
+    { fr: "Quels nouveaux employés ont des tâches d'onboarding en retard ?",           en: "Which new employees have overdue onboarding tasks?" },
   ],
+
+  // ── Technologies de l'information ─────────────────────────────────────────
+  // Incidents, licences, sécurité, infrastructure, appareils, cloud
   it: [
-    { fr: "Incidents critiques ouverts et non assignés",                      en: "Open critical incidents unassigned" },
-    { fr: "Licences logicielles expirant dans les 30 jours",                  en: "Software licenses expiring in 30 days" },
-    { fr: "Appareils non conformes aux politiques IT",                        en: "Devices non-compliant with IT policies" },
-    { fr: "Coûts cloud du mois et optimisations possibles",                   en: "Cloud costs this month and optimizations" },
-    { fr: "Alertes cybersécurité critiques des 7 derniers jours",             en: "Critical cybersecurity alerts last 7 days" },
+    { fr: "Quels incidents critiques sont ouverts et non assignés ?",                  en: "Which critical incidents are open and unassigned?" },
+    { fr: "Quelles licences logicielles expirent dans les 30 prochains jours ?",       en: "Which software licenses expire in the next 30 days?" },
+    { fr: "Quels appareils ne respectent pas les politiques de sécurité IT ?",         en: "Which devices are non-compliant with IT security policies?" },
+    { fr: "Quelles alertes de cybersécurité critiques ont été détectées cette semaine ?", en: "What critical cybersecurity alerts were detected this week?" },
+    { fr: "Quelles mises à jour critiques sont en attente de déploiement ?",           en: "Which critical updates are pending deployment?" },
   ],
+
+  // ── Opérations ────────────────────────────────────────────────────────────
+  // Gestion de projets, livrables, équipes, capacité, processus
   operations: [
-    { fr: "Projets en retard avec blocages identifiés",                       en: "Late projects with identified blockers" },
-    { fr: "Tâches critiques non assignées cette semaine",                     en: "Critical unassigned tasks this week" },
-    { fr: "Processus manuels à fort potentiel d'automatisation",              en: "Manual processes with automation potential" },
-    { fr: "Commandes fournisseurs en attente de livraison",                   en: "Supplier orders pending delivery" },
-    { fr: "Score d'efficacité opérationnelle et économies potentielles",      en: "Operational efficiency score and savings" },
+    { fr: "Quels projets sont en retard et quels sont les blocages identifiés ?",      en: "Which projects are delayed and what blockers are identified?" },
+    { fr: "Quelles tâches critiques n'ont pas encore été assignées cette semaine ?",   en: "Which critical tasks have not been assigned this week?" },
+    { fr: "Quels membres de l'équipe sont surchargés ou sous-utilisés ?",              en: "Which team members are overloaded or underutilized?" },
+    { fr: "Quels processus opérationnels génèrent le plus de délais récurrents ?",     en: "Which operational processes generate the most recurring delays?" },
+    { fr: "Quel est le taux de complétion des livrables du mois en cours ?",           en: "What is the completion rate of deliverables for the current month?" },
   ],
+
+  // ── Marketing & Ventes ────────────────────────────────────────────────────
+  // Campagnes, leads, pipeline CRM, opportunités, acquisition client
   marketing: [
-    { fr: "Performance des campagnes en cours",                               en: "Performance of active campaigns" },
-    { fr: "Leads entrants cette semaine — statut et priorité",                en: "Incoming leads this week — status and priority" },
-    { fr: "Contrats clients à renouveler prochainement",                      en: "Client contracts up for renewal" },
-    { fr: "Pipeline commercial et opportunités à risque",                     en: "Sales pipeline and at-risk opportunities" },
-    { fr: "Activité récente dans le CRM — nouveaux contacts",                 en: "Recent CRM activity — new contacts" },
+    { fr: "Quelle est la performance des campagnes marketing actives ce mois ?",       en: "What is the performance of active marketing campaigns this month?" },
+    { fr: "Quels leads entrants cette semaine n'ont pas encore été qualifiés ?",       en: "Which incoming leads this week have not been qualified yet?" },
+    { fr: "Quelles opportunités CRM sont sans suivi depuis plus de 7 jours ?",         en: "Which CRM opportunities have had no follow-up in over 7 days?" },
+    { fr: "Quel est le pipeline commercial actuel et les opportunités à risque ?",     en: "What is the current sales pipeline and at-risk opportunities?" },
+    { fr: "Quel est le coût d'acquisition client ce trimestre vs l'objectif ?",        en: "What is the customer acquisition cost this quarter vs target?" },
   ],
+
+  // ── Direction générale ────────────────────────────────────────────────────
+  // Vue consolidée multi-département : finances, RH, IT, projets, risques
   direction: [
-    { fr: "Santé globale de l'organisation — risques et alertes",             en: "Organization health — risks and alerts" },
-    { fr: "Économies potentielles identifiées ce mois-ci",                    en: "Potential savings identified this month" },
-    { fr: "Performance financière : budget vs réel par département",          en: "Financial performance: budget vs actual by department" },
-    { fr: "Incidents critiques + emails prioritaires + projets en retard",    en: "Critical incidents + priority emails + late projects" },
-    { fr: "Quels sont les 3 principaux risques opérationnels actuels ?",      en: "What are the top 3 current operational risks?" },
+    { fr: "Quel est l'état de santé global de l'organisation — risques et alertes ?",  en: "What is the overall health of the organization — risks and alerts?" },
+    { fr: "Quelles économies potentielles ont été identifiées ce mois-ci ?",           en: "What potential savings have been identified this month?" },
+    { fr: "Performance financière consolidée : budget vs réel par département",        en: "Consolidated financial performance: budget vs actual by department" },
+    { fr: "Résumé exécutif : incidents IT + projets en retard + alertes RH",          en: "Executive summary: IT incidents + late projects + HR alerts" },
+    { fr: "Quels sont les 3 principaux risques opérationnels à adresser en priorité ?", en: "What are the top 3 operational risks to address as a priority?" },
   ],
+
+  // ── Juridique & Conformité ────────────────────────────────────────────────
+  // Contrats, obligations légales, conformité, litiges, NDA, LPRPDE
   legal: [
-    { fr: "Contrats avec clauses de renouvellement tacite ce trimestre",      en: "Contracts with auto-renewal clauses this quarter" },
-    { fr: "Obligations réglementaires à date limite imminente",               en: "Regulatory obligations with imminent deadlines" },
-    { fr: "Fournisseurs avec contrats à renégocier",                          en: "Vendors with contracts to renegotiate" },
-    { fr: "Risques juridiques identifiés dans les contrats actifs",           en: "Legal risks identified in active contracts" },
-    { fr: "État de la conformité organisationnelle",                          en: "Organizational compliance status" },
+    { fr: "Quels contrats actifs contiennent des clauses de renouvellement automatique ?", en: "Which active contracts contain auto-renewal clauses?" },
+    { fr: "Quelles obligations réglementaires ont une date limite dans les 30 prochains jours ?", en: "Which regulatory obligations have a deadline in the next 30 days?" },
+    { fr: "Quels contrats fournisseurs peuvent être renégociés à notre avantage ?",    en: "Which vendor contracts can be renegotiated in our favor?" },
+    { fr: "Quels risques juridiques ont été identifiés dans les contrats actifs ?",    en: "What legal risks have been identified in active contracts?" },
+    { fr: "Quel est l'état de conformité LPRPDE / RGPD de l'organisation ?",          en: "What is the organization's PIPEDA / GDPR compliance status?" },
   ],
+
+  // ── Approvisionnement ────────────────────────────────────────────────────
+  // Fournisseurs, achats, appels d'offres, commandes, coûts d'acquisition
   approvisionnement: [
-    { fr: "Fournisseurs en doublon — consolidation possible",                 en: "Duplicate vendors — consolidation possible" },
-    { fr: "Contrats à fort potentiel de renégociation",                       en: "Contracts with high renegotiation potential" },
-    { fr: "Commandes en attente et délais de livraison",                      en: "Pending orders and delivery timelines" },
-    { fr: "Économies identifiées sur les achats ce trimestre",                en: "Procurement savings identified this quarter" },
-    { fr: "Top fournisseurs par volume de dépenses",                          en: "Top vendors by spend volume" },
+    { fr: "Quels fournisseurs offrent des services en doublon — consolidation possible ?", en: "Which vendors offer duplicate services — consolidation possible?" },
+    { fr: "Quels contrats d'achat ont le plus fort potentiel de renégociation ?",      en: "Which purchase contracts have the highest renegotiation potential?" },
+    { fr: "Quelles commandes sont en attente de livraison avec retard ?",              en: "Which orders are pending delivery with delays?" },
+    { fr: "Quelles économies ont été réalisées sur les achats ce trimestre ?",         en: "What savings were achieved on purchases this quarter?" },
+    { fr: "Quels sont les top 5 fournisseurs par volume de dépenses annuelles ?",      en: "What are the top 5 vendors by annual spend volume?" },
   ],
+
+  // ── Fabrication & Supply Chain ────────────────────────────────────────────
+  // Production, stocks, qualité, ordres de fabrication, chaîne logistique
   manufacturing: [
-    { fr: "Ordres de production en cours et taux d'avancement",              en: "Active production orders and completion rates" },
-    { fr: "Stock critique — ruptures imminentes",                             en: "Critical stock — imminent stockouts" },
-    { fr: "Délais fournisseurs et commandes en retard",                       en: "Supplier lead times and late orders" },
-    { fr: "Coût de production par unité ce mois-ci",                         en: "Production cost per unit this month" },
-    { fr: "Taux de rebut et non-conformités qualité",                        en: "Scrap rate and quality non-conformances" },
+    { fr: "Quels ordres de production sont en retard sur le calendrier prévu ?",       en: "Which production orders are behind schedule?" },
+    { fr: "Quels articles sont en rupture de stock critique ou en alerte ?",           en: "Which items are in critical stockout or alert status?" },
+    { fr: "Quels fournisseurs ont des délais de livraison qui impactent la production ?", en: "Which suppliers have delivery delays impacting production?" },
+    { fr: "Quel est le coût de production par unité ce mois vs l'objectif ?",          en: "What is the production cost per unit this month vs target?" },
+    { fr: "Quel est le taux de rebut et les non-conformités qualité de cette semaine ?", en: "What is the scrap rate and quality non-conformances this week?" },
+  ],
+
+  // ── Communication & Relations publiques ───────────────────────────────────
+  // Relations médias, image de marque, communications internes/externes, RP
+  communication: [
+    { fr: "Quelles mentions de notre organisation dans les médias cette semaine ?",    en: "What mentions of our organization appeared in the media this week?" },
+    { fr: "Quelles communications internes ont été publiées et leur taux de lecture ?", en: "Which internal communications were published and what was their read rate?" },
+    { fr: "Quels événements ou conférences de presse sont prévus ce mois ?",           en: "What events or press conferences are scheduled this month?" },
+    { fr: "Quel est l'état des demandes médias en attente de réponse ?",               en: "What is the status of pending media requests awaiting response?" },
+    { fr: "Quelles campagnes de communication ont le meilleur engagement ?",           en: "Which communication campaigns have the best engagement?" },
+  ],
+
+  // ── Service client & Support ──────────────────────────────────────────────
+  // Tickets, satisfaction client, SLA, résolution, escalades
+  support: [
+    { fr: "Quels tickets clients sont ouverts depuis plus de 48 heures ?",             en: "Which customer tickets have been open for more than 48 hours?" },
+    { fr: "Quel est le score de satisfaction client (CSAT) de cette semaine ?",        en: "What is the customer satisfaction score (CSAT) this week?" },
+    { fr: "Quels SLA risquent d'être dépassés dans les prochaines 24 heures ?",        en: "Which SLAs are at risk of being exceeded in the next 24 hours?" },
+    { fr: "Quels types de problèmes génèrent le plus de tickets récurrents ?",         en: "What types of issues generate the most recurring tickets?" },
+    { fr: "Quels clients prioritaires ont des tickets en attente de résolution ?",     en: "Which priority clients have tickets pending resolution?" },
+  ],
+
+  // ── Recherche & Développement ────────────────────────────────────────────
+  // Projets R&D, innovation, brevets, prototypes, budgets de recherche
+  rd: [
+    { fr: "Quels projets R&D sont en phase de test ou de validation ?",                en: "Which R&D projects are in testing or validation phase?" },
+    { fr: "Quel est le budget R&D consommé vs alloué ce trimestre ?",                  en: "What is the R&D budget consumed vs allocated this quarter?" },
+    { fr: "Quels livrables de recherche sont en retard sur le calendrier ?",           en: "Which research deliverables are behind schedule?" },
+    { fr: "Quels jalons de développement sont prévus dans les 30 prochains jours ?",   en: "Which development milestones are planned in the next 30 days?" },
+    { fr: "Quelles innovations brevetées ou en cours de brevet avons-nous ce trimestre ?", en: "Which innovations are patented or pending patent this quarter?" },
   ],
 };
 
@@ -4683,6 +4740,10 @@ async function _updateWorkspaceBar() {
     marketing:         { icon: "📣", color: "#db2777", label: { fr: "Marketing",           en: "Marketing" } },
     approvisionnement: { icon: "🛒", color: "#0891b2", label: { fr: "Approvisionnement",   en: "Procurement" } },
     direction:         { icon: "🏛️", color: "#1e293b", label: { fr: "Direction",           en: "Executive" } },
+    manufacturing:     { icon: "🏭", color: "#c8102e", label: { fr: "Fabrication",         en: "Manufacturing" } },
+    communication:     { icon: "📢", color: "#db2777", label: { fr: "Communication",       en: "Communication" } },
+    support:           { icon: "🎧", color: "#0891b2", label: { fr: "Support client",      en: "Customer Support" } },
+    rd:                { icon: "🔬", color: "#7c3aed", label: { fr: "R&D",                 en: "R&D" } },
     general:           { icon: "📊", color: "#64748b", label: { fr: "Général",             en: "General" } },
   };
 
