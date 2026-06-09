@@ -81,7 +81,7 @@ create or replace function public.archive_old_data()
 returns jsonb
 language plpgsql
 security definer
-as $$
+as $func$
 declare
   conv_count   int;
   audit_count  int;
@@ -121,7 +121,7 @@ begin
     'archived_at',            now()
   );
 end;
-$$;
+$func$;
 
 comment on function public.archive_old_data() is
   'Déplace les données anciennes vers les tables _archive. Appeler mensuellement.';
