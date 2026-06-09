@@ -263,8 +263,8 @@ def _member_level(user_id: str, dept_id: str) -> int:
 
 
 def _cross_org_level(user_id: str, org_id: str) -> int | None:
-    """Retourne le niveau hiérarchique de l'utilisateur dans son dept cross-org (Direction/RH/IT).
-    Retourne None si l'utilisateur n'est pas dans un dept cross-org."""
+    """Retourne le niveau hiérarchique si l'utilisateur est dans un dept cross-org ET niveau <= 3.
+    Niveaux 4-6 = opérationnel → pas de visibilité cross-org, retourne None."""
     try:
         with get_db() as cur:
             cur.execute(
@@ -281,7 +281,8 @@ def _cross_org_level(user_id: str, org_id: str) -> int | None:
         if not r:
             return None
         lvl = r.get("hierarchy_level")
-        return int(lvl) if lvl and 1 <= int(lvl) <= 6 else 6
+        lvl = int(lvl) if lvl and 1 <= int(lvl) <= 6 else 6
+        return lvl if lvl <= 3 else None  # niveaux 4-6 = opérationnel → pas de cross-org
     except Exception:
         return None
 
@@ -805,21 +806,10 @@ _CROSS_ORG_DEPT_TYPES: frozenset[str] = frozenset({"direction", "rh", "it", "dig
 def list_departments(user: CurrentUser = Depends(require_min_role("user"))):
     is_admin = ROLE_RANK.get(user.role, 0) >= 3 or user.is_service_account
 
-    # Vérifier si l'utilisateur est dans un dept avec visibilité cross-org (Direction, RH, IT)
+    # Visibilité cross-org : dept Direction/RH/IT ET niveau <= 3 uniquement
     has_cross_org = False
     if not is_admin:
-        try:
-            with get_db() as cur:
-                cur.execute(
-                    """SELECT d.dept_type FROM department_members dm
-                       JOIN departments d ON d.id = dm.department_id
-                       WHERE dm.user_id = %s AND d.organization_id = %s""",
-                    (user.id, user.organization_id),
-                )
-                user_types = {r["dept_type"] for r in rows(cur) if r.get("dept_type")}
-            has_cross_org = bool(user_types & _CROSS_ORG_DEPT_TYPES)
-        except Exception:
-            pass
+        has_cross_org = _cross_org_level(user.id, user.organization_id) is not None
 
     if is_admin or has_cross_org:
         with get_db() as cur:
