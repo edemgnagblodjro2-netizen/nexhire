@@ -1001,6 +1001,27 @@
         <div class="dept-kpi-grid" id="dept-kpi-grid">
           <div class="dept-kpi-loading"><div class="spinner" style="margin:auto"></div></div>
         </div>
+
+        <!-- Vue agrégée Direction Générale -->
+        <div id="direction-aggregate-wrap" class="hidden">
+          <!-- Barre d'actions -->
+          <div class="dir-agg-toolbar">
+            <div class="dir-agg-toolbar-left">
+              <span class="dir-agg-period" id="dir-agg-period"></span>
+            </div>
+            <div class="dir-agg-toolbar-right">
+              <button class="btn btn-outline btn-sm" onclick="loadDirectionAggregate()">↻ Actualiser</button>
+              <button class="btn btn-primary btn-sm" onclick="printDirectionReport()">📥 Rapport PDF</button>
+            </div>
+          </div>
+
+          <!-- KPIs globaux -->
+          <div class="dir-global-strip" id="dir-global-strip"></div>
+
+          <!-- Grille des départements -->
+          <div id="direction-aggregate-grid" class="dir-agg-grid"></div>
+        </div>
+
         <!-- Collaborateurs externes du département (affiché par défaut) -->
         <div id="dept-external-wrap" class="dept-external-mini hidden">
           <div class="dept-external-mini-header">

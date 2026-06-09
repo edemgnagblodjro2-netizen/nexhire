@@ -328,6 +328,62 @@ class TitlePayload(BaseModel):
     hierarchy_level: int | None = Field(None, ge=1, le=6)
 
 
+@router.get("/aggregate")
+def dept_aggregate(user: CurrentUser = Depends(require_min_role("user"))):
+    """Vue agrégée Direction Générale : résumé des 3 KPIs principaux de chaque département."""
+    org_id = user.organization_id
+    is_org_admin = ROLE_RANK.get(user.role, 0) >= 3 or user.is_service_account
+
+    access_level = 1 if is_org_admin else (_cross_org_level(user.id, org_id) or 6)
+    if access_level > 3:
+        raise HTTPException(status_code=403, detail="Accès réservé à la Direction, RH et IT (niveaux 1-3).")
+
+    try:
+        with get_db() as cur:
+            cur.execute(
+                "SELECT * FROM departments WHERE organization_id = %s ORDER BY name",
+                (org_id,),
+            )
+            depts = rows(cur)
+    except Exception:
+        return []
+
+    result = []
+    for dept in depts:
+        dept_id   = dept["id"]
+        dept_type = dept.get("dept_type") or "general"
+        cfg       = DEPT_TYPE_CONFIG.get(dept_type, DEPT_TYPE_CONFIG["general"])
+
+        # Limite à 3 KPIs visibles selon le niveau
+        summary_keys = _visible_kpis(cfg["kpis"][:5], access_level)[:3]
+        kpis = _build_kpis(org_id, dept_id, summary_keys)
+
+        # Nombre de membres
+        try:
+            with get_db() as cur:
+                cur.execute(
+                    "SELECT COUNT(*) AS cnt FROM department_members WHERE department_id = %s",
+                    (dept_id,),
+                )
+                cnt_row = row(cur)
+            member_count = cnt_row["cnt"] if cnt_row else 0
+        except Exception:
+            member_count = 0
+
+        result.append({
+            "dept_id":      dept_id,
+            "dept_type":    dept_type,
+            "dept_name":    dept.get("name"),
+            "icon":         cfg["icon"],
+            "color":        cfg["color"],
+            "label":        cfg["label"],
+            "kpis":         kpis,
+            "member_count": member_count,
+        })
+
+    return result
+
+
 @router.get("/dashboard")
 def dept_dashboard(
     dept_id: str | None = Query(None),

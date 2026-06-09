@@ -5572,6 +5572,15 @@ async function loadDeptDashboard(deptId = null) {
     _activeDeptId = d.dept_id || deptId || null;
     loadDeptExternalContractors(_activeDeptId);
 
+    // Vue agrégée Direction Générale (uniquement si direction sans workspace actif)
+    const aggWrap = $("direction-aggregate-wrap");
+    if (d.dept_type === "direction" && !_activeWorkspaceDeptType) {
+      if (aggWrap) aggWrap.classList.remove("hidden");
+      loadDirectionAggregate();
+    } else {
+      if (aggWrap) aggWrap.classList.add("hidden");
+    }
+
     section.classList.remove("hidden");
   } catch (_) {
     // Silently hide — dashboard is non-critical
@@ -5934,6 +5943,295 @@ document.addEventListener("click", e => {
   if (e.target?.id === "legal-modal") closeLegal();
   if (e.target?.id === "contractor-modal") closeContractorModal();
 });
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ── VUE AGRÉGÉE DIRECTION GÉNÉRALE ───────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════
+
+// Calcule un score de santé (0-100) à partir des couleurs des KPIs
+function _deptHealthScore(kpis) {
+  if (!kpis || kpis.length === 0) return null;
+  const weights = { "#16a34a": 100, "#2563eb": 80, "#0891b2": 75, "#d97706": 40, "#dc2626": 10 };
+  const scores = kpis.map(k => weights[k.color] ?? 60);
+  return Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+}
+
+// Donut SVG pur CSS — pct 0-100
+function _donutSvg(pct, color, size = 56) {
+  const r = (size - 8) / 2;
+  const circ = 2 * Math.PI * r;
+  const filled = (pct / 100) * circ;
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="transform:rotate(-90deg)">
+    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="#e2e8f0" stroke-width="6"/>
+    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${color}" stroke-width="6"
+            stroke-dasharray="${filled} ${circ}" stroke-linecap="round"/>
+  </svg>`;
+}
+
+// Couleur selon score
+function _scoreColor(s) {
+  if (s == null) return "#94a3b8";
+  if (s >= 75) return "#16a34a";
+  if (s >= 50) return "#d97706";
+  return "#dc2626";
+}
+
+// Barre de progression
+function _progressBar(pct, color) {
+  const p = Math.min(Math.max(pct || 0, 0), 100);
+  return `<div class="dir-kpi-bar-track"><div class="dir-kpi-bar-fill" style="width:${p}%;background:${color}"></div></div>`;
+}
+
+// Essaie d'extraire un % depuis la valeur string
+function _parsePct(val) {
+  if (!val) return null;
+  const m = String(val).match(/^(\d+(?:\.\d+)?)\s*%/);
+  return m ? parseFloat(m[1]) : null;
+}
+
+let _aggData = [];  // cache pour le rapport PDF
+
+async function loadDirectionAggregate() {
+  const grid   = $("direction-aggregate-grid");
+  const strip  = $("dir-global-strip");
+  const period = $("dir-agg-period");
+  if (!grid) return;
+
+  if (period) {
+    const now = new Date();
+    period.textContent = now.toLocaleDateString("fr-CA", { year: "numeric", month: "long", day: "numeric" });
+  }
+
+  grid.innerHTML = `<div style="grid-column:1/-1;padding:32px;text-align:center"><div class="spinner" style="margin:auto"></div><p class="muted" style="margin-top:12px">Chargement de tous les départements…</p></div>`;
+  if (strip) strip.innerHTML = "";
+
+  try {
+    const depts = await apiCall("/api/departments/aggregate");
+    _aggData = depts || [];
+
+    if (!_aggData.length) {
+      grid.innerHTML = `<p class="muted" style="padding:16px;grid-column:1/-1">Aucun département créé.</p>`;
+      return;
+    }
+
+    // ── Calcul global ──────────────────────────────────────────────────────
+    const totalMembers  = _aggData.reduce((s, d) => s + (d.member_count || 0), 0);
+    const scores        = _aggData.map(d => _deptHealthScore(d.kpis)).filter(s => s != null);
+    const avgScore      = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
+    const critical      = _aggData.filter(d => (_deptHealthScore(d.kpis) ?? 100) < 50).length;
+    const healthy       = _aggData.filter(d => (_deptHealthScore(d.kpis) ?? 0) >= 75).length;
+
+    // ── Bande KPIs globaux ─────────────────────────────────────────────────
+    if (strip) strip.innerHTML = `
+      <div class="dir-global-kpi">
+        <div class="dir-global-donut">
+          ${_donutSvg(avgScore ?? 0, _scoreColor(avgScore), 64)}
+          <span class="dir-global-donut-val" style="color:${_scoreColor(avgScore)}">${avgScore != null ? avgScore + "%" : "—"}</span>
+        </div>
+        <div class="dir-global-kpi-info">
+          <div class="dir-global-kpi-label">Santé organisationnelle</div>
+          <div class="dir-global-kpi-sub">Score moyen des ${_aggData.length} départements</div>
+        </div>
+      </div>
+      <div class="dir-global-kpi">
+        <div class="dir-global-big">${_aggData.length}</div>
+        <div class="dir-global-kpi-info">
+          <div class="dir-global-kpi-label">Départements</div>
+          <div class="dir-global-kpi-sub">${healthy} en bonne santé · ${critical} à surveiller</div>
+        </div>
+      </div>
+      <div class="dir-global-kpi">
+        <div class="dir-global-big">${totalMembers}</div>
+        <div class="dir-global-kpi-info">
+          <div class="dir-global-kpi-label">Membres au total</div>
+          <div class="dir-global-kpi-sub">Répartis sur tous les workspaces</div>
+        </div>
+      </div>
+      <div class="dir-global-kpi">
+        <div class="dir-global-big" style="color:${critical > 0 ? '#dc2626' : '#16a34a'}">${critical}</div>
+        <div class="dir-global-kpi-info">
+          <div class="dir-global-kpi-label">Alertes critiques</div>
+          <div class="dir-global-kpi-sub">Départements score &lt; 50%</div>
+        </div>
+      </div>`;
+
+    // ── Cartes départements ────────────────────────────────────────────────
+    grid.innerHTML = _aggData.map(dept => {
+      const score  = _deptHealthScore(dept.kpis);
+      const sColor = _scoreColor(score);
+      const members = dept.member_count === 1 ? "1 membre" : `${dept.member_count} membres`;
+
+      const kpisHtml = (dept.kpis || []).map(k => {
+        const pct = _parsePct(k.value);
+        const barHtml = pct != null ? _progressBar(pct, k.color) : "";
+        return `<div class="dir-kpi-row">
+          <span class="dir-kpi-icon">${k.icon || "📊"}</span>
+          <div class="dir-kpi-body">
+            <div class="dir-kpi-top">
+              <span class="dir-kpi-label">${esc(k.label)}</span>
+              <span class="dir-kpi-val" style="color:${k.color || "#1e293b"}">${esc(k.value)}</span>
+            </div>
+            ${barHtml}
+            ${k.sub ? `<div class="dir-kpi-sub">${esc(k.sub)}</div>` : ""}
+          </div>
+        </div>`;
+      }).join("");
+
+      return `<div class="dir-agg-card" style="--dept-accent:${dept.color || '#818CF8'}">
+        <div class="dir-agg-card-header">
+          <span class="dir-agg-card-icon">${dept.icon || "📊"}</span>
+          <div class="dir-agg-card-titles">
+            <div class="dir-agg-card-name">${esc(dept.dept_name || "")}</div>
+            <div class="dir-agg-card-members">${members}</div>
+          </div>
+          <div class="dir-agg-score-wrap">
+            ${_donutSvg(score ?? 0, sColor, 48)}
+            <span class="dir-agg-score-val" style="color:${sColor}">${score != null ? score + "%" : "—"}</span>
+          </div>
+        </div>
+        <div class="dir-kpi-list">${kpisHtml || '<p class="muted" style="font-size:.78rem;padding:4px 0">Aucune donnée disponible</p>'}</div>
+        <button class="dir-agg-open-btn" onclick="activateWorkspace('${dept.dept_id}','${dept.dept_type}','${esc(dept.dept_name || '')}')">
+          Ouvrir le workspace →
+        </button>
+      </div>`;
+    }).join("");
+
+  } catch (ex) {
+    grid.innerHTML = `<p class="form-error" style="grid-column:1/-1">Erreur : ${esc(ex.message)}</p>`;
+  }
+}
+
+function printDirectionReport() {
+  const now = new Date().toLocaleDateString("fr-CA", { year:"numeric", month:"long", day:"numeric" });
+  const orgName = state.user?.organization_name || state.user?.email || "Organisation";
+
+  const cardsHtml = _aggData.map(dept => {
+    const score  = _deptHealthScore(dept.kpis);
+    const sColor = _scoreColor(score);
+    const members = dept.member_count === 1 ? "1 membre" : `${dept.member_count} membres`;
+    const kpisHtml = (dept.kpis || []).map(k => `
+      <tr>
+        <td>${k.icon || ""} ${esc(k.label)}</td>
+        <td style="font-weight:700;color:${k.color}">${esc(k.value)}</td>
+        <td style="color:#64748b;font-size:.8em">${esc(k.sub || "")}</td>
+      </tr>`).join("");
+    return `
+      <div class="rpt-dept-card">
+        <div class="rpt-dept-header" style="border-left:4px solid ${dept.color}">
+          <span style="font-size:1.3rem">${dept.icon || "📊"}</span>
+          <div>
+            <div class="rpt-dept-name">${esc(dept.dept_name || "")}</div>
+            <div class="rpt-dept-meta">${members} · Score : <strong style="color:${sColor}">${score != null ? score+"%" : "—"}</strong></div>
+          </div>
+        </div>
+        <table class="rpt-kpi-table"><tbody>${kpisHtml}</tbody></table>
+      </div>`;
+  }).join("");
+
+  const scores = _aggData.map(d => _deptHealthScore(d.kpis)).filter(s => s != null);
+  const avgScore = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
+  const totalMembers = _aggData.reduce((s, d) => s + (d.member_count || 0), 0);
+  const critical = _aggData.filter(d => (_deptHealthScore(d.kpis) ?? 100) < 50).length;
+
+  const win = window.open("", "_blank");
+  win.document.write(`<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8">
+<title>Rapport Direction Générale — ${now}</title>
+<style>
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Segoe UI',Arial,sans-serif; color:#1e293b; background:#fff; font-size:11pt; }
+  .rpt-page { max-width:900px; margin:0 auto; padding:40px; }
+
+  /* En-tête */
+  .rpt-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:32px; padding-bottom:20px; border-bottom:2px solid #1e293b; }
+  .rpt-logo { font-size:1.6rem; font-weight:800; color:#1e293b; letter-spacing:-.5px; }
+  .rpt-logo span { color:#818CF8; }
+  .rpt-header-right { text-align:right; font-size:.85rem; color:#64748b; line-height:1.6; }
+
+  /* Résumé global */
+  .rpt-summary { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:32px; }
+  .rpt-summary-card { background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; text-align:center; }
+  .rpt-summary-val { font-size:1.8rem; font-weight:800; color:#1e293b; }
+  .rpt-summary-label { font-size:.78rem; color:#64748b; margin-top:2px; }
+
+  /* Section */
+  .rpt-section-title { font-size:1rem; font-weight:700; color:#1e293b; margin:28px 0 12px; padding-bottom:6px; border-bottom:1px solid #e2e8f0; }
+
+  /* Carte département */
+  .rpt-dept-card { break-inside:avoid; border:1px solid #e2e8f0; border-radius:8px; padding:14px; margin-bottom:14px; }
+  .rpt-dept-header { display:flex; align-items:center; gap:12px; margin-bottom:10px; padding-left:8px; }
+  .rpt-dept-name { font-weight:700; font-size:.95rem; }
+  .rpt-dept-meta { font-size:.8rem; color:#64748b; margin-top:2px; }
+  .rpt-kpi-table { width:100%; border-collapse:collapse; font-size:.82rem; }
+  .rpt-kpi-table td { padding:4px 8px; border-bottom:1px solid #f1f5f9; }
+  .rpt-kpi-table td:first-child { color:#475569; width:45%; }
+  .rpt-kpi-table td:last-child { color:#94a3b8; }
+
+  /* Conclusion */
+  .rpt-conclusion { background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:18px; margin-top:24px; font-size:.88rem; line-height:1.7; }
+  .rpt-conclusion h3 { font-size:.9rem; font-weight:700; margin-bottom:8px; }
+
+  /* Pied de page */
+  .rpt-footer { margin-top:40px; padding-top:16px; border-top:1px solid #e2e8f0; font-size:.75rem; color:#94a3b8; display:flex; justify-content:space-between; }
+  @media print { body { font-size:10pt; } .rpt-page { padding:20px; } }
+</style></head><body>
+<div class="rpt-page">
+
+  <div class="rpt-header">
+    <div>
+      <div class="rpt-logo">Nex<span>Hire</span> EIP</div>
+      <div style="font-size:.85rem;color:#64748b;margin-top:4px">Rapport Direction Générale</div>
+    </div>
+    <div class="rpt-header-right">
+      <div><strong>${esc(orgName)}</strong></div>
+      <div>${now}</div>
+      <div>${_aggData.length} département${_aggData.length > 1 ? "s" : ""}</div>
+    </div>
+  </div>
+
+  <div class="rpt-summary">
+    <div class="rpt-summary-card">
+      <div class="rpt-summary-val" style="color:${_scoreColor(avgScore)}">${avgScore != null ? avgScore+"%" : "—"}</div>
+      <div class="rpt-summary-label">Santé organisationnelle</div>
+    </div>
+    <div class="rpt-summary-card">
+      <div class="rpt-summary-val">${_aggData.length}</div>
+      <div class="rpt-summary-label">Départements actifs</div>
+    </div>
+    <div class="rpt-summary-card">
+      <div class="rpt-summary-val">${totalMembers}</div>
+      <div class="rpt-summary-label">Membres total</div>
+    </div>
+    <div class="rpt-summary-card">
+      <div class="rpt-summary-val" style="color:${critical > 0 ? '#dc2626' : '#16a34a'}">${critical}</div>
+      <div class="rpt-summary-label">Alertes critiques</div>
+    </div>
+  </div>
+
+  <div class="rpt-section-title">📊 Performance par département</div>
+  ${cardsHtml}
+
+  <div class="rpt-conclusion">
+    <h3>📝 Conclusion et recommandations</h3>
+    <p>
+      Ce rapport présente une vue consolidée de <strong>${_aggData.length} département${_aggData.length > 1 ? "s" : ""}</strong>
+      avec un score de santé organisationnelle moyen de <strong style="color:${_scoreColor(avgScore)}">${avgScore != null ? avgScore+"%" : "—"}</strong>.
+      ${critical > 0
+        ? `<strong>${critical} département${critical > 1 ? "s nécessitent" : " nécessite"} une attention immédiate</strong> (score &lt; 50 %).`
+        : "L'ensemble des départements affiche des indicateurs satisfaisants."}
+      Il est recommandé de prioriser les workspaces à score faible, de réviser les budgets non utilisés et de planifier les renouvellements de contrats à venir.
+    </p>
+  </div>
+
+  <div class="rpt-footer">
+    <span>NexHire EIP — Confidentiel</span>
+    <span>Généré le ${now}</span>
+  </div>
+</div>
+<script>window.onload = () => { window.print(); }<\/script>
+</body></html>`);
+  win.document.close();
+}
 
 // ═══════════════════════════════════════════════════════════════════════════
 // ── COLLABORATEURS EXTERNES ───────────────────────────────────────────────
