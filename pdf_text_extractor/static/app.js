@@ -4464,6 +4464,56 @@ const _DEPT_CHIPS = {
     { fr: "Quels jalons de développement sont prévus dans les 30 prochains jours ?",   en: "Which development milestones are planned in the next 30 days?" },
     { fr: "Quelles innovations brevetées ou en cours de brevet avons-nous ce trimestre ?", en: "Which innovations are patented or pending patent this quarter?" },
   ],
+
+  // ── Commerciaux / Ventes ──────────────────────────────────────────────────
+  // Quota, pipeline, clients, propositions, commissions, closing
+  sales: [
+    { fr: "Quels représentants sont en dessous de leur quota ce mois-ci ?",            en: "Which sales reps are below quota this month?" },
+    { fr: "Quelles opportunités doivent être closées avant la fin du trimestre ?",     en: "Which opportunities need to be closed before end of quarter?" },
+    { fr: "Quelles propositions commerciales sont en attente de réponse client ?",     en: "Which commercial proposals are awaiting client response?" },
+    { fr: "Quels comptes clients n'ont eu aucun contact depuis 30 jours ?",            en: "Which client accounts have had no contact in 30 days?" },
+    { fr: "Quel est le taux de conversion des leads en clients ce trimestre ?",        en: "What is the lead-to-client conversion rate this quarter?" },
+  ],
+
+  // ── Assurance qualité ─────────────────────────────────────────────────────
+  // Non-conformités, audits, contrôle qualité, certifications, incidents
+  qualite: [
+    { fr: "Quelles non-conformités sont ouvertes et sans plan d'action ?",             en: "Which non-conformances are open and without an action plan?" },
+    { fr: "Quels audits qualité sont prévus dans les 30 prochains jours ?",            en: "Which quality audits are scheduled in the next 30 days?" },
+    { fr: "Quel est le taux de défauts ou de rejets qualité ce mois-ci ?",             en: "What is the defect or quality rejection rate this month?" },
+    { fr: "Quelles certifications (ISO, etc.) arrivent à renouvellement ?",            en: "Which certifications (ISO, etc.) are due for renewal?" },
+    { fr: "Quelles réclamations clients liées à la qualité sont en attente ?",         en: "Which customer quality complaints are currently pending?" },
+  ],
+
+  // ── Digitalisation & Transformation numérique ────────────────────────────
+  // Projets digitaux, adoption outils, automatisation, ROI transformation
+  digitalisation: [
+    { fr: "Quels projets de transformation digitale sont en cours et leur avancement ?", en: "Which digital transformation projects are in progress and what is their status?" },
+    { fr: "Quel est le taux d'adoption des nouveaux outils numériques déployés ?",     en: "What is the adoption rate of newly deployed digital tools?" },
+    { fr: "Quels processus manuels sont prioritaires pour l'automatisation ?",         en: "Which manual processes are priorities for automation?" },
+    { fr: "Quel est le ROI mesuré des initiatives de digitalisation ce trimestre ?",   en: "What is the measured ROI of digitalization initiatives this quarter?" },
+    { fr: "Quels obstacles freinent l'adoption numérique dans les équipes ?",          en: "What obstacles are slowing digital adoption across teams?" },
+  ],
+
+  // ── Comptabilité ──────────────────────────────────────────────────────────
+  // Écritures, rapprochements, clôtures, taxes, états financiers
+  comptabilite: [
+    { fr: "Quels rapprochements bancaires sont en attente de validation ?",            en: "Which bank reconciliations are pending validation?" },
+    { fr: "Quelles écritures comptables sont incomplètes pour la clôture du mois ?",  en: "Which accounting entries are incomplete for month-end close?" },
+    { fr: "Quel est l'état des déclarations fiscales et taxes à venir ?",              en: "What is the status of upcoming tax filings and declarations?" },
+    { fr: "Quelles dépenses n'ont pas encore de justificatif attaché ?",               en: "Which expenses do not yet have an attached receipt?" },
+    { fr: "Quel est le solde des comptes clients et fournisseurs en ce moment ?",      en: "What is the current balance of accounts receivable and payable?" },
+  ],
+
+  // ── Logistique & Entrepôt ─────────────────────────────────────────────────
+  // Expéditions, réceptions, gestion stock, transport, livraisons
+  logistique: [
+    { fr: "Quelles livraisons sont en retard ou non confirmées aujourd'hui ?",         en: "Which deliveries are delayed or unconfirmed today?" },
+    { fr: "Quel est le niveau de stock des articles à rotation rapide ?",              en: "What is the stock level of fast-moving items?" },
+    { fr: "Quelles réceptions de marchandises sont prévues cette semaine ?",           en: "Which goods receipts are expected this week?" },
+    { fr: "Quels transporteurs ont les meilleures performances de délai ce mois ?",   en: "Which carriers have the best on-time performance this month?" },
+    { fr: "Quels articles sont en surstock et mobilisent du capital inutilement ?",    en: "Which items are overstocked and tying up capital unnecessarily?" },
+  ],
 };
 
 const _DEFAULT_CHIPS = [
@@ -4740,11 +4790,16 @@ async function _updateWorkspaceBar() {
     marketing:         { icon: "📣", color: "#db2777", label: { fr: "Marketing",           en: "Marketing" } },
     approvisionnement: { icon: "🛒", color: "#0891b2", label: { fr: "Approvisionnement",   en: "Procurement" } },
     direction:         { icon: "🏛️", color: "#1e293b", label: { fr: "Direction",           en: "Executive" } },
-    manufacturing:     { icon: "🏭", color: "#c8102e", label: { fr: "Fabrication",         en: "Manufacturing" } },
-    communication:     { icon: "📢", color: "#db2777", label: { fr: "Communication",       en: "Communication" } },
-    support:           { icon: "🎧", color: "#0891b2", label: { fr: "Support client",      en: "Customer Support" } },
-    rd:                { icon: "🔬", color: "#7c3aed", label: { fr: "R&D",                 en: "R&D" } },
-    general:           { icon: "📊", color: "#64748b", label: { fr: "Général",             en: "General" } },
+    manufacturing:     { icon: "🏭", color: "#c8102e", label: { fr: "Fabrication",              en: "Manufacturing" } },
+    communication:     { icon: "📢", color: "#db2777", label: { fr: "Communication",          en: "Communication" } },
+    support:           { icon: "🎧", color: "#0891b2", label: { fr: "Support client",         en: "Customer Support" } },
+    rd:                { icon: "🔬", color: "#7c3aed", label: { fr: "R&D",                    en: "R&D" } },
+    sales:             { icon: "💼", color: "#ea580c", label: { fr: "Commerciaux",            en: "Sales" } },
+    qualite:           { icon: "✅", color: "#16a34a", label: { fr: "Assurance qualité",      en: "Quality Assurance" } },
+    digitalisation:    { icon: "⚡", color: "#818CF8", label: { fr: "Digitalisation",         en: "Digitalization" } },
+    comptabilite:      { icon: "🧾", color: "#0f766e", label: { fr: "Comptabilité",           en: "Accounting" } },
+    logistique:        { icon: "🚚", color: "#92400e", label: { fr: "Logistique",             en: "Logistics" } },
+    general:           { icon: "📊", color: "#64748b", label: { fr: "Général",               en: "General" } },
   };
 
   if (isAdmin) {
