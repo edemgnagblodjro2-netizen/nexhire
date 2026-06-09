@@ -3964,12 +3964,16 @@ async function loadOrgChart() {
           </div>`;
       }).join("");
 
+      const canManage = ["admin","owner"].includes(state.user?.role);
       return `
         <div class="org-dept-block">
           <div class="org-dept-hd" onclick="this.nextElementSibling.classList.toggle('hidden')">
             ${icon} ${esc(dept.name)}
             <span class="org-dept-count">${members.length} membre${members.length>1?"s":""}</span>
             <span class="org-chevron">▾</span>
+            ${canManage ? `<button class="btn btn-primary btn-sm org-add-member-btn"
+              onclick="event.stopPropagation();openAddMemberModal('${dept.id}','${esc(dept.name)}')"
+              style="margin-left:auto;font-size:.75rem;padding:3px 10px">+ Membre</button>` : ""}
           </div>
           <div class="org-members-list">${rows}</div>
         </div>`;
@@ -3983,6 +3987,75 @@ async function setMemberTitle(deptId, memberId, title) {
   try {
     await apiCall(`/api/departments/${deptId}/members/${memberId}/title`, "PATCH", { title });
   } catch(e) { alert(e.message); }
+}
+
+// ── Ajout membre au département ───────────────────────────────────────────────
+async function openAddMemberModal(deptId, deptName) {
+  $("add-member-dept-id").value   = deptId;
+  $("add-member-dept-name").textContent = deptName;
+  $("add-member-error").classList.add("hidden");
+  $("add-member-user").innerHTML  = "<option value=''>Chargement…</option>";
+  $("add-member-level").value     = "6";
+  $("add-member-modal").classList.remove("hidden");
+
+  try {
+    const members = await apiCall("/api/members");
+    // Load existing dept members to exclude them
+    let existing = new Set();
+    try {
+      const deptMembers = await apiCall(`/api/departments/${deptId}/members`);
+      deptMembers.forEach(m => existing.add(m.user_id));
+    } catch(_) {}
+
+    const available = (members.members || members || []).filter(m => !existing.has(m.id));
+    if (!available.length) {
+      $("add-member-user").innerHTML = "<option value=''>Aucun membre disponible</option>";
+      return;
+    }
+    $("add-member-user").innerHTML = `<option value=''>— Sélectionner un membre —</option>` +
+      available.map(m => `<option value="${m.id}">${esc(m.full_name || m.email)}</option>`).join("");
+  } catch(e) {
+    $("add-member-user").innerHTML = "<option value=''>Erreur de chargement</option>";
+  }
+}
+
+// Preview d'accès en temps réel selon le niveau sélectionné
+document.addEventListener("DOMContentLoaded", () => {
+  $("add-member-level")?.addEventListener("change", function() {
+    const level = parseInt(this.value);
+    const label = $("add-member-access-label");
+    const detail = $("add-member-access-detail");
+    if (!label || !detail) return;
+    const ACCESS = [
+      ["Accès total", "Tous les KPIs — budget, savings, dépenses, tous départements"],
+      ["Accès total", "Tous les KPIs — budget, savings, dépenses, tous départements"],
+      ["Accès complet département", "Tous les KPIs financiers et opérationnels du département"],
+      ["Accès Gestionnaire", "Opérationnel + budget consommé — pas de projections ni savings $"],
+      ["Accès Opérationnel", "Comptages et scores uniquement — aucune donnée financière ($)"],
+      ["Accès Opérationnel", "Comptages et scores uniquement — aucune donnée financière ($)"],
+    ];
+    const [lbl, det] = ACCESS[level - 1] || ACCESS[5];
+    label.textContent = lbl;
+    detail.textContent = det;
+  });
+});
+
+async function submitAddMember(e) {
+  e.preventDefault();
+  const deptId = $("add-member-dept-id").value;
+  const userId = $("add-member-user").value;
+  const level  = parseInt($("add-member-level").value);
+  const errEl  = $("add-member-error");
+  if (!userId) { errEl.textContent = "Sélectionnez un membre."; errEl.classList.remove("hidden"); return; }
+  try {
+    await apiCall(`/api/departments/${deptId}/members`, "POST", {
+      user_id: userId,
+      role: level <= 4 ? "manager" : "member",
+      hierarchy_level: level,
+    });
+    $("add-member-modal").classList.add("hidden");
+    loadOrgChart();
+  } catch(err) { errEl.textContent = err.message || "Erreur."; errEl.classList.remove("hidden"); }
 }
 
 async function loadDepartments() {
@@ -5228,10 +5301,13 @@ async function loadDeptDashboard(deptId = null) {
     if (label) label.textContent = d.label || "Mon département";
     if (name)  name.textContent  = d.dept_name || "";
 
-    // Indicateur vue restreinte (membre sans accès financier)
+    // Indicateur vue restreinte selon le niveau hiérarchique
     const restrictedBadge = $("dept-dash-restricted");
     if (restrictedBadge) {
-      restrictedBadge.classList.toggle("hidden", d.can_see_financial !== false);
+      const level = d.access_level ?? 1;
+      restrictedBadge.classList.toggle("hidden", level <= 3);
+      if (level === 4) restrictedBadge.textContent = "👔 Vue Gestionnaire";
+      else if (level >= 5) restrictedBadge.textContent = "👤 Vue Opérationnelle";
     }
 
     // Mémorise le type de département pour l'agent IA

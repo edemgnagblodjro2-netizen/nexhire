@@ -228,34 +228,48 @@ DEPT_TYPE_CONFIG: dict[str, dict] = {
 }
 
 
-# KPIs contenant des données financières (montants $) — masqués pour les membres réguliers
-_FINANCIAL_KPI_KEYS: frozenset[str] = frozenset({
-    "budget_used", "budget_forecast_gap",
+# ── Contrôle d'accès par niveau hiérarchique ─────────────────────────────────
+# Niveau 1 : Direction Générale  → accès total
+# Niveau 2 : VP / Directeur Exécutif → accès total
+# Niveau 3 : Directeur de Département → tout le département
+# Niveau 4 : Gestionnaire / Chef d'équipe → opérationnel + budget consommé
+# Niveau 5 : Superviseur → opérationnel uniquement
+# Niveau 6 : Employé → opérationnel uniquement
+
+# KPIs masqués pour niveau 4 (Gestionnaire) : pas de projections ni savings $
+_LEVEL4_HIDDEN: frozenset[str] = frozenset({
     "contracts_savings", "negotiation_savings", "license_savings",
-    "total_savings", "top_opportunity_savings", "monthly_spend",
-    "monthly_app_cost", "hr_savings", "operations_savings",
+    "total_savings", "top_opportunity_savings", "hr_savings",
+    "operations_savings", "budget_forecast_gap", "monthly_spend", "monthly_app_cost",
 })
 
+# KPIs masqués pour niveaux 5-6 : tout ce qui contient des montants $
+_LEVEL56_HIDDEN: frozenset[str] = _LEVEL4_HIDDEN | frozenset({"budget_used"})
 
-def _member_role(user_id: str, dept_id: str) -> str:
-    """Retourne le rôle du membre dans le département ('member' ou 'manager'). '' si absent."""
+
+def _member_level(user_id: str, dept_id: str) -> int:
+    """Retourne le hierarchy_level du membre dans le département (1-6). 6 si absent."""
     try:
         with get_db() as cur:
             cur.execute(
-                "SELECT role FROM department_members WHERE user_id = %s AND department_id = %s LIMIT 1",
+                "SELECT hierarchy_level FROM department_members WHERE user_id = %s AND department_id = %s LIMIT 1",
                 (user_id, dept_id),
             )
             r = row(cur)
-        return r.get("role", "member") if r else ""
+        lvl = r.get("hierarchy_level") if r else None
+        return int(lvl) if lvl and 1 <= int(lvl) <= 6 else 6
     except Exception:
-        return ""
+        return 6
 
 
-def _visible_kpis(kpi_keys: list[str], can_see_financial: bool) -> list[str]:
-    """Filtre les KPIs financiers pour les membres réguliers."""
-    if can_see_financial:
-        return kpi_keys
-    return [k for k in kpi_keys if k not in _FINANCIAL_KPI_KEYS]
+def _visible_kpis(kpi_keys: list[str], access_level: int) -> list[str]:
+    """Filtre les KPIs selon le niveau hiérarchique effectif."""
+    if access_level <= 3:
+        return kpi_keys          # Direction / VP / Directeur : tout
+    elif access_level == 4:
+        return [k for k in kpi_keys if k not in _LEVEL4_HIDDEN]   # Gestionnaire
+    else:
+        return [k for k in kpi_keys if k not in _LEVEL56_HIDDEN]  # Superviseur / Employé
 
 
 class DeptPayload(BaseModel):
@@ -280,6 +294,8 @@ TITLE_LEVEL: dict[str, int] = {t: i + 1 for i, t in enumerate(HIERARCHY_TITLES)}
 class AddMemberPayload(BaseModel):
     user_id: str
     role: str = Field("member", pattern="^(member|manager)$")
+    title: str | None = None
+    hierarchy_level: int | None = Field(None, ge=1, le=6)
 
 
 class TitlePayload(BaseModel):
@@ -318,10 +334,9 @@ def dept_dashboard(
                         "primary_tab": "optim", "primary_subtab": "dashboard", "kpis": []}
             resolved_type = dept_row.get("dept_type") or "general"
             cfg = DEPT_TYPE_CONFIG.get(resolved_type, DEPT_TYPE_CONFIG["general"])
-            # Droits financiers : admin/owner OU manager du département
-            dept_role = _member_role(user.id, dept_id)
-            can_see_financial = is_org_admin or dept_role == "manager"
-            kpi_keys = _visible_kpis(cfg["kpis"], can_see_financial)
+            # Niveau effectif : admin/owner = 1, sinon hierarchy_level du membre
+            access_level = 1 if is_org_admin else _member_level(user.id, dept_id)
+            kpi_keys = _visible_kpis(cfg["kpis"], access_level)
             kpis = _build_kpis(org_id, dept_id, kpi_keys)
             return {
                 "dept_type":      resolved_type,
@@ -332,7 +347,7 @@ def dept_dashboard(
                 "primary_tab":    cfg["primary_tab"],
                 "primary_subtab": cfg["primary_subtab"],
                 "kpis":           kpis,
-                "can_see_financial": can_see_financial,
+                "access_level":   access_level,
             }
 
         # Vue par défaut — département de l'utilisateur connecté
@@ -364,10 +379,9 @@ def dept_dashboard(
             resolved_type = "direction"
 
         cfg = DEPT_TYPE_CONFIG.get(resolved_type, DEPT_TYPE_CONFIG["general"])
-        # Droits financiers : admin/owner OU manager du département
-        dept_role = _member_role(user.id, user_dept_id) if user_dept_id else ""
-        can_see_financial = is_org_admin or dept_role == "manager"
-        kpi_keys = _visible_kpis(cfg["kpis"], can_see_financial)
+        # Niveau effectif : admin/owner = 1, sinon hierarchy_level du membre dans son dept
+        access_level = 1 if is_org_admin else _member_level(user.id, user_dept_id or "")
+        kpi_keys = _visible_kpis(cfg["kpis"], access_level)
         kpis = _build_kpis(org_id, user_dept_id, kpi_keys)
 
         return {
@@ -379,7 +393,7 @@ def dept_dashboard(
             "primary_tab":    cfg["primary_tab"],
             "primary_subtab": cfg["primary_subtab"],
             "kpis":           kpis,
-            "can_see_financial": can_see_financial,
+            "access_level":   access_level,
         }
     except Exception:
         # Si les tables n'existent pas encore, retourner un dashboard vide
@@ -913,13 +927,17 @@ def add_dept_member(
     if not check or check[0].get("organization_id") != user.organization_id:
         raise HTTPException(status_code=400, detail="Utilisateur introuvable dans cette organisation.")
 
+    level = payload.hierarchy_level or TITLE_LEVEL.get(payload.title or "", 6)
+    title = payload.title or (HIERARCHY_TITLES[level - 1] if 1 <= level <= 6 else HIERARCHY_TITLES[-1])
+
     with get_db() as cur:
         cur.execute(
-            """INSERT INTO department_members (user_id, department_id, role)
-               VALUES (%s, %s, %s)
-               ON CONFLICT (user_id, department_id) DO UPDATE SET role = EXCLUDED.role
+            """INSERT INTO department_members (user_id, department_id, role, title, hierarchy_level)
+               VALUES (%s, %s, %s, %s, %s)
+               ON CONFLICT (user_id, department_id) DO UPDATE
+               SET role = EXCLUDED.role, title = EXCLUDED.title, hierarchy_level = EXCLUDED.hierarchy_level
                RETURNING *""",
-            (payload.user_id, dept_id, payload.role),
+            (payload.user_id, dept_id, payload.role, title, level),
         )
         return row(cur)
 

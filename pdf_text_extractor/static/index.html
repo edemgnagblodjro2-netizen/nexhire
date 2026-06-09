@@ -2032,6 +2032,43 @@
       </div>
     </div>
 
+    <!-- ── MODAL AJOUT MEMBRE AU DÉPARTEMENT ──────────────────────────────── -->
+    <div id="add-member-modal" class="modal-backdrop hidden">
+      <div class="modal-card" style="max-width:440px">
+        <button class="modal-close" onclick="$('add-member-modal').classList.add('hidden')">✕</button>
+        <h3>+ Ajouter un membre — <span id="add-member-dept-name"></span></h3>
+        <p class="settings-desc" style="margin-bottom:16px">Sélectionnez un membre de l'organisation et définissez son niveau hiérarchique dans ce département.</p>
+        <form onsubmit="submitAddMember(event)" style="display:grid;gap:12px">
+          <input type="hidden" id="add-member-dept-id" />
+          <div>
+            <label class="auth-label"><span>Membre</span>
+              <select id="add-member-user" class="settings-input" required>
+                <option value="">— Sélectionner —</option>
+              </select>
+            </label>
+          </div>
+          <div>
+            <label class="auth-label"><span>Niveau hiérarchique</span>
+              <select id="add-member-level" class="settings-input">
+                <option value="1">Niveau 1 — Direction Générale</option>
+                <option value="2">Niveau 2 — VP / Directeur Exécutif</option>
+                <option value="3">Niveau 3 — Directeur de Département</option>
+                <option value="4">Niveau 4 — Gestionnaire / Chef d'équipe</option>
+                <option value="5">Niveau 5 — Superviseur</option>
+                <option value="6" selected>Niveau 6 — Employé</option>
+              </select>
+            </label>
+          </div>
+          <div class="hierarchy-access-preview" id="add-member-preview">
+            <div class="hap-row"><span class="hap-icon">👁️</span><span>Accès : <strong id="add-member-access-label">Opérationnel uniquement</strong></span></div>
+            <div class="hap-row hap-sub" id="add-member-access-detail">Pas de données financières (budget, économies $)</div>
+          </div>
+          <p id="add-member-error" class="form-error hidden"></p>
+          <button type="submit" class="btn btn-primary" style="margin-top:4px">Ajouter au département</button>
+        </form>
+      </div>
+    </div>
+
     <!-- ── MODAL INITIALISATION DÉPARTEMENTS PAR SECTEUR ──────────────────── -->
     <div id="init-depts-modal" class="modal-backdrop hidden">
       <div class="modal-card" style="max-width:600px">

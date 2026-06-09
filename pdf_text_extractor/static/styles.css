@@ -2889,6 +2889,17 @@ tbody tr:hover { background: var(--blue-pale); transition: background .12s; }
 .org-dept-hd:hover { background: #f8fafc; }
 .org-dept-count { font-size: .75rem; font-weight: 500; color: var(--slate); margin-left: auto; }
 .org-chevron { font-size: .8rem; color: var(--slate); }
+.org-add-member-btn { margin-left: 8px !important; flex-shrink: 0; }
+
+/* Preview d'accès hiérarchique dans la modale */
+.hierarchy-access-preview {
+  background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px;
+  padding: 10px 14px; font-size: .82rem; color: #15803d;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.hap-row { display: flex; align-items: center; gap: 8px; }
+.hap-icon { font-size: 1rem; }
+.hap-sub { color: #6b7280; font-size: .78rem; padding-left: 24px; }
 .org-members-list { border-top: 1px solid var(--border); background: #fafbff; }
 
 .org-member-row {
