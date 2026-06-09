@@ -262,6 +262,30 @@ def _member_level(user_id: str, dept_id: str) -> int:
         return 6
 
 
+def _cross_org_level(user_id: str, org_id: str) -> int | None:
+    """Retourne le niveau hiérarchique de l'utilisateur dans son dept cross-org (Direction/RH/IT).
+    Retourne None si l'utilisateur n'est pas dans un dept cross-org."""
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """SELECT dm.hierarchy_level
+                   FROM department_members dm
+                   JOIN departments d ON d.id = dm.department_id
+                   WHERE dm.user_id = %s AND d.organization_id = %s
+                     AND d.dept_type = ANY(%s)
+                   ORDER BY dm.hierarchy_level ASC
+                   LIMIT 1""",
+                (user_id, org_id, list(_CROSS_ORG_DEPT_TYPES)),
+            )
+            r = row(cur)
+        if not r:
+            return None
+        lvl = r.get("hierarchy_level")
+        return int(lvl) if lvl and 1 <= int(lvl) <= 6 else 6
+    except Exception:
+        return None
+
+
 def _visible_kpis(kpi_keys: list[str], access_level: int) -> list[str]:
     """Filtre les KPIs selon le niveau hiérarchique effectif."""
     if access_level <= 3:
@@ -334,8 +358,16 @@ def dept_dashboard(
                         "primary_tab": "optim", "primary_subtab": "dashboard", "kpis": []}
             resolved_type = dept_row.get("dept_type") or "general"
             cfg = DEPT_TYPE_CONFIG.get(resolved_type, DEPT_TYPE_CONFIG["general"])
-            # Niveau effectif : admin/owner = 1, sinon hierarchy_level du membre
-            access_level = 1 if is_org_admin else _member_level(user.id, dept_id)
+            # Niveau effectif : admin/owner=1 | membre direct=son niveau | cross-org (Direction/RH/IT)=niveau dans leur dept | sinon=6
+            if is_org_admin:
+                access_level = 1
+            else:
+                direct_level = _member_level(user.id, dept_id)
+                if direct_level < 6:
+                    access_level = direct_level          # membre direct de ce dept
+                else:
+                    cross = _cross_org_level(user.id, org_id)
+                    access_level = cross if cross is not None else 6
             kpi_keys = _visible_kpis(cfg["kpis"], access_level)
             kpis = _build_kpis(org_id, dept_id, kpi_keys)
             return {
@@ -380,8 +412,16 @@ def dept_dashboard(
             resolved_type = "direction"
 
         cfg = DEPT_TYPE_CONFIG.get(resolved_type, DEPT_TYPE_CONFIG["general"])
-        # Niveau effectif : admin/owner = 1, sinon hierarchy_level du membre dans son dept
-        access_level = 1 if is_org_admin else _member_level(user.id, user_dept_id or "")
+        # Niveau effectif : admin/owner=1 | membre de son dept=son niveau | cross-org=niveau dans leur dept
+        if is_org_admin:
+            access_level = 1
+        else:
+            direct_level = _member_level(user.id, user_dept_id or "")
+            if direct_level < 6:
+                access_level = direct_level
+            else:
+                cross = _cross_org_level(user.id, org_id)
+                access_level = cross if cross is not None else 6
         kpi_keys = _visible_kpis(cfg["kpis"], access_level)
         kpis = _build_kpis(org_id, user_dept_id, kpi_keys)
 
