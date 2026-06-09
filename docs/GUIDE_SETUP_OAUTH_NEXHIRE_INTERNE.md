@@ -264,10 +264,10 @@ QUICKBOOKS_REDIRECT_URI  = https://agenthub.nexhire.ca/api/connectors/oauth/call
 1. **Microsoft 365** — ✅ fait
 2. **Salesforce** — ✅ fait (2026-06-08)
 3. **QuickBooks** — ✅ fait (2026-06-08)
-4. **Google Workspace** — en cours ✍️
-5. **Jira / Confluence** — ~10 min
-6. **HubSpot** — ~10 min
-7. **Slack** — ~10 min
+4. **Google Workspace** — ✅ fait (2026-06-09)
+5. **Jira / Confluence** — ✅ fait (2026-06-09)
+6. **HubSpot** — ✅ fait (2026-06-09)
+7. **Slack** — ✅ fait (2026-06-09)
 8. **Zendesk** — ✅ per-client (modal, aucune variable Render)
 9. **ServiceNow** — ✅ per-client (modal, aucune variable Render)
 
