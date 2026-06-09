@@ -2707,6 +2707,7 @@ async function loadSettings() {
     $("sp-since").value    = p.member_since || "";
     if ($("sp-org-type")) $("sp-org-type").value = p.org_type || "entreprise";
     state.orgType = p.org_type || "entreprise";
+    state.orgSlug = p.organization_slug || "";
 
     // Logo & branding
     const isAdmin = ["admin", "owner"].includes(p.role);
@@ -2903,6 +2904,10 @@ async function _loadSSOConfig() {
   const form = $("sso-config-form");
   if (!form) return;
   form.classList.remove("hidden");
+
+  // Affiche le slug de l'organisation
+  const slugEl = $("sso-org-slug-display");
+  if (slugEl && state.orgSlug) slugEl.textContent = state.orgSlug;
 
   try {
     const cfg = await apiCall("/api/sso/config");

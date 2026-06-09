@@ -1405,10 +1405,22 @@
               <span>Client Secret</span>
               <input id="sso-client-secret" type="password" placeholder="••••••••••••" required />
             </label>
-            <p style="font-size:.78rem;color:var(--slate);margin:4px 0 12px">
-              URL de callback à configurer dans votre IdP :
-              <code style="background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:.75rem">/api/sso/callback</code>
-            </p>
+            <div style="background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin:4px 0 16px;font-size:.8rem;color:var(--slate)">
+              <div style="margin-bottom:8px">
+                <strong style="color:var(--navy)">URL de callback</strong> — à configurer dans votre IdP :
+                <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+                  <code id="sso-callback-url" style="background:#eef2ff;color:#4338ca;padding:3px 8px;border-radius:4px;font-size:.78rem;flex:1">https://agenthub.nexhire.ca/api/sso/callback</code>
+                  <button type="button" onclick="navigator.clipboard.writeText('https://agenthub.nexhire.ca/api/sso/callback').then(()=>this.textContent='✓').catch(()=>{})" style="background:none;border:1px solid var(--border);border-radius:6px;padding:2px 8px;cursor:pointer;font-size:.75rem;color:var(--slate)">Copier</button>
+                </div>
+              </div>
+              <div>
+                <strong style="color:var(--navy)">Identifiant SSO de votre organisation</strong> — à communiquer à vos collaborateurs :
+                <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+                  <code id="sso-org-slug-display" style="background:#eef2ff;color:#4338ca;padding:3px 8px;border-radius:4px;font-size:.78rem;flex:1">—</code>
+                  <button type="button" onclick="navigator.clipboard.writeText($('sso-org-slug-display').textContent).then(()=>this.textContent='✓').catch(()=>{})" style="background:none;border:1px solid var(--border);border-radius:6px;padding:2px 8px;cursor:pointer;font-size:.75rem;color:var(--slate)">Copier</button>
+                </div>
+              </div>
+            </div>
             <div style="display:flex;gap:8px;flex-wrap:wrap">
               <button type="submit" class="btn btn-primary btn-sm" id="sso-save-btn">Enregistrer</button>
               <button type="button" class="btn btn-outline btn-sm hidden" id="sso-delete-btn" onclick="deleteSSOConfig()" style="color:#dc2626;border-color:#dc2626">Supprimer</button>
