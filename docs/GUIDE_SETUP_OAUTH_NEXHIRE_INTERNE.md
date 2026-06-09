@@ -273,5 +273,36 @@ QUICKBOOKS_REDIRECT_URI  = https://agenthub.nexhire.ca/api/connectors/oauth/call
 
 ---
 
+---
+
+## Dates d'expiration à surveiller
+
+| Connecteur | Ce qui expire | Date limite | Action requise |
+|---|---|---|---|
+| **Microsoft 365 (Azure AD)** | Client Secret (24 mois) | **Juin 2028** | Régénérer dans portal.azure.com → App registrations → NexHire → Certificates & secrets → New client secret → mettre à jour `M365_CLIENT_SECRET` dans Render |
+| **Salesforce** | Consumer Secret | Pas d'expiration automatique | Surveiller si révocation manuelle |
+| **Google Workspace** | Client Secret | Pas d'expiration automatique | Surveiller si révocation manuelle |
+| **Jira / Confluence** | Client Secret | Pas d'expiration automatique | Surveiller si révocation manuelle |
+| **HubSpot** | Client Secret | Pas d'expiration automatique | Surveiller si révocation manuelle |
+| **Slack** | Client Secret | Pas d'expiration automatique | Surveiller si révocation manuelle |
+| **QuickBooks (Intuit)** | Client Secret | Pas d'expiration automatique | Vérifier sur developer.intuit.com si rotation requise |
+
+### ⚠️ Action critique — Microsoft Azure AD
+
+Mettre un rappel calendrier pour **mai 2028** (1 mois avant l'expiration).
+
+**Si le secret Azure AD expire sans être renouvelé → tous les clients Microsoft 365 ne peuvent plus connecter NexHire.**
+
+Procédure de renouvellement :
+1. portal.azure.com → **Microsoft Entra ID → App registrations → NexHire**
+2. **Certificates & secrets → New client secret**
+3. Description : `nexhire-prod-2028`, Expiration : 24 mois
+4. Cliquer **Add** → copier immédiatement la nouvelle valeur
+5. Render Dashboard → Environment → mettre à jour `M365_CLIENT_SECRET`
+6. Redéployer le service Render (ou attendre le prochain déploiement auto)
+7. Supprimer l'ancien secret expiré dans Azure
+
+---
+
 > **Note sécurité :** Ne partage jamais ces clés dans Slack, GitHub, ou par email.
 > Utilise uniquement le panneau Render Environment pour les stocker.
