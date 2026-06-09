@@ -154,7 +154,7 @@ JIRA_REDIRECT_URI  = https://agenthub.nexhire.ca/api/connectors/oauth/callback
 **Variables Render :** `HUBSPOT_CLIENT_ID` · `HUBSPOT_CLIENT_SECRET` · `HUBSPOT_REDIRECT_URI`
 
 **Étapes :**
-1. Va sur [developers.hubspot.com](p/) → **Create app**
+1. Va sur [developers.hubspot.com](pvois leadmlorchif'estMPLOA/) → **Create app**
 2. Onglet **Auth** :
    - Redirect URLs : `https://agenthub.nexhire.ca/api/connectors/oauth/callback`
    - Scopes : `crm.objects.contacts.read`, `crm.objects.deals.read`, `crm.objects.companies.read`, `tickets`
