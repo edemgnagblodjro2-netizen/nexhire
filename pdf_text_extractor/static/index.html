@@ -1001,6 +1001,14 @@
         <div class="dept-kpi-grid" id="dept-kpi-grid">
           <div class="dept-kpi-loading"><div class="spinner" style="margin:auto"></div></div>
         </div>
+        <!-- Collaborateurs externes du département (affiché par défaut) -->
+        <div id="dept-external-wrap" class="dept-external-mini hidden">
+          <div class="dept-external-mini-header">
+            <span>🤝 Collaborateurs externes</span>
+            <button class="btn btn-outline btn-xs" onclick="openContractorModal(null, _activeDeptId)" style="font-size:.72rem;padding:2px 8px">+ Ajouter</button>
+          </div>
+          <div id="dept-external-list" class="dept-external-mini-list"></div>
+        </div>
       </div>
 
       <!-- Workspace context banner -->
@@ -1238,6 +1246,16 @@
           <button class="btn btn-outline btn-sm" onclick="loadOrgChart()">↻ Actualiser</button>
         </div>
         <div id="orgchart-wrap"><p class="muted">Chargement…</p></div>
+      </div>
+
+      <!-- Collaborateurs externes -->
+      <div style="margin-top:32px" id="external-contractors-section">
+        <div class="section-header" style="margin-bottom:8px">
+          <h3 style="font-size:.95rem;font-weight:700;color:var(--navy)">🤝 Collaborateurs externes</h3>
+          <button class="btn btn-primary btn-sm" onclick="openContractorModal()">+ Ajouter</button>
+        </div>
+        <p class="section-desc" style="margin-bottom:12px">Consultants, prestataires, fournisseurs et sous-traitants liés à votre organisation ou à des départements spécifiques.</p>
+        <div id="external-contractors-wrap"><p class="muted">Chargement…</p></div>
       </div>
     </section>
 
@@ -2028,6 +2046,113 @@
           <label class="auth-label"><span>Notes</span><input id="pm-notes" type="text" /></label>
           <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
           <p id="pm-error" class="form-error hidden"></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- ── MODAL COLLABORATEUR EXTERNE ────────────────────────────────────── -->
+    <div id="contractor-modal" class="modal-backdrop hidden">
+      <div class="modal-card" style="max-width:560px;max-height:90vh;overflow-y:auto">
+        <button class="modal-close" onclick="closeContractorModal()">✕</button>
+        <h3 id="contractor-modal-title">+ Collaborateur externe</h3>
+        <input type="hidden" id="cm-id" />
+        <input type="hidden" id="cm-default-dept" />
+        <form id="contractor-form" class="settings-form" onsubmit="submitContractorModal(event)" style="display:grid;gap:10px;margin-top:12px">
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label" style="grid-column:1/-1">
+              <span>Nom complet *</span>
+              <input id="cm-fullname" type="text" placeholder="Jean Tremblay" required maxlength="120" />
+            </label>
+            <label class="auth-label">
+              <span>Courriel</span>
+              <input id="cm-email" type="email" placeholder="jean@entreprise.ca" />
+            </label>
+            <label class="auth-label">
+              <span>Entreprise</span>
+              <input id="cm-company" type="text" placeholder="Tremblay Conseil inc." />
+            </label>
+            <label class="auth-label">
+              <span>Type *</span>
+              <select id="cm-type">
+                <option value="consultant">Consultant</option>
+                <option value="provider">Prestataire de services</option>
+                <option value="vendor">Fournisseur</option>
+                <option value="contractor">Sous-traitant</option>
+              </select>
+            </label>
+            <label class="auth-label">
+              <span>Titre / Poste</span>
+              <input id="cm-jobtitle" type="text" placeholder="Consultant senior ERP" />
+            </label>
+          </div>
+
+          <label class="auth-label">
+            <span>Mission / Description</span>
+            <textarea id="cm-mission" rows="2" placeholder="Migration SAP, intégration API, audit de sécurité…" style="resize:vertical"></textarea>
+          </label>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+            <label class="auth-label">
+              <span>Budget alloué</span>
+              <input id="cm-value" type="number" min="0" step="0.01" value="0" />
+            </label>
+            <label class="auth-label">
+              <span>Devise</span>
+              <select id="cm-currency">
+                <option value="CAD">CAD $</option>
+                <option value="USD">USD $</option>
+                <option value="EUR">EUR €</option>
+              </select>
+            </label>
+            <label class="auth-label">
+              <span>Durée (ans)</span>
+              <select id="cm-duration" onchange="updateContractEnd()">
+                <option value="">Dates manuelles</option>
+                <option value="1">1 an</option>
+                <option value="2">2 ans</option>
+                <option value="3">3 ans</option>
+                <option value="4">4 ans</option>
+                <option value="5">5 ans</option>
+                <option value="6">6 ans</option>
+                <option value="7">7 ans</option>
+                <option value="8">8 ans</option>
+                <option value="9">9 ans</option>
+                <option value="10">10 ans</option>
+              </select>
+            </label>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label">
+              <span>Date début *</span>
+              <input id="cm-start" type="date" required onchange="updateContractEnd()" />
+            </label>
+            <label class="auth-label">
+              <span>Date fin *</span>
+              <input id="cm-end" type="date" required />
+            </label>
+          </div>
+
+          <label class="auth-label">
+            <span>Portée</span>
+            <select id="cm-scope" onchange="toggleContractorDepts()">
+              <option value="department">Département(s) spécifique(s)</option>
+              <option value="organization">Toute l'organisation</option>
+            </select>
+          </label>
+
+          <div id="cm-dept-wrap">
+            <label class="auth-label">
+              <span>Département(s)</span>
+              <div id="cm-dept-checkboxes" class="dept-checkbox-list" style="max-height:140px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;padding:8px;gap:4px;display:flex;flex-direction:column">
+                <p class="muted" style="font-size:.8rem">Chargement…</p>
+              </div>
+            </label>
+          </div>
+
+          <p id="cm-error" class="form-error hidden"></p>
+          <button type="submit" class="btn btn-primary btn-sm" id="cm-submit-btn">Enregistrer</button>
         </form>
       </div>
     </div>

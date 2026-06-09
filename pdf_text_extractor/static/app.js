@@ -2541,6 +2541,7 @@ async function loadTeam() {
   await Promise.all([_loadMembers(), _loadPendingInvitations()]);
   loadDepartments();
   loadOrgChart();
+  loadAllExternalContractors();
 }
 
 async function _loadMembers() {
@@ -5056,6 +5057,7 @@ async function installWorkspace(templateId) {
 
 // ── Workspace activation ──────────────────────────────────────────────────────
 let _activeWorkspaceDeptType = null;
+let _activeDeptId = null;
 
 // Résolution dept_type depuis le nom si le type DB ne correspond à aucun chips connu
 const _NAME_TO_DEPT_TYPE = {
@@ -5344,6 +5346,10 @@ async function loadDeptDashboard(deptId = null) {
 
     // Style header accent
     if (d.color) section.style.setProperty("--dept-color", d.color);
+
+    // Mémorise le dept_id actif pour les collaborateurs externes
+    _activeDeptId = d.dept_id || deptId || null;
+    loadDeptExternalContractors(_activeDeptId);
 
     section.classList.remove("hidden");
   } catch (_) {
@@ -5666,4 +5672,278 @@ async function saSetStatus(orgId, status) {
 // Close on backdrop click
 document.addEventListener("click", e => {
   if (e.target?.id === "legal-modal") closeLegal();
+  if (e.target?.id === "contractor-modal") closeContractorModal();
 });
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ── COLLABORATEURS EXTERNES ───────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════
+
+const _contractorTypeLabel = {
+  consultant: "Consultant",
+  provider:   "Prestataire",
+  vendor:     "Fournisseur",
+  contractor: "Sous-traitant",
+};
+
+const _contractorStatusCfg = {
+  active:         { cls: "badge-active",    icon: "✅", label: "Actif" },
+  expiring_soon:  { cls: "badge-expiring",  icon: "⚠️", label: "Expire bientôt" },
+  expired:        { cls: "badge-expired",   icon: "🔴", label: "Expiré" },
+  suspended:      { cls: "badge-idle",      icon: "⏸️", label: "Suspendu" },
+};
+
+function _fmtDate(d) {
+  if (!d) return "—";
+  return new Date(d).toLocaleDateString("fr-CA", { year:"numeric", month:"short", day:"numeric" });
+}
+
+function _fmtBudget(val, currency) {
+  if (!val && val !== 0) return "—";
+  return new Intl.NumberFormat("fr-CA", { style:"currency", currency: currency || "CAD", maximumFractionDigits: 0 }).format(val);
+}
+
+function _contractorCard(c, compact = false) {
+  const st  = _contractorStatusCfg[c.computed_status] || _contractorStatusCfg.active;
+  const lbl = _contractorTypeLabel[c.contractor_type] || "Externe";
+  const depts = (c.department_names || []).join(", ") || (c.scope === "organization" ? "Toute l'organisation" : "—");
+  const days  = c.days_remaining != null ? (c.days_remaining > 0 ? `${c.days_remaining}j restants` : "Terminé") : "";
+
+  if (compact) {
+    return `<div class="ext-card-compact">
+      <span class="ext-status-dot ${st.cls}" title="${st.label}"></span>
+      <span class="ext-name">${esc(c.full_name)}</span>
+      <span class="ext-type-chip">${lbl}</span>
+      ${c.company_name ? `<span class="ext-company muted">${esc(c.company_name)}</span>` : ""}
+      <span class="ext-dates muted" style="margin-left:auto;font-size:.75rem">${_fmtDate(c.contract_end)}${days ? ` · ${days}` : ""}</span>
+    </div>`;
+  }
+
+  const canAdmin = state.role === "admin" || state.role === "owner";
+  return `<div class="ext-card" data-cid="${c.id}">
+    <div class="ext-card-top">
+      <div class="ext-card-left">
+        <div class="ext-card-name">${esc(c.full_name)}</div>
+        ${c.company_name ? `<div class="ext-card-company">${esc(c.company_name)}</div>` : ""}
+      </div>
+      <div style="display:flex;gap:6px;align-items:flex-start">
+        <span class="ext-type-chip">${lbl}</span>
+        <span class="badge ${st.cls}">${st.icon} ${st.label}</span>
+        ${canAdmin ? `<button class="btn-icon-sm" onclick="openContractorModal('${c.id}')" title="Modifier">✏️</button>
+        <button class="btn-icon-sm" onclick="deleteContractor('${c.id}')" title="Supprimer" style="color:var(--red)">🗑️</button>` : ""}
+      </div>
+    </div>
+    <div class="ext-card-meta">
+      ${c.job_title ? `<span>💼 ${esc(c.job_title)}</span>` : ""}
+      <span>📅 ${_fmtDate(c.contract_start)} → ${_fmtDate(c.contract_end)}${days ? ` (${days})` : ""}</span>
+      <span>💰 ${_fmtBudget(c.contract_value, c.currency)}</span>
+      <span>🏢 ${esc(depts)}</span>
+    </div>
+    ${c.mission ? `<div class="ext-card-mission">${esc(c.mission)}</div>` : ""}
+  </div>`;
+}
+
+// Mini-section dans le dashboard département (par défaut pour chaque département)
+async function loadDeptExternalContractors(deptId) {
+  const wrap = $("dept-external-wrap");
+  const list = $("dept-external-list");
+  if (!wrap || !list) return;
+
+  if (!deptId) { wrap.classList.add("hidden"); return; }
+
+  try {
+    const items = await apiCall(`/api/external-contractors?dept_id=${encodeURIComponent(deptId)}`);
+    if (!items || items.length === 0) {
+      list.innerHTML = `<p class="muted" style="font-size:.8rem;padding:4px 0">Aucun collaborateur externe assigné à ce département.</p>`;
+    } else {
+      list.innerHTML = items.map(c => _contractorCard(c, true)).join("");
+    }
+    wrap.classList.remove("hidden");
+  } catch (_) {
+    wrap.classList.add("hidden");
+  }
+}
+
+// Section complète dans l'onglet Équipe
+async function loadAllExternalContractors() {
+  const wrap = $("external-contractors-wrap");
+  if (!wrap) return;
+  wrap.innerHTML = `<div class="dept-kpi-loading"><div class="spinner" style="margin:auto"></div></div>`;
+  try {
+    const items = await apiCall("/api/external-contractors");
+    if (!items || items.length === 0) {
+      wrap.innerHTML = `<p class="muted">Aucun collaborateur externe enregistré. Cliquez sur <strong>+ Ajouter</strong> pour en créer un.</p>`;
+      return;
+    }
+    wrap.innerHTML = `<div class="ext-cards-grid">${items.map(c => _contractorCard(c)).join("")}</div>`;
+  } catch (ex) {
+    wrap.innerHTML = `<p class="form-error">Erreur : ${esc(ex.message)}</p>`;
+  }
+}
+
+// ── Modal ────────────────────────────────────────────────────────────────────
+
+let _contractorDepts = [];
+
+async function openContractorModal(id = null, defaultDeptId = null) {
+  const modal = $("contractor-modal");
+  if (!modal) return;
+
+  // Charger la liste des départements pour les checkboxes
+  try {
+    const r = await apiCall("/api/departments");
+    _contractorDepts = Array.isArray(r) ? r : (r.departments || []);
+  } catch (_) { _contractorDepts = []; }
+
+  const checkboxWrap = $("cm-dept-checkboxes");
+  if (checkboxWrap) {
+    if (_contractorDepts.length === 0) {
+      checkboxWrap.innerHTML = `<p class="muted" style="font-size:.8rem">Aucun département créé.</p>`;
+    } else {
+      checkboxWrap.innerHTML = _contractorDepts.map(d => `
+        <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;cursor:pointer">
+          <input type="checkbox" name="cm-dept" value="${d.id}" ${d.id === defaultDeptId ? "checked" : ""} />
+          ${esc(d.name)}
+        </label>`).join("");
+    }
+  }
+
+  $("cm-id").value = "";
+  $("contractor-modal-title").textContent = "+ Collaborateur externe";
+  $("cm-fullname").value = "";
+  $("cm-email").value = "";
+  $("cm-company").value = "";
+  $("cm-type").value = "consultant";
+  $("cm-jobtitle").value = "";
+  $("cm-mission").value = "";
+  $("cm-value").value = "0";
+  $("cm-currency").value = "CAD";
+  $("cm-duration").value = "";
+  const today = new Date().toISOString().split("T")[0];
+  $("cm-start").value = today;
+  $("cm-end").value = "";
+  $("cm-scope").value = "department";
+  $("cm-default-dept").value = defaultDeptId || "";
+  toggleContractorDepts();
+  if ($("cm-error")) $("cm-error").classList.add("hidden");
+  $("cm-submit-btn").textContent = "Enregistrer";
+  $("cm-submit-btn").disabled = false;
+
+  if (id) {
+    // Mode édition — charger les données existantes
+    try {
+      const all = await apiCall("/api/external-contractors");
+      const c = all.find(x => x.id === id);
+      if (c) {
+        $("cm-id").value = c.id;
+        $("contractor-modal-title").textContent = "Modifier le collaborateur";
+        $("cm-fullname").value = c.full_name || "";
+        $("cm-email").value = c.email || "";
+        $("cm-company").value = c.company_name || "";
+        $("cm-type").value = c.contractor_type || "consultant";
+        $("cm-jobtitle").value = c.job_title || "";
+        $("cm-mission").value = c.mission || "";
+        $("cm-value").value = c.contract_value ?? 0;
+        $("cm-currency").value = c.currency || "CAD";
+        $("cm-start").value = c.contract_start ? c.contract_start.substring(0, 10) : "";
+        $("cm-end").value   = c.contract_end   ? c.contract_end.substring(0, 10)   : "";
+        $("cm-scope").value = c.scope || "department";
+        toggleContractorDepts();
+        // Cocher les départements liés
+        const linkedIds = c.department_ids || [];
+        document.querySelectorAll("input[name='cm-dept']").forEach(cb => {
+          cb.checked = linkedIds.includes(cb.value);
+        });
+      }
+    } catch (_) {}
+  }
+
+  modal.classList.remove("hidden");
+}
+
+function closeContractorModal() {
+  const m = $("contractor-modal");
+  if (m) m.classList.add("hidden");
+}
+
+function toggleContractorDepts() {
+  const scope = $("cm-scope")?.value;
+  const wrap  = $("cm-dept-wrap");
+  if (wrap) wrap.style.display = scope === "organization" ? "none" : "";
+}
+
+function updateContractEnd() {
+  const dur   = parseInt($("cm-duration")?.value, 10);
+  const start = $("cm-start")?.value;
+  if (!dur || !start) return;
+  const d = new Date(start);
+  d.setFullYear(d.getFullYear() + dur);
+  if ($("cm-end")) $("cm-end").value = d.toISOString().split("T")[0];
+}
+
+async function submitContractorModal(e) {
+  e.preventDefault();
+  const errEl  = $("cm-error");
+  const btn    = $("cm-submit-btn");
+  const id     = $("cm-id").value.trim();
+  const scope  = $("cm-scope").value;
+
+  const deptIds = scope === "department"
+    ? [...document.querySelectorAll("input[name='cm-dept']:checked")].map(cb => cb.value)
+    : [];
+
+  const payload = {
+    full_name:       $("cm-fullname").value.trim(),
+    email:           $("cm-email").value.trim() || null,
+    company_name:    $("cm-company").value.trim() || null,
+    contractor_type: $("cm-type").value,
+    job_title:       $("cm-jobtitle").value.trim() || null,
+    mission:         $("cm-mission").value.trim() || null,
+    contract_value:  parseFloat($("cm-value").value) || 0,
+    currency:        $("cm-currency").value,
+    contract_start:  $("cm-start").value,
+    contract_end:    $("cm-end").value,
+    scope,
+    department_ids:  deptIds,
+  };
+
+  if (!payload.full_name) { showErr(errEl, "Le nom est requis."); return; }
+  if (!payload.contract_start || !payload.contract_end) { showErr(errEl, "Les dates de contrat sont requises."); return; }
+  if (scope === "department" && deptIds.length === 0) { showErr(errEl, "Sélectionnez au moins un département."); return; }
+
+  btn.disabled = true;
+  btn.textContent = "Enregistrement…";
+  if (errEl) errEl.classList.add("hidden");
+
+  try {
+    if (id) {
+      await apiCall(`/api/external-contractors/${id}`, "PATCH", payload);
+    } else {
+      await apiCall("/api/external-contractors", "POST", payload);
+    }
+    closeContractorModal();
+    loadAllExternalContractors();
+    if (_activeDeptId) loadDeptExternalContractors(_activeDeptId);
+  } catch (ex) {
+    showErr(errEl, ex.message || "Erreur lors de l'enregistrement.");
+    btn.disabled = false;
+    btn.textContent = "Enregistrer";
+  }
+}
+
+function showErr(el, msg) {
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.remove("hidden");
+}
+
+async function deleteContractor(id) {
+  if (!confirm("Supprimer ce collaborateur externe ?")) return;
+  try {
+    await apiCall(`/api/external-contractors/${id}`, "DELETE");
+    loadAllExternalContractors();
+    if (_activeDeptId) loadDeptExternalContractors(_activeDeptId);
+  } catch (ex) {
+    alert(ex.message || "Erreur lors de la suppression.");
+  }
+}

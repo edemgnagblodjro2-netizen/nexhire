@@ -339,6 +339,7 @@ def dept_dashboard(
             kpi_keys = _visible_kpis(cfg["kpis"], access_level)
             kpis = _build_kpis(org_id, dept_id, kpi_keys)
             return {
+                "dept_id":        dept_id,
                 "dept_type":      resolved_type,
                 "dept_name":      dept_row.get("name"),
                 "icon":           cfg["icon"],
@@ -385,6 +386,7 @@ def dept_dashboard(
         kpis = _build_kpis(org_id, user_dept_id, kpi_keys)
 
         return {
+            "dept_id":        user_dept_id,
             "dept_type":      resolved_type,
             "dept_name":      dept_name,
             "icon":           cfg["icon"],
