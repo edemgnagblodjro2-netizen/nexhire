@@ -227,7 +227,7 @@ def remove_connector_department(
 _REQUIRED_FIELDS: dict[str, list[str]] = {
     "sap":      ["api_url", "username", "password"],
     "workday":  ["tenant_url", "client_id", "client_secret"],
-    "autotask": ["username", "api_key", "zone_url"],
+    "autotask": ["username", "api_key", "api_integration_code", "zone_url"],
 }
 
 
@@ -324,6 +324,76 @@ async def save_credentials(
         http_status=200,
     ))
     return {"connector_type": connector_type, "status": "connected"}
+
+
+@router.post("/{connector_type}/ping")
+def ping_connector(
+    connector_type: str,
+    user: CurrentUser = Depends(require_min_role("admin")),
+):
+    """Teste la connexion réelle d'un connecteur credentials (SAP, Workday, Autotask)."""
+    _check_type(connector_type)
+    org_id = user.organization_id
+
+    try:
+        if connector_type == "sap":
+            from sap_service import _load_config, _headers
+            import httpx
+            cfg = _load_config(org_id)
+            if not cfg:
+                return {"ok": False, "error": "Connecteur non configuré ou credentials manquants."}
+            base_url = (cfg.get("instance_url") or cfg.get("api_url", "")).rstrip("/")
+            with httpx.Client(timeout=10) as client:
+                resp = client.get(
+                    f"{base_url}/sap/opu/odata/sap/API_COST_CENTER_SRV/A_CostCenter",
+                    headers=_headers(cfg),
+                    params={"$format": "json", "$top": "1"},
+                )
+            if resp.status_code in (200, 401, 403):
+                ok = resp.status_code == 200
+                return {"ok": ok, "http_status": resp.status_code,
+                        "error": None if ok else f"HTTP {resp.status_code} — vérifiez vos credentials SAP."}
+            resp.raise_for_status()
+
+        elif connector_type == "workday":
+            from workday_service import _load_config, _get_access_token, _api_base
+            import httpx
+            cfg = _load_config(org_id)
+            if not cfg:
+                return {"ok": False, "error": "Connecteur non configuré ou credentials manquants."}
+            token = _get_access_token(cfg)
+            base  = _api_base(cfg)
+            with httpx.Client(timeout=10) as client:
+                resp = client.get(
+                    f"{base}/workers",
+                    headers={"Authorization": f"Bearer {token}", "Accept": "application/json"},
+                    params={"limit": 1},
+                )
+            ok = resp.status_code == 200
+            return {"ok": ok, "http_status": resp.status_code,
+                    "error": None if ok else f"HTTP {resp.status_code} — vérifiez vos credentials Workday."}
+
+        elif connector_type == "autotask":
+            from autotask_service import _load_config, _headers as at_headers, _base_url
+            import httpx
+            cfg = _load_config(org_id)
+            if not cfg:
+                return {"ok": False, "error": "Connecteur non configuré ou credentials manquants."}
+            base = _base_url(cfg)
+            with httpx.Client(timeout=10) as client:
+                resp = client.post(
+                    f"{base}/Tickets/query",
+                    headers=at_headers(cfg),
+                    json={"filter": [], "maxRecords": 1},
+                )
+            ok = resp.status_code in (200, 204)
+            return {"ok": ok, "http_status": resp.status_code,
+                    "error": None if ok else f"HTTP {resp.status_code} — vérifiez vos credentials Autotask."}
+
+        return {"ok": False, "error": f"Ping non supporté pour le connecteur '{connector_type}'."}
+
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
 
 
 @router.post("/{connector_type}/connect", status_code=status.HTTP_200_OK)

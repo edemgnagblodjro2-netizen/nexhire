@@ -2274,8 +2274,19 @@ async function saveCredentials(type) {
   if (errEl)   errEl.classList.add("hidden");
   try {
     await apiCall(`/api/connectors/${type}/credentials`, "POST", payload);
-    closeCredModal();
-    await loadConnectors();
+    // Test de connexion après sauvegarde
+    if (saveBtn) { saveBtn.textContent = "Test en cours…"; }
+    try {
+      const ping = await apiCall(`/api/connectors/${type}/ping`, "POST");
+      closeCredModal();
+      await loadConnectors();
+      if (ping.ok === false) {
+        setTimeout(() => alert(`⚠️ Credentials sauvegardés mais connexion échouée :\n${ping.error || "Erreur inconnue"}`), 200);
+      }
+    } catch (_) {
+      closeCredModal();
+      await loadConnectors();
+    }
   } catch (ex) {
     if (errEl) { errEl.textContent = ex.message; errEl.classList.remove("hidden"); }
     if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = "Enregistrer"; }
