@@ -69,6 +69,42 @@ DEPT_TEMPLATES: dict[str, list[dict]] = {
         {"name": "Développement institutionnel","description": "Philanthropie, relations avec les diplômés"},
         {"name": "Approvisionnement",           "description": "Achats, contrats, gestion des fournisseurs"},
     ],
+    "entrepreneur": [
+        {"name": "Direction & Stratégie",       "description": "Vision, développement d'affaires, partenariats, gouvernance"},
+        {"name": "Finances",                    "description": "Comptabilité, facturation, gestion de trésorerie, fiscalité"},
+        {"name": "Ventes",                      "description": "Acquisition clients, pipeline, propositions commerciales"},
+        {"name": "Marketing & Communications",  "description": "Présence en ligne, contenu, réseaux sociaux, réputation"},
+        {"name": "Opérations",                  "description": "Livraison de services, gestion des mandats, qualité"},
+        {"name": "Service client",              "description": "Satisfaction, fidélisation, suivi clients, renouvellements"},
+    ],
+    "pme": [
+        {"name": "Direction Générale",          "description": "Stratégie, gouvernance, planification, gestion du changement"},
+        {"name": "Finances & Comptabilité",     "description": "Comptabilité, trésorerie, paie, rapports financiers"},
+        {"name": "Ressources Humaines",         "description": "Recrutement, formation, avantages sociaux, relations travail"},
+        {"name": "Technologies de l'information", "description": "Support TI, cybersécurité, outils numériques, licences"},
+        {"name": "Ventes & Développement",      "description": "Prospection, devis, comptes clients, prévisions"},
+        {"name": "Marketing & Communications",  "description": "Publicité, réseaux sociaux, image de marque, campagnes"},
+        {"name": "Service à la clientèle",      "description": "Support, satisfaction client, gestion des plaintes"},
+        {"name": "Approvisionnement",           "description": "Fournisseurs, achats, contrats, appels d'offres"},
+        {"name": "Juridique & Conformité",      "description": "Contrats, protection des données, conformité réglementaire"},
+        {"name": "Gestion de projet",           "description": "Coordination des mandats, livrables, PMO"},
+        {"name": "Logistique",                  "description": "Distribution, chaîne d'approvisionnement, expédition"},
+        {"name": "Administration",              "description": "Gestion administrative, secrétariat, archivage"},
+    ],
+    "pmi": [
+        {"name": "Direction Générale",          "description": "Stratégie industrielle, gouvernance, performance globale"},
+        {"name": "Production",                  "description": "Planification, ordonnancement, rendement, capacité"},
+        {"name": "Contrôle qualité",            "description": "Normes ISO, inspections, non-conformités, certifications"},
+        {"name": "Maintenance",                 "description": "Équipements, entretien préventif, sécurité industrielle"},
+        {"name": "Approvisionnement",           "description": "Matières premières, fournisseurs, gestion des stocks"},
+        {"name": "Logistique & Distribution",   "description": "Expédition, transport, entrepôts, gestion des stocks finis"},
+        {"name": "Ressources Humaines",         "description": "Main-d'œuvre, formation, conventions collectives"},
+        {"name": "Finances",                    "description": "Coûts de production, budget, rentabilité, trésorerie"},
+        {"name": "Technologies de l'information", "description": "Automatisation, ERP, systèmes industriels, cybersécurité"},
+        {"name": "Ventes & Commerce",           "description": "Clients industriels, devis, contrats de fourniture"},
+        {"name": "Recherche & Développement",   "description": "Innovation produit, prototypes, amélioration process"},
+        {"name": "Environnement & Conformité",  "description": "Normes environnementales, sécurité, certifications réglementaires"},
+    ],
 }
 
 ORG_TYPE_LABELS = {
@@ -76,6 +112,9 @@ ORG_TYPE_LABELS = {
     "hopital":       "Hôpital / Centre de santé",
     "municipalite":  "Municipalité",
     "universite":    "Université / Établissement d'enseignement",
+    "entrepreneur":  "Entrepreneur / Micro-entreprise",
+    "pme":           "PME — Petite et Moyenne Entreprise",
+    "pmi":           "PMI — Petite et Moyenne Industrie",
 }
 
 # ── Configuration des tableaux de bord par type de département ───────────────

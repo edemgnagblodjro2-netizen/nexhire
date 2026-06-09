@@ -1405,6 +1405,9 @@
                 <option value="hopital">🏥 Hôpital / Centre de santé</option>
                 <option value="municipalite">🏛️ Municipalité</option>
                 <option value="universite">🎓 Université / Établissement d'enseignement</option>
+                <option value="entrepreneur">🚀 Entrepreneur / Micro-entreprise</option>
+                <option value="pme">🏬 PME — Petite et Moyenne Entreprise</option>
+                <option value="pmi">🏭 PMI — Petite et Moyenne Industrie</option>
               </select>
             </label>
             <label class="auth-label">
@@ -2287,6 +2290,21 @@
             <div class="sector-card-label">Université / Enseignement</div>
             <div class="sector-card-count" id="sc-count-universite">12 départements</div>
           </div>
+          <div class="sector-card" data-type="entrepreneur" onclick="selectSector('entrepreneur')">
+            <div class="sector-card-icon">🚀</div>
+            <div class="sector-card-label">Entrepreneur / Micro-entreprise</div>
+            <div class="sector-card-count" id="sc-count-entrepreneur">6 départements</div>
+          </div>
+          <div class="sector-card" data-type="pme" onclick="selectSector('pme')">
+            <div class="sector-card-icon">🏬</div>
+            <div class="sector-card-label">PME — Petite et Moyenne Entreprise</div>
+            <div class="sector-card-count" id="sc-count-pme">12 départements</div>
+          </div>
+          <div class="sector-card" data-type="pmi" onclick="selectSector('pmi')">
+            <div class="sector-card-icon">🏭</div>
+            <div class="sector-card-label">PMI — Petite et Moyenne Industrie</div>
+            <div class="sector-card-count" id="sc-count-pmi">12 départements</div>
+          </div>
         </div>
         <div id="sector-preview" class="hidden" style="margin-bottom:16px">
           <h4 style="font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:8px">Départements qui seront créés :</h4>
@@ -2415,6 +2433,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="/static/app.js?v=20260609d"></script>
+<script src="/static/app.js?v=20260609f"></script>
 </body>
 </html>

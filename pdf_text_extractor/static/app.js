@@ -5096,6 +5096,21 @@ const _NAME_TO_DEPT_TYPE = {
   audit: "audit", forensique: "audit",
   // Compliance
   conformité: "compliance", compliance: "compliance",
+  // ── Entrepreneur / PME / PMI ────────────────────────────────────────────
+  "direction & stratégie": "direction", "direction & strategie": "direction",
+  "finances & comptabilité": "finance", "finances & comptabilite": "finance",
+  "ventes & développement": "sales", "ventes & developpement": "sales",
+  "marketing & communications": "communication",
+  "service client": "support",
+  "juridique & conformité": "compliance", "juridique & conformite": "compliance",
+  production: "manufacturing", "production industrielle": "manufacturing",
+  "contrôle qualité": "qualite", "controle qualite": "qualite", "contrôle de la qualité": "qualite",
+  maintenance: "operations",
+  "logistique & distribution": "logistique",
+  "ventes & commerce": "sales",
+  "recherche & développement": "rd", "recherche & developpement": "rd",
+  "environnement & conformité": "compliance", "environnement & conformite": "compliance",
+  administration: "general",
   // ── Santé ──────────────────────────────────────────────────────────────
   "administration hospitalière": "admin_hospitalier", "administration hospitaliere": "admin_hospitalier",
   "approvisionnement médical": "appro_medical", "approvisionnement medical": "appro_medical",
@@ -5481,6 +5496,7 @@ async function _updateWorkspaceBar() {
     direction:         { icon: "🏛️", color: "#1e293b", label: { fr: "Direction",           en: "Executive" } },
     manufacturing:     { icon: "🏭", color: "#c8102e", label: { fr: "Fabrication",              en: "Manufacturing" } },
     communication:     { icon: "📢", color: "#db2777", label: { fr: "Communication",          en: "Communication" } },
+    marketing:         { icon: "📢", color: "#db2777", label: { fr: "Communication",          en: "Communication" } },
     support:           { icon: "🎧", color: "#0891b2", label: { fr: "Support client",         en: "Customer Support" } },
     rd:                { icon: "🔬", color: "#7c3aed", label: { fr: "R&D",                    en: "R&D" } },
     sales:             { icon: "💼", color: "#ea580c", label: { fr: "Commerciaux",            en: "Sales" } },
@@ -5527,7 +5543,8 @@ async function _updateWorkspaceBar() {
         seen.add(k); return true;
       });
       chips.innerHTML = unique.map(d => {
-        const cfg = _typeConfig[d.dept_type] || _typeConfig.general;
+        const resolved = _resolveDeptType(d.dept_type || "", d.name);
+        const cfg = _typeConfig[resolved] || _typeConfig[d.dept_type] || _typeConfig.general;
         return `<span class="ws-chip" style="background:${cfg.color}" title="${esc(d.name)}"
                       data-dept-id="${d.id}"
                       onclick="activateWorkspace('${d.id}','${d.dept_type}','${esc(d.name)}')">${cfg.icon} ${esc(d.name)}</span>`;
