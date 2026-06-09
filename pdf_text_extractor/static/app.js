@@ -2900,9 +2900,8 @@ async function sendMonthlyReport() {
 
 // ── SSO Config (admin) ────────────────────────────────────────────────────────
 async function _loadSSOConfig() {
-  const isAdmin = ["admin", "owner"].includes(state.user?.role);
   const form = $("sso-config-form");
-  if (!form || !isAdmin) return;
+  if (!form) return;
   form.classList.remove("hidden");
 
   try {
