@@ -1218,6 +1218,17 @@ footer {
 }
 .auth-submit:hover:not(:disabled) { background: var(--blue-dark); }
 .auth-submit:disabled { opacity: .6; cursor: not-allowed; }
+.sso-btn { background: var(--navy); box-shadow: none; margin-top: 8px; display: flex; align-items: center; justify-content: center; font-size: .9rem; }
+.sso-btn:hover:not(:disabled) { background: #1e293b; }
+.sso-divider { display: flex; align-items: center; gap: 12px; margin: 16px 0 12px; }
+.sso-divider::before, .sso-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.sso-divider span { font-size: .78rem; color: var(--slate); font-weight: 500; }
+.auth-input-plain {
+  width: 100%; padding: 10px 14px; border: 1px solid var(--border);
+  border-radius: var(--radius-md); font-size: .88rem; font-family: inherit;
+  color: var(--navy); background: #fff; outline: none;
+}
+.auth-input-plain:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(129,140,248,.15); }
 .auth-switch {
   text-align: center;
   font-size: .875rem;

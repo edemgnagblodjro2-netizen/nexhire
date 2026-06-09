@@ -2959,6 +2959,72 @@ async function deleteSSOConfig() {
   } catch (e) { alert(e.message); }
 }
 
+// ── SSO Login (page de connexion) ────────────────────────────────────────────
+
+function loginWithSSO() {
+  const slug = ($("sso-org-slug-input")?.value || "").trim();
+  const errEl = $("sso-login-error");
+  if (!slug) {
+    if (errEl) { errEl.textContent = "Veuillez entrer l'identifiant SSO de votre organisation."; errEl.classList.remove("hidden"); }
+    return;
+  }
+  if (errEl) errEl.classList.add("hidden");
+  // Redirige vers le flux SSO côté backend
+  window.location.href = `/api/sso/authorize/${encodeURIComponent(slug)}`;
+}
+
+// ── Gestion des retours SSO depuis le backend ────────────────────────────────
+
+(function _handleSSOReturn() {
+  const params = new URLSearchParams(window.location.search);
+
+  // Erreur SSO
+  const ssoError = params.get("sso_error");
+  if (ssoError) {
+    const msgs = {
+      config_missing:       "Configuration SSO introuvable pour cette organisation.",
+      unknown_provider:     "Fournisseur SSO non reconnu.",
+      token_exchange_failed:"Échec de l'échange de token avec le fournisseur SSO.",
+      userinfo_failed:      "Impossible de récupérer les informations utilisateur.",
+      no_email:             "Le fournisseur SSO n'a pas retourné d'adresse courriel.",
+      user_creation_failed: "Erreur lors de la création du compte utilisateur.",
+      provisioning_failed:  "Erreur lors du provisionnement du compte.",
+    };
+    const msg = msgs[ssoError] || `Erreur SSO : ${ssoError}`;
+    // Affiche l'erreur sur la page de login une fois le DOM prêt
+    document.addEventListener("DOMContentLoaded", () => {
+      const errEl = $("sso-login-error");
+      if (errEl) { errEl.textContent = msg; errEl.classList.remove("hidden"); }
+    });
+    history.replaceState({}, "", "/");
+    return;
+  }
+
+  // Lien magique Supabase retourné après provisionnement SSO
+  const magicLink = params.get("sso_magic_link");
+  if (magicLink) {
+    history.replaceState({}, "", "/");
+    // Redirige vers le magic link Supabase qui connecte l'utilisateur
+    window.location.href = magicLink;
+    return;
+  }
+
+  // Email pré-rempli (si le compte existait déjà)
+  const ssoEmail = params.get("sso_email");
+  if (ssoEmail) {
+    document.addEventListener("DOMContentLoaded", () => {
+      const emailInput = $("login-email");
+      if (emailInput) {
+        emailInput.value = decodeURIComponent(ssoEmail);
+        emailInput.readOnly = true;
+        const errEl = $("login-error");
+        if (errEl) { errEl.textContent = "Compte SSO existant — entrez votre mot de passe ou utilisez un magic link."; errEl.classList.remove("hidden"); errEl.style.color = "var(--blue)"; }
+      }
+    });
+    history.replaceState({}, "", "/");
+  }
+})();
+
 // ── Org branding helpers ──────────────────────────────────────────────────────
 
 function _showLogoPreview(url) {

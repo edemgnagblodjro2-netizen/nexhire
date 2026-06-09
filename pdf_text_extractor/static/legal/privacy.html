@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Politique de confidentialité — NexHire EIP</title>
+  <meta name="description" content="Politique de confidentialité de NexHire Enterprise Intelligence Platform. Conformité Loi 25, LPRPDE, RGPD.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue: #818CF8; --navy: #0f172a; --slate: #64748b;
+      --border: #e2e8f0; --radius: 12px; --shadow: 0 1px 3px rgba(0,0,0,.08);
+    }
+    body { font-family: 'Inter', sans-serif; color: #1e293b; background: #f8fafc; line-height: 1.7; }
+
+    /* NAV */
+    nav {
+      background: var(--navy); padding: 0 32px; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand-mark {
+      width: 32px; height: 32px; background: linear-gradient(135deg,#818CF8,#6366f1);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      font-weight: 800; color: #fff; font-size: .85rem; letter-spacing: -.5px;
+    }
+    .brand-text { color: #fff; font-weight: 700; font-size: 1rem; }
+    .brand-text span { color: var(--blue); }
+    .nav-back { color: rgba(255,255,255,.65); text-decoration: none; font-size: .85rem; transition: color .2s; }
+    .nav-back:hover { color: #fff; }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #1e293b 100%);
+      padding: 60px 32px 50px; text-align: center; color: #fff;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(129,140,248,.15); border: 1px solid rgba(129,140,248,.3);
+      border-radius: 99px; padding: 4px 14px; font-size: .75rem;
+      color: var(--blue); font-weight: 600; margin-bottom: 20px; letter-spacing: .04em;
+    }
+    .hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 12px; }
+    .hero p { color: rgba(255,255,255,.6); font-size: .95rem; }
+    .hero-meta {
+      display: flex; justify-content: center; gap: 24px; margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .hero-meta span {
+      display: flex; align-items: center; gap: 6px;
+      color: rgba(255,255,255,.5); font-size: .8rem;
+    }
+
+    /* LAYOUT */
+    .container { max-width: 780px; margin: 0 auto; padding: 48px 24px 80px; }
+
+    /* SECTION */
+    .legal-section {
+      background: #fff; border-radius: var(--radius); border: 1px solid var(--border);
+      box-shadow: var(--shadow); margin-bottom: 24px; overflow: hidden;
+    }
+    .section-title {
+      display: flex; align-items: center; gap: 10px;
+      padding: 20px 24px; border-bottom: 1px solid var(--border);
+      background: #f8fafc;
+    }
+    .section-num {
+      width: 28px; height: 28px; background: var(--blue); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: .75rem; font-weight: 700; flex-shrink: 0;
+    }
+    .section-title h2 { font-size: .95rem; font-weight: 700; color: var(--navy); }
+    .section-body { padding: 20px 24px; font-size: .88rem; color: #374151; }
+    .section-body p { margin-bottom: 10px; }
+    .section-body ul { padding-left: 18px; }
+    .section-body li { margin-bottom: 6px; }
+    .section-body strong { color: var(--navy); }
+    .section-body a { color: var(--blue); }
+
+    /* TABLE */
+    .data-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: .84rem; }
+    .data-table th { background: #eef2ff; padding: 10px 12px; text-align: left; color: var(--navy); font-weight: 600; }
+    .data-table td { padding: 10px 12px; border-top: 1px solid var(--border); vertical-align: top; }
+    .data-table tr:nth-child(even) td { background: #fafafa; }
+
+    /* HIGHLIGHT */
+    .highlight-box {
+      background: #eef2ff; border: 1px solid rgba(129,140,248,.3);
+      border-left: 4px solid var(--blue); border-radius: 8px;
+      padding: 14px 18px; margin: 14px 0; font-size: .86rem;
+    }
+    .highlight-box strong { color: #4338ca; }
+
+    /* CONTACT */
+    .contact-card {
+      background: linear-gradient(135deg, var(--navy), #1e293b);
+      border-radius: var(--radius); padding: 32px; text-align: center;
+      color: #fff; margin-top: 32px;
+    }
+    .contact-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
+    .contact-card p { color: rgba(255,255,255,.65); font-size: .88rem; margin-bottom: 20px; }
+    .contact-btn {
+      display: inline-block; background: var(--blue); color: #fff;
+      text-decoration: none; padding: 10px 24px; border-radius: 8px;
+      font-weight: 600; font-size: .88rem;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border); padding: 24px;
+      text-align: center; color: var(--slate); font-size: .8rem;
+    }
+    footer a { color: var(--blue); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.4rem; }
+      .hero-meta { gap: 12px; }
+      .section-body { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">
+    <div class="brand-mark">N</div>
+    <span class="brand-text">Nex<span>Hire</span></span>
+  </a>
+  <a href="/" class="nav-back">← Retour à l'accueil</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">🛡️ PROTECTION DES DONNÉES</div>
+  <h1>Politique de confidentialité</h1>
+  <p>Nous traitons vos données avec transparence et conformité aux lois canadiennes et québécoises.</p>
+  <div class="hero-meta">
+    <span>📅 Dernière mise à jour : Juin 2026</span>
+    <span>🏛️ Loi 25 (Québec)</span>
+    <span>🇨🇦 LPRPDE</span>
+    <span>🇪🇺 RGPD</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="legal-section">
+    <div class="section-title">
+      <div class="section-num">1</div>
+      <h2>Responsable du traitement</h2>
+    </div>
+    <div class="section-body">
+      <p><strong>Nexhire Inc.</strong>, société enregistrée au Québec, Canada, est responsable du traitement des données personnelles collectées via la plateforme NexHire Enterprise Intelligence Platform.</p>
+      <div class="highlight-box">
+        <strong>Coordonnées :</strong> Nexhire Inc., Montréal, Québec, Canada<br>
+        Courriel : <a href="mailto:privacy@nexhire.ca">privacy@nexhire.ca</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="legal-section">
+    <div class="section-title">
+      <div class="section-num">2</div>
+      <h2>Données collectées</h2>
+    </div>
+    <div class="section-body">
+      <table class="data-table">
+        <thead><tr><th>Catégorie</th><th>Données</th><th>Finalité</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Compte</strong></td>
+            <td>Adresse courriel, nom complet, nom de l'organisation</td>
+            <td>Authentification, facturation, support</td>
+          </tr>
+          <tr>
+            <td><strong>Utilisation</strong></td>
+            <td>Questions posées à l'agent IA, connecteurs utilisés, actions effectuées</td>
+            <td>Fourniture du Service, amélioration, journal d'audit</td>
+          </tr>
+          <tr>
+            <td><strong>Techniques</strong></td>
+            <td>Adresse IP, navigateur, timestamps de connexion</td>
+            <td>Sécurité, détection de fraude</td>
+          </tr>
+          <tr>
+            <td><strong>Tokens OAuth</strong></td>
+            <td>Tokens d'accès chiffrés Fernet (AES-128)</td>
+            <td>Connexion sécurisée aux systèmes de l'organisation</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="highlight-box">
+        <strong>Important :</strong> NexHire ne stocke ni ne lit le contenu de vos systèmes connectés au-delà de ce qui est strictement nécessaire pour répondre à vos questions. Les tokens OAuth ne sont <em>jamais lisibles en clair</em> par NexHire.
+      </div>
+    </div>
+  </div>
+
+  <div class="legal-section">
+    <div class="section-title">
+      <div class="section-num">3</div>
+      <h2>Finalités du traitement</h2>
+    </div>
+    <div class="section-body">
+      <ul>
+        <li>Fournir et améliorer le Service NexHire EIP</li>
+        <li>Personnaliser les réponses de l'agent IA selon votre organisation</li>
+        <li>Assurer la sécurité et détecter les accès non autorisés</li>
+        <li>Respecter nos obligations légales (journal d'audit, conservation)</li>
+        <li>Traiter la facturation et la gestion des abonnements via Stripe</li>
+        <li>Vous envoyer des communications relatives au Service (pas de marketing sans consentement)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="legal-section">
+    <div class="section-title">
+      <div class="section-num">4</div>
+      <h2>Conformité — Loi 25 (Québec) &amp; LPRPDE</h2>
+    </div>
+    <div class="section-body">
+      <p>NexHire est conforme à la <strong>Loi modernisant des dispositions législatives en matière de protection des renseignements personnels (Loi 25)</strong> et à la <strong>Loi sur la protection des renseignements personnels et les documents électroniques (LPRPDE)</strong>.</p>
+      <p style="margin-top:12px">Vous disposez des droits suivants :</p>
+      <ul>
+        <li><strong>Droit d'accès</strong> — obtenir une copie de vos données personnelles</li>
+        <li><strong>Droit de rectification</strong> — corriger des données inexactes</li>
+        <li><strong>Droit de suppression</strong> — demander l'effacement de vos données</li>
+        <li><strong>Droit à la portabilité</strong> — recevoir vos données dans un format structuré</li>
+        <li><strong>Droit d'opposition</strong> — vous opposer à certains traitements</li>
+      </ul>
+      <p style="margin-top:12px">Pour exercer ces droits : <a href="mailto:privacy@nexhire.ca">privacy@nexhire.ca</a></p>
+    </div>
+  </div>
+
+  <div class="legal-section">
+    <div class="section-title">
+      <div class="section-num">5</div>
+      <h2>Sous-traitants et tiers</h2>
+    </div>
+    <div class="section-body">
+      <table class="data-table">
+        <thead><tr><th>Sous-traitant</th><th>Rôle</th><th>Localisation</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Supabase</strong></td><td>Base de données PostgreSQL</td><td>Canada / USA</td></tr>
+          <tr><td><strong>Render</strong></td><td>Hébergement de l'application</td><td>USA</td></tr>
+          <tr><td><strong>OpenAI</strong></td><td>Traitement des questions par l'IA</td><td>USA</td></tr>
+          <tr><td><strong>Stripe</strong></td><td>Gestion des paiements et abonnements</td><td>USA</td></tr>
+        </tbody>
+      </table>
+      <div class="highlight-box">
+        <strong>OpenAI :</strong> Les questions sont transmises à OpenAI via l'API — elles ne sont pas stockées ni utilisées pour l'entraînement des modèles dans le cadre de l'utilisation API professionnelle.
+      </div>
+    </div>
+  </div>
+
+  <div class="legal-section">
+    <div class="section-title">
+      <div class="section-num">6</div>
+      <h2>Conservation des données</h2>
+    </div>
+    <div class="section-body">
+      <ul>
+        <li><strong>Données de compte :</strong> durée de l'abonnement actif + 12 mois après résiliation</li>
+        <li><strong>Journal d'audit :</strong> 7 ans (obligations légales canadiennes)</li>
+        <li><strong>Logs techniques :</strong> 90 jours</li>
+        <li><strong>Tokens OAuth :</strong> supprimés immédiatement à la déconnexion d'un connecteur</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="legal-section">
+    <div class="section-title">
+      <div class="section-num">7</div>
+      <h2>Cookies et traçage</h2>
+    </div>
+    <div class="section-body">
+      <p>NexHire n'utilise <strong>aucun cookie publicitaire</strong> ni outil de traçage tiers (Google Analytics, Meta Pixel, etc.).</p>
+      <p style="margin-top:8px">Seul un <strong>token d'authentification JWT</strong> est stocké en mémoire locale du navigateur (localStorage) pour maintenir votre session. Ce token expire automatiquement.</p>
+    </div>
+  </div>
+
+  <div class="legal-section">
+    <div class="section-title">
+      <div class="section-num">8</div>
+      <h2>Transferts internationaux</h2>
+    </div>
+    <div class="section-body">
+      <p>Certaines données transitent via des serveurs situés aux États-Unis (OpenAI, Stripe, Render). Ces transferts sont encadrés par des <strong>clauses contractuelles types (CCT)</strong> conformes aux standards internationaux et à la Loi 25.</p>
+    </div>
+  </div>
+
+  <div class="legal-section">
+    <div class="section-title">
+      <div class="section-num">9</div>
+      <h2>Incidents et violations</h2>
+    </div>
+    <div class="section-body">
+      <p>En cas de violation de données susceptible de causer un préjudice sérieux, NexHire s'engage à :</p>
+      <ul>
+        <li>Notifier la <strong>Commission d'accès à l'information (CAI)</strong> dans les 72 heures</li>
+        <li>Informer les personnes concernées dans les meilleurs délais</li>
+        <li>Documenter l'incident dans le registre des incidents</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="contact-card">
+    <h3>Questions sur vos données ?</h3>
+    <p>Notre responsable de la protection des données répond dans les 5 jours ouvrables.</p>
+    <a href="mailto:privacy@nexhire.ca" class="contact-btn">privacy@nexhire.ca</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>
+    © 2026 Nexhire Inc. — Montréal, Québec, Canada &nbsp;·&nbsp;
+    <a href="/legal/tos">Conditions d'utilisation</a> &nbsp;·&nbsp;
+    <a href="/legal/privacy">Politique de confidentialité</a> &nbsp;·&nbsp;
+    <a href="/legal/security">Sécurité</a> &nbsp;·&nbsp;
+    <a href="mailto:privacy@nexhire.ca">privacy@nexhire.ca</a>
+  </p>
+</footer>
+
+</body>
+</html>

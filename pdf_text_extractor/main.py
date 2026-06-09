@@ -180,6 +180,18 @@ def create_app(
             },
         )
 
+    @app.get("/legal/privacy")
+    def legal_privacy():
+        return FileResponse(STATIC_DIR / "legal" / "privacy.html", media_type="text/html")
+
+    @app.get("/legal/tos")
+    def legal_tos():
+        return FileResponse(STATIC_DIR / "legal" / "tos.html", media_type="text/html")
+
+    @app.get("/legal/security")
+    def legal_security():
+        return FileResponse(STATIC_DIR / "legal" / "security.html", media_type="text/html")
+
     @app.get("/api/health")
     def health():
         return {"status": "ok"}
