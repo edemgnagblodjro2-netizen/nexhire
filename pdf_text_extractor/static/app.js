@@ -6093,7 +6093,7 @@ async function loadDirectionAggregate() {
   $("eid-kpi-row").innerHTML = [
     { val: avgScore != null ? avgScore + "%" : "—", label: "Efficacité organisationnelle", color: _scoreColor(avgScore) },
     { val: _aggData.length,  label: "Départements actifs",   color: "#60a5fa" },
-    { val: totalMbr,         label: "Membres au total",       color: "#a78bfa" },
+    { val: warning,          label: "À surveiller",           color: warning  > 0 ? "#fbbf24" : "#4ade80" },
     { val: critical,         label: "Risques critiques",       color: critical > 0 ? "#f87171" : "#4ade80" },
   ].map(k => `
     <div class="eid-kpi-card">
@@ -6165,50 +6165,79 @@ async function loadDirectionAggregate() {
     `).join("") || `<p class="muted" style="font-size:.82rem">Aucune donnée</p>`;
 
   // ── Connecteurs ────────────────────────────────────────────────────────────
-  let servers = [];
-  try { servers = (await apiCall("/api/servers")) || []; } catch {}
-  const active = servers.filter(s => s.status === "connected" || s.status === "active").length;
+  const _CONN_LABELS = {
+    microsoft_365: "Microsoft 365", salesforce: "Salesforce", servicenow: "ServiceNow",
+    jira: "Jira", zendesk: "Zendesk", hubspot: "HubSpot", google_workspace: "Google Workspace",
+    slack: "Slack", quickbooks: "QuickBooks", sap: "SAP", workday: "Workday",
+    autotask: "Autotask", bamboohr: "BambooHR", adp: "ADP", asana: "Asana",
+    monday: "Monday.com", clickup: "ClickUp", aws: "AWS", netsuite: "NetSuite",
+    intune: "Intune", crowdstrike: "CrowdStrike", epicor: "Epicor",
+  };
+  let connectors = [];
+  try { connectors = (await apiCall("/api/connectors")) || []; } catch {}
+  // Déduplique par connector_type (l'API peut retourner plusieurs lignes si plusieurs depts)
+  const seenTypes = new Set();
+  const uniqueConns = connectors.filter(c => {
+    if (seenTypes.has(c.connector_type)) return false;
+    seenTypes.add(c.connector_type); return true;
+  });
+  const activeConns = uniqueConns.filter(c => c.status === "connected").length;
   $("eid-connectors").innerHTML = `<div class="eid-card-title">Systèmes connectés</div>` +
-    servers.slice(0, 5).map(s => {
-      const ok = s.status === "connected" || s.status === "active";
-      return `<div class="eid-list-row">
-        <span class="eid-conn-dot" style="background:${ok ? "#4ade80" : "#f87171"}"></span>
-        <span class="eid-list-label">${esc(s.name || s.server_type || "Système")}</span>
-        <span style="font-size:.75rem;color:${ok ? "#4ade80" : "#f87171"}">${ok ? "Actif" : "Hors ligne"}</span>
-      </div>`;
-    }).join("") +
-    `<div class="eid-list-row" style="margin-top:8px;padding-top:8px;border-top:1px solid #1e293b">
+    (uniqueConns.length
+      ? uniqueConns.slice(0, 5).map(c => {
+          const ok = c.status === "connected";
+          const label = _CONN_LABELS[c.connector_type] || c.connector_type;
+          return `<div class="eid-list-row">
+            <span class="eid-conn-dot" style="background:${ok ? "#4ade80" : "#f87171"}"></span>
+            <span class="eid-list-label">${esc(label)}</span>
+            <span style="font-size:.75rem;color:${ok ? "#4ade80" : "#f87171"}">${ok ? "Actif" : "Hors ligne"}</span>
+          </div>`;
+        }).join("")
+      : `<p class="muted" style="font-size:.82rem;padding:4px 0">Aucun connecteur configuré</p>`
+    ) +
+    `<div class="eid-list-row" style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
       <span class="eid-list-label" style="font-weight:600">Total actifs</span>
-      <span style="color:#60a5fa;font-weight:700">${active}/${servers.length}</span>
+      <span style="color:#60a5fa;font-weight:700">${activeConns}/${uniqueConns.length}</span>
     </div>`;
 
   // ── Santé organisationnelle ────────────────────────────────────────────────
-  $("eid-dept-health").innerHTML = `<div class="eid-card-title">Santé organisationnelle</div>` +
-    _aggData.map((d, i) => {
-      const s = allScores[i];
-      const c = _scoreColor(s);
-      return `<div class="eid-list-row">
-        <span class="eid-list-label">${d.icon || "📊"} ${esc(d.dept_name || d.dept_type)}</span>
-        <span style="font-weight:700;color:${c}">${s != null ? s + "%" : "—"}</span>
-      </div>`;
-    }).join("") || `<p class="muted" style="font-size:.82rem">Aucun département</p>`;
+  const healthSorted = [..._aggData].map((d, i) => ({ ...d, score: allScores[i] }))
+    .filter(d => d.score != null && d.score < 100)
+    .sort((a, b) => a.score - b.score);
+  const healthToShow = healthSorted.slice(0, 10);
+  const hiddenCount  = healthSorted.length - healthToShow.length;
+  $("eid-dept-health").innerHTML = `<div class="eid-card-title">À surveiller</div>` +
+    (healthToShow.length
+      ? healthToShow.map(d => `
+          <div class="eid-list-row" style="cursor:pointer" onclick="activateWorkspace('${d.dept_id}','${d.dept_type}','${esc(d.dept_name || '')}')">
+            <span class="eid-list-label">${d.icon || "📊"} ${esc(d.dept_name || d.dept_type)}</span>
+            <span style="font-weight:700;color:${_scoreColor(d.score)}">${d.score}%</span>
+          </div>`).join("")
+        + (hiddenCount > 0 ? `<div class="eid-list-row muted" style="font-size:.76rem;justify-content:center">${hiddenCount} autres — tous à 100 %</div>` : "")
+      : `<div class="eid-list-row" style="color:#4ade80">✅ Tous les départements sont à 100 %</div>`);
 
   // ── Alertes & risques ──────────────────────────────────────────────────────
   const critDepts = _aggData.filter((d, i) => (allScores[i] ?? 100) < 50);
   const warnDepts = _aggData.filter((d, i) => { const s = allScores[i]; return s != null && s >= 50 && s < 70; });
+
+  function _alertRow(d, badgeClass, badgeLabel) {
+    const score = _deptHealthScore(d.kpis);
+    const kpiPreview = (d.kpis || []).slice(0, 2).map(k =>
+      `<span style="font-size:.72rem;color:${k.color || "#64748b"}">${esc(k.label)}: ${esc(k.value)}</span>`
+    ).join(" · ");
+    return `<div class="eid-alert-item" onclick="activateWorkspace('${d.dept_id}','${d.dept_type}','${esc(d.dept_name || '')}')">
+      <div class="eid-list-row" style="margin-bottom:2px">
+        <span class="eid-alert-badge ${badgeClass}">${badgeLabel}</span>
+        <span class="eid-list-label" style="font-weight:600">${esc(d.dept_name || d.dept_type)}</span>
+        <span style="font-weight:700;color:${_scoreColor(score)};font-size:.8rem">${score != null ? score + "%" : "—"}</span>
+      </div>
+      ${kpiPreview ? '<div style="padding:0 0 6px 4px">' + kpiPreview + '</div>' : ""}
+    </div>`;
+  }
+
   $("eid-alerts").innerHTML = `<div class="eid-card-title">Alertes & Risques</div>` +
-    (critDepts.length ? critDepts.map(d => `
-      <div class="eid-list-row">
-        <span class="eid-alert-badge eid-alert-red">Critique</span>
-        <span class="eid-list-label">${esc(d.dept_name || d.dept_type)}</span>
-      </div>
-    `).join("") : "") +
-    (warnDepts.length ? warnDepts.map(d => `
-      <div class="eid-list-row">
-        <span class="eid-alert-badge eid-alert-orange">Attention</span>
-        <span class="eid-list-label">${esc(d.dept_name || d.dept_type)}</span>
-      </div>
-    `).join("") : "") +
+    (critDepts.length ? critDepts.map(d => _alertRow(d, "eid-alert-red", "Critique")).join("") : "") +
+    (warnDepts.length ? warnDepts.map(d => _alertRow(d, "eid-alert-orange", "Attention")).join("") : "") +
     (!critDepts.length && !warnDepts.length ? `<div class="eid-list-row" style="color:#4ade80">✅ Aucun risque critique détecté</div>` : "");
 }
 

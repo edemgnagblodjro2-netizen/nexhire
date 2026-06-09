@@ -3192,7 +3192,7 @@ tbody tr:hover { background: var(--blue-pale); transition: background .12s; }
 }
 .eid-ticker-inner {
   display: inline-block; white-space: nowrap;
-  animation: ticker-scroll 28s linear infinite;
+  animation: ticker-scroll 55s linear infinite;
 }
 @keyframes ticker-scroll {
   from { transform: translateX(100%); }
@@ -3244,6 +3244,12 @@ tbody tr:hover { background: var(--blue-pale); transition: background .12s; }
 .eid-alert-badge { font-size: .68rem; font-weight: 700; padding: 1px 6px; border-radius: 999px; flex-shrink: 0; }
 .eid-alert-red    { background: #fee2e2; color: #dc2626; }
 .eid-alert-orange { background: #fef3c7; color: #d97706; }
+.eid-alert-item {
+  border-bottom: 1px solid var(--border); padding: 4px 0;
+  cursor: pointer; border-radius: 6px; transition: background .12s;
+}
+.eid-alert-item:hover { background: var(--bg-light); }
+.eid-alert-item:last-child { border-bottom: none; }
 
 @media (max-width: 900px) {
   .eid-kpi-row    { grid-template-columns: repeat(2, 1fr); }
