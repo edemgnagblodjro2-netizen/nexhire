@@ -134,7 +134,7 @@ QUICKBOOKS_CLIENT_SECRET    = ...
 QUICKBOOKS_REDIRECT_URI     = https://agenthub.nexhire.ca/api/connectors/oauth/callback
 ```
 
-> **Connecteurs Catégorie B** (ServiceNow, Zendesk, SAP, Workday, Autotask, BambooHR, NetSuite, Asana, Monday.com, ClickUp) : aucune variable Render — les credentials sont saisies directement dans le portail NexHire par l'admin client et chiffrées en base.
+> **Connecteurs Catégorie B** (ServiceNow, Zendesk, SAP, Workday, Autotask, BambooHR, ADP, NetSuite, Epicor, AWS, Intune, CrowdStrike, Asana, Monday.com, ClickUp) : aucune variable Render — les credentials sont saisies directement dans le portail NexHire par l'admin client et chiffrées en base.
 
 ---
 
@@ -298,11 +298,16 @@ Si `ping.ok === false` → alerte affichée à l'admin avec le message d'erreur.
 
 | Connecteur | Champs obligatoires |
 |---|---|
-| SAP | `url`, `username`, `password` |
+| SAP | `api_url`, `username`, `password` |
 | Workday | `tenant_url`, `client_id`, `client_secret` |
 | Autotask | `username`, `api_key`, `api_integration_code`, `zone_url` |
 | BambooHR | `subdomain`, `api_key` |
+| ADP Workforce Now | `client_id`, `client_secret` |
 | NetSuite | `account_id`, `consumer_key`, `consumer_secret`, `token_id`, `token_secret` |
+| Epicor ERP | `url`, `username`, `password` |
+| AWS | `access_key_id`, `secret_access_key`, `region` |
+| Microsoft Intune | `tenant_id`, `client_id`, `client_secret` |
+| CrowdStrike Falcon | `client_id`, `client_secret` |
 | Asana | `access_token` |
 | Monday.com | `api_token` |
 | ClickUp | `api_token` |

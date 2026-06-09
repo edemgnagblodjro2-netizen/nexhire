@@ -175,6 +175,76 @@ Toutes les credentials sont chiffrées (AES-128) avant d'être stockées et ne s
 
 ---
 
+### ADP Workforce Now
+
+**Ce que vous obtenez :** RH, Paie, Gestion des temps, Structure organisationnelle.
+
+**Prérequis :** Un accès développeur ADP (ADP Marketplace ou API Gateway).
+
+| Champ | Description |
+|---|---|
+| Client ID | Généré dans ADP Developer Portal → vos applications |
+| Client Secret | Secret du client ADP |
+
+---
+
+### AWS (Amazon Web Services)
+
+**Ce que vous obtenez :** Ressources cloud, coûts et facturation, logs CloudWatch, alertes.
+
+**Prérequis :** Un utilisateur IAM avec accès en lecture seule (politique `ReadOnlyAccess` ou personnalisée).
+
+| Champ | Description | Exemple |
+|---|---|---|
+| Access Key ID | Clé d'accès de l'utilisateur IAM | `AKIAIOSFODNN7EXAMPLE` |
+| Secret Access Key | Clé secrète IAM | — |
+| Région | Région AWS principale | `ca-central-1` |
+
+---
+
+### Microsoft Intune
+
+**Ce que vous obtenez :** Gestion des appareils, conformité, politiques de sécurité, inventaire endpoints.
+
+**Prérequis :** Une app registration Azure AD avec les permissions Microsoft Graph `DeviceManagementManagedDevices.Read.All`.
+
+| Champ | Description |
+|---|---|
+| Tenant ID | ID du tenant Azure AD |
+| Client ID | ID de l'app registration Azure |
+| Client Secret | Secret de l'app registration |
+
+---
+
+### CrowdStrike Falcon
+
+**Ce que vous obtenez :** Alertes de sécurité, incidents, détections de menaces, score de santé des endpoints.
+
+**Prérequis :** Un client API dans CrowdStrike Falcon Console avec le scope `Detections: Read`.
+
+| Champ | Description |
+|---|---|
+| Client ID | Généré dans CrowdStrike Falcon Console → API Clients |
+| Client Secret | Secret du client API |
+
+---
+
+### Epicor ERP
+
+**Ce que vous obtenez :** ERP manufacturier — Production, Inventaire, Finance, Commandes clients, Achats.
+
+**Prérequis :** Un utilisateur de service avec accès API REST Epicor.
+
+| Champ | Description | Exemple |
+|---|---|---|
+| URL de l'instance | URL de votre instance Epicor | `https://epicor.votreentreprise.com` |
+| Nom d'utilisateur | Utilisateur de service Epicor | `NEXHIRE_SVC` |
+| Mot de passe | Mot de passe du service account | — |
+
+---
+
+> **Test de connexion automatique :** Pour SAP, Workday et Autotask, NexHire teste automatiquement la connectivité dès l'enregistrement des credentials. Un message de confirmation (ou d'erreur détaillée) s'affiche immédiatement à l'administrateur.
+
 ---
 
 ## Authentification SSO (Single Sign-On)
@@ -287,6 +357,11 @@ Une fois le SSO configuré, les employés accèdent à `https://agenthub.nexhire
 | Asana | Saisir Personal Access Token dans NexHire |
 | Monday.com | Saisir API Token dans NexHire |
 | ClickUp | Saisir Personal API Token dans NexHire |
+| ADP Workforce Now | Saisir Client ID + Secret dans NexHire |
+| AWS | Saisir Access Key ID + Secret + Région dans NexHire |
+| Microsoft Intune | Saisir Tenant ID + Client ID + Secret dans NexHire |
+| CrowdStrike Falcon | Saisir Client ID + Secret dans NexHire |
+| Epicor ERP | Saisir URL + utilisateur + mot de passe dans NexHire |
 | **SSO (Entra ID / Google / Okta)** | **IT crée une app OIDC → Admin NexHire entre Client ID + Secret + Tenant ID dans Paramètres → SSO** |
 
 ---

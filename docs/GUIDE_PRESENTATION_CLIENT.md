@@ -71,11 +71,11 @@ Le tableau de bord s'adapte au rôle de l'utilisateur : un directeur général v
 
 ---
 
-### 5. Connecteurs — 19 systèmes d'entreprise
+### 5. Connecteurs — 22 systèmes d'entreprise
 
 Connectez NexHire à vos outils existants. Aucune migration, aucun double-encodage.
 
-#### Connexion en 1 clic (OAuth)
+#### Connexion en 1 clic (OAuth) — 9 systèmes
 
 | Système | Ce que NexHire accède |
 |---|---|
@@ -86,22 +86,29 @@ Connectez NexHire à vos outils existants. Aucune migration, aucun double-encoda
 | HubSpot | CRM, Contacts, Deals |
 | Slack | Messages, canaux, fichiers |
 | QuickBooks Online | Facturation, dépenses, rapports |
+| ServiceNow | Incidents, CMDB, SLA |
+| Zendesk | Tickets support, Base de connaissances |
 
-#### Connexion avec credentials (API Key)
+#### Connexion avec credentials (API Key) — 13 systèmes
 
 | Système | Ce que NexHire accède |
 |---|---|
 | SAP | ERP, Finance, Achats, Logistique, RH |
 | Workday | RH, Paie, Recrutement, Absences |
 | Autotask / Datto PSA | Tickets PSA, Projets, Facturation |
-| ServiceNow | Incidents, CMDB, SLA |
-| Zendesk | Tickets support, Base de connaissances |
 | BambooHR | Employés, Congés, Onboarding |
+| ADP Workforce Now | Paie, RH, Gestion des temps |
 | NetSuite ERP | Finance, Inventaire, Commandes |
+| Epicor ERP | Production, Inventaire, Finance, Achats |
+| AWS | Ressources cloud, coûts, logs, alertes |
+| Microsoft Intune | Gestion des appareils, conformité, endpoints |
+| CrowdStrike Falcon | Alertes sécurité, détections de menaces |
 | Asana | Projets, Tâches, Équipes |
 | Monday.com | Tableaux, Automatisations |
 | ClickUp | Tâches, Documents, Sprints |
 
+> **Test de connexion automatique :** Pour SAP, Workday et Autotask, NexHire teste la connectivité dès l'enregistrement des credentials et affiche un retour immédiat.
+>
 > **Sécurité :** Toutes les credentials sont chiffrées (AES-128) avant d'être stockées. Elles ne sont jamais affichées en clair.
 
 ---
