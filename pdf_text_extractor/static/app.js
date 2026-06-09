@@ -4356,13 +4356,13 @@ const _DEPT_CHIPS = {
   ],
 
   // ── Ressources humaines ────────────────────────────────────────────────────
-  // Recrutement, absences, paie, performance, onboarding, rétention
+  // Effectifs, recrutement, absences, paie, santé-sécurité, projets RH
   hr: [
-    { fr: "Quels postes sont vacants et depuis combien de temps ?",                    en: "Which positions are open and for how long?" },
-    { fr: "Quelles absences et congés sont prévus cette semaine ?",                    en: "What absences and leaves are scheduled this week?" },
-    { fr: "Quelles évaluations de performance sont en attente de complétion ?",        en: "Which performance reviews are pending completion?" },
-    { fr: "Quel est le taux de roulement du personnel ces 6 derniers mois ?",          en: "What is the staff turnover rate over the last 6 months?" },
-    { fr: "Quels nouveaux employés ont des tâches d'onboarding en retard ?",           en: "Which new employees have overdue onboarding tasks?" },
+    { fr: "Quel est l'effectif total actuel — actifs, en congé, démissionnaires — par département ?", en: "What is the current total headcount — active, on leave, resigned — by department?" },
+    { fr: "Quels recrutements sont en cours, combien de postes vacants et depuis quand ?", en: "Which recruitments are ongoing, how many positions are open and since when?" },
+    { fr: "Quel est le budget RH ce mois — masse salariale, avantages sociaux et dépenses totales ?", en: "What is the HR budget this month — payroll, benefits and total expenses?" },
+    { fr: "Combien d'accidents de travail ou d'incidents santé-sécurité ont été déclarés ce trimestre ?", en: "How many workplace accidents or health and safety incidents were reported this quarter?" },
+    { fr: "Quels projets RH sont en cours, terminés ou en attente de validation ?",    en: "Which HR projects are in progress, completed or pending approval?" },
   ],
 
   // ── Technologies de l'information ─────────────────────────────────────────
@@ -4762,9 +4762,13 @@ const _NAME_TO_DEPT_TYPE = {
 };
 
 function _resolveDeptType(deptType, deptName) {
-  if (_DEPT_CHIPS[deptType]) return deptType;
+  // Priorité au nom — plus fiable que l'ancien dept_type en base
   const key = (deptName || "").toLowerCase().trim();
-  return _NAME_TO_DEPT_TYPE[key] || _NAME_TO_DEPT_TYPE[key.split(" ")[0]] || deptType;
+  const byName = _NAME_TO_DEPT_TYPE[key] || _NAME_TO_DEPT_TYPE[key.split(" ")[0]];
+  if (byName) return byName;
+  // Fallback sur le dept_type de la DB s'il a des chips
+  if (_DEPT_CHIPS[deptType]) return deptType;
+  return "general";
 }
 
 function activateWorkspace(deptId, deptType, deptName) {
