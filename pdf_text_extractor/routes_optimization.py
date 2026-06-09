@@ -421,6 +421,10 @@ async def _ai_cost_analysis(org_id: str, question: str, language: str, org_type:
             max_tokens=1500,
         )
         analysis = json.loads(resp.choices[0].message.content)
+        # Recalcule le total depuis les steps pour garantir la cohérence
+        analysis["total_potential_savings"] = round(
+            sum(s.get("savings", 0) for s in analysis.get("steps", [])), 2
+        )
         return {"success": True, "question": question, "analysis": analysis}
 
     except Exception as exc:
@@ -501,13 +505,14 @@ def _rule_based_analysis(org_id: str, org_type: str = "entreprise") -> dict:
     all_insights = [i for i in base_insights if not i.startswith("0 ")] + sector_insights[:2]
 
     sector_labels = {"entreprise": "entreprise privée", "hopital": "hôpital", "municipalite": "municipalité", "universite": "université"}
+    steps_total = round(sum(s["savings"] for s in steps), 2)
     return {
         "summary": (
             f"Analyse ({sector_labels.get(org_type, org_type)}) : "
             f"{len(unused)} licences sous-utilisées, {len(dups)} catégories avec doublons, "
             f"{len(procs)} processus automatisables, {len(contracts)} contrats à renégocier."
         ),
-        "total_potential_savings": round(data_total, 2),
+        "total_potential_savings": steps_total,
         "confidence":             82,
         "steps":                  steps,
         "insights":               all_insights,
