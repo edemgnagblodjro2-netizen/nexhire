@@ -819,6 +819,31 @@
 
 <!-- ═══════════════════════════════════════ AUTH ═══════════════════════════ -->
 <div id="view-auth" class="auth-screen hidden">
+
+  <!-- Panneau gauche — branding -->
+  <div class="auth-left">
+    <div class="auth-left-inner">
+      <div class="auth-left-logo">
+        <div class="auth-left-logo-icon">N</div>
+        <div class="auth-left-logo-text">NexHire <span>EIP</span></div>
+      </div>
+      <h2 class="auth-left-headline">Enterprise Intelligence<br>Platform</h2>
+      <p class="auth-left-sub">Connectez tous vos systèmes d'entreprise et interrogez-les en langage naturel.</p>
+      <ul class="auth-left-features">
+        <li><span class="auth-feat-dot"></span>22 connecteurs — SAP, Workday, M365, Salesforce&hellip;</li>
+        <li><span class="auth-feat-dot"></span>Assistant IA contextuel par département</li>
+        <li><span class="auth-feat-dot"></span>SSO Microsoft · Google · Okta</li>
+        <li><span class="auth-feat-dot"></span>Tableaux de bord EID temps réel</li>
+      </ul>
+      <div class="auth-left-footer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Chiffrement AES-128 · JWT · Audit log immuable
+      </div>
+    </div>
+  </div>
+
+  <!-- Panneau droit — formulaire -->
+  <div class="auth-right">
   <div class="auth-card">
     <button class="auth-back" onclick="showLanding()" data-i18n="auth.back">← Retour à l'accueil</button>
 
@@ -897,6 +922,7 @@
       <p class="auth-switch"><span data-i18n="auth.signup.switch">Déjà un compte ?</span> <a href="#" onclick="showAuth('login');return false" data-i18n="auth.signup.switch.link">Se connecter</a></p>
     </div>
   </div>
+  </div><!-- /auth-right -->
 </div>
 
 <!-- ═══════════════════════════════════════ SPLASH ══════════════════════════ -->
