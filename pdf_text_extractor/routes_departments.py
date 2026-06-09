@@ -757,11 +757,31 @@ def initialize_departments(
     return {"created": len(created), "skipped": len(tmpl) - len(created), "departments": created}
 
 
+# Dept types with cross-organization workspace visibility (see all chips)
+_CROSS_ORG_DEPT_TYPES: frozenset[str] = frozenset({"direction", "rh", "it", "digital", "digitalisation"})
+
+
 @router.get("")
 def list_departments(user: CurrentUser = Depends(require_min_role("user"))):
     is_admin = ROLE_RANK.get(user.role, 0) >= 3 or user.is_service_account
 
-    if is_admin:
+    # Vérifier si l'utilisateur est dans un dept avec visibilité cross-org (Direction, RH, IT)
+    has_cross_org = False
+    if not is_admin:
+        try:
+            with get_db() as cur:
+                cur.execute(
+                    """SELECT d.dept_type FROM department_members dm
+                       JOIN departments d ON d.id = dm.department_id
+                       WHERE dm.user_id = %s AND d.organization_id = %s""",
+                    (user.id, user.organization_id),
+                )
+                user_types = {r["dept_type"] for r in rows(cur) if r.get("dept_type")}
+            has_cross_org = bool(user_types & _CROSS_ORG_DEPT_TYPES)
+        except Exception:
+            pass
+
+    if is_admin or has_cross_org:
         with get_db() as cur:
             cur.execute(
                 "SELECT * FROM departments WHERE organization_id = %s ORDER BY name",
