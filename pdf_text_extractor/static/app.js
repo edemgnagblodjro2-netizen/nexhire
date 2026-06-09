@@ -5228,6 +5228,12 @@ async function loadDeptDashboard(deptId = null) {
     if (label) label.textContent = d.label || "Mon département";
     if (name)  name.textContent  = d.dept_name || "";
 
+    // Indicateur vue restreinte (membre sans accès financier)
+    const restrictedBadge = $("dept-dash-restricted");
+    if (restrictedBadge) {
+      restrictedBadge.classList.toggle("hidden", d.can_see_financial !== false);
+    }
+
     // Mémorise le type de département pour l'agent IA
     // Ne pas écraser les chips si un workspace est manuellement actif
     if (d.dept_type && !_activeWorkspaceDeptType) {

@@ -228,6 +228,36 @@ DEPT_TYPE_CONFIG: dict[str, dict] = {
 }
 
 
+# KPIs contenant des données financières (montants $) — masqués pour les membres réguliers
+_FINANCIAL_KPI_KEYS: frozenset[str] = frozenset({
+    "budget_used", "budget_forecast_gap",
+    "contracts_savings", "negotiation_savings", "license_savings",
+    "total_savings", "top_opportunity_savings", "monthly_spend",
+    "monthly_app_cost", "hr_savings", "operations_savings",
+})
+
+
+def _member_role(user_id: str, dept_id: str) -> str:
+    """Retourne le rôle du membre dans le département ('member' ou 'manager'). '' si absent."""
+    try:
+        with get_db() as cur:
+            cur.execute(
+                "SELECT role FROM department_members WHERE user_id = %s AND department_id = %s LIMIT 1",
+                (user_id, dept_id),
+            )
+            r = row(cur)
+        return r.get("role", "member") if r else ""
+    except Exception:
+        return ""
+
+
+def _visible_kpis(kpi_keys: list[str], can_see_financial: bool) -> list[str]:
+    """Filtre les KPIs financiers pour les membres réguliers."""
+    if can_see_financial:
+        return kpi_keys
+    return [k for k in kpi_keys if k not in _FINANCIAL_KPI_KEYS]
+
+
 class DeptPayload(BaseModel):
     name: str = Field(..., min_length=1, max_length=100)
     description: str | None = None
@@ -271,6 +301,9 @@ def dept_dashboard(
     try:
         org_id = user.organization_id
 
+        # Niveau d'accès : admin/owner voit tout — manager dept voit tout — member voit seulement l'opérationnel
+        is_org_admin = ROLE_RANK.get(user.role, 0) >= 3 or user.is_service_account
+
         # Admin visualisant un workspace spécifique depuis la workspace bar
         if dept_id:
             with get_db() as cur:
@@ -284,17 +317,22 @@ def dept_dashboard(
                         "label": "Tableau de bord", "color": "#818CF8",
                         "primary_tab": "optim", "primary_subtab": "dashboard", "kpis": []}
             resolved_type = dept_row.get("dept_type") or "general"
-            cfg  = DEPT_TYPE_CONFIG.get(resolved_type, DEPT_TYPE_CONFIG["general"])
-            kpis = _build_kpis(org_id, dept_id, cfg["kpis"])
+            cfg = DEPT_TYPE_CONFIG.get(resolved_type, DEPT_TYPE_CONFIG["general"])
+            # Droits financiers : admin/owner OU manager du département
+            dept_role = _member_role(user.id, dept_id)
+            can_see_financial = is_org_admin or dept_role == "manager"
+            kpi_keys = _visible_kpis(cfg["kpis"], can_see_financial)
+            kpis = _build_kpis(org_id, dept_id, kpi_keys)
             return {
-                "dept_type":   resolved_type,
-                "dept_name":   dept_row.get("name"),
-                "icon":        cfg["icon"],
-                "label":       cfg["label"],
-                "color":       cfg["color"],
+                "dept_type":      resolved_type,
+                "dept_name":      dept_row.get("name"),
+                "icon":           cfg["icon"],
+                "label":          cfg["label"],
+                "color":          cfg["color"],
                 "primary_tab":    cfg["primary_tab"],
                 "primary_subtab": cfg["primary_subtab"],
-                "kpis": kpis,
+                "kpis":           kpis,
+                "can_see_financial": can_see_financial,
             }
 
         # Vue par défaut — département de l'utilisateur connecté
@@ -322,22 +360,26 @@ def dept_dashboard(
                 pass  # tables pas encore créées → vue générale
 
         # Admins/owners sans département → vue Direction Générale (agrégé)
-        is_admin = ROLE_RANK.get(user.role, 0) >= 3 or user.is_service_account
-        if is_admin and not user_dept_id:
+        if is_org_admin and not user_dept_id:
             resolved_type = "direction"
 
-        cfg  = DEPT_TYPE_CONFIG.get(resolved_type, DEPT_TYPE_CONFIG["general"])
-        kpis = _build_kpis(org_id, user_dept_id, cfg["kpis"])
+        cfg = DEPT_TYPE_CONFIG.get(resolved_type, DEPT_TYPE_CONFIG["general"])
+        # Droits financiers : admin/owner OU manager du département
+        dept_role = _member_role(user.id, user_dept_id) if user_dept_id else ""
+        can_see_financial = is_org_admin or dept_role == "manager"
+        kpi_keys = _visible_kpis(cfg["kpis"], can_see_financial)
+        kpis = _build_kpis(org_id, user_dept_id, kpi_keys)
 
         return {
-            "dept_type":   resolved_type,
-            "dept_name":   dept_name,
-            "icon":        cfg["icon"],
-            "label":       cfg["label"],
-            "color":       cfg["color"],
+            "dept_type":      resolved_type,
+            "dept_name":      dept_name,
+            "icon":           cfg["icon"],
+            "label":          cfg["label"],
+            "color":          cfg["color"],
             "primary_tab":    cfg["primary_tab"],
             "primary_subtab": cfg["primary_subtab"],
-            "kpis": kpis,
+            "kpis":           kpis,
+            "can_see_financial": can_see_financial,
         }
     except Exception:
         # Si les tables n'existent pas encore, retourner un dashboard vide
