@@ -6066,113 +6066,140 @@ function _parsePct(val) {
 let _aggData = [];  // cache pour le rapport PDF
 
 async function loadDirectionAggregate() {
-  const grid   = $("direction-aggregate-grid");
-  const strip  = $("dir-global-strip");
   const period = $("dir-agg-period");
-  if (!grid) return;
+  if (!$("eid-kpi-row")) return;
 
-  if (period) {
-    const now = new Date();
-    period.textContent = now.toLocaleDateString("fr-CA", { year: "numeric", month: "long", day: "numeric" });
-  }
-
-  grid.innerHTML = `<div style="grid-column:1/-1;padding:32px;text-align:center"><div class="spinner" style="margin:auto"></div><p class="muted" style="margin-top:12px">Chargement de tous les départements…</p></div>`;
-  if (strip) strip.innerHTML = "";
+  if (period) period.textContent = new Date().toLocaleDateString("fr-CA", { year: "numeric", month: "long", day: "numeric" });
 
   try {
-    const depts = await apiCall("/api/departments/aggregate");
-    _aggData = depts || [];
-
-    if (!_aggData.length) {
-      grid.innerHTML = `<p class="muted" style="padding:16px;grid-column:1/-1">Aucun département créé.</p>`;
-      return;
-    }
-
-    // ── Calcul global ──────────────────────────────────────────────────────
-    const totalMembers  = _aggData.reduce((s, d) => s + (d.member_count || 0), 0);
-    const scores        = _aggData.map(d => _deptHealthScore(d.kpis)).filter(s => s != null);
-    const avgScore      = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
-    const critical      = _aggData.filter(d => (_deptHealthScore(d.kpis) ?? 100) < 50).length;
-    const healthy       = _aggData.filter(d => (_deptHealthScore(d.kpis) ?? 0) >= 75).length;
-
-    // ── Bande KPIs globaux ─────────────────────────────────────────────────
-    if (strip) strip.innerHTML = `
-      <div class="dir-global-kpi">
-        <div class="dir-global-donut">
-          ${_donutSvg(avgScore ?? 0, _scoreColor(avgScore), 64)}
-          <span class="dir-global-donut-val" style="color:${_scoreColor(avgScore)}">${avgScore != null ? avgScore + "%" : "—"}</span>
-        </div>
-        <div class="dir-global-kpi-info">
-          <div class="dir-global-kpi-label">Santé organisationnelle</div>
-          <div class="dir-global-kpi-sub">Score moyen des ${_aggData.length} départements</div>
-        </div>
-      </div>
-      <div class="dir-global-kpi">
-        <div class="dir-global-big">${_aggData.length}</div>
-        <div class="dir-global-kpi-info">
-          <div class="dir-global-kpi-label">Départements</div>
-          <div class="dir-global-kpi-sub">${healthy} en bonne santé · ${critical} à surveiller</div>
-        </div>
-      </div>
-      <div class="dir-global-kpi">
-        <div class="dir-global-big">${totalMembers}</div>
-        <div class="dir-global-kpi-info">
-          <div class="dir-global-kpi-label">Membres au total</div>
-          <div class="dir-global-kpi-sub">Répartis sur tous les workspaces</div>
-        </div>
-      </div>
-      <div class="dir-global-kpi">
-        <div class="dir-global-big" style="color:${critical > 0 ? '#dc2626' : '#16a34a'}">${critical}</div>
-        <div class="dir-global-kpi-info">
-          <div class="dir-global-kpi-label">Alertes critiques</div>
-          <div class="dir-global-kpi-sub">Départements score &lt; 50%</div>
-        </div>
-      </div>`;
-
-    // ── Cartes départements ────────────────────────────────────────────────
-    grid.innerHTML = _aggData.map(dept => {
-      const score  = _deptHealthScore(dept.kpis);
-      const sColor = _scoreColor(score);
-      const members = dept.member_count === 1 ? "1 membre" : `${dept.member_count} membres`;
-
-      const kpisHtml = (dept.kpis || []).map(k => {
-        const pct = _parsePct(k.value);
-        const barHtml = pct != null ? _progressBar(pct, k.color) : "";
-        return `<div class="dir-kpi-row">
-          <span class="dir-kpi-icon">${k.icon || "📊"}</span>
-          <div class="dir-kpi-body">
-            <div class="dir-kpi-top">
-              <span class="dir-kpi-label">${esc(k.label)}</span>
-              <span class="dir-kpi-val" style="color:${k.color || "#1e293b"}">${esc(k.value)}</span>
-            </div>
-            ${barHtml}
-            ${k.sub ? `<div class="dir-kpi-sub">${esc(k.sub)}</div>` : ""}
-          </div>
-        </div>`;
-      }).join("");
-
-      return `<div class="dir-agg-card" style="--dept-accent:${dept.color || '#818CF8'}">
-        <div class="dir-agg-card-header">
-          <span class="dir-agg-card-icon">${dept.icon || "📊"}</span>
-          <div class="dir-agg-card-titles">
-            <div class="dir-agg-card-name">${esc(dept.dept_name || "")}</div>
-            <div class="dir-agg-card-members">${members}</div>
-          </div>
-          <div class="dir-agg-score-wrap">
-            ${_donutSvg(score ?? 0, sColor, 48)}
-            <span class="dir-agg-score-val" style="color:${sColor}">${score != null ? score + "%" : "—"}</span>
-          </div>
-        </div>
-        <div class="dir-kpi-list">${kpisHtml || '<p class="muted" style="font-size:.78rem;padding:4px 0">Aucune donnée disponible</p>'}</div>
-        <button class="dir-agg-open-btn" onclick="activateWorkspace('${dept.dept_id}','${dept.dept_type}','${esc(dept.dept_name || '')}')">
-          Ouvrir le workspace →
-        </button>
-      </div>`;
-    }).join("");
-
+    _aggData = (await apiCall("/api/departments/aggregate")) || [];
   } catch (ex) {
-    grid.innerHTML = `<p class="form-error" style="grid-column:1/-1">Erreur : ${esc(ex.message)}</p>`;
+    $("eid-kpi-row").innerHTML = `<p class="form-error">Erreur : ${esc(ex.message)}</p>`;
+    return;
   }
+
+  const allScores   = _aggData.map(d => _deptHealthScore(d.kpis));
+  const validScores = allScores.filter(s => s != null);
+  const avgScore    = validScores.length ? Math.round(validScores.reduce((a, b) => a + b, 0) / validScores.length) : null;
+  const totalMbr    = _aggData.reduce((s, d) => s + (d.member_count || 0), 0);
+  const critical    = validScores.filter(s => s < 50).length;
+  const warning     = validScores.filter(s => s >= 50 && s < 70).length;
+  const healthy     = validScores.filter(s => s >= 70).length;
+
+  // ── KPI cards ─────────────────────────────────────────────────────────────
+  $("eid-kpi-row").innerHTML = [
+    { val: avgScore != null ? avgScore + "%" : "—", label: "Efficacité organisationnelle", color: _scoreColor(avgScore) },
+    { val: _aggData.length,  label: "Départements actifs",   color: "#60a5fa" },
+    { val: totalMbr,         label: "Membres au total",       color: "#a78bfa" },
+    { val: critical,         label: "Risques critiques",       color: critical > 0 ? "#f87171" : "#4ade80" },
+  ].map(k => `
+    <div class="eid-kpi-card">
+      <div class="eid-kpi-val" style="color:${k.color}">${k.val}</div>
+      <div class="eid-kpi-label">${k.label}</div>
+    </div>
+  `).join("");
+
+  // ── Bar chart — score par département ─────────────────────────────────────
+  const barEl = document.getElementById("eid-bar-chart");
+  if (barEl) {
+    if (window._eidBarChart) window._eidBarChart.destroy();
+    window._eidBarChart = new Chart(barEl, {
+      type: "bar",
+      data: {
+        labels: _aggData.map(d => d.dept_name || d.dept_type),
+        datasets: [{
+          data: allScores.map(s => s ?? 0),
+          backgroundColor: allScores.map(s => s == null ? "#334155" : s >= 70 ? "#4ade80" : s >= 50 ? "#fbbf24" : "#f87171"),
+          borderRadius: 6,
+          borderSkipped: false,
+        }],
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.parsed.y + "%" } } },
+        scales: {
+          y: { min: 0, max: 100, ticks: { color: "#64748b", callback: v => v + "%" }, grid: { color: "#1e293b" } },
+          x: { ticks: { color: "#64748b", maxRotation: 35 }, grid: { display: false } },
+        },
+      },
+    });
+  }
+
+  // ── Donut chart — répartition santé ───────────────────────────────────────
+  const donutEl = document.getElementById("eid-donut-chart");
+  if (donutEl) {
+    if (window._eidDonutChart) window._eidDonutChart.destroy();
+    window._eidDonutChart = new Chart(donutEl, {
+      type: "doughnut",
+      data: {
+        labels: ["Bonne santé (≥70%)", "À surveiller (50–69%)", "Critique (<50%)"],
+        datasets: [{ data: [healthy, warning, critical], backgroundColor: ["#4ade80", "#fbbf24", "#f87171"], borderWidth: 0 }],
+      },
+      options: {
+        responsive: true,
+        cutout: "62%",
+        plugins: { legend: { position: "bottom", labels: { color: "#94a3b8", font: { size: 11 }, padding: 12 } } },
+      },
+    });
+  }
+
+  // ── Top opportunités ───────────────────────────────────────────────────────
+  const sorted = [..._aggData].map((d, i) => ({ ...d, score: allScores[i] ?? 0 })).sort((a, b) => a.score - b.score);
+  $("eid-opportunities").innerHTML = `<div class="eid-card-title">Top opportunités</div>` +
+    sorted.slice(0, 4).map((d, i) => `
+      <div class="eid-list-row">
+        <span class="eid-list-rank">${i + 1}</span>
+        <span class="eid-list-label">${esc(d.dept_name || d.dept_type)}</span>
+        <span class="eid-list-val" style="color:${_scoreColor(d.score)}">${d.score}%</span>
+      </div>
+    `).join("") || `<p class="muted" style="font-size:.82rem">Aucune donnée</p>`;
+
+  // ── Connecteurs ────────────────────────────────────────────────────────────
+  let servers = [];
+  try { servers = (await apiCall("/api/servers")) || []; } catch {}
+  const active = servers.filter(s => s.status === "connected" || s.status === "active").length;
+  $("eid-connectors").innerHTML = `<div class="eid-card-title">Systèmes connectés</div>` +
+    servers.slice(0, 5).map(s => {
+      const ok = s.status === "connected" || s.status === "active";
+      return `<div class="eid-list-row">
+        <span class="eid-conn-dot" style="background:${ok ? "#4ade80" : "#f87171"}"></span>
+        <span class="eid-list-label">${esc(s.name || s.server_type || "Système")}</span>
+        <span style="font-size:.75rem;color:${ok ? "#4ade80" : "#f87171"}">${ok ? "Actif" : "Hors ligne"}</span>
+      </div>`;
+    }).join("") +
+    `<div class="eid-list-row" style="margin-top:8px;padding-top:8px;border-top:1px solid #1e293b">
+      <span class="eid-list-label" style="font-weight:600">Total actifs</span>
+      <span style="color:#60a5fa;font-weight:700">${active}/${servers.length}</span>
+    </div>`;
+
+  // ── Santé organisationnelle ────────────────────────────────────────────────
+  $("eid-dept-health").innerHTML = `<div class="eid-card-title">Santé organisationnelle</div>` +
+    _aggData.map((d, i) => {
+      const s = allScores[i];
+      const c = _scoreColor(s);
+      return `<div class="eid-list-row">
+        <span class="eid-list-label">${d.icon || "📊"} ${esc(d.dept_name || d.dept_type)}</span>
+        <span style="font-weight:700;color:${c}">${s != null ? s + "%" : "—"}</span>
+      </div>`;
+    }).join("") || `<p class="muted" style="font-size:.82rem">Aucun département</p>`;
+
+  // ── Alertes & risques ──────────────────────────────────────────────────────
+  const critDepts = _aggData.filter((d, i) => (allScores[i] ?? 100) < 50);
+  const warnDepts = _aggData.filter((d, i) => { const s = allScores[i]; return s != null && s >= 50 && s < 70; });
+  $("eid-alerts").innerHTML = `<div class="eid-card-title">Alertes & Risques</div>` +
+    (critDepts.length ? critDepts.map(d => `
+      <div class="eid-list-row">
+        <span class="eid-alert-badge eid-alert-red">Critique</span>
+        <span class="eid-list-label">${esc(d.dept_name || d.dept_type)}</span>
+      </div>
+    `).join("") : "") +
+    (warnDepts.length ? warnDepts.map(d => `
+      <div class="eid-list-row">
+        <span class="eid-alert-badge eid-alert-orange">Attention</span>
+        <span class="eid-list-label">${esc(d.dept_name || d.dept_type)}</span>
+      </div>
+    `).join("") : "") +
+    (!critDepts.length && !warnDepts.length ? `<div class="eid-list-row" style="color:#4ade80">✅ Aucun risque critique détecté</div>` : "");
 }
 
 function printDirectionReport() {

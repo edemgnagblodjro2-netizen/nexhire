@@ -1004,22 +1004,55 @@
 
         <!-- Vue agrégée Direction Générale -->
         <div id="direction-aggregate-wrap" class="hidden">
-          <!-- Barre d'actions -->
-          <div class="dir-agg-toolbar">
-            <div class="dir-agg-toolbar-left">
-              <span class="dir-agg-period" id="dir-agg-period"></span>
+
+          <!-- En-tête -->
+          <div class="eid-header">
+            <div>
+              <div class="eid-title">Executive Intelligence Dashboard</div>
+              <div class="eid-period" id="dir-agg-period"></div>
             </div>
-            <div class="dir-agg-toolbar-right">
+            <div class="eid-actions">
               <button class="btn btn-outline btn-sm" onclick="loadDirectionAggregate()">↻ Actualiser</button>
               <button class="btn btn-primary btn-sm" onclick="printDirectionReport()">📥 Rapport PDF</button>
             </div>
           </div>
 
-          <!-- KPIs globaux -->
-          <div class="dir-global-strip" id="dir-global-strip"></div>
+          <!-- Ticker valeur NexHire EIP -->
+          <div class="eid-ticker">
+            <span class="eid-ticker-inner">
+              ✦ NexHire EIP détecte en moyenne 2,8 M$ d'économies cachées par organisation &nbsp;·&nbsp;
+              ✦ Analyse automatique de vos licences ERP, SaaS et contrats fournisseurs &nbsp;·&nbsp;
+              ✦ Identifie les doublons de dépenses entre départements en temps réel &nbsp;·&nbsp;
+              ✦ Réduit le temps d'audit financier de 60 % grâce à l'IA &nbsp;·&nbsp;
+              ✦ Connecté à Microsoft 365, SAP, Salesforce, ServiceNow, Workday et Jira &nbsp;·&nbsp;
+              ✦ Alertes proactives sur les contrats à renégocier avant échéance &nbsp;·&nbsp;
+              ✦ Tableau de bord exécutif en temps réel pour des décisions financières éclairées
+            </span>
+          </div>
 
-          <!-- Grille des départements -->
-          <div id="direction-aggregate-grid" class="dir-agg-grid"></div>
+          <!-- 4 KPI cards -->
+          <div class="eid-kpi-row" id="eid-kpi-row"></div>
+
+          <!-- Graphiques -->
+          <div class="eid-charts-row">
+            <div class="eid-chart-card">
+              <div class="eid-card-title">Score santé par département</div>
+              <canvas id="eid-bar-chart" height="180"></canvas>
+            </div>
+            <div class="eid-chart-card">
+              <div class="eid-card-title">Répartition organisationnelle</div>
+              <canvas id="eid-donut-chart" height="180"></canvas>
+            </div>
+          </div>
+
+          <!-- 4 cartes bas -->
+          <div class="eid-bottom-grid">
+            <div class="eid-bottom-card" id="eid-opportunities"></div>
+            <div class="eid-bottom-card" id="eid-connectors"></div>
+            <div class="eid-bottom-card" id="eid-dept-health"></div>
+            <div class="eid-bottom-card" id="eid-alerts"></div>
+          </div>
+
         </div>
 
         <!-- Collaborateurs externes du département (affiché par défaut) -->
@@ -2370,6 +2403,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="/static/app.js?v=20260608e"></script>
+<script src="/static/app.js?v=20260609a"></script>
 </body>
 </html>
