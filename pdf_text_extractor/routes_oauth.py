@@ -6,8 +6,11 @@ Connecteurs API-key         : sap, workday, autotask  (via /api/connectors/{type
 """
 from __future__ import annotations
 
+import base64
+import hashlib
 import json
 import os
+import secrets
 from datetime import UTC, datetime, timedelta
 from urllib.parse import urlencode
 
@@ -45,6 +48,7 @@ _OAUTH_CFG: dict[str, dict] = {
         "client_id_env":     "SF_CLIENT_ID",
         "client_secret_env": "SF_CLIENT_SECRET",
         "redirect_uri_env":  "SF_REDIRECT_URI",
+        "pkce":       True,
     },
     "jira": {
         "auth_url":  "https://auth.atlassian.com/authorize",
@@ -107,6 +111,17 @@ _SNOW_OAUTH = {
 }
 
 _APIKEY_TYPES = frozenset({"sap", "workday", "autotask"})
+
+
+# ── PKCE helpers ──────────────────────────────────────────────────────────────
+
+def _pkce_pair() -> tuple[str, str]:
+    """Retourne (code_verifier, code_challenge) pour PKCE S256."""
+    verifier = secrets.token_urlsafe(32)
+    challenge = base64.urlsafe_b64encode(
+        hashlib.sha256(verifier.encode()).digest()
+    ).rstrip(b"=").decode()
+    return verifier, challenge
 
 
 # ── CSRF state helpers ────────────────────────────────────────────────────────
@@ -274,6 +289,14 @@ def oauth_start(
             if body.get(k): extra[k] = body[k]
 
     c = _resolve_cfg(connector_type, state_extra=extra)
+
+    # PKCE — génère verifier/challenge si le connecteur l'exige (ex: Salesforce)
+    cfg_entry = _OAUTH_CFG.get(connector_type, {})
+    pkce_verifier: str | None = None
+    if cfg_entry.get("pkce"):
+        pkce_verifier, pkce_challenge = _pkce_pair()
+        extra["pkce_verifier"] = pkce_verifier
+
     state = _make_state(user.organization_id, user.id, connector_type, extra=extra if extra else None)
     params: dict = {
         "client_id":     c["client_id"],
@@ -283,7 +306,11 @@ def oauth_start(
         "state":         state,
         **c["extra_params"],
     }
-    # Jira requires PKCE-like audience; M365 wants response_mode=query
+    if pkce_verifier:
+        params["code_challenge"]        = pkce_challenge
+        params["code_challenge_method"] = "S256"
+
+    # M365 wants response_mode=query
     if connector_type == "microsoft_365":
         params["response_mode"] = "query"
         params["prompt"] = "select_account"
@@ -313,14 +340,19 @@ def oauth_callback(
 
     c = _resolve_cfg(connector_type, state_extra=state_data)
 
+    token_data: dict = {
+        "client_id":     c["client_id"],
+        "client_secret": c["client_secret"],
+        "code":          code,
+        "redirect_uri":  c["redirect_uri"],
+        "grant_type":    "authorization_code",
+    }
+    # PKCE — inclure le verifier si présent dans le state
+    if state_data.get("pkce_verifier"):
+        token_data["code_verifier"] = state_data["pkce_verifier"]
+
     try:
-        resp = httpx.post(c["token_url"], data={
-            "client_id":     c["client_id"],
-            "client_secret": c["client_secret"],
-            "code":          code,
-            "redirect_uri":  c["redirect_uri"],
-            "grant_type":    "authorization_code",
-        }, timeout=20)
+        resp = httpx.post(c["token_url"], data=token_data, timeout=20)
     except httpx.RequestError as exc:
         return RedirectResponse(url=f"/?oauth_error=network_error", status_code=302)
 
