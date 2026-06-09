@@ -4489,6 +4489,7 @@ const WORKSPACE_TEMPLATES = [
 
 let _marketplaceBuilt = false;
 let _installedWorkspaces = new Set();
+let _installedDeptIds = {};  // dept_type → dept_id
 
 async function buildMarketplace() {
   if (_marketplaceBuilt) return;
@@ -4502,7 +4503,14 @@ async function buildMarketplace() {
   // Fetch existing departments to mark already-installed types
   try {
     const depts = await apiCall("/api/departments");
-    (depts || []).forEach(d => { if (d.dept_type) _installedWorkspaces.add(d.dept_type); });
+    _installedWorkspaces.clear();
+    _installedDeptIds = {};
+    (depts || []).forEach(d => {
+      if (d.dept_type) {
+        _installedWorkspaces.add(d.dept_type);
+        _installedDeptIds[d.dept_type] = d.id;
+      }
+    });
   } catch (_) {}
 
   grid.innerHTML = WORKSPACE_TEMPLATES.map(tpl => {
@@ -4525,12 +4533,40 @@ async function buildMarketplace() {
       <div class="marketplace-card-footer">
         <span style="font-size:.75rem;color:var(--slate)">${tpl.connectors.length} ${lang === "en" ? "connectors" : "connecteurs"}</span>
         ${isInstalled
-          ? `<button class="btn btn-outline btn-sm" onclick="switchTab('org')">${lang === "en" ? "Manage" : "Gérer"}</button>`
+          ? `<div style="display:flex;gap:6px">
+               <button class="btn btn-outline btn-sm" onclick="switchTab('org')">${lang === "en" ? "Manage" : "Gérer"}</button>
+               <button class="btn btn-sm" style="background:#fee2e2;color:#991b1b;border:1px solid #fecaca" onclick="uninstallWorkspace('${tpl.id}')" id="uninstall-${tpl.id}" title="${lang === "en" ? "Remove workspace" : "Retirer le workspace"}">✕</button>
+             </div>`
           : `<button class="btn btn-primary btn-sm" onclick="installWorkspace('${tpl.id}')" id="install-${tpl.id}">${lang === "en" ? "Install" : "Installer"}</button>`
         }
       </div>
     </div>`;
   }).join("");
+}
+
+async function uninstallWorkspace(templateId) {
+  const tpl  = WORKSPACE_TEMPLATES.find(t => t.id === templateId);
+  if (!tpl) return;
+  const lang = document.documentElement.lang === "en" ? "en" : "fr";
+  const deptId = _installedDeptIds[tpl.dept_type];
+  if (!deptId) return;
+  const confirm_msg = lang === "en"
+    ? `Remove "${tpl.name.en}" workspace? This will delete the department and its members.`
+    : `Retirer le workspace "${tpl.name.fr}" ? Cela supprimera le département et ses membres.`;
+  if (!window.confirm(confirm_msg)) return;
+  const btn = $(`uninstall-${templateId}`);
+  if (btn) { btn.disabled = true; btn.textContent = "…"; }
+  try {
+    await apiCall(`/api/departments/${deptId}`, "DELETE");
+    _installedWorkspaces.delete(tpl.dept_type);
+    delete _installedDeptIds[tpl.dept_type];
+    _marketplaceBuilt = false;
+    buildMarketplace();
+    _updateWorkspaceBar();
+  } catch (e) {
+    if (btn) { btn.disabled = false; btn.textContent = "✕"; }
+    alert(e.message || (lang === "en" ? "Could not remove workspace." : "Impossible de retirer le workspace."));
+  }
 }
 
 async function installWorkspace(templateId) {
@@ -4541,7 +4577,7 @@ async function installWorkspace(templateId) {
   if (btn) { btn.disabled = true; btn.textContent = lang === "en" ? "Installing…" : "Installation…"; }
 
   try {
-    await apiCall("/api/departments", "POST", {
+    const created = await apiCall("/api/departments", "POST", {
       name: tpl.name.fr,
       description: tpl.desc?.fr || "",
       dept_type: tpl.dept_type,
@@ -4549,6 +4585,7 @@ async function installWorkspace(templateId) {
       currency: "CAD",
     });
     _installedWorkspaces.add(tpl.dept_type);
+    if (created?.id) _installedDeptIds[tpl.dept_type] = created.id;
     _marketplaceBuilt = false;
     buildMarketplace();
     _updateWorkspaceBar();
