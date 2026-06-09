@@ -4505,6 +4505,16 @@ const _DEPT_CHIPS = {
     { fr: "Quel est le solde des comptes clients et fournisseurs en ce moment ?",      en: "What is the current balance of accounts receivable and payable?" },
   ],
 
+  // ── Conformité / Compliance ───────────────────────────────────────────────
+  // Réglementation, politiques internes, contrôles, risques, LPRPDE, SOX, ISO
+  compliance: [
+    { fr: "Quelles exigences réglementaires arrivent à échéance dans les 60 prochains jours ?", en: "Which regulatory requirements are due in the next 60 days?" },
+    { fr: "Quelles politiques internes n'ont pas été révisées depuis plus d'un an ?",  en: "Which internal policies have not been reviewed in over a year?" },
+    { fr: "Quels contrôles internes ont échoué lors des vérifications récentes ?",     en: "Which internal controls failed during recent checks?" },
+    { fr: "Quel est l'état de conformité LPRPDE / SOX / ISO 27001 de l'organisation ?", en: "What is the organization's PIPEDA / SOX / ISO 27001 compliance status?" },
+    { fr: "Quels employés n'ont pas complété les formations de conformité obligatoires ?", en: "Which employees have not completed mandatory compliance training?" },
+  ],
+
   // ── Audit interne & Forensique TI ────────────────────────────────────────
   // Audits internes, investigation numérique, preuves, fraude, traçabilité
   audit: [
@@ -4810,6 +4820,7 @@ async function _updateWorkspaceBar() {
     comptabilite:      { icon: "🧾", color: "#0f766e", label: { fr: "Comptabilité",           en: "Accounting" } },
     logistique:        { icon: "🚚", color: "#92400e", label: { fr: "Logistique",             en: "Logistics" } },
     audit:             { icon: "🔍", color: "#1e293b", label: { fr: "Audit & Forensique TI",  en: "Audit & IT Forensics" } },
+    compliance:        { icon: "🛡️", color: "#0369a1", label: { fr: "Conformité",              en: "Compliance" } },
     general:           { icon: "📊", color: "#64748b", label: { fr: "Général",               en: "General" } },
   };
 
