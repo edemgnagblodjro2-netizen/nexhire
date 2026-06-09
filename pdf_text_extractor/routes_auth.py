@@ -44,8 +44,18 @@ def signup(payload: SignupPayload, background: BackgroundTasks):
 
     if payload.invite_token:
         background.add_task(_notify_member_join, payload.invite_token, payload.email)
+    else:
+        background.add_task(_send_welcome, payload.email, payload.full_name, payload.organization_name)
 
     return {"status": "ok", "user_id": getattr(res.user, "id", None)}
+
+
+def _send_welcome(email: str, full_name: str, org_name: str) -> None:
+    try:
+        from email_service import send_welcome_email
+        send_welcome_email(to_email=email, full_name=full_name, org_name=org_name)
+    except Exception:
+        pass
 
 
 def _notify_member_join(invite_token: str, email: str) -> None:

@@ -42,6 +42,44 @@ def check_license_expiry_all_orgs() -> None:
     logger.info("Vérification licences — %d licences expirant bientôt", len(licenses))
 
 
+def check_trial_expiry_all_orgs() -> None:
+    """Envoie un email d'avertissement aux orgs dont le trial expire dans 7 ou 3 jours."""
+    try:
+        from db import get_db, rows
+        from email_service import send_trial_expiry_warning
+    except Exception as exc:
+        logger.error("scheduler import error (trial expiry): %s", exc)
+        return
+
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """SELECT name, owner_email,
+                          (subscription_end::date - CURRENT_DATE) AS days_left
+                   FROM organizations
+                   WHERE subscription_status = 'trialing'
+                     AND subscription_end IS NOT NULL
+                     AND owner_email IS NOT NULL
+                     AND (subscription_end::date - CURRENT_DATE) IN (7, 3, 1)"""
+            )
+            orgs = rows(cur)
+    except Exception as exc:
+        logger.error("scheduler DB error (trial expiry): %s", exc)
+        return
+
+    for org in orgs:
+        try:
+            send_trial_expiry_warning(
+                to_email=org["owner_email"],
+                org_name=org["name"],
+                days_left=int(org["days_left"]),
+            )
+        except Exception as exc:
+            logger.error("trial expiry email org %s : %s", org.get("name"), exc)
+
+    logger.info("Trial expiry check — %d emails envoyés", len(orgs))
+
+
 def send_monthly_reports_all_orgs() -> None:
     """Envoie le rapport mensuel à tous les admins des orgs qui l'ont activé."""
     try:

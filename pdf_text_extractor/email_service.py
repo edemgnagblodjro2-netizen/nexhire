@@ -294,6 +294,129 @@ def send_monthly_report_rich(
     return _send(to_email, subject, html)
 
 
+def send_welcome_email(
+    to_email: str,
+    full_name: str,
+    org_name: str,
+    trial_days: int = 14,
+) -> bool:
+    first_name = full_name.split()[0] if full_name else "là"
+    subject = f"Bienvenue sur NexHire, {first_name} 👋"
+    html = f"""<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/></head>
+<body style="font-family:system-ui,sans-serif;background:#f8fafc;margin:0;padding:32px 16px">
+  <div style="max-width:560px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.08)">
+    <div style="background:#0f172a;padding:26px 32px">
+      <span style="font-size:1.25rem;font-weight:800;color:#fff">Nex<span style="color:#818CF8">hire</span>
+        <span style="font-size:.65rem;background:rgba(129,140,248,.2);color:#818CF8;padding:2px 7px;border-radius:99px;margin-left:6px;vertical-align:middle">EIP</span>
+      </span>
+    </div>
+    <div style="padding:32px">
+      <h2 style="margin:0 0 8px;color:#0f172a">Bienvenue, {first_name} ! 🎉</h2>
+      <p style="color:#475569;margin:0 0 20px">Votre organisation <strong>{org_name}</strong> est prête sur NexHire Enterprise Intelligence Platform. Vous disposez de <strong>{trial_days} jours d'essai gratuit</strong> pour explorer toutes les fonctionnalités.</p>
+
+      <div style="background:#eef2ff;border-radius:10px;padding:20px;margin:0 0 24px">
+        <p style="margin:0 0 12px;font-weight:700;color:#3730a3">Pour commencer :</p>
+        <ol style="margin:0;padding-left:20px;color:#475569;line-height:1.8">
+          <li>Ajoutez vos départements dans <strong>Workspaces</strong></li>
+          <li>Connectez vos outils (Microsoft 365, SAP, Jira…) dans <strong>Connecteurs</strong></li>
+          <li>Invitez votre équipe dans <strong>Équipe</strong></li>
+          <li>Posez votre première question à l'<strong>Agent IA</strong></li>
+        </ol>
+      </div>
+
+      <div style="text-align:center;margin:24px 0">
+        <a href="{APP_URL}"
+           style="display:inline-block;background:#6366f1;color:#fff;padding:13px 32px;border-radius:8px;font-weight:700;text-decoration:none;font-size:.95rem">
+          Accéder à mon tableau de bord →
+        </a>
+      </div>
+      <p style="color:#94a3b8;font-size:.82rem;text-align:center;margin:0">Des questions ? Répondez à cet email — nous sommes là pour vous aider.</p>
+    </div>
+    <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
+      <p style="margin:0;color:#94a3b8;font-size:.76rem">© 2026 Nexhire Inc. · <a href="{APP_URL}" style="color:#6366f1">nexhire.ca</a> 🍁</p>
+    </div>
+  </div>
+</body>
+</html>"""
+    return _send(to_email, subject, html)
+
+
+def send_trial_expiry_warning(
+    to_email: str,
+    org_name: str,
+    days_left: int,
+) -> bool:
+    subject = f"⏳ Votre essai NexHire se termine dans {days_left} jour{'s' if days_left > 1 else ''}"
+    urgency_color = "#dc2626" if days_left <= 3 else "#f59e0b"
+    html = f"""<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/></head>
+<body style="font-family:system-ui,sans-serif;background:#f8fafc;margin:0;padding:32px 16px">
+  <div style="max-width:540px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.08)">
+    <div style="background:#0f172a;padding:24px 32px">
+      <span style="font-size:1.2rem;font-weight:800;color:#fff">Nex<span style="color:#818CF8">hire</span></span>
+    </div>
+    <div style="padding:28px 32px">
+      <div style="background:{urgency_color}15;border:1px solid {urgency_color}40;border-radius:10px;padding:16px 20px;margin:0 0 20px;text-align:center">
+        <p style="margin:0;font-size:1.1rem;font-weight:700;color:{urgency_color}">⏳ Plus que {days_left} jour{'s' if days_left > 1 else ''} d'essai</p>
+      </div>
+      <p style="color:#475569;margin:0 0 16px">L'essai gratuit de <strong>{org_name}</strong> se termine bientôt. Pour continuer à utiliser NexHire sans interruption, souscrivez un abonnement.</p>
+      <div style="background:#f8fafc;border-radius:8px;padding:16px;margin:16px 0">
+        <p style="margin:0 0 8px;font-weight:700;color:#1e293b">Plans disponibles :</p>
+        <p style="margin:0 0 4px;color:#475569">• <strong>Mensuel</strong> — 99 $/mois · Sans engagement</p>
+        <p style="margin:0;color:#475569">• <strong>Annuel</strong> — 990 $/an · 2 mois offerts</p>
+      </div>
+      <div style="text-align:center;margin:24px 0">
+        <a href="{APP_URL}#settings"
+           style="display:inline-block;background:#6366f1;color:#fff;padding:13px 32px;border-radius:8px;font-weight:700;text-decoration:none;font-size:.95rem">
+          Activer mon abonnement →
+        </a>
+      </div>
+    </div>
+    <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
+      <p style="margin:0;color:#94a3b8;font-size:.76rem">© 2026 Nexhire Inc. · <a href="{APP_URL}" style="color:#6366f1">nexhire.ca</a></p>
+    </div>
+  </div>
+</body>
+</html>"""
+    return _send(to_email, subject, html)
+
+
+def send_subscription_cancelled_email(
+    to_email: str,
+    org_name: str,
+) -> bool:
+    subject = f"Abonnement NexHire annulé — {org_name}"
+    html = f"""<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"/></head>
+<body style="font-family:system-ui,sans-serif;background:#f8fafc;margin:0;padding:40px 20px">
+  <div style="max-width:520px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08)">
+    <div style="background:#1e293b;padding:24px 32px;text-align:center">
+      <span style="font-size:1.2rem;font-weight:800;color:#fff">Nex<span style="color:#818CF8">hire</span></span>
+    </div>
+    <div style="padding:28px 32px">
+      <h2 style="margin:0 0 12px;color:#1e293b">Votre abonnement a été annulé</h2>
+      <p style="color:#475569;margin:0 0 16px">L'abonnement de <strong>{org_name}</strong> a été annulé. Vous conservez l'accès jusqu'à la fin de la période payée.</p>
+      <p style="color:#475569;margin:0 0 24px">Si c'est une erreur ou si vous souhaitez reprendre votre abonnement, vous pouvez le réactiver depuis les Paramètres.</p>
+      <div style="text-align:center">
+        <a href="{APP_URL}#settings"
+           style="display:inline-block;background:#6366f1;color:#fff;padding:11px 28px;border-radius:8px;font-weight:700;text-decoration:none">
+          Réactiver mon abonnement
+        </a>
+      </div>
+    </div>
+    <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
+      <p style="margin:0;color:#94a3b8;font-size:.78rem">© 2026 Nexhire Inc. · contact@nexhire.ca</p>
+    </div>
+  </div>
+</body>
+</html>"""
+    return _send(to_email, subject, html)
+
+
 def send_subscription_confirmation(
     to_email: str,
     org_name: str,

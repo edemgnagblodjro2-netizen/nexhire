@@ -268,9 +268,10 @@ def _handle_subscription_upsert(sub: dict) -> None:
 
     try:
         from routes_webhooks import send_webhook_notification
+        from email_service import send_subscription_confirmation
         with get_db() as cur:
             cur.execute(
-                "SELECT id FROM organizations WHERE stripe_customer_id = %s LIMIT 1",
+                "SELECT id, name, owner_email FROM organizations WHERE stripe_customer_id = %s LIMIT 1",
                 (customer_id,),
             )
             org_row = row(cur)
@@ -279,6 +280,14 @@ def _handle_subscription_upsert(sub: dict) -> None:
                 "status": nexhire_status,
                 "plan": plan,
             })
+            if nexhire_status == "active" and org_row.get("owner_email"):
+                amounts = {"monthly": "99 $/mois", "annual": "990 $/an"}
+                send_subscription_confirmation(
+                    to_email=org_row["owner_email"],
+                    org_name=org_row.get("name", ""),
+                    plan=plan,
+                    amount=amounts.get(plan, ""),
+                )
     except Exception:
         pass
 
@@ -300,7 +309,11 @@ def _handle_subscription_cancelled(sub: dict) -> None:
             )
             org = row(cur) or {}
         if org.get("owner_email"):
-            pass  # TODO: send cancellation email
+            from email_service import send_subscription_cancelled_email
+            send_subscription_cancelled_email(
+                to_email=org["owner_email"],
+                org_name=org.get("name", ""),
+            )
         from routes_webhooks import send_webhook_notification
         with get_db() as cur:
             cur.execute(
