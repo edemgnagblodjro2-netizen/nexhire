@@ -21,7 +21,7 @@ STRIPE_SECRET_KEY     = os.environ.get("STRIPE_SECRET_KEY", "")
 STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
 STRIPE_PRICE_MONTHLY  = os.environ.get("STRIPE_PRICE_MONTHLY", "")
 STRIPE_PRICE_ANNUAL   = os.environ.get("STRIPE_PRICE_ANNUAL", "")
-APP_URL               = os.environ.get("APP_URL", "https://nexhire.ca")
+APP_URL               = os.environ.get("APP_URL", "https://agenthub.nexhire.ca")
 
 STRIPE_API = "https://api.stripe.com/v1"
 

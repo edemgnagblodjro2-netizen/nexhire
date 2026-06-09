@@ -6,7 +6,7 @@ import httpx
 
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
 FROM_EMAIL     = os.environ.get("EMAIL_FROM", "NexHire <noreply@nexhire.ca>")
-APP_URL        = os.environ.get("APP_URL", "https://nexhire.ca")
+APP_URL        = os.environ.get("APP_URL", "https://agenthub.nexhire.ca")
 
 
 def _send(to: str, subject: str, html: str) -> bool:
@@ -66,7 +66,7 @@ def send_invite_email(
       <p style="color:#94a3b8;font-size:.8rem;text-align:center;margin:0">Ce lien est valide 7 jours. Si vous ne reconnaissez pas cette invitation, ignorez cet email.</p>
     </div>
     <div style="background:#f8fafc;padding:16px 32px;text-align:center;border-top:1px solid #e2e8f0">
-      <p style="margin:0;color:#94a3b8;font-size:.78rem">© 2026 Nexhire Inc. · <a href="{APP_URL}" style="color:#6366f1">nexhire.ca</a> · Conçu pour les organisations canadiennes 🍁</p>
+      <p style="margin:0;color:#94a3b8;font-size:.78rem">© 2026 Nexhire Inc. · <a href="{APP_URL}" style="color:#6366f1">agenthub.nexhire.ca</a> · Conçu pour les organisations canadiennes 🍁</p>
     </div>
   </div>
 </body>
@@ -178,7 +178,7 @@ def send_monthly_report(
       </div>
     </div>
     <div style="background:#f8fafc;padding:16px 32px;text-align:center;border-top:1px solid #e2e8f0">
-      <p style="margin:0;color:#94a3b8;font-size:.78rem">© 2026 Nexhire Inc. · <a href="{APP_URL}" style="color:#6366f1">nexhire.ca</a> · Vous recevez ce rapport car vous êtes admin de {org_name}.</p>
+      <p style="margin:0;color:#94a3b8;font-size:.78rem">© 2026 Nexhire Inc. · <a href="{APP_URL}" style="color:#6366f1">agenthub.nexhire.ca</a> · Vous recevez ce rapport car vous êtes admin de {org_name}.</p>
     </div>
   </div>
 </body>
@@ -283,7 +283,7 @@ def send_monthly_report_rich(
 
     <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
       <p style="margin:0;color:#94a3b8;font-size:.76rem">
-        © 2026 Nexhire Inc. · <a href="{APP_URL}" style="color:#6366f1">nexhire.ca</a> ·
+        © 2026 Nexhire Inc. · <a href="{APP_URL}" style="color:#6366f1">agenthub.nexhire.ca</a> ·
         Vous recevez ce rapport car vous êtes admin de {org_name}.
         <a href="{APP_URL}#settings" style="color:#6366f1">Se désabonner</a>
       </p>
@@ -335,7 +335,7 @@ def send_welcome_email(
       <p style="color:#94a3b8;font-size:.82rem;text-align:center;margin:0">Des questions ? Répondez à cet email — nous sommes là pour vous aider.</p>
     </div>
     <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
-      <p style="margin:0;color:#94a3b8;font-size:.76rem">© 2026 Nexhire Inc. · <a href="{APP_URL}" style="color:#6366f1">nexhire.ca</a> 🍁</p>
+      <p style="margin:0;color:#94a3b8;font-size:.76rem">© 2026 Nexhire Inc. · <a href="{APP_URL}" style="color:#6366f1">agenthub.nexhire.ca</a> 🍁</p>
     </div>
   </div>
 </body>
@@ -376,7 +376,7 @@ def send_trial_expiry_warning(
       </div>
     </div>
     <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
-      <p style="margin:0;color:#94a3b8;font-size:.76rem">© 2026 Nexhire Inc. · <a href="{APP_URL}" style="color:#6366f1">nexhire.ca</a></p>
+      <p style="margin:0;color:#94a3b8;font-size:.76rem">© 2026 Nexhire Inc. · <a href="{APP_URL}" style="color:#6366f1">agenthub.nexhire.ca</a></p>
     </div>
   </div>
 </body>

@@ -20,7 +20,7 @@ from rbac import require_min_role
 
 router = APIRouter(prefix="/api/sso", tags=["sso"])
 
-APP_URL = os.environ.get("APP_URL", "https://nexhire.ca")
+APP_URL = os.environ.get("APP_URL", "https://agenthub.nexhire.ca")
 
 # ── Providers OIDC connus ─────────────────────────────────────────────────────
 
