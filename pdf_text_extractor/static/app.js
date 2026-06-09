@@ -4346,13 +4346,12 @@ document.addEventListener("DOMContentLoaded", () => {
 const _DEPT_CHIPS = {
 
   // ── Finance ────────────────────────────────────────────────────────────────
-  // Comptabilité, trésorerie, budgets, factures, prévisions financières
   finance: [
-    { fr: "Quelles factures fournisseurs sont en retard de paiement ?",                en: "Which supplier invoices are overdue?" },
-    { fr: "Budget vs réel par département ce trimestre",                               en: "Budget vs actual by department this quarter" },
-    { fr: "Quels contrats fournisseurs arrivent à échéance dans 90 jours ?",           en: "Which supplier contracts expire in 90 days?" },
-    { fr: "Prévisions de trésorerie pour le prochain trimestre",                       en: "Cash flow forecast for next quarter" },
-    { fr: "Quels postes de dépenses dépassent le budget alloué ce mois ?",             en: "Which expense lines exceed the allocated budget this month?" },
+    { fr: "Quelles factures fournisseurs sont en retard et quel est le montant total dû ?", en: "Which supplier invoices are overdue and what is the total amount due?" },
+    { fr: "Quel est le budget consommé vs alloué par département ce mois-ci ?", en: "What is the budget consumed vs allocated by department this month?" },
+    { fr: "Quel est le solde de trésorerie actuel et la projection à 30 jours ?", en: "What is the current cash balance and the 30-day projection?" },
+    { fr: "Quels postes de dépenses dépassent le budget alloué ce trimestre ?", en: "Which expense lines exceed the allocated budget this quarter?" },
+    { fr: "Quels contrats fournisseurs arrivent à échéance dans les 60 prochains jours ?", en: "Which supplier contracts expire in the next 60 days?" },
   ],
 
   // ── Ressources humaines ────────────────────────────────────────────────────
@@ -4366,143 +4365,129 @@ const _DEPT_CHIPS = {
   ],
 
   // ── Technologies de l'information ─────────────────────────────────────────
-  // Incidents, licences, sécurité, infrastructure, appareils, cloud
   it: [
-    { fr: "Quels incidents critiques sont ouverts et non assignés ?",                  en: "Which critical incidents are open and unassigned?" },
-    { fr: "Quelles licences logicielles expirent dans les 30 prochains jours ?",       en: "Which software licenses expire in the next 30 days?" },
-    { fr: "Quels appareils ne respectent pas les politiques de sécurité IT ?",         en: "Which devices are non-compliant with IT security policies?" },
+    { fr: "Combien d'incidents sont ouverts — critiques, majeurs, mineurs — et qui les gère ?", en: "How many incidents are open — critical, major, minor — and who owns them?" },
+    { fr: "Quelles licences logicielles expirent dans les 30 jours et quel est leur coût de renouvellement ?", en: "Which software licenses expire in 30 days and what is their renewal cost?" },
+    { fr: "Quels appareils du parc IT sont non conformes aux politiques de sécurité ?", en: "Which IT assets are non-compliant with security policies?" },
     { fr: "Quelles alertes de cybersécurité critiques ont été détectées cette semaine ?", en: "What critical cybersecurity alerts were detected this week?" },
-    { fr: "Quelles mises à jour critiques sont en attente de déploiement ?",           en: "Which critical updates are pending deployment?" },
+    { fr: "Quel est le coût total de l'infrastructure IT ce mois — cloud, licences, matériel ?", en: "What is the total IT infrastructure cost this month — cloud, licenses, hardware?" },
   ],
 
   // ── Opérations ────────────────────────────────────────────────────────────
-  // Gestion de projets, livrables, équipes, capacité, processus
   operations: [
-    { fr: "Quels projets sont en retard et quels sont les blocages identifiés ?",      en: "Which projects are delayed and what blockers are identified?" },
-    { fr: "Quelles tâches critiques n'ont pas encore été assignées cette semaine ?",   en: "Which critical tasks have not been assigned this week?" },
-    { fr: "Quels membres de l'équipe sont surchargés ou sous-utilisés ?",              en: "Which team members are overloaded or underutilized?" },
-    { fr: "Quels processus opérationnels génèrent le plus de délais récurrents ?",     en: "Which operational processes generate the most recurring delays?" },
-    { fr: "Quel est le taux de complétion des livrables du mois en cours ?",           en: "What is the completion rate of deliverables for the current month?" },
+    { fr: "Quels projets sont en retard, quel est le blocage et qui est responsable ?", en: "Which projects are delayed, what is the blocker and who is responsible?" },
+    { fr: "Quel est le taux de complétion des livrables prévus ce mois ?", en: "What is the completion rate of deliverables planned for this month?" },
+    { fr: "Quels membres de l'équipe sont surchargés et quelles tâches peuvent être redistribuées ?", en: "Which team members are overloaded and which tasks can be redistributed?" },
+    { fr: "Quels processus opérationnels causent le plus de retards ou de retravail ?", en: "Which operational processes cause the most delays or rework?" },
+    { fr: "Quel est le statut des projets en cours — actifs, terminés, en attente, annulés ?", en: "What is the status of ongoing projects — active, completed, on hold, cancelled?" },
   ],
 
-  // ── Marketing & Ventes ────────────────────────────────────────────────────
-  // Campagnes, leads, pipeline CRM, opportunités, acquisition client
+  // ── Marketing ────────────────────────────────────────────────────────────
   marketing: [
-    { fr: "Quelle est la performance des campagnes marketing actives ce mois ?",       en: "What is the performance of active marketing campaigns this month?" },
-    { fr: "Quels leads entrants cette semaine n'ont pas encore été qualifiés ?",       en: "Which incoming leads this week have not been qualified yet?" },
-    { fr: "Quelles opportunités CRM sont sans suivi depuis plus de 7 jours ?",         en: "Which CRM opportunities have had no follow-up in over 7 days?" },
-    { fr: "Quel est le pipeline commercial actuel et les opportunités à risque ?",     en: "What is the current sales pipeline and at-risk opportunities?" },
-    { fr: "Quel est le coût d'acquisition client ce trimestre vs l'objectif ?",        en: "What is the customer acquisition cost this quarter vs target?" },
+    { fr: "Quelle est la performance des campagnes actives — impressions, clics, conversions, coût ?", en: "What is the performance of active campaigns — impressions, clicks, conversions, cost?" },
+    { fr: "Quels leads entrants cette semaine n'ont pas encore été qualifiés ou assignés ?", en: "Which incoming leads this week have not been qualified or assigned yet?" },
+    { fr: "Quel est le budget marketing consommé vs alloué ce mois et par canal ?", en: "What is the marketing budget consumed vs allocated this month and by channel?" },
+    { fr: "Quelles opportunités CRM sont sans suivi depuis plus de 7 jours ?", en: "Which CRM opportunities have had no follow-up in over 7 days?" },
+    { fr: "Quel est le coût d'acquisition client et le ROI des campagnes ce trimestre ?", en: "What is the customer acquisition cost and campaign ROI this quarter?" },
   ],
 
   // ── Direction générale ────────────────────────────────────────────────────
-  // Vue consolidée multi-département : finances, RH, IT, projets, risques
   direction: [
-    { fr: "Quel est l'état de santé global de l'organisation — risques et alertes ?",  en: "What is the overall health of the organization — risks and alerts?" },
-    { fr: "Quelles économies potentielles ont été identifiées ce mois-ci ?",           en: "What potential savings have been identified this month?" },
-    { fr: "Performance financière consolidée : budget vs réel par département",        en: "Consolidated financial performance: budget vs actual by department" },
-    { fr: "Résumé exécutif : incidents IT + projets en retard + alertes RH",          en: "Executive summary: IT incidents + late projects + HR alerts" },
-    { fr: "Quels sont les 3 principaux risques opérationnels à adresser en priorité ?", en: "What are the top 3 operational risks to address as a priority?" },
+    { fr: "Résumé exécutif : finances, RH, IT, projets — alertes et points d'attention", en: "Executive summary: finance, HR, IT, projects — alerts and attention points" },
+    { fr: "Quelles économies potentielles ont été identifiées ce mois dans tous les départements ?", en: "What potential savings were identified this month across all departments?" },
+    { fr: "Quel est le budget consommé vs alloué par département ce trimestre ?", en: "What is the budget consumed vs allocated by department this quarter?" },
+    { fr: "Quels sont les 3 principaux risques opérationnels à traiter en priorité ?", en: "What are the top 3 operational risks to address as a priority?" },
+    { fr: "Quels KPIs sont hors objectif ce mois — finance, RH, opérations, ventes ?", en: "Which KPIs are off-target this month — finance, HR, operations, sales?" },
   ],
 
-  // ── Juridique & Conformité ────────────────────────────────────────────────
-  // Contrats, obligations légales, conformité, litiges, NDA, LPRPDE
+  // ── Juridique ────────────────────────────────────────────────────────────
   legal: [
-    { fr: "Quels contrats actifs contiennent des clauses de renouvellement automatique ?", en: "Which active contracts contain auto-renewal clauses?" },
-    { fr: "Quelles obligations réglementaires ont une date limite dans les 30 prochains jours ?", en: "Which regulatory obligations have a deadline in the next 30 days?" },
-    { fr: "Quels contrats fournisseurs peuvent être renégociés à notre avantage ?",    en: "Which vendor contracts can be renegotiated in our favor?" },
-    { fr: "Quels risques juridiques ont été identifiés dans les contrats actifs ?",    en: "What legal risks have been identified in active contracts?" },
-    { fr: "Quel est l'état de conformité LPRPDE / RGPD de l'organisation ?",          en: "What is the organization's PIPEDA / GDPR compliance status?" },
+    { fr: "Quels contrats actifs arrivent à échéance ou ont une clause de renouvellement automatique ?", en: "Which active contracts are expiring or have auto-renewal clauses?" },
+    { fr: "Quelles obligations légales ou réglementaires ont une échéance dans les 30 jours ?", en: "Which legal or regulatory obligations have a deadline in the next 30 days?" },
+    { fr: "Quels litiges ou dossiers contentieux sont actifs en ce moment ?", en: "Which disputes or contentious files are currently active?" },
+    { fr: "Quels fournisseurs ou partenaires n'ont pas signé les NDA requis ?", en: "Which vendors or partners have not signed the required NDAs?" },
+    { fr: "Quel est l'état de conformité LPRPDE / RGPD — violations ou lacunes identifiées ?", en: "What is the PIPEDA / GDPR compliance status — violations or gaps identified?" },
   ],
 
   // ── Approvisionnement ────────────────────────────────────────────────────
-  // Fournisseurs, achats, appels d'offres, commandes, coûts d'acquisition
   approvisionnement: [
-    { fr: "Quels fournisseurs offrent des services en doublon — consolidation possible ?", en: "Which vendors offer duplicate services — consolidation possible?" },
-    { fr: "Quels contrats d'achat ont le plus fort potentiel de renégociation ?",      en: "Which purchase contracts have the highest renegotiation potential?" },
-    { fr: "Quelles commandes sont en attente de livraison avec retard ?",              en: "Which orders are pending delivery with delays?" },
-    { fr: "Quelles économies ont été réalisées sur les achats ce trimestre ?",         en: "What savings were achieved on purchases this quarter?" },
-    { fr: "Quels sont les top 5 fournisseurs par volume de dépenses annuelles ?",      en: "What are the top 5 vendors by annual spend volume?" },
+    { fr: "Quelles commandes sont en retard de livraison et quel est l'impact sur les opérations ?", en: "Which orders are delayed and what is the operational impact?" },
+    { fr: "Quels fournisseurs offrent des services ou produits en doublon — consolidation possible ?", en: "Which vendors offer duplicate services or products — consolidation possible?" },
+    { fr: "Quels contrats d'achat peuvent être renégociés et quelle économie est possible ?", en: "Which purchase contracts can be renegotiated and what savings are possible?" },
+    { fr: "Quel est le montant total des factures en attente de paiement fournisseurs ?", en: "What is the total amount of outstanding supplier invoices pending payment?" },
+    { fr: "Quels sont les top 5 fournisseurs par volume de dépenses et leur performance ?", en: "What are the top 5 vendors by spend volume and their performance?" },
   ],
 
-  // ── Fabrication & Supply Chain ────────────────────────────────────────────
-  // Production, stocks, qualité, ordres de fabrication, chaîne logistique
+  // ── Fabrication & Production ────────────────────────────────────────────
   manufacturing: [
-    { fr: "Quels ordres de production sont en retard sur le calendrier prévu ?",       en: "Which production orders are behind schedule?" },
-    { fr: "Quels articles sont en rupture de stock critique ou en alerte ?",           en: "Which items are in critical stockout or alert status?" },
-    { fr: "Quels fournisseurs ont des délais de livraison qui impactent la production ?", en: "Which suppliers have delivery delays impacting production?" },
-    { fr: "Quel est le coût de production par unité ce mois vs l'objectif ?",          en: "What is the production cost per unit this month vs target?" },
-    { fr: "Quel est le taux de rebut et les non-conformités qualité de cette semaine ?", en: "What is the scrap rate and quality non-conformances this week?" },
+    { fr: "Quels ordres de fabrication sont en retard et quel est l'impact sur les livraisons clients ?", en: "Which production orders are behind schedule and what is the customer delivery impact?" },
+    { fr: "Quels articles sont en rupture ou en alerte critique — matières premières et produits finis ?", en: "Which items are in stockout or critical alert — raw materials and finished goods?" },
+    { fr: "Quel est le taux de rebut, de retouche et de non-conformité qualité cette semaine ?", en: "What is the scrap, rework and quality non-conformance rate this week?" },
+    { fr: "Quel est le coût de production par unité ce mois vs l'objectif et l'écart ?", en: "What is the production cost per unit this month vs target and the variance?" },
+    { fr: "Quels équipements de production sont en panne ou en maintenance et depuis quand ?", en: "Which production equipment is down or under maintenance and since when?" },
   ],
 
-  // ── Communication & Relations publiques ───────────────────────────────────
-  // Relations médias, image de marque, communications internes/externes, RP
+  // ── Communication & RP ───────────────────────────────────────────────────
   communication: [
-    { fr: "Quelles mentions de notre organisation dans les médias cette semaine ?",    en: "What mentions of our organization appeared in the media this week?" },
-    { fr: "Quelles communications internes ont été publiées et leur taux de lecture ?", en: "Which internal communications were published and what was their read rate?" },
-    { fr: "Quels événements ou conférences de presse sont prévus ce mois ?",           en: "What events or press conferences are scheduled this month?" },
-    { fr: "Quel est l'état des demandes médias en attente de réponse ?",               en: "What is the status of pending media requests awaiting response?" },
-    { fr: "Quelles campagnes de communication ont le meilleur engagement ?",           en: "Which communication campaigns have the best engagement?" },
+    { fr: "Quelles communications internes ont été envoyées cette semaine et quel est le taux de lecture ?", en: "Which internal communications were sent this week and what is the read rate?" },
+    { fr: "Y a-t-il des mentions de notre organisation dans les médias ou réseaux sociaux à surveiller ?", en: "Are there any mentions of our organization in media or social networks to monitor?" },
+    { fr: "Quels événements, conférences ou lancements de communication sont prévus ce mois ?", en: "What events, conferences or communication launches are planned this month?" },
+    { fr: "Quelles demandes médias ou journalistes sont en attente de réponse de notre équipe ?", en: "Which media or journalist requests are awaiting a response from our team?" },
+    { fr: "Quel est le statut des projets de communication en cours — brochures, site, campagnes ?", en: "What is the status of ongoing communication projects — brochures, website, campaigns?" },
   ],
 
-  // ── Service client & Support ──────────────────────────────────────────────
-  // Tickets, satisfaction client, SLA, résolution, escalades
+  // ── Support client ────────────────────────────────────────────────────────
   support: [
-    { fr: "Quels tickets clients sont ouverts depuis plus de 48 heures ?",             en: "Which customer tickets have been open for more than 48 hours?" },
-    { fr: "Quel est le score de satisfaction client (CSAT) de cette semaine ?",        en: "What is the customer satisfaction score (CSAT) this week?" },
-    { fr: "Quels SLA risquent d'être dépassés dans les prochaines 24 heures ?",        en: "Which SLAs are at risk of being exceeded in the next 24 hours?" },
-    { fr: "Quels types de problèmes génèrent le plus de tickets récurrents ?",         en: "What types of issues generate the most recurring tickets?" },
-    { fr: "Quels clients prioritaires ont des tickets en attente de résolution ?",     en: "Which priority clients have tickets pending resolution?" },
+    { fr: "Combien de tickets sont ouverts aujourd'hui — par priorité, par agent et par client ?", en: "How many tickets are open today — by priority, by agent and by client?" },
+    { fr: "Quels tickets sont ouverts depuis plus de 48h et risquent de dépasser le SLA ?", en: "Which tickets have been open for over 48h and risk exceeding SLA?" },
+    { fr: "Quel est le score de satisfaction client (CSAT) de cette semaine vs l'objectif ?", en: "What is the customer satisfaction score (CSAT) this week vs target?" },
+    { fr: "Quels types de problèmes génèrent le plus de tickets récurrents ce mois ?", en: "What types of issues generate the most recurring tickets this month?" },
+    { fr: "Quels clients prioritaires ou grands comptes ont des incidents en attente ?", en: "Which priority clients or key accounts have pending incidents?" },
   ],
 
-  // ── Recherche & Développement ────────────────────────────────────────────
-  // Projets R&D, innovation, brevets, prototypes, budgets de recherche
+  // ── R&D ──────────────────────────────────────────────────────────────────
   rd: [
-    { fr: "Quels projets R&D sont en phase de test ou de validation ?",                en: "Which R&D projects are in testing or validation phase?" },
-    { fr: "Quel est le budget R&D consommé vs alloué ce trimestre ?",                  en: "What is the R&D budget consumed vs allocated this quarter?" },
-    { fr: "Quels livrables de recherche sont en retard sur le calendrier ?",           en: "Which research deliverables are behind schedule?" },
-    { fr: "Quels jalons de développement sont prévus dans les 30 prochains jours ?",   en: "Which development milestones are planned in the next 30 days?" },
-    { fr: "Quelles innovations brevetées ou en cours de brevet avons-nous ce trimestre ?", en: "Which innovations are patented or pending patent this quarter?" },
+    { fr: "Quels projets R&D sont actifs, en test, en attente ou annulés en ce moment ?", en: "Which R&D projects are active, in testing, on hold or cancelled right now?" },
+    { fr: "Quel est le budget R&D consommé vs alloué ce trimestre par projet ?", en: "What is the R&D budget consumed vs allocated this quarter by project?" },
+    { fr: "Quels jalons ou livrables de recherche sont en retard sur le calendrier ?", en: "Which research milestones or deliverables are behind schedule?" },
+    { fr: "Quelles nouvelles technologies ou brevets avons-nous identifiés ou déposés ce trimestre ?", en: "Which new technologies or patents have we identified or filed this quarter?" },
+    { fr: "Quelles ressources humaines ou matérielles manquent aux équipes R&D actives ?", en: "What human or material resources are lacking in active R&D teams?" },
   ],
 
-  // ── Commerciaux / Ventes ──────────────────────────────────────────────────
-  // Quota, pipeline, clients, propositions, commissions, closing
+  // ── Commerciaux / Ventes ────────────────────────────────────────────────
   sales: [
-    { fr: "Quels représentants sont en dessous de leur quota ce mois-ci ?",            en: "Which sales reps are below quota this month?" },
-    { fr: "Quelles opportunités doivent être closées avant la fin du trimestre ?",     en: "Which opportunities need to be closed before end of quarter?" },
-    { fr: "Quelles propositions commerciales sont en attente de réponse client ?",     en: "Which commercial proposals are awaiting client response?" },
-    { fr: "Quels comptes clients n'ont eu aucun contact depuis 30 jours ?",            en: "Which client accounts have had no contact in 30 days?" },
-    { fr: "Quel est le taux de conversion des leads en clients ce trimestre ?",        en: "What is the lead-to-client conversion rate this quarter?" },
+    { fr: "Quels représentants sont en dessous de leur quota ce mois et de combien ?", en: "Which sales reps are below quota this month and by how much?" },
+    { fr: "Quelles opportunités doivent être closées avant la fin du trimestre — montant et probabilité ?", en: "Which opportunities must close before quarter-end — amount and probability?" },
+    { fr: "Quelles propositions commerciales envoyées sont sans réponse depuis plus de 5 jours ?", en: "Which sent commercial proposals have had no response for over 5 days?" },
+    { fr: "Quels comptes clients actifs n'ont eu aucun contact ou suivi depuis 30 jours ?", en: "Which active client accounts have had no contact or follow-up in 30 days?" },
+    { fr: "Quel est le pipeline total ce trimestre — nombre d'opportunités, valeur et taux de conversion ?", en: "What is the total pipeline this quarter — number of opportunities, value and conversion rate?" },
   ],
 
-  // ── Assurance qualité ─────────────────────────────────────────────────────
-  // Non-conformités, audits, contrôle qualité, certifications, incidents
+  // ── Assurance qualité ────────────────────────────────────────────────────
   qualite: [
-    { fr: "Quelles non-conformités sont ouvertes et sans plan d'action ?",             en: "Which non-conformances are open and without an action plan?" },
-    { fr: "Quels audits qualité sont prévus dans les 30 prochains jours ?",            en: "Which quality audits are scheduled in the next 30 days?" },
-    { fr: "Quel est le taux de défauts ou de rejets qualité ce mois-ci ?",             en: "What is the defect or quality rejection rate this month?" },
-    { fr: "Quelles certifications (ISO, etc.) arrivent à renouvellement ?",            en: "Which certifications (ISO, etc.) are due for renewal?" },
-    { fr: "Quelles réclamations clients liées à la qualité sont en attente ?",         en: "Which customer quality complaints are currently pending?" },
+    { fr: "Combien de non-conformités sont ouvertes et lesquelles n'ont pas encore de plan d'action ?", en: "How many non-conformances are open and which ones don't have an action plan yet?" },
+    { fr: "Quel est le taux de défauts, rejets et retouches qualité ce mois vs l'objectif ?", en: "What is the defect, rejection and rework rate this month vs target?" },
+    { fr: "Quels audits qualité internes ou externes sont prévus dans les 30 prochains jours ?", en: "Which internal or external quality audits are planned in the next 30 days?" },
+    { fr: "Quelles certifications ISO ou réglementaires arrivent à renouvellement ou ont des écarts ?", en: "Which ISO or regulatory certifications are up for renewal or have gaps?" },
+    { fr: "Quelles réclamations clients qualité sont en attente d'analyse ou de réponse ?", en: "Which customer quality complaints are pending analysis or response?" },
   ],
 
-  // ── Digitalisation & Transformation numérique ────────────────────────────
-  // Projets digitaux, adoption outils, automatisation, ROI transformation
+  // ── Digitalisation ───────────────────────────────────────────────────────
   digitalisation: [
-    { fr: "Quels projets de transformation digitale sont en cours et leur avancement ?", en: "Which digital transformation projects are in progress and what is their status?" },
-    { fr: "Quel est le taux d'adoption des nouveaux outils numériques déployés ?",     en: "What is the adoption rate of newly deployed digital tools?" },
-    { fr: "Quels processus manuels sont prioritaires pour l'automatisation ?",         en: "Which manual processes are priorities for automation?" },
-    { fr: "Quel est le ROI mesuré des initiatives de digitalisation ce trimestre ?",   en: "What is the measured ROI of digitalization initiatives this quarter?" },
-    { fr: "Quels obstacles freinent l'adoption numérique dans les équipes ?",          en: "What obstacles are slowing digital adoption across teams?" },
+    { fr: "Quels projets de transformation numérique sont en cours — avancement, budget et risques ?", en: "Which digital transformation projects are in progress — progress, budget and risks?" },
+    { fr: "Quel est le taux d'adoption des outils numériques déployés par département ?", en: "What is the adoption rate of deployed digital tools by department?" },
+    { fr: "Quels processus manuels ont le plus grand potentiel d'automatisation et de gain de temps ?", en: "Which manual processes have the highest automation potential and time savings?" },
+    { fr: "Quel est le ROI mesuré des initiatives numériques lancées ce trimestre ?", en: "What is the measured ROI of digital initiatives launched this quarter?" },
+    { fr: "Quels obstacles ou résistances freinent l'adoption des outils dans les équipes ?", en: "What obstacles or resistance are slowing tool adoption across teams?" },
   ],
 
-  // ── Comptabilité ──────────────────────────────────────────────────────────
-  // Écritures, rapprochements, clôtures, taxes, états financiers
+  // ── Comptabilité ─────────────────────────────────────────────────────────
   comptabilite: [
-    { fr: "Quels rapprochements bancaires sont en attente de validation ?",            en: "Which bank reconciliations are pending validation?" },
-    { fr: "Quelles écritures comptables sont incomplètes pour la clôture du mois ?",  en: "Which accounting entries are incomplete for month-end close?" },
-    { fr: "Quel est l'état des déclarations fiscales et taxes à venir ?",              en: "What is the status of upcoming tax filings and declarations?" },
-    { fr: "Quelles dépenses n'ont pas encore de justificatif attaché ?",               en: "Which expenses do not yet have an attached receipt?" },
-    { fr: "Quel est le solde des comptes clients et fournisseurs en ce moment ?",      en: "What is the current balance of accounts receivable and payable?" },
+    { fr: "Quels rapprochements bancaires sont en attente de validation pour la clôture ?", en: "Which bank reconciliations are pending validation for close?" },
+    { fr: "Quelles écritures ou journaux comptables sont incomplets pour la fin du mois ?", en: "Which accounting entries or journals are incomplete for month-end?" },
+    { fr: "Quel est l'état des déclarations de taxes (TPS/TVQ) et des remises à venir ?", en: "What is the status of tax filings (GST/QST) and upcoming remittances?" },
+    { fr: "Quelles notes de frais ou dépenses n'ont pas encore de pièce justificative ?", en: "Which expense reports or costs are missing supporting documentation?" },
+    { fr: "Quel est le solde actuel des comptes clients (AR) et fournisseurs (AP) ?", en: "What is the current balance of accounts receivable (AR) and payable (AP)?" },
   ],
 
   // ── Conformité / Compliance ───────────────────────────────────────────────
@@ -4525,14 +4510,13 @@ const _DEPT_CHIPS = {
     { fr: "Quelles preuves numériques ont été préservées dans les incidents en cours d'investigation ?", en: "What digital evidence has been preserved in ongoing investigations?" },
   ],
 
-  // ── Logistique & Entrepôt ─────────────────────────────────────────────────
-  // Expéditions, réceptions, gestion stock, transport, livraisons
+  // ── Logistique ───────────────────────────────────────────────────────────
   logistique: [
-    { fr: "Quelles livraisons sont en retard ou non confirmées aujourd'hui ?",         en: "Which deliveries are delayed or unconfirmed today?" },
-    { fr: "Quel est le niveau de stock des articles à rotation rapide ?",              en: "What is the stock level of fast-moving items?" },
-    { fr: "Quelles réceptions de marchandises sont prévues cette semaine ?",           en: "Which goods receipts are expected this week?" },
-    { fr: "Quels transporteurs ont les meilleures performances de délai ce mois ?",   en: "Which carriers have the best on-time performance this month?" },
-    { fr: "Quels articles sont en surstock et mobilisent du capital inutilement ?",    en: "Which items are overstocked and tying up capital unnecessarily?" },
+    { fr: "Quelles expéditions ou livraisons sont en retard aujourd'hui et quel est le motif ?", en: "Which shipments or deliveries are delayed today and what is the reason?" },
+    { fr: "Quel est le niveau de stock des articles à forte rotation et ceux en alerte ?", en: "What is the stock level of fast-moving items and those in alert status?" },
+    { fr: "Quelles réceptions de marchandises sont attendues cette semaine — quantités et fournisseurs ?", en: "Which goods receipts are expected this week — quantities and suppliers?" },
+    { fr: "Quels transporteurs ont les meilleures et pires performances de ponctualité ce mois ?", en: "Which carriers have the best and worst on-time performance this month?" },
+    { fr: "Quels articles sont en surstock et quel est le coût de ce capital immobilisé ?", en: "Which items are overstocked and what is the cost of this tied-up capital?" },
   ],
 };
 
