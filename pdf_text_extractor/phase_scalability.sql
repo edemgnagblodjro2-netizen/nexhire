@@ -14,8 +14,8 @@ create index if not exists conversations_org_idx
 create index if not exists budget_entries_org_idx
   on public.budget_entries(organization_id);
 
-create index if not exists budget_entries_org_period_idx
-  on public.budget_entries(organization_id, period_start desc);
+create index if not exists budget_entries_org_year_month_idx
+  on public.budget_entries(organization_id, year desc, month desc);
 
 -- tables enterprise (licenses, contracts, workforce_processes, etc.)
 create index if not exists licenses_org_idx
