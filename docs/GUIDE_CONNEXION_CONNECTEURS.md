@@ -175,6 +175,97 @@ Toutes les credentials sont chiffrées (AES-128) avant d'être stockées et ne s
 
 ---
 
+---
+
+## Authentification SSO (Single Sign-On)
+
+Le SSO permet aux employés d'un client de se connecter à NexHire avec leurs identifiants d'entreprise existants (Microsoft, Google, Okta, etc.) **sans créer un compte NexHire séparé**.
+
+---
+
+### Ce que NexHire vous fournit
+
+| Élément | Valeur |
+|---|---|
+| **URL de callback (Redirect URI)** | `https://agenthub.nexhire.ca/api/sso/callback` |
+| **Identifiant d'organisation (slug)** | Visible dans NexHire → Paramètres → SSO (ex : `ville-trois-rivieres`) |
+
+Ces deux informations sont les **seules choses que NexHire vous transmet**. Toute la configuration se fait ensuite de votre côté et dans votre panneau NexHire.
+
+---
+
+### Fournisseurs supportés
+
+| Fournisseur | Type | Utilisation typique |
+|---|---|---|
+| **Microsoft Entra ID (Azure AD)** | OIDC / OAuth 2.0 | Entreprises, gouvernements, municipalités |
+| **Google Workspace** | OIDC / OAuth 2.0 | Organisations Google |
+| **Okta** | OIDC / OAuth 2.0 | Entreprises avec IdP dédié |
+
+---
+
+### Étapes de configuration — côté client (équipe IT)
+
+**Étape 1 — Créer une application OIDC chez votre fournisseur d'identité (IdP)**
+
+Exemple pour **Microsoft Entra ID (Azure AD)** :
+
+1. Connectez-vous à [portal.azure.com](https://portal.azure.com) → **Microsoft Entra ID** → **App registrations**
+2. Cliquez **New registration**
+3. Remplissez :
+   - **Name :** `NexHire SSO`
+   - **Redirect URI :** `https://agenthub.nexhire.ca/api/sso/callback` *(type : Web)*
+4. Cliquez **Register**
+5. Dans l'application créée, notez :
+   - **Application (client) ID**
+   - **Directory (tenant) ID**
+6. Allez dans **Certificates & secrets** → **New client secret** → notez la valeur du secret
+
+Exemple pour **Google Workspace** :
+1. Console Google Cloud → **APIs & Services** → **Credentials** → **Create OAuth 2.0 Client ID**
+2. Type : **Web application**
+3. Ajoutez l'URL de callback : `https://agenthub.nexhire.ca/api/sso/callback`
+4. Notez le **Client ID** et le **Client Secret**
+
+---
+
+**Étape 2 — Configurer le SSO dans NexHire**
+
+L'administrateur NexHire de votre organisation accède à **NexHire → Paramètres → SSO** et saisit :
+
+| Champ | Description |
+|---|---|
+| **Fournisseur** | Microsoft Entra ID, Google Workspace ou Okta |
+| **Client ID** | ID de l'application OIDC créée chez votre IdP |
+| **Client Secret** | Secret de l'application OIDC |
+| **Tenant ID / Domain** | Votre identifiant de tenant (Azure) ou domaine (Google/Okta) |
+
+> Toutes les credentials sont chiffrées (Fernet AES-128) avant stockage et ne sont jamais affichées en clair.
+
+---
+
+**Étape 3 — Connexion des employés**
+
+Une fois le SSO configuré, les employés accèdent à `https://agenthub.nexhire.ca` et, dans la section SSO de la page de connexion :
+
+1. Saisissent l'**identifiant d'organisation** (slug fourni par votre administrateur NexHire)
+2. Cliquent **Se connecter avec SSO**
+3. Sont redirigés vers leur IdP (Microsoft, Google, Okta) pour s'authentifier
+4. Retournent automatiquement dans NexHire — aucun mot de passe NexHire requis
+
+---
+
+### Résumé des responsabilités
+
+| Qui | Quoi |
+|---|---|
+| **NexHire** | Fournir l'URL de callback + le slug d'organisation |
+| **IT client** | Créer l'app OIDC chez l'IdP, configurer l'URL de callback, fournir Client ID + Secret + Tenant ID |
+| **Administrateur NexHire client** | Entrer les credentials IdP dans NexHire → Paramètres → SSO |
+| **Employés** | Entrer le slug d'organisation sur la page de connexion NexHire |
+
+---
+
 ## Récapitulatif
 
 | Connecteur | Action requise |
@@ -196,6 +287,7 @@ Toutes les credentials sont chiffrées (AES-128) avant d'être stockées et ne s
 | Asana | Saisir Personal Access Token dans NexHire |
 | Monday.com | Saisir API Token dans NexHire |
 | ClickUp | Saisir Personal API Token dans NexHire |
+| **SSO (Entra ID / Google / Okta)** | **IT crée une app OIDC → Admin NexHire entre Client ID + Secret + Tenant ID dans Paramètres → SSO** |
 
 ---
 
