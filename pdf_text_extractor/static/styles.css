@@ -1338,6 +1338,60 @@ footer {
 }
 .auth-switch a { font-weight: 700; color: #4F46E5; }
 .auth-switch a:hover { color: #4338CA; }
+
+/* Checkbox CGU */
+.auth-cgu {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  gap: 10px;
+  cursor: pointer;
+  font-size: .82rem;
+  color: #374151;
+  line-height: 1.55;
+  padding: 10px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  background: #f8fafc;
+  transition: border-color .15s, background .15s;
+}
+.auth-cgu:has(input:checked) {
+  border-color: #818CF8;
+  background: #f5f3ff;
+}
+.auth-cgu input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+  accent-color: #4F46E5;
+  cursor: pointer;
+}
+.auth-cgu > span {
+  flex: 1;
+  min-width: 0;
+}
+.auth-cgu a {
+  color: #4F46E5;
+  font-weight: 600;
+  text-decoration: none;
+}
+.auth-cgu a:hover { text-decoration: underline; }
+
+/* Illustration dashboard (panneau gauche) */
+.auth-illustration {
+  width: 100%;
+  margin: 24px 0 8px;
+  opacity: .92;
+}
+.auth-illus-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,.4));
+}
 .form-error {
   padding: 10px 14px;
   border-radius: var(--radius-sm);
