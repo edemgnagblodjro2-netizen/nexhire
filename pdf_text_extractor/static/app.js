@@ -1226,7 +1226,25 @@ function switchTab(name) {
   document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === name));
   document.querySelectorAll(".tab-content").forEach(s => s.classList.toggle("hidden", s.id !== `tab-${name}`));
   history.pushState({ tab: name }, "", `#${name}`);
+  _syncMobileNav(name);
   loadActiveTab();
+}
+
+function _syncMobileNav(tab) {
+  const moreTabs = ["stats", "documents", "org", "team", "marketplace", "audit", "settings", "superadmin"];
+  document.querySelectorAll(".mob-nav-btn[data-tab]").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.tab === tab);
+  });
+  const moreBtn = $("mob-more-btn");
+  if (moreBtn) moreBtn.classList.toggle("active", moreTabs.includes(tab));
+}
+
+function toggleMobMore() {
+  $("mob-more-drawer")?.classList.toggle("hidden");
+}
+
+function closeMobMore() {
+  $("mob-more-drawer")?.classList.add("hidden");
 }
 
 window.addEventListener("popstate", (e) => {

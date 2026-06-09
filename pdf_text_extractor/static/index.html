@@ -2420,6 +2420,46 @@
     </section>
 
   </main>
+
+  <!-- ── Mobile Bottom Navigation ─────────────────────────────────────────── -->
+  <nav id="mobile-bottom-nav" class="mobile-bottom-nav">
+    <button class="mob-nav-btn active" data-tab="agent" onclick="switchTab('agent')">
+      <span class="mob-nav-icon">🤖</span>
+      <span class="mob-nav-label">Assistant</span>
+    </button>
+    <button class="mob-nav-btn" data-tab="optim" onclick="switchTab('optim')">
+      <span class="mob-nav-icon">📊</span>
+      <span class="mob-nav-label">Optimisation</span>
+    </button>
+    <button class="mob-nav-btn" data-tab="parc-it" onclick="switchTab('parc-it')">
+      <span class="mob-nav-icon">💻</span>
+      <span class="mob-nav-label">Parc IT</span>
+    </button>
+    <button class="mob-nav-btn" data-tab="connectors" onclick="switchTab('connectors')">
+      <span class="mob-nav-icon">🔌</span>
+      <span class="mob-nav-label">Connecteurs</span>
+    </button>
+    <button class="mob-nav-btn" id="mob-more-btn" onclick="toggleMobMore()">
+      <span class="mob-nav-icon">☰</span>
+      <span class="mob-nav-label">Plus</span>
+    </button>
+  </nav>
+
+  <!-- Mobile More Drawer -->
+  <div id="mob-more-drawer" class="mob-more-drawer hidden">
+    <div class="mob-more-backdrop" onclick="closeMobMore()"></div>
+    <div class="mob-more-sheet">
+      <div class="mob-more-handle"></div>
+      <button class="mob-more-item" onclick="switchTab('stats');closeMobMore()"><span>📈</span> Statistiques</button>
+      <button class="mob-more-item" onclick="switchTab('documents');closeMobMore()"><span>📄</span> Documents</button>
+      <button class="mob-more-item admin-only hidden" onclick="switchTab('org');closeMobMore()"><span>🏛️</span> Organisation</button>
+      <button class="mob-more-item admin-only hidden" onclick="switchTab('team');closeMobMore()"><span>👥</span> Équipe</button>
+      <button class="mob-more-item admin-only hidden" onclick="switchTab('marketplace');closeMobMore()"><span>🏪</span> Marketplace</button>
+      <button class="mob-more-item admin-only hidden" onclick="switchTab('audit');closeMobMore()"><span>🔍</span> Audit</button>
+      <button class="mob-more-item" onclick="switchTab('settings');closeMobMore()"><span>⚙️</span> Paramètres</button>
+    </div>
+  </div>
+
 </div>
 
 <!-- ═══════════════════════════ LEGAL MODALS ═══════════════════════════════ -->
@@ -2437,6 +2477,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="/static/app.js?v=20260609g"></script>
+<script src="/static/app.js?v=20260609h"></script>
 </body>
 </html>

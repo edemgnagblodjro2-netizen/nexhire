@@ -3433,3 +3433,79 @@ tbody tr:hover { background: var(--blue-pale); transition: background .12s; }
   .ext-card-compact { flex-wrap: wrap; }
   .ext-dates { margin-left: 0 !important; }
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   MOBILE BOTTOM NAVIGATION
+═══════════════════════════════════════════════════════════════════════════ */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 62px;
+  background: var(--navy);
+  border-top: 1px solid rgba(255,255,255,.12);
+  z-index: 900;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (max-width: 640px) {
+  /* Affiche la bottom nav */
+  .mobile-bottom-nav { display: flex; }
+  /* Masque les tabs horizontaux du topnav */
+  .nav-tabs { display: none !important; }
+  /* Compense la height de la bottom nav */
+  .app-main { padding-bottom: 80px !important; }
+  /* Topnav plus compact sans les tabs */
+  .topnav { min-height: 52px; padding: 0 12px; }
+}
+
+.mob-nav-btn {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2px;
+  background: none; border: none; cursor: pointer;
+  color: rgba(255,255,255,.4);
+  transition: color .15s;
+  padding: 6px 4px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.mob-nav-btn.active  { color: #818CF8; }
+.mob-nav-btn:active  { opacity: .7; }
+.mob-nav-icon  { font-size: 1.25rem; line-height: 1; }
+.mob-nav-label { font-size: .58rem; font-weight: 600; letter-spacing: .02em; white-space: nowrap; }
+
+/* Drawer "Plus" */
+.mob-more-drawer {
+  position: fixed; inset: 0; z-index: 960;
+}
+.mob-more-backdrop {
+  position: absolute; inset: 0; background: rgba(0,0,0,.45);
+}
+.mob-more-sheet {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: #fff;
+  border-radius: 18px 18px 0 0;
+  padding: 8px 0 calc(70px + env(safe-area-inset-bottom, 0px));
+  animation: mob-slide-up .22s ease;
+  box-shadow: 0 -4px 24px rgba(0,0,0,.15);
+}
+.mob-more-handle {
+  width: 38px; height: 4px; background: #e2e8f0;
+  border-radius: 99px; margin: 8px auto 12px;
+}
+.mob-more-item {
+  display: flex; align-items: center; gap: 14px;
+  width: 100%; background: none; border: none; cursor: pointer;
+  padding: 14px 22px; font-size: .92rem; font-weight: 500;
+  color: #0f172a; text-align: left;
+  transition: background .12s;
+  -webkit-tap-highlight-color: transparent;
+}
+.mob-more-item:active { background: #f1f5f9; }
+.mob-more-item span:first-child { font-size: 1.15rem; width: 26px; text-align: center; }
+
+@keyframes mob-slide-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
