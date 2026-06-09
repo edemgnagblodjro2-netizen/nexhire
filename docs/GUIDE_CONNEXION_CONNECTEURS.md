@@ -48,17 +48,19 @@ Pour ces connecteurs, votre équipe IT doit effectuer une **configuration unique
    - **Client ID** (généré automatiquement)
    - **Client Secret** (cliquez sur le cadenas pour l'afficher)
 
-**Étape 2 — Transmettez à votre gestionnaire de compte NexHire :**
+**Étape 2 — Entrez les informations dans NexHire (vous le faites vous-même) :**
+
+L'administrateur NexHire de votre organisation accède à **NexHire → Connecteurs → ServiceNow → Connecter via OAuth** et remplit le formulaire :
 
 | Information | Exemple |
 |---|---|
 | URL de votre instance ServiceNow | `https://votreentreprise.service-now.com` |
 | Client ID | `abc123def456...` |
-| Client Secret | (à transmettre de façon sécurisée) |
+| Client Secret | (saisie sécurisée, non affichée) |
 
-**Étape 3 — Connexion :**
+**Étape 3 — Authentification :**
 
-Votre gestionnaire NexHire entre ces informations dans le portail → un lien d'authentification vous est envoyé → vous vous connectez avec votre compte ServiceNow → connecteur actif.
+Cliquez **Connecter →** — vous êtes redirigé vers votre instance ServiceNow pour vous authentifier avec votre compte ServiceNow → connecteur actif.
 
 ---
 
@@ -66,13 +68,24 @@ Votre gestionnaire NexHire entre ces informations dans le portail → un lien d'
 
 **Ce que NexHire accède :** Tickets support, Agents, SLA, Base de connaissances.
 
-**Ce que vous nous fournissez :** Votre sous-domaine Zendesk.
+**Ce dont vous avez besoin :** Votre sous-domaine Zendesk (la partie avant `.zendesk.com`).
 
-```
-Exemple : votreentreprise  (si votre URL est votreentreprise.zendesk.com)
-```
+**Étape 1 — Votre IT crée une app OAuth dans Zendesk :**
+1. Zendesk Admin Center → **Apps and integrations → APIs → OAuth Clients → Add OAuth client**
+2. Remplir : Client name : `NexHire` · Redirect URLs : `https://agenthub.nexhire.ca/api/connectors/oauth/callback`
+3. Sauvegarder → noter le **Unique identifier** et le **Secret**
 
-Ensuite : cliquez "Connecter" dans NexHire → connexion avec votre compte Zendesk Admin.
+**Étape 2 — Vous entrez les infos dans NexHire (vous le faites vous-même) :**
+
+Allez dans **NexHire → Connecteurs → Zendesk → Connecter via OAuth** et remplissez :
+
+| Champ | Exemple |
+|---|---|
+| Sous-domaine | `votreentreprise` (de `votreentreprise.zendesk.com`) |
+| Client ID | `votreentreprise-nexhire` |
+| Client Secret | (saisie sécurisée) |
+
+Cliquez **Connecter →** → authentification avec votre compte Zendesk Admin → connecteur actif.
 
 ---
 
