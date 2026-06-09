@@ -39,9 +39,10 @@ create index if not exists service_accounts_org_idx
 create index if not exists department_members_org_idx
   on public.department_members(department_id);
 
--- kpi_snapshots : index composite pour les requêtes de tendance
-create index if not exists kpi_snapshots_org_key_date_idx
-  on public.kpi_snapshots(org_id, kpi_key, snapshot_date desc);
+-- kpi_snapshots : index health_score pour filtrer les orgs en difficulté
+-- (idx_kpi_snap_org et idx_kpi_snap_dept déjà créés dans phase_kpi_snapshots.sql)
+create index if not exists kpi_snapshots_org_health_idx
+  on public.kpi_snapshots(org_id, health_score, snapshot_date desc);
 
 
 -- ── 2. TABLE D'ARCHIVAGE — conversations > 12 mois ──────────
