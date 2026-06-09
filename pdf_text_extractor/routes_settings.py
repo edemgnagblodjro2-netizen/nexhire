@@ -73,7 +73,7 @@ def get_profile(user: CurrentUser = Depends(require_min_role("user"))):
     if user.organization_id:
         with get_db() as cur:
             cur.execute(
-                "SELECT name, slug, created_at, org_type, logo_url, brand_color FROM organizations WHERE id = %s LIMIT 1",
+                "SELECT name, slug, created_at, org_type, logo_url, brand_color, monthly_report_enabled FROM organizations WHERE id = %s LIMIT 1",
                 (user.organization_id,),
             )
             org = row(cur) or {}
@@ -106,6 +106,7 @@ def get_profile(user: CurrentUser = Depends(require_min_role("user"))):
         "subscription_status": user.subscription_status,
         "logo_url":            org.get("logo_url") or "",
         "brand_color":         org.get("brand_color") or "#818CF8",
+        "monthly_report_enabled": org.get("monthly_report_enabled", True),
     }
 
 
@@ -142,6 +143,22 @@ def update_org(
     with get_db() as cur:
         cur.execute(f"UPDATE organizations SET {', '.join(fields)} WHERE id = %s", values)
     return {"ok": True}
+
+
+# ── Rapport mensuel (admin/owner only) ───────────────────────────────────────
+
+@router.patch("/monthly-report")
+def toggle_monthly_report(
+    payload: dict,
+    user: CurrentUser = Depends(require_min_role("admin")),
+):
+    enabled = bool(payload.get("enabled", True))
+    with get_db() as cur:
+        cur.execute(
+            "UPDATE organizations SET monthly_report_enabled = %s WHERE id = %s",
+            (enabled, user.organization_id),
+        )
+    return {"ok": True, "monthly_report_enabled": enabled}
 
 
 # ── Password ───────────────────────────────────────────────────────────────

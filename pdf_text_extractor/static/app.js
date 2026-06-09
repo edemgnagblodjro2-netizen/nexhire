@@ -2748,6 +2748,15 @@ async function loadSettings() {
       if ($("sp-brand-color")) { $("sp-brand-color").value = p.brand_color; $("sp-brand-color-val").textContent = p.brand_color; }
     }
 
+    // Rapport mensuel toggle
+    const togRep = $("monthly-report-toggle");
+    const lblRep = $("monthly-report-label");
+    if (togRep) {
+      const enabled = p.monthly_report_enabled !== false;
+      togRep.checked = enabled;
+      if (lblRep) lblRep.textContent = enabled ? "Activé" : "Désactivé";
+    }
+
     // SSO
     const badge = $("sso-badge");
     const txt   = $("sso-status-text");
@@ -2915,6 +2924,7 @@ async function sendMonthlyReport() {
   const btn = $("report-send-btn");
   const msg = $("report-msg");
   if (btn) { btn.disabled = true; btn.textContent = "Envoi…"; }
+  if (msg) { msg.classList.add("hidden"); msg.style.color = "var(--success)"; }
   try {
     const res = await apiCall("/api/webhooks/reports/monthly", "POST");
     if (msg) { msg.textContent = `✓ Rapport envoyé à ${res.to}.`; msg.classList.remove("hidden"); }
@@ -2922,6 +2932,17 @@ async function sendMonthlyReport() {
     if (msg) { msg.textContent = err.message || "Erreur."; msg.style.color = "var(--error)"; msg.classList.remove("hidden"); }
   } finally {
     if (btn) { btn.disabled = false; btn.textContent = "Envoyer le rapport maintenant"; }
+  }
+}
+
+async function toggleMonthlyReport(enabled) {
+  const lbl = $("monthly-report-label");
+  try {
+    await apiCall("/api/settings/monthly-report", "PATCH", { enabled });
+    if (lbl) lbl.textContent = enabled ? "Activé" : "Désactivé";
+  } catch (_) {
+    const tog = $("monthly-report-toggle");
+    if (tog) tog.checked = !enabled;
   }
 }
 

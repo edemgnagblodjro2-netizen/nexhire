@@ -186,6 +186,114 @@ def send_monthly_report(
     return _send(to_email, subject, html)
 
 
+def send_monthly_report_rich(
+    to_email: str,
+    org_name: str,
+    total_queries: int,
+    avg_rating: float,
+    active_users: int,
+    expiring_licenses: int,
+    avg_health: int = 0,
+    dept_count: int = 0,
+    total_savings: int = 0,
+    top_depts: list[dict] | None = None,
+) -> bool:
+    from datetime import datetime
+    month_label = datetime.now().strftime("%B %Y")
+    rating_stars = "★" * round(avg_rating) + "☆" * (5 - round(avg_rating)) if avg_rating else "—"
+    subject = f"📊 Rapport mensuel NexHire — {org_name} ({month_label})"
+
+    health_color = "#16a34a" if avg_health >= 80 else "#f59e0b" if avg_health >= 60 else "#dc2626"
+
+    savings_html = (
+        f'<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;'
+        f'padding:18px;text-align:center;flex:1;min-width:120px">'
+        f'<div style="font-size:1.6rem;font-weight:800;color:#16a34a">{total_savings:,} $</div>'
+        f'<div style="font-size:.8rem;color:#64748b;margin-top:4px">Économies identifiées</div>'
+        f'</div>'
+    ) if total_savings > 0 else ""
+
+    top_depts_html = ""
+    if top_depts:
+        rows_html = "".join(
+            f'<tr><td style="padding:6px 8px;color:#1e293b">{d["name"]}</td>'
+            f'<td style="padding:6px 8px;text-align:right;font-weight:700;'
+            f'color:{"#16a34a" if d["score"]>=80 else "#f59e0b" if d["score"]>=60 else "#dc2626"}">'
+            f'{d["score"]}%</td></tr>'
+            for d in top_depts
+        )
+        top_depts_html = f"""
+      <h3 style="font-size:.88rem;font-weight:700;color:#1e293b;margin:24px 0 10px">🏆 Top départements ce mois</h3>
+      <table style="width:100%;border-collapse:collapse;font-size:.85rem;background:#f8fafc;border-radius:8px;overflow:hidden">
+        {rows_html}
+      </table>"""
+
+    expiry_html = (
+        f'<div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;'
+        f'padding:12px 16px;margin:20px 0">'
+        f'<p style="margin:0;color:#c2410c;font-weight:600">⚠️ {expiring_licenses} licence(s) expirent dans les 30 prochains jours</p>'
+        f'</div>'
+    ) if expiring_licenses > 0 else ""
+
+    html = f"""<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/></head>
+<body style="font-family:system-ui,sans-serif;background:#f8fafc;margin:0;padding:32px 16px">
+  <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.08)">
+
+    <div style="background:#0f172a;padding:26px 32px;display:flex;align-items:center;justify-content:space-between">
+      <span style="font-size:1.25rem;font-weight:800;color:#fff">Nex<span style="color:#818CF8">hire</span>
+        <span style="font-size:.65rem;background:rgba(129,140,248,.2);color:#818CF8;padding:2px 7px;border-radius:99px;margin-left:6px;vertical-align:middle">EIP</span>
+      </span>
+      <span style="color:#94a3b8;font-size:.82rem">Rapport · {month_label}</span>
+    </div>
+
+    <div style="padding:28px 32px">
+      <h2 style="margin:0 0 4px;color:#0f172a;font-size:1.1rem">Rapport mensuel — {org_name}</h2>
+      <p style="color:#64748b;margin:0 0 24px;font-size:.88rem">Résumé de votre activité NexHire pour <strong>{month_label}</strong></p>
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px">
+        <div style="flex:1;min-width:110px;background:#eef2ff;border-radius:10px;padding:16px;text-align:center">
+          <div style="font-size:1.8rem;font-weight:800;color:#6366f1">{total_queries}</div>
+          <div style="font-size:.78rem;color:#64748b;margin-top:3px">Requêtes IA</div>
+        </div>
+        <div style="flex:1;min-width:110px;background:#f0fdf4;border-radius:10px;padding:16px;text-align:center">
+          <div style="font-size:1.8rem;font-weight:800;color:#16a34a">{active_users}</div>
+          <div style="font-size:.78rem;color:#64748b;margin-top:3px">Utilisateurs actifs</div>
+        </div>
+        <div style="flex:1;min-width:110px;background:#fef9c3;border-radius:10px;padding:16px;text-align:center">
+          <div style="font-size:1.1rem;font-weight:800;color:#a16207">{rating_stars}</div>
+          <div style="font-size:.78rem;color:#64748b;margin-top:3px">Satisfaction ({avg_rating:.1f}/5)</div>
+        </div>
+        {f'<div style="flex:1;min-width:110px;background:#f0f9ff;border-radius:10px;padding:16px;text-align:center"><div style="font-size:1.8rem;font-weight:800;color:{health_color}">{avg_health}%</div><div style="font-size:.78rem;color:#64748b;margin-top:3px">Santé org. ({dept_count} depts)</div></div>' if dept_count > 0 else ""}
+        {savings_html}
+      </div>
+
+      {expiry_html}
+      {top_depts_html}
+
+      <div style="text-align:center;margin:28px 0 8px">
+        <a href="{APP_URL}#stats"
+           style="display:inline-block;background:#6366f1;color:#fff;padding:13px 32px;
+                  border-radius:8px;font-weight:700;text-decoration:none;font-size:.92rem">
+          Voir le tableau de bord complet →
+        </a>
+      </div>
+    </div>
+
+    <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
+      <p style="margin:0;color:#94a3b8;font-size:.76rem">
+        © 2026 Nexhire Inc. · <a href="{APP_URL}" style="color:#6366f1">nexhire.ca</a> ·
+        Vous recevez ce rapport car vous êtes admin de {org_name}.
+        <a href="{APP_URL}#settings" style="color:#6366f1">Se désabonner</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>"""
+    return _send(to_email, subject, html)
+
+
 def send_subscription_confirmation(
     to_email: str,
     org_name: str,

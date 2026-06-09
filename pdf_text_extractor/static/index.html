@@ -1571,9 +1571,16 @@
 
         <!-- Rapport mensuel (admin only) -->
         <div class="settings-card admin-only hidden">
-          <h3 data-i18n="settings.report.title">Rapport mensuel</h3>
-          <p class="settings-desc" data-i18n="settings.report.desc">Envoyez un rapport mensuel d'activité par courriel aux admins de l'organisation.</p>
-          <button id="report-send-btn" class="btn btn-primary btn-sm" onclick="sendMonthlyReport()" data-i18n="settings.report.send">Envoyer le rapport maintenant</button>
+          <h3>Rapport mensuel automatique</h3>
+          <p class="settings-desc">Un rapport d'activité est envoyé automatiquement par courriel le <strong>1er de chaque mois</strong> à l'administrateur de l'organisation — KPIs, économies identifiées, santé des départements, licences expirant bientôt.</p>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+            <label class="toggle-switch">
+              <input type="checkbox" id="monthly-report-toggle" onchange="toggleMonthlyReport(this.checked)" />
+              <span class="toggle-slider"></span>
+            </label>
+            <span id="monthly-report-label" style="font-size:.88rem;color:var(--slate)">Activé</span>
+          </div>
+          <button id="report-send-btn" class="btn btn-primary btn-sm" onclick="sendMonthlyReport()">Envoyer le rapport maintenant</button>
           <div id="report-msg" class="hidden" style="font-size:.83rem;margin-top:10px;color:var(--success)"></div>
         </div>
 
@@ -2477,6 +2484,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="/static/app.js?v=20260609h"></script>
+<script src="/static/app.js?v=20260609i"></script>
 </body>
 </html>
