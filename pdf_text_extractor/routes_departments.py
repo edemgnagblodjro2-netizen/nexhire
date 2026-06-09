@@ -123,6 +123,108 @@ DEPT_TYPE_CONFIG: dict[str, dict] = {
         "kpis": ["efficiency_score", "total_savings", "unused_licenses_count", "contracts_expiring_60"],
         "primary_tab": "optim", "primary_subtab": "dashboard",
     },
+    # ── Types supplémentaires ────────────────────────────────────────────────
+    "comptabilite": {
+        "label": "Comptabilité", "icon": "🧾", "color": "#0f766e",
+        "kpis": ["budget_used", "budget_forecast_gap", "contracts_expiring_60", "contracts_savings"],
+        "primary_tab": "parc-it", "primary_subtab": "budget",
+    },
+    "sales": {
+        "label": "Ventes / Commerciaux", "icon": "💼", "color": "#ea580c",
+        "kpis": ["contracts_active", "negotiation_savings", "contracts_expiring_90", "efficiency_score"],
+        "primary_tab": "optim", "primary_subtab": "contracts",
+    },
+    "support": {
+        "label": "Support client", "icon": "🎧", "color": "#0891b2",
+        "kpis": ["processes_count", "automatable_hours", "efficiency_score", "unused_apps"],
+        "primary_tab": "optim", "primary_subtab": "processes",
+    },
+    "rd": {
+        "label": "R&D", "icon": "🔬", "color": "#7c3aed",
+        "kpis": ["apps_count", "monthly_app_cost", "unused_licenses_count", "contracts_active"],
+        "primary_tab": "parc-it", "primary_subtab": "apps",
+    },
+    "qualite": {
+        "label": "Assurance qualité", "icon": "✅", "color": "#16a34a",
+        "kpis": ["processes_count", "automatable_hours", "contracts_active", "efficiency_score"],
+        "primary_tab": "optim", "primary_subtab": "processes",
+    },
+    "digitalisation": {
+        "label": "Digitalisation", "icon": "⚡", "color": "#818CF8",
+        "kpis": ["apps_count", "unused_apps", "monthly_app_cost", "license_savings"],
+        "primary_tab": "parc-it", "primary_subtab": "apps",
+    },
+    "logistique": {
+        "label": "Logistique", "icon": "🚚", "color": "#92400e",
+        "kpis": ["contracts_active", "contracts_expiring_60", "negotiation_savings", "efficiency_score"],
+        "primary_tab": "optim", "primary_subtab": "contracts",
+    },
+    "audit": {
+        "label": "Audit & Forensique TI", "icon": "🔍", "color": "#1e293b",
+        "kpis": ["contracts_active", "contracts_expiring_90", "efficiency_score", "unused_licenses_count"],
+        "primary_tab": "optim", "primary_subtab": "dashboard",
+    },
+    "compliance": {
+        "label": "Conformité", "icon": "🛡️", "color": "#0369a1",
+        "kpis": ["contracts_active", "contracts_expiring_30", "contracts_expiring_60", "contracts_savings"],
+        "primary_tab": "optim", "primary_subtab": "contracts",
+    },
+    "communication": {
+        "label": "Communication", "icon": "📢", "color": "#db2777",
+        "kpis": ["apps_count", "monthly_app_cost", "duplicate_categories", "unused_apps"],
+        "primary_tab": "parc-it", "primary_subtab": "apps",
+    },
+    "manufacturing": {
+        "label": "Fabrication / Production", "icon": "🏭", "color": "#c8102e",
+        "kpis": ["processes_count", "automatable_hours", "contracts_active", "efficiency_score"],
+        "primary_tab": "optim", "primary_subtab": "processes",
+    },
+    # ── Santé ────────────────────────────────────────────────────────────────
+    "admin_hospitalier": {
+        "label": "Administration hospitalière", "icon": "🏥", "color": "#9333ea",
+        "kpis": ["budget_used", "budget_forecast_gap", "contracts_active", "contracts_expiring_60"],
+        "primary_tab": "parc-it", "primary_subtab": "budget",
+    },
+    "direction_medicale": {
+        "label": "Direction médicale", "icon": "🩺", "color": "#0891b2",
+        "kpis": ["processes_count", "automatable_hours", "efficiency_score", "budget_used"],
+        "primary_tab": "optim", "primary_subtab": "processes",
+    },
+    "soins_infirmiers": {
+        "label": "Soins infirmiers", "icon": "💊", "color": "#16a34a",
+        "kpis": ["processes_count", "automatable_hours", "hr_savings", "efficiency_score"],
+        "primary_tab": "optim", "primary_subtab": "processes",
+    },
+    "pharmacie": {
+        "label": "Pharmacie", "icon": "💉", "color": "#7c3aed",
+        "kpis": ["apps_count", "contracts_active", "contracts_expiring_60", "budget_used"],
+        "primary_tab": "parc-it", "primary_subtab": "budget",
+    },
+    "laboratoires": {
+        "label": "Laboratoires", "icon": "🔬", "color": "#2563eb",
+        "kpis": ["apps_count", "unused_licenses_count", "contracts_active", "budget_used"],
+        "primary_tab": "parc-it", "primary_subtab": "apps",
+    },
+    "imagerie": {
+        "label": "Imagerie médicale", "icon": "🖥️", "color": "#d97706",
+        "kpis": ["apps_count", "monthly_app_cost", "contracts_active", "budget_used"],
+        "primary_tab": "parc-it", "primary_subtab": "apps",
+    },
+    "service_patients": {
+        "label": "Service aux patients", "icon": "🛏️", "color": "#0891b2",
+        "kpis": ["processes_count", "automatable_hours", "efficiency_score", "contracts_active"],
+        "primary_tab": "optim", "primary_subtab": "processes",
+    },
+    "appro_medical": {
+        "label": "Approvisionnement médical", "icon": "📦", "color": "#dc2626",
+        "kpis": ["contracts_active", "contracts_expiring_60", "negotiation_savings", "contracts_savings"],
+        "primary_tab": "optim", "primary_subtab": "contracts",
+    },
+    "archives_medicales": {
+        "label": "Archives médicales", "icon": "📁", "color": "#92400e",
+        "kpis": ["processes_count", "automatable_hours", "contracts_active", "efficiency_score"],
+        "primary_tab": "optim", "primary_subtab": "processes",
+    },
 }
 
 
@@ -156,13 +258,47 @@ class TitlePayload(BaseModel):
 
 
 @router.get("/dashboard")
-def dept_dashboard(user: CurrentUser = Depends(require_min_role("user"))):
-    """Tableau de bord personnalisé selon le type de département de l'utilisateur."""
+def dept_dashboard(
+    dept_id: str | None = Query(None),
+    user: CurrentUser = Depends(require_min_role("user")),
+):
+    """Tableau de bord personnalisé selon le type de département.
+
+    Si dept_id est fourni (admin visualisant un workspace), retourne le dashboard
+    de ce département spécifique. Sinon, retourne le dashboard du département
+    principal de l'utilisateur connecté.
+    """
     try:
         org_id = user.organization_id
 
-        # Trouve le département principal de l'utilisateur
-        dept_type, dept_name, dept_id = "general", None, None
+        # Admin visualisant un workspace spécifique depuis la workspace bar
+        if dept_id:
+            with get_db() as cur:
+                cur.execute(
+                    "SELECT name, dept_type FROM departments WHERE id = %s AND organization_id = %s LIMIT 1",
+                    (dept_id, org_id),
+                )
+                dept_row = row(cur)
+            if not dept_row:
+                return {"dept_type": "general", "dept_name": None, "icon": "📊",
+                        "label": "Tableau de bord", "color": "#818CF8",
+                        "primary_tab": "optim", "primary_subtab": "dashboard", "kpis": []}
+            resolved_type = dept_row.get("dept_type") or "general"
+            cfg  = DEPT_TYPE_CONFIG.get(resolved_type, DEPT_TYPE_CONFIG["general"])
+            kpis = _build_kpis(org_id, dept_id, cfg["kpis"])
+            return {
+                "dept_type":   resolved_type,
+                "dept_name":   dept_row.get("name"),
+                "icon":        cfg["icon"],
+                "label":       cfg["label"],
+                "color":       cfg["color"],
+                "primary_tab":    cfg["primary_tab"],
+                "primary_subtab": cfg["primary_subtab"],
+                "kpis": kpis,
+            }
+
+        # Vue par défaut — département de l'utilisateur connecté
+        resolved_type, dept_name, user_dept_id = "general", None, None
         if not user.is_service_account:
             try:
                 with get_db() as cur:
@@ -172,35 +308,35 @@ def dept_dashboard(user: CurrentUser = Depends(require_min_role("user"))):
                     )
                     dm = row(cur)
                 if dm:
-                    dept_id = dm["department_id"]
+                    user_dept_id = dm["department_id"]
                     with get_db() as cur:
                         cur.execute(
                             "SELECT name, dept_type FROM departments WHERE id = %s LIMIT 1",
-                            (dept_id,),
+                            (user_dept_id,),
                         )
                         dept_row = row(cur)
                     if dept_row:
                         dept_name = dept_row.get("name")
-                        dept_type = dept_row.get("dept_type") or "general"
+                        resolved_type = dept_row.get("dept_type") or "general"
             except Exception:
                 pass  # tables pas encore créées → vue générale
 
-        # Admins/owners sans département → vue direction
+        # Admins/owners sans département → vue Direction Générale (agrégé)
         is_admin = ROLE_RANK.get(user.role, 0) >= 3 or user.is_service_account
-        if is_admin and not dept_id:
-            dept_type = "direction"
+        if is_admin and not user_dept_id:
+            resolved_type = "direction"
 
-        cfg  = DEPT_TYPE_CONFIG.get(dept_type, DEPT_TYPE_CONFIG["general"])
-        kpis = _build_kpis(org_id, dept_id, cfg["kpis"])
+        cfg  = DEPT_TYPE_CONFIG.get(resolved_type, DEPT_TYPE_CONFIG["general"])
+        kpis = _build_kpis(org_id, user_dept_id, cfg["kpis"])
 
         return {
-            "dept_type":    dept_type,
-            "dept_name":    dept_name,
-            "icon":         cfg["icon"],
-            "label":        cfg["label"],
-            "color":        cfg["color"],
-            "primary_tab":     cfg["primary_tab"],
-            "primary_subtab":  cfg["primary_subtab"],
+            "dept_type":   resolved_type,
+            "dept_name":   dept_name,
+            "icon":        cfg["icon"],
+            "label":       cfg["label"],
+            "color":       cfg["color"],
+            "primary_tab":    cfg["primary_tab"],
+            "primary_subtab": cfg["primary_subtab"],
             "kpis": kpis,
         }
     except Exception:

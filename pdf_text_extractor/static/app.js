@@ -5050,6 +5050,8 @@ function _resolveDeptType(deptType, deptName) {
 function activateWorkspace(deptId, deptType, deptName) {
   const resolvedType = _resolveDeptType(deptType, deptName);
   _activeWorkspaceDeptType = resolvedType;
+  // Charge le dashboard de CE workspace (avant switchTab pour éviter la race condition)
+  loadDeptDashboard(deptId);
   switchTab("agent");
 
   // Find template for this dept_type to get icon + connectors
@@ -5097,6 +5099,8 @@ function deactivateWorkspace() {
   if (banner) banner.classList.add("hidden");
   // Reset chips to default
   _updateAgentChips(null);
+  // Reload admin's personal dashboard (Direction Générale)
+  loadDeptDashboard();
   // Remove active highlight
   document.querySelectorAll(".ws-chip").forEach(el => el.classList.remove("ws-chip-active"));
 }
@@ -5133,6 +5137,16 @@ async function _updateWorkspaceBar() {
     audit:             { icon: "🔍", color: "#1e293b", label: { fr: "Audit & Forensique TI",  en: "Audit & IT Forensics" } },
     compliance:        { icon: "🛡️", color: "#0369a1", label: { fr: "Conformité",              en: "Compliance" } },
     general:           { icon: "📊", color: "#64748b", label: { fr: "Général",               en: "General" } },
+    // ── Santé ──────────────────────────────────────────────────────────────
+    admin_hospitalier: { icon: "🏥", color: "#9333ea", label: { fr: "Administration hospitalière", en: "Hospital Administration" } },
+    direction_medicale:{ icon: "🩺", color: "#0891b2", label: { fr: "Direction médicale",          en: "Medical Direction" } },
+    soins_infirmiers:  { icon: "💊", color: "#16a34a", label: { fr: "Soins infirmiers",            en: "Nursing" } },
+    pharmacie:         { icon: "💉", color: "#7c3aed", label: { fr: "Pharmacie",                  en: "Pharmacy" } },
+    laboratoires:      { icon: "🔬", color: "#2563eb", label: { fr: "Laboratoires",               en: "Laboratories" } },
+    imagerie:          { icon: "🖥️", color: "#d97706", label: { fr: "Imagerie médicale",          en: "Medical Imaging" } },
+    service_patients:  { icon: "🛏️", color: "#0891b2", label: { fr: "Service aux patients",       en: "Patient Services" } },
+    appro_medical:     { icon: "📦", color: "#dc2626", label: { fr: "Approvisionnement médical",   en: "Medical Supply" } },
+    archives_medicales:{ icon: "📁", color: "#92400e", label: { fr: "Archives médicales",          en: "Medical Records" } },
   };
 
   if (isAdmin) {
@@ -5177,13 +5191,19 @@ async function _updateWorkspaceBar() {
 }
 
 // ── Tableau de bord département (Phase 12) ────────────────────────────────────
-async function loadDeptDashboard() {
+async function loadDeptDashboard(deptId = null) {
+  // Si un workspace est manuellement actif et qu'on charge la vue générale, on laisse le workspace intact
+  if (_activeWorkspaceDeptType && !deptId) return;
+
   const section = $("dept-dashboard-section");
   const grid    = $("dept-kpi-grid");
   if (!section || !grid) return;
 
   try {
-    const d = await apiCall("/api/departments/dashboard");
+    const url = deptId
+      ? `/api/departments/dashboard?dept_id=${encodeURIComponent(deptId)}`
+      : "/api/departments/dashboard";
+    const d = await apiCall(url);
     if (!d || !d.kpis || d.kpis.length === 0) {
       // Pas de département assigné → invite à en créer un
       const icon  = $("dept-dash-icon");  if (icon)  icon.textContent = "📋";
@@ -5209,7 +5229,8 @@ async function loadDeptDashboard() {
     if (name)  name.textContent  = d.dept_name || "";
 
     // Mémorise le type de département pour l'agent IA
-    if (d.dept_type) {
+    // Ne pas écraser les chips si un workspace est manuellement actif
+    if (d.dept_type && !_activeWorkspaceDeptType) {
       state.deptType = d.dept_type;
       _updateAgentChips(d.dept_type);
     }
