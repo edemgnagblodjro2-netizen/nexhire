@@ -4518,6 +4518,87 @@ const _DEPT_CHIPS = {
     { fr: "Quels transporteurs ont les meilleures et pires performances de ponctualité ce mois ?", en: "Which carriers have the best and worst on-time performance this month?" },
     { fr: "Quels articles sont en surstock et quel est le coût de ce capital immobilisé ?", en: "Which items are overstocked and what is the cost of this tied-up capital?" },
   ],
+
+  // ── Administration hospitalière ──────────────────────────────────────────
+  admin_hospitalier: [
+    { fr: "Quel est le budget hospitalier consommé vs alloué ce trimestre par service ?", en: "What is the hospital budget consumed vs allocated this quarter by department?" },
+    { fr: "Combien de lits sont disponibles, occupés et en maintenance aujourd'hui ?", en: "How many beds are available, occupied and under maintenance today?" },
+    { fr: "Quel est le taux d'occupation des soins intensifs et des urgences ce mois ?", en: "What is the ICU and emergency department occupancy rate this month?" },
+    { fr: "Quels projets d'infrastructure hospitalière sont en cours et quel est leur avancement ?", en: "Which hospital infrastructure projects are in progress and what is their status?" },
+    { fr: "Quelles exigences d'agrément ou gouvernementales ont une échéance dans les 60 jours ?", en: "Which accreditation or government requirements have a deadline in the next 60 days?" },
+  ],
+
+  // ── Approvisionnement médical ────────────────────────────────────────────
+  appro_medical: [
+    { fr: "Quels médicaments ou fournitures médicales sont en rupture de stock ou en alerte critique ?", en: "Which medications or medical supplies are in stockout or critical alert?" },
+    { fr: "Quelles commandes de matériel médical sont en retard de livraison ?", en: "Which medical equipment orders are delayed in delivery?" },
+    { fr: "Quel est le coût des achats de médicaments et fournitures ce mois vs le budget ?", en: "What is the cost of medications and supplies purchased this month vs budget?" },
+    { fr: "Quels contrats d'achat de fournitures médicales arrivent à échéance ?", en: "Which medical supply purchase contracts are expiring?" },
+    { fr: "Quels fournisseurs de matériel médical ont les meilleures performances de livraison ?", en: "Which medical equipment suppliers have the best delivery performance?" },
+  ],
+
+  // ── Archives médicales ───────────────────────────────────────────────────
+  archives_medicales: [
+    { fr: "Combien de dossiers patients sont en attente de numérisation ou de classement ?", en: "How many patient records are pending digitization or filing?" },
+    { fr: "Quelles demandes d'accès aux dossiers sont en attente de traitement ?", en: "Which medical record access requests are pending processing?" },
+    { fr: "Quels dossiers arrivent à la fin de leur période légale de conservation ?", en: "Which records are reaching the end of their legal retention period?" },
+    { fr: "Quel est l'état de conformité LPRPDE pour la gestion des dossiers médicaux ?", en: "What is the PIPEDA compliance status for medical records management?" },
+    { fr: "Quels incidents de sécurité liés aux dossiers patients ont été déclarés ce trimestre ?", en: "What security incidents related to patient records were reported this quarter?" },
+  ],
+
+  // ── Direction médicale ───────────────────────────────────────────────────
+  direction_medicale: [
+    { fr: "Quels indicateurs de qualité des soins sont hors objectif ce mois ?", en: "Which quality of care indicators are off-target this month?" },
+    { fr: "Quel est le taux de réadmission à 30 jours et la mortalité hospitalière ce trimestre ?", en: "What is the 30-day readmission rate and hospital mortality this quarter?" },
+    { fr: "Combien de médecins sont disponibles vs en congé ou absents cette semaine ?", en: "How many physicians are available vs on leave or absent this week?" },
+    { fr: "Quels incidents médicaux graves ou presqu'accidents ont été déclarés ce trimestre ?", en: "Which serious medical incidents or near-misses were reported this quarter?" },
+    { fr: "Quels projets d'amélioration de la qualité des soins sont en cours ?", en: "Which care quality improvement projects are currently in progress?" },
+  ],
+
+  // ── Imagerie médicale ────────────────────────────────────────────────────
+  imagerie: [
+    { fr: "Quel est le délai d'attente moyen pour un examen IRM, scanner ou radiographie ?", en: "What is the average wait time for MRI, CT scan or X-ray?" },
+    { fr: "Quels équipements d'imagerie sont en panne ou en maintenance actuellement ?", en: "Which imaging equipment is currently down or under maintenance?" },
+    { fr: "Combien d'examens ont été effectués cette semaine et quel est le taux de complétion ?", en: "How many exams were performed this week and what is the completion rate?" },
+    { fr: "Quels examens urgents sont en attente de lecture par un radiologue ?", en: "Which urgent exams are pending radiologist reading?" },
+    { fr: "Quel est le coût de maintenance des équipements d'imagerie ce trimestre ?", en: "What is the imaging equipment maintenance cost this quarter?" },
+  ],
+
+  // ── Laboratoires ─────────────────────────────────────────────────────────
+  laboratoires: [
+    { fr: "Combien d'analyses sont en attente de traitement ou de résultat aujourd'hui ?", en: "How many analyses are pending processing or results today?" },
+    { fr: "Quels réactifs ou fournitures de laboratoire sont en rupture ou en alerte ?", en: "Which reagents or lab supplies are in stockout or alert status?" },
+    { fr: "Quel est le délai moyen de rendu des résultats par type d'analyse ?", en: "What is the average turnaround time for results by type of analysis?" },
+    { fr: "Quels résultats critiques (valeurs de panique) ont été transmis ce jour ?", en: "Which critical results (panic values) were transmitted today?" },
+    { fr: "Quels équipements de laboratoire sont en panne ou en calibration ?", en: "Which laboratory equipment is down or being calibrated?" },
+  ],
+
+  // ── Pharmacie ────────────────────────────────────────────────────────────
+  pharmacie: [
+    { fr: "Quels médicaments sont en rupture ou sous le seuil de réapprovisionnement ?", en: "Which medications are in stockout or below the replenishment threshold?" },
+    { fr: "Quelles ordonnances prioritaires sont en attente de validation ou de préparation ?", en: "Which priority prescriptions are pending validation or preparation?" },
+    { fr: "Quel est le coût des médicaments dispensés ce mois vs le budget alloué ?", en: "What is the cost of medications dispensed this month vs allocated budget?" },
+    { fr: "Quelles alertes de rappel de médicaments ou d'interactions médicamenteuses sont actives ?", en: "Which drug recall alerts or drug interaction warnings are currently active?" },
+    { fr: "Quels médicaments à haute surveillance (stupéfiants, biologiques) ont des anomalies de stock ?", en: "Which high-surveillance medications (narcotics, biologics) have inventory discrepancies?" },
+  ],
+
+  // ── Service aux patients ─────────────────────────────────────────────────
+  service_patients: [
+    { fr: "Combien de patients sont admis, en attente de lit et sortants aujourd'hui ?", en: "How many patients are admitted, waiting for a bed and being discharged today?" },
+    { fr: "Quel est le score de satisfaction patient de cette semaine vs l'objectif ?", en: "What is the patient satisfaction score this week vs target?" },
+    { fr: "Quels patients prioritaires n'ont pas eu de visite médicale depuis plus de 24h ?", en: "Which priority patients have not had a medical visit in over 24 hours?" },
+    { fr: "Quelle est la durée de séjour moyenne ce mois vs l'objectif et les tendances ?", en: "What is the average length of stay this month vs target and trends?" },
+    { fr: "Combien de plaintes ou réclamations patients sont en attente de réponse ?", en: "How many patient complaints or grievances are pending response?" },
+  ],
+
+  // ── Soins infirmiers ─────────────────────────────────────────────────────
+  soins_infirmiers: [
+    { fr: "Combien d'infirmières sont en poste, absentes ou en congé par unité aujourd'hui ?", en: "How many nurses are on duty, absent or on leave per unit today?" },
+    { fr: "Quels incidents de soins ou quasi-accidents ont été déclarés cette semaine ?", en: "Which care incidents or near-misses were reported this week?" },
+    { fr: "Quels soins ou procédures planifiés n'ont pas encore été effectués aujourd'hui ?", en: "Which planned care procedures have not yet been performed today?" },
+    { fr: "Quelles formations obligatoires du personnel infirmier arrivent à échéance ce mois ?", en: "Which mandatory nursing staff training deadlines are coming up this month?" },
+    { fr: "Quel est le taux d'heures supplémentaires du personnel infirmier ce mois ?", en: "What is the overtime rate for nursing staff this month?" },
+  ],
 };
 
 const _DEFAULT_CHIPS = [
@@ -4599,10 +4680,58 @@ const WORKSPACE_TEMPLATES = [
     connectors: ["microsoft_365", "servicenow", "zendesk", "jira"],
   },
   {
-    id: "hospital", icon: "🏥", color: "#9333ea", dept_type: "hr",
-    name: { fr: "Hospital Workspace",      en: "Hospital Workspace" },
-    desc: { fr: "Approvisionnement médical, RH cliniques, dossiers et conformité santé centralisés.", en: "Medical procurement, clinical HR, records, and healthcare compliance centralized." },
+    id: "hospital", icon: "🏥", color: "#9333ea", dept_type: "admin_hospitalier",
+    name: { fr: "Administration hospitalière", en: "Hospital Administration" },
+    desc: { fr: "Budget hospitalier, occupation des lits, projets d'infrastructure et conformité gouvernementale.", en: "Hospital budget, bed occupancy, infrastructure projects and government compliance." },
     connectors: ["microsoft_365", "bamboohr", "servicenow", "netsuite"],
+  },
+  {
+    id: "direction_medicale", icon: "🩺", color: "#7c3aed", dept_type: "direction_medicale",
+    name: { fr: "Direction médicale",        en: "Medical Direction" },
+    desc: { fr: "Qualité des soins, indicateurs cliniques, incidents et ressources médicales.", en: "Quality of care, clinical indicators, incidents and medical resources." },
+    connectors: ["microsoft_365", "servicenow", "bamboohr"],
+  },
+  {
+    id: "soins_infirmiers", icon: "💊", color: "#0891b2", dept_type: "soins_infirmiers",
+    name: { fr: "Soins infirmiers",          en: "Nursing" },
+    desc: { fr: "Personnel infirmier, gardes, incidents de soins, formations et heures supplémentaires.", en: "Nursing staff, shifts, care incidents, training and overtime." },
+    connectors: ["microsoft_365", "bamboohr", "servicenow"],
+  },
+  {
+    id: "pharmacie", icon: "💉", color: "#16a34a", dept_type: "pharmacie",
+    name: { fr: "Pharmacie",                 en: "Pharmacy" },
+    desc: { fr: "Stocks de médicaments, ordonnances prioritaires, budget pharma et alertes de rappel.", en: "Medication inventory, priority prescriptions, pharma budget and recall alerts." },
+    connectors: ["netsuite", "microsoft_365", "servicenow"],
+  },
+  {
+    id: "laboratoires", icon: "🔬", color: "#d97706", dept_type: "laboratoires",
+    name: { fr: "Laboratoires",              en: "Laboratories" },
+    desc: { fr: "Analyses en attente, résultats critiques, stocks de réactifs et maintenance équipements.", en: "Pending analyses, critical results, reagent inventory and equipment maintenance." },
+    connectors: ["microsoft_365", "servicenow"],
+  },
+  {
+    id: "imagerie", icon: "🖥️", color: "#2563eb", dept_type: "imagerie",
+    name: { fr: "Imagerie médicale",         en: "Medical Imaging" },
+    desc: { fr: "Délais IRM/scanner/radio, pannes équipements, file d'attente et coûts de maintenance.", en: "MRI/CT/X-ray delays, equipment downtime, queue and maintenance costs." },
+    connectors: ["microsoft_365", "servicenow"],
+  },
+  {
+    id: "service_patients", icon: "🛏️", color: "#dc2626", dept_type: "service_patients",
+    name: { fr: "Service aux patients",      en: "Patient Services" },
+    desc: { fr: "Admissions, durée de séjour, satisfaction patients, plaintes et visites médicales.", en: "Admissions, length of stay, patient satisfaction, complaints and medical visits." },
+    connectors: ["microsoft_365", "zendesk", "servicenow"],
+  },
+  {
+    id: "appro_medical", icon: "📦", color: "#0f766e", dept_type: "appro_medical",
+    name: { fr: "Approvisionnement médical", en: "Medical Procurement" },
+    desc: { fr: "Stocks de matériel médical, commandes en retard, fournisseurs et budget achats.", en: "Medical supply inventory, delayed orders, vendors and purchasing budget." },
+    connectors: ["netsuite", "sap", "microsoft_365"],
+  },
+  {
+    id: "archives_medicales", icon: "📁", color: "#64748b", dept_type: "archives_medicales",
+    name: { fr: "Archives médicales",        en: "Medical Records" },
+    desc: { fr: "Dossiers patients, numérisation, conformité LPRPDE, conservation légale et accès.", en: "Patient records, digitization, PIPEDA compliance, legal retention and access." },
+    connectors: ["microsoft_365", "servicenow"],
   },
 ];
 
@@ -4726,23 +4855,55 @@ let _activeWorkspaceDeptType = null;
 
 // Résolution dept_type depuis le nom si le type DB ne correspond à aucun chips connu
 const _NAME_TO_DEPT_TYPE = {
-  finance: "finance", comptabilité: "comptabilite", comptabilite: "comptabilite",
+  // Finance
+  finance: "finance", finances: "finance", "finance & comptabilité": "finance",
+  comptabilité: "comptabilite", comptabilite: "comptabilite",
+  // RH
   "ressources humaines": "hr", rh: "hr", "human resources": "hr",
+  // IT
   informatique: "it", "technologies de l'information": "it", it: "it",
+  // Juridique
   juridique: "legal", legal: "legal", droit: "legal",
+  // Opérations
   opérations: "operations", operations: "operations",
-  marketing: "marketing", ventes: "sales", commerciaux: "sales", sales: "sales",
+  "gestion de projet": "operations", "opérations & logistique": "operations",
+  // Marketing
+  marketing: "marketing", "marketing & communications": "marketing",
+  // Ventes
+  ventes: "sales", commerciaux: "sales", sales: "sales",
+  // Direction
   direction: "direction", exécutif: "direction", "direction générale": "direction",
+  "executive workspace": "direction",
+  // Approvisionnement
   approvisionnement: "approvisionnement", achats: "approvisionnement", procurement: "approvisionnement",
+  // Fabrication
   fabrication: "manufacturing", production: "manufacturing", manufacturing: "manufacturing",
+  // Communication
   communication: "communication", "relations publiques": "communication",
-  support: "support", "service client": "support",
+  // Support
+  support: "support", "service client": "support", "service à la clientèle": "support",
+  // R&D
   "r&d": "rd", recherche: "rd", développement: "rd",
+  // Qualité
   "assurance qualité": "qualite", qualité: "qualite", qualite: "qualite",
+  // Digitalisation
   digitalisation: "digitalisation", "transformation numérique": "digitalisation",
+  // Logistique
   logistique: "logistique", entrepôt: "logistique",
+  // Audit
   audit: "audit", forensique: "audit",
+  // Compliance
   conformité: "compliance", compliance: "compliance",
+  // ── Santé ──────────────────────────────────────────────────────────────
+  "administration hospitalière": "admin_hospitalier", "administration hospitaliere": "admin_hospitalier",
+  "approvisionnement médical": "appro_medical", "approvisionnement medical": "appro_medical",
+  "archives médicales": "archives_medicales", "archives medicales": "archives_medicales",
+  "direction médicale": "direction_medicale", "direction medicale": "direction_medicale",
+  "imagerie médicale": "imagerie", "imagerie medicale": "imagerie", imagerie: "imagerie",
+  laboratoires: "laboratoires", laboratoire: "laboratoires",
+  pharmacie: "pharmacie",
+  "service aux patients": "service_patients",
+  "soins infirmiers": "soins_infirmiers",
 };
 
 function _resolveDeptType(deptType, deptName) {
@@ -4768,6 +4929,9 @@ function activateWorkspace(deptId, deptType, deptName) {
     direction: "🏛️", manufacturing: "🏭", communication: "📢", support: "🎧",
     rd: "🔬", qualite: "✅", digitalisation: "⚡", logistique: "🚚",
     audit: "🔍", compliance: "🛡️",
+    admin_hospitalier: "🏥", direction_medicale: "🩺", soins_infirmiers: "💊",
+    pharmacie: "💉", laboratoires: "🔬", imagerie: "🖥️",
+    service_patients: "🛏️", appro_medical: "📦", archives_medicales: "📁",
   };
   const icon = tpl?.icon || cfg[resolvedType] || "📊";
 
