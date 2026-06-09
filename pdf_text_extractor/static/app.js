@@ -4264,12 +4264,15 @@ async function _loadOptimDashboard() {
     // Savings
     const s = data.savings || {};
     if ($("savings-total")) $("savings-total").textContent = `${_fmt(s.total)} $`;
-    if ($("savings-breakdown")) $("savings-breakdown").innerHTML = [
-      { label: "Licences",       val: s.licenses  },
-      { label: "Logiciels",      val: s.software  },
-      { label: "Contrats",       val: s.contracts },
-      { label: "Processus",      val: s.processes },
-    ].map(r => `<div class="savings-row"><span class="savings-row-label">${r.label}</span><span class="savings-row-val">${_fmt(r.val)} $</span></div>`).join("");
+    if ($("savings-breakdown")) {
+      const sl = _currentSavingsLabels || ["Licences", "Logiciels", "Contrats", "Processus"];
+      $("savings-breakdown").innerHTML = [
+        { label: sl[0], val: s.licenses  },
+        { label: sl[1], val: s.software  },
+        { label: sl[2], val: s.contracts },
+        { label: sl[3], val: s.processes },
+      ].map(r => `<div class="savings-row"><span class="savings-row-label">${r.label}</span><span class="savings-row-val">${_fmt(r.val)} $</span></div>`).join("");
+    }
 
     // Top opportunities
     const opps = data.top_opportunities || [];
@@ -5059,6 +5062,7 @@ async function installWorkspace(templateId) {
 // ── Workspace activation ──────────────────────────────────────────────────────
 let _activeWorkspaceDeptType = null;
 let _activeDeptId = null;
+let _currentSavingsLabels = null;
 
 // Résolution dept_type depuis le nom si le type DB ne correspond à aucun chips connu
 const _NAME_TO_DEPT_TYPE = {
@@ -5129,6 +5133,8 @@ const _OPTIM_DEFAULT = {
   duplicates: { btn: "Outils en doublon",          desc: "Catégories d'applications où plusieurs outils font la même chose — consolider sur une solution unique." },
   contracts:  { btn: "Contrats",                   desc: "" },
   processes:  { btn: "Processus",                  desc: "Processus manuels identifiés dans l'organisation et leur potentiel d'automatisation." },
+  dims:    ["Logiciels", "Licences", "Infrastructure", "Processus"],
+  savings: ["Licences", "Logiciels", "Contrats", "Processus"],
 };
 
 const _OPTIM_DEPT_LABELS = {
@@ -5138,6 +5144,8 @@ const _OPTIM_DEPT_LABELS = {
     duplicates: { btn: "Doublons inter-départements",   desc: "Ressources, outils ou processus dupliqués entre plusieurs départements." },
     contracts:  { btn: "Contrats stratégiques",         desc: "" },
     processes:  { btn: "Processus Direction",           desc: "Gouvernance, prise de décision et flux de validation à la direction." },
+    dims:    ["Dépenses globales", "Budget alloué", "Infrastructure", "Gouvernance"],
+    savings: ["Budgets", "Systèmes", "Contrats", "Gouvernance"],
   },
   // ── IT / Tech / Digital ────────────────────────────────────────────────────
   it: {
@@ -5145,18 +5153,24 @@ const _OPTIM_DEPT_LABELS = {
     duplicates: { btn: "Outils en doublon",          desc: "Plusieurs outils couvrent la même fonction — consolider pour réduire les coûts." },
     contracts:  { btn: "Contrats SaaS",              desc: "" },
     processes:  { btn: "Processus IT",               desc: "Processus manuels IT : déploiements, accès, incidents — automatisation possible." },
+    dims:    ["Logiciels", "Licences", "Infrastructure", "Processus"],
+    savings: ["Licences", "Logiciels", "Contrats SaaS", "Processus"],
   },
   digital: {
     licenses:   { btn: "Licences inutilisées",      desc: "Outils numériques actifs mais peu utilisés." },
     duplicates: { btn: "Outils en doublon",          desc: "Plateformes digitales redondantes à consolider." },
     contracts:  { btn: "Contrats SaaS",              desc: "" },
     processes:  { btn: "Processus digitaux",         desc: "Processus manuels digitaux à automatiser." },
+    dims:    ["Logiciels", "Licences", "Infrastructure", "Projets digitaux"],
+    savings: ["Licences", "Logiciels", "Contrats", "Projets"],
   },
   digitalisation: {
     licenses:   { btn: "Licences inutilisées",      desc: "Outils de digitalisation sous-utilisés." },
     duplicates: { btn: "Outils en doublon",          desc: "Plateformes redondantes dans le programme de transformation." },
     contracts:  { btn: "Contrats Tech",              desc: "" },
     processes:  { btn: "Processus transformation",  desc: "Étapes manuelles dans les projets de digitalisation." },
+    dims:    ["Logiciels", "Licences", "Infrastructure", "Projets transformation"],
+    savings: ["Licences", "Logiciels", "Contrats", "Projets"],
   },
   // ── RH ────────────────────────────────────────────────────────────────────
   rh: {
@@ -5164,6 +5178,8 @@ const _OPTIM_DEPT_LABELS = {
     duplicates: { btn: "Coûts formation",            desc: "Formations similaires dispensées en doublon — regrouper pour réduire les coûts." },
     contracts:  { btn: "Contrats prestataires RH",  desc: "" },
     processes:  { btn: "Processus RH",              desc: "Onboarding, évaluation, gestion des congés — flux à automatiser." },
+    dims:    ["Effectifs", "Recrutement", "Formation", "Processus RH"],
+    savings: ["Recrutement", "Formation", "Contrats RH", "Automatisation"],
   },
   // ── Finance / Comptabilité ────────────────────────────────────────────────
   finance: {
@@ -5171,12 +5187,16 @@ const _OPTIM_DEPT_LABELS = {
     duplicates: { btn: "Doublons paiements",         desc: "Paiements suspects ou doublons identifiés dans les comptes." },
     contracts:  { btn: "Contrats fournisseurs",      desc: "" },
     processes:  { btn: "Processus finance",          desc: "Clôtures comptables, rapports financiers et validations à automatiser." },
+    dims:    ["Systèmes financiers", "Licences ERP", "Infrastructure", "Processus"],
+    savings: ["Licences ERP", "Systèmes", "Contrats", "Processus"],
   },
   comptabilite: {
     licenses:   { btn: "Dépenses non justifiées",   desc: "Dépenses sans justificatif ou hors budget." },
     duplicates: { btn: "Doublons paiements",         desc: "Doublons et anomalies dans les paiements." },
     contracts:  { btn: "Contrats fournisseurs",      desc: "" },
     processes:  { btn: "Processus comptables",       desc: "Réconciliations, validations et rapports à automatiser." },
+    dims:    ["Outils comptables", "Licences", "Infrastructure", "Processus"],
+    savings: ["Licences", "Outils", "Contrats", "Processus"],
   },
   // ── Procurement / Achats ──────────────────────────────────────────────────
   procurement: {
@@ -5184,6 +5204,8 @@ const _OPTIM_DEPT_LABELS = {
     duplicates: { btn: "Achats en doublon",           desc: "Catégories d'achats redondantes à consolider." },
     contracts:  { btn: "Contrats fournisseurs",       desc: "" },
     processes:  { btn: "Processus d'achat",           desc: "Appels d'offres, validations et réception — étapes à optimiser." },
+    dims:    ["Outils achats", "Contrats fournisseurs", "Stocks", "Processus"],
+    savings: ["Contrats", "Outils", "Stocks", "Processus"],
   },
   // ── Marketing ─────────────────────────────────────────────────────────────
   marketing: {
@@ -5191,12 +5213,16 @@ const _OPTIM_DEPT_LABELS = {
     duplicates: { btn: "Campagnes en doublon",         desc: "Segments ou canaux ciblés plusieurs fois sans coordination." },
     contracts:  { btn: "Contrats agences",             desc: "" },
     processes:  { btn: "Processus marketing",          desc: "Workflows de création, validation et publication à automatiser." },
+    dims:    ["Outils marketing", "Licences", "Infrastructure", "Campagnes"],
+    savings: ["Licences", "Outils", "Contrats agences", "Campagnes"],
   },
   communication: {
     licenses:   { btn: "Outils comm. inutilisés",   desc: "Abonnements communication et médias sous-utilisés." },
     duplicates: { btn: "Messages en doublon",         desc: "Communications similaires émises en parallèle sans coordination." },
     contracts:  { btn: "Contrats médias",             desc: "" },
     processes:  { btn: "Processus communication",    desc: "Flux de validation et diffusion des communications internes/externes." },
+    dims:    ["Outils comms", "Licences", "Infrastructure", "Campagnes"],
+    savings: ["Licences", "Outils", "Contrats médias", "Campagnes"],
   },
   // ── Sales / Ventes ─────────────────────────────────────────────────────────
   sales: {
@@ -5204,6 +5230,8 @@ const _OPTIM_DEPT_LABELS = {
     duplicates: { btn: "Comptes en doublon",          desc: "Prospects ou clients enregistrés plusieurs fois dans le CRM." },
     contracts:  { btn: "Contrats clients",            desc: "" },
     processes:  { btn: "Processus vente",             desc: "Cycle de vente, pipeline et relances — étapes à automatiser." },
+    dims:    ["Outils CRM", "Licences", "Infrastructure", "Processus vente"],
+    savings: ["Licences", "Outils CRM", "Contrats", "Processus"],
   },
   // ── Legal ─────────────────────────────────────────────────────────────────
   legal: {
@@ -5211,6 +5239,8 @@ const _OPTIM_DEPT_LABELS = {
     duplicates: { btn: "Doublons contrats",           desc: "Clauses ou contrats similaires à harmoniser." },
     contracts:  { btn: "Contrats en révision",        desc: "" },
     processes:  { btn: "Processus juridiques",        desc: "Validation, signature, archivage et conformité — flux à optimiser." },
+    dims:    ["Logiciels juridiques", "Licences", "Infrastructure", "Processus"],
+    savings: ["Licences", "Logiciels", "Contrats", "Processus"],
   },
   // ── Operations / Logistique ───────────────────────────────────────────────
   operations: {
@@ -5218,12 +5248,16 @@ const _OPTIM_DEPT_LABELS = {
     duplicates: { btn: "Processus redondants",        desc: "Étapes opérationnelles dupliquées à consolider." },
     contracts:  { btn: "Contrats opérations",         desc: "" },
     processes:  { btn: "Processus opérations",        desc: "Gestion des flux, livraisons et inventaires — automatisation possible." },
+    dims:    ["Équipements", "Contrats fournisseurs", "Infrastructure", "Processus"],
+    savings: ["Équipements", "Logiciels", "Contrats", "Processus"],
   },
   logistique: {
     licenses:   { btn: "Équipements sous-utilisés",  desc: "Matériel logistique peu utilisé ou en attente de déploiement." },
     duplicates: { btn: "Flux en doublon",             desc: "Itinéraires ou processus de livraison redondants." },
     contracts:  { btn: "Contrats transporteurs",      desc: "" },
     processes:  { btn: "Processus logistique",        desc: "Flux de commande, expédition et réception à optimiser." },
+    dims:    ["Outils logistique", "Contrats transport", "Infrastructure", "Processus"],
+    savings: ["Contrats", "Outils", "Transport", "Processus"],
   },
   // ── R&D ──────────────────────────────────────────────────────────────────
   rd: {
@@ -5231,6 +5265,8 @@ const _OPTIM_DEPT_LABELS = {
     duplicates: { btn: "Projets en doublon",          desc: "Projets ou axes de recherche similaires dans l'organisation." },
     contracts:  { btn: "Contrats R&D",               desc: "" },
     processes:  { btn: "Processus innovation",        desc: "Idéation, prototypage et validation — étapes à accélérer." },
+    dims:    ["Outils R&D", "Licences", "Infrastructure", "Projets R&D"],
+    savings: ["Licences", "Outils R&D", "Contrats", "Projets"],
   },
   // ── Support / Service client ──────────────────────────────────────────────
   support: {
@@ -5238,6 +5274,8 @@ const _OPTIM_DEPT_LABELS = {
     duplicates: { btn: "Tickets en doublon",          desc: "Catégories de tickets similaires à fusionner." },
     contracts:  { btn: "Contrats support SLA",        desc: "" },
     processes:  { btn: "Processus support",           desc: "Résolution, escalade et feedback client — flux à optimiser." },
+    dims:    ["Outils support", "Licences", "Infrastructure", "Processus"],
+    savings: ["Licences", "Logiciels", "Contrats SLA", "Processus"],
   },
   // ── Qualité / Audit / Compliance ─────────────────────────────────────────
   qualite: {
@@ -5245,18 +5283,24 @@ const _OPTIM_DEPT_LABELS = {
     duplicates: { btn: "Non-conformités récurrentes", desc: "Anomalies ou non-conformités répétées — analyse des causes." },
     contracts:  { btn: "Contrats certification",      desc: "" },
     processes:  { btn: "Processus qualité",           desc: "Contrôles, audits internes et actions correctives." },
+    dims:    ["Outils qualité", "Certifications", "Infrastructure", "Processus"],
+    savings: ["Certifications", "Outils", "Contrats", "Processus"],
   },
   audit: {
     licenses:   { btn: "Outils audit inutilisés",    desc: "Logiciels d'audit et outils analytiques sous-utilisés." },
     duplicates: { btn: "Contrôles en doublon",        desc: "Vérifications similaires menées par plusieurs équipes." },
     contracts:  { btn: "Contrats auditeurs externes", desc: "" },
     processes:  { btn: "Processus audit",             desc: "Planification, exécution et rapport d'audit — étapes à optimiser." },
+    dims:    ["Outils audit", "Licences", "Infrastructure", "Processus"],
+    savings: ["Licences", "Outils", "Contrats", "Processus"],
   },
   compliance: {
     licenses:   { btn: "Outils conformité inutilisés", desc: "Solutions RegTech et compliance peu actives." },
     duplicates: { btn: "Contrôles redondants",          desc: "Exigences couvertes plusieurs fois par différentes équipes." },
     contracts:  { btn: "Contrats réglementaires",       desc: "" },
     processes:  { btn: "Processus conformité",          desc: "Monitoring, reporting et remédiation — flux à automatiser." },
+    dims:    ["Outils conformité", "Licences", "Infrastructure", "Processus"],
+    savings: ["Licences", "Outils", "Contrats", "Processus"],
   },
   // ── Manufacturing ─────────────────────────────────────────────────────────
   manufacturing: {
@@ -5264,6 +5308,8 @@ const _OPTIM_DEPT_LABELS = {
     duplicates: { btn: "Processus redondants",        desc: "Étapes de fabrication dupliquées ou consolidables." },
     contracts:  { btn: "Contrats maintenance",        desc: "" },
     processes:  { btn: "Processus production",        desc: "Flux de fabrication, contrôle qualité et gestion des arrêts." },
+    dims:    ["Équipements", "Licences", "Maintenance", "Processus"],
+    savings: ["Licences", "Équipements", "Contrats", "Processus"],
   },
   // ── Healthcare ────────────────────────────────────────────────────────────
   admin_hospitalier: {
@@ -5271,54 +5317,72 @@ const _OPTIM_DEPT_LABELS = {
     duplicates: { btn: "Services en doublon",           desc: "Services ou unités offrant des prestations similaires." },
     contracts:  { btn: "Contrats fournisseurs médicaux", desc: "" },
     processes:  { btn: "Processus hospitaliers",        desc: "Admissions, sorties et flux patient — étapes à optimiser." },
+    dims:    ["Systèmes admin", "Licences", "Infrastructure", "Processus"],
+    savings: ["Licences", "Systèmes", "Contrats", "Processus"],
   },
   direction_medicale: {
     licenses:   { btn: "Ressources médicales",         desc: "Matériel et équipements médicaux sous-utilisés." },
     duplicates: { btn: "Services en doublon",           desc: "Spécialités ou unités médicales avec chevauchements." },
     contracts:  { btn: "Contrats médecins et praticiens", desc: "" },
     processes:  { btn: "Processus médicaux stratégiques", desc: "Protocoles de soins, validation et gouvernance médicale." },
+    dims:    ["Systèmes médicaux", "Licences", "Infrastructure", "Protocoles"],
+    savings: ["Licences", "Systèmes", "Contrats", "Protocoles"],
   },
   soins_infirmiers: {
     licenses:   { btn: "Équipements soins",           desc: "Matériel de soins peu utilisé ou à remplacer." },
     duplicates: { btn: "Protocoles en doublon",        desc: "Protocoles soins similaires à standardiser." },
     contracts:  { btn: "Contrats équipements médicaux", desc: "" },
     processes:  { btn: "Processus soins infirmiers",   desc: "Tournées, administration médicaments et suivi patient." },
+    dims:    ["Outils soins", "Licences", "Équipements", "Protocoles"],
+    savings: ["Licences", "Outils", "Équipements", "Protocoles"],
   },
   pharmacie: {
     licenses:   { btn: "Médicaments périmés",          desc: "Stocks de médicaments à rotation lente ou proches de l'expiration." },
     duplicates: { btn: "Stocks excessifs",              desc: "Médicaments en surnombre par rapport à la consommation réelle." },
     contracts:  { btn: "Contrats fournisseurs pharma",  desc: "" },
     processes:  { btn: "Processus médicaux",            desc: "Dispensation, inventaire et renouvellement des stocks." },
+    dims:    ["Médicaments", "Stocks", "Infrastructure", "Processus"],
+    savings: ["Stocks", "Médicaments", "Contrats", "Processus"],
   },
   laboratoires: {
     licenses:   { btn: "Équipements labo inutilisés",  desc: "Appareils de laboratoire peu ou pas utilisés." },
     duplicates: { btn: "Tests en doublon",              desc: "Analyses similaires réalisées sur plusieurs équipements." },
     contracts:  { btn: "Contrats réactifs et équipements", desc: "" },
     processes:  { btn: "Processus laboratoire",         desc: "Prélèvement, analyse et rapport de résultats." },
+    dims:    ["Réactifs", "Licences", "Équipements", "Protocoles"],
+    savings: ["Licences", "Réactifs", "Équipements", "Protocoles"],
   },
   imagerie: {
     licenses:   { btn: "Appareils sous-utilisés",      desc: "Équipements d'imagerie à faible taux d'utilisation." },
     duplicates: { btn: "Examens redondants",            desc: "Examens d'imagerie prescrits plusieurs fois pour le même patient." },
     contracts:  { btn: "Contrats maintenance équipements", desc: "" },
     processes:  { btn: "Processus imagerie médicale",   desc: "Prise en charge patient, réalisation et rendu d'examens." },
+    dims:    ["Équipements", "Licences", "Infrastructure", "Processus"],
+    savings: ["Licences", "Équipements", "Contrats", "Processus"],
   },
   service_patients: {
     licenses:   { btn: "Équipements patient inutilisés", desc: "Équipements de chambre et de confort peu utilisés." },
     duplicates: { btn: "Services redondants",             desc: "Services aux patients offerts en doublon." },
     contracts:  { btn: "Contrats services patients",      desc: "" },
     processes:  { btn: "Processus accueil et suivi",      desc: "Accueil, orientation et suivi de satisfaction patient." },
+    dims:    ["Outils patients", "Licences", "Infrastructure", "Processus"],
+    savings: ["Licences", "Outils", "Contrats", "Processus"],
   },
   appro_medical: {
     licenses:   { btn: "Stock excessif",               desc: "Consommables médicaux en surplus par rapport à la demande." },
     duplicates: { btn: "Fournisseurs en doublon",       desc: "Mêmes produits achetés auprès de plusieurs fournisseurs sans justification." },
     contracts:  { btn: "Contrats approvisionnement",   desc: "" },
     processes:  { btn: "Processus commandes médicales", desc: "Commandes, réception et gestion des stocks médicaux." },
+    dims:    ["Consommables", "Contrats fournisseurs", "Stocks", "Processus"],
+    savings: ["Contrats", "Consommables", "Stocks", "Processus"],
   },
   archives_medicales: {
     licenses:   { btn: "Systèmes d'archivage inutilisés", desc: "Logiciels GED et archivage peu actifs." },
     duplicates: { btn: "Doublons dossiers",                desc: "Dossiers patients en doublon ou mal structurés." },
     contracts:  { btn: "Contrats gestion documentaire",    desc: "" },
     processes:  { btn: "Processus archivage médical",      desc: "Création, classement, accès et destruction des dossiers médicaux." },
+    dims:    ["Systèmes GED", "Licences", "Infrastructure", "Processus"],
+    savings: ["Licences", "Systèmes", "Contrats", "Processus"],
   },
 };
 
@@ -5334,6 +5398,16 @@ function _applyOptimDeptLabels(deptType) {
     if (key === "duplicates" && $("optim-dup-desc")  && val.desc) $("optim-dup-desc").textContent  = val.desc;
     if (key === "processes"  && $("optim-proc-desc") && val.desc) $("optim-proc-desc").textContent = val.desc;
   });
+
+  // Score dimension labels
+  const dims = cfg.dims || _OPTIM_DEFAULT.dims;
+  if ($("sdim-label-sw"))    $("sdim-label-sw").textContent    = dims[0];
+  if ($("sdim-label-lic"))   $("sdim-label-lic").textContent   = dims[1];
+  if ($("sdim-label-infra")) $("sdim-label-infra").textContent = dims[2];
+  if ($("sdim-label-proc"))  $("sdim-label-proc").textContent  = dims[3];
+
+  // Savings breakdown labels (used when rendering the breakdown)
+  _currentSavingsLabels = cfg.savings || _OPTIM_DEFAULT.savings;
 
   // Placeholder du champ question Plan IA
   const hint = _OPTIM_QUESTION_HINTS[deptType];
