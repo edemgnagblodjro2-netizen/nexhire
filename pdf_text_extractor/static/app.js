@@ -4505,6 +4505,16 @@ const _DEPT_CHIPS = {
     { fr: "Quel est le solde des comptes clients et fournisseurs en ce moment ?",      en: "What is the current balance of accounts receivable and payable?" },
   ],
 
+  // ── Audit interne & Forensique TI ────────────────────────────────────────
+  // Audits internes, investigation numérique, preuves, fraude, traçabilité
+  audit: [
+    { fr: "Quelles anomalies ou accès suspects ont été détectés dans les journaux système ?", en: "What anomalies or suspicious access were detected in system logs?" },
+    { fr: "Quels utilisateurs ont accédé à des données sensibles en dehors des heures normales ?", en: "Which users accessed sensitive data outside of normal hours?" },
+    { fr: "Quels audits internes sont planifiés et quel est leur état d'avancement ?", en: "Which internal audits are scheduled and what is their progress status?" },
+    { fr: "Y a-t-il des transactions financières inhabituelles ou potentiellement frauduleuses ?", en: "Are there any unusual or potentially fraudulent financial transactions?" },
+    { fr: "Quelles preuves numériques ont été préservées dans les incidents en cours d'investigation ?", en: "What digital evidence has been preserved in ongoing investigations?" },
+  ],
+
   // ── Logistique & Entrepôt ─────────────────────────────────────────────────
   // Expéditions, réceptions, gestion stock, transport, livraisons
   logistique: [
@@ -4799,6 +4809,7 @@ async function _updateWorkspaceBar() {
     digitalisation:    { icon: "⚡", color: "#818CF8", label: { fr: "Digitalisation",         en: "Digitalization" } },
     comptabilite:      { icon: "🧾", color: "#0f766e", label: { fr: "Comptabilité",           en: "Accounting" } },
     logistique:        { icon: "🚚", color: "#92400e", label: { fr: "Logistique",             en: "Logistics" } },
+    audit:             { icon: "🔍", color: "#1e293b", label: { fr: "Audit & Forensique TI",  en: "Audit & IT Forensics" } },
     general:           { icon: "📊", color: "#64748b", label: { fr: "Général",               en: "General" } },
   };
 
