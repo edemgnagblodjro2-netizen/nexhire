@@ -422,13 +422,20 @@ app = create_app()
 try:
     from apscheduler.schedulers.background import BackgroundScheduler
     from apscheduler.triggers.cron import CronTrigger
-    from scheduler import send_monthly_reports_all_orgs
+    from scheduler import send_monthly_reports_all_orgs, check_license_expiry_all_orgs
 
     _scheduler = BackgroundScheduler(timezone="UTC")
     _scheduler.add_job(
         send_monthly_reports_all_orgs,
         CronTrigger(day=1, hour=8, minute=0),
         id="monthly_report",
+        replace_existing=True,
+        misfire_grace_time=3600,
+    )
+    _scheduler.add_job(
+        check_license_expiry_all_orgs,
+        CronTrigger(hour=9, minute=0),
+        id="license_expiry_check",
         replace_existing=True,
         misfire_grace_time=3600,
     )

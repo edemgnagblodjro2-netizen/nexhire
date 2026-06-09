@@ -266,6 +266,22 @@ def _handle_subscription_upsert(sub: dict) -> None:
     except Exception:
         pass
 
+    try:
+        from routes_webhooks import send_webhook_notification
+        with get_db() as cur:
+            cur.execute(
+                "SELECT id FROM organizations WHERE stripe_customer_id = %s LIMIT 1",
+                (customer_id,),
+            )
+            org_row = row(cur)
+        if org_row:
+            send_webhook_notification(org_row["id"], "subscription", {
+                "status": nexhire_status,
+                "plan": plan,
+            })
+    except Exception:
+        pass
+
 
 def _handle_subscription_cancelled(sub: dict) -> None:
     """Marque l'abonnement comme annulé."""
@@ -285,5 +301,14 @@ def _handle_subscription_cancelled(sub: dict) -> None:
             org = row(cur) or {}
         if org.get("owner_email"):
             pass  # TODO: send cancellation email
+        from routes_webhooks import send_webhook_notification
+        with get_db() as cur:
+            cur.execute(
+                "SELECT id FROM organizations WHERE stripe_customer_id = %s LIMIT 1",
+                (customer_id,),
+            )
+            org_row = row(cur)
+        if org_row:
+            send_webhook_notification(org_row["id"], "subscription", {"status": "cancelled", "plan": ""})
     except Exception:
         pass

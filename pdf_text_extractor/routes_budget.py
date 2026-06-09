@@ -107,6 +107,21 @@ def list_budget_entries(
         return rows(cur)
 
 
+def _maybe_budget_alert(org_id: str, category: str, allocated: float, actual: float) -> None:
+    if allocated <= 0:
+        return
+    pct = round(actual / allocated * 100, 1)
+    if pct >= 80:
+        try:
+            from routes_webhooks import send_webhook_notification
+            send_webhook_notification(org_id, "budget_alert", {
+                "category": category,
+                "pct": pct,
+            })
+        except Exception:
+            pass
+
+
 @router.post("", status_code=201)
 def create_budget_entry(
     payload: BudgetPayload,
@@ -136,6 +151,7 @@ def create_budget_entry(
             ),
         )
         result = row(cur)
+    _maybe_budget_alert(user.organization_id, payload.category, payload.allocated, payload.actual)
     return result
 
 
@@ -171,6 +187,7 @@ def update_budget_entry(
             ),
         )
         result = row(cur)
+    _maybe_budget_alert(user.organization_id, payload.category, payload.allocated, payload.actual)
     return result
 
 

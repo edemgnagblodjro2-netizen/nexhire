@@ -1,10 +1,45 @@
-"""Tâches planifiées — rapport mensuel automatique le 1er de chaque mois."""
+"""Tâches planifiées — rapport mensuel + alertes licences."""
 from __future__ import annotations
 
 import logging
 from datetime import datetime
 
 logger = logging.getLogger(__name__)
+
+
+def check_license_expiry_all_orgs() -> None:
+    """Envoie des notifications webhook pour les licences expirant dans 30 jours."""
+    try:
+        from db import get_db, rows
+        from routes_webhooks import send_webhook_notification
+    except Exception as exc:
+        logger.error("scheduler import error (license expiry): %s", exc)
+        return
+
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """SELECT organization_id, software_name,
+                          (expires_at::date - CURRENT_DATE) AS days_left
+                   FROM licenses
+                   WHERE expires_at BETWEEN now() AND now() + interval '30 days'
+                   ORDER BY expires_at"""
+            )
+            licenses = rows(cur)
+    except Exception as exc:
+        logger.error("scheduler DB error (license expiry): %s", exc)
+        return
+
+    for lic in licenses:
+        try:
+            send_webhook_notification(lic["organization_id"], "license_expiry", {
+                "software_name": lic.get("software_name", ""),
+                "days_left": int(lic.get("days_left") or 0),
+            })
+        except Exception as exc:
+            logger.error("license expiry notification org %s : %s", lic.get("organization_id"), exc)
+
+    logger.info("Vérification licences — %d licences expirant bientôt", len(licenses))
 
 
 def send_monthly_reports_all_orgs() -> None:

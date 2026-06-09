@@ -19,7 +19,7 @@ class SignupPayload(BaseModel):
 
 
 @router.post("/signup")
-def signup(payload: SignupPayload):
+def signup(payload: SignupPayload, background: BackgroundTasks):
     """Inscription. Crée le compte Supabase ; un trigger DB crée ensuite
     automatiquement le tenant, l'utilisateur owner et l'essai de 14 jours
     (voir phase1_onboarding.sql). Les métadonnées portent le nom de l'org."""
@@ -42,7 +42,26 @@ def signup(payload: SignupPayload):
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
+    if payload.invite_token:
+        background.add_task(_notify_member_join, payload.invite_token, payload.email)
+
     return {"status": "ok", "user_id": getattr(res.user, "id", None)}
+
+
+def _notify_member_join(invite_token: str, email: str) -> None:
+    try:
+        from db import get_db, row
+        from routes_webhooks import send_webhook_notification
+        with get_db() as cur:
+            cur.execute(
+                "SELECT org_id FROM pending_invitations WHERE token = %s LIMIT 1",
+                (invite_token,),
+            )
+            inv = row(cur)
+        if inv and inv.get("org_id"):
+            send_webhook_notification(inv["org_id"], "member_join", {"email": email})
+    except Exception:
+        pass
 
 
 class LoginPayload(BaseModel):
