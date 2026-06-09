@@ -991,6 +991,18 @@
         </div>
       </div>
 
+      <!-- Workspace context banner -->
+      <div id="ws-context-banner" class="ws-context-banner hidden">
+        <div class="ws-ctx-left">
+          <span class="ws-ctx-icon" id="ws-ctx-icon">📊</span>
+          <div>
+            <div class="ws-ctx-name" id="ws-ctx-name">Workspace</div>
+            <div class="ws-ctx-connectors" id="ws-ctx-connectors"></div>
+          </div>
+        </div>
+        <button class="ws-ctx-close" onclick="deactivateWorkspace()" title="Quitter ce workspace">✕</button>
+      </div>
+
       <div class="section-header">
         <h2 data-i18n="agent.title">Posez votre question</h2>
         <div class="controls-inline">

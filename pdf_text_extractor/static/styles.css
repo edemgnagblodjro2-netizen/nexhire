@@ -2909,6 +2909,41 @@ tbody tr:hover { background: var(--blue-pale); transition: background .12s; }
 }
 
 /* ── Tableau de bord département (Phase 12) ─────────────────────────────── */
+/* ── Workspace context banner ─────────────────────────────────────────────── */
+.ws-context-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+  border: 1px solid rgba(129,140,248,.3);
+  border-left: 4px solid var(--blue);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+.ws-ctx-left { display: flex; align-items: center; gap: 12px; }
+.ws-ctx-icon { font-size: 1.6rem; line-height: 1; }
+.ws-ctx-name { font-size: .95rem; font-weight: 700; color: var(--navy); }
+.ws-ctx-connectors { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 4px; }
+.ws-ctx-badge {
+  font-size: .68rem; font-weight: 600;
+  padding: 2px 8px; border-radius: 99px;
+  background: rgba(129,140,248,.15); color: var(--blue-dark);
+  border: 1px solid rgba(129,140,248,.25);
+}
+.ws-ctx-close {
+  background: none; border: none; cursor: pointer;
+  color: var(--slate); font-size: .9rem; padding: 4px 6px;
+  border-radius: 4px; flex-shrink: 0;
+  transition: background .15s;
+}
+.ws-ctx-close:hover { background: rgba(0,0,0,.07); }
+.ws-chip.ws-chip-active {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(129,140,248,.6);
+  opacity: 1;
+}
+
 .dept-dashboard {
   background: #fff;
   border: 1px solid #e2e8f0;

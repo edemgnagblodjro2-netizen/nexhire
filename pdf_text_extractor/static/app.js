@@ -4409,16 +4409,24 @@ const _DEPT_CHIPS = {
   ],
 };
 
+const _DEFAULT_CHIPS = [
+  { fr: "Montre-moi les incidents critiques ouverts, les projets en retard et les dépenses du mois.", en: "Show me open critical incidents, delayed projects and this month's expenses." },
+  { fr: "Quels emails importants n'ont pas été lus depuis hier ?", en: "Which important emails haven't been read since yesterday?" },
+  { fr: "Quels contrats arrivent à échéance dans les 90 prochains jours ?", en: "Which contracts are expiring in the next 90 days?" },
+  { fr: "Combien de postes sont vacants et quelles absences sont prévues cette semaine ?", en: "How many positions are vacant and what absences are scheduled this week?" },
+  { fr: "Quel est le statut du budget du mois courant par département ?", en: "What is the current month's budget status by department?" },
+];
+
 function _updateAgentChips(deptType) {
-  const chips = _DEPT_CHIPS[deptType];
-  if (!chips) return;
+  const chips = (deptType && _DEPT_CHIPS[deptType]) ? _DEPT_CHIPS[deptType] : _DEFAULT_CHIPS;
   const lang = document.documentElement.lang === "en" ? "en" : "fr";
   document.querySelectorAll(".prompt-chip").forEach((btn, i) => {
-    if (!chips[i]) return;
-    const text = chips[i][lang] || chips[i].fr;
-    btn.dataset.promptFr = chips[i].fr;
-    btn.dataset.promptEn = chips[i].en;
-    btn.dataset.prompt   = chips[i][lang] || chips[i].fr;
+    const chip = chips[i];
+    if (!chip) return;
+    const text = chip[lang] || chip.fr;
+    btn.dataset.promptFr = chip.fr;
+    btn.dataset.promptEn = chip.en;
+    btn.dataset.prompt   = chip[lang] || chip.fr;
     btn.textContent      = text;
   });
 }
@@ -4602,6 +4610,59 @@ async function installWorkspace(templateId) {
   }
 }
 
+// ── Workspace activation ──────────────────────────────────────────────────────
+let _activeWorkspaceDeptType = null;
+
+function activateWorkspace(deptId, deptType, deptName) {
+  _activeWorkspaceDeptType = deptType;
+  switchTab("agent");
+
+  // Find template for this dept_type to get icon + connectors
+  const tpl = WORKSPACE_TEMPLATES.find(t => t.dept_type === deptType);
+  const cfg = {
+    finance:           { icon: "💰" }, hr:                { icon: "👥" },
+    it:                { icon: "💻" }, legal:             { icon: "⚖️" },
+    operations:        { icon: "⚙️" }, marketing:         { icon: "📣" },
+    approvisionnement: { icon: "🛒" }, direction:         { icon: "🏛️" },
+    manufacturing:     { icon: "🏭" }, general:           { icon: "📊" },
+  };
+  const icon = tpl?.icon || cfg[deptType]?.icon || "📊";
+
+  // Show banner
+  const banner = $("ws-context-banner");
+  if (banner) {
+    $("ws-ctx-icon").textContent = icon;
+    $("ws-ctx-name").textContent = deptName;
+    const connDiv = $("ws-ctx-connectors");
+    if (connDiv && tpl?.connectors?.length) {
+      connDiv.innerHTML = tpl.connectors.map(c =>
+        `<span class="ws-ctx-badge">${esc(CONNECTORS[c]?.label || c)}</span>`
+      ).join("");
+    } else if (connDiv) {
+      connDiv.innerHTML = "";
+    }
+    banner.classList.remove("hidden");
+  }
+
+  // Update prompt chips for this dept_type
+  _updateAgentChips(deptType);
+
+  // Highlight active chip in workspace bar
+  document.querySelectorAll(".ws-chip").forEach(el => {
+    el.classList.toggle("ws-chip-active", el.dataset.deptId === String(deptId));
+  });
+}
+
+function deactivateWorkspace() {
+  _activeWorkspaceDeptType = null;
+  const banner = $("ws-context-banner");
+  if (banner) banner.classList.add("hidden");
+  // Reset chips to default
+  _updateAgentChips(null);
+  // Remove active highlight
+  document.querySelectorAll(".ws-chip").forEach(el => el.classList.remove("ws-chip-active"));
+}
+
 // ── Workspace bar ─────────────────────────────────────────────────────────────
 async function _updateWorkspaceBar() {
   const bar   = $("workspace-bar");
@@ -4645,7 +4706,8 @@ async function _updateWorkspaceBar() {
         chips.innerHTML = unique.map(d => {
           const cfg = _typeConfig[d.dept_type] || _typeConfig.general;
           return `<span class="ws-chip" style="background:${cfg.color}" title="${esc(d.name)}"
-                        onclick="switchTab('org')">${cfg.icon} ${esc(d.name)}</span>`;
+                        data-dept-id="${d.id}"
+                        onclick="activateWorkspace('${d.id}','${d.dept_type}','${esc(d.name)}')">${cfg.icon} ${esc(d.name)}</span>`;
         }).join("");
       }
 
