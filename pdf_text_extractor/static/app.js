@@ -5122,6 +5122,221 @@ function _resolveDeptType(deptType, deptName) {
   return "general";
 }
 
+// ── Optimisation contextuelle par type de département ─────────────────────────
+const _OPTIM_DEFAULT = {
+  licenses:   { btn: "Licences inutilisées",      desc: "Licences avec un taux d'utilisation inférieur à 80 %. Réduire ces licences génère des économies immédiates." },
+  duplicates: { btn: "Outils en doublon",          desc: "Catégories d'applications où plusieurs outils font la même chose — consolider sur une solution unique." },
+  contracts:  { btn: "Contrats",                   desc: "" },
+  processes:  { btn: "Processus",                  desc: "Processus manuels identifiés dans l'organisation et leur potentiel d'automatisation." },
+};
+
+const _OPTIM_DEPT_LABELS = {
+  // ── Direction ──────────────────────────────────────────────────────────────
+  direction: {
+    licenses:   { btn: "Budget par département",        desc: "Allocations budgétaires par département — identifier les sur/sous-dépenses." },
+    duplicates: { btn: "Doublons inter-départements",   desc: "Ressources, outils ou processus dupliqués entre plusieurs départements." },
+    contracts:  { btn: "Contrats stratégiques",         desc: "" },
+    processes:  { btn: "Processus Direction",           desc: "Gouvernance, prise de décision et flux de validation à la direction." },
+  },
+  // ── IT / Tech / Digital ────────────────────────────────────────────────────
+  it: {
+    licenses:   { btn: "Licences inutilisées",      desc: "Licences logicielles avec moins de 80 % d'utilisation — économies immédiates possibles." },
+    duplicates: { btn: "Outils en doublon",          desc: "Plusieurs outils couvrent la même fonction — consolider pour réduire les coûts." },
+    contracts:  { btn: "Contrats SaaS",              desc: "" },
+    processes:  { btn: "Processus IT",               desc: "Processus manuels IT : déploiements, accès, incidents — automatisation possible." },
+  },
+  digital: {
+    licenses:   { btn: "Licences inutilisées",      desc: "Outils numériques actifs mais peu utilisés." },
+    duplicates: { btn: "Outils en doublon",          desc: "Plateformes digitales redondantes à consolider." },
+    contracts:  { btn: "Contrats SaaS",              desc: "" },
+    processes:  { btn: "Processus digitaux",         desc: "Processus manuels digitaux à automatiser." },
+  },
+  digitalisation: {
+    licenses:   { btn: "Licences inutilisées",      desc: "Outils de digitalisation sous-utilisés." },
+    duplicates: { btn: "Outils en doublon",          desc: "Plateformes redondantes dans le programme de transformation." },
+    contracts:  { btn: "Contrats Tech",              desc: "" },
+    processes:  { btn: "Processus transformation",  desc: "Étapes manuelles dans les projets de digitalisation." },
+  },
+  // ── RH ────────────────────────────────────────────────────────────────────
+  rh: {
+    licenses:   { btn: "Recrutements lents",        desc: "Postes ouverts depuis plus de 30 jours — identifier les goulots d'étranglement." },
+    duplicates: { btn: "Coûts formation",            desc: "Formations similaires dispensées en doublon — regrouper pour réduire les coûts." },
+    contracts:  { btn: "Contrats prestataires RH",  desc: "" },
+    processes:  { btn: "Processus RH",              desc: "Onboarding, évaluation, gestion des congés — flux à automatiser." },
+  },
+  // ── Finance / Comptabilité ────────────────────────────────────────────────
+  finance: {
+    licenses:   { btn: "Dépenses non justifiées",   desc: "Dépenses sans ROI mesurable ou sans approbation formelle." },
+    duplicates: { btn: "Doublons paiements",         desc: "Paiements suspects ou doublons identifiés dans les comptes." },
+    contracts:  { btn: "Contrats fournisseurs",      desc: "" },
+    processes:  { btn: "Processus finance",          desc: "Clôtures comptables, rapports financiers et validations à automatiser." },
+  },
+  comptabilite: {
+    licenses:   { btn: "Dépenses non justifiées",   desc: "Dépenses sans justificatif ou hors budget." },
+    duplicates: { btn: "Doublons paiements",         desc: "Doublons et anomalies dans les paiements." },
+    contracts:  { btn: "Contrats fournisseurs",      desc: "" },
+    processes:  { btn: "Processus comptables",       desc: "Réconciliations, validations et rapports à automatiser." },
+  },
+  // ── Procurement / Achats ──────────────────────────────────────────────────
+  procurement: {
+    licenses:   { btn: "Fournisseurs sous-utilisés", desc: "Fournisseurs référencés sans commandes récentes." },
+    duplicates: { btn: "Achats en doublon",           desc: "Catégories d'achats redondantes à consolider." },
+    contracts:  { btn: "Contrats fournisseurs",       desc: "" },
+    processes:  { btn: "Processus d'achat",           desc: "Appels d'offres, validations et réception — étapes à optimiser." },
+  },
+  // ── Marketing ─────────────────────────────────────────────────────────────
+  marketing: {
+    licenses:   { btn: "Outils marketing inutilisés", desc: "Plateformes et abonnements marketing peu ou pas utilisés." },
+    duplicates: { btn: "Campagnes en doublon",         desc: "Segments ou canaux ciblés plusieurs fois sans coordination." },
+    contracts:  { btn: "Contrats agences",             desc: "" },
+    processes:  { btn: "Processus marketing",          desc: "Workflows de création, validation et publication à automatiser." },
+  },
+  communication: {
+    licenses:   { btn: "Outils comm. inutilisés",   desc: "Abonnements communication et médias sous-utilisés." },
+    duplicates: { btn: "Messages en doublon",         desc: "Communications similaires émises en parallèle sans coordination." },
+    contracts:  { btn: "Contrats médias",             desc: "" },
+    processes:  { btn: "Processus communication",    desc: "Flux de validation et diffusion des communications internes/externes." },
+  },
+  // ── Sales / Ventes ─────────────────────────────────────────────────────────
+  sales: {
+    licenses:   { btn: "Outils CRM inutilisés",     desc: "Licences CRM et outils de vente sans activité récente." },
+    duplicates: { btn: "Comptes en doublon",          desc: "Prospects ou clients enregistrés plusieurs fois dans le CRM." },
+    contracts:  { btn: "Contrats clients",            desc: "" },
+    processes:  { btn: "Processus vente",             desc: "Cycle de vente, pipeline et relances — étapes à automatiser." },
+  },
+  // ── Legal ─────────────────────────────────────────────────────────────────
+  legal: {
+    licenses:   { btn: "Logiciels juridiques",       desc: "Outils de veille, LegalTech et abonnements sous-utilisés." },
+    duplicates: { btn: "Doublons contrats",           desc: "Clauses ou contrats similaires à harmoniser." },
+    contracts:  { btn: "Contrats en révision",        desc: "" },
+    processes:  { btn: "Processus juridiques",        desc: "Validation, signature, archivage et conformité — flux à optimiser." },
+  },
+  // ── Operations / Logistique ───────────────────────────────────────────────
+  operations: {
+    licenses:   { btn: "Équipements sous-utilisés",  desc: "Matériel et équipements opérationnels à faible taux d'utilisation." },
+    duplicates: { btn: "Processus redondants",        desc: "Étapes opérationnelles dupliquées à consolider." },
+    contracts:  { btn: "Contrats opérations",         desc: "" },
+    processes:  { btn: "Processus opérations",        desc: "Gestion des flux, livraisons et inventaires — automatisation possible." },
+  },
+  logistique: {
+    licenses:   { btn: "Équipements sous-utilisés",  desc: "Matériel logistique peu utilisé ou en attente de déploiement." },
+    duplicates: { btn: "Flux en doublon",             desc: "Itinéraires ou processus de livraison redondants." },
+    contracts:  { btn: "Contrats transporteurs",      desc: "" },
+    processes:  { btn: "Processus logistique",        desc: "Flux de commande, expédition et réception à optimiser." },
+  },
+  // ── R&D ──────────────────────────────────────────────────────────────────
+  rd: {
+    licenses:   { btn: "Licences recherche",         desc: "Outils scientifiques, bases de données et licences peu utilisés." },
+    duplicates: { btn: "Projets en doublon",          desc: "Projets ou axes de recherche similaires dans l'organisation." },
+    contracts:  { btn: "Contrats R&D",               desc: "" },
+    processes:  { btn: "Processus innovation",        desc: "Idéation, prototypage et validation — étapes à accélérer." },
+  },
+  // ── Support / Service client ──────────────────────────────────────────────
+  support: {
+    licenses:   { btn: "Outils support inutilisés",  desc: "Plateformes de ticketing et outils support peu actifs." },
+    duplicates: { btn: "Tickets en doublon",          desc: "Catégories de tickets similaires à fusionner." },
+    contracts:  { btn: "Contrats support SLA",        desc: "" },
+    processes:  { btn: "Processus support",           desc: "Résolution, escalade et feedback client — flux à optimiser." },
+  },
+  // ── Qualité / Audit / Compliance ─────────────────────────────────────────
+  qualite: {
+    licenses:   { btn: "Outils audit inutilisés",    desc: "Logiciels de contrôle qualité peu ou pas utilisés." },
+    duplicates: { btn: "Non-conformités récurrentes", desc: "Anomalies ou non-conformités répétées — analyse des causes." },
+    contracts:  { btn: "Contrats certification",      desc: "" },
+    processes:  { btn: "Processus qualité",           desc: "Contrôles, audits internes et actions correctives." },
+  },
+  audit: {
+    licenses:   { btn: "Outils audit inutilisés",    desc: "Logiciels d'audit et outils analytiques sous-utilisés." },
+    duplicates: { btn: "Contrôles en doublon",        desc: "Vérifications similaires menées par plusieurs équipes." },
+    contracts:  { btn: "Contrats auditeurs externes", desc: "" },
+    processes:  { btn: "Processus audit",             desc: "Planification, exécution et rapport d'audit — étapes à optimiser." },
+  },
+  compliance: {
+    licenses:   { btn: "Outils conformité inutilisés", desc: "Solutions RegTech et compliance peu actives." },
+    duplicates: { btn: "Contrôles redondants",          desc: "Exigences couvertes plusieurs fois par différentes équipes." },
+    contracts:  { btn: "Contrats réglementaires",       desc: "" },
+    processes:  { btn: "Processus conformité",          desc: "Monitoring, reporting et remédiation — flux à automatiser." },
+  },
+  // ── Manufacturing ─────────────────────────────────────────────────────────
+  manufacturing: {
+    licenses:   { btn: "Équipements sous-utilisés",  desc: "Machines et postes de production à faible rendement." },
+    duplicates: { btn: "Processus redondants",        desc: "Étapes de fabrication dupliquées ou consolidables." },
+    contracts:  { btn: "Contrats maintenance",        desc: "" },
+    processes:  { btn: "Processus production",        desc: "Flux de fabrication, contrôle qualité et gestion des arrêts." },
+  },
+  // ── Healthcare ────────────────────────────────────────────────────────────
+  admin_hospitalier: {
+    licenses:   { btn: "Équipements sous-utilisés",   desc: "Équipements hospitaliers à faible taux d'utilisation." },
+    duplicates: { btn: "Services en doublon",           desc: "Services ou unités offrant des prestations similaires." },
+    contracts:  { btn: "Contrats fournisseurs médicaux", desc: "" },
+    processes:  { btn: "Processus hospitaliers",        desc: "Admissions, sorties et flux patient — étapes à optimiser." },
+  },
+  direction_medicale: {
+    licenses:   { btn: "Ressources médicales",         desc: "Matériel et équipements médicaux sous-utilisés." },
+    duplicates: { btn: "Services en doublon",           desc: "Spécialités ou unités médicales avec chevauchements." },
+    contracts:  { btn: "Contrats médecins et praticiens", desc: "" },
+    processes:  { btn: "Processus médicaux stratégiques", desc: "Protocoles de soins, validation et gouvernance médicale." },
+  },
+  soins_infirmiers: {
+    licenses:   { btn: "Équipements soins",           desc: "Matériel de soins peu utilisé ou à remplacer." },
+    duplicates: { btn: "Protocoles en doublon",        desc: "Protocoles soins similaires à standardiser." },
+    contracts:  { btn: "Contrats équipements médicaux", desc: "" },
+    processes:  { btn: "Processus soins infirmiers",   desc: "Tournées, administration médicaments et suivi patient." },
+  },
+  pharmacie: {
+    licenses:   { btn: "Médicaments périmés",          desc: "Stocks de médicaments à rotation lente ou proches de l'expiration." },
+    duplicates: { btn: "Stocks excessifs",              desc: "Médicaments en surnombre par rapport à la consommation réelle." },
+    contracts:  { btn: "Contrats fournisseurs pharma",  desc: "" },
+    processes:  { btn: "Processus médicaux",            desc: "Dispensation, inventaire et renouvellement des stocks." },
+  },
+  laboratoires: {
+    licenses:   { btn: "Équipements labo inutilisés",  desc: "Appareils de laboratoire peu ou pas utilisés." },
+    duplicates: { btn: "Tests en doublon",              desc: "Analyses similaires réalisées sur plusieurs équipements." },
+    contracts:  { btn: "Contrats réactifs et équipements", desc: "" },
+    processes:  { btn: "Processus laboratoire",         desc: "Prélèvement, analyse et rapport de résultats." },
+  },
+  imagerie: {
+    licenses:   { btn: "Appareils sous-utilisés",      desc: "Équipements d'imagerie à faible taux d'utilisation." },
+    duplicates: { btn: "Examens redondants",            desc: "Examens d'imagerie prescrits plusieurs fois pour le même patient." },
+    contracts:  { btn: "Contrats maintenance équipements", desc: "" },
+    processes:  { btn: "Processus imagerie médicale",   desc: "Prise en charge patient, réalisation et rendu d'examens." },
+  },
+  service_patients: {
+    licenses:   { btn: "Équipements patient inutilisés", desc: "Équipements de chambre et de confort peu utilisés." },
+    duplicates: { btn: "Services redondants",             desc: "Services aux patients offerts en doublon." },
+    contracts:  { btn: "Contrats services patients",      desc: "" },
+    processes:  { btn: "Processus accueil et suivi",      desc: "Accueil, orientation et suivi de satisfaction patient." },
+  },
+  appro_medical: {
+    licenses:   { btn: "Stock excessif",               desc: "Consommables médicaux en surplus par rapport à la demande." },
+    duplicates: { btn: "Fournisseurs en doublon",       desc: "Mêmes produits achetés auprès de plusieurs fournisseurs sans justification." },
+    contracts:  { btn: "Contrats approvisionnement",   desc: "" },
+    processes:  { btn: "Processus commandes médicales", desc: "Commandes, réception et gestion des stocks médicaux." },
+  },
+  archives_medicales: {
+    licenses:   { btn: "Systèmes d'archivage inutilisés", desc: "Logiciels GED et archivage peu actifs." },
+    duplicates: { btn: "Doublons dossiers",                desc: "Dossiers patients en doublon ou mal structurés." },
+    contracts:  { btn: "Contrats gestion documentaire",    desc: "" },
+    processes:  { btn: "Processus archivage médical",      desc: "Création, classement, accès et destruction des dossiers médicaux." },
+  },
+};
+
+function _applyOptimDeptLabels(deptType) {
+  const cfg = _OPTIM_DEPT_LABELS[deptType] || _OPTIM_DEFAULT;
+
+  const tabs = { licenses: cfg.licenses, duplicates: cfg.duplicates, contracts: cfg.contracts, processes: cfg.processes };
+
+  Object.entries(tabs).forEach(([key, val]) => {
+    // Bouton subtab
+    const btn = document.querySelector(`[data-optim="${key}"]`);
+    if (btn) btn.textContent = val.btn;
+    // Description du panneau
+    if (key === "licenses"   && $("optim-lic-desc")  && val.desc) $("optim-lic-desc").textContent  = val.desc;
+    if (key === "duplicates" && $("optim-dup-desc")  && val.desc) $("optim-dup-desc").textContent  = val.desc;
+    if (key === "processes"  && $("optim-proc-desc") && val.desc) $("optim-proc-desc").textContent = val.desc;
+  });
+}
+
 function activateWorkspace(deptId, deptType, deptName) {
   const resolvedType = _resolveDeptType(deptType, deptName);
   _activeWorkspaceDeptType = resolvedType;
@@ -5162,6 +5377,9 @@ function activateWorkspace(deptId, deptType, deptName) {
   // Update prompt chips for this dept_type
   _updateAgentChips(resolvedType);
 
+  // Adapt optimization tab labels to this dept type
+  _applyOptimDeptLabels(resolvedType);
+
   // Highlight active chip in workspace bar
   document.querySelectorAll(".ws-chip").forEach(el => {
     el.classList.toggle("ws-chip-active", el.dataset.deptId === String(deptId));
@@ -5174,6 +5392,8 @@ function deactivateWorkspace() {
   if (banner) banner.classList.add("hidden");
   // Reset chips to default
   _updateAgentChips(null);
+  // Reset optimization labels to default
+  _applyOptimDeptLabels(null);
   // Reload admin's personal dashboard (Direction Générale)
   loadDeptDashboard();
   // Remove active highlight
@@ -5317,6 +5537,7 @@ async function loadDeptDashboard(deptId = null) {
     if (d.dept_type && !_activeWorkspaceDeptType) {
       state.deptType = d.dept_type;
       _updateAgentChips(d.dept_type);
+      _applyOptimDeptLabels(d.dept_type);
     }
     _updateWorkspaceBar();
 
