@@ -4740,20 +4740,48 @@ async function installWorkspace(templateId) {
 // ── Workspace activation ──────────────────────────────────────────────────────
 let _activeWorkspaceDeptType = null;
 
+// Résolution dept_type depuis le nom si le type DB ne correspond à aucun chips connu
+const _NAME_TO_DEPT_TYPE = {
+  finance: "finance", comptabilité: "comptabilite", comptabilite: "comptabilite",
+  "ressources humaines": "hr", rh: "hr", "human resources": "hr",
+  informatique: "it", "technologies de l'information": "it", it: "it",
+  juridique: "legal", legal: "legal", droit: "legal",
+  opérations: "operations", operations: "operations",
+  marketing: "marketing", ventes: "sales", commerciaux: "sales", sales: "sales",
+  direction: "direction", exécutif: "direction", "direction générale": "direction",
+  approvisionnement: "approvisionnement", achats: "approvisionnement", procurement: "approvisionnement",
+  fabrication: "manufacturing", production: "manufacturing", manufacturing: "manufacturing",
+  communication: "communication", "relations publiques": "communication",
+  support: "support", "service client": "support",
+  "r&d": "rd", recherche: "rd", développement: "rd",
+  "assurance qualité": "qualite", qualité: "qualite", qualite: "qualite",
+  digitalisation: "digitalisation", "transformation numérique": "digitalisation",
+  logistique: "logistique", entrepôt: "logistique",
+  audit: "audit", forensique: "audit",
+  conformité: "compliance", compliance: "compliance",
+};
+
+function _resolveDeptType(deptType, deptName) {
+  if (_DEPT_CHIPS[deptType]) return deptType;
+  const key = (deptName || "").toLowerCase().trim();
+  return _NAME_TO_DEPT_TYPE[key] || _NAME_TO_DEPT_TYPE[key.split(" ")[0]] || deptType;
+}
+
 function activateWorkspace(deptId, deptType, deptName) {
-  _activeWorkspaceDeptType = deptType;
+  const resolvedType = _resolveDeptType(deptType, deptName);
+  _activeWorkspaceDeptType = resolvedType;
   switchTab("agent");
 
   // Find template for this dept_type to get icon + connectors
-  const tpl = WORKSPACE_TEMPLATES.find(t => t.dept_type === deptType);
+  const tpl = WORKSPACE_TEMPLATES.find(t => t.dept_type === resolvedType);
   const cfg = {
-    finance:           { icon: "💰" }, hr:                { icon: "👥" },
-    it:                { icon: "💻" }, legal:             { icon: "⚖️" },
-    operations:        { icon: "⚙️" }, marketing:         { icon: "📣" },
-    approvisionnement: { icon: "🛒" }, direction:         { icon: "🏛️" },
-    manufacturing:     { icon: "🏭" }, general:           { icon: "📊" },
+    finance: "💰", comptabilite: "🧾", hr: "👥", it: "💻", legal: "⚖️",
+    operations: "⚙️", marketing: "📣", sales: "💼", approvisionnement: "🛒",
+    direction: "🏛️", manufacturing: "🏭", communication: "📢", support: "🎧",
+    rd: "🔬", qualite: "✅", digitalisation: "⚡", logistique: "🚚",
+    audit: "🔍", compliance: "🛡️",
   };
-  const icon = tpl?.icon || cfg[deptType]?.icon || "📊";
+  const icon = tpl?.icon || cfg[resolvedType] || "📊";
 
   // Show banner
   const banner = $("ws-context-banner");
@@ -4772,7 +4800,7 @@ function activateWorkspace(deptId, deptType, deptName) {
   }
 
   // Update prompt chips for this dept_type
-  _updateAgentChips(deptType);
+  _updateAgentChips(resolvedType);
 
   // Highlight active chip in workspace bar
   document.querySelectorAll(".ws-chip").forEach(el => {
