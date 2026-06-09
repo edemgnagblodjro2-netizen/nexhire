@@ -5448,43 +5448,39 @@ async function _updateWorkspaceBar() {
     archives_medicales:{ icon: "📁", color: "#92400e", label: { fr: "Archives médicales",          en: "Medical Records" } },
   };
 
-  if (isAdmin) {
-    // Admin: load all departments and show chips
-    try {
-      const depts = await apiCall("/api/departments");
-      if (!depts || !depts.length) { bar.classList.add("hidden"); return; }
+  // Admin → tous les depts de l'org  |  Membre → uniquement ses depts (filtre backend)
+  try {
+    const depts = await apiCall("/api/departments");
+    if (!depts || !depts.length) { bar.classList.add("hidden"); return; }
 
-      if (dot)   { dot.style.background = "#818CF8"; }
-      if (label) { label.textContent = lang === "en" ? "All Workspaces" : "Tous les Workspaces"; }
-
-      if (chips) {
-        // Déduplication par nom (insensible à la casse)
-        const seen = new Set();
-        const unique = depts.filter(d => {
-          const k = (d.name || "").toLowerCase();
-          if (seen.has(k)) return false;
-          seen.add(k); return true;
-        });
-        chips.innerHTML = unique.map(d => {
-          const cfg = _typeConfig[d.dept_type] || _typeConfig.general;
-          return `<span class="ws-chip" style="background:${cfg.color}" title="${esc(d.name)}"
-                        data-dept-id="${d.id}"
-                        onclick="activateWorkspace('${d.id}','${d.dept_type}','${esc(d.name)}')">${cfg.icon} ${esc(d.name)}</span>`;
-        }).join("");
+    if (dot) dot.style.background = isAdmin ? "#818CF8" : (_typeConfig[depts[0]?.dept_type]?.color || "#818CF8");
+    if (label) {
+      if (isAdmin) {
+        label.textContent = lang === "en" ? "All Workspaces" : "Tous les Workspaces";
+      } else {
+        label.textContent = lang === "en" ? (depts.length === 1 ? "My Workspace" : "My Workspaces")
+                                          : (depts.length === 1 ? "Mon Workspace" : "Mes Workspaces");
       }
-
-      bar.classList.remove("hidden");
-    } catch (_) {
-      bar.classList.add("hidden");
     }
-  } else if (state.deptType) {
-    // Regular user: show their workspace
-    const cfg = _typeConfig[state.deptType] || _typeConfig.general;
-    if (dot)   { dot.style.background = cfg.color; }
-    if (label) { label.textContent = `${cfg.icon} Workspace ${cfg.label[lang] || cfg.label.fr}`; }
-    if (chips) { chips.innerHTML = ""; }
+
+    if (chips) {
+      // Déduplication par nom (insensible à la casse)
+      const seen = new Set();
+      const unique = depts.filter(d => {
+        const k = (d.name || "").toLowerCase();
+        if (seen.has(k)) return false;
+        seen.add(k); return true;
+      });
+      chips.innerHTML = unique.map(d => {
+        const cfg = _typeConfig[d.dept_type] || _typeConfig.general;
+        return `<span class="ws-chip" style="background:${cfg.color}" title="${esc(d.name)}"
+                      data-dept-id="${d.id}"
+                      onclick="activateWorkspace('${d.id}','${d.dept_type}','${esc(d.name)}')">${cfg.icon} ${esc(d.name)}</span>`;
+      }).join("");
+    }
+
     bar.classList.remove("hidden");
-  } else {
+  } catch (_) {
     bar.classList.add("hidden");
   }
 }
