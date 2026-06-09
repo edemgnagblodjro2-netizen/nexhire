@@ -1180,6 +1180,12 @@ $("signup-form").addEventListener("submit", async e => {
   const suc = $("signup-success");
   btn.disabled = true; btn.textContent = "Création…";
   err.classList.add("hidden"); suc.classList.add("hidden");
+  if (!$("signup-cgu")?.checked) {
+    err.textContent = "Veuillez accepter les Conditions d'utilisation et la Politique de confidentialité.";
+    err.classList.remove("hidden");
+    btn.disabled = false; btn.textContent = "Créer mon compte gratuitement";
+    return;
+  }
   const fullName = `${$("signup-fname").value.trim()} ${$("signup-lname").value.trim()}`.trim();
   try {
     const signupBody = {

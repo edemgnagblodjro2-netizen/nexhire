@@ -872,6 +872,10 @@
           <span data-i18n="auth.password.new">Mot de passe (min. 8 caractères)</span>
           <input id="signup-password" type="password" placeholder="••••••••" required minlength="8" autocomplete="new-password" />
         </label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:#374151;margin-bottom:8px;cursor:pointer">
+          <input type="checkbox" id="signup-cgu" style="margin-top:3px;flex-shrink:0;accent-color:#818CF8" />
+          <span>J'accepte les <a href="/legal/tos" target="_blank" style="color:#818CF8">Conditions d'utilisation</a> et la <a href="/legal/privacy" target="_blank" style="color:#818CF8">Politique de confidentialité</a> de NexHire.</span>
+        </label>
         <button type="submit" class="auth-submit" id="signup-btn" data-i18n="auth.signup.btn">Créer mon compte gratuitement</button>
         <p id="signup-error"   class="form-error hidden"></p>
         <p id="signup-success" class="form-success hidden"></p>
@@ -2433,6 +2437,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="/static/app.js?v=20260609f"></script>
+<script src="/static/app.js?v=20260609g"></script>
 </body>
 </html>
