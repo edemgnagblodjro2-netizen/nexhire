@@ -31,6 +31,7 @@ class AgentQuery(BaseModel):
     question: str = Field(..., min_length=1, max_length=2000)
     assistant_mode: str = Field("enterprise", pattern="^(enterprise|municipal|recruiting)$")
     language: str = Field("fr", pattern="^(fr|en)$")
+    dept_type: str | None = None   # workspace actif côté frontend — prioritaire sur le dept DB
 
 
 class AgentQueryResponse(BaseModel):
@@ -144,7 +145,8 @@ def agent_query(
     check_and_consume_query(user.organization_id, user.subscription_status)
 
     connectors = _connected_connectors_for_user(user)
-    dept_type  = _get_user_dept_type(user.id)
+    # Workspace actif (envoyé par le frontend) prend la priorité sur le département DB de l'utilisateur
+    dept_type = payload.dept_type or _get_user_dept_type(user.id)
 
     try:
         result: AgentResponse = run_agent(

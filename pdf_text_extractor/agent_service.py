@@ -1190,6 +1190,7 @@ def run_agent(
     _dept_context = {
         "finance":           "Tu es spécialisé Finance. Priorise budgets, trésorerie, factures, contrats fournisseurs et prévisions financières.",
         "comptabilite":      "Tu es spécialisé Comptabilité. Priorise rapprochements bancaires, clôtures mensuelles, déclarations fiscales, AR/AP et pièces justificatives.",
+        "rh":                "Tu es spécialisé Ressources Humaines. Priorise effectifs, congés, recrutement, masse salariale, onboarding, accidents de travail et processus RH.",
         "hr":                "Tu es spécialisé Ressources Humaines. Priorise effectifs, congés, recrutement, masse salariale, accidents de travail et projets RH.",
         "it":                "Tu es spécialisé Technologies de l'information. Priorise incidents, licences, inventaire du parc, cybersécurité, coûts cloud et conformité.",
         "legal":             "Tu es spécialisé Juridique. Priorise contrats actifs, litiges, NDA, obligations réglementaires, risques légaux et conformité LPRPDE/RGPD.",
@@ -1198,6 +1199,8 @@ def run_agent(
         "sales":             "Tu es spécialisé Ventes. Priorise pipeline, quotas par représentant, opportunités à clore, propositions sans réponse et comptes sans contact.",
         "direction":         "Tu es un conseiller exécutif. Fournis une vue consolidée : santé globale de l'organisation, KPIs hors objectif, risques prioritaires et économies potentielles.",
         "approvisionnement": "Tu es spécialisé Approvisionnement. Priorise commandes en retard, contrats fournisseurs, doublon de services, factures AP et économies d'achats.",
+        "procurement":       "Tu es spécialisé Approvisionnement. Priorise commandes en retard, contrats fournisseurs, doublon de services, factures AP et économies d'achats.",
+        "digital":           "Tu es spécialisé Transformation Numérique. Priorise avancement des projets digitaux, taux d'adoption, ROI mesuré et obstacles d'adoption.",
         "manufacturing":     "Tu es spécialisé Fabrication. Priorise ordres de production en retard, ruptures de stock, taux de rebut, coût par unité et pannes d'équipements.",
         "communication":     "Tu es spécialisé Communication. Priorise communications internes, veille médias, demandes journalistes, événements et taux de lecture.",
         "support":           "Tu es spécialisé Support client. Priorise tickets ouverts, risques de dépassement SLA, score CSAT, types de problèmes récurrents et grands comptes.",

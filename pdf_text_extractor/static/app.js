@@ -1308,6 +1308,7 @@ $("agent-form").addEventListener("submit", async e => {
       question:       q,
       assistant_mode: $("agent-mode").value,
       language:       $("agent-lang").value,
+      dept_type:      _activeWorkspaceDeptType || state.deptType || undefined,
     });
     renderAgentResult(data);
   } catch (ex) {
@@ -5327,14 +5328,17 @@ function _applyOptimDeptLabels(deptType) {
   const tabs = { licenses: cfg.licenses, duplicates: cfg.duplicates, contracts: cfg.contracts, processes: cfg.processes };
 
   Object.entries(tabs).forEach(([key, val]) => {
-    // Bouton subtab
     const btn = document.querySelector(`[data-optim="${key}"]`);
     if (btn) btn.textContent = val.btn;
-    // Description du panneau
     if (key === "licenses"   && $("optim-lic-desc")  && val.desc) $("optim-lic-desc").textContent  = val.desc;
     if (key === "duplicates" && $("optim-dup-desc")  && val.desc) $("optim-dup-desc").textContent  = val.desc;
     if (key === "processes"  && $("optim-proc-desc") && val.desc) $("optim-proc-desc").textContent = val.desc;
   });
+
+  // Placeholder du champ question Plan IA
+  const hint = _OPTIM_QUESTION_HINTS[deptType];
+  const aiQ  = $("ai-question");
+  if (aiQ && hint) aiQ.placeholder = hint;
 }
 
 function activateWorkspace(deptId, deptType, deptName) {
@@ -5580,22 +5584,61 @@ async function loadDeptDashboard(deptId = null) {
 }
 
 // ── Plan IA ───────────────────────────────────────────────────────────────────
+// Labels de question contextuelle par dept_type (placeholder + message chargement)
+const _OPTIM_QUESTION_HINTS = {
+  rh:             "Comment optimiser nos processus RH et réduire les délais de recrutement ?",
+  hr:             "Comment optimiser nos processus RH et réduire les délais de recrutement ?",
+  finance:        "Comment identifier les dépenses non justifiées et améliorer le suivi budgétaire ?",
+  comptabilite:   "Comment réduire les doublons de paiements et accélérer les clôtures mensuelles ?",
+  it:             "Comment réduire nos dépenses IT de 10 % sans affecter les opérations ?",
+  digital:        "Comment accélérer l'adoption des outils digitaux et maximiser le ROI ?",
+  digitalisation: "Comment mesurer et améliorer le ROI de notre transformation digitale ?",
+  procurement:    "Comment optimiser nos achats et réduire les coûts fournisseurs ?",
+  marketing:      "Comment maximiser le ROI de nos campagnes et réduire les outils inutilisés ?",
+  communication:  "Comment rationaliser nos outils de communication et réduire les coûts médias ?",
+  sales:          "Comment accélérer le cycle de vente et réduire les outils CRM sous-utilisés ?",
+  legal:          "Comment optimiser les processus juridiques et réduire les coûts de conformité ?",
+  operations:     "Comment éliminer les goulots d'étranglement opérationnels et réduire les délais ?",
+  logistique:     "Comment optimiser les flux logistiques et réduire les coûts de transport ?",
+  rd:             "Comment accélérer l'innovation et réduire le budget R&D gaspillé ?",
+  support:        "Comment réduire le volume de tickets et améliorer le CSAT ?",
+  qualite:        "Comment réduire les non-conformités et accélérer les audits qualité ?",
+  audit:          "Comment optimiser les audits internes et identifier les anomalies ?",
+  compliance:     "Comment automatiser la conformité réglementaire et réduire les risques ?",
+  manufacturing:  "Comment améliorer le taux de rendement synthétique et réduire les arrêts ?",
+  direction:      "Comment obtenir une vue consolidée des économies potentielles de l'organisation ?",
+  pharmacie:      "Comment réduire les stocks excessifs et éviter les médicaments périmés ?",
+  laboratoires:   "Comment réduire les délais d'analyse et optimiser les stocks de réactifs ?",
+  imagerie:       "Comment maximiser l'utilisation des équipements d'imagerie médicale ?",
+  soins_infirmiers: "Comment optimiser les plannings infirmiers et réduire les heures supplémentaires ?",
+  admin_hospitalier: "Comment optimiser le budget hospitalier et le taux d'occupation des lits ?",
+  direction_medicale: "Comment améliorer les indicateurs qualité des soins et réduire les readmissions ?",
+  service_patients: "Comment améliorer la satisfaction patient et réduire la durée de séjour ?",
+  appro_medical:  "Comment éliminer les ruptures de stock médical et réduire les coûts d'achat ?",
+  archives_medicales: "Comment accélérer la numérisation des dossiers et garantir la conformité LPRPDE ?",
+};
+
 async function runAIAnalysis() {
   const btn = $("optim-analyze-btn");
-  const question = $("ai-question")?.value || "Comment réduire nos dépenses IT de 10% sans affecter les opérations ?";
+  const activeDept = _activeWorkspaceDeptType || state.deptType;
+  const defaultQ   = _OPTIM_QUESTION_HINTS[activeDept] || "Comment optimiser les opérations et réduire les coûts ?";
+  const question   = $("ai-question")?.value?.trim() || defaultQ;
   const resultWrap = $("ai-plan-result");
 
   // Switch to AI plan tab
   switchOptimTab("aiplan");
 
   if (btn) { btn.disabled = true; btn.textContent = "Analyse en cours…"; }
-  if (resultWrap) resultWrap.innerHTML = `<div style="padding:40px;text-align:center"><div class="spinner" style="margin:auto"></div><p class="muted" style="margin-top:12px">Analyse de vos données IT…</p></div>`;
+  const deptLabel = activeDept ? (document.querySelector('[data-optim="processes"]')?.textContent || activeDept) : "l'organisation";
+  if (resultWrap) resultWrap.innerHTML = `<div style="padding:40px;text-align:center"><div class="spinner" style="margin:auto"></div><p class="muted" style="margin-top:12px">Analyse des données — ${esc(deptLabel)}…</p></div>`;
 
   try {
     const lang    = _lang || "fr";
     const orgType = state.orgType || "entreprise";
     const enc     = encodeURIComponent(question);
-    const data    = await apiCall(`/api/optimization/analyze?question=${enc}&language=${lang}&org_type=${orgType}`, "POST");
+    const deptParam = activeDept ? `&dept_type=${encodeURIComponent(activeDept)}` : "";
+    const deptIdParam = _activeDeptId ? `&dept_id=${encodeURIComponent(_activeDeptId)}` : "";
+    const data    = await apiCall(`/api/optimization/analyze?question=${enc}&language=${lang}&org_type=${orgType}${deptParam}${deptIdParam}`, "POST");
     const a    = data.analysis || {};
     const computedTotal = (a.steps||[]).reduce((sum, s) => sum + (s.savings||0), 0);
 

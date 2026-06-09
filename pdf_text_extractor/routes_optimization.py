@@ -73,15 +73,17 @@ def get_efficiency_score(user: CurrentUser = Depends(require_min_role("user"))):
 
 @router.post("/analyze")
 async def ai_analyze(
-    question: str = Query(default="Comment réduire nos dépenses IT de 10% sans affecter les opérations ?"),
+    question: str = Query(default="Comment optimiser les opérations et réduire les coûts de votre organisation ?"),
     language: str = Query(default="fr", pattern="^(fr|en)$"),
     org_type: str = Query(default="entreprise"),
+    dept_type: str | None = Query(default=None),
+    dept_id: str | None = Query(default=None),
     user: CurrentUser = Depends(require_min_role("user")),
 ):
-    """Analyse IA : génère un plan d'économies personnalisé via OpenAI."""
+    """Analyse IA : génère un plan d'optimisation contextualisé par département."""
     # Récupère le org_type depuis la DB si non fourni explicitement
-    effective_type = org_type
-    if effective_type == "entreprise":
+    effective_org = org_type
+    if effective_org == "entreprise":
         try:
             with get_db() as cur:
                 cur.execute(
@@ -89,10 +91,10 @@ async def ai_analyze(
                     (user.organization_id,),
                 )
                 r = row(cur)
-            effective_type = (r.get("org_type") or "entreprise") if r else "entreprise"
+            effective_org = (r.get("org_type") or "entreprise") if r else "entreprise"
         except Exception:
             pass
-    return await _ai_cost_analysis(user.organization_id, question, language, effective_type)
+    return await _ai_cost_analysis(user.organization_id, question, language, effective_org, dept_type=dept_type, dept_id=dept_id)
 
 
 # ── Analysis helpers ──────────────────────────────────────────────────────────
@@ -372,7 +374,7 @@ SECTOR_OPPORTUNITIES: dict[str, list[dict]] = {
 }
 
 
-async def _ai_cost_analysis(org_id: str, question: str, language: str, org_type: str = "entreprise") -> dict:
+async def _ai_cost_analysis(org_id: str, question: str, language: str, org_type: str = "entreprise", *, dept_type: str | None = None, dept_id: str | None = None) -> dict:
     """Plan d'économies via OpenAI — fallback règles si indisponible."""
     try:
         from openai import OpenAI
@@ -399,16 +401,43 @@ async def _ai_cost_analysis(org_id: str, question: str, language: str, org_type:
             )
             budget = rows(cur)
 
-        context = _build_context(apps, lics, budget, org_type)
+        context = _build_context(apps, lics, budget, org_type, dept_type=dept_type)
         lang_str = "French" if language == "fr" else "English"
         sector_labels = {"entreprise": "private enterprise", "hopital": "hospital/healthcare", "municipalite": "municipality", "universite": "university"}
         sector_label = sector_labels.get(org_type, "organization")
+
+        # Domaine d'expertise selon le type de département actif
+        _dept_domain = {
+            "rh": "HR and workforce optimization", "hr": "HR and workforce optimization",
+            "finance": "financial optimization and cost control",
+            "comptabilite": "accounting and financial processes",
+            "it": "IT cost optimization", "digital": "digital transformation optimization",
+            "digitalisation": "digital transformation optimization",
+            "procurement": "procurement and supply chain optimization",
+            "marketing": "marketing spend optimization", "communication": "communications optimization",
+            "sales": "sales process optimization", "legal": "legal operations optimization",
+            "operations": "operations efficiency", "logistique": "logistics optimization",
+            "rd": "R&D efficiency and innovation", "support": "customer support optimization",
+            "qualite": "quality management optimization", "audit": "audit and compliance optimization",
+            "compliance": "regulatory compliance optimization", "manufacturing": "manufacturing efficiency",
+            "direction": "executive-level strategic optimization",
+            "admin_hospitalier": "hospital administration optimization",
+            "pharmacie": "hospital pharmacy optimization",
+            "laboratoires": "medical laboratory optimization",
+            "imagerie": "medical imaging department optimization",
+            "soins_infirmiers": "nursing care optimization",
+            "direction_medicale": "medical direction optimization",
+            "service_patients": "patient services optimization",
+            "appro_medical": "medical supply chain optimization",
+            "archives_medicales": "medical records management optimization",
+        }
+        domain = _dept_domain.get(dept_type or "", f"cost optimization in {sector_label}")
 
         resp = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": (
-                    f"You are an IT cost optimization expert specializing in {sector_label} organizations in Canada. "
+                    f"You are an expert in {domain} specializing in {sector_label} organizations in Canada. "
                     f"Respond strictly in {lang_str}. "
                     "Return a valid JSON object with this exact structure:\n"
                     '{"summary":"...","total_potential_savings":0,"confidence":0,'
@@ -436,13 +465,14 @@ async def _ai_cost_analysis(org_id: str, question: str, language: str, org_type:
         }
 
 
-def _build_context(apps: list, lics: list, budget: list, org_type: str = "entreprise") -> str:
+def _build_context(apps: list, lics: list, budget: list, org_type: str = "entreprise", *, dept_type: str | None = None) -> str:
     total_monthly   = sum(float(a.get("monthly_cost") or 0) for a in apps)
     unused_apps     = [a for a in apps if a.get("status") == "unused"]
     annual_budget   = sum(float(b.get("allocated") or 0) for b in budget if b.get("year") == date.today().year)
     sector_labels = {"entreprise": "private enterprise", "hopital": "hospital", "municipalite": "municipality", "universite": "university"}
     lines = [
         f"Organization type: {sector_labels.get(org_type, org_type)}",
+        *([ f"Active department context: {dept_type}" ] if dept_type else []),
         f"Monthly IT spend: ${total_monthly:,.0f}",
         f"Annual IT budget: ${annual_budget:,.0f}",
         f"Applications: {len(apps)} total, {len(unused_apps)} unused",
