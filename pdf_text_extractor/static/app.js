@@ -2950,6 +2950,8 @@ async function toggleMonthlyReport(enabled) {
 async function _loadSSOConfig() {
   const form = $("sso-config-form");
   if (!form) return;
+  const role = state.user?.role;
+  if (role !== "admin" && role !== "owner") return;
   form.classList.remove("hidden");
 
   // Affiche le slug de l'organisation
@@ -3021,7 +3023,7 @@ function loginWithSSO() {
   }
   if (errEl) errEl.classList.add("hidden");
   // Redirige vers le flux SSO côté backend
-  window.location.href = `/api/sso/authorize/${encodeURIComponent(slug)}`;
+  window.location.href = `/api/sso/authorize?org_slug=${encodeURIComponent(slug)}`;
 }
 
 // ── Gestion des retours SSO depuis le backend ────────────────────────────────

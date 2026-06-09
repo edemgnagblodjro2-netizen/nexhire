@@ -315,7 +315,6 @@ async def sso_callback(request: Request, code: str = "", state: str = "", error:
             "email": email,
             "options": {"redirect_to": APP_URL},
         })
-        token_hash = getattr(link_resp, "properties", {})
         if hasattr(link_resp, "properties") and link_resp.properties:
             magic_url = f"{APP_URL}?sso_magic_link={urllib.parse.quote(str(link_resp.properties.action_link))}"
             return RedirectResponse(url=magic_url, status_code=302)
