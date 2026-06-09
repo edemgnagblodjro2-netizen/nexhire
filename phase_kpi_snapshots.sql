@@ -20,6 +20,10 @@ CREATE INDEX IF NOT EXISTS idx_kpi_snap_org  ON kpi_snapshots (org_id,  snapshot
 -- RLS : un utilisateur ne voit que les snapshots de son org
 ALTER TABLE kpi_snapshots ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS kpi_snap_select ON kpi_snapshots;
+DROP POLICY IF EXISTS kpi_snap_insert ON kpi_snapshots;
+DROP POLICY IF EXISTS kpi_snap_update ON kpi_snapshots;
+
 CREATE POLICY kpi_snap_select ON kpi_snapshots FOR SELECT
   USING (org_id IN (SELECT organization_id FROM users WHERE id = auth.uid()));
 

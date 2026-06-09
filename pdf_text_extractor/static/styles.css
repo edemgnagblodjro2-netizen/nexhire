@@ -3251,6 +3251,25 @@ tbody tr:hover { background: var(--blue-pale); transition: background .12s; }
 .eid-alert-item:hover { background: var(--bg-light); }
 .eid-alert-item:last-child { border-bottom: none; }
 
+/* Accordion bottom cards */
+.eid-acc-header {
+  display: flex; justify-content: space-between; align-items: center;
+  cursor: pointer; padding-bottom: 8px; user-select: none;
+  border-bottom: 1px solid var(--border); margin-bottom: 8px;
+}
+.eid-acc-header:hover .eid-card-title { color: var(--primary); }
+.eid-acc-chevron {
+  font-size: .85rem; color: var(--slate);
+  transition: transform .22s; display: inline-block;
+}
+.eid-acc-rotated { transform: rotate(-90deg); }
+.eid-acc-body {
+  overflow: hidden; max-height: 600px;
+  transition: max-height .28s ease, opacity .22s;
+  opacity: 1;
+}
+.eid-acc-closed { max-height: 0 !important; opacity: 0; }
+
 @media (max-width: 900px) {
   .eid-kpi-row    { grid-template-columns: repeat(2, 1fr); }
   .eid-charts-row { grid-template-columns: 1fr; }

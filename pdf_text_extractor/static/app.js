@@ -6153,16 +6153,32 @@ async function loadDirectionAggregate() {
     });
   }
 
+  // ── Helper accordion ──────────────────────────────────────────────────────
+  function _eidCard(id, title, html, open = true) {
+    const el = $(id);
+    if (!el) return;
+    const bid = id + "-b";
+    el.innerHTML =
+      '<div class="eid-acc-header" onclick="_eidToggle(\'' + bid + '\',this)">'
+      + '<span class="eid-card-title">' + title + '</span>'
+      + '<span class="eid-acc-chevron' + (open ? '' : ' eid-acc-rotated') + '">▾</span>'
+      + '</div>'
+      + '<div id="' + bid + '" class="eid-acc-body' + (open ? '' : ' eid-acc-closed') + '">'
+      + html
+      + '</div>';
+  }
+
   // ── Top opportunités ───────────────────────────────────────────────────────
   const sorted = [..._aggData].map((d, i) => ({ ...d, score: allScores[i] ?? 0 })).sort((a, b) => a.score - b.score);
-  $("eid-opportunities").innerHTML = `<div class="eid-card-title">Top opportunités</div>` +
-    sorted.slice(0, 4).map((d, i) => `
-      <div class="eid-list-row">
-        <span class="eid-list-rank">${i + 1}</span>
-        <span class="eid-list-label">${esc(d.dept_name || d.dept_type)}</span>
-        <span class="eid-list-val" style="color:${_scoreColor(d.score)}">${d.score}%</span>
-      </div>
-    `).join("") || `<p class="muted" style="font-size:.82rem">Aucune donnée</p>`;
+  _eidCard("eid-opportunities", "Top opportunités",
+    sorted.slice(0, 4).map((d, i) =>
+      '<div class="eid-list-row" style="cursor:pointer" onclick="activateWorkspace(\'' + d.dept_id + '\',\'' + d.dept_type + '\',\'' + esc(d.dept_name || '') + '\')">'
+      + '<span class="eid-list-rank">' + (i + 1) + '</span>'
+      + '<span class="eid-list-label">' + esc(d.dept_name || d.dept_type) + '</span>'
+      + '<span class="eid-list-val" style="color:' + _scoreColor(d.score) + '">' + d.score + '%</span>'
+      + '</div>'
+    ).join("") || '<p class="muted" style="font-size:.82rem">Aucune donnée</p>'
+  );
 
   // ── Connecteurs ────────────────────────────────────────────────────────────
   const _CONN_LABELS = {
@@ -6182,7 +6198,7 @@ async function loadDirectionAggregate() {
     seenTypes.add(c.connector_type); return true;
   });
   const activeConns = uniqueConns.filter(c => c.status === "connected").length;
-  $("eid-connectors").innerHTML = `<div class="eid-card-title">Systèmes connectés</div>` +
+  const _connHtml =
     (uniqueConns.length
       ? uniqueConns.slice(0, 5).map(c => {
           const ok = c.status === "connected";
@@ -6200,21 +6216,25 @@ async function loadDirectionAggregate() {
       <span style="color:#60a5fa;font-weight:700">${activeConns}/${uniqueConns.length}</span>
     </div>`;
 
+  _eidCard("eid-connectors", "Systèmes connectés", _connHtml, true);
+
   // ── Santé organisationnelle ────────────────────────────────────────────────
   const healthSorted = [..._aggData].map((d, i) => ({ ...d, score: allScores[i] }))
     .filter(d => d.score != null && d.score < 100)
     .sort((a, b) => a.score - b.score);
   const healthToShow = healthSorted.slice(0, 10);
   const hiddenCount  = healthSorted.length - healthToShow.length;
-  $("eid-dept-health").innerHTML = `<div class="eid-card-title">À surveiller</div>` +
+  const _healthHtml  =
     (healthToShow.length
-      ? healthToShow.map(d => `
-          <div class="eid-list-row" style="cursor:pointer" onclick="activateWorkspace('${d.dept_id}','${d.dept_type}','${esc(d.dept_name || '')}')">
-            <span class="eid-list-label">${d.icon || "📊"} ${esc(d.dept_name || d.dept_type)}</span>
-            <span style="font-weight:700;color:${_scoreColor(d.score)}">${d.score}%</span>
-          </div>`).join("")
-        + (hiddenCount > 0 ? `<div class="eid-list-row muted" style="font-size:.76rem;justify-content:center">${hiddenCount} autres — tous à 100 %</div>` : "")
-      : `<div class="eid-list-row" style="color:#4ade80">✅ Tous les départements sont à 100 %</div>`);
+      ? healthToShow.map(d =>
+          '<div class="eid-list-row" style="cursor:pointer" onclick="activateWorkspace(\'' + d.dept_id + '\',\'' + d.dept_type + '\',\'' + esc(d.dept_name || '') + '\')">'
+          + '<span class="eid-list-label">' + (d.icon || "📊") + " " + esc(d.dept_name || d.dept_type) + '</span>'
+          + '<span style="font-weight:700;color:' + _scoreColor(d.score) + '">' + d.score + '%</span>'
+          + '</div>'
+        ).join("")
+        + (hiddenCount > 0 ? '<div class="eid-list-row muted" style="font-size:.76rem;justify-content:center">' + hiddenCount + ' autres — tous à 100 %</div>' : "")
+      : '<div class="eid-list-row" style="color:#4ade80">✅ Tous les départements sont à 100 %</div>');
+  _eidCard("eid-dept-health", "À surveiller", _healthHtml, true);
 
   // ── Alertes & risques ──────────────────────────────────────────────────────
   const critDepts = _aggData.filter((d, i) => (allScores[i] ?? 100) < 50);
@@ -6222,23 +6242,32 @@ async function loadDirectionAggregate() {
 
   function _alertRow(d, badgeClass, badgeLabel) {
     const score = _deptHealthScore(d.kpis);
-    const kpiPreview = (d.kpis || []).slice(0, 2).map(k =>
-      `<span style="font-size:.72rem;color:${k.color || "#64748b"}">${esc(k.label)}: ${esc(k.value)}</span>`
+    const kpiParts = (d.kpis || []).slice(0, 2).map(k =>
+      '<span style="font-size:.72rem;color:' + (k.color || "#64748b") + '">' + esc(k.label) + ": " + esc(k.value) + '</span>'
     ).join(" · ");
-    return `<div class="eid-alert-item" onclick="activateWorkspace('${d.dept_id}','${d.dept_type}','${esc(d.dept_name || '')}')">
-      <div class="eid-list-row" style="margin-bottom:2px">
-        <span class="eid-alert-badge ${badgeClass}">${badgeLabel}</span>
-        <span class="eid-list-label" style="font-weight:600">${esc(d.dept_name || d.dept_type)}</span>
-        <span style="font-weight:700;color:${_scoreColor(score)};font-size:.8rem">${score != null ? score + "%" : "—"}</span>
-      </div>
-      ${kpiPreview ? '<div style="padding:0 0 6px 4px">' + kpiPreview + '</div>' : ""}
-    </div>`;
+    return '<div class="eid-alert-item" onclick="activateWorkspace(\'' + d.dept_id + '\',\'' + d.dept_type + '\',\'' + esc(d.dept_name || '') + '\')">'
+      + '<div class="eid-list-row" style="margin-bottom:2px">'
+      + '<span class="eid-alert-badge ' + badgeClass + '">' + badgeLabel + '</span>'
+      + '<span class="eid-list-label" style="font-weight:600">' + esc(d.dept_name || d.dept_type) + '</span>'
+      + '<span style="font-weight:700;color:' + _scoreColor(score) + ';font-size:.8rem">' + (score != null ? score + "%" : "—") + '</span>'
+      + '</div>'
+      + (kpiParts ? '<div style="padding:0 0 6px 4px">' + kpiParts + '</div>' : "")
+      + '</div>';
   }
 
-  $("eid-alerts").innerHTML = `<div class="eid-card-title">Alertes & Risques</div>` +
+  const _alertsHtml =
     (critDepts.length ? critDepts.map(d => _alertRow(d, "eid-alert-red", "Critique")).join("") : "") +
     (warnDepts.length ? warnDepts.map(d => _alertRow(d, "eid-alert-orange", "Attention")).join("") : "") +
-    (!critDepts.length && !warnDepts.length ? `<div class="eid-list-row" style="color:#4ade80">✅ Aucun risque critique détecté</div>` : "");
+    (!critDepts.length && !warnDepts.length ? '<div class="eid-list-row" style="color:#4ade80">✅ Aucun risque critique détecté</div>' : "");
+  _eidCard("eid-alerts", "Alertes & Risques", _alertsHtml, true);
+}
+
+function _eidToggle(bodyId, headerEl) {
+  const body = $(bodyId);
+  if (!body) return;
+  const chevron = headerEl.querySelector(".eid-acc-chevron");
+  const closed = body.classList.toggle("eid-acc-closed");
+  if (chevron) chevron.classList.toggle("eid-acc-rotated", closed);
 }
 
 // ── KPI Trend Modal ───────────────────────────────────────────────────────────
