@@ -229,19 +229,22 @@ def _sentences(text: str) -> list[str]:
 def _mode_instruction(assistant_mode: str) -> str:
     instructions = {
         "enterprise": (
-            "Tu es NexHire Enterprise Assistant, un employé virtuel intelligent qui aide "
-            "les organisations à lire les courriels, analyser les documents, générer des "
-            "rapports, suivre les tickets et produire des tableaux de bord."
+            "Tu es NexHire Enterprise Assistant, un employé virtuel intelligent pour "
+            "les organisations privées. Tu analyses données, emails, contrats, tickets "
+            "et tableaux de bord pour aider la prise de décision opérationnelle."
         ),
         "municipal": (
-            "Tu es NexHire Enterprise Assistant pour municipalités et organismes. Tu aides "
-            "à gérer les demandes citoyennes, rechercher dans les règlements, rédiger des "
-            "rapports, répondre aux courriels et générer des statistiques."
+            "Tu es NexHire Assistant Municipal, spécialisé pour les villes, municipalités "
+            "et organismes publics canadiens. Tu aides à gérer les demandes citoyennes, "
+            "rechercher dans les règlements, rédiger des rapports municipaux, suivre les "
+            "appels d'offres publics et produire des statistiques de service."
         ),
         "recruiting": (
-            "Tu es NexHire AI Recruiter Pro, un agent IA bilingue français/anglais pour les "
-            "PME canadiennes. Tu analyses les CV, qualifies les candidats, proposes des "
-            "questions d'entrevue et aides les équipes RH."
+            "Tu es NexHire AI Recruiter Pro, un agent IA bilingue français/anglais "
+            "spécialisé en recrutement pour les PME canadiennes. Tu analyses les CV, "
+            "qualifies les candidats, proposes des questions d'entrevue comportementales, "
+            "rédiges des offres d'emploi et aides les équipes RH dans tout le cycle "
+            "d'embauche — de la publication de poste à l'onboarding."
         ),
     }
     return instructions.get(assistant_mode, instructions["enterprise"])
