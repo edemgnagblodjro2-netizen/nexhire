@@ -4733,6 +4733,67 @@ const WORKSPACE_TEMPLATES = [
     desc: { fr: "Dossiers patients, numérisation, conformité LPRPDE, conservation légale et accès.", en: "Patient records, digitization, PIPEDA compliance, legal retention and access." },
     connectors: ["microsoft_365", "servicenow"],
   },
+  // ── Départements généraux sans template précédent ────────────────────────
+  {
+    id: "marketing_comm", icon: "📣", color: "#ec4899", dept_type: "marketing",
+    name: { fr: "Marketing & Communications", en: "Marketing & Communications" },
+    desc: { fr: "Campagnes, leads, budget, ROI, communications internes, relations médias et événements.", en: "Campaigns, leads, budget, ROI, internal communications, media relations and events." },
+    connectors: ["hubspot", "salesforce", "microsoft_365", "slack"],
+  },
+  {
+    id: "sales", icon: "💼", color: "#f59e0b", dept_type: "sales",
+    name: { fr: "Ventes Workspace",          en: "Sales Workspace" },
+    desc: { fr: "Pipeline, quotas, propositions, closing et suivi des comptes clients.", en: "Pipeline, quotas, proposals, closing and client account tracking." },
+    connectors: ["salesforce", "hubspot", "microsoft_365", "slack"],
+  },
+  {
+    id: "support", icon: "🎧", color: "#06b6d4", dept_type: "support",
+    name: { fr: "Support Workspace",         en: "Support Workspace" },
+    desc: { fr: "Tickets, SLA, satisfaction client (CSAT), escalades et grands comptes.", en: "Tickets, SLA, customer satisfaction (CSAT), escalations and key accounts." },
+    connectors: ["zendesk", "servicenow", "microsoft_365", "slack"],
+  },
+  {
+    id: "rd", icon: "🔭", color: "#10b981", dept_type: "rd",
+    name: { fr: "R&D Workspace",             en: "R&D Workspace" },
+    desc: { fr: "Projets de recherche, budgets R&D, jalons, brevets et ressources d'équipe.", en: "Research projects, R&D budgets, milestones, patents and team resources." },
+    connectors: ["jira", "asana", "microsoft_365", "slack"],
+  },
+  {
+    id: "qualite", icon: "✅", color: "#16a34a", dept_type: "qualite",
+    name: { fr: "Qualité Workspace",         en: "Quality Workspace" },
+    desc: { fr: "Non-conformités, audits ISO, taux de défauts, certifications et réclamations clients.", en: "Non-conformances, ISO audits, defect rates, certifications and customer complaints." },
+    connectors: ["servicenow", "microsoft_365", "jira"],
+  },
+  {
+    id: "digitalisation", icon: "⚡", color: "#6366f1", dept_type: "digitalisation",
+    name: { fr: "Digitalisation Workspace",  en: "Digitalization Workspace" },
+    desc: { fr: "Projets de transformation numérique, taux d'adoption, ROI et obstacles d'adoption.", en: "Digital transformation projects, adoption rates, ROI and adoption blockers." },
+    connectors: ["microsoft_365", "jira", "asana", "slack"],
+  },
+  {
+    id: "comptabilite", icon: "🧾", color: "#854d0e", dept_type: "comptabilite",
+    name: { fr: "Comptabilité Workspace",    en: "Accounting Workspace" },
+    desc: { fr: "Rapprochements, clôtures, déclarations fiscales, AR/AP et pièces justificatives.", en: "Reconciliations, close, tax filings, AR/AP and supporting documentation." },
+    connectors: ["quickbooks", "netsuite", "microsoft_365"],
+  },
+  {
+    id: "compliance", icon: "🛡️", color: "#475569", dept_type: "compliance",
+    name: { fr: "Compliance Workspace",      en: "Compliance Workspace" },
+    desc: { fr: "Exigences réglementaires, politiques internes, contrôles, formations et conformité LPRPDE/SOX.", en: "Regulatory requirements, internal policies, controls, training and PIPEDA/SOX compliance." },
+    connectors: ["microsoft_365", "servicenow", "jira"],
+  },
+  {
+    id: "audit", icon: "🔍", color: "#334155", dept_type: "audit",
+    name: { fr: "Audit Workspace",           en: "Audit Workspace" },
+    desc: { fr: "Anomalies système, accès suspects, audits internes, fraudes et preuves numériques.", en: "System anomalies, suspicious access, internal audits, fraud and digital evidence." },
+    connectors: ["microsoft_365", "crowdstrike", "servicenow"],
+  },
+  {
+    id: "logistique", icon: "🚚", color: "#0369a1", dept_type: "logistique",
+    name: { fr: "Logistique Workspace",      en: "Logistics Workspace" },
+    desc: { fr: "Livraisons, niveaux de stock, réceptions, transporteurs et gestion du surstock.", en: "Deliveries, stock levels, receipts, carriers and overstock management." },
+    connectors: ["netsuite", "sap", "microsoft_365"],
+  },
 ];
 
 let _marketplaceBuilt = false;
@@ -4868,7 +4929,7 @@ const _NAME_TO_DEPT_TYPE = {
   opérations: "operations", operations: "operations",
   "gestion de projet": "operations", "opérations & logistique": "operations",
   // Marketing
-  marketing: "marketing", "marketing & communications": "marketing",
+  marketing: "marketing", "marketing & communications": "marketing", communication: "communication",
   // Ventes
   ventes: "sales", commerciaux: "sales", sales: "sales",
   // Direction
