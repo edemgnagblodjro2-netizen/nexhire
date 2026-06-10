@@ -70,6 +70,22 @@ class DocumentStore:
 
         return self.documents.get(document_id)
 
+    def delete_document(self, document_id: str, organization_id: str) -> bool:
+        """Supprime définitivement le texte extrait du document."""
+        if self.supabase is not None:
+            resp = (
+                self.supabase.table("documents")
+                .delete()
+                .eq("id", document_id)
+                .eq("organization_id", organization_id)
+                .execute()
+            )
+            return bool(resp.data)
+        if document_id in self.documents:
+            del self.documents[document_id]
+            return True
+        return False
+
     def update_document_summary(self, document_id: str, summary: str) -> None:
         if self.supabase is not None:
             (

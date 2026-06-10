@@ -9,6 +9,8 @@ load_dotenv(Path(__file__).parent / ".env")
 from typing import Annotated
 
 from fastapi import BackgroundTasks, Body, Depends, FastAPI, File, Form, HTTPException, Request, UploadFile
+from auth import CurrentUser
+from rbac import require_min_role
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -413,6 +415,31 @@ def create_app(
             answer=answer,
             conversation_id=conversation["id"],
         )
+
+    @app.delete("/api/documents/{document_id}", status_code=204)
+    async def delete_document_endpoint(
+        document_id: str,
+        request: Request,
+        background: BackgroundTasks,
+        store: DocumentStore = Depends(get_storage),
+        user: CurrentUser = Depends(require_min_role("user")),
+    ):
+        """Supprime définitivement le texte extrait du document (le binaire n'a jamais été stocké)."""
+        document = _document_or_404(store, document_id)
+        doc_org = str(document.get("organization_id") or "")
+        if doc_org and doc_org != str(user.organization_id):
+            raise HTTPException(status_code=403, detail="Accès refusé.")
+        store.delete_document(document_id, str(user.organization_id))
+        background.add_task(log_audit, AuditEvent(
+            action="document_delete",
+            query=document.get("filename", document_id),
+            organization_id=str(user.organization_id),
+            user_id=str(user.id),
+            resource_ids=[document_id],
+            ip_address=client_ip(request),
+            http_status=204,
+            metadata={"filename": document.get("filename", "")},
+        ))
 
     return app
 

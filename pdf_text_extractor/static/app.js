@@ -2479,11 +2479,29 @@ $("upload-form").addEventListener("submit", async e => {
     $("summary").textContent = data.warning || "Document prêt. Cliquez pour générer un résumé IA.";
     $("summary").classList.toggle("muted", Boolean(data.warning));
     $("chat-log").innerHTML = '<div class="message assistant">Document chargé. Posez votre question en français ou en anglais.</div>';
+    $("doc-delete-btn")?.classList.remove("hidden");
     toggleDoc(false);
   } catch (ex) {
     state.docId = null; st.textContent = ex.message; st.classList.add("error");
   }
 });
+
+async function deleteCurrentDocument() {
+  if (!state.docId) return;
+  if (!confirm("Supprimer définitivement ce document ? Le texte extrait sera effacé de nos serveurs.")) return;
+  try {
+    await apiCall(`/api/documents/${state.docId}`, "DELETE");
+    state.docId = null;
+    $("preview").textContent = "Aucun document téléversé.";
+    $("upload-status").textContent = "Document supprimé.";
+    $("summary").textContent = "Téléversez un PDF pour activer le résumé.";
+    $("summary").classList.add("muted");
+    $("chat-log").innerHTML = '<div class="message assistant">Document supprimé. Téléversez un nouveau PDF.</div>';
+    $("doc-delete-btn")?.classList.add("hidden");
+    $("file-label").textContent = "Choisir un fichier PDF";
+    toggleDoc(true);
+  } catch(e) { alert("Erreur suppression : " + e.message); }
+}
 
 $("summary-button").addEventListener("click", async () => {
   if (!state.docId) return;
