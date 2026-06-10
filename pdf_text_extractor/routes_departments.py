@@ -1001,6 +1001,20 @@ def update_department(
         return row(cur)
 
 
+@router.delete("/reset-all", status_code=200)
+def reset_all_departments(
+    user: CurrentUser = Depends(require_min_role("owner")),
+):
+    """Supprime tous les départements de l'organisation (owner uniquement)."""
+    with get_db() as cur:
+        cur.execute(
+            "DELETE FROM departments WHERE organization_id = %s RETURNING id",
+            (user.organization_id,),
+        )
+        deleted = len(cur.fetchall() or [])
+    return {"deleted": deleted}
+
+
 @router.delete("/{dept_id}", status_code=204)
 def delete_department(
     dept_id: str,

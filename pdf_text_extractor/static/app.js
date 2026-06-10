@@ -4273,6 +4273,21 @@ async function saveOrgType(type) {
 
 let _selectedSector = null;
 
+async function resetAllDepartments() {
+  const msg = _lang === "en"
+    ? "Delete ALL departments? This cannot be undone. Members will be removed from their departments."
+    : "Supprimer TOUS les départements ? Cette action est irréversible. Les membres seront retirés de leurs départements.";
+  if (!window.confirm(msg)) return;
+  try {
+    const res = await apiCall("/api/departments/reset-all", "DELETE");
+    loadDepartments();
+    _populateDeptSelects();
+    openInitDeptsModal();
+  } catch (ex) {
+    alert(ex.message || "Erreur lors de la réinitialisation.");
+  }
+}
+
 function openInitDeptsModal() {
   _selectedSector = null;
   document.querySelectorAll(".sector-card").forEach(c => c.classList.remove("selected"));
