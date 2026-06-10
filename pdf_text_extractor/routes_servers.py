@@ -80,7 +80,7 @@ def list_servers(
     params: list = [user.organization_id]
 
     if allowed is not None:
-        conditions.append("s.department_id = ANY(%s)")
+        conditions.append("s.department_id = ANY(%s::uuid[])")
         params.append(allowed)
     if dept_id:
         conditions.append("s.department_id = %s")

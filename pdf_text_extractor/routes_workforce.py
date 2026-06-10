@@ -57,7 +57,7 @@ def list_processes(
     params: list = [user.organization_id]
 
     if allowed is not None:
-        conditions.append("wp.department_id = ANY(%s)")
+        conditions.append("wp.department_id = ANY(%s::uuid[])")
         params.append(allowed)
 
     if dept_id:

@@ -74,7 +74,7 @@ def list_contracts(
     params: list = [user.organization_id]
 
     if allowed is not None:
-        conditions.append("c.department_id = ANY(%s)")
+        conditions.append("c.department_id = ANY(%s::uuid[])")
         params.append(allowed)
 
     if dept_id:

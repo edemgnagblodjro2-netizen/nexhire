@@ -82,7 +82,7 @@ def list_budget_entries(
     params: list = [user.organization_id]
 
     if allowed is not None:
-        conditions.append("b.department_id = ANY(%s)")
+        conditions.append("b.department_id = ANY(%s::uuid[])")
         params.append(allowed)
     if dept_id:
         conditions.append("b.department_id = %s")
@@ -218,7 +218,7 @@ def budget_summary(
     params: list = [user.organization_id, current_year]
 
     if allowed is not None:
-        conditions.append("b.department_id = ANY(%s)")
+        conditions.append("b.department_id = ANY(%s::uuid[])")
         params.append(allowed)
     if dept_id:
         conditions.append("b.department_id = %s")

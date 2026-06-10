@@ -101,7 +101,7 @@ def list_licenses(
     params: list = [user.organization_id]
 
     if allowed is not None:
-        conditions.append("l.department_id = ANY(%s)")
+        conditions.append("l.department_id = ANY(%s::uuid[])")
         params.append(allowed)
     if dept_id:
         conditions.append("l.department_id = %s")

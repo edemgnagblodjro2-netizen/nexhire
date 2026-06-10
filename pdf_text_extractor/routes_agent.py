@@ -103,7 +103,7 @@ def _connected_connectors_for_user(user: CurrentUser) -> list[str]:
                           NOT EXISTS (SELECT 1 FROM connector_departments cd WHERE cd.connector_id = c.id)
                           OR EXISTS (
                               SELECT 1 FROM connector_departments cd
-                              WHERE cd.connector_id = c.id AND cd.department_id = ANY(%s)
+                              WHERE cd.connector_id = c.id AND cd.department_id = ANY(%s::uuid[])
                           )
                       )
                     """,
