@@ -971,6 +971,10 @@ function showApp() {
   const isAdmin = ["admin", "owner"].includes(u?.role);
   document.querySelectorAll(".admin-only").forEach(el => el.classList.toggle("hidden", !isAdmin));
 
+  // Manager-only elements (manager, admin, owner)
+  const isManager = ["manager", "admin", "owner"].includes(u?.role);
+  document.querySelectorAll(".manager-only").forEach(el => el.classList.toggle("hidden", !isManager));
+
   // Super-admin tab
   const saBtn = $("superadmin-tab-btn");
   if (saBtn) saBtn.classList.toggle("hidden", !u?.is_superadmin);

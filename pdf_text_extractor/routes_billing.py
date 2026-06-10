@@ -94,7 +94,7 @@ def billing_debug(user: CurrentUser = Depends(require_min_role("admin"))):
 # ── GET /api/billing/status ───────────────────────────────────────────────────
 
 @router.get("/status")
-def billing_status(user: CurrentUser = Depends(require_min_role("user"))):
+def billing_status(user: CurrentUser = Depends(require_min_role("manager"))):
     """Retourne l'état de l'abonnement de l'organisation."""
     # Relecture dynamique pour prendre en compte les mises à jour d'env sans redémarrage
     live_key = os.environ.get("STRIPE_SECRET_KEY", "") or STRIPE_SECRET_KEY
