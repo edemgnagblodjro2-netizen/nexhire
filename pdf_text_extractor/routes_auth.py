@@ -36,6 +36,7 @@ class SignupPayload(BaseModel):
     full_name: str = Field(min_length=1, max_length=255)
     email: EmailStr
     password: str = Field(min_length=12)
+    phone: str | None = Field(default=None, max_length=30)
     invite_token: str | None = None
 
     @field_validator("password")
@@ -56,6 +57,8 @@ def signup(request: Request, payload: SignupPayload, background: BackgroundTasks
             "org_name":  payload.organization_name,
             "full_name": payload.full_name,
         }
+        if payload.phone:
+            meta["phone"] = payload.phone
         if payload.invite_token:
             meta["invite_token"] = payload.invite_token
 

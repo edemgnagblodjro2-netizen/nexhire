@@ -1285,6 +1285,8 @@ $("signup-form").addEventListener("submit", async e => {
       email: $("signup-email").value.trim(),
       password: $("signup-password").value,
     };
+    const phone = $("signup-phone")?.value.trim();
+    if (phone) signupBody.phone = phone;
     const invToken = $("signup-invite-token")?.value;
     if (invToken) signupBody.invite_token = invToken;
     await apiCall("/api/auth/signup", "POST", signupBody);
