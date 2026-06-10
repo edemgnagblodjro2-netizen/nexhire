@@ -4241,7 +4241,7 @@ function editDept(id, name, desc, budget, currency, deptType) {
 }
 async function deleteDept(id) {
   if (!confirm("Supprimer ce département ? Les données associées seront dissociées.")) return;
-  try { await apiCall(`/api/departments/${id}`, "DELETE"); loadDepartments(); } catch(e) { alert(e.message); }
+  try { await apiCall(`/api/departments/${id}`, "DELETE"); loadDepartments(); loadOrgChart(); } catch(e) { alert(e.message); }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -4290,6 +4290,7 @@ async function resetAllDepartments() {
   try {
     const res = await apiCall("/api/departments/reset-all", "DELETE");
     loadDepartments();
+    loadOrgChart();
     _populateDeptSelects();
     openInitDeptsModal();
   } catch (ex) {
@@ -4336,6 +4337,7 @@ async function confirmInitDepts() {
     if ($("sp-org-type")) $("sp-org-type").value = _selectedSector;
     closeInitDeptsModal();
     loadDepartments();
+    loadOrgChart();
     _populateDeptSelects();
     alert(`✅ ${res.created} département(s) créé(s), ${res.skipped} déjà existant(s).`);
   } catch (ex) {
