@@ -1323,10 +1323,27 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
 });
 
 function switchTab(name) {
+  const u = state.user;
+  const isAdmin = ["admin","owner"].includes(u?.role);
+
+  // Onglets réservés aux admins/owners
+  if (["connectors","audit","org","security"].includes(name) && !isAdmin) {
+    const grid = $("connector-grid");
+    if (grid) grid.innerHTML = `<div style="padding:40px;text-align:center;color:#64748b">
+      <div style="font-size:2rem;margin-bottom:12px">🔒</div>
+      <p style="font-weight:600;color:#1e293b;margin:0 0 6px">Accès refusé</p>
+      <p style="margin:0;font-size:.88rem">Vous n'avez pas les permissions requises pour accéder à cette section.</p>
+    </div>`;
+    // Affiche quand même la section mais avec le message d'erreur
+    state.tab = name;
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === name));
+    document.querySelectorAll(".tab-content").forEach(s => s.classList.toggle("hidden", s.id !== `tab-${name}`));
+    history.pushState({ tab: name }, "", `#${name}`);
+    return;
+  }
+
   // Vérifie l'accès à Parc IT
   if (name === "parc-it") {
-    const u = state.user;
-    const isAdmin = ["admin","owner"].includes(u?.role);
     const deptTypes = u?.dept_types || [];
     if (!isAdmin && !deptTypes.some(t => ["it","direction"].includes(t))) return;
   }
