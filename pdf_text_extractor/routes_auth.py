@@ -149,6 +149,24 @@ def refresh_token(payload: RefreshPayload):
 def me(user: CurrentUser = Depends(get_current_user)):
     import os
     superadmin_emails = {e.strip().lower() for e in os.environ.get("SUPERADMIN_EMAILS", "").split(",") if e.strip()}
+
+    # Récupère les types de département de l'utilisateur pour contrôler la nav
+    dept_types: list[str] = []
+    if user.organization_id:
+        try:
+            from db import get_db, rows
+            with get_db() as cur:
+                cur.execute(
+                    """SELECT DISTINCT d.dept_type
+                       FROM department_members dm
+                       JOIN departments d ON d.id = dm.department_id
+                       WHERE dm.user_id = %s AND d.dept_type IS NOT NULL""",
+                    (user.id,),
+                )
+                dept_types = [r["dept_type"] for r in rows(cur)]
+        except Exception:
+            pass
+
     return {
         "id": user.id,
         "email": user.email,
@@ -156,4 +174,5 @@ def me(user: CurrentUser = Depends(get_current_user)):
         "role": user.role,
         "subscription_status": user.subscription_status,
         "is_superadmin": bool(user.email and user.email.lower() in superadmin_emails),
+        "dept_types": dept_types,
     }

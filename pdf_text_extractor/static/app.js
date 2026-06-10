@@ -965,6 +965,14 @@ function showApp() {
   const saBtn = $("superadmin-tab-btn");
   if (saBtn) saBtn.classList.toggle("hidden", !u?.is_superadmin);
 
+  // Parc IT — uniquement pour IT, Direction et admins
+  const parcTabBtn = document.querySelector('[data-tab="parc-it"]');
+  if (parcTabBtn) {
+    const deptTypes = u?.dept_types || [];
+    const showParc  = isAdmin || deptTypes.some(t => ["it","direction"].includes(t));
+    parcTabBtn.classList.toggle("hidden", !showParc);
+  }
+
   // Trial banner
   if (u?.subscription_status === "trialing") {
     const banner = $("trial-banner");
@@ -1295,6 +1303,13 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
 });
 
 function switchTab(name) {
+  // Vérifie l'accès à Parc IT
+  if (name === "parc-it") {
+    const u = state.user;
+    const isAdmin = ["admin","owner"].includes(u?.role);
+    const deptTypes = u?.dept_types || [];
+    if (!isAdmin && !deptTypes.some(t => ["it","direction"].includes(t))) return;
+  }
   state.tab = name;
   document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === name));
   document.querySelectorAll(".tab-content").forEach(s => s.classList.toggle("hidden", s.id !== `tab-${name}`));
