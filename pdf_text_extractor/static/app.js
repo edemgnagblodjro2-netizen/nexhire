@@ -4254,7 +4254,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       if (id) await apiCall(`/api/departments/${id}`, "PATCH", body);
       else    await apiCall("/api/departments", "POST", body);
-      closeParcModal("dept-modal"); loadDepartments();
+      closeParcModal("dept-modal"); loadDepartments(); loadOrgChart();
     } catch(ex) { const err=$("dm-error"); err.textContent=ex.message||"Erreur"; err.classList.remove("hidden"); }
   });
 });
