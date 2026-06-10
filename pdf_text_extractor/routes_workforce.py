@@ -77,9 +77,13 @@ def list_processes(
         ORDER BY wp.name
     """
 
-    with get_db() as cur:
-        cur.execute(sql, params)
-        result = rows(cur)
+    try:
+        with get_db() as cur:
+            cur.execute(sql, params)
+            result = rows(cur)
+    except Exception as exc:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=500, detail=f"Erreur base de données processus : {exc}") from exc
 
     return [_enrich(p) for p in result]
 

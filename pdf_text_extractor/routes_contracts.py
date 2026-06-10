@@ -102,9 +102,12 @@ def list_contracts(
         ORDER BY c.renewal_date
     """
 
-    with get_db() as cur:
-        cur.execute(sql, params)
-        result = rows(cur)
+    try:
+        with get_db() as cur:
+            cur.execute(sql, params)
+            result = rows(cur)
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=f"Erreur base de données contrats : {exc}") from exc
 
     return [_enrich(c) for c in result]
 

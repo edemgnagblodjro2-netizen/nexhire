@@ -4317,6 +4317,8 @@ async function loadDepartments() {
   if (!wrap) return;
   try {
     const depts = await apiCall("/api/departments");
+    // Mappe dept_id → dept_type pour les catégories contextuelles
+    window._deptTypeMap = Object.fromEntries(depts.map(d => [d.id, d.dept_type || "general"]));
     if (!depts.length) {
       wrap.innerHTML = `<p class="muted">Aucun département. Cliquez sur <strong>⚡ Initialiser par secteur</strong> pour en créer automatiquement.</p>`;
       return;
@@ -4501,10 +4503,16 @@ function _loadOptimSection(name) {
   if (name === "dashboard")      _loadOptimDashboard();
   if (name === "licenses")       _loadUnusedLicenses();
   if (name === "duplicates")     _loadDuplicateTools();
-  if (name === "contracts")      loadContracts();
+  if (name === "contracts")    { _populateContractCatSelects(_activeDeptType()); loadContracts(); }
   if (name === "processes")      loadProcesses();
   if (name === "recommandations") _loadRecommendations();
   if (name === "previsions")     _loadPredictions();
+}
+
+function _activeDeptType() {
+  // Retourne le dept_type du département actif ou du premier département de l'user
+  if (_activeDeptId && window._deptTypeMap) return window._deptTypeMap[_activeDeptId] || "general";
+  return state.user?.dept_type || "general";
 }
 
 async function _populateOptimDeptSelects() {
@@ -4774,6 +4782,31 @@ async function _loadDuplicateTools() {
 }
 
 // ── Contrats ──────────────────────────────────────────────────────────────────
+// Catégories de contrats par type de département
+const DEPT_CONTRACT_CATS = {
+  finance:       [["audit","Audit"],["conseil_financier","Conseil financier"],["assurances","Assurances"],["banque","Banque"],["comptabilite","Comptabilité"],["services","Services professionnels"],["other","Autre"]],
+  hr:            [["recrutement","Recrutement"],["formation","Formation & développement"],["avantages_sociaux","Avantages sociaux"],["conseil_rh","Conseil RH"],["services","Services professionnels"],["other","Autre"]],
+  legal:         [["conseil_juridique","Conseil juridique"],["conformite","Conformité"],["propriete_intellectuelle","Propriété intellectuelle"],["services","Services professionnels"],["other","Autre"]],
+  marketing:     [["agences","Agences"],["medias","Médias & production"],["publicite","Publicité"],["relations_publiques","Relations publiques"],["services","Services professionnels"],["other","Autre"]],
+  it:            [["telecom","Télécommunications"],["software","Logiciels"],["hardware","Matériel"],["cloud","Cloud & hébergement"],["services","Services IT"],["facilities","Installations"],["other","Autre"]],
+  operations:    [["fournisseurs","Fournisseurs"],["logistique","Logistique & transport"],["maintenance","Maintenance"],["facilities","Installations"],["services","Services professionnels"],["other","Autre"]],
+  direction:     [["conseil_strategique","Conseil stratégique"],["audit","Audit"],["assurances","Assurances"],["services","Services professionnels"],["other","Autre"]],
+  approvisionnement: [["fournisseurs","Fournisseurs"],["logistique","Logistique"],["maintenance","Maintenance"],["services","Services professionnels"],["other","Autre"]],
+};
+const DEFAULT_CONTRACT_CATS = [["services","Services professionnels"],["telecom","Télécommunications"],["software","Logiciels"],["hardware","Matériel"],["other","Autre"]];
+
+function _populateContractCatSelects(deptType) {
+  const cats = DEPT_CONTRACT_CATS[deptType] || DEFAULT_CONTRACT_CATS;
+  const filterSel = $("contract-cat-filter");
+  const modalSel  = $("cm-cat");
+  [filterSel, modalSel].forEach(sel => {
+    if (!sel) return;
+    const current = sel.value;
+    sel.innerHTML = (sel === filterSel ? `<option value="">Toutes catégories</option>` : "") +
+      cats.map(([v,l]) => `<option value="${v}"${v===current?" selected":""}>${l}</option>`).join("");
+  });
+}
+
 async function loadContracts() {
   const wrap = $("contracts-table-wrap");
   const renewing = $("contract-renew-filter")?.value || "";
@@ -4804,6 +4837,9 @@ async function loadContracts() {
 }
 
 function openContractModal(c = null) {
+  const deptId   = c?.department_id || $("cm-dept")?.value || _activeDeptId || "";
+  const deptType = (deptId && window._deptTypeMap?.[deptId]) || _activeDeptType();
+  _populateContractCatSelects(deptType);
   $("cm-id").value = c?.id || "";
   $("cm-vendor").value   = c?.vendor        || "";
   $("cm-cat").value      = c?.category      || "other";
@@ -6956,7 +6992,7 @@ function _contractorCard(c, compact = false) {
     </div>`;
   }
 
-  const canAdmin = state.role === "admin" || state.role === "owner";
+  const canAdmin = ["admin","owner"].includes(state.user?.role);
   return `<div class="ext-card" data-cid="${c.id}">
     <div class="ext-card-top">
       <div class="ext-card-left">

@@ -1184,7 +1184,7 @@
         <div id="dept-external-wrap" class="dept-external-mini hidden">
           <div class="dept-external-mini-header">
             <span>🤝 Collaborateurs externes</span>
-            <button class="btn btn-outline btn-xs" onclick="openContractorModal(null, _activeDeptId)" style="font-size:.72rem;padding:2px 8px">+ Ajouter</button>
+            <button id="dept-ext-add-btn" class="btn btn-outline btn-xs admin-only" onclick="openContractorModal(null, _activeDeptId)" style="font-size:.72rem;padding:2px 8px">+ Ajouter</button>
           </div>
           <div id="dept-external-list" class="dept-external-mini-list"></div>
         </div>
@@ -2106,10 +2106,10 @@
                 </div>
               </div>
               <div class="score-dimensions">
-                <div class="score-dim"><span id="sdim-label-sw">Logiciels</span><div class="score-dim-bar-wrap"><div class="score-dim-bar" id="sdim-software"></div></div><span id="sdim-sw-val">—</span></div>
-                <div class="score-dim"><span id="sdim-label-lic">Licences</span><div class="score-dim-bar-wrap"><div class="score-dim-bar" id="sdim-licenses"></div></div><span id="sdim-lic-val">—</span></div>
-                <div class="score-dim"><span id="sdim-label-infra">Infrastructure</span><div class="score-dim-bar-wrap"><div class="score-dim-bar" id="sdim-infra"></div></div><span id="sdim-infra-val">—</span></div>
-                <div class="score-dim"><span id="sdim-label-proc">Processus</span><div class="score-dim-bar-wrap"><div class="score-dim-bar" id="sdim-process"></div></div><span id="sdim-proc-val">—</span></div>
+                <div class="score-dim"><span id="sdim-label-sw">Applications</span><div class="score-dim-bar-wrap"><div class="score-dim-bar" id="sdim-software"></div></div><span id="sdim-sw-val">—</span></div>
+                <div class="score-dim"><span id="sdim-label-lic">Ressources</span><div class="score-dim-bar-wrap"><div class="score-dim-bar" id="sdim-licenses"></div></div><span id="sdim-lic-val">—</span></div>
+                <div class="score-dim"><span id="sdim-label-infra">Systèmes</span><div class="score-dim-bar-wrap"><div class="score-dim-bar" id="sdim-infra"></div></div><span id="sdim-infra-val">—</span></div>
+                <div class="score-dim"><span id="sdim-label-proc">Automatisation</span><div class="score-dim-bar-wrap"><div class="score-dim-bar" id="sdim-process"></div></div><span id="sdim-proc-val">—</span></div>
               </div>
             </div>
           </div>
@@ -2149,12 +2149,6 @@
             </select>
             <select id="contract-cat-filter" onchange="loadContracts()">
               <option value="">Toutes catégories</option>
-              <option value="telecom">Télécommunications</option>
-              <option value="software">Logiciels</option>
-              <option value="hardware">Matériel</option>
-              <option value="services">Services</option>
-              <option value="cloud">Cloud</option>
-              <option value="facilities">Installations</option>
             </select>
           </div>
           <button class="btn btn-primary btn-sm" onclick="openContractModal()" data-i18n="optim.contract.add">+ Contrat</button>
@@ -2204,7 +2198,7 @@
         <form id="contract-modal-form" class="settings-form" style="display:grid;gap:10px">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
             <label class="auth-label"><span>Fournisseur *</span><input id="cm-vendor" type="text" required placeholder="Bell Canada" /></label>
-            <label class="auth-label"><span>Catégorie</span><select id="cm-cat"><option value="telecom">Télécommunications</option><option value="software">Logiciels</option><option value="hardware">Matériel</option><option value="services">Services</option><option value="cloud">Cloud</option><option value="facilities">Installations</option><option value="other">Autre</option></select></label>
+            <label class="auth-label"><span>Catégorie</span><select id="cm-cat"><option value="other">Autre</option></select></label>
           </div>
           <label class="auth-label"><span>Description</span><input id="cm-desc" type="text" /></label>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
