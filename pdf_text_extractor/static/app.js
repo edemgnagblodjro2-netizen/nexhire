@@ -4129,7 +4129,7 @@ async function loadOrgChart() {
                 ${HIERARCHY_TITLES.map((t,i) => `<option value="${t}" ${t===m.title?"selected":""}>${t}</option>`).join("")}
               </select>
               <button class="btn btn-outline btn-sm" title="Transférer vers un autre département"
-                onclick="openTransferModal('${dept.id}','${m.id}','${esc(m.full_name||m.email)}')"
+                onclick="openTransferModal('${dept.id}','${esc(dept.name)}','${m.id}','${esc(m.full_name||m.email)}')"
                 style="font-size:.72rem;padding:2px 8px">⇄</button>
               <button class="btn btn-sm" title="Retirer du département"
                 onclick="removeMemberFromDept('${dept.id}','${m.id}','${esc(m.full_name||m.email)}')"
@@ -4165,7 +4165,7 @@ async function removeMemberFromDept(deptId, memberId, name) {
   } catch(e) { alert(e.message); }
 }
 
-async function openTransferModal(fromDeptId, memberId, name) {
+async function openTransferModal(fromDeptId, fromDeptName, memberId, name) {
   const depts = await apiCall("/api/departments");
   const others = depts.filter(d => d.id !== fromDeptId);
   if (!others.length) { alert("Aucun autre département disponible."); return; }
@@ -4173,23 +4173,26 @@ async function openTransferModal(fromDeptId, memberId, name) {
   const sel = document.createElement("div");
   sel.innerHTML = `
     <div style="position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:9999;display:flex;align-items:center;justify-content:center">
-      <div style="background:#fff;border-radius:12px;padding:24px;min-width:320px;box-shadow:0 8px 32px rgba(0,0,0,.18)">
-        <h3 style="margin:0 0 16px;font-size:1rem">Transférer ${esc(name)}</h3>
-        <label style="display:block;margin-bottom:12px;font-size:.85rem;font-weight:600">Département de destination
-          <select id="transfer-dest" style="display:block;width:100%;margin-top:6px;padding:8px;border:1.5px solid #e2e8f0;border-radius:8px">${opts}</select>
-        </label>
-        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px">
-          <button onclick="this.closest('div[style]').remove()" class="btn btn-outline btn-sm">Annuler</button>
+      <div style="background:#fff;border-radius:12px;padding:24px;min-width:340px;box-shadow:0 8px 32px rgba(0,0,0,.18)">
+        <h3 style="margin:0 0 16px;font-size:1rem">Transférer <strong>${esc(name)}</strong></h3>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:10px 14px;background:#f1f5f9;border-radius:8px;font-size:.85rem">
+          <span style="flex:1;color:#475569;font-weight:600">${esc(fromDeptName)}</span>
+          <span style="color:#94a3b8;font-size:1.1rem">→</span>
+          <select id="transfer-dest" style="flex:1;padding:6px 8px;border:1.5px solid #c7d2fe;border-radius:6px;font-size:.85rem;font-weight:600;color:#3730a3;background:#eef2ff">${opts}</select>
+        </div>
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:4px">
+          <button onclick="this.closest('[data-transfer-overlay]').remove()" class="btn btn-outline btn-sm">Annuler</button>
           <button id="transfer-confirm-btn" class="btn btn-primary btn-sm">Transférer</button>
         </div>
       </div>
     </div>`;
+  sel.querySelector("div[style]").setAttribute("data-transfer-overlay","1");
   document.body.appendChild(sel);
   sel.querySelector("#transfer-confirm-btn").onclick = async () => {
     const destId = sel.querySelector("#transfer-dest").value;
+    if (!destId) return;
     try {
       await apiCall(`/api/departments/${fromDeptId}/members/${memberId}`, "DELETE");
-      const level = parseInt(sel.querySelector("#transfer-dest").selectedIndex) + 1;
       await apiCall(`/api/departments/${destId}/members`, "POST", { user_id: memberId, hierarchy_level: 6 });
       sel.remove();
       loadOrgChart();
