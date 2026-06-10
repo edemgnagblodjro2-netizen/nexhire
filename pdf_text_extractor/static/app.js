@@ -2798,7 +2798,12 @@ async function _handleInviteToken() {
   if (!token) return;
   try {
     const inv = await fetch(`/api/members/invite/validate?token=${encodeURIComponent(token)}`).then(r=>r.json());
-    if (inv.detail) return;  // invalid
+    if (inv.detail) {
+      showAuth("signup");
+      const errEl = $("signup-error");
+      if (errEl) { errEl.textContent = "Ce lien d'invitation est invalide ou expiré. Demandez un nouveau lien à votre administrateur."; errEl.classList.remove("hidden"); }
+      return true;
+    }
     // Pre-fill signup form
     showAuth("signup");
     $("signup-invite-token").value = token;
@@ -2809,6 +2814,7 @@ async function _handleInviteToken() {
     $("invite-role-label").textContent = ROLE_LABELS_FR[inv.role] || inv.role;
     $("invite-context").classList.remove("hidden");
     window.history.replaceState({}, "", "/");
+    return true;
   } catch { /* ignore invalid tokens */ }
 }
 
@@ -3287,7 +3293,8 @@ $("settings-pwd-form")?.addEventListener("submit", async e => {
 // ═══════════════════════════════════════════════════════════════════════════
 
 async function init() {
-  await _handleInviteToken();
+  const handledInvite = await _handleInviteToken();
+  if (handledInvite) return;  // signup form shown — ne pas continuer vers landing
   const stored = localStorage.getItem("nexhire_token");
   if (!stored) { showLanding(); return; }
   state.token = stored;
