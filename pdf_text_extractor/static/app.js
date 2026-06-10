@@ -1951,39 +1951,43 @@ function buildConnectorCard(type, meta, info) {
 
   const isAdmin = ["admin","owner"].includes(state.user?.role);
   if (isConnected) {
-    const disconnBtn = document.createElement("button");
-    disconnBtn.className = "btn-disconnect";
-    disconnBtn.textContent = "Déconnecter";
-    disconnBtn.addEventListener("click", () => doDisconnect(type, disconnBtn));
-    actions.appendChild(disconnBtn);
+    if (isAdmin) {
+      const disconnBtn = document.createElement("button");
+      disconnBtn.className = "btn-disconnect";
+      disconnBtn.textContent = "Déconnecter";
+      disconnBtn.addEventListener("click", () => doDisconnect(type, disconnBtn));
+      actions.appendChild(disconnBtn);
 
-    if (isOAuth) {
-      const reauth = document.createElement("button");
-      reauth.className = "btn-connect real btn-sm";
-      reauth.textContent = "Renouveler OAuth";
-      reauth.style.marginLeft = "8px";
-      reauth.addEventListener("click", () => doOAuthStart(type, reauth));
-      actions.appendChild(reauth);
+      if (isOAuth) {
+        const reauth = document.createElement("button");
+        reauth.className = "btn-connect real btn-sm";
+        reauth.textContent = "Renouveler OAuth";
+        reauth.style.marginLeft = "8px";
+        reauth.addEventListener("click", () => doOAuthStart(type, reauth));
+        actions.appendChild(reauth);
+      }
     }
 
-  } else if (isOAuth) {
-    const btn = document.createElement("button");
-    btn.className = "btn-connect real";
-    btn.textContent = `Connecter via OAuth`;
-    btn.addEventListener("click", () => doOAuthStart(type, btn));
-    actions.appendChild(btn);
-  } else if (isApiKey) {
-    const btn = document.createElement("button");
-    btn.className = "btn-connect sim";
-    btn.textContent = "Configurer les credentials";
-    btn.addEventListener("click", () => openCredModal(type, meta));
-    actions.appendChild(btn);
-  } else {
-    const btn = document.createElement("button");
-    btn.className = "btn-connect sim";
-    btn.textContent = "Connecter (simulé)";
-    btn.addEventListener("click", () => doConnect(type, btn));
-    actions.appendChild(btn);
+  } else if (isAdmin) {
+    if (isOAuth) {
+      const btn = document.createElement("button");
+      btn.className = "btn-connect real";
+      btn.textContent = `Connecter via OAuth`;
+      btn.addEventListener("click", () => doOAuthStart(type, btn));
+      actions.appendChild(btn);
+    } else if (isApiKey) {
+      const btn = document.createElement("button");
+      btn.className = "btn-connect sim";
+      btn.textContent = "Configurer les credentials";
+      btn.addEventListener("click", () => openCredModal(type, meta));
+      actions.appendChild(btn);
+    } else {
+      const btn = document.createElement("button");
+      btn.className = "btn-connect sim";
+      btn.textContent = "Connecter (simulé)";
+      btn.addEventListener("click", () => doConnect(type, btn));
+      actions.appendChild(btn);
+    }
   }
 
   if (isAdmin) {
