@@ -2817,10 +2817,6 @@ async function loadSettings() {
     // Logo & branding
     const isAdmin = ["admin", "owner"].includes(p.role);
     state.isAdmin = isAdmin;
-    const spOrgEl = $("sp-org");
-    if (spOrgEl) {
-      if (!isAdmin) { spOrgEl.setAttribute("disabled",""); spOrgEl.style.opacity="0.6"; spOrgEl.style.cursor="not-allowed"; }
-    }
     const orgLogoSection = $("org-logo-section");
     if (orgLogoSection && isAdmin) orgLogoSection.classList.remove("hidden");
     if (p.logo_url) {
