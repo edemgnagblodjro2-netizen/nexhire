@@ -1036,7 +1036,7 @@
     </a>
     <div class="nav-tabs" role="tablist">
       <button class="tab-btn active" data-tab="agent"      role="tab" data-i18n="app.tab.agent">Assistant IA</button>
-      <button class="tab-btn"        data-tab="connectors" role="tab" data-i18n="app.tab.connectors">Connecteurs</button>
+      <button class="tab-btn admin-only hidden" data-tab="connectors" role="tab" data-i18n="app.tab.connectors">Connecteurs</button>
       <button class="tab-btn"        data-tab="documents"  role="tab" data-i18n="app.tab.documents">Documents</button>
       <button class="tab-btn admin-only hidden" data-tab="org"          role="tab">🏛️ Organisation</button>
       <button class="tab-btn admin-only hidden" data-tab="audit"        role="tab" data-i18n="app.tab.audit">Audit</button>
@@ -2685,7 +2685,7 @@
       <span class="mob-nav-icon">💻</span>
       <span class="mob-nav-label">Parc IT</span>
     </button>
-    <button class="mob-nav-btn" data-tab="connectors" onclick="switchTab('connectors')">
+    <button class="mob-nav-btn admin-only hidden" data-tab="connectors" onclick="switchTab('connectors')">
       <span class="mob-nav-icon">🔌</span>
       <span class="mob-nav-label">Connecteurs</span>
     </button>
