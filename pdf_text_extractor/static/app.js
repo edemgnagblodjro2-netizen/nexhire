@@ -4498,11 +4498,13 @@ async function loadOptimization() {
 }
 
 function _loadOptimSection(name) {
-  if (name === "dashboard")  _loadOptimDashboard();
-  if (name === "licenses")   _loadUnusedLicenses();
-  if (name === "duplicates") _loadDuplicateTools();
-  if (name === "contracts")  loadContracts();
-  if (name === "processes")  loadProcesses();
+  if (name === "dashboard")      _loadOptimDashboard();
+  if (name === "licenses")       _loadUnusedLicenses();
+  if (name === "duplicates")     _loadDuplicateTools();
+  if (name === "contracts")      loadContracts();
+  if (name === "processes")      loadProcesses();
+  if (name === "recommandations") _loadRecommendations();
+  if (name === "previsions")     _loadPredictions();
 }
 
 async function _populateOptimDeptSelects() {
@@ -4543,23 +4545,37 @@ async function _loadOptimDashboard() {
       ].map(r => `<div class="savings-row"><span class="savings-row-label">${r.label}</span><span class="savings-row-val">${_fmt(r.val)} $</span></div>`).join("");
     }
 
-    // Top opportunities
+    // Top opportunities — format numéroté
     const opps = data.top_opportunities || [];
     const wrap = $("optim-top-opps");
     if (wrap) {
-      if (!opps.length) { wrap.innerHTML = `<p class="muted">Ajoutez des licences, applications et contrats pour voir les opportunités d'économies.</p>`; }
-      else wrap.innerHTML = opps.map(o => `
-        <div class="opp-card">
-          <div class="opp-icon ${o.type}">${OPTIM_ICONS[o.type] || "💡"}</div>
-          <div class="opp-body">
-            <div class="opp-title">${esc(o.title)}</div>
-            <div class="opp-meta">Confiance : ${o.confidence}%</div>
-          </div>
-          <div class="opp-savings">
-            <div class="opp-savings-val">${_fmt(o.savings)} $</div>
-            <div class="opp-confidence">économies/an</div>
-          </div>
-        </div>`).join("");
+      if (!opps.length) {
+        wrap.innerHTML = `<p class="muted">Ajoutez des licences, applications et contrats pour voir les opportunités d'économies.</p>`;
+      } else {
+        const typeLabel = { license:"Licences", duplicate:"Doublons logiciels", contract:"Contrat", process:"Automatisation" };
+        const typeBg    = { license:"#ede9fe", duplicate:"#fef9c3", contract:"#fce7f3", process:"#dcfce7" };
+        const typeColor = { license:"#7c3aed", duplicate:"#b45309", contract:"#db2777", process:"#16a34a" };
+        wrap.innerHTML = opps.map((o, i) => {
+          const bg = typeBg[o.type] || "#f1f5f9";
+          const fg = typeColor[o.type] || "#475569";
+          return `
+          <div style="display:flex;align-items:center;gap:16px;padding:16px 20px;margin-bottom:10px;background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.04)">
+            <div style="min-width:36px;text-align:center">
+              <div style="font-size:.68rem;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:.04em">N°</div>
+              <div style="font-size:1.5rem;font-weight:900;color:#6366f1;line-height:1">${i + 1}</div>
+            </div>
+            <div style="flex:1;min-width:0">
+              <span style="display:inline-block;margin-bottom:5px;padding:2px 9px;background:${bg};color:${fg};border-radius:20px;font-size:.72rem;font-weight:700">${typeLabel[o.type] || o.type}</span>
+              <div style="font-size:.9rem;font-weight:600;color:#1e293b;line-height:1.3">${esc(o.title)}</div>
+              <div style="font-size:.75rem;color:#94a3b8;margin-top:3px">Confiance : ${o.confidence} %</div>
+            </div>
+            <div style="text-align:right;flex-shrink:0">
+              <div style="font-size:1.2rem;font-weight:800;color:#15803d">${fmtCAD(o.savings)}</div>
+              <div style="font-size:.72rem;color:#64748b">économies / an</div>
+            </div>
+          </div>`;
+        }).join("");
+      }
     }
   } catch (e) { console.error(e); }
 }
@@ -4593,6 +4609,143 @@ async function _loadUnusedLicenses() {
         </tr>`;
       }).join("") + `</tbody></table>`;
   } catch (e) { wrap.innerHTML = `<p class="muted">${e.message}</p>`; }
+}
+
+async function _loadRecommendations() {
+  const wrap = $("reco-list");
+  if (!wrap) return;
+  wrap.innerHTML = `<div style="padding:20px;text-align:center"><div class="spinner" style="margin:auto"></div></div>`;
+  try {
+    const data = await apiCall("/api/optimization/recommendations");
+    const recs  = data.recommendations || [];
+    const total = data.total_savings || 0;
+    const fmtC  = v => (v||0).toLocaleString("fr-CA",{style:"currency",currency:"CAD",maximumFractionDigits:0});
+
+    if (!recs.length) {
+      wrap.innerHTML = `<p class="muted" style="padding:20px">Aucune recommandation disponible — ajoutez des licences, contrats ou processus.</p>`;
+      return;
+    }
+
+    const impactColor = { high:"#ef4444", medium:"#f59e0b", low:"#22c55e" };
+    const impactLabel = { high:"Impact élevé", medium:"Impact moyen", low:"Impact faible" };
+    const navLabel    = { licenses:"Voir les licences", duplicates:"Voir les doublons", contracts:"Voir les contrats", processes:"Voir les processus", dashboard:"Tableau de bord" };
+
+    wrap.innerHTML = `
+      <div style="padding:16px 20px;margin-bottom:20px;background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1.5px solid #86efac;border-radius:12px;display:flex;align-items:center;gap:16px">
+        <span style="font-size:1.6rem">💡</span>
+        <div>
+          <div style="font-size:.78rem;color:#16a34a;font-weight:700;text-transform:uppercase;letter-spacing:.05em">Total des économies recommandées</div>
+          <div style="font-size:1.6rem;font-weight:900;color:#15803d">${fmtC(total)}</div>
+        </div>
+      </div>
+      ${recs.map((r, i) => `
+        <div style="display:flex;align-items:flex-start;gap:16px;padding:16px 20px;margin-bottom:10px;background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.04)">
+          <div style="min-width:28px;text-align:center;padding-top:2px">
+            <div style="width:28px;height:28px;border-radius:50%;background:#6366f1;color:#fff;font-size:.8rem;font-weight:800;display:flex;align-items:center;justify-content:center">${i+1}</div>
+          </div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:.88rem;font-weight:600;color:#1e293b;margin-bottom:6px;line-height:1.4">${esc(r.action)}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;font-size:.75rem">
+              <span style="padding:2px 9px;border-radius:20px;background:${impactColor[r.impact]}18;color:${impactColor[r.impact]};font-weight:700">${impactLabel[r.impact]||r.impact}</span>
+              <span style="padding:2px 9px;border-radius:20px;background:#f1f5f9;color:#64748b">⏱ ${r.timeline}</span>
+            </div>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            <div style="font-size:1.05rem;font-weight:800;color:#15803d">${fmtC(r.savings)}</div>
+            <div style="font-size:.7rem;color:#94a3b8;margin-bottom:6px">/an</div>
+            <button class="btn btn-outline btn-sm" style="font-size:.72rem;padding:3px 10px" onclick="switchOptimTab('${r.nav_tab}')">${navLabel[r.nav_tab]||"Voir"} →</button>
+          </div>
+        </div>`).join("")}`;
+  } catch (e) {
+    wrap.innerHTML = `<p class="muted">${esc(e.message)}</p>`;
+  }
+}
+
+async function _loadPredictions() {
+  const wrap = $("prev-list");
+  if (!wrap) return;
+  wrap.innerHTML = `<div style="padding:20px;text-align:center"><div class="spinner" style="margin:auto"></div></div>`;
+  try {
+    const data  = await apiCall("/api/optimization/predictions");
+    const fmtC  = v => (v||0).toLocaleString("fr-CA",{style:"currency",currency:"CAD",maximumFractionDigits:0});
+    const summ  = data.summary || {};
+    const bRisk = data.budget_risks || [];
+    const hTrend= data.dept_health_trends || [];
+
+    const riskColor = { high:"#ef4444", medium:"#f59e0b", low:"#22c55e" };
+    const riskBg    = { high:"#fef2f2", medium:"#fffbeb", low:"#f0fdf4" };
+    const riskLabel = { high:"Risque élevé", medium:"À surveiller", low:"En ordre" };
+    const trendIcon = t => t > 2 ? "📈" : t < -2 ? "📉" : "➡️";
+    const trendColor= t => t > 2 ? "#16a34a" : t < -2 ? "#dc2626" : "#64748b";
+
+    // Résumé
+    let html = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+        <div style="padding:16px 20px;background:#fef2f2;border:1.5px solid #fca5a5;border-radius:12px">
+          <div style="font-size:.75rem;color:#dc2626;font-weight:700;text-transform:uppercase;margin-bottom:4px">Santé en risque</div>
+          <div style="font-size:1.8rem;font-weight:900;color:#dc2626">${summ.depts_health_at_risk||0}</div>
+          <div style="font-size:.78rem;color:#64748b">département${(summ.depts_health_at_risk||0)!==1?"s":""} en déclin prévu</div>
+        </div>
+        <div style="padding:16px 20px;background:#fffbeb;border:1.5px solid #fcd34d;border-radius:12px">
+          <div style="font-size:.75rem;color:#d97706;font-weight:700;text-transform:uppercase;margin-bottom:4px">Budget en risque</div>
+          <div style="font-size:1.8rem;font-weight:900;color:#d97706">${summ.depts_budget_at_risk||0}</div>
+          <div style="font-size:.78rem;color:#64748b">département${(summ.depts_budget_at_risk||0)!==1?"s":""} sur trajectoire de dépassement</div>
+        </div>
+      </div>`;
+
+    // Tendances santé
+    if (hTrend.length) {
+      html += `<h3 style="font-size:.9rem;font-weight:700;color:#374151;margin:0 0 10px">Tendances santé organisationnelle</h3>`;
+      html += hTrend.map(d => `
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;margin-bottom:8px;background:${riskBg[d.risk]||"#f8fafc"};border:1.5px solid ${riskColor[d.risk]||"#e2e8f0"}30;border-radius:10px">
+          <div style="flex:1">
+            <div style="font-size:.85rem;font-weight:600;color:#1e293b">${esc(d.dept_name)}</div>
+            <div style="font-size:.75rem;color:#64748b;margin-top:2px">
+              Score actuel : <strong>${d.current_score}/100</strong>
+              &nbsp;→&nbsp; Prédit : <strong style="color:${trendColor(d.trend)}">${d.predicted}/100</strong>
+            </div>
+          </div>
+          <div style="text-align:center;flex-shrink:0">
+            <div style="font-size:1.3rem">${trendIcon(d.trend)}</div>
+            <div style="font-size:.7rem;color:${trendColor(d.trend)};font-weight:700">${d.trend>0?"+":""}${d.trend}</div>
+          </div>
+          <span style="padding:3px 10px;border-radius:20px;background:${riskColor[d.risk]}18;color:${riskColor[d.risk]};font-size:.72rem;font-weight:700;flex-shrink:0">${riskLabel[d.risk]||d.risk}</span>
+        </div>`).join("");
+    }
+
+    // Risques budget
+    if (bRisk.length) {
+      html += `<h3 style="font-size:.9rem;font-weight:700;color:#374151;margin:16px 0 10px">Prévisions budgétaires fin d'année</h3>`;
+      html += bRisk.map(b => {
+        const pct = b.proj_pct||0;
+        const barW = Math.min(100, pct);
+        const barC = pct > 105 ? "#ef4444" : pct > 90 ? "#f59e0b" : "#22c55e";
+        return `
+          <div style="padding:14px 16px;margin-bottom:8px;background:#fff;border:1.5px solid #e2e8f0;border-radius:10px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <span style="font-size:.85rem;font-weight:600;color:#1e293b">${esc(b.dept_name)}</span>
+              <span style="font-size:.8rem;font-weight:700;color:${barC}">${pct.toFixed(0)} % du budget</span>
+            </div>
+            <div style="background:#f1f5f9;border-radius:4px;height:6px;margin-bottom:6px">
+              <div style="height:6px;border-radius:4px;background:${barC};width:${barW}%"></div>
+            </div>
+            <div style="font-size:.75rem;color:#64748b;display:flex;justify-content:space-between">
+              <span>Dépensé : ${fmtC(b.spent_ytd)}</span>
+              <span>Projeté fin d'année : ${fmtC(b.projected)}</span>
+              <span>Alloué : ${fmtC(b.allocated)}</span>
+            </div>
+          </div>`;
+      }).join("");
+    }
+
+    if (!hTrend.length && !bRisk.length) {
+      html += `<p class="muted" style="padding:20px;text-align:center">Pas encore assez de données historiques pour générer des prévisions.<br><span style="font-size:.82rem">Les prévisions apparaîtront après quelques jours de données de santé et de budget.</span></p>`;
+    }
+
+    wrap.innerHTML = html;
+  } catch (e) {
+    wrap.innerHTML = `<p class="muted">${esc(e.message)}</p>`;
+  }
 }
 
 async function _loadDuplicateTools() {

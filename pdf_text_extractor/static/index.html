@@ -2088,7 +2088,9 @@
         <button class="parc-tab-btn"        data-optim="duplicates" onclick="switchOptimTab('duplicates')" data-i18n="optim.tab.duplicates">Outils en doublon</button>
         <button class="parc-tab-btn"        data-optim="contracts"  onclick="switchOptimTab('contracts')"  data-i18n="optim.tab.contracts">Contrats</button>
         <button class="parc-tab-btn"        data-optim="processes"  onclick="switchOptimTab('processes')"  data-i18n="optim.tab.processes">Processus RH</button>
-        <button class="parc-tab-btn"        data-optim="aiplan"     onclick="switchOptimTab('aiplan')"     data-i18n="optim.tab.aiplan">Plan IA</button>
+        <button class="parc-tab-btn"        data-optim="aiplan"          onclick="switchOptimTab('aiplan')"          data-i18n="optim.tab.aiplan">Plan IA</button>
+        <button class="parc-tab-btn"        data-optim="recommandations" onclick="switchOptimTab('recommandations')" >Recommandations</button>
+        <button class="parc-tab-btn"        data-optim="previsions"      onclick="switchOptimTab('previsions')"      >Prévisions</button>
       </div>
 
       <!-- Dashboard -->
@@ -2167,6 +2169,16 @@
           <button class="btn btn-primary btn-sm" onclick="openProcessModal()" data-i18n="optim.proc.add">+ Processus</button>
         </div>
         <div id="processes-table-wrap"><p class="muted" data-i18n="loading">Chargement…</p></div>
+      </div>
+
+      <!-- Recommandations IA -->
+      <div id="optim-recommandations" class="parc-content hidden">
+        <div id="reco-list"><p class="muted">Chargement…</p></div>
+      </div>
+
+      <!-- Prévisions -->
+      <div id="optim-previsions" class="parc-content hidden">
+        <div id="prev-list"><p class="muted">Chargement…</p></div>
       </div>
 
       <!-- Plan IA -->

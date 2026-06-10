@@ -71,6 +71,168 @@ def get_efficiency_score(user: CurrentUser = Depends(require_min_role("user"))):
     return _efficiency_score(user.organization_id)
 
 
+@router.get("/recommendations")
+def get_recommendations(user: CurrentUser = Depends(require_min_role("user"))):
+    """Actions concrètes recommandées, triées par économies potentielles."""
+    org_id = user.organization_id
+    org_type = "entreprise"
+    try:
+        with get_db() as cur:
+            cur.execute("SELECT org_type FROM organizations WHERE id = %s LIMIT 1", (org_id,))
+            r = row(cur)
+        org_type = (r.get("org_type") or "entreprise") if r else "entreprise"
+    except Exception:
+        pass
+
+    analysis = _rule_based_analysis(org_id, org_type)
+    steps = analysis.get("steps", [])
+
+    # Cible de navigation pour chaque type d'action
+    def _nav(action: str) -> str:
+        a = action.lower()
+        if any(k in a for k in ("licen",)):            return "licenses"
+        if any(k in a for k in ("doublon", "consolid", "outil")): return "duplicates"
+        if any(k in a for k in ("contrat", "renégo")):  return "contracts"
+        if any(k in a for k in ("automat", "process")): return "processes"
+        return "dashboard"
+
+    recs = []
+    for s in steps:
+        action = s.get("action", "")
+        recs.append({
+            "rank":     s.get("step", 0),
+            "action":   action,
+            "savings":  round(s.get("savings", 0), 0),
+            "impact":   s.get("impact", "medium"),
+            "timeline": s.get("timeline", "—"),
+            "nav_tab":  _nav(action),
+        })
+    return {"recommendations": sorted(recs, key=lambda x: -x["savings"]), "total_savings": analysis.get("total_potential_savings", 0)}
+
+
+@router.get("/predictions")
+def get_predictions(user: CurrentUser = Depends(require_min_role("admin"))):
+    """Prédictions de budget et de santé org sur les 3 prochains mois."""
+    from datetime import datetime as _dt
+    org_id   = user.organization_id
+    now      = date.today()
+    cur_year = now.year
+    cur_mon  = now.month
+
+    # ── Tendances santé par département (kpi_snapshots) ──────────────────────
+    dept_trends: list[dict] = []
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """
+                SELECT k.dept_id, d.name AS dept_name,
+                       k.health_score, k.snapshot_date
+                FROM kpi_snapshots k
+                JOIN departments d ON d.id = k.dept_id
+                WHERE k.org_id = %s
+                  AND k.snapshot_date >= CURRENT_DATE - INTERVAL '60 days'
+                ORDER BY k.dept_id, k.snapshot_date
+                """,
+                (org_id,),
+            )
+            snaps = rows(cur)
+    except Exception:
+        snaps = []
+
+    by_dept: dict[str, list] = {}
+    dept_names: dict[str, str] = {}
+    for s in snaps:
+        did = s["dept_id"]
+        by_dept.setdefault(did, []).append(float(s.get("health_score") or 0))
+        dept_names[did] = s.get("dept_name", did)
+
+    for did, scores in by_dept.items():
+        if len(scores) < 2:
+            continue
+        recent  = scores[-1]
+        earlier = scores[0]
+        trend   = round(recent - earlier, 1)
+        predicted = round(max(0, min(100, recent + trend * 0.5)), 1)
+        dept_trends.append({
+            "dept_id":   did,
+            "dept_name": dept_names[did],
+            "current_score": recent,
+            "trend":     trend,
+            "predicted": predicted,
+            "risk":      "high" if predicted < 40 else ("medium" if predicted < 70 else "low"),
+        })
+    dept_trends.sort(key=lambda x: x["predicted"])
+
+    # ── Prédictions budget par département ────────────────────────────────────
+    budget_risks: list[dict] = []
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """
+                SELECT b.department_id, d.name AS dept_name,
+                       b.month, b.allocated, b.actual
+                FROM budget_entries b
+                LEFT JOIN departments d ON d.id = b.department_id
+                WHERE b.organization_id = %s AND b.year = %s
+                ORDER BY b.department_id, b.month
+                """,
+                (org_id, cur_year),
+            )
+            bent = rows(cur)
+    except Exception:
+        bent = []
+
+    by_bdept: dict[str, dict] = {}
+    for b in bent:
+        did = str(b.get("department_id") or "org")
+        if did not in by_bdept:
+            by_bdept[did] = {"name": b.get("dept_name") or "Organisation", "allocated": 0.0, "monthly": {}}
+        by_bdept[did]["allocated"] += float(b.get("allocated") or 0)
+        m = b.get("month")
+        if m:
+            by_bdept[did]["monthly"][m] = by_bdept[did]["monthly"].get(m, 0.0) + float(b.get("actual") or 0)
+
+    def _lin_forecast(vals: list[float], periods: int = 3) -> list[float]:
+        n = len(vals)
+        if n == 0: return [0.0] * periods
+        if n == 1: return [vals[0]] * periods
+        xm = (n - 1) / 2; ym = sum(vals) / n
+        num = sum((i - xm) * (vals[i] - ym) for i in range(n))
+        den = sum((i - xm) ** 2 for i in range(n))
+        s = num / den if den else 0
+        ic = ym - s * xm
+        return [max(0.0, ic + s * (n + i)) for i in range(periods)]
+
+    for did, bd in by_bdept.items():
+        series  = [bd["monthly"].get(m, 0.0) for m in range(1, cur_mon + 1)]
+        fc      = _lin_forecast(series, 12 - cur_mon)
+        spent   = sum(series)
+        projected_total = spent + sum(fc)
+        alloc   = bd["allocated"]
+        if alloc > 0:
+            proj_pct = round(projected_total / alloc * 100, 1)
+            budget_risks.append({
+                "dept_id":    did,
+                "dept_name":  bd["name"],
+                "allocated":  round(alloc, 0),
+                "spent_ytd":  round(spent, 0),
+                "projected":  round(projected_total, 0),
+                "proj_pct":   proj_pct,
+                "risk":       "high" if proj_pct > 105 else ("medium" if proj_pct > 90 else "low"),
+            })
+    budget_risks.sort(key=lambda x: -x["proj_pct"])
+
+    return {
+        "generated_at": now.isoformat(),
+        "dept_health_trends": dept_trends[:8],
+        "budget_risks": budget_risks[:8],
+        "summary": {
+            "depts_health_at_risk":  sum(1 for d in dept_trends  if d["risk"] in ("high","medium")),
+            "depts_budget_at_risk":  sum(1 for b in budget_risks if b["risk"] in ("high","medium")),
+        },
+    }
+
+
 @router.post("/analyze")
 async def ai_analyze(
     question: str = Query(default="Comment optimiser les opérations et réduire les coûts de votre organisation ?"),
