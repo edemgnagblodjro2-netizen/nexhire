@@ -60,6 +60,17 @@ Le tableau de bord s'adapte au rôle de l'utilisateur : un directeur général v
 - Affecter chaque membre à son département avec son niveau de permission
 - Dès la connexion, chaque employé voit l'interface et l'IA adaptées à son contexte
 
+#### Comment fonctionne le processus d'invitation
+
+1. **L'administrateur génère un lien** depuis l'onglet **Équipe** → *+ Inviter un membre* → saisit l'email et le rôle → clique *Générer le lien*
+2. **Le lien est partagé** par email, Slack ou tout autre canal (valide **7 jours**)
+3. **La personne invitée clique le lien** → elle arrive directement sur le formulaire de création de compte NexHire, pré-rempli avec son email (verrouillé) et le nom de votre organisation
+4. **Elle choisit un mot de passe** et crée son compte → vérifie son email → se connecte
+5. **Elle rejoint automatiquement votre organisation** avec le rôle assigné (Utilisateur, Manager ou Admin)
+
+> **Important :** la personne invitée crée un nouveau compte NexHire spécifique à votre organisation. Elle n'a pas besoin d'un compte Microsoft, Google ou autre — seulement un email et un mot de passe NexHire.  
+> Si le lien est expiré (après 7 jours), l'administrateur doit générer un nouveau lien depuis l'onglet Équipe.
+
 ---
 
 ### 4. Budget et optimisation
