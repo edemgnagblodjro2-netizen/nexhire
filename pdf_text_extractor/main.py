@@ -441,7 +441,12 @@ app = create_app()
 try:
     from apscheduler.schedulers.background import BackgroundScheduler
     from apscheduler.triggers.cron import CronTrigger
-    from scheduler import send_monthly_reports_all_orgs, check_license_expiry_all_orgs, check_trial_expiry_all_orgs
+    from scheduler import (
+        send_monthly_reports_all_orgs,
+        check_license_expiry_all_orgs,
+        check_trial_expiry_all_orgs,
+        check_connector_health_all_orgs,
+    )
 
     _scheduler = BackgroundScheduler(timezone="UTC")
     _scheduler.add_job(
@@ -462,6 +467,13 @@ try:
         check_trial_expiry_all_orgs,
         CronTrigger(hour=10, minute=0),
         id="trial_expiry_check",
+        replace_existing=True,
+        misfire_grace_time=3600,
+    )
+    _scheduler.add_job(
+        check_connector_health_all_orgs,
+        CronTrigger(hour=7, minute=0),
+        id="connector_health_check",
         replace_existing=True,
         misfire_grace_time=3600,
     )

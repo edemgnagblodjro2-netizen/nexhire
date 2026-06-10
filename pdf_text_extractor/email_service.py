@@ -417,6 +417,88 @@ def send_subscription_cancelled_email(
     return _send(to_email, subject, html)
 
 
+def send_connector_alert(
+    to_email: str,
+    org_name: str,
+    failed_connectors: list[dict],
+) -> bool:
+    """Alerte l'owner quand un ou plusieurs connecteurs sont en erreur."""
+    if not failed_connectors:
+        return False
+    count = len(failed_connectors)
+    subject = f"🔴 {count} connecteur{'s' if count > 1 else ''} déconnecté{'s' if count > 1 else ''} — {org_name}"
+
+    rows_html = "".join(
+        f"""<tr>
+          <td style="padding:10px 12px;border-top:1px solid #e2e8f0;font-weight:600;color:#1e293b">{c.get('connector_type','').upper()}</td>
+          <td style="padding:10px 12px;border-top:1px solid #e2e8f0;color:#dc2626;font-size:.82rem">{c.get('last_error','Erreur inconnue')[:120]}</td>
+          <td style="padding:10px 12px;border-top:1px solid #e2e8f0;color:#94a3b8;font-size:.8rem">{str(c.get('updated_at',''))[:16].replace('T',' ')}</td>
+        </tr>"""
+        for c in failed_connectors
+    )
+
+    html = f"""<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/></head>
+<body style="font-family:system-ui,sans-serif;background:#f8fafc;margin:0;padding:32px 16px">
+  <div style="max-width:620px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.08)">
+
+    <div style="background:#0f172a;padding:24px 32px;display:flex;align-items:center;justify-content:space-between">
+      <span style="font-size:1.2rem;font-weight:800;color:#fff">Nex<span style="color:#818CF8">hire</span>
+        <span style="font-size:.65rem;background:rgba(129,140,248,.2);color:#818CF8;padding:2px 7px;border-radius:99px;margin-left:6px;vertical-align:middle">EIP</span>
+      </span>
+      <span style="color:#94a3b8;font-size:.82rem">Alerte connecteurs</span>
+    </div>
+
+    <div style="padding:28px 32px">
+      <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:16px 20px;margin-bottom:24px">
+        <p style="margin:0;font-size:1rem;font-weight:700;color:#dc2626">
+          🔴 {count} connecteur{'s' if count > 1 else ''} déconnecté{'s' if count > 1 else ''} chez {org_name}
+        </p>
+        <p style="margin:6px 0 0;color:#7f1d1d;font-size:.88rem">
+          Les données de {'ces systèmes sont' if count > 1 else 'ce système est'} indisponibles dans NexHire.
+          Le tableau de bord Direction peut afficher des informations incomplètes.
+        </p>
+      </div>
+
+      <table style="width:100%;border-collapse:collapse;font-size:.85rem">
+        <tr style="background:#f8fafc">
+          <th style="padding:10px 12px;text-align:left;color:#1e293b;font-size:.8rem">CONNECTEUR</th>
+          <th style="padding:10px 12px;text-align:left;color:#1e293b;font-size:.8rem">ERREUR</th>
+          <th style="padding:10px 12px;text-align:left;color:#1e293b;font-size:.8rem">DÉTECTÉ</th>
+        </tr>
+        {rows_html}
+      </table>
+
+      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:14px 18px;margin:24px 0 20px">
+        <p style="margin:0;font-weight:700;color:#92400e;font-size:.88rem">Action requise</p>
+        <p style="margin:6px 0 0;color:#78350f;font-size:.85rem">
+          Reconnectez les connecteurs concernés dans NexHire → <strong>Connecteurs</strong>.
+          Si le problème persiste, vérifiez que les permissions n'ont pas été révoquées dans le système source.
+        </p>
+      </div>
+
+      <div style="text-align:center;margin:20px 0">
+        <a href="{APP_URL}#connectors"
+           style="display:inline-block;background:#6366f1;color:#fff;padding:12px 28px;
+                  border-radius:8px;font-weight:700;text-decoration:none;font-size:.92rem">
+          Gérer les connecteurs →
+        </a>
+      </div>
+    </div>
+
+    <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
+      <p style="margin:0;color:#94a3b8;font-size:.76rem">
+        © 2026 Nexhire Inc. · <a href="{APP_URL}" style="color:#6366f1">agenthub.nexhire.ca</a> ·
+        Vous recevez cet email car vous êtes admin de {org_name}.
+      </p>
+    </div>
+  </div>
+</body>
+</html>"""
+    return _send(to_email, subject, html)
+
+
 def send_subscription_confirmation(
     to_email: str,
     org_name: str,

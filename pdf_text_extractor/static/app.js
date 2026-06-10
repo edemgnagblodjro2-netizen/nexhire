@@ -894,8 +894,20 @@ function showAuth(mode = "login") {
   $("view-app").classList.add("hidden");
   $("auth-login").classList.toggle("hidden",  mode !== "login");
   $("auth-signup").classList.toggle("hidden", mode !== "signup");
-  if (mode === "login")  { $("login-error").classList.add("hidden"); $("login-email").focus(); }
-  if (mode === "signup") { $("signup-error").classList.add("hidden"); $("signup-success").classList.add("hidden"); $("signup-org").focus(); }
+  const h = $("auth-left-headline"), s = $("auth-left-sub");
+  if (mode === "login") {
+    $("login-error").classList.add("hidden");
+    $("login-email").focus();
+    if (h) h.innerHTML = "Enterprise Intelligence<br>Platform";
+    if (s) s.textContent = "Connectez tous vos systèmes d'entreprise et interrogez-les en langage naturel.";
+  }
+  if (mode === "signup") {
+    $("signup-error").classList.add("hidden");
+    $("signup-success").classList.add("hidden");
+    $("signup-org").focus();
+    if (h) h.innerHTML = "Commencez votre essai<br>gratuit — 14 jours";
+    if (s) s.textContent = "Aucune carte de crédit requise. Accès complet dès la création de votre compte.";
+  }
 }
 
 function _showSplash(orgName) {
@@ -1385,6 +1397,22 @@ $("agent-form").addEventListener("submit", async e => {
 });
 
 function renderAgentResult(data) {
+  // Bannière connecteurs en erreur
+  let warnEl = $("agent-connector-warning");
+  if (!warnEl) {
+    warnEl = document.createElement("div");
+    warnEl.id = "agent-connector-warning";
+    warnEl.style.cssText = "display:none;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:.83rem;color:#92400e";
+    $("agent-result").insertAdjacentElement("afterbegin", warnEl);
+  }
+  if (data.connector_warnings?.length) {
+    const names = data.connector_warnings.map(t => (CONNECTORS[t]?.label || t).toUpperCase()).join(", ");
+    warnEl.innerHTML = `⚠️ <strong>Données potentiellement incomplètes</strong> — ${names} ${data.connector_warnings.length > 1 ? "sont déconnectés" : "est déconnecté"}. <a href="#" onclick="switchTab('connectors');return false" style="color:#c2410c;font-weight:700">Reconnecter →</a>`;
+    warnEl.style.display = "block";
+  } else {
+    warnEl.style.display = "none";
+  }
+
   const sources = $("agent-sources");
   sources.innerHTML = "";
   if (data.sources?.length) {

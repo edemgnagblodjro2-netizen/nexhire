@@ -80,6 +80,69 @@ def check_trial_expiry_all_orgs() -> None:
     logger.info("Trial expiry check — %d emails envoyés", len(orgs))
 
 
+def check_connector_health_all_orgs() -> None:
+    """Alerte les owners des orgs ayant au moins un connecteur en status=error."""
+    try:
+        from db import get_db, rows
+        from email_service import send_connector_alert
+    except Exception as exc:
+        logger.error("scheduler import error (connector health): %s", exc)
+        return
+
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """
+                SELECT c.connector_type, c.last_error, c.updated_at,
+                       o.id AS org_id, o.name AS org_name, o.owner_email
+                FROM connectors c
+                JOIN organizations o ON o.id = c.organization_id
+                WHERE c.status = 'error'
+                  AND o.owner_email IS NOT NULL
+                  AND o.owner_email <> ''
+                ORDER BY o.id, c.updated_at DESC
+                """
+            )
+            failed = rows(cur)
+    except Exception as exc:
+        logger.error("scheduler DB error (connector health): %s", exc)
+        return
+
+    # Grouper par organisation
+    orgs: dict[str, dict] = {}
+    for c in failed:
+        oid = c["org_id"]
+        if oid not in orgs:
+            orgs[oid] = {
+                "org_name":   c["org_name"],
+                "owner_email": c["owner_email"],
+                "connectors": [],
+            }
+        orgs[oid]["connectors"].append({
+            "connector_type": c["connector_type"],
+            "last_error":     c["last_error"] or "Erreur inconnue",
+            "updated_at":     str(c["updated_at"] or ""),
+        })
+
+    sent = 0
+    for org in orgs.values():
+        try:
+            ok = send_connector_alert(
+                to_email=org["owner_email"],
+                org_name=org["org_name"],
+                failed_connectors=org["connectors"],
+            )
+            if ok:
+                sent += 1
+        except Exception as exc:
+            logger.error("connector alert org %s : %s", org.get("org_name"), exc)
+
+    logger.info(
+        "Connector health check — %d orgs affectées, %d alertes envoyées",
+        len(orgs), sent,
+    )
+
+
 def send_monthly_reports_all_orgs() -> None:
     """Envoie le rapport mensuel à tous les admins des orgs qui l'ont activé."""
     try:

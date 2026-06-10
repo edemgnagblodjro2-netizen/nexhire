@@ -39,6 +39,20 @@ class AgentQueryResponse(BaseModel):
     sources: list[str]
     tools_called: list[dict]
     audit_id: str | None = None
+    connector_warnings: list[str] = []
+
+
+def _error_connectors_for_user(user: CurrentUser) -> list[str]:
+    """Retourne les connecteurs en status=error pour l'org de l'utilisateur."""
+    try:
+        with get_db() as cur:
+            cur.execute(
+                "SELECT connector_type FROM connectors WHERE organization_id = %s AND status = 'error'",
+                (user.organization_id,),
+            )
+            return [r["connector_type"] for r in rows(cur)]
+    except Exception:
+        return []
 
 
 def _connected_connectors_for_user(user: CurrentUser) -> list[str]:
@@ -145,6 +159,7 @@ def agent_query(
     check_and_consume_query(user.organization_id, user.subscription_status)
 
     connectors = _connected_connectors_for_user(user)
+    error_connectors = _error_connectors_for_user(user)
     # Workspace actif (envoyé par le frontend) prend la priorité sur le département DB de l'utilisateur
     dept_type = payload.dept_type or _get_user_dept_type(user.id)
 
@@ -194,4 +209,5 @@ def agent_query(
         sources=result.sources,
         tools_called=result.tools_called,
         audit_id=audit_id,
+        connector_warnings=error_connectors,
     )

@@ -64,6 +64,10 @@ def refresh_oauth(
             "grant_type":    "refresh_token",
         }, timeout=12)
         if resp.status_code != 200:
+            _mark_connector_error(
+                connector_id,
+                f"Token refresh failed: HTTP {resp.status_code} — {resp.text[:200]}",
+            )
             return creds
         data = resp.json()
         creds = {
@@ -78,10 +82,22 @@ def refresh_oauth(
             "encrypted_credentials": encrypt(json.dumps(creds)),
             "updated_at": datetime.now(UTC).isoformat(),
         }).eq("id", connector_id).execute()
-    except Exception:
-        pass
+    except Exception as exc:
+        _mark_connector_error(connector_id, f"Token refresh exception: {exc}")
 
     return creds
+
+
+def _mark_connector_error(connector_id: str, error_msg: str) -> None:
+    """Passe le connecteur en status=error et persiste le message d'erreur."""
+    try:
+        service_client().table("connectors").update({
+            "status":     "error",
+            "last_error": error_msg[:500],
+            "updated_at": datetime.now(UTC).isoformat(),
+        }).eq("id", connector_id).execute()
+    except Exception:
+        pass
 
 
 def bearer(creds: dict) -> dict[str, str]:
