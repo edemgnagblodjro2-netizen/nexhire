@@ -75,23 +75,26 @@ def analytics_dashboard(
 ):
     """Retourne les métriques d'utilisation pour le tableau de bord."""
     since = (datetime.now(timezone.utc) - timedelta(days=days)).isoformat()
+    org_id = str(user.organization_id)
 
-    # 1. Queries d'agent uniquement
+    # 1. Queries d'agent uniquement — filtrées par organisation
     with get_db() as cur:
         cur.execute(
             """
             SELECT created_at, user_id, satisfaction_score, metadata
             FROM audit_logs
-            WHERE action = 'agent_query' AND created_at >= %s
+            WHERE action = 'agent_query'
+              AND organization_id = %s
+              AND created_at >= %s
             """,
-            (since,),
+            (org_id, since),
         )
         audit_rows = rows(cur)
 
     with get_db() as cur:
         cur.execute(
-            "SELECT COUNT(*) AS cnt FROM audit_logs WHERE action = 'agent_query' AND created_at >= %s",
-            (since,),
+            "SELECT COUNT(*) AS cnt FROM audit_logs WHERE action = 'agent_query' AND organization_id = %s AND created_at >= %s",
+            (org_id, since),
         )
         cnt_row = row(cur)
     total_queries = cnt_row["cnt"] if cnt_row else 0
@@ -138,8 +141,8 @@ def analytics_dashboard(
     try:
         with get_db() as cur:
             cur.execute(
-                "SELECT event_type FROM usage_events WHERE created_at >= %s",
-                (since,),
+                "SELECT event_type FROM usage_events WHERE org_id = %s AND created_at >= %s",
+                (org_id, since),
             )
             evt_rows = rows(cur)
         event_counts: dict[str, int] = {}
@@ -149,12 +152,12 @@ def analytics_dashboard(
     except Exception:
         event_counts = {}
 
-    # 7. % utilisation (actifs / total users si admin)
+    # 7. % utilisation (actifs / total users de l'org, si admin)
     utilization_pct = None
     try:
-        if getattr(user, "role", "") in ("admin", "superadmin"):
+        if getattr(user, "role", "") in ("admin", "owner", "superadmin"):
             with get_db() as cur:
-                cur.execute("SELECT COUNT(*) AS cnt FROM users")
+                cur.execute("SELECT COUNT(*) AS cnt FROM users WHERE organization_id = %s", (org_id,))
                 total_row = row(cur)
             total_users = (total_row["cnt"] if total_row else 0) or 1
             active_ids = {str(r.get("user_id")) for r in audit_rows if r.get("user_id")}

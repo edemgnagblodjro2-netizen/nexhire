@@ -101,16 +101,17 @@ def billing_status(user: CurrentUser = Depends(require_min_role("user"))):
     with get_db() as cur:
         cur.execute(
             """SELECT subscription_status, subscription_plan, subscription_end,
-                      stripe_customer_id
+                      trial_ends_at, stripe_customer_id
                FROM organizations WHERE id = %s LIMIT 1""",
             (user.organization_id,),
         )
         r = row(cur) or {}
     return {
-        "status":      r.get("subscription_status", "trialing"),
-        "plan":        r.get("subscription_plan", "trial"),
-        "ends_at":     r.get("subscription_end"),
-        "has_stripe":  bool(r.get("stripe_customer_id")),
+        "status":        r.get("subscription_status", "trialing"),
+        "plan":          r.get("subscription_plan", "trial"),
+        "ends_at":       r.get("subscription_end"),
+        "trial_ends_at": r.get("trial_ends_at"),
+        "has_stripe":    bool(r.get("stripe_customer_id")),
         "stripe_configured": bool(live_key),
         "price_monthly_set": bool(os.environ.get("STRIPE_PRICE_MONTHLY", "") or STRIPE_PRICE_MONTHLY),
         "price_annual_set":  bool(os.environ.get("STRIPE_PRICE_ANNUAL", "") or STRIPE_PRICE_ANNUAL),

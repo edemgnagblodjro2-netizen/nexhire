@@ -55,12 +55,12 @@ def check_trial_expiry_all_orgs() -> None:
         with get_db() as cur:
             cur.execute(
                 """SELECT name, owner_email,
-                          (subscription_end::date - CURRENT_DATE) AS days_left
+                          (trial_ends_at::date - CURRENT_DATE) AS days_left
                    FROM organizations
                    WHERE subscription_status = 'trialing'
-                     AND subscription_end IS NOT NULL
+                     AND trial_ends_at IS NOT NULL
                      AND owner_email IS NOT NULL
-                     AND (subscription_end::date - CURRENT_DATE) IN (7, 3, 1)"""
+                     AND (trial_ends_at::date - CURRENT_DATE) IN (7, 3, 1)"""
             )
             orgs = rows(cur)
     except Exception as exc:

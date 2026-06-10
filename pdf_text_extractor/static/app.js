@@ -2958,6 +2958,33 @@ async function _loadBillingStatus() {
       billingBadge.className = "plan-badge " + (b.status === "active" ? "plan-active" : b.status === "trialing" ? "plan-trial" : "plan-inactive");
     }
 
+    // Mise à jour du banner trial avec le vrai décompte
+    if (b.status === "trialing") {
+      const banner = $("trial-banner");
+      const txt    = $("trial-text");
+      if (banner && txt) {
+        let daysLeft = null;
+        const endDateStr = b.trial_ends_at || b.ends_at;
+        if (endDateStr) {
+          const end   = new Date(endDateStr); end.setHours(0,0,0,0);
+          const today = new Date();            today.setHours(0,0,0,0);
+          daysLeft = Math.ceil((end - today) / 86400000);
+        }
+        if (daysLeft === null) {
+          txt.textContent = "Vous êtes en période d'essai gratuit — passez au Premium pour continuer.";
+        } else if (daysLeft <= 0) {
+          txt.textContent = "⛔ Votre période d'essai est terminée. Passez au Premium pour continuer.";
+          txt.style.color = "#dc2626"; banner.style.background = "#fee2e2"; banner.style.borderColor = "#fca5a5";
+        } else if (daysLeft <= 3) {
+          txt.textContent = `⚠️ Votre essai se termine dans ${daysLeft} jour${daysLeft > 1 ? "s" : ""} — passez au Premium maintenant.`;
+          txt.style.color = "#b45309"; banner.style.background = "#fef3c7"; banner.style.borderColor = "#fde68a";
+        } else {
+          txt.textContent = `Vous êtes en période d'essai gratuit — encore ${daysLeft} jours restants. Passez au Premium pour continuer.`;
+        }
+        banner.classList.remove("hidden");
+      }
+    }
+
     // Affiche les boutons selon l'état
     if (b.status === "active" && b.has_stripe) {
       if (subscribeWrap) subscribeWrap.classList.add("hidden");

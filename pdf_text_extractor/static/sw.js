@@ -1,4 +1,4 @@
-const CACHE_NAME    = "nexhire-v8";
+const CACHE_NAME    = "nexhire-v9";
 const STATIC_ASSETS = [
   "/",
   "/static/app.js",
