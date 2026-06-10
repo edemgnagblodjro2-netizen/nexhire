@@ -60,7 +60,7 @@ def list_connectors(user: CurrentUser = Depends(require_min_role("user"))):
     """Liste les connecteurs accessibles à l'utilisateur.
 
     - Admin/owner : tous les connecteurs + leurs départements assignés.
-    - Membre : connecteurs sans restriction (org-wide) OU assignés à ses départements.
+    - Membre : uniquement les connecteurs explicitement assignés à ses départements.
     """
     if _is_admin(user):
         # Jointure pour récupérer les départements assignés à chaque connecteur
@@ -105,23 +105,11 @@ def list_connectors(user: CurrentUser = Depends(require_min_role("user"))):
             )
             dept_ids = [r["department_id"] for r in rows(cur)]
 
-        # Quand dept_ids est vide, ANY(%s) échoue sur le type UUID — requête adaptée
+        # Aucun département assigné → aucun connecteur visible
         if not dept_ids:
-            with get_db() as cur:
-                cur.execute(
-                    """
-                    SELECT DISTINCT c.id, c.connector_type, c.status,
-                                    c.connected_at, c.last_error, c.updated_at
-                    FROM connectors c
-                    WHERE c.organization_id = %s
-                      AND NOT EXISTS (
-                          SELECT 1 FROM connector_departments WHERE connector_id = c.id
-                      )
-                    """,
-                    (user.organization_id,),
-                )
-                return rows(cur)
+            return []
 
+        # Seulement les connecteurs explicitement assignés aux départements du membre
         with get_db() as cur:
             cur.execute(
                 """
@@ -129,15 +117,10 @@ def list_connectors(user: CurrentUser = Depends(require_min_role("user"))):
                                 c.connected_at, c.last_error, c.updated_at
                 FROM connectors c
                 WHERE c.organization_id = %s
-                  AND (
-                      NOT EXISTS (
-                          SELECT 1 FROM connector_departments WHERE connector_id = c.id
-                      )
-                      OR EXISTS (
-                          SELECT 1 FROM connector_departments
-                          WHERE connector_id = c.id
-                            AND department_id = ANY(%s::uuid[])
-                      )
+                  AND EXISTS (
+                      SELECT 1 FROM connector_departments
+                      WHERE connector_id = c.id
+                        AND department_id = ANY(%s::uuid[])
                   )
                 """,
                 (user.organization_id, dept_ids),
