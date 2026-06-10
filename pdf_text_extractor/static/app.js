@@ -1168,8 +1168,16 @@ document.addEventListener("click", () => {
 // AUTH
 // ═══════════════════════════════════════════════════════════════════════════
 
-function saveToken(t) { state.token = t; localStorage.setItem("nexhire_token", t); }
-function clearAuth()  { state.token = null; state.user = null; localStorage.removeItem("nexhire_token"); }
+function saveToken(t, rt) {
+  state.token = t;
+  localStorage.setItem("nexhire_token", t);
+  if (rt) localStorage.setItem("nexhire_refresh_token", rt);
+}
+function clearAuth() {
+  state.token = null; state.user = null;
+  localStorage.removeItem("nexhire_token");
+  localStorage.removeItem("nexhire_refresh_token");
+}
 
 async function apiCall(path, method = "GET", body = null) {
   const ctrl = new AbortController();
@@ -1187,7 +1195,20 @@ async function apiCall(path, method = "GET", body = null) {
   } finally {
     clearTimeout(tid);
   }
-  if (res.status === 401) { clearAuth(); showAuth("login"); throw new Error("Session expirée."); }
+  if (res.status === 401) {
+    const rt = localStorage.getItem("nexhire_refresh_token");
+    if (rt && !path.includes("/auth/refresh")) {
+      try {
+        const rr = await fetch("/api/auth/refresh", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({refresh_token: rt}) });
+        if (rr.ok) {
+          const rd = await rr.json();
+          saveToken(rd.access_token, rd.refresh_token);
+          return apiCall(path, method, body);
+        }
+      } catch {}
+    }
+    clearAuth(); showAuth("login"); throw new Error("Session expirée.");
+  }
   const data = await res.json().catch(() => ({ detail: `HTTP ${res.status}` }));
   if (!res.ok) {
     const err = new Error(data.detail || `Erreur ${res.status}`);
@@ -1214,7 +1235,7 @@ $("login-form").addEventListener("submit", async e => {
     });
     const json = await data.json();
     if (!data.ok) throw new Error(json.detail || "Connexion échouée.");
-    saveToken(json.access_token);
+    saveToken(json.access_token, json.refresh_token);
     await fetchMe();
     showApp();
   } catch (ex) {

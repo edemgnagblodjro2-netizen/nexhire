@@ -117,10 +117,31 @@ def login(payload: LoginPayload, request: Request, background: BackgroundTasks):
         http_status=200,
     ))
     return {
-        "access_token": res.session.access_token,
-        "token_type": "bearer",
-        "user_id": res.user.id,
-        "expires_in": res.session.expires_in,
+        "access_token":  res.session.access_token,
+        "refresh_token": res.session.refresh_token,
+        "token_type":    "bearer",
+        "user_id":       res.user.id,
+        "expires_in":    res.session.expires_in,
+    }
+
+
+class RefreshPayload(BaseModel):
+    refresh_token: str
+
+@router.post("/refresh")
+def refresh_token(payload: RefreshPayload):
+    """Renouvelle l'access_token via le refresh_token Supabase."""
+    try:
+        sb = anon_client()
+        res = sb.auth.refresh_session(payload.refresh_token)
+    except Exception as exc:
+        raise HTTPException(status_code=401, detail="Session expirée — reconnectez-vous.") from exc
+    if not res.session:
+        raise HTTPException(status_code=401, detail="Session expirée — reconnectez-vous.")
+    return {
+        "access_token":  res.session.access_token,
+        "refresh_token": res.session.refresh_token,
+        "expires_in":    res.session.expires_in,
     }
 
 
