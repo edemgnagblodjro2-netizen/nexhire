@@ -4098,9 +4098,15 @@ async function loadOrgChart() {
     wrap.innerHTML = depts.map(dept => {
       const icon = DEPT_ICONS[dept.dept_type] || "🏢";
       const members = dept.members || [];
+      const canManage = ["admin","owner"].includes(state.user?.role);
       if (!members.length) return `
         <div class="org-dept-block">
-          <div class="org-dept-hd">${icon} ${esc(dept.name)} <span class="org-dept-count muted">— aucun membre</span></div>
+          <div class="org-dept-hd">
+            ${icon} ${esc(dept.name)} <span class="org-dept-count muted">— aucun membre</span>
+            ${canManage ? `<button class="btn btn-primary btn-sm org-add-member-btn"
+              onclick="openAddMemberModal('${dept.id}','${esc(dept.name)}')"
+              style="margin-left:auto;font-size:.75rem;padding:3px 10px">+ Membre</button>` : ""}
+          </div>
         </div>`;
 
       const rows = members.map(m => {
@@ -4125,7 +4131,6 @@ async function loadOrgChart() {
           </div>`;
       }).join("");
 
-      const canManage = ["admin","owner"].includes(state.user?.role);
       return `
         <div class="org-dept-block">
           <div class="org-dept-hd" onclick="this.nextElementSibling.classList.toggle('hidden')">
