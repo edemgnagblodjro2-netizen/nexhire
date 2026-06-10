@@ -1,6 +1,6 @@
 # NexHire EIP — Guide de présentation client
 
-**Version :** 2.0 (juin 2026)  
+**Version :** 3.0 (juin 2026)  
 **Produit :** NexHire Enterprise Intelligence Platform  
 **URL :** `https://agenthub.nexhire.ca`
 
@@ -25,7 +25,7 @@ NexHire EIP est une **plateforme d'intelligence d'entreprise tout-en-un** qui co
 
 ---
 
-## Les 7 modules clés
+## Les 10 modules clés
 
 ### 1. Assistant IA contextuel
 
@@ -43,42 +43,75 @@ L'assistant IA se configure **automatiquement** selon le département de l'emplo
 
 Tableau de bord de direction temps réel avec :
 
+- **Score Santé Organisationnel (0-100)** — indicateur global calculé à partir des scores de chaque département. Affiché avec un badge coloré (Excellent / Bon / À surveiller / Critique) et une jauge SVG en anneau.
 - **Cartes KPI accordéon** par département (expandables au clic)
 - **Ticker défilant** des métriques critiques
 - **Alertes cliquables** avec actions contextuelles recommandées
 - **Graphiques de tendance** avec historique sur 6 mois (Chart.js)
 - **Comparaisons mois-sur-mois** pour anticiper les dérapages
+- **Briefing exécutif hebdomadaire** — email automatique envoyé chaque lundi à 07h30 UTC à l'administrateur avec un résumé des KPIs de tous les départements
 
 Le tableau de bord s'adapte au rôle de l'utilisateur : un directeur général voit l'agrégé de tous les départements, un responsable Finance ne voit que ses KPIs.
 
 ---
 
-### 3. Gestion des membres et départements
+### 3. Optimisation IA — Centre d'économies
 
-- Créer tous les départements de votre organisation (Juridique, Finance, IT, RH, Opérations, Marketing, etc.)
-- Inviter les membres par email — ils reçoivent un lien d'activation sécurisé
-- Affecter chaque membre à son département avec son niveau de permission
-- Dès la connexion, chaque employé voit l'interface et l'IA adaptées à son contexte
+Module dédié à l'identification des opportunités d'économies et d'efficacité, organisé en trois onglets :
 
-#### Comment fonctionne le processus d'invitation
+#### Opportunités d'économies
+- Opportunités numérotées (N°1, N°2…) classées par impact financier estimé
+- Chaque opportunité indique le département concerné, le type (licences / processus / contrats) et l'économie annuelle potentielle
+- Badge coloré selon le type de département
 
-1. **L'administrateur génère un lien** depuis l'onglet **Équipe** → *+ Inviter un membre* → saisit l'email et le rôle → clique *Générer le lien*
-2. **Le lien est partagé** par email, Slack ou tout autre canal (valide **7 jours**)
-3. **La personne invitée clique le lien** → elle arrive directement sur le formulaire de création de compte NexHire, pré-rempli avec son email (verrouillé) et le nom de votre organisation
-4. **Elle choisit un mot de passe** et crée son compte → vérifie son email → se connecte
-5. **Elle rejoint automatiquement votre organisation** avec le rôle assigné (Utilisateur, Manager ou Admin)
+#### Centre de recommandations
+- Actions concrètes avec impact estimé, effort requis et délai de mise en œuvre
+- Bouton de navigation directe vers le module concerné (ex. cliquer sur une recommandation contrats redirige vers Contrats)
 
-> **Important :** la personne invitée crée un nouveau compte NexHire spécifique à votre organisation. Elle n'a pas besoin d'un compte Microsoft, Google ou autre — seulement un email et un mot de passe NexHire.  
-> Si le lien est expiré (après 7 jours), l'administrateur doit générer un nouveau lien depuis l'onglet Équipe.
+#### Prévisions et risques
+- Tendances de santé par département sur les 30 derniers jours
+- Prévisions budgétaires à 3 mois basées sur les dépenses réelles
+- Barres de risque budgétaire avec pourcentage de dépassement prévu
 
 ---
 
-### 4. Budget et optimisation
+### 4. Gestion des membres, départements et hiérarchie
 
-- Saisir les budgets alloués par catégorie et département
-- Suivre les dépenses réelles en temps réel
-- **Alerte automatique** à 80% du budget consommé → notification dans Teams ou Slack
-- Recommandations d'optimisation générées par l'IA
+#### Créer et organiser les départements
+- Initialisation automatique par secteur : Entreprise privée, Hôpital, Municipalité, Université, PME, PMI, Entrepreneur
+- Types de département reconnus : Finance, RH, IT, Juridique, Opérations, Communication, Direction, Approvisionnement, Marketing
+- Chaque département a un type qui détermine les catégories de contrats visibles, les KPIs affichés et les accès IA
+
+#### Inviter des membres
+1. L'administrateur génère un lien depuis **Équipe → + Inviter un membre** (valide **7 jours**)
+2. Le lien est partagé par email, Slack ou tout autre canal
+3. La personne invitée arrive sur le formulaire NexHire pré-rempli avec son email (verrouillé)
+4. Elle choisit un mot de passe, vérifie son email et se connecte
+5. Elle rejoint automatiquement l'organisation avec le rôle assigné
+
+> **Important :** La personne invitée crée un compte NexHire propre — aucun compte Microsoft ou Google requis.
+
+#### Niveaux hiérarchiques (1 à 6)
+
+| Niveau | Titre | Accès |
+|---|---|---|
+| 1 | Direction Générale | Accès total — tous les KPIs financiers, tous les départements |
+| 2 | VP / Directeur Exécutif | Accès total |
+| 3 | Directeur de Département | Accès complet département + KPIs financiers |
+| 4 | Gestionnaire / Chef d'équipe | Budget consommé — pas de projections ni savings $ |
+| 5 | Superviseur | Comptages et scores — aucune donnée financière |
+| 6 | Employé | Comptages et scores — aucune donnée financière |
+
+> L'accès est déterminé automatiquement à l'ajout d'un membre — l'admin choisit le niveau, les droits s'appliquent immédiatement.
+
+#### Transfert de département
+- Le bouton **⇄** permet de transférer un membre d'un département à un autre
+- **Par défaut** : le membre **perd tous ses droits dans l'ancien département** (suppression automatique)
+- **Option "double appartenance"** : une case à cocher permet de maintenir l'accès à l'ancien département si nécessaire (ex. un manager à cheval sur Finance et Opérations)
+
+#### Navigation contextuelle par département
+- **Parc IT** — visible uniquement pour les membres IT, Direction et les admins. Les autres départements (Finance, RH, Juridique…) ne voient pas cet onglet.
+- **Type d'organisation** dans les paramètres — modifiable uniquement par les admins ; figé en lecture seule pour les autres membres.
 
 ---
 
@@ -118,77 +151,118 @@ Connectez NexHire à vos outils existants. Aucune migration, aucun double-encoda
 | Monday.com | Tableaux, Automatisations |
 | ClickUp | Tâches, Documents, Sprints |
 
-> **Test de connexion automatique :** Pour SAP, Workday et Autotask, NexHire teste la connectivité dès l'enregistrement des credentials et affiche un retour immédiat.
->
-> **Sécurité :** Toutes les credentials sont chiffrées (AES-128) avant d'être stockées. Elles ne sont jamais affichées en clair.
+#### Comptes de service par département
+
+Chaque connecteur peut être **restreint à un ou plusieurs départements**. Exemple : QuickBooks est accessible uniquement au département Finance, Jira uniquement à IT.
+
+- L'admin assigne les départements autorisés via **🔒 Accès département** sur chaque connecteur
+- Les membres des autres départements ne voient pas les connecteurs qui ne leur sont pas assignés
+- Recommandation : créer un compte de service dédié par département dans chaque système source (ex. `svc-finance@org.com` pour QuickBooks, `svc-it@org.com` pour Jira) — meilleure traçabilité et révocation facilitée
+
+> **Sécurité :** Toutes les credentials sont chiffrées (AES-128) avant stockage. Elles ne sont jamais affichées en clair.  
+> **Connexion permanente :** Les tokens OAuth sont renouvelés automatiquement en arrière-plan — aucune reconnexion manuelle requise.  
+> **Test automatique :** Pour SAP, Workday et Autotask, NexHire teste la connectivité dès l'enregistrement des credentials.
 
 ---
 
-### 6. SSO — Connexion unique d'entreprise
+### 6. Analyse de documents PDF confidentiels
 
-Les employés se connectent à NexHire avec leurs **identifiants d'entreprise existants** — plus de mot de passe NexHire séparé à retenir.
+Téléversez des PDF — politiques, appels d'offres, contrats, rapports — et posez des questions directement sur leur contenu en langage naturel.
+
+#### Sécurité et confidentialité des documents
+
+Point clé pour les clients soucieux de la confidentialité :
+
+| Aspect | Détail |
+|---|---|
+| **Fichier jamais stocké** | Le PDF est lu en mémoire, le texte extrait, le binaire immédiatement effacé |
+| **Seul le texte est conservé** | Stocké dans votre espace isolé (lié à votre `organization_id`) |
+| **Transport chiffré** | HTTPS/TLS entre le navigateur et le serveur |
+| **Isolation totale** | Aucune autre organisation ne peut accéder à vos documents |
+| **Audit complet** | Chaque upload et chaque consultation tracés dans le journal d'audit |
+| **Suppression à la demande** | Bouton "🗑️ Supprimer ce document" disponible après chaque upload |
+| **Anthropic (Claude) API** | Anthropic ne réutilise pas les données de l'API pour entraîner ses modèles |
+
+#### Ce que vous répondez à un prospect
+
+> *"Mon document est confidentiel — que se passe-t-il quand je l'uploade ?"*
+
+**Réponse :** Le fichier PDF n'est jamais stocké. On en extrait le texte en mémoire, le fichier disparaît immédiatement. Seul le texte extrait est sauvegardé dans votre espace isolé — chiffré en transit, lié à votre organisation. Tout accès est tracé dans votre journal d'audit. Pour l'analyse IA, le texte est transmis à l'API Anthropic (Claude), qui s'engage contractuellement à ne pas utiliser les données API pour entraîner ses modèles. Vous pouvez supprimer le document à tout moment depuis l'interface.
+
+---
+
+### 7. Parc IT et gestion des actifs
+
+*(Visible uniquement pour les départements IT, Direction et les administrateurs.)*
+
+- **Budget IT** : suivi des dépenses par catégorie, prévisions à 3 mois
+- **Licences logicielles** : dates d'expiration, alertes 30 jours avant, taux d'utilisation
+- **Équipements** : inventaire serveurs et appareils, statut de décommissionnement
+- **Applications** : suivi des apps actives, détection des inutilisées
+- Vue d'ensemble en 4 KPIs : budget consommé, licences à risque, équipements à décommissionner, applications inutilisées
+
+---
+
+### 8. Gestion des contrats par département
+
+- Création de contrats fournisseurs avec suivi des renouvellements et alertes automatiques
+- **Catégories contextuelles par département** : un utilisateur Finance voit les catégories Audit, Conseil financier, Assurances, Banque — un utilisateur IT voit Logiciels, Cloud, Matériel, Services IT. Aucune confusion entre les secteurs.
+- Potentiel de négociation estimé en %
+- Alertes renouvellement à 30 et 90 jours
+- Filtrage par département, statut et catégorie
+
+---
+
+### 9. Statistiques d'utilisation (isolées par organisation)
+
+Chaque organisation voit **uniquement ses propres statistiques** — aucune donnée d'une autre organisation n'apparaît jamais.
+
+- Nombre de requêtes IA sur 7 / 30 / 90 jours
+- Activité quotidienne (graphique barres)
+- Connecteurs les plus utilisés
+- Score de satisfaction moyen (notes 1-5 étoiles)
+- Taux d'utilisation : % de membres actifs vs membres inscrits *(admins uniquement)*
+- Top utilisateurs *(admins uniquement)*
+
+---
+
+### 10. SSO — Connexion unique d'entreprise
+
+Les employés se connectent à NexHire avec leurs **identifiants d'entreprise existants** — plus de mot de passe NexHire séparé.
 
 **Fournisseurs supportés :**
-- Microsoft Entra ID (Azure AD) — idéal pour les entreprises Microsoft
-- Google Workspace — idéal pour les organisations Google
-- Okta — pour les entreprises avec un IdP dédié
+- Microsoft Entra ID (Azure AD)
+- Google Workspace
+- Okta
 
-**Bénéfices :**
-- Déploiement instantané sur toute l'organisation
-- Accès révoqué dès que l'employé quitte l'entreprise (centralisé dans votre IdP)
-- Conformité IT et sécurité renforcée
+**Bénéfices :** déploiement instantané, révocation centralisée, conformité IT renforcée.
 
 ---
 
-### 7. Alertes Teams et Slack
+## Alertes automatiques — récapitulatif complet
 
-Recevez les alertes critiques directement dans vos canaux Teams ou Slack existants.
-
-| Alerte | Déclencheur |
-|---|---|
-| Nouveau membre rejoint | Un employé accepte une invitation |
-| Abonnement activé | Paiement Stripe confirmé |
-| Alerte budget | Dépenses ≥ 80% du budget alloué |
-| Licence bientôt expirée | 30 jours avant la date d'expiration |
-
-Configuration en 2 clics : **Paramètres → Intégrations → coller l'URL de votre webhook Teams/Slack**.
-
----
-
-## L'expérience utilisateur
-
-### Premier accès — Splash screen de bienvenue
-
-À la connexion, une animation de bienvenue soignée s'affiche pendant 5 secondes avec le nom de l'organisation et la signature NexHire EIP. Première impression professionnelle garantie lors des démonstrations et du déploiement.
-
-### Interface contextuelle automatique
-
-L'application détecte le département de chaque employé et adapte automatiquement :
-- Les suggestions de l'assistant IA
-- Les KPIs affichés en priorité
-- Les raccourcis et actions rapides
-
-**Aucune configuration par employé** : l'admin assigne un département, tout le reste s'adapte.
-
-### Application mobile (PWA)
-
-NexHire EIP s'installe comme une application native sur :
-- **Windows / macOS** : icône sur le bureau, fenêtre standalone
-- **iPhone / iPad** : Partager → Sur l'écran d'accueil
-- **Android** : bannière d'installation automatique
-
-Fonctionne hors ligne pour les données en cache. Notifications push supportées.
-
----
-
-## Emails automatiques
-
-| Email | À qui | Quand |
+| Alerte | Canal | Déclencheur |
 |---|---|---|
-| Bienvenue dans NexHire | Nouvel utilisateur | Lors de l'inscription |
-| Confirmation d'abonnement | Admin de l'org | Après paiement Stripe |
-| Rappel fin d'essai | Admin de l'org | J-7, J-3, J-1 avant fin de l'essai |
-| Confirmation d'annulation | Admin de l'org | Lors de l'annulation Stripe |
+| Nouveau membre rejoint | Teams / Slack | Acceptation d'une invitation |
+| Alerte budget | Teams / Slack | Dépenses ≥ 80% du budget alloué |
+| Licence bientôt expirée | Teams / Slack | 30 jours avant expiration |
+| Connecteur déconnecté | Email + bannière UI | Erreur de connexion détectée |
+| Fin d'essai imminente | Email | J-7, J-3, J-1 avant expiration du trial |
+| Abonnement activé | Teams / Slack | Paiement Stripe confirmé |
+| Briefing hebdomadaire | Email | Chaque lundi à 07h30 UTC |
+
+---
+
+## Période d'essai — comment ça fonctionne
+
+- **14 jours gratuits** — aucune carte de crédit requise
+- Un décompte précis en temps réel est affiché dans l'interface : *"Encore 11 jours restants"*
+- Le décompte change de couleur selon l'urgence :
+  - Vert → plus de 3 jours restants
+  - Orange → 3 jours ou moins
+  - Rouge → essai expiré
+- L'administrateur reçoit des **emails d'alerte automatiques** à J-7, J-3 et J-1
+- Transition transparente vers Premium en 2 clics (Stripe)
 
 ---
 
@@ -196,78 +270,119 @@ Fonctionne hors ligne pour les données en cache. Notifications push supportées
 
 | Point | Détail |
 |---|---|
-| **Chiffrement des données** | Credentials connecteurs et SSO chiffrés AES-128 (Fernet) |
-| **Auth sécurisée** | Supabase Auth + JWT signés, sessions courte durée |
+| **Chiffrement credentials** | AES-128 (Fernet) pour tous les tokens et clés API |
+| **Auth sécurisée** | Supabase Auth + JWT ES256, sessions courte durée |
 | **HTTPS** | TLS enforced sur tout le domaine `agenthub.nexhire.ca` |
-| **Isolation des organisations** | Chaque org voit uniquement ses propres données |
-| **Accès par rôle** | Chaque fonctionnalité filtrée par rôle (owner / admin / manager / member) |
-| **Webhooks Stripe** | Validés par signature HMAC — impossible à forger |
-| **Hébergement** | Render (infrastructure cloud canadienne disponible) |
+| **Isolation des organisations** | Chaque org voit uniquement ses propres données — stats, docs, contrats, membres, connecteurs |
+| **Accès par rôle** | 4 rôles (owner / admin / manager / member) + 6 niveaux hiérarchiques |
+| **Accès par département** | Les connecteurs, contrats, processus et budgets sont filtrés par département |
+| **Documents PDF** | Binaire jamais stocké — seul le texte extrait, suppression à la demande |
+| **Webhooks Stripe** | Validés par signature HMAC |
+| **Journal d'audit immuable** | Chaque action tracée avec IP, utilisateur, date, résultat — append-only |
+| **Conformité PIPEDA** | Loi fédérale canadienne sur la protection des renseignements personnels |
+| **Conformité Loi 25 QC** | Note complémentaire pour les clients québécois |
+| **Hébergement** | Render + Supabase (infrastructure canadienne disponible) |
 
 ---
 
-## Script de démonstration (20 minutes)
+## L'expérience utilisateur
 
-### Phase 1 — Connexion et découverte (5 min)
+### Premier accès — Splash screen de bienvenue
+
+À la connexion, une animation de bienvenue soignée s'affiche avec le nom de l'organisation et la signature NexHire EIP. Première impression professionnelle garantie lors des démonstrations.
+
+### Interface contextuelle automatique
+
+| Ce que l'app détecte | Ce qui s'adapte |
+|---|---|
+| Département de l'employé | Suggestions IA, catégories de contrats |
+| Rôle (admin / manager / member) | Onglets visibles, actions disponibles |
+| Type de département (IT / Finance…) | Onglet Parc IT masqué pour les non-IT |
+| Niveau hiérarchique (1-6) | KPIs financiers accessibles ou non |
+
+**Aucune configuration par employé** : l'admin assigne un département et un niveau, tout le reste s'adapte automatiquement.
+
+### Application mobile (PWA)
+
+S'installe sur Windows, macOS, iPhone/iPad, Android. Fonctionne hors ligne pour les données en cache. Notifications push supportées.
+
+---
+
+## Script de démonstration (25 minutes)
+
+### Phase 1 — Connexion et première impression (5 min)
 
 1. Ouvrir `https://agenthub.nexhire.ca`
-2. Se connecter avec le compte de démo → **le splash screen s'affiche** (5 secondes)
-3. Pointer : *"À chaque connexion, l'employé est accueilli avec le nom de son organisation"*
-4. Montrer le **tableau de bord EID** : ticker, cartes KPI, alertes
-5. Cliquer sur une carte KPI → afficher le **graphique de tendance**
+2. Connexion → **splash screen** 5 secondes
+3. Pointer : *"Chaque employé est accueilli avec le nom de son organisation"*
+4. Montrer le **Score Santé Organisationnel** en haut du tableau de bord (jauge 0-100)
+5. Déplier une carte KPI → afficher le graphique de tendance
 
 ### Phase 2 — Intelligence contextuelle (5 min)
 
-6. Ouvrir l'**Assistant IA** (onglet Agent)
-7. Pointer les suggestions rapides : *"Elles sont différentes selon le département — un Juridique voit 'Contrats à renouveler', un Finance voit 'Dépenses vs budget'"*
+6. Aller dans **Assistant IA**
+7. Pointer les suggestions rapides différentes par département
 8. Poser une question en langage naturel
-9. Montrer comment l'IA répond avec les données de l'organisation
+9. Montrer le score de satisfaction (étoiles) sur la réponse
 
-### Phase 3 — Connecteurs et intégrations (5 min)
+### Phase 3 — Optimisation IA (5 min)
 
-10. Aller dans **Connecteurs**
-11. Montrer la liste des 19 connecteurs disponibles
-12. Cliquer sur un connecteur OAuth (ex: Microsoft 365) → montrer le flux de connexion en 1 clic
-13. Montrer le bouton **Test de connexion** (ping) pour les connecteurs API Key
+10. Aller dans **Optimisation IA**
+11. Montrer les opportunités numérotées (N°1, N°2…) avec économies estimées
+12. Cliquer sur **Recommandations** → montrer les actions avec impact et délai
+13. Cliquer sur **Prévisions** → montrer les tendances et risques budgétaires
 
-### Phase 4 — Administration et sécurité (5 min)
+### Phase 4 — Connecteurs et sécurité (5 min)
 
-14. Aller dans **Paramètres → Membres** → montrer la gestion des départements
-15. Montrer **Paramètres → SSO** → *"Vos employés se connectent avec leurs identifiants Microsoft existants"*
-16. Montrer **Paramètres → Intégrations** → *"Les alertes arrivent directement dans votre Teams ou Slack"*
-17. Conclure : *"Tout est installable en PWA sur mobile — vos managers ont leurs tableaux de bord dans leur poche"*
+14. Aller dans **Connecteurs**
+15. Montrer les 22 connecteurs disponibles
+16. Cliquer **🔒 Accès département** sur un connecteur → *"Ce connecteur est réservé au département Finance"*
+17. Montrer les credentials chiffrées (*****) et le bouton Test de connexion
+
+### Phase 5 — Administration et conformité (5 min)
+
+18. **Organisation → organigramme** → montrer les niveaux hiérarchiques et le bouton transfert
+19. Transférer un membre → montrer la case "Conserver l'accès à l'ancien département"
+20. **Documents** → uploader un PDF → pointer la bannière sécurité verte → montrer le bouton 🗑️ Supprimer
+21. **Paramètres → Abonnement** → montrer le décompte trial précis ("Encore X jours")
+22. Conclure : *"Tout est installable en PWA sur mobile — vos managers ont leurs tableaux de bord dans leur poche"*
 
 ---
 
 ## Questions fréquentes en démonstration
 
 **Q : Nos données restent-elles en sécurité ?**  
-R : Oui. Chaque organisation est complètement isolée. Les credentials de vos connecteurs sont chiffrées avant stockage et ne sont jamais affichées en clair. L'hébergement peut être configuré sur des serveurs canadiens.
+R : Chaque organisation est complètement isolée — stats, documents, contrats, membres et connecteurs sont filtrés par `organization_id`. Les credentials de vos connecteurs sont chiffrées AES-128 avant stockage et ne sont jamais affichées en clair. L'hébergement peut être configuré sur infrastructure canadienne.
 
 **Q : Faut-il migrer nos données actuelles ?**  
-R : Non. NexHire se connecte à vos systèmes existants et les lit là où ils sont. Aucune migration, aucun double-encodage.
+R : Non. NexHire se connecte à vos systèmes existants et les lit là où ils sont.
 
 **Q : Faut-il se reconnecter régulièrement aux connecteurs ?**  
-R : Non. La connexion OAuth est permanente. NexHire renouvelle automatiquement les tokens d'accès en arrière-plan — votre équipe IT n'a pas à intervenir. La seule exception : si votre service IT révoque les permissions de l'application NexHire dans votre Azure AD, Google Workspace ou Salesforce, une reconnexion manuelle sera nécessaire.
+R : Non. La connexion OAuth est permanente — NexHire renouvelle automatiquement les tokens en arrière-plan.
 
 **Q : Que se passe-t-il si un connecteur se déconnecte ?**  
-R : NexHire détecte la rupture instantanément et déclenche deux protections automatiques :
-- **Email d'alerte** envoyé à l'administrateur dans l'heure, listant les connecteurs en erreur et les étapes pour reconnecter.
-- **Bannière d'avertissement** visible dans l'interface agent : *"Données potentiellement incomplètes — SAP est déconnecté"* avec un lien direct vers la page Connecteurs.
+R : NexHire déclenche deux protections automatiques : un email d'alerte à l'administrateur, et une bannière d'avertissement dans l'interface agent. Les autres connecteurs continuent de fonctionner normalement.
 
-Le tableau de bord Direction continue d'afficher les données des connecteurs encore actifs — seul le système déconnecté est absent.
+**Q : Un employé Finance verra-t-il les données IT ou RH ?**  
+R : Non. Chaque employé voit uniquement les données de son département. Les connecteurs, contrats, budgets et processus sont tous filtrés par département. L'onglet Parc IT n'apparaît même pas dans le menu d'un employé Finance.
+
+**Q : Que se passe-t-il quand un employé change de département ?**  
+R : Le transfert retire automatiquement ses accès à l'ancien département. Si vous souhaitez qu'il garde les deux accès temporairement (ex. passation), une case "double appartenance" permet de le faire explicitement.
+
+**Q : Mon document PDF confidentiel est-il en sécurité ?**  
+R : Le fichier PDF n'est **jamais stocké** — on en extrait le texte en mémoire et le fichier disparaît immédiatement. Seul le texte extrait est conservé dans votre espace isolé. Pour l'analyse IA, le texte est transmis à l'API Anthropic, qui ne réutilise pas les données de l'API pour entraîner ses modèles. Vous pouvez supprimer le document à tout moment depuis l'interface.
 
 **Q : NexHire stocke-t-il une copie de nos données SAP, M365, Salesforce… ?**  
-R : Non. NexHire ne stocke **aucune copie locale** des données provenant de vos connecteurs. Chaque réponse de l'agent interroge vos systèmes en temps réel. Vos données restent uniquement dans vos systèmes d'origine — NexHire est une fenêtre de lecture, pas un entrepôt de données.
+R : Non. Chaque réponse de l'agent interroge vos systèmes en temps réel. NexHire est une fenêtre de lecture, pas un entrepôt de données.
 
 **Q : Combien de temps pour déployer ?**  
-R : La configuration de base (organisation, membres, 2-3 connecteurs) prend moins d'une demi-journée. Le SSO peut être configuré en 1 heure avec votre équipe IT.
+R : Configuration de base (organisation, membres, 2-3 connecteurs) : moins d'une demi-journée. SSO : 1 heure avec votre équipe IT.
+
+**Q : Y a-t-il une app mobile ?**  
+R : Oui, via PWA. S'installe sur iPhone, Android et bureau sans passer par l'App Store.
 
 **Q : Et si on utilise un logiciel non listé ?**  
 R : Contactez-nous — nous évaluons les nouvelles intégrations sur demande.
-
-**Q : Y a-t-il une app mobile ?**  
-R : Oui, via PWA (Progressive Web App). Elle s'installe sur iPhone, Android et bureau sans passer par l'App Store. Pour une app native dédiée, nous contacter.
 
 ---
 
@@ -275,9 +390,10 @@ R : Oui, via PWA (Progressive Web App). Elle s'installe sur iPhone, Android et b
 
 1. **Essai gratuit 14 jours** — aucune carte de crédit requise
 2. Créer votre organisation sur `https://agenthub.nexhire.ca`
-3. Inviter vos premiers membres
+3. Inviter vos premiers membres et les assigner à leurs départements
 4. Connecter votre premier système (Microsoft 365 recommandé — 2 minutes)
-5. Planifier une session d'accompagnement avec l'équipe NexHire
+5. Initialiser les départements par secteur (⚡ bouton automatique)
+6. Planifier une session d'accompagnement avec l'équipe NexHire
 
 ---
 
@@ -286,4 +402,4 @@ R : Oui, via PWA (Progressive Web App). Elle s'installe sur iPhone, Android et b
 
 ---
 
-*Dernière mise à jour : juin 2026 — NexHire EIP v2.0*
+*Dernière mise à jour : 10 juin 2026 — NexHire EIP v3.0*
