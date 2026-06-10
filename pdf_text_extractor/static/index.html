@@ -1750,9 +1750,11 @@
             <p class="settings-desc" id="plan-desc"></p>
           </div>
 
-          <!-- Boutons Stripe -->
-          <div id="billing-subscribe-wrap" style="display:flex;flex-direction:column;gap:10px">
-            <p class="settings-desc" style="margin:0 0 8px">Choisissez votre plan pour continuer après la période d'essai :</p>
+          <!-- Décompte essai — visible à tous les manager+ -->
+          <p id="billing-trial-countdown" class="muted hidden" style="font-size:.85rem;margin:0 0 10px"></p>
+
+          <!-- Boutons Stripe — owner uniquement -->
+          <div id="billing-subscribe-wrap" class="owner-only hidden" style="display:flex;flex-direction:column;gap:10px">
             <div style="display:flex;gap:8px;flex-wrap:wrap">
               <button id="stripe-btn-monthly" class="btn btn-primary btn-sm" onclick="subscribeStripe('monthly')">
                 Mensuel — 99 $/mois
