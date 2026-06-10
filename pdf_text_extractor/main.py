@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import io
+import os
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -206,7 +207,6 @@ def create_app(
     app.state.assistant = assistant or AssistantService.from_env()
 
     # Rate limiter
-    import os
     app.state.limiter = limiter
     app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
@@ -272,7 +272,6 @@ def create_app(
     @app.get("/api/readiness")
     def readiness():
         """Vérifie les variables d'env et la connexion DB."""
-        import os
         checks: dict = {}
         for var in ["SUPABASE_URL", "SUPABASE_ANON_KEY", "SUPABASE_SERVICE_ROLE_KEY",
                     "FERNET_KEYS", "OPENAI_API_KEY"]:
