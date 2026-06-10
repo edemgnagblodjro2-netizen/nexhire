@@ -19,6 +19,7 @@ class ProfileUpdate(BaseModel):
     full_name: str = Field(..., min_length=1, max_length=255)
 
 class OrgUpdate(BaseModel):
+    org_name:    str | None = Field(None, min_length=1, max_length=255)
     logo_url:    str | None = Field(None, max_length=2048)
     brand_color: str | None = Field(None, pattern=r"^#[0-9a-fA-F]{6}$")
 
@@ -131,8 +132,10 @@ def update_org(
     payload: OrgUpdate,
     user: CurrentUser = Depends(require_min_role("admin")),
 ):
-    """Met à jour le logo et la couleur de marque de l'organisation."""
+    """Met à jour le nom, logo et couleur de marque de l'organisation."""
     fields, values = [], []
+    if payload.org_name is not None:
+        fields.append("name = %s"); values.append(payload.org_name.strip())
     if payload.logo_url is not None:
         fields.append("logo_url = %s"); values.append(payload.logo_url or None)
     if payload.brand_color is not None:
