@@ -186,9 +186,19 @@ Géré par **APScheduler** dans `main.py`, démarré au démarrage de l'app.
 
 | Job ID | Déclencheur | Fonction | Description |
 |---|---|---|---|
-| `monthly_report` | 1er du mois à 08h00 | `generate_monthly_report_all_orgs()` | Génère les rapports KPI mensuels pour toutes les orgs |
+| `connector_health_check` | Tous les jours à **07h00** | `check_connector_health_all_orgs()` | Email d'alerte si connecteur en `status=error` |
+| `monthly_report` | 1er du mois à 08h00 | `send_monthly_reports_all_orgs()` | Rapport mensuel KPI à tous les admins |
 | `license_expiry_check` | Tous les jours à 09h00 | `check_license_expiry_all_orgs()` | Alerte webhook si licence expire dans ≤ 30 jours |
 | `trial_expiry_check` | Tous les jours à 10h00 | `check_trial_expiry_all_orgs()` | Email d'urgence si essai expire dans 7, 3 ou 1 jour |
+
+### Logique `check_connector_health_all_orgs()`
+
+- Requête : tous les connecteurs avec `status = 'error'`, jointure `organizations` pour avoir `owner_email`
+- Groupe par org → un seul email consolidé par organisation affectée
+- Appelle `send_connector_alert(owner_email, org_name, failed_connectors[])`
+- Le connecteur passe en `status=error` **immédiatement** dans `connector_loader.py` quand un refresh OAuth échoue (HTTP ≠ 200 ou exception réseau) — pas d'attente du scheduler
+
+> **Important :** NexHire ne stocke aucune copie locale des données connecteurs (M365, SAP, Salesforce, etc.). Tout est lu en temps réel. En cas d'erreur connecteur, les données ne sont pas perdues — elles restent dans le système source. Seules les réponses de l'agent sont incomplètes le temps de la reconnexion. Une bannière `connector_warnings[]` s'affiche dans l'interface agent pour avertir l'utilisateur.
 
 ### Logique `check_trial_expiry_all_orgs()`
 
@@ -210,7 +220,11 @@ Fichier : `pdf_text_extractor/email_service.py`
 | Fonction | Déclencheur | Contenu |
 |---|---|---|
 | `send_welcome_email(to, name, org, trial_days=14)` | Inscription (non-invite) | Bienvenue + 4 étapes pour démarrer |
+| `send_invite_email(to, org, role, token, by)` | Invitation membre | Lien d'invitation, valide 7 jours |
+| `send_connector_alert(to, org, failed_connectors[])` | Scheduler 07h00 quotidien | Liste connecteurs en erreur, CTA reconnecter |
+| `send_license_expiry_alert(to, org, licenses[])` | Scheduler 09h00 quotidien | Tableau licences expirant dans ≤ 30 jours |
 | `send_trial_expiry_warning(to, org, days_left)` | Scheduler J-7 / J-3 / J-1 | Bannière urgence, tarifs, CTA upgrade |
+| `send_monthly_report_rich(to, org, stats...)` | Scheduler 1er du mois 08h00 | KPIs, top depts, économies, licences |
 | `send_subscription_confirmation(to, org, plan, amount)` | Activation Stripe | Confirmation abonnement actif |
 | `send_subscription_cancelled_email(to, org)` | Annulation Stripe | Confirmation annulation + CTA réactivation |
 

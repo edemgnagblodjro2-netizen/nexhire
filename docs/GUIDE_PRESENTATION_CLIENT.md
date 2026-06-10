@@ -236,6 +236,19 @@ R : Oui. Chaque organisation est complètement isolée. Les credentials de vos c
 **Q : Faut-il migrer nos données actuelles ?**  
 R : Non. NexHire se connecte à vos systèmes existants et les lit là où ils sont. Aucune migration, aucun double-encodage.
 
+**Q : Faut-il se reconnecter régulièrement aux connecteurs ?**  
+R : Non. La connexion OAuth est permanente. NexHire renouvelle automatiquement les tokens d'accès en arrière-plan — votre équipe IT n'a pas à intervenir. La seule exception : si votre service IT révoque les permissions de l'application NexHire dans votre Azure AD, Google Workspace ou Salesforce, une reconnexion manuelle sera nécessaire.
+
+**Q : Que se passe-t-il si un connecteur se déconnecte ?**  
+R : NexHire détecte la rupture instantanément et déclenche deux protections automatiques :
+- **Email d'alerte** envoyé à l'administrateur dans l'heure, listant les connecteurs en erreur et les étapes pour reconnecter.
+- **Bannière d'avertissement** visible dans l'interface agent : *"Données potentiellement incomplètes — SAP est déconnecté"* avec un lien direct vers la page Connecteurs.
+
+Le tableau de bord Direction continue d'afficher les données des connecteurs encore actifs — seul le système déconnecté est absent.
+
+**Q : NexHire stocke-t-il une copie de nos données SAP, M365, Salesforce… ?**  
+R : Non. NexHire ne stocke **aucune copie locale** des données provenant de vos connecteurs. Chaque réponse de l'agent interroge vos systèmes en temps réel. Vos données restent uniquement dans vos systèmes d'origine — NexHire est une fenêtre de lecture, pas un entrepôt de données.
+
 **Q : Combien de temps pour déployer ?**  
 R : La configuration de base (organisation, membres, 2-3 connecteurs) prend moins d'une demi-journée. Le SSO peut être configuré en 1 heure avec votre équipe IT.
 
