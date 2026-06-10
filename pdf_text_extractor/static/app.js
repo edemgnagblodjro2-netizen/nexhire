@@ -4256,14 +4256,18 @@ async function openTransferModal(fromDeptId, fromDeptName, memberId, name) {
   const sel = document.createElement("div");
   sel.innerHTML = `
     <div style="position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:9999;display:flex;align-items:center;justify-content:center">
-      <div style="background:#fff;border-radius:12px;padding:24px;min-width:340px;box-shadow:0 8px 32px rgba(0,0,0,.18)">
+      <div style="background:#fff;border-radius:12px;padding:24px;min-width:360px;box-shadow:0 8px 32px rgba(0,0,0,.18)">
         <h3 style="margin:0 0 16px;font-size:1rem">Transférer <strong>${esc(name)}</strong></h3>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:10px 14px;background:#f1f5f9;border-radius:8px;font-size:.85rem">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:10px 14px;background:#f1f5f9;border-radius:8px;font-size:.85rem">
           <span style="flex:1;color:#475569;font-weight:600">${esc(fromDeptName)}</span>
           <span style="color:#94a3b8;font-size:1.1rem">→</span>
           <select id="transfer-dest" style="flex:1;padding:6px 8px;border:1.5px solid #c7d2fe;border-radius:6px;font-size:.85rem;font-weight:600;color:#3730a3;background:#eef2ff">${opts}</select>
         </div>
-        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:4px">
+        <label style="display:flex;align-items:center;gap:8px;font-size:.82rem;color:#475569;margin-bottom:18px;cursor:pointer;padding:8px 12px;background:#fef9c3;border-radius:6px;border:1px solid #fde68a">
+          <input type="checkbox" id="transfer-keep-access" style="width:15px;height:15px;accent-color:#d97706" />
+          <span>Conserver l'accès à <strong>${esc(fromDeptName)}</strong> (double appartenance)</span>
+        </label>
+        <div style="display:flex;gap:8px;justify-content:flex-end">
           <button onclick="this.closest('[data-transfer-overlay]').remove()" class="btn btn-outline btn-sm">Annuler</button>
           <button id="transfer-confirm-btn" class="btn btn-primary btn-sm">Transférer</button>
         </div>
@@ -4272,15 +4276,21 @@ async function openTransferModal(fromDeptId, fromDeptName, memberId, name) {
   sel.querySelector("div[style]").setAttribute("data-transfer-overlay","1");
   document.body.appendChild(sel);
   sel.querySelector("#transfer-confirm-btn").onclick = async () => {
-    const destId = sel.querySelector("#transfer-dest").value;
+    const destId    = sel.querySelector("#transfer-dest").value;
+    const keepAccess = sel.querySelector("#transfer-keep-access").checked;
     if (!destId) return;
+    const btn = sel.querySelector("#transfer-confirm-btn");
+    btn.disabled = true; btn.textContent = "Transfert…";
     try {
-      await apiCall(`/api/departments/${fromDeptId}/members/${memberId}`, "DELETE");
+      if (!keepAccess) {
+        // Par défaut : retirer de l'ancien département → perd tous les droits
+        await apiCall(`/api/departments/${fromDeptId}/members/${memberId}`, "DELETE");
+      }
       await apiCall(`/api/departments/${destId}/members`, "POST", { user_id: memberId, hierarchy_level: 6 });
       sel.remove();
       loadOrgChart();
       loadDepartments();
-    } catch(e) { alert(e.message); }
+    } catch(e) { btn.disabled = false; btn.textContent = "Transférer"; alert(e.message); }
   };
 }
 
