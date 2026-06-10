@@ -1947,7 +1947,7 @@ function buildConnectorCard(type, meta, info) {
     ${deptBadges}
     <div class="connector-footer">
       <span class="connector-method-tag">${methodBadge}</span>
-      ${meta.help_url ? `<a class="connector-help-link" href="${meta.help_url}" target="_blank" rel="noopener">${meta.help_label || "Documentation"} ↗</a>` : ""}
+      ${meta.help_url && ["admin","owner"].includes(state.user?.role) ? `<a class="connector-help-link" href="${meta.help_url}" target="_blank" rel="noopener">${meta.help_label || "Documentation"} ↗</a>` : ""}
     </div>`;
 
   const actions = document.createElement("div");
