@@ -2474,6 +2474,10 @@ footer {
   background: #fff; border-radius: var(--radius-lg); padding: 36px;
   width: 100%; max-width: 480px; box-shadow: var(--shadow-lg);
   position: relative;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
 }
 .modal-close {
   position: absolute; top: 16px; right: 16px;
