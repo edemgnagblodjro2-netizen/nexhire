@@ -255,6 +255,7 @@ def department_detail(
     # Vérifier accès
     is_admin = user.role in ("admin", "owner")
     if not is_admin:
+        from fastapi import HTTPException as _HTTPException
         try:
             with get_db() as cur:
                 cur.execute(
@@ -263,11 +264,10 @@ def department_detail(
                     (dept_id, user.id),
                 )
                 membership = rows(cur)
-            if not membership:
-                from fastapi import HTTPException
-                raise HTTPException(403, "Accès refusé à ce département.")
         except Exception:
-            pass
+            raise _HTTPException(403, "Accès refusé à ce département.")
+        if not membership:
+            raise _HTTPException(403, "Accès refusé à ce département.")
 
     try:
         with get_db() as cur:

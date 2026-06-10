@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import re
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request
@@ -194,7 +195,6 @@ def refresh_token(payload: RefreshPayload):
 
 @router.get("/me")
 def me(user: CurrentUser = Depends(get_current_user)):
-    import os
     superadmin_emails = {e.strip().lower() for e in os.environ.get("SUPERADMIN_EMAILS", "").split(",") if e.strip()}
 
     # Récupère les types de département de l'utilisateur pour contrôler la nav
