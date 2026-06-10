@@ -173,7 +173,7 @@ def agent_query(
             dept_type=dept_type,
         )
     except RuntimeError as exc:
-        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=str(exc)) from exc
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Service IA temporairement indisponible.") from exc
     except Exception as exc:
         background.add_task(log_audit, AuditEvent(
             action="agent_query",
@@ -186,7 +186,7 @@ def agent_query(
             error_detail=str(exc),
             metadata={"assistant_mode": payload.assistant_mode, "language": payload.language},
         ))
-        raise HTTPException(status_code=500, detail=str(exc)) from exc
+        raise HTTPException(status_code=500, detail="Erreur serveur interne.") from exc
 
     audit_id = log_audit_sync(AuditEvent(
         action="agent_query",

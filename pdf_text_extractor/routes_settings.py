@@ -1,6 +1,8 @@
 """Paramètres utilisateur — profil, mot de passe, SSO + formulaire contact public."""
 from __future__ import annotations
 
+from html import escape
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, EmailStr, Field
 
@@ -41,15 +43,15 @@ def contact_form(payload: ContactRequest):
     html = f"""
     <h2 style="color:#818CF8">Nouveau contact EIP — NexHire</h2>
     <table style="border-collapse:collapse;font-family:Arial,sans-serif">
-      <tr><td style="padding:8px 16px 8px 0;color:#64748b;font-weight:600">Nom</td><td>{payload.name}</td></tr>
-      <tr><td style="padding:8px 16px 8px 0;color:#64748b;font-weight:600">Organisation</td><td>{payload.company}</td></tr>
-      <tr><td style="padding:8px 16px 8px 0;color:#64748b;font-weight:600">Email</td><td><a href="mailto:{payload.email}">{payload.email}</a></td></tr>
-      <tr><td style="padding:8px 16px 8px 0;color:#64748b;font-weight:600;vertical-align:top">Message</td><td>{payload.message or "(aucun)"}</td></tr>
+      <tr><td style="padding:8px 16px 8px 0;color:#64748b;font-weight:600">Nom</td><td>{escape(payload.name)}</td></tr>
+      <tr><td style="padding:8px 16px 8px 0;color:#64748b;font-weight:600">Organisation</td><td>{escape(payload.company)}</td></tr>
+      <tr><td style="padding:8px 16px 8px 0;color:#64748b;font-weight:600">Email</td><td><a href="mailto:{escape(payload.email)}">{escape(payload.email)}</a></td></tr>
+      <tr><td style="padding:8px 16px 8px 0;color:#64748b;font-weight:600;vertical-align:top">Message</td><td>{escape(payload.message or "(aucun)")}</td></tr>
     </table>
     """
     email_service._send(
         "edemgnagblodjro2@gmail.com",
-        f"EIP — Nouveau contact : {payload.name} ({payload.company})",
+        f"EIP — Nouveau contact : {escape(payload.name)} ({escape(payload.company)})",
         html,
     )
     return {"status": "ok"}
@@ -189,6 +191,6 @@ def change_password(
         sb = service_client()
         sb.auth.admin.update_user_by_id(user.id, {"password": payload.new_password})
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=f"Impossible de changer le mot de passe : {exc}") from exc
+        raise HTTPException(status_code=500, detail="Impossible de changer le mot de passe — réessayez ou contactez le support.") from exc
 
     return {"ok": True}

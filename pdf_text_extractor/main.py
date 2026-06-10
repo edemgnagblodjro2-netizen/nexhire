@@ -14,6 +14,9 @@ from rbac import require_min_role
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from rate_limiter import limiter
 from pydantic import BaseModel, Field
 from starlette import status
 _NO_CACHE_EXTS = (".js", ".css")
@@ -23,6 +26,38 @@ _NO_CACHE_HEADERS = [
     (b"expires",       b"0"),
 ]
 _STRIP_CACHE_KEYS = {b"cache-control", b"pragma", b"etag", b"last-modified", b"expires"}
+
+
+_SECURITY_HEADERS = [
+    (b"x-frame-options",           b"DENY"),
+    (b"x-content-type-options",    b"nosniff"),
+    (b"referrer-policy",           b"strict-origin-when-cross-origin"),
+    (b"permissions-policy",        b"geolocation=(), microphone=(), camera=()"),
+    (b"strict-transport-security", b"max-age=31536000; includeSubDomains"),
+]
+
+
+class SecurityHeadersMiddleware:
+    """Injecte les headers de sécurité HTTP sur toutes les réponses."""
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] != "http":
+            await self.app(scope, receive, send)
+            return
+
+        async def send_secure(message):
+            if message["type"] == "http.response.start":
+                headers = list(message.get("headers", []))
+                existing = {k.lower() for k, _ in headers}
+                for k, v in _SECURITY_HEADERS:
+                    if k not in existing:
+                        headers.append((k, v))
+                message = {**message, "headers": headers}
+            await send(message)
+
+        await self.app(scope, receive, send_secure)
 
 
 class NoCacheStaticMiddleware:
@@ -164,13 +199,22 @@ def create_app(
     app.state.storage = storage or DocumentStore.from_env()
     app.state.assistant = assistant or AssistantService.from_env()
 
+    # Rate limiter
+    import os
+    app.state.limiter = limiter
+    app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+    # CORS — origines explicites uniquement
+    _raw = os.environ.get("ALLOWED_ORIGINS", "https://agenthub.nexhire.ca,https://nexhire.ca")
+    _origins = [o.strip() for o in _raw.split(",") if o.strip()]
+    app.add_middleware(SecurityHeadersMiddleware)
     app.add_middleware(NoCacheStaticMiddleware)
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
-        allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
+        allow_origins=_origins,
+        allow_credentials=False,
+        allow_methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+        allow_headers=["Authorization", "Content-Type", "X-Request-ID"],
     )
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
@@ -335,7 +379,7 @@ def create_app(
             ))
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-                detail=str(exc),
+                detail="Service IA temporairement indisponible.",
             ) from exc
 
         store.update_document_summary(document_id, summary)
@@ -385,7 +429,7 @@ def create_app(
             ))
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-                detail=str(exc),
+                detail="Service IA temporairement indisponible.",
             ) from exc
 
         conversation = store.create_conversation(

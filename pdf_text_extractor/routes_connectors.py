@@ -144,7 +144,7 @@ def list_connectors(user: CurrentUser = Depends(require_min_role("user"))):
             )
             return rows(cur)
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=f"Erreur chargement connecteurs : {exc}") from exc
+        raise HTTPException(status_code=500, detail="Erreur serveur interne.") from exc
 
 
 @router.get("/{connector_type}/status")

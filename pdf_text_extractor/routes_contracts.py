@@ -107,7 +107,7 @@ def list_contracts(
             cur.execute(sql, params)
             result = rows(cur)
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=f"Erreur base de données contrats : {exc}") from exc
+        raise HTTPException(status_code=500, detail="Erreur serveur interne.") from exc
 
     return [_enrich(c) for c in result]
 

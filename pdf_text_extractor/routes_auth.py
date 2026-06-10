@@ -5,6 +5,7 @@ from pydantic import BaseModel, EmailStr, Field
 
 from audit import AuditEvent, client_ip, log_audit
 from auth import CurrentUser, get_current_user
+from rate_limiter import limiter
 from supabase_client import anon_client
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
@@ -19,7 +20,8 @@ class SignupPayload(BaseModel):
 
 
 @router.post("/signup")
-def signup(payload: SignupPayload, background: BackgroundTasks):
+@limiter.limit("5/minute")
+def signup(request: Request, payload: SignupPayload, background: BackgroundTasks):
     """Inscription. Crée le compte Supabase ; un trigger DB crée ensuite
     automatiquement le tenant, l'utilisateur owner et l'essai de 14 jours
     (voir phase1_onboarding.sql). Les métadonnées portent le nom de l'org."""
@@ -40,7 +42,7 @@ def signup(payload: SignupPayload, background: BackgroundTasks):
             }
         )
     except Exception as exc:
-        raise HTTPException(status_code=400, detail=str(exc)) from exc
+        raise HTTPException(status_code=400, detail="Inscription échouée — vérifiez les informations saisies.") from exc
 
     if payload.invite_token:
         background.add_task(_notify_member_join, payload.invite_token, payload.email)
@@ -80,7 +82,8 @@ class LoginPayload(BaseModel):
 
 
 @router.post("/login")
-def login(payload: LoginPayload, request: Request, background: BackgroundTasks):
+@limiter.limit("10/minute")
+def login(request: Request, payload: LoginPayload, background: BackgroundTasks):
     """Connexion. Retourne le JWT Supabase à passer en Authorization: Bearer."""
     ip = client_ip(request)
     try:
@@ -95,7 +98,7 @@ def login(payload: LoginPayload, request: Request, background: BackgroundTasks):
             http_status=401,
             error_detail=str(exc),
         ))
-        raise HTTPException(status_code=401, detail=str(exc)) from exc
+        raise HTTPException(status_code=401, detail="Identifiants invalides.") from exc
 
     if not res.session:
         background.add_task(log_audit, AuditEvent(

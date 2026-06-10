@@ -83,7 +83,7 @@ def list_processes(
             result = rows(cur)
     except Exception as exc:
         from fastapi import HTTPException
-        raise HTTPException(status_code=500, detail=f"Erreur base de données processus : {exc}") from exc
+        raise HTTPException(status_code=500, detail="Erreur serveur interne.") from exc
 
     return [_enrich(p) for p in result]
 

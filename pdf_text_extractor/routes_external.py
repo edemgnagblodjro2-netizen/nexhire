@@ -110,7 +110,7 @@ def list_contractors(
 
         return [_enrich(c) for c in items]
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+        raise HTTPException(status_code=500, detail="Erreur serveur interne.")
 
 
 @router.post("", status_code=201)
@@ -150,7 +150,7 @@ def create_contractor(
     except HTTPException:
         raise
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+        raise HTTPException(status_code=500, detail="Erreur serveur interne.")
 
 
 @router.patch("/{contractor_id}")
@@ -204,7 +204,7 @@ def update_contractor(
     except HTTPException:
         raise
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+        raise HTTPException(status_code=500, detail="Erreur serveur interne.")
 
 
 @router.patch("/{contractor_id}/status")
