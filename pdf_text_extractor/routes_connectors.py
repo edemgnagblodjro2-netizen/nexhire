@@ -97,34 +97,54 @@ def list_connectors(user: CurrentUser = Depends(require_min_role("user"))):
         return list(result.values())
 
     # Membres : récupérer leurs départements
-    with get_db() as cur:
-        cur.execute(
-            "SELECT department_id FROM department_members WHERE user_id = %s",
-            (user.id,),
-        )
-        dept_ids = [r["department_id"] for r in rows(cur)]
+    try:
+        with get_db() as cur:
+            cur.execute(
+                "SELECT department_id FROM department_members WHERE user_id = %s",
+                (user.id,),
+            )
+            dept_ids = [r["department_id"] for r in rows(cur)]
 
-    with get_db() as cur:
-        cur.execute(
-            """
-            SELECT DISTINCT c.id, c.connector_type, c.status,
-                            c.connected_at, c.last_error, c.updated_at
-            FROM connectors c
-            WHERE c.organization_id = %s
-              AND (
-                  NOT EXISTS (
-                      SELECT 1 FROM connector_departments WHERE connector_id = c.id
+        # Quand dept_ids est vide, ANY(%s) échoue sur le type UUID — requête adaptée
+        if not dept_ids:
+            with get_db() as cur:
+                cur.execute(
+                    """
+                    SELECT DISTINCT c.id, c.connector_type, c.status,
+                                    c.connected_at, c.last_error, c.updated_at
+                    FROM connectors c
+                    WHERE c.organization_id = %s
+                      AND NOT EXISTS (
+                          SELECT 1 FROM connector_departments WHERE connector_id = c.id
+                      )
+                    """,
+                    (user.organization_id,),
+                )
+                return rows(cur)
+
+        with get_db() as cur:
+            cur.execute(
+                """
+                SELECT DISTINCT c.id, c.connector_type, c.status,
+                                c.connected_at, c.last_error, c.updated_at
+                FROM connectors c
+                WHERE c.organization_id = %s
+                  AND (
+                      NOT EXISTS (
+                          SELECT 1 FROM connector_departments WHERE connector_id = c.id
+                      )
+                      OR EXISTS (
+                          SELECT 1 FROM connector_departments
+                          WHERE connector_id = c.id
+                            AND department_id = ANY(%s::uuid[])
+                      )
                   )
-                  OR EXISTS (
-                      SELECT 1 FROM connector_departments
-                      WHERE connector_id = c.id
-                        AND department_id = ANY(%s)
-                  )
-              )
-            """,
-            (user.organization_id, dept_ids or []),
-        )
-        return rows(cur)
+                """,
+                (user.organization_id, dept_ids),
+            )
+            return rows(cur)
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=f"Erreur chargement connecteurs : {exc}") from exc
 
 
 @router.get("/{connector_type}/status")

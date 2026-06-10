@@ -2873,7 +2873,12 @@ async function loadSettings() {
     $("sp-email").value    = p.email    || "";
     $("sp-org").value      = p.organization_name || "";
     $("sp-since").value    = p.member_since || "";
-    if ($("sp-org-type")) $("sp-org-type").value = p.org_type || "entreprise";
+    if ($("sp-org-type")) {
+      $("sp-org-type").value = p.org_type || "entreprise";
+      const isAdmForType = ["admin","owner"].includes(p.role);
+      $("sp-org-type").disabled = !isAdmForType;
+      if (!isAdmForType) { $("sp-org-type").style.opacity = "0.6"; $("sp-org-type").title = "Seuls les administrateurs peuvent modifier le type d'organisation."; }
+    }
     state.orgType = p.org_type || "entreprise";
     state.orgSlug = p.organization_slug || "";
 
@@ -4140,7 +4145,7 @@ async function loadOrgChart() {
           <div class="org-dept-hd">
             ${icon} ${esc(dept.name)} <span class="org-dept-count muted">— aucun membre</span>
             ${canManage ? `<button class="btn btn-primary btn-sm org-add-member-btn"
-              onclick="openAddMemberModal('${dept.id}','${esc(dept.name)}')"
+              onclick="openAddMemberModal('${dept.id}','${esc(dept.name)}','${dept.dept_type||"general"}')"
               style="margin-left:auto;font-size:.75rem;padding:3px 10px">+ Membre</button>` : ""}
           </div>
         </div>`;
@@ -4181,7 +4186,7 @@ async function loadOrgChart() {
             <span class="org-dept-count">${members.length} membre${members.length>1?"s":""}</span>
             <span class="org-chevron">▾</span>
             ${canManage ? `<button class="btn btn-primary btn-sm org-add-member-btn"
-              onclick="event.stopPropagation();openAddMemberModal('${dept.id}','${esc(dept.name)}')"
+              onclick="event.stopPropagation();openAddMemberModal('${dept.id}','${esc(dept.name)}','${dept.dept_type||"general"}')"
               style="margin-left:auto;font-size:.75rem;padding:3px 10px">+ Membre</button>` : ""}
           </div>
           <div class="org-members-list">${rows}</div>
@@ -4244,9 +4249,12 @@ async function setMemberTitle(deptId, memberId, title) {
 }
 
 // ── Ajout membre au département ───────────────────────────────────────────────
-async function openAddMemberModal(deptId, deptName) {
+async function openAddMemberModal(deptId, deptName, deptType) {
   $("add-member-dept-id").value   = deptId;
   $("add-member-dept-name").textContent = deptName;
+  const DEPT_LABELS = {finance:"Finance",hr:"Ressources humaines",it:"Informatique",legal:"Juridique",operations:"Opérations",communication:"Communication",direction:"Direction",approvisionnement:"Approvisionnement",marketing:"Marketing",general:"Général"};
+  const badge = $("add-member-dept-type-badge");
+  if (badge) badge.textContent = DEPT_LABELS[deptType] || deptType || "";
   $("add-member-error").classList.add("hidden");
   $("add-member-user").innerHTML  = "<option value=''>Chargement…</option>";
   $("add-member-level").value     = "6";
