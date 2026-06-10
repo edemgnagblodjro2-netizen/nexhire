@@ -1244,6 +1244,17 @@ footer {
   border-top: 1px solid rgba(255,255,255,.07);
 }
 
+/* ── Lang bar sur la page auth ── */
+.auth-lang-bar {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  z-index: 10;
+}
+
 /* ── Panneau droit ── */
 .auth-right {
   background: #f8fafc;
@@ -1251,6 +1262,7 @@ footer {
   align-items: center;
   justify-content: center;
   padding: 48px 40px;
+  position: relative;
   overflow-y: auto;
 }
 .auth-card {
