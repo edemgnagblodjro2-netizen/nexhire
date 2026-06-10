@@ -1652,10 +1652,46 @@ async function loadExecutiveDashboard() {
   const k = data.kpis || {};
   const lang = state.lang || "fr";
 
-  // ── KPIs globaux ────────────────────────────────────────────────────────
+  // ── Score Santé Organisationnelle ────────────────────────────────────────
   const fmtCAD = v => (v || 0).toLocaleString("fr-CA", { style: "currency", currency: "CAD", maximumFractionDigits: 0 });
   const fmtPct = v => `${(v || 0).toFixed(1)} %`;
 
+  const orgScore = data.org_score || 0;
+  const orgBadge = data.org_badge || "red";
+  const _sc = { green: "#22c55e", yellow: "#f59e0b", red: "#ef4444" };
+  const scoreColor = _sc[orgBadge] || "#ef4444";
+  const scoreLabel = orgScore >= 70 ? "Excellente" : orgScore >= 40 ? "À surveiller" : "Critique";
+  const circumference = 2 * Math.PI * 38;
+  const scoreEl = $("exec-org-score");
+  if (scoreEl) {
+    scoreEl.innerHTML = `
+      <div style="display:flex;align-items:center;gap:24px;padding:20px 24px;background:${scoreColor}18;border:2px solid ${scoreColor}50;border-radius:16px">
+        <div style="position:relative;width:88px;height:88px;flex-shrink:0">
+          <svg width="88" height="88" viewBox="0 0 88 88">
+            <circle cx="44" cy="44" r="38" fill="none" stroke="#e2e8f0" stroke-width="7"/>
+            <circle cx="44" cy="44" r="38" fill="none" stroke="${scoreColor}" stroke-width="7"
+              stroke-dasharray="${circumference.toFixed(1)}"
+              stroke-dashoffset="${(circumference * (1 - orgScore / 100)).toFixed(1)}"
+              stroke-linecap="round" transform="rotate(-90 44 44)"/>
+          </svg>
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0">
+            <span style="font-size:1.55rem;font-weight:900;color:${scoreColor};line-height:1">${Math.round(orgScore)}</span>
+            <span style="font-size:.58rem;color:#94a3b8;font-weight:600">/100</span>
+          </div>
+        </div>
+        <div style="flex:1">
+          <div style="font-size:1.05rem;font-weight:700;color:${scoreColor};margin-bottom:6px">Score Santé : ${scoreLabel}</div>
+          <div style="font-size:.82rem;color:#64748b;display:flex;flex-wrap:wrap;gap:12px">
+            <span>🏢 ${k.depts_total || 0} département${(k.depts_total || 0) !== 1 ? "s" : ""}</span>
+            <span>⚠️ ${k.depts_at_risk || 0} à risque</span>
+            <span>📋 ${k.contracts_due || 0} contrat${(k.contracts_due || 0) !== 1 ? "s" : ""} à renouveler</span>
+            <span style="color:#22c55e;font-weight:600">💡 ${fmtCAD(k.savings_potential)} d'économies identifiées</span>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // ── KPIs globaux ────────────────────────────────────────────────────────
   const budgetPct = k.budget_pct || 0;
   const budgetColor = budgetPct >= 95 ? "#ef4444" : budgetPct >= 80 ? "#f59e0b" : "#22c55e";
 

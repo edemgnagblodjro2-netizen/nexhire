@@ -224,7 +224,13 @@ def executive_dashboard(user: CurrentUser = Depends(require_min_role("admin"))):
     order = {"red": 0, "yellow": 1, "green": 2}
     departments.sort(key=lambda d: (order[d["badge"]], d["name"]))
 
+    # Score global org = moyenne pondérée des scores départements
+    dept_scores = [d["score"] for d in departments]
+    org_score = round(sum(dept_scores) / len(dept_scores), 1) if dept_scores else 0.0
+
     return {
+        "org_score": org_score,
+        "org_badge": _health_badge(org_score),
         "kpis": {
             "budget_total":    round(total_budget, 0),
             "budget_spent":    round(total_spent, 0),

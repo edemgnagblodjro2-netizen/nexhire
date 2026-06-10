@@ -499,6 +499,124 @@ def send_connector_alert(
     return _send(to_email, subject, html)
 
 
+def send_executive_briefing(
+    to_email: str,
+    org_name: str,
+    score: float,
+    badge: str,
+    depts_total: int,
+    depts_at_risk: int,
+    contracts_due: int,
+    savings_potential: float,
+    budget_pct: float,
+    top_risks: list[dict],
+    date_str: str = "",
+) -> bool:
+    """Briefing exécutif hebdomadaire — envoyé chaque lundi matin."""
+    from datetime import date as _date
+    if not date_str:
+        date_str = _date.today().strftime("%d %B %Y")
+
+    score_colors = {"green": "#22c55e", "yellow": "#f59e0b", "red": "#ef4444"}
+    score_bgs    = {"green": "#f0fdf4", "yellow": "#fffbeb", "red": "#fef2f2"}
+    score_color  = score_colors.get(badge, "#ef4444")
+    score_bg     = score_bgs.get(badge, "#fef2f2")
+    score_label  = "Excellente" if score >= 70 else ("À surveiller" if score >= 40 else "Critique")
+
+    budget_status = "critique" if budget_pct >= 95 else ("attention" if budget_pct >= 80 else "normal")
+    budget_color  = "#ef4444" if budget_status == "critique" else ("#f59e0b" if budget_status == "attention" else "#22c55e")
+    budget_bg     = "#fef2f2" if budget_status == "critique" else ("#fffbeb" if budget_status == "attention" else "#f0fdf4")
+
+    def fmt_cad(v: float) -> str:
+        return f"{int(v):,} $".replace(",", " ")
+
+    risks_rows = ""
+    for r in top_risks:
+        rc = score_colors.get(r.get("badge", "red"), "#ef4444")
+        risks_rows += (
+            f'<tr><td style="padding:8px 12px;border-bottom:1px solid #f1f5f9;color:#475569;font-size:.85rem">{r.get("dept","")}</td>'
+            f'<td style="padding:8px 12px;border-bottom:1px solid #f1f5f9;text-align:center">'
+            f'<span style="background:{rc}20;color:{rc};padding:2px 10px;border-radius:20px;font-size:.78rem;font-weight:700">{int(r.get("score",0))}/100</span>'
+            f"</td></tr>"
+        )
+
+    risks_section = ""
+    if top_risks:
+        risks_section = (
+            '<div style="padding:20px 32px 0">'
+            '<table style="width:100%;border-collapse:collapse;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden">'
+            '<thead><tr style="background:#f8fafc">'
+            '<th style="padding:10px 12px;text-align:left;font-size:.8rem;color:#64748b;font-weight:600">Département à risque</th>'
+            '<th style="padding:10px 12px;text-align:center;font-size:.8rem;color:#64748b;font-weight:600">Score</th>'
+            f"</tr></thead><tbody>{risks_rows}</tbody></table></div>"
+        )
+
+    actions = []
+    if savings_potential > 0:
+        actions.append("Examiner les licences sous-utilisées pour récupérer les coûts identifiés")
+    if contracts_due > 0:
+        actions.append(f"Traiter les <strong>{contracts_due} contrat{'s' if contracts_due != 1 else ''}</strong> à renouveler avant expiration")
+    if depts_at_risk > 0:
+        actions.append(f"Revoir les <strong>{depts_at_risk} département{'s' if depts_at_risk != 1 else ''}</strong> en score rouge")
+    if budget_pct >= 80:
+        actions.append(f"Surveiller la consommation budgétaire — {budget_pct:.0f} % consommé")
+    actions.append("Consulter le tableau de bord complet pour les détails")
+    actions_html = "".join(f'<li style="margin-bottom:6px">{a}</li>' for a in actions)
+
+    subject = f"Briefing NexHire — {org_name} · Score {int(score)}/100"
+    html = f"""<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f8fafc;font-family:Arial,sans-serif">
+<div style="max-width:600px;margin:32px auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08)">
+  <div style="background:linear-gradient(135deg,#818CF8 0%,#6366f1 100%);padding:28px 32px;text-align:center">
+    <p style="margin:0 0 6px;color:rgba(255,255,255,.7);font-size:.82rem">BRIEFING EXÉCUTIF &nbsp;·&nbsp; {date_str}</p>
+    <h1 style="margin:0;color:#fff;font-size:1.3rem;font-weight:700">{org_name}</h1>
+  </div>
+  <div style="padding:28px 32px 0">
+    <div style="display:flex;align-items:center;gap:20px;padding:20px 24px;background:{score_bg};border:2px solid {score_color}45;border-radius:12px">
+      <div style="text-align:center;min-width:72px">
+        <div style="font-size:3rem;font-weight:900;color:{score_color};line-height:1">{int(score)}</div>
+        <div style="font-size:.7rem;color:#94a3b8;font-weight:600">/100</div>
+      </div>
+      <div>
+        <div style="font-size:.72rem;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Score Santé Organisationnelle</div>
+        <div style="font-size:1.1rem;font-weight:700;color:{score_color};margin-bottom:6px">{score_label}</div>
+        <div style="font-size:.82rem;color:#64748b">
+          {depts_total} département{'s' if depts_total != 1 else ''}&nbsp;&nbsp;&middot;&nbsp;&nbsp;{depts_at_risk} à risque&nbsp;&nbsp;&middot;&nbsp;&nbsp;{contracts_due} contrat{'s' if contracts_due != 1 else ''} à renouveler
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="padding:16px 32px 0">
+    <div style="padding:16px 20px;background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:10px;display:flex;align-items:center;gap:14px">
+      <span style="font-size:1.5rem">💡</span>
+      <div>
+        <div style="font-size:.72rem;color:#16a34a;font-weight:700;text-transform:uppercase;letter-spacing:.05em">Économies potentielles identifiées</div>
+        <div style="font-size:1.45rem;font-weight:800;color:#15803d">{fmt_cad(savings_potential)}</div>
+      </div>
+    </div>
+  </div>
+  <div style="padding:12px 32px 0">
+    <div style="padding:13px 18px;background:{budget_bg};border:1.5px solid {budget_color}40;border-radius:10px">
+      <span style="color:{budget_color};font-weight:600;font-size:.88rem">💰 Budget consommé : {budget_pct:.1f}&nbsp;%{'  ⚠️' if budget_status != 'normal' else '  ✅'}</span>
+    </div>
+  </div>
+  {risks_section}
+  <div style="padding:20px 32px 0">
+    <h3 style="margin:0 0 10px;font-size:.9rem;font-weight:700;color:#374151">Actions recommandées cette semaine</h3>
+    <ul style="margin:0;padding-left:18px;color:#475569;font-size:.85rem;line-height:1.8">{actions_html}</ul>
+  </div>
+  <div style="padding:28px 32px;text-align:center">
+    <a href="{APP_URL}" style="display:inline-block;background:linear-gradient(135deg,#818CF8,#6366f1);color:#fff;text-decoration:none;padding:13px 32px;border-radius:8px;font-weight:700;font-size:.92rem">Ouvrir NexHire EIP →</a>
+  </div>
+  <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
+    <p style="margin:0;color:#94a3b8;font-size:.75rem">© 2026 NexHire Inc. · Briefing automatique chaque lundi · <a href="{APP_URL}" style="color:#818CF8;text-decoration:none">nexhire.ca</a></p>
+  </div>
+</div>
+</body></html>"""
+    return _send(to_email, subject, html)
+
+
 def send_subscription_confirmation(
     to_email: str,
     org_name: str,

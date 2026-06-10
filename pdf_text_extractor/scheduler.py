@@ -178,6 +178,128 @@ def send_monthly_reports_all_orgs() -> None:
     logger.info("Rapport mensuel — %s — terminé (%d orgs)", month_label, len(orgs))
 
 
+def send_weekly_briefing_all_orgs() -> None:
+    """Envoie le briefing exécutif du lundi à tous les owners/admins."""
+    try:
+        from db import get_db, row, rows
+        from email_service import send_executive_briefing
+        from routes_dashboard import _dept_health, _health_badge
+        from datetime import date, timedelta
+    except Exception as exc:
+        logger.error("scheduler import error (weekly briefing): %s", exc)
+        return
+
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """SELECT o.id, o.name, o.owner_email
+                   FROM organizations o
+                   WHERE o.owner_email IS NOT NULL AND o.owner_email <> ''"""
+            )
+            orgs = rows(cur)
+    except Exception as exc:
+        logger.error("scheduler DB error (weekly briefing): %s", exc)
+        return
+
+    sent = 0
+    for org in orgs:
+        try:
+            _send_briefing_for_org(org)
+            sent += 1
+        except Exception as exc:
+            logger.error("weekly briefing org %s : %s", org.get("id"), exc)
+
+    logger.info("Weekly briefing — %d emails envoyés", sent)
+
+
+def _send_briefing_for_org(org: dict) -> None:
+    from db import get_db, row, rows
+    from email_service import send_executive_briefing
+    from routes_dashboard import _dept_health, _health_badge
+    from datetime import date, timedelta
+
+    org_id   = org["id"]
+    org_name = org["name"]
+    to_email = org["owner_email"]
+    today    = date.today()
+
+    # Départements
+    try:
+        with get_db() as cur:
+            cur.execute("SELECT id, name FROM departments WHERE organization_id = %s", (org_id,))
+            depts = rows(cur)
+    except Exception:
+        depts = []
+
+    dept_scores = []
+    for d in depts:
+        s = _dept_health(org_id, d["id"])
+        b = _health_badge(s)
+        dept_scores.append({"dept": d["name"], "score": s, "badge": b})
+
+    org_score = round(sum(ds["score"] for ds in dept_scores) / len(dept_scores), 1) if dept_scores else 0.0
+    org_badge = _health_badge(org_score)
+    top_risks = sorted([ds for ds in dept_scores if ds["badge"] in ("red","yellow")], key=lambda x: x["score"])[:5]
+    depts_at_risk = sum(1 for ds in dept_scores if ds["badge"] in ("red","yellow"))
+
+    # Budget
+    budget_total = budget_spent = 0.0
+    try:
+        with get_db() as cur:
+            cur.execute(
+                "SELECT COALESCE(SUM(allocated),0) AS t, COALESCE(SUM(actual),0) AS s FROM budget_entries WHERE organization_id = %s",
+                (org_id,),
+            )
+            br = row(cur) or {}
+        budget_total = float(br.get("t") or 0)
+        budget_spent = float(br.get("s") or 0)
+    except Exception:
+        pass
+    budget_pct = round(budget_spent / budget_total * 100, 1) if budget_total > 0 else 0.0
+
+    # Contrats à renouveler dans 90 jours
+    contracts_due = 0
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """SELECT COUNT(*) AS cnt FROM contracts
+                   WHERE organization_id = %s AND status = 'active'
+                     AND renewal_date <= %s AND renewal_date >= %s""",
+                (org_id, (today + timedelta(days=90)).isoformat(), today.isoformat()),
+            )
+            cr = row(cur) or {}
+        contracts_due = int(cr.get("cnt") or 0)
+    except Exception:
+        pass
+
+    # Économies potentielles
+    savings = 0.0
+    try:
+        with get_db() as cur:
+            cur.execute("SELECT quantity, assigned_count, cost_per_unit, billing_cycle FROM licenses WHERE organization_id = %s", (org_id,))
+            for l in (cur.fetchall() or []):
+                qty = int(l.get("quantity") or 0); asgn = int(l.get("assigned_count") or 0)
+                cost = float(l.get("cost_per_unit") or 0)
+                if qty > 0 and asgn / qty < 0.8:
+                    mul = 12 if l.get("billing_cycle") == "monthly" else 1
+                    savings += (qty - asgn) * cost * mul
+    except Exception:
+        pass
+
+    send_executive_briefing(
+        to_email=to_email,
+        org_name=org_name,
+        score=org_score,
+        badge=org_badge,
+        depts_total=len(depts),
+        depts_at_risk=depts_at_risk,
+        contracts_due=contracts_due,
+        savings_potential=round(savings, 0),
+        budget_pct=budget_pct,
+        top_risks=top_risks,
+    )
+
+
 def _send_for_org(org: dict) -> None:
     from db import get_db, row
     from email_service import send_monthly_report_rich
