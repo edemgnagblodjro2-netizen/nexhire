@@ -98,7 +98,7 @@ def get_profile(user: CurrentUser = Depends(require_min_role("user"))):
         "email":               u.get("email") or user.email,
         "full_name":           u.get("full_name") or "",
         "role":                u.get("role") or user.role,
-        "member_since":        (u.get("created_at") or "")[:10],
+        "member_since":        str(u.get("created_at") or "")[:10],
         "organization_id":     user.organization_id,
         "organization_name":   org.get("name") or "",
         "organization_slug":   org.get("slug") or "",
