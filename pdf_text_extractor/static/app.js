@@ -2816,6 +2816,11 @@ async function loadSettings() {
 
     // Logo & branding
     const isAdmin = ["admin", "owner"].includes(p.role);
+    state.isAdmin = isAdmin;
+    const spOrgEl = $("sp-org");
+    if (spOrgEl) {
+      if (!isAdmin) { spOrgEl.setAttribute("disabled",""); spOrgEl.style.opacity="0.6"; spOrgEl.style.cursor="not-allowed"; }
+    }
     const orgLogoSection = $("org-logo-section");
     if (orgLogoSection && isAdmin) orgLogoSection.classList.remove("hidden");
     if (p.logo_url) {
@@ -3212,10 +3217,14 @@ $("settings-profile-form")?.addEventListener("submit", async e => {
   btn.disabled = true; suc.classList.add("hidden"); err.classList.add("hidden");
   try {
     await apiCall("/api/settings/profile", "PATCH", { full_name: $("sp-fullname").value.trim() });
+    const orgVal = $("sp-org")?.value.trim();
+    if (state.isAdmin && orgVal) {
+      await apiCall("/api/settings/org", "PATCH", { org_name: orgVal });
+      $("settings-fullname").textContent = $("sp-fullname").value.trim();
+    }
     suc.classList.remove("hidden");
     $("settings-fullname").textContent = $("sp-fullname").value.trim();
     $("settings-avatar").textContent   = $("sp-fullname").value.trim()[0].toUpperCase();
-    // Sync top nav avatar
     $("user-avatar").textContent = $("sp-fullname").value.trim()[0].toUpperCase();
     setTimeout(() => suc.classList.add("hidden"), 4000);
   } catch (ex) {
