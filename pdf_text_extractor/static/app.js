@@ -653,10 +653,15 @@ const CONNECTORS = {
     help_label: "Connected App Salesforce",
   },
   servicenow: {
-    label: "ServiceNow", icon: "SN", color: "#62d2cc", method: "oauth",
+    label: "ServiceNow", icon: "SN", color: "#62d2cc", method: "apikey",
     desc: "Incidents, Changements, CMDB, SLA, Demandes",
     help_url: "https://docs.servicenow.com/bundle/washingtondc-platform-security/page/administer/security/concept/c_OAuthApplications.html",
-    help_label: "OAuth dans ServiceNow",
+    help_label: "Utilisateur ServiceNow",
+    fields: [
+      { id: "instance_url", label: "URL de l'instance *", placeholder: "https://monentreprise.service-now.com" },
+      { id: "username",     label: "Nom d'utilisateur *", placeholder: "admin" },
+      { id: "password",     label: "Mot de passe *",      placeholder: "••••••••", type: "password" },
+    ],
   },
   jira: {
     label: "Jira / Confluence", icon: "J", color: "#0052cc", method: "oauth",
@@ -665,10 +670,15 @@ const CONNECTORS = {
     help_label: "Atlassian Developer Console",
   },
   zendesk: {
-    label: "Zendesk", icon: "ZD", color: "#03363d", method: "oauth",
+    label: "Zendesk", icon: "ZD", color: "#03363d", method: "apikey",
     desc: "Tickets support, Agents, SLA, Articles base de connaissances",
-    help_url: "https://developer.zendesk.com/api-reference/ticketing/oauth/oauth_clients/",
-    help_label: "OAuth Client Zendesk",
+    help_url: "https://support.zendesk.com/hc/en-us/articles/4408889192858-Generating-a-new-API-token",
+    help_label: "Générer un API Token Zendesk",
+    fields: [
+      { id: "subdomain",  label: "Sous-domaine *",   placeholder: "monentreprise  (sans .zendesk.com)" },
+      { id: "email",      label: "Adresse courriel admin *", placeholder: "admin@monentreprise.com" },
+      { id: "api_token",  label: "API Token *",       placeholder: "••••••••••••••••••••••••••••••", type: "password" },
+    ],
   },
   hubspot: {
     label: "HubSpot", icon: "HS", color: "#ff7a59", method: "oauth",
@@ -4466,6 +4476,32 @@ function _fmt(v) {
 // TYPE D'ORGANISATION & INITIALISATION DÉPARTEMENTS
 // ═══════════════════════════════════════════════════════════════════════════
 
+let _pendingOrgType = null;
+let _prevOrgType    = null;
+let _orgTypeSelectEl = null;
+
+function warnOrgTypeChange(newVal, selectEl) {
+  if (newVal === (state.orgType || "entreprise")) return; // pas de changement réel
+  _pendingOrgType  = newVal;
+  _prevOrgType     = state.orgType || "entreprise";
+  _orgTypeSelectEl = selectEl;
+  selectEl.value   = _prevOrgType; // remet la valeur précédente visuellement
+  $("org-type-warn-modal").classList.remove("hidden");
+}
+
+async function confirmOrgTypeChangeAction() {
+  $("org-type-warn-modal").classList.add("hidden");
+  if (_orgTypeSelectEl) _orgTypeSelectEl.value = _pendingOrgType;
+  await saveOrgType(_pendingOrgType);
+  _pendingOrgType = null; _orgTypeSelectEl = null;
+}
+
+function cancelOrgTypeChange() {
+  $("org-type-warn-modal").classList.add("hidden");
+  if (_orgTypeSelectEl) _orgTypeSelectEl.value = _prevOrgType;
+  _pendingOrgType = null; _orgTypeSelectEl = null;
+}
+
 async function saveOrgType(type) {
   // Enregistre le type d'org sans créer les départements (juste la colonne organizations.org_type)
   // On réutilise l'endpoint initialize qui met à jour la colonne avant d'insérer
@@ -5518,7 +5554,7 @@ async function buildMarketplace() {
         <span style="font-size:.75rem;color:var(--slate)">${tpl.connectors.length} ${lang === "en" ? "connectors" : "connecteurs"}</span>
         ${isInstalled
           ? `<div style="display:flex;gap:6px">
-               <button class="btn btn-outline btn-sm" onclick="switchTab('org')">${lang === "en" ? "Manage" : "Gérer"}</button>
+               <button class="btn btn-outline btn-sm" onclick="openWorkspaceManager('${tpl.id}')">${lang === "en" ? "Manage" : "Gérer"}</button>
                <button class="btn btn-sm" style="background:#fee2e2;color:#991b1b;border:1px solid #fecaca" onclick="uninstallWorkspace('${tpl.id}')" id="uninstall-${tpl.id}" title="${lang === "en" ? "Remove workspace" : "Retirer le workspace"}">✕</button>
              </div>`
           : `<button class="btn btn-primary btn-sm" onclick="installWorkspace('${tpl.id}')" id="install-${tpl.id}">${lang === "en" ? "Install" : "Installer"}</button>`
@@ -5583,6 +5619,129 @@ async function installWorkspace(templateId) {
     } else {
       alert(e.message || "Erreur lors de l'installation.");
     }
+  }
+}
+
+// ── Workspace Manager Modal ──────────────────────────────────────────────────
+
+async function openWorkspaceManager(templateId) {
+  const lang = document.documentElement.lang === "en" ? "en" : "fr";
+  const tpl = WORKSPACE_TEMPLATES.find(t => t.id === templateId);
+  if (!tpl) return;
+  const deptId = _installedDeptIds[tpl.dept_type];
+  if (!deptId) return;
+
+  const modal = $("workspace-manager-modal");
+  const content = $("workspace-manager-content");
+  content.innerHTML = `<div style="padding:32px;text-align:center;color:#94a3b8">${lang === "en" ? "Loading…" : "Chargement…"}</div>`;
+  modal.classList.remove("hidden");
+
+  let allConnectors = [];
+  try {
+    allConnectors = (await apiCall("/api/connectors")) || [];
+  } catch {
+    content.innerHTML = `<div style="padding:24px;color:#dc2626">${lang === "en" ? "Error loading connectors." : "Erreur lors du chargement des connecteurs."}</div>`;
+    return;
+  }
+
+  const connMap = {};
+  allConnectors.forEach(c => { connMap[c.connector_type] = c; });
+
+  function renderConnRow(ctype) {
+    const meta = CONNECTORS[ctype] || { label: ctype, icon: "?", color: "#888", desc: "" };
+    const conn = connMap[ctype];
+    const isConnected = conn?.status === "connected";
+    const isAssigned = conn?.departments?.some(d => d.id === deptId) || false;
+
+    const statusBadge = !conn
+      ? `<span style="font-size:.73rem;background:#f1f5f9;color:#64748b;padding:2px 8px;border-radius:4px;white-space:nowrap">${lang === "en" ? "Not set up" : "Non configuré"}</span>`
+      : isConnected
+        ? `<span style="font-size:.73rem;background:#dcfce7;color:#166534;padding:2px 8px;border-radius:4px;white-space:nowrap">✓ ${lang === "en" ? "Connected" : "Connecté"}</span>`
+        : `<span style="font-size:.73rem;background:#fef9c3;color:#92400e;padding:2px 8px;border-radius:4px;white-space:nowrap">${lang === "en" ? "Disconnected" : "Déconnecté"}</span>`;
+
+    const actionBtn = isAssigned
+      ? `<button class="btn btn-sm" style="background:#fee2e2;color:#991b1b;border:1px solid #fecaca;min-width:88px;font-size:.78rem"
+             onclick="workspaceMgrToggle('${ctype}','${deptId}',false,'${templateId}')">
+           ${lang === "en" ? "Remove" : "Retirer"}
+         </button>`
+      : `<button class="btn btn-primary btn-sm" style="min-width:88px;font-size:.78rem"
+             onclick="workspaceMgrToggle('${ctype}','${deptId}',true,'${templateId}')">
+           ${lang === "en" ? "Assign" : "Assigner"}
+         </button>`;
+
+    return `<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #f1f5f9">
+      <div style="width:34px;height:34px;border-radius:7px;background:${meta.color};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;flex-shrink:0">${meta.icon}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:500;font-size:.88rem;color:#1e293b">${meta.label}</div>
+        <div style="font-size:.75rem;color:#94a3b8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${meta.desc || ""}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+        ${statusBadge}
+        ${actionBtn}
+      </div>
+    </div>`;
+  }
+
+  const suggested = tpl.connectors;
+  const otherTypes = Object.keys(CONNECTORS).filter(k => !suggested.includes(k));
+  const otherConfigured = otherTypes.filter(k => connMap[k]);
+  const otherUnconfigured = otherTypes.filter(k => !connMap[k]);
+
+  content.innerHTML = `
+    <div style="padding:20px 22px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <span style="font-size:1.5rem">${tpl.icon}</span>
+        <div>
+          <h3 style="margin:0;font-size:1rem;font-weight:700;color:#1e293b">${tpl.name[lang]}</h3>
+          <div style="font-size:.78rem;color:#64748b">${lang === "en" ? "Manage connector access for this workspace" : "Gérez l'accès aux connecteurs pour ce workspace"}</div>
+        </div>
+      </div>
+
+      <div style="margin-top:18px">
+        <div style="font-size:.7rem;font-weight:700;color:#94a3b8;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">
+          ${lang === "en" ? "Suggested connectors" : "Connecteurs suggérés"}
+        </div>
+        ${suggested.map(renderConnRow).join("")}
+      </div>
+
+      ${otherConfigured.length ? `
+        <div style="margin-top:18px">
+          <div style="font-size:.7rem;font-weight:700;color:#94a3b8;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">
+            ${lang === "en" ? "Other configured connectors" : "Autres connecteurs configurés"}
+          </div>
+          ${otherConfigured.map(renderConnRow).join("")}
+        </div>
+      ` : ""}
+
+      ${otherUnconfigured.length ? `
+        <details style="margin-top:16px">
+          <summary style="cursor:pointer;font-size:.78rem;color:#64748b;padding:6px 0;user-select:none;list-style:none">
+            <span style="display:flex;align-items:center;gap:4px">
+              <span style="font-size:.9rem">›</span>
+              ${lang === "en" ? "All other connectors" : "Tous les autres connecteurs"}
+              <span style="background:#e2e8f0;color:#64748b;border-radius:9px;padding:0 6px;font-size:.7rem">${otherUnconfigured.length}</span>
+            </span>
+          </summary>
+          <div style="margin-top:8px">${otherUnconfigured.map(renderConnRow).join("")}</div>
+        </details>
+      ` : ""}
+    </div>`;
+}
+
+function closeWorkspaceManager() {
+  $("workspace-manager-modal")?.classList.add("hidden");
+}
+
+async function workspaceMgrToggle(connType, deptId, assign, templateId) {
+  try {
+    if (assign) {
+      await apiCall(`/api/connectors/${connType}/departments/${deptId}`, "POST");
+    } else {
+      await apiCall(`/api/connectors/${connType}/departments/${deptId}`, "DELETE");
+    }
+    openWorkspaceManager(templateId);
+  } catch (e) {
+    alert(e.message || (assign ? "Erreur lors de l'assignation." : "Erreur lors du retrait."));
   }
 }
 

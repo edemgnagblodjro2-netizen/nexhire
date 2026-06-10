@@ -80,7 +80,8 @@ def get_recommendations(user: CurrentUser = Depends(require_min_role("user"))):
         with get_db() as cur:
             cur.execute("SELECT org_type FROM organizations WHERE id = %s LIMIT 1", (org_id,))
             r = row(cur)
-        org_type = (r.get("org_type") or "entreprise") if r else "entreprise"
+        raw_type = (r.get("org_type") or "entreprise") if r else "entreprise"
+        org_type = raw_type if raw_type in _KNOWN_ORG_TYPES else "entreprise"
     except Exception:
         pass
 
@@ -508,6 +509,11 @@ SECTOR_INSIGHTS: dict[str, list[str]] = {
         "L'automatisation des processus manuels récurrents génère un ROI positif en moins de 12 mois.",
         "La renégociation proactive des contrats (90 jours avant) économise en moyenne 15-20%.",
     ],
+    "entrepreneur": [
+        "Les micro-entreprises peuvent réduire de 30% leurs abonnements SaaS en passant aux plans annuels.",
+        "Les outils open-source ou freemium couvrent 80% des besoins des entrepreneurs solo ou petites équipes.",
+        "L'automatisation de la facturation et des relances réduit les retards de paiement de 50%.",
+    ],
 }
 
 SECTOR_OPPORTUNITIES: dict[str, list[dict]] = {
@@ -532,7 +538,19 @@ SECTOR_OPPORTUNITIES: dict[str, list[dict]] = {
         {"action": "Renégocier les contrats de bases de données et ressources académiques",   "impact": "medium", "timeline": "3-6 mois",  "savings_pct": 0.10},
         {"action": "Optimiser l'utilisation des espaces et salles de cours",                   "impact": "low",    "timeline": "1-3 mois",  "savings_pct": 0.06},
     ],
-    "entreprise": [],
+    "entreprise": [
+        {"action": "Auditer et réduire les licences SaaS sous-utilisées",                    "impact": "high",   "timeline": "1-2 mois",  "savings_pct": 0.15},
+        {"action": "Consolider les outils doublons par catégorie (CRM, RH, communication)",  "impact": "high",   "timeline": "3-6 mois",  "savings_pct": 0.20},
+        {"action": "Renégocier proactivement les contrats fournisseurs avant renouvellement", "impact": "medium", "timeline": "1-3 mois",  "savings_pct": 0.12},
+        {"action": "Automatiser les processus administratifs récurrents à fort volume",       "impact": "high",   "timeline": "3-6 mois",  "savings_pct": 0.10},
+        {"action": "Optimiser et réduire les dépenses cloud et infrastructure TI",            "impact": "medium", "timeline": "1-2 mois",  "savings_pct": 0.08},
+    ],
+    "entrepreneur": [
+        {"action": "Regrouper les abonnements SaaS sur des plans annuels (économie ~20%)",   "impact": "high",   "timeline": "1 mois",    "savings_pct": 0.20},
+        {"action": "Remplacer les outils payants redondants par des solutions gratuites",     "impact": "medium", "timeline": "1-3 mois",  "savings_pct": 0.30},
+        {"action": "Automatiser la facturation, les relances et le suivi des paiements",      "impact": "high",   "timeline": "1-2 mois",  "savings_pct": 0.15},
+        {"action": "Consolider la gestion de projets sur un seul outil centralisé",          "impact": "medium", "timeline": "1-2 mois",  "savings_pct": 0.10},
+    ],
 }
 
 
@@ -652,7 +670,12 @@ def _build_context(apps: list, lics: list, budget: list, org_type: str = "entrep
     return "\n".join(lines)
 
 
+_KNOWN_ORG_TYPES = frozenset({"entreprise", "entrepreneur", "hopital", "municipalite", "universite"})
+
 def _rule_based_analysis(org_id: str, org_type: str = "entreprise") -> dict:
+    # Normalise les types inconnus vers "entreprise"
+    if org_type not in _KNOWN_ORG_TYPES:
+        org_type = "entreprise"
     unused    = _unused_licenses(org_id)
     dups      = _duplicate_tools(org_id)
     procs     = _process_waste(org_id)

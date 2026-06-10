@@ -200,9 +200,31 @@ def add_connector_department(
     dept_id: str,
     user: CurrentUser = Depends(require_min_role("admin")),
 ):
-    """Autorise un département à accéder à ce connecteur."""
+    """Autorise un département à accéder à ce connecteur.
+    Crée le connecteur (disconnected) s'il n'existe pas encore."""
     _check_type(connector_type)
-    connector_id = _connector_id_or_404(connector_type, user.organization_id)
+
+    # Auto-créer le connecteur s'il n'est pas encore configuré
+    with get_db() as cur:
+        cur.execute(
+            "SELECT id FROM connectors WHERE organization_id = %s AND connector_type = %s LIMIT 1",
+            (user.organization_id, connector_type),
+        )
+        existing = row(cur)
+
+    if existing:
+        connector_id = existing["id"]
+    else:
+        with get_db() as cur:
+            cur.execute(
+                """INSERT INTO connectors (organization_id, connector_type, status)
+                   VALUES (%s, %s, 'disconnected') RETURNING id""",
+                (user.organization_id, connector_type),
+            )
+            created = row(cur)
+        if not created:
+            raise HTTPException(status_code=500, detail="Impossible de créer le connecteur.")
+        connector_id = created["id"]
 
     # Vérifier que le département appartient à la même organisation
     with get_db() as cur:

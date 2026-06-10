@@ -494,6 +494,28 @@ TOOL_DEFINITIONS: list[dict] = [
             },
         },
     },
+    {
+        "type": "function",
+        "function": {
+            "name": "query_epicor",
+            "description": (
+                "Interroge Epicor ERP pour la fabrication : ordres de production, stocks, achats, finances. "
+                "Utile pour : ordres en retard, niveaux de stock, coûts de fabrication, fournisseurs."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "category": {
+                        "type": "string",
+                        "enum": ["production_orders", "inventory", "purchasing", "financials"],
+                        "description": "Domaine à interroger",
+                    },
+                    "period": {"type": "string", "default": "current_month"},
+                },
+                "required": ["category"],
+            },
+        },
+    },
 ]
 
 
@@ -978,6 +1000,19 @@ def _mock_crowdstrike(query: str, severity: str = "all", limit: int = 5) -> list
     ][:limit]
 
 
+def _mock_epicor(category: str = "production_orders", period: str = "current_month") -> dict:
+    mocks = {
+        "production_orders": {"ordres_total": 34, "en_retard": 5, "complétés": 22, "en_cours": 7,
+                              "top_retards": [{"ordre": "MFG-2847", "article": "Composant A-412", "retard_jours": 8}, {"ordre": "MFG-2831", "article": "Assemblage B-201", "retard_jours": 3}]},
+        "inventory":         {"articles_total": 1240, "ruptures_stock": 12, "sur_stock": 45, "valeur_totale": "3 450 000 CAD",
+                              "alertes": [{"article": "REF-0847", "nom": "Roulement SKF-6205", "stock": 0, "min_requis": 50}]},
+        "purchasing":        {"commandes_ouvertes": 28, "en_attente_livraison": 14, "total_engagé": "890 000 CAD",
+                              "fournisseurs_en_retard": [{"fournisseur": "Métal Plus Inc.", "commandes_retard": 3}]},
+        "financials":        {"revenus": "2 100 000 CAD", "coûts_prod": "1 450 000 CAD", "marge_brute": "31%", "période": period},
+    }
+    return mocks.get(category, mocks["production_orders"])
+
+
 def _mock_hubspot(query: str, object_type: str = "all", limit: int = 5) -> list[dict]:
     data = [
         {"type": "deal", "nom": "Ville de Québec — Expansion licences", "valeur": "180 000 $", "étape": "Proposition envoyée", "probabilité": "70 %", "contact": "Directeur TI", "fermeture_prévue": "2026-07-31"},
@@ -1059,6 +1094,74 @@ def _call_tool(name: str, arguments: dict[str, Any], org_id: str | None = None) 
                            status=arguments.get("status", "all"),
                            limit=arguments.get("limit", 5),
                            org_id=org_id)
+            if name == "query_quickbooks":
+                from quickbooks_service import query_quickbooks as _fn
+                return _fn(category=arguments.get("category", "invoices"),
+                           org_id=org_id,
+                           period=arguments.get("period", "current_month"))
+            if name == "search_google_workspace":
+                from google_workspace_service import search_google_workspace as _fn
+                return _fn(query=arguments.get("query", ""), org_id=org_id,
+                           source=arguments.get("source", "all"),
+                           limit=arguments.get("limit", 5))
+            if name == "search_slack":
+                from slack_service import search_slack as _fn
+                return _fn(query=arguments.get("query", ""), org_id=org_id,
+                           channel=arguments.get("channel"),
+                           limit=arguments.get("limit", 5))
+            if name == "query_bamboohr":
+                from bamboohr_service import query_bamboohr as _fn
+                return _fn(category=arguments.get("category", "headcount"),
+                           org_id=org_id,
+                           period=arguments.get("period", "current_month"))
+            if name == "query_adp":
+                from adp_service import query_adp as _fn
+                return _fn(category=arguments.get("category", "headcount"),
+                           org_id=org_id,
+                           period=arguments.get("period", "current_month"))
+            if name == "search_asana":
+                from asana_service import search_asana as _fn
+                return _fn(query=arguments.get("query", ""), org_id=org_id,
+                           status=arguments.get("status", "all"),
+                           project=arguments.get("project"),
+                           limit=arguments.get("limit", 10))
+            if name == "search_monday":
+                from monday_service import search_monday as _fn
+                return _fn(query=arguments.get("query", ""), org_id=org_id,
+                           status=arguments.get("status", "all"),
+                           board=arguments.get("board"),
+                           limit=arguments.get("limit", 10))
+            if name == "search_clickup":
+                from clickup_service import search_clickup as _fn
+                return _fn(query=arguments.get("query", ""), org_id=org_id,
+                           status=arguments.get("status", "all"),
+                           space=arguments.get("space"),
+                           limit=arguments.get("limit", 10))
+            if name == "query_aws":
+                from aws_service import query_aws as _fn
+                return _fn(category=arguments.get("category", "costs"),
+                           org_id=org_id,
+                           period=arguments.get("period", "current_month"))
+            if name == "query_netsuite":
+                from netsuite_service import query_netsuite as _fn
+                return _fn(category=arguments.get("category", "financials"),
+                           org_id=org_id,
+                           period=arguments.get("period", "current_month"))
+            if name == "query_intune":
+                from intune_service import query_intune as _fn
+                return _fn(category=arguments.get("category", "devices"),
+                           org_id=org_id,
+                           department=arguments.get("department"))
+            if name == "search_crowdstrike":
+                from crowdstrike_service import search_crowdstrike as _fn
+                return _fn(query=arguments.get("query", ""), org_id=org_id,
+                           severity=arguments.get("severity", "all"),
+                           limit=arguments.get("limit", 5))
+            if name == "query_epicor":
+                from epicor_service import query_epicor as _fn
+                return _fn(category=arguments.get("category", "production_orders"),
+                           org_id=org_id,
+                           period=arguments.get("period", "current_month"))
         except Exception:
             pass  # fallback vers mock
 
@@ -1085,6 +1188,7 @@ def _call_tool(name: str, arguments: dict[str, Any], org_id: str | None = None) 
         "query_netsuite":         lambda a: _mock_netsuite(**a),
         "query_intune":           lambda a: _mock_intune(**a),
         "search_crowdstrike":     lambda a: _mock_crowdstrike(**a),
+        "query_epicor":           lambda a: _mock_epicor(**a),
     }
     handler = handlers.get(name)
     if not handler:
@@ -1153,6 +1257,7 @@ def run_agent(
         "netsuite":        "query_netsuite",
         "intune":          "query_intune",
         "crowdstrike":     "search_crowdstrike",
+        "epicor":          "query_epicor",
     }
     if connected_connectors is not None:
         active_tools = {connector_tool_map[c] for c in connected_connectors if c in connector_tool_map}

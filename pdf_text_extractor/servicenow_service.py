@@ -1,26 +1,27 @@
-"""ServiceNow REST API — vrais appels à partir des tokens OAuth stockés."""
+"""ServiceNow REST API — Basic Auth (username + password) par organisation.
+
+Les credentials sont saisis par l'admin dans le formulaire connecteur
+et stockés chiffrés en base. Aucune variable d'env, aucune app OAuth à créer.
+"""
 from __future__ import annotations
 
-import os
-
 import httpx
-from connector_loader import bearer, load_creds, refresh_oauth
-
-
-def _instance_url() -> str:
-    return os.environ.get("SNOW_INSTANCE_URL", "").rstrip("/")
+from connector_loader import load_creds
 
 
 def search_servicenow(
     query: str, org_id: str, status: str = "all", priority: str = "all", limit: int = 5
 ) -> list[dict]:
-    creds, cid = load_creds("servicenow", org_id)
+    creds, _ = load_creds("servicenow", org_id)
     if not creds:
         return [{"error": "ServiceNow non connecté"}]
 
-    instance = _instance_url()
-    token_url = f"{instance}/oauth_token.do" if instance else ""
-    creds = refresh_oauth(creds, cid, token_url, "SNOW_CLIENT_ID", "SNOW_CLIENT_SECRET")
+    instance = creds.get("instance_url", "").rstrip("/")
+    username = creds.get("username", "")
+    password = creds.get("password", "")
+
+    if not instance or not username:
+        return [{"error": "Credentials ServiceNow incomplets — reconfigurer le connecteur"}]
 
     sysparm_query = f"short_descriptionLIKE{query}^ORdescriptionLIKE{query}"
     if status != "all":
@@ -35,7 +36,7 @@ def search_servicenow(
     try:
         r = httpx.get(
             f"{instance}/api/now/table/incident",
-            headers=bearer(creds),
+            auth=(username, password),
             params={
                 "sysparm_query":  sysparm_query,
                 "sysparm_limit":  limit,
@@ -48,13 +49,15 @@ def search_servicenow(
             {
                 "id":       row.get("number"),
                 "titre":    row.get("short_description"),
-                "priorité": row.get("priority", {}).get("display_value") if isinstance(row.get("priority"), dict) else row.get("priority"),
-                "statut":   row.get("state", {}).get("display_value") if isinstance(row.get("state"), dict) else row.get("state"),
-                "assigné":  row.get("assigned_to", {}).get("display_value") if isinstance(row.get("assigned_to"), dict) else row.get("assigned_to"),
+                "priorité": (row.get("priority") or {}).get("display_value", row.get("priority")),
+                "statut":   (row.get("state") or {}).get("display_value", row.get("state")),
+                "assigné":  (row.get("assigned_to") or {}).get("display_value", row.get("assigned_to")),
                 "créé":     row.get("sys_created_on"),
                 "source":   "servicenow",
             }
             for row in r.json().get("result", [])
         ]
+    except httpx.HTTPStatusError as exc:
+        return [{"error": f"ServiceNow HTTP {exc.response.status_code}", "source": "servicenow"}]
     except Exception as exc:
         return [{"error": str(exc), "source": "servicenow"}]
