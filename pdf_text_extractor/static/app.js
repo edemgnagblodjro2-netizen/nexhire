@@ -4412,6 +4412,7 @@ async function loadDepartments() {
     window._deptTypeMap = Object.fromEntries(depts.map(d => [d.id, d.dept_type || "general"]));
     if (!depts.length) {
       wrap.innerHTML = `<p class="muted">Aucun département. Cliquez sur <strong>⚡ Initialiser par secteur</strong> pour en créer automatiquement.</p>`;
+      _updateWorkspaceBar();
       return;
     }
     const DEPT_TYPE_ICONS = { finance:"💰", hr:"👥", it:"🖥️", legal:"⚖️", operations:"⚙️", communication:"📢", direction:"🏛️", approvisionnement:"📦", general:"🏢" };
@@ -4428,6 +4429,7 @@ async function loadDepartments() {
           <button class="btn-icon btn-deactivate" onclick="deleteDept('${d.id}')">✕</button>
         </div>
       </div>`).join("");
+    _updateWorkspaceBar();
   } catch(e) {
     const isDbMissing = e.status === 500;
     wrap.innerHTML = isDbMissing
@@ -4525,9 +4527,13 @@ async function resetAllDepartments() {
   if (!window.confirm(msg)) return;
   try {
     const res = await apiCall("/api/departments/reset-all", "DELETE");
+    _installedWorkspaces.clear();
+    _installedDeptIds = {};
+    _marketplaceBuilt = false;
     loadDepartments();
     loadOrgChart();
     _populateDeptSelects();
+    _updateWorkspaceBar();
     openInitDeptsModal();
   } catch (ex) {
     alert(ex.message || "Erreur lors de la réinitialisation.");
@@ -5508,6 +5514,43 @@ const WORKSPACE_TEMPLATES = [
     desc: { fr: "Livraisons, niveaux de stock, réceptions, transporteurs et gestion du surstock.", en: "Deliveries, stock levels, receipts, carriers and overstock management." },
     connectors: ["netsuite", "sap", "microsoft_365"],
   },
+  // ── Université ──────────────────────────────────────────────────────────
+  {
+    id: "rectorat", icon: "🎓", color: "#7c3aed", dept_type: "rectorat",
+    name: { fr: "Rectorat Workspace",           en: "Rector's Office" },
+    desc: { fr: "Planification institutionnelle, gouvernance, indicateurs académiques et projets stratégiques.", en: "Institutional planning, governance, academic indicators and strategic projects." },
+    connectors: ["microsoft_365", "salesforce", "slack"],
+  },
+  {
+    id: "affaires_academiques", icon: "📚", color: "#0369a1", dept_type: "affaires_academiques",
+    name: { fr: "Affaires académiques",          en: "Academic Affairs" },
+    desc: { fr: "Programmes, qualité académique, corps professoral, charges d'enseignement et accréditations.", en: "Programs, academic quality, faculty, teaching loads and accreditations." },
+    connectors: ["microsoft_365", "bamboohr", "jira"],
+  },
+  {
+    id: "registraire", icon: "📝", color: "#0891b2", dept_type: "registraire",
+    name: { fr: "Admission & Registraire",       en: "Admissions & Registrar" },
+    desc: { fr: "Dossiers étudiants, admissions, diplomation, transferts et gestion des crédits.", en: "Student records, admissions, graduation, transfers and credit management." },
+    connectors: ["microsoft_365", "servicenow"],
+  },
+  {
+    id: "recherche_univ", icon: "🔬", color: "#16a34a", dept_type: "recherche_univ",
+    name: { fr: "Recherche & Innovation",        en: "Research & Innovation" },
+    desc: { fr: "Subventions CRSH/CRSNG, partenariats industriels, propriété intellectuelle et projets de recherche.", en: "SSHRC/NSERC grants, industry partnerships, intellectual property and research projects." },
+    connectors: ["microsoft_365", "asana", "jira"],
+  },
+  {
+    id: "services_etudiants", icon: "🎒", color: "#ea580c", dept_type: "services_etudiants",
+    name: { fr: "Services aux étudiants",        en: "Student Services" },
+    desc: { fr: "Aide financière, bourses, counseling, logement, vie étudiante et gestion des plaintes.", en: "Financial aid, scholarships, counseling, housing, student life and complaint management." },
+    connectors: ["microsoft_365", "zendesk", "servicenow"],
+  },
+  {
+    id: "bibliotheques", icon: "📖", color: "#854d0e", dept_type: "bibliotheques",
+    name: { fr: "Bibliothèques & Archives",      en: "Libraries & Archives" },
+    desc: { fr: "Collections, accès aux ressources numériques, licences d'édition académique et archives institutionnelles.", en: "Collections, digital resource access, academic publishing licenses and institutional archives." },
+    connectors: ["microsoft_365", "netsuite"],
+  },
 ];
 
 let _marketplaceBuilt = false;
@@ -6215,6 +6258,13 @@ async function _updateWorkspaceBar() {
     service_patients:  { icon: "🛏️", color: "#0891b2", label: { fr: "Service aux patients",       en: "Patient Services" } },
     appro_medical:     { icon: "📦", color: "#dc2626", label: { fr: "Approvisionnement médical",   en: "Medical Supply" } },
     archives_medicales:{ icon: "📁", color: "#92400e", label: { fr: "Archives médicales",          en: "Medical Records" } },
+    // ── Université ─────────────────────────────────────────────────────────
+    rectorat:            { icon: "🎓", color: "#7c3aed", label: { fr: "Rectorat",                   en: "Rector's Office" } },
+    affaires_academiques:{ icon: "📚", color: "#0369a1", label: { fr: "Affaires académiques",        en: "Academic Affairs" } },
+    registraire:         { icon: "📝", color: "#0891b2", label: { fr: "Admission & Registraire",     en: "Admissions" } },
+    recherche_univ:      { icon: "🔬", color: "#16a34a", label: { fr: "Recherche & Innovation",      en: "Research" } },
+    services_etudiants:  { icon: "🎒", color: "#ea580c", label: { fr: "Services aux étudiants",      en: "Student Services" } },
+    bibliotheques:       { icon: "📖", color: "#854d0e", label: { fr: "Bibliothèques & Archives",    en: "Libraries" } },
   };
 
   // Admin → tous les depts de l'org  |  Membre → uniquement ses depts (filtre backend)
