@@ -1036,6 +1036,7 @@
       <button class="tab-btn"        data-tab="documents"  role="tab" data-i18n="app.tab.documents">Documents</button>
       <button class="tab-btn admin-only hidden" data-tab="org"          role="tab">🏛️ Organisation</button>
       <button class="tab-btn admin-only hidden" data-tab="audit"        role="tab" data-i18n="app.tab.audit">Audit</button>
+      <button class="tab-btn admin-only hidden" data-tab="security"     role="tab">🔐 Sécurité</button>
       <button class="tab-btn admin-only hidden" data-tab="marketplace"  role="tab">🏪 Marketplace</button>
       <button class="tab-btn hidden" id="superadmin-tab-btn" data-tab="superadmin" role="tab">🛡️ Super Admin</button>
       <button class="tab-btn"        data-tab="stats"      role="tab" data-i18n="app.tab.stats">Statistiques</button>
@@ -1497,6 +1498,87 @@
         </div>
       </div>
     </div>
+
+    <!-- ── SÉCURITÉ ─────────────────────────────────────────────────────── -->
+    <section id="tab-security" class="tab-content hidden admin-only" role="tabpanel">
+      <div class="section-header">
+        <h2>🔐 Tableau de bord Sécurité</h2>
+      </div>
+
+      <!-- Score global -->
+      <div id="sec-score-bar" style="display:flex;align-items:center;gap:16px;margin-bottom:24px;padding:18px 20px;background:var(--card-bg);border-radius:12px;border:1px solid var(--border)">
+        <div style="position:relative;width:72px;height:72px;flex-shrink:0">
+          <svg viewBox="0 0 36 36" style="width:72px;height:72px;transform:rotate(-90deg)">
+            <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--border)" stroke-width="3"/>
+            <circle id="sec-score-ring" cx="18" cy="18" r="15.9" fill="none" stroke="#818cf8"
+              stroke-width="3" stroke-dasharray="100 100" stroke-linecap="round"/>
+          </svg>
+          <span id="sec-score-num" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;color:var(--primary)">—</span>
+        </div>
+        <div>
+          <div style="font-size:1.05rem;font-weight:600;color:var(--text-primary)">Score de sécurité</div>
+          <div id="sec-score-label" style="font-size:.82rem;color:var(--text-muted);margin-top:2px">Chargement…</div>
+        </div>
+        <div id="sec-checklist" style="margin-left:auto;display:flex;flex-wrap:wrap;gap:8px"></div>
+      </div>
+
+      <!-- 3 KPIs -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px">
+        <div class="stat-card" style="padding:16px">
+          <div class="stat-label">MFA activé</div>
+          <div id="sec-mfa-kpi" class="stat-value" style="font-size:1.6rem">—</div>
+          <div id="sec-mfa-sub" class="stat-label" style="margin-top:2px"></div>
+        </div>
+        <div class="stat-card" style="padding:16px">
+          <div class="stat-label">Alertes non traitées</div>
+          <div id="sec-alerts-kpi" class="stat-value" style="font-size:1.6rem;color:#f87171">—</div>
+          <div id="sec-alerts-sub" class="stat-label" style="margin-top:2px"></div>
+        </div>
+        <div class="stat-card" style="padding:16px">
+          <div class="stat-label">Conformité Loi 25</div>
+          <div id="sec-compliance-kpi" class="stat-value" style="font-size:1.6rem">—</div>
+          <div id="sec-compliance-sub" class="stat-label" style="margin-top:2px"></div>
+        </div>
+      </div>
+
+      <!-- Alertes récentes -->
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:20px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <h3 style="font-size:.95rem;font-weight:600;color:var(--text-primary)">Alertes de sécurité</h3>
+          <button class="btn btn-outline btn-sm" onclick="loadSecurityDashboard()">Actualiser</button>
+        </div>
+        <div id="sec-alerts-list" style="font-size:.82rem">
+          <p class="muted">Chargement…</p>
+        </div>
+      </div>
+
+      <!-- Activité login + IPs -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:18px">
+          <h3 style="font-size:.9rem;font-weight:600;color:var(--text-primary);margin-bottom:12px">Connexions — 7 derniers jours</h3>
+          <div id="sec-login-chart" style="font-size:.82rem"></div>
+        </div>
+        <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:18px">
+          <h3 style="font-size:.9rem;font-weight:600;color:var(--text-primary);margin-bottom:12px">IPs de connexion récentes</h3>
+          <div id="sec-ips-list" style="font-size:.82rem"></div>
+        </div>
+      </div>
+
+      <!-- MFA par utilisateur -->
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:18px;margin-top:16px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <h3 style="font-size:.9rem;font-weight:600;color:var(--text-primary)">Gestion MFA</h3>
+          <button class="btn btn-sm" style="background:#818cf8;color:#fff" onclick="toggleOrgMfa()">
+            <span id="sec-mfa-toggle-label">Exiger MFA organisation</span>
+          </button>
+        </div>
+        <p style="font-size:.82rem;color:var(--text-muted)">
+          Les utilisateurs peuvent activer leur MFA dans <strong>Paramètres → Sécurité</strong>.
+          Vous pouvez exiger le MFA pour tous les membres de l'organisation.
+        </p>
+        <div id="sec-mfa-req-status" style="margin-top:8px;font-size:.82rem"></div>
+      </div>
+    </section>
 
     <!-- ── PARAMÈTRES ────────────────────────────────────────────────────── -->
     <section id="tab-settings" class="tab-content hidden" role="tabpanel">

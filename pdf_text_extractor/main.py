@@ -111,6 +111,9 @@ from routes_sso              import router as sso_router
 from routes_webhooks         import router as webhooks_router
 from routes_superadmin       import router as superadmin_router
 from routes_external         import router as external_router
+from routes_mfa                    import router as mfa_router
+from routes_compliance             import router as compliance_router
+from routes_security_dashboard     import router as security_dashboard_router
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -196,6 +199,9 @@ def create_app(
     app.include_router(webhooks_router)
     app.include_router(superadmin_router)
     app.include_router(external_router)
+    app.include_router(mfa_router)
+    app.include_router(compliance_router)
+    app.include_router(security_dashboard_router)
     app.state.storage = storage or DocumentStore.from_env()
     app.state.assistant = assistant or AssistantService.from_env()
 

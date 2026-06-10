@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import re
+
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, field_validator
 
 from audit import AuditEvent, client_ip, log_audit
 from auth import CurrentUser, get_current_user
@@ -11,12 +13,34 @@ from supabase_client import anon_client
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 
 
+def _check_password_strength(v: str) -> str:
+    errors = []
+    if len(v) < 12:
+        errors.append("au moins 12 caractères")
+    if not re.search(r"[A-Z]", v):
+        errors.append("une majuscule")
+    if not re.search(r"[a-z]", v):
+        errors.append("une minuscule")
+    if not re.search(r"\d", v):
+        errors.append("un chiffre")
+    if not re.search(r"[!@#$%^&*()\-_=+\[\]{};:'\",.<>?/\\|`~]", v):
+        errors.append("un caractère spécial")
+    if errors:
+        raise ValueError(f"Mot de passe trop faible — requis : {', '.join(errors)}.")
+    return v
+
+
 class SignupPayload(BaseModel):
     organization_name: str = Field(default="Mon organisation", min_length=1, max_length=255)
     full_name: str = Field(min_length=1, max_length=255)
     email: EmailStr
-    password: str = Field(min_length=8)
+    password: str = Field(min_length=12)
     invite_token: str | None = None
+
+    @field_validator("password")
+    @classmethod
+    def password_strength(cls, v: str) -> str:
+        return _check_password_strength(v)
 
 
 @router.post("/signup")
@@ -111,21 +135,41 @@ def login(request: Request, payload: LoginPayload, background: BackgroundTasks):
         ))
         raise HTTPException(status_code=401, detail="Authentification échouée.")
 
+    uid = str(res.user.id)
     background.add_task(log_audit, AuditEvent(
         action="auth_login",
         query=payload.email,
-        user_id=res.user.id,
+        user_id=uid,
         success=True,
         ip_address=ip,
         http_status=200,
     ))
+
+    # Détection impossible travel en arrière-plan
+    try:
+        org_id = str(res.user.user_metadata.get("organization_id") or "")
+        if ip and org_id:
+            background.add_task(
+                _run_travel_check, uid, ip, org_id,
+            )
+    except Exception:
+        pass
+
     return {
         "access_token":  res.session.access_token,
         "refresh_token": res.session.refresh_token,
         "token_type":    "bearer",
-        "user_id":       res.user.id,
+        "user_id":       uid,
         "expires_in":    res.session.expires_in,
     }
+
+
+def _run_travel_check(user_id: str, ip: str, org_id: str) -> None:
+    try:
+        from anomaly_detection import check_impossible_travel
+        check_impossible_travel(user_id, ip, org_id)
+    except Exception:
+        pass
 
 
 class RefreshPayload(BaseModel):

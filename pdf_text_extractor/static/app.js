@@ -1329,7 +1329,7 @@ function switchTab(name) {
 }
 
 function _syncMobileNav(tab) {
-  const moreTabs = ["stats", "documents", "org", "team", "marketplace", "audit", "settings", "superadmin"];
+  const moreTabs = ["stats", "documents", "org", "team", "marketplace", "audit", "security", "settings", "superadmin"];
   document.querySelectorAll(".mob-nav-btn[data-tab]").forEach(btn => {
     btn.classList.toggle("active", btn.dataset.tab === tab);
   });
@@ -1369,6 +1369,7 @@ function loadActiveTab() {
     "optim":       loadOptimization,
     "marketplace": buildMarketplace,
     "superadmin":  loadSuperAdmin,
+    "security":    loadSecurityDashboard,
   };
   const fn = loaders[state.tab];
   if (fn) Promise.resolve().then(() => fn()).catch(err => console.warn(`[${state.tab}] load error:`, err));
@@ -7455,5 +7456,204 @@ async function deleteContractor(id) {
     if (_activeDeptId) loadDeptExternalContractors(_activeDeptId);
   } catch (ex) {
     alert(ex.message || "Erreur lors de la suppression.");
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// TABLEAU DE BORD SÉCURITÉ
+// ═══════════════════════════════════════════════════════════════════════════
+
+let _secData = null;
+
+async function loadSecurityDashboard() {
+  try {
+    _secData = await apiCall("/api/security/dashboard");
+    _renderSecurityDashboard(_secData);
+  } catch (e) {
+    $("sec-alerts-list").innerHTML = `<p class="muted">Erreur chargement : ${e.message}</p>`;
+  }
+}
+
+function _renderSecurityDashboard(d) {
+  const lang = document.documentElement.lang === "en" ? "en" : "fr";
+
+  // Score
+  const score = d.score_securite || 0;
+  const ring = $("sec-score-ring");
+  if (ring) {
+    ring.setAttribute("stroke-dasharray", `${score} 100`);
+    ring.setAttribute("stroke",
+      score >= 80 ? "#4ade80" : score >= 50 ? "#fbbf24" : "#f87171");
+  }
+  _set("sec-score-num", score + "%");
+  _set("sec-score-label",
+    score >= 80 ? "Bonne posture de sécurité" :
+    score >= 50 ? "Améliorations requises" : "Risques critiques à corriger");
+
+  // Checklist badges
+  const cl = d.checklist || {};
+  const badges = [
+    { key: "mfa_partiel",       label: "MFA",          ok: cl.mfa_partiel },
+    { key: "mfa_complet",       label: "MFA ≥80%",     ok: cl.mfa_complet },
+    { key: "mfa_requis_org",    label: "MFA obligatoire", ok: cl.mfa_requis_org },
+    { key: "alertes_critiques", label: "0 alerte critique", ok: cl.alertes_critiques },
+    { key: "conformite_loi25",  label: "Loi 25",        ok: cl.conformite_loi25 },
+  ];
+  const checkEl = $("sec-checklist");
+  if (checkEl) {
+    checkEl.innerHTML = badges.map(b =>
+      `<span style="padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:600;
+        background:${b.ok ? "rgba(74,222,128,.15)" : "rgba(248,113,113,.15)"};
+        color:${b.ok ? "#4ade80" : "#f87171"};border:1px solid ${b.ok ? "#4ade80" : "#f87171"}">
+        ${b.ok ? "✓" : "✗"} ${b.label}</span>`
+    ).join("");
+  }
+
+  // KPIs
+  const mfa = d.mfa || {};
+  _set("sec-mfa-kpi", `${mfa.mfa_actif ?? "—"}/${mfa.utilisateurs_total ?? "—"}`);
+  _set("sec-mfa-sub", `${mfa.pourcentage ?? 0}% des utilisateurs`);
+
+  const alerts = d.alertes || {};
+  const critiques = alerts.critiques_hautes || 0;
+  _set("sec-alerts-kpi", alerts.non_acquittees_total ?? "0");
+  _set("sec-alerts-sub", `dont ${critiques} critiques/hautes`);
+  if ($("sec-alerts-kpi")) {
+    $("sec-alerts-kpi").style.color = critiques > 0 ? "#f87171" : "#4ade80";
+  }
+
+  const comp = d.conformite || {};
+  const pending = comp.suppressions_en_attente || 0;
+  _set("sec-compliance-kpi", pending === 0 ? "✓" : pending);
+  _set("sec-compliance-sub", pending === 0
+    ? "Aucune demande en attente"
+    : `${pending} demande(s) suppression en attente`);
+
+  // MFA organisation required
+  _set("sec-mfa-toggle-label",
+    mfa.requis_organisation ? "Désactiver obligation MFA" : "Exiger MFA organisation");
+  _set("sec-mfa-req-status",
+    mfa.requis_organisation
+      ? '<span style="color:#4ade80">✓ MFA obligatoire pour tous les membres</span>'
+      : '<span style="color:#fbbf24">⚠ MFA optionnel — recommandez-le à vos équipes</span>');
+
+  // Alertes récentes
+  const recentes = (alerts.recentes || []);
+  const alertEl = $("sec-alerts-list");
+  if (alertEl) {
+    if (!recentes.length) {
+      alertEl.innerHTML = '<p class="muted" style="font-size:.82rem">Aucune alerte non traitée ✓</p>';
+    } else {
+      const sevColor = { critical: "#f87171", high: "#fb923c", medium: "#fbbf24", low: "#60a5fa" };
+      alertEl.innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:.8rem">
+        <thead><tr style="color:var(--text-muted)">
+          <th style="text-align:left;padding:4px 8px">Type</th>
+          <th style="text-align:left;padding:4px 8px">Sévérité</th>
+          <th style="text-align:left;padding:4px 8px">IP</th>
+          <th style="text-align:left;padding:4px 8px">Heure</th>
+          <th style="padding:4px 8px"></th>
+        </tr></thead>
+        <tbody>
+        ${recentes.map(a => `
+          <tr style="border-top:1px solid var(--border)">
+            <td style="padding:6px 8px;font-weight:600">${_secAlertLabel(a.alert_type)}</td>
+            <td style="padding:6px 8px">
+              <span style="padding:2px 8px;border-radius:12px;background:${sevColor[a.severity] || "#60a5fa"}22;
+                color:${sevColor[a.severity] || "#60a5fa"};font-size:.75rem;font-weight:600">
+                ${a.severity}
+              </span>
+            </td>
+            <td style="padding:6px 8px;color:var(--text-muted)">${a.ip_address || "—"}</td>
+            <td style="padding:6px 8px;color:var(--text-muted)">${_fmtDateTime(a.created_at)}</td>
+            <td style="padding:6px 8px">
+              <button class="btn btn-outline btn-sm"
+                onclick="ackSecAlert('${a.id}')">Traiter</button>
+            </td>
+          </tr>`).join("")}
+        </tbody></table>`;
+    }
+  }
+
+  // Activité login
+  const loginEl = $("sec-login-chart");
+  if (loginEl) {
+    const activity = d.activite_login || [];
+    if (!activity.length) {
+      loginEl.innerHTML = '<p class="muted">Aucune donnée</p>';
+    } else {
+      const maxVal = Math.max(...activity.map(r => (r.succes || 0) + (r.echecs || 0)), 1);
+      loginEl.innerHTML = activity.slice(0, 7).map(r => {
+        const total = (r.succes || 0) + (r.echecs || 0);
+        const pct   = Math.round(total / maxVal * 100);
+        const date  = r.jour ? r.jour.substring(5) : "—";
+        return `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="width:36px;font-size:.75rem;color:var(--text-muted);text-align:right">${date}</span>
+          <div style="flex:1;height:14px;background:var(--border);border-radius:4px;overflow:hidden">
+            <div style="width:${pct}%;height:100%;background:#818cf8;border-radius:4px"></div>
+          </div>
+          <span style="font-size:.75rem;color:var(--text-muted);width:40px">${r.succes}✓ ${r.echecs}✗</span>
+        </div>`;
+      }).join("");
+    }
+  }
+
+  // IPs récentes
+  const ipsEl = $("sec-ips-list");
+  if (ipsEl) {
+    const ips = d.ips_recentes || [];
+    if (!ips.length) {
+      ipsEl.innerHTML = '<p class="muted">Aucune donnée</p>';
+    } else {
+      ipsEl.innerHTML = ips.map(ip =>
+        `<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:.8rem">
+          <span style="font-family:monospace;color:var(--text-primary)">${ip.ip}</span>
+          <span style="color:var(--text-muted)">${ip.connexions} conn. — ${_fmtDateTime(ip.derniere_vue)}</span>
+        </div>`
+      ).join("");
+    }
+  }
+}
+
+function _secAlertLabel(type) {
+  const labels = {
+    impossible_travel:    "Voyage impossible",
+    bulk_export:          "Export massif",
+    bulk_export_hourly:   "Export massif (1h)",
+    behavior_anomaly:     "Comportement anormal",
+    unusual_dept_access:  "Accès dept inhabituel",
+    prompt_injection:     "Injection IA",
+  };
+  return labels[type] || type;
+}
+
+function _fmtDateTime(iso) {
+  if (!iso) return "—";
+  try {
+    const d = new Date(iso);
+    return d.toLocaleDateString("fr-CA", { month: "short", day: "numeric" })
+           + " " + d.toLocaleTimeString("fr-CA", { hour: "2-digit", minute: "2-digit" });
+  } catch { return iso.substring(0, 16).replace("T", " "); }
+}
+
+async function ackSecAlert(alertId) {
+  try {
+    await apiCall(`/api/compliance/alerts/${alertId}/ack`, "POST");
+    await loadSecurityDashboard();
+  } catch (e) {
+    alert(e.message || "Erreur lors du traitement.");
+  }
+}
+
+async function toggleOrgMfa() {
+  const current = _secData?.mfa?.requis_organisation || false;
+  const msg = current
+    ? "Désactiver l'obligation de MFA pour toute l'organisation ?"
+    : "Exiger le MFA pour tous les membres de l'organisation ?";
+  if (!confirm(msg)) return;
+  try {
+    await apiCall(`/api/mfa/require-org?enable=${!current}`, "POST");
+    await loadSecurityDashboard();
+  } catch (e) {
+    alert(e.message || "Erreur lors de la mise à jour.");
   }
 }
