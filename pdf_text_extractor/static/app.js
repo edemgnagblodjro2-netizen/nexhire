@@ -4835,11 +4835,13 @@ async function runM365Sync() {
     const res = await apiCall("/api/intelligence/m365/sync", "POST");
     const collected = res.collected || {};
     const entra     = res.entra || {};
+    const intune    = res.intune || {};
     const parts = [];
     if (collected.users) parts.push(`${collected.users} utilisateurs M365`);
     if (entra.postures_updated) parts.push(`${entra.postures_updated} postures MFA`);
     if (entra.privileged_users) parts.push(`${entra.privileged_users} admin(s) détectés`);
     if (entra.service_principals) parts.push(`${entra.service_principals} apps de service`);
+    if (intune.total > 0) parts.push(`${intune.total} appareils Intune (${intune.compliant} conformes)`);
     if (entra.warning) showToast(`Entra ID partiel : ${entra.warning}`, "warning");
     else if (parts.length) showToast(`Synchronisé — ${parts.join(", ")}`, "success");
     await _loadM365Intelligence();
@@ -4868,11 +4870,12 @@ async function _loadM365Intelligence() {
   if (list) list.innerHTML = `<p class="muted" style="padding:12px 0">Chargement…</p>`;
 
   try {
-    // Chargement parallèle : licences + risques + utilisateurs avec posture MFA
-    const [licSummary, risks, users] = await Promise.all([
+    // Chargement parallèle : licences + risques + utilisateurs + Intune
+    const [licSummary, risks, users, intuneSum] = await Promise.all([
       apiCall("/api/intelligence/m365/licenses").catch(() => ({})),
       apiCall("/api/intelligence/risks").catch(() => []),
       apiCall("/api/intelligence/m365/users").catch(() => []),
+      apiCall("/api/intelligence/intune/summary").catch(() => null),
     ]);
 
     // KPI cards — comptage depuis les vrais findings actifs uniquement
@@ -5113,7 +5116,78 @@ async function _loadM365Intelligence() {
       risksHtml = `<p class="muted" style="text-align:center;padding:32px">Aucun risque confirmé — les données d'activité seront disponibles sous 24-48h après la création des comptes.</p>`;
     }
 
-    if (list) list.innerHTML = poolsHtml + postureHtml + risksHtml;
+    // ── Assets & Conformité Intune ───────────────────────────────────────────
+    let intuneHtml = "";
+    if (intuneSum && intuneSum.total > 0) {
+      const iTotal    = intuneSum.total || 0;
+      const iCompliant = intuneSum.compliant || 0;
+      const iNonCompliant = intuneSum.noncompliant || 0;
+      const iUnknown  = iTotal - iCompliant - iNonCompliant;
+      const iEncrypted = intuneSum.encrypted || 0;
+      const iStale    = intuneSum.stale_30d || 0;
+      const iRate     = intuneSum.compliance_rate ?? (iTotal ? Math.round(iCompliant / iTotal * 100) : 0);
+      const rateCol   = iRate >= 90 ? "#16a34a" : iRate >= 70 ? "#d97706" : "#dc2626";
+
+      const byOsHtml = (intuneSum.by_os || []).slice(0, 5).map(o =>
+        `<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #f1f5f9">
+          <span style="font-size:.82rem;color:#475569">${esc(o.os || "Inconnu")}</span>
+          <span style="font-size:.82rem;font-weight:700;color:#1e293b">${o.count}</span>
+        </div>`
+      ).join("");
+
+      intuneHtml = `
+      <div style="margin-bottom:28px">
+        <h4 style="margin:0 0 14px;font-size:.88rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em">Assets & Conformité Intune</h4>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
+          <div style="background:#f0fdf4;border:2px solid ${iRate>=90?'#16a34a':'#e2e8f0'};border-radius:12px;padding:14px 16px;text-align:center">
+            <div style="font-size:1.8rem;font-weight:800;color:${rateCol}">${iRate}%</div>
+            <div style="font-size:.78rem;font-weight:700;color:#64748b;text-transform:uppercase">Taux conformité</div>
+            <div style="font-size:.72rem;color:#94a3b8;margin-top:2px">${iCompliant} / ${iTotal} appareils</div>
+          </div>
+          <div style="background:${iNonCompliant>0?'#fef2f2':'#f8fafc'};border:2px solid ${iNonCompliant>0?'#dc2626':'#e2e8f0'};border-radius:12px;padding:14px 16px;text-align:center">
+            <div style="font-size:1.8rem;font-weight:800;color:${iNonCompliant>0?'#dc2626':'#94a3b8'}">${iNonCompliant}</div>
+            <div style="font-size:.78rem;font-weight:700;color:#64748b;text-transform:uppercase">Non conformes</div>
+            <div style="font-size:.72rem;color:#94a3b8;margin-top:2px">Politique de sécurité</div>
+          </div>
+          <div style="background:${intuneSum.unencrypted>0?'#fff7ed':'#f8fafc'};border:2px solid ${intuneSum.unencrypted>0?'#d97706':'#e2e8f0'};border-radius:12px;padding:14px 16px;text-align:center">
+            <div style="font-size:1.8rem;font-weight:800;color:${intuneSum.unencrypted>0?'#d97706':'#94a3b8'}">${intuneSum.unencrypted||0}</div>
+            <div style="font-size:.78rem;font-weight:700;color:#64748b;text-transform:uppercase">Non chiffrés</div>
+            <div style="font-size:.72rem;color:#94a3b8;margin-top:2px">${iEncrypted} chiffrés / ${iTotal}</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:10px;padding:14px 16px">
+            <div style="font-size:.8rem;font-weight:700;color:#475569;margin-bottom:10px">Répartition par OS</div>
+            ${byOsHtml || '<p style="font-size:.8rem;color:#94a3b8;margin:0">Aucune donnée</p>'}
+          </div>
+          <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:10px;padding:14px 16px">
+            <div style="font-size:.8rem;font-weight:700;color:#475569;margin-bottom:10px">Synchronisation</div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f1f5f9">
+              <span style="font-size:.82rem;color:#475569">Appareils total</span>
+              <span style="font-size:.82rem;font-weight:700">${iTotal}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f1f5f9">
+              <span style="font-size:.82rem;color:#475569">Pas sync depuis 30j</span>
+              <span style="font-size:.82rem;font-weight:700;color:${iStale>0?'#d97706':'#16a34a'}">${iStale}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0">
+              <span style="font-size:.82rem;color:#475569">Pas sync depuis 90j</span>
+              <span style="font-size:.82rem;font-weight:700;color:${(intuneSum.stale_90d||0)>0?'#dc2626':'#16a34a'}">${intuneSum.stale_90d||0}</span>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    } else if (intuneSum === null) {
+      intuneHtml = `
+      <div style="margin-bottom:24px;padding:16px;background:#fafafa;border:1.5px dashed #e2e8f0;border-radius:10px">
+        <p style="margin:0;font-size:.83rem;color:#64748b">
+          <strong>Assets Intune</strong> — Permission <code>DeviceManagementManagedDevices.Read.All</code> non accordée.
+          Ajoutez-la dans l'App Registration Azure pour activer l'inventaire des appareils.
+        </p>
+      </div>`;
+    }
+
+    if (list) list.innerHTML = poolsHtml + postureHtml + intuneHtml + risksHtml;
   } catch (e) {
     if (list) list.innerHTML = `<p class="muted" style="padding:20px">Lancez d'abord une synchronisation pour voir les données M365.</p>`;
   }

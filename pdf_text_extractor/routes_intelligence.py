@@ -183,6 +183,18 @@ def m365_sync(user: CurrentUser = Depends(require_min_role("admin"))):
         log.warning("Entra risk analyzer partiel : %s", exc)
         entra_risks = {"warning": str(exc)}
 
+    # Intune — appareils & conformité (optionnel — nécessite DeviceManagementManagedDevices.Read.All)
+    intune_stats: dict = {}
+    try:
+        from intune_collector import collect_intune
+        intune_stats = collect_intune(org)
+    except PermissionError as exc:
+        log.info("Intune sync ignoré (permission manquante) : %s", exc)
+        intune_stats = {"skipped": True, "reason": "permission_missing"}
+    except Exception as exc:
+        log.warning("Intune sync partiel : %s", exc)
+        intune_stats = {"warning": str(exc)}
+
     correlations = correlate_identities(org)
     optimizer    = run_m365_optimizer(org)
 
@@ -203,6 +215,13 @@ def m365_sync(user: CurrentUser = Depends(require_min_role("admin"))):
             "high":     entra_risks.get("high", 0),
             "medium":   entra_risks.get("medium", 0),
             "total":    entra_risks.get("findings_count", 0),
+        },
+        "intune": {
+            "total":           intune_stats.get("devices_total", 0),
+            "compliant":       intune_stats.get("compliant", 0),
+            "noncompliant":    intune_stats.get("noncompliant", 0),
+            "encrypted":       intune_stats.get("encrypted", 0),
+            "skipped":         intune_stats.get("skipped", False),
         },
         "correlations": {
             "orphans": correlations.get("orphans", 0),
@@ -234,6 +253,80 @@ def entra_sync(user: CurrentUser = Depends(require_min_role("admin"))):
     from entra_risk_analyzer import run_entra_risk_analyzer
     risks = run_entra_risk_analyzer(org)
     return {"ok": True, "entra": stats, "security_posture": risks}
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Intune — Assets & conformité appareils
+# ─────────────────────────────────────────────────────────────────────────────
+
+@router.post("/intune/sync")
+def intune_sync(user: CurrentUser = Depends(require_min_role("admin"))):
+    """
+    Collecte les appareils Intune (managedDevices) via Graph API.
+    Requiert DeviceManagementManagedDevices.Read.All sur l'App Registration. Admin+.
+    """
+    from intune_collector import collect_intune
+    org = user.organization_id
+    try:
+        stats = collect_intune(org)
+    except RuntimeError as exc:
+        raise HTTPException(400, str(exc))
+    except PermissionError as exc:
+        raise HTTPException(
+            403,
+            f"Permission Graph manquante : DeviceManagementManagedDevices.Read.All. "
+            f"Ajoutez-la dans l'App Registration Azure puis accordez le consentement admin. "
+            f"Détail : {exc}",
+        )
+    return {"ok": True, "intune": stats}
+
+
+@router.get("/intune/summary")
+def intune_summary(user: CurrentUser = Depends(require_min_role("manager"))):
+    """KPIs de conformité Intune — taux conformité, chiffrement, appareils obsolètes. Manager+."""
+    from intune_collector import get_intune_summary
+    return get_intune_summary(user.organization_id)
+
+
+@router.get("/intune/devices")
+def intune_devices(
+    compliance_state: str | None = None,
+    user: CurrentUser = Depends(require_min_role("admin")),
+):
+    """Liste les appareils Intune avec leur état de conformité. Admin+."""
+    params = [user.organization_id]
+    where  = "WHERE a.organization_id = %s AND a.source_connector = 'intune'"
+    if compliance_state:
+        where += " AND a.compliance_state = %s"
+        params.append(compliance_state)
+
+    with get_db() as cur:
+        cur.execute(
+            f"""
+            SELECT
+              a.id, a.external_id, a.display_name, a.device_type,
+              a.os, a.os_version, a.compliance_state,
+              a.is_encrypted, a.is_supervised,
+              a.serial_number, a.model, a.manufacturer,
+              a.owner_upn, a.enrolled_at, a.last_sync_at, a.synced_at,
+              i.full_name   AS owner_name,
+              i.canonical_email AS owner_email
+            FROM public.assets a
+            LEFT JOIN public.identities i ON i.id = a.owner_identity_id
+            {where}
+            ORDER BY
+              CASE a.compliance_state
+                WHEN 'noncompliant' THEN 1
+                WHEN 'unknown'      THEN 2
+                WHEN 'inGracePeriod' THEN 3
+                ELSE 4
+              END,
+              a.last_sync_at ASC NULLS FIRST
+            LIMIT 500
+            """,
+            params,
+        )
+        return db_rows(cur)
 
 
 @router.post("/m365/optimize")
