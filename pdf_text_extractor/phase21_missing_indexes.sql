@@ -12,9 +12,9 @@ CREATE INDEX IF NOT EXISTS idx_risk_findings_severity
   ON public.risk_findings (organization_id, severity)
   WHERE resolved_at IS NULL;
 
--- kpi_snapshots : requêtes chronologiques par dept + metric
-CREATE INDEX IF NOT EXISTS idx_kpi_snapshots_dept_metric
-  ON public.kpi_snapshots (department_id, metric_name, snapshot_date DESC);
+-- kpi_snapshots : requêtes chronologiques par dept (colonne réelle : dept_id)
+CREATE INDEX IF NOT EXISTS idx_kpi_snapshots_dept_date
+  ON public.kpi_snapshots (org_id, dept_id, snapshot_date DESC);
 
 -- audit_logs : filtrage par action + date (dashboards analytics)
 CREATE INDEX IF NOT EXISTS idx_audit_logs_action_date
