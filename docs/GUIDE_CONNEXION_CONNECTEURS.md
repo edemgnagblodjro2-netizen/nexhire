@@ -10,7 +10,7 @@ Pour ces connecteurs, **aucune configuration IT n'est requise**. L'administrateu
 
 | Connecteur | Compte requis | Ce que NexHire accède |
 |---|---|---|
-| **Microsoft 365** | Compte Microsoft 365 / Azure AD de l'entreprise | Emails, Teams, SharePoint, OneDrive, Calendrier |
+| **Microsoft 365 + Entra ID** | Compte Microsoft 365 / Entra ID de l'entreprise (admin requis) | Emails, Teams, SharePoint, OneDrive, Calendrier **+ identités, licences, MFA, rôles admin, comptes de service** |
 | **Salesforce CRM** | Compte Salesforce de l'entreprise | Comptes, Leads, Opportunités, Tickets |
 | **Jira / Confluence** | Compte Atlassian (Jira Cloud) | Tickets, Sprints, Projets, Pages Confluence |
 | **HubSpot** | Compte HubSpot de l'entreprise | CRM, Contacts, Deals, Tickets |
@@ -18,7 +18,12 @@ Pour ces connecteurs, **aucune configuration IT n'est requise**. L'administrateu
 | **Slack** | Compte Slack de l'entreprise (Admin requis) | Messages, canaux, fichiers, recherche |
 | **QuickBooks Online** | Compte Intuit / QuickBooks | Facturation, dépenses, rapports financiers |
 
-> **Remarque Microsoft 365 :** lors de la première connexion, un administrateur Azure AD doit approuver les permissions pour l'ensemble de l'organisation ("Grant admin consent"). Un simple utilisateur ne peut pas accorder des permissions à l'échelle de l'org.
+> **Remarque Microsoft 365 :** lors de la première connexion, un **administrateur Entra ID** doit approuver les permissions pour l'ensemble de l'organisation ("Grant admin consent"). Un simple utilisateur ne peut pas accorder des permissions à l'échelle de l'org. Sans ce consentement, le sync M365 échoue avec une erreur 403.
+
+> **Ce que le bouton "Analyser M365 + Entra" collecte :**
+> - **M365** : tous les utilisateurs, licences assignées, activité réelle 30 jours par application
+> - **Entra ID** : statut MFA par utilisateur (méthodes réelles), rôles administrateurs, principals de service (apps d'entreprise, managed identities)
+> - **Résultat** : détection automatique des licences inutilisées, comptes à risque, admins sans MFA
 
 > **Remarque Google Workspace :** si votre organisation a restreint l'accès aux applications tierces, un administrateur Google Workspace doit approuver NexHire dans la console d'administration Google.
 

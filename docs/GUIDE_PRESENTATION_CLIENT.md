@@ -55,7 +55,38 @@ Le tableau de bord s'adapte au rôle de l'utilisateur : un directeur général v
 
 ---
 
-### 3. Optimisation IA — Centre d'économies
+### 3. Gouvernance des identités — Intelligence M365 + Entra ID
+
+Module de gouvernance des identités alimenté par des données **réelles** provenant de Microsoft Graph API. Aucune estimation — tout est basé sur l'activité réelle des utilisateurs.
+
+#### Tableau de bord des licences
+
+- **Licences inutilisées** : utilisateurs avec zéro activité depuis plus de 90 jours (validé par le rapport Graph)
+- **Licences surdimensionnées** : E5 pour un usage E3, ou E3 pour un usage Outlook+Teams seulement
+- **Comptes orphelins** : employés terminés dans Workday avec un compte M365 encore actif
+- **Économies potentielles** en $ par mois et par an
+
+**Exemple réel :** 12 utilisateurs inactifs sur 420 → économie potentielle 84 $/mois, 1 008 $/an.
+
+#### Posture de sécurité (Entra ID)
+
+- **MFA par utilisateur** : statut réel depuis Entra ID (pas une estimation)
+- **Administrateurs détectés** : Global Admin, Security Admin, Conditional Access Admin, etc.
+- **Admins sans MFA** : risque critique signalé automatiquement
+- **Comptes de service** : principals de service (apps d'entreprise, managed identities) inventoriés
+
+#### Comment ça marche
+
+1. Connecter Microsoft 365 (un clic, consentement admin requis)
+2. Cliquer **Analyser M365 + Entra** dans l'onglet Intelligence
+3. NexHire collecte les données via Microsoft Graph API (30–60 secondes)
+4. Les recommandations apparaissent automatiquement, classées par impact financier
+
+> **Garantie qualité :** NexHire ne génère jamais de recommandation de suppression de licence pour un compte sans données d'activité confirmées. Seules les données Graph Reports ou l'historique de connexion déclenchent des recommandations.
+
+---
+
+### 3b. Optimisation IA — Centre d'économies
 
 Module dédié à l'identification des opportunités d'économies et d'efficacité, organisé en trois onglets :
 
@@ -123,7 +154,7 @@ Connectez NexHire à vos outils existants. Aucune migration, aucun double-encoda
 
 | Système | Ce que NexHire accède |
 |---|---|
-| Microsoft 365 | Emails, Teams, SharePoint, OneDrive, Calendrier |
+| Microsoft 365 + Entra ID | Emails, Teams, SharePoint, OneDrive, Calendrier **+ identités, licences, MFA, rôles admin** |
 | Google Workspace | Gmail, Drive, Agenda, Annuaire |
 | Salesforce CRM | Comptes, Opportunités, Tickets |
 | Jira / Confluence | Tickets, Sprints, Documentation |

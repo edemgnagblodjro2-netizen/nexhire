@@ -18,13 +18,18 @@ Dashboard Render → ton service → Environment → Add Environment Variable
 
 ---
 
-## 1. Microsoft 365
+## 1. Microsoft 365 + Entra ID
 
 **Variables Render :** `M365_CLIENT_ID` · `M365_CLIENT_SECRET` · `M365_REDIRECT_URI`
 
+> Le connecteur Microsoft 365 alimente **deux modules** :
+> - **Intelligence M365** (licences, activité, posture) via `m365_collector.py`
+> - **Intelligence Entra ID** (MFA réel, rôles admin, principals de service) via `entra_collector.py`
+> Les deux utilisent la même App Registration Azure et les mêmes tokens OAuth.
+
 **Étapes :**
 1. Va sur [portal.azure.com](https://portal.azure.com) → connecte-toi avec un compte Microsoft
-2. **Azure Active Directory → App registrations → New registration**
+2. **Microsoft Entra ID → App registrations → New registration**
 3. Remplis :
    - Name : `NexHire`
    - Supported account types : **Accounts in any organizational directory (Any Azure AD tenant - Multitenant)**
@@ -35,7 +40,30 @@ Dashboard Render → ton service → Environment → Add Environment Variable
    - Description : `nexhire-prod`, Expiration : 24 mois
    - Clique **Add** → note immédiatement le **Value** → c'est `M365_CLIENT_SECRET`
 7. Va dans **API permissions → Add a permission → Microsoft Graph → Delegated**
-   - Ajoute : `Mail.Read`, `Files.Read.All`, `Sites.Read.All`, `Calendars.Read`, `Chat.Read`, `User.Read`, `offline_access`, `openid`, `email`, `profile`
+
+**Permissions à ajouter — liste complète :**
+
+| Permission | Usage |
+|---|---|
+| `User.Read` | Profil utilisateur connecté (OAuth standard) |
+| `User.Read.All` | Tous les utilisateurs du tenant |
+| `Directory.Read.All` | Annuaire Entra ID complet |
+| `Reports.Read.All` | Rapports d'usage 30 jours (activité par app) |
+| `UserAuthenticationMethod.Read.All` | Méthodes MFA par utilisateur |
+| `AuditLog.Read.All` | Historique de connexion (signInActivity) |
+| `RoleManagement.Read.Directory` | Rôles administrateurs Entra |
+| `Application.Read.All` | Principals de service (apps d'entreprise) |
+| `Mail.Read` | Emails (assistant IA) |
+| `Files.Read.All` | Fichiers SharePoint / OneDrive (assistant IA) |
+| `Sites.Read.All` | Sites SharePoint (assistant IA) |
+| `Calendars.Read` | Calendriers (assistant IA) |
+| `Chat.Read` | Messages Teams (assistant IA) |
+| `openid`, `profile`, `email`, `offline_access` | OAuth standard — toujours inclus |
+
+8. **OBLIGATOIRE — Grant admin consent :**
+   - Après avoir ajouté toutes les permissions, clique **Grant admin consent for [ton tenant]**
+   - Toutes les permissions doivent passer en statut ✅ **Granted for [tenant]**
+   - ⚠️ Sans ce consentement, le collecteur échoue avec une erreur 403 dès le premier sync.
 
 **Dans Render :**
 ```
@@ -43,6 +71,13 @@ M365_CLIENT_ID     = <Application (client) ID>
 M365_CLIENT_SECRET = <Client secret Value>
 M365_REDIRECT_URI  = https://agenthub.nexhire.ca/api/connectors/oauth/callback
 ```
+
+**Ce qui est collecté après connexion (bouton "Analyser M365 + Entra") :**
+
+| Collecteur | Données | Table cible |
+|---|---|---|
+| `m365_collector.py` | Utilisateurs, licences, activité 30j | `identities`, `identity_accounts`, `license_pools`, `license_assignments`, `license_usage` |
+| `entra_collector.py` | MFA réel, rôles admin, principals de service | `security_postures`, `identities (service_account)` |
 
 ---
 

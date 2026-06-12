@@ -39,6 +39,10 @@ _TIER_TO_SKU = {
 
 def run_m365_optimizer(org_id: str) -> dict:
     """Lance toutes les règles et retourne le résumé des économies."""
+    # Résout les findings calculés automatiquement avant de recalculer —
+    # évite de conserver des findings obsolètes (ex. 999 jours après correction)
+    _reset_calculated_findings(org_id)
+
     findings = []
     findings += _rule_unused_licenses(org_id)
     findings += _rule_oversized_e5(org_id)
@@ -392,8 +396,28 @@ def _rule_contractor_licenses(org_id: str) -> list[dict]:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Helper — persistance
+# Helpers — persistance
 # ─────────────────────────────────────────────────────────────────────────────
+
+def _reset_calculated_findings(org_id: str) -> None:
+    """
+    Marque comme résolus les findings calculés automatiquement (non acknowledgés)
+    avant chaque recalcul. Évite de garder des findings obsolètes en base
+    quand la règle ne s'applique plus (ex. compte récent, données corrigées).
+    """
+    with get_db() as cur:
+        cur.execute(
+            """
+            UPDATE public.risk_findings
+            SET resolved_at = now()
+            WHERE organization_id = %s
+              AND finding_type IN ('unused_license', 'orphan_account')
+              AND resolved_at IS NULL
+              AND is_acknowledged = false
+            """,
+            (org_id,),
+        )
+
 
 def _upsert_risk_finding(
     org_id: str,

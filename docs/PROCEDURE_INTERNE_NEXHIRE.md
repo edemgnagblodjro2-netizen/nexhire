@@ -37,16 +37,23 @@ pdf_text_extractor/
 ├── routes_budget.py         ← Budget CRUD, alertes webhook à 80%
 ├── routes_connectors.py     ← OAuth + API Key + /ping test
 ├── routes_departments.py    ← Dashboard par département, KPIs, access_level
+├── routes_intelligence.py   ← Intelligence API : /m365/sync, /entra/sync, /risks, /identities
 ├── routes_sso.py            ← SSO OIDC authorize/callback, magic link
 ├── routes_webhooks.py       ← Configuration webhooks Teams/Slack, send_webhook_notification()
+├── m365_collector.py        ← Collecteur Microsoft Graph : utilisateurs, licences, activité 30j
+├── entra_collector.py       ← Collecteur Entra ID : MFA réel, rôles admin, principals de service
+├── m365_license_optimizer.py← Optimiseur de licences : 5 règles, génère risk_findings
+├── collector_service.py     ← Orchestrateur : M365 réel → fallback démo
+├── correlation_engine.py    ← Corrélation cross-systèmes (orphelins, fantômes)
+├── risk_calculator.py       ← Calcul des risques organisationnels
 ├── scheduler.py             ← Tâches planifiées (license_expiry, trial_expiry)
 ├── email_service.py         ← Resend — welcome, trial warning, cancellation
 ├── static/
-│   ├── app.js               ← Frontend SPA principal
+│   ├── app.js               ← Frontend SPA principal (v=20260612b)
 │   ├── index.html           ← Meta PWA, splash screen HTML, SW registration
 │   ├── styles.css           ← Splash screen animations, PWA styles
 │   ├── manifest.json        ← PWA manifest (servi depuis /manifest.json)
-│   ├── sw.js                ← Service worker (servi depuis /sw.js)
+│   ├── sw.js                ← Service worker v28 (servi depuis /sw.js)
 │   └── icons/               ← Icônes PNG 72-512px + apple-touch-icon.png
 ```
 
@@ -158,6 +165,106 @@ QUICKBOOKS_REDIRECT_URI     = https://agenthub.nexhire.ca/api/connectors/oauth/c
 
 - **Authentication → URL Configuration → Site URL** : `https://agenthub.nexhire.ca`
 - **Authentication → URL Configuration → Redirect URLs** : ajouter `https://agenthub.nexhire.ca/**`
+
+---
+
+## 3b. Intelligence — Modèle universel d'identités
+
+### Tables SQL du modèle universel (à créer si absentes)
+
+| Table | Rôle |
+|---|---|
+| `public.identities` | Identité maître (1 ligne par personne réelle) |
+| `public.identity_accounts` | Compte par système source (M365, Workday, Entra…) |
+| `public.license_pools` | Licences achetées (SKUs du tenant M365) |
+| `public.license_assignments` | Qui a quelle licence |
+| `public.license_usage` | Activité réelle 30j — snapshot hebdomadaire |
+| `public.security_postures` | MFA, rôles admin, score de risque par identité |
+| `public.risk_findings` | Recommandations générées (licences inutilisées, orphelins…) |
+
+### Qualité des données — champ `data_source`
+
+Le champ `license_usage.metrics->>'data_source'` distingue trois niveaux de fiabilité :
+
+| Valeur | Signification | Recommandations générées |
+|---|---|---|
+| `report` | Données réelles Graph Reports 30 jours | Oui — fiable |
+| `signin` | Données historique de connexion | Oui — fiable |
+| `created_date` | Aucune donnée d'activité — fallback date de création | **Non** — bloqué |
+
+> **Règle critique :** L'optimiseur ne génère jamais de recommandation "Révoquer la licence" pour un compte dont `data_source = 'created_date'`. Cela évite les faux positifs sur les comptes récents ou sans historique Graph.
+
+### Endpoints Intelligence
+
+| Méthode | Endpoint | Rôle | Accès min |
+|---|---|---|---|
+| POST | `/api/intelligence/m365/sync` | Sync M365 complet (licences + Entra MFA + rôles) | admin |
+| POST | `/api/intelligence/entra/sync` | Sync Entra ID seul (MFA, rôles, principals) | admin |
+| POST | `/api/intelligence/sync` | Sync général (M365 + corrélations + risques) | admin |
+| GET | `/api/intelligence/risks` | Liste des risques actifs | manager |
+| GET | `/api/intelligence/risks/summary` | Résumé économies | manager |
+| POST | `/api/intelligence/risks/{id}/acknowledge` | Reconnaître un risque | admin |
+| POST | `/api/intelligence/risks/{id}/resolve` | Résoudre un risque | admin |
+| GET | `/api/intelligence/m365/licenses` | Résumé licences M365 | manager |
+| GET | `/api/intelligence/m365/users` | Liste utilisateurs M365 avec score | admin |
+| GET | `/api/intelligence/identities` | Identités maîtres | admin |
+
+### Collecteurs disponibles
+
+#### `m365_collector.py` — Microsoft 365
+
+- Récupère tous les utilisateurs du tenant via Graph API
+- Calcule `days_inactive` depuis Graph Reports → signInActivity → `createdDateTime` (par ordre de priorité)
+- Calcule `activity_score` (0-100) et `tier_needed` (none/basic/standard/advanced/enterprise)
+- Alimente : `identities`, `identity_accounts`, `license_pools`, `license_assignments`, `license_usage`
+
+#### `entra_collector.py` — Entra ID (Identités & Sécurité)
+
+- **MFA per-user** : `/users/{id}/authentication/methods` (v1.0, fonctionne sans Entra P1/P2)
+- **Rôles admin** : `/directoryRoles` + membres → `security_postures.privileged_access = true`
+- **Principals de service** : `/servicePrincipals` → `identities (type=service_account)`
+- Alimente : `security_postures`, `identities (service_account)`, `identity_accounts`
+
+#### `m365_license_optimizer.py` — Règles d'optimisation
+
+| Règle | Sévérité | Déclencheur |
+|---|---|---|
+| `unused_license` | high | `activity_score = 0` ET `days_inactive > 90` ET `data_source != 'created_date'` |
+| `oversized_e5` | medium | Licence E5, usage réel ≤ E3 |
+| `oversized_e3` | medium | Licence E3, usage minimal (Outlook + Teams seulement) |
+| `orphan_m365` | critical | Identité terminée Workday, compte M365 encore actif |
+| `contractor_license` | medium | Consultant/externe avec licence E3 ou E5 |
+
+### Validation SQL post-sync
+
+```sql
+-- Données M365 pour une organisation
+SELECT
+  (SELECT COUNT(*) FROM public.identities        WHERE organization_id = '<org-id>') AS identities,
+  (SELECT COUNT(*) FROM public.identity_accounts WHERE organization_id = '<org-id>'
+                                                  AND source_connector = 'microsoft_365') AS accounts_m365,
+  (SELECT COUNT(*) FROM public.license_pools     WHERE organization_id = '<org-id>') AS pools,
+  (SELECT COUNT(*) FROM public.license_assignments WHERE organization_id = '<org-id>') AS assignments,
+  (SELECT COUNT(*) FROM public.license_usage     WHERE organization_id = '<org-id>') AS usage_snapshots,
+  (SELECT COUNT(*) FROM public.security_postures WHERE organization_id = '<org-id>') AS postures;
+
+-- Qualité des données d'activité
+SELECT
+  metrics->>'data_source' AS data_source,
+  COUNT(*) AS count,
+  AVG(activity_score) AS avg_score
+FROM public.license_usage lu
+JOIN public.license_assignments la ON la.id = lu.assignment_id
+WHERE la.organization_id = '<org-id>'
+GROUP BY metrics->>'data_source';
+
+-- Risques actifs
+SELECT finding_type, severity, COUNT(*), SUM(cost_impact_monthly)
+FROM public.risk_findings
+WHERE organization_id = '<org-id>' AND resolved_at IS NULL
+GROUP BY finding_type, severity
+ORDER BY severity;
+```
 
 ---
 
