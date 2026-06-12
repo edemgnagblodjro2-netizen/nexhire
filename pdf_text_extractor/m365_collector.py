@@ -643,7 +643,6 @@ def collect_all_m365(org_id: str) -> dict:
         # Dernière activité : depuis usage report ou signInActivity
         usage_row  = usage_data.get(upn) or usage_data.get(email)
         last_active = None
-        days_inactive = 999
         apps: dict[str, bool] = {}
 
         if usage_row:
@@ -653,6 +652,11 @@ def collect_all_m365(org_id: str) -> dict:
         elif days_since_signin is not None:
             days_inactive = days_since_signin
             last_active   = last_sign_in_str
+        else:
+            # Compte sans activité connue — utilise la date de création
+            created_str  = u.get("createdDateTime")
+            created_date = _parse_date(created_str) if created_str else None
+            days_inactive = (date.today() - created_date).days if created_date else 0
 
         # 4b. Compte M365
         account_id = _upsert_account(
