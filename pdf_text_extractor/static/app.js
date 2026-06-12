@@ -4868,22 +4868,25 @@ async function _loadM365Intelligence() {
   if (list) list.innerHTML = `<p class="muted" style="padding:12px 0">Chargement…</p>`;
 
   try {
-    // Chargement parallèle : résumé licences + risques M365
+    // Chargement parallèle : résumé licences + TOUS les risques M365
     const [licSummary, risks] = await Promise.all([
       apiCall("/api/intelligence/m365/licenses").catch(() => ({})),
-      apiCall("/api/intelligence/risks?finding_type=unused_license").catch(() => []),
+      apiCall("/api/intelligence/risks").catch(() => []),
     ]);
 
-    // KPI cards
-    const orphans  = risks.filter(r => r.finding_type === "orphan_account").length;
-    const unused   = risks.filter(r => r.description?.includes("inactif") || r.description?.includes("inactive")).length;
-    const oversized = risks.filter(r => r.title?.includes("surdimensionn")).length;
-    const totalSavings = risks.reduce((s, r) => s + (r.cost_impact_monthly || 0), 0);
+    // KPI cards — comptage depuis les vrais findings actifs uniquement
+    const m365Risks  = risks.filter(r =>
+      ["unused_license","orphan_account","oversized_e5","oversized_e3","contractor_license"].includes(r.finding_type)
+    );
+    const orphans    = m365Risks.filter(r => r.finding_type === "orphan_account").length;
+    const unused     = m365Risks.filter(r => r.finding_type === "unused_license").length;
+    const oversized  = m365Risks.filter(r => ["oversized_e5","oversized_e3"].includes(r.finding_type)).length;
+    const totalSavings = m365Risks.reduce((s, r) => s + (r.cost_impact_monthly || 0), 0);
 
-    _setText("m365-kpi-orphans",  orphans || (licSummary.inactive_count ?? "—"));
-    _setText("m365-kpi-unused",   unused  || (licSummary.inactive_count ?? "—"));
-    _setText("m365-kpi-oversized", oversized || (licSummary.oversized_count ?? "—"));
-    _setText("m365-kpi-savings",  totalSavings > 0 ? `${_fmt(totalSavings)} $` : "—");
+    _setText("m365-kpi-orphans",   orphans   > 0 ? orphans   : "—");
+    _setText("m365-kpi-unused",    unused    > 0 ? unused    : "—");
+    _setText("m365-kpi-oversized", oversized > 0 ? oversized : (licSummary.oversized_count > 0 ? licSummary.oversized_count : "—"));
+    _setText("m365-kpi-savings",   totalSavings > 0 ? `${_fmt(totalSavings)} $` : "—");
 
     // Pools de licences
     const pools = licSummary.pools || [];

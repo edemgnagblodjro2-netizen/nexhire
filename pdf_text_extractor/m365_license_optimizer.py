@@ -478,13 +478,25 @@ def get_license_summary(org_id: str) -> dict:
             cur.execute(
                 """
                 SELECT
-                  COUNT(*) FILTER (WHERE lu.activity_score = 0)            AS inactive_count,
+                  -- Même critère que l'optimiseur : données réelles uniquement
+                  COUNT(*) FILTER (
+                    WHERE lu.activity_score = 0
+                      AND (lu.metrics->>'days_inactive')::int > 90
+                      AND COALESCE(lu.metrics->>'data_source','report') != 'created_date'
+                  ) AS inactive_count,
                   COUNT(*) FILTER (WHERE lu.tier_needed = 'standard'
                                      AND la.sku_name IN ('E3','E5'))        AS oversized_count,
-                  COUNT(*) FILTER (WHERE lu.tier_needed = 'none'
-                                     AND lu.activity_score = 0)             AS revoke_count,
+                  COUNT(*) FILTER (
+                    WHERE lu.tier_needed = 'none'
+                      AND lu.activity_score = 0
+                      AND COALESCE(lu.metrics->>'data_source','report') != 'created_date'
+                  ) AS revoke_count,
                   COALESCE(SUM(lp.unit_cost_monthly)
-                    FILTER (WHERE lu.activity_score = 0), 0)                AS inactive_cost
+                    FILTER (
+                      WHERE lu.activity_score = 0
+                        AND (lu.metrics->>'days_inactive')::int > 90
+                        AND COALESCE(lu.metrics->>'data_source','report') != 'created_date'
+                    ), 0) AS inactive_cost
                 FROM public.license_usage lu
                 JOIN public.license_assignments la ON la.id = lu.assignment_id
                 LEFT JOIN public.license_pools lp  ON lp.id = la.pool_id
