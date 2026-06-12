@@ -4888,30 +4888,78 @@ async function _loadM365Intelligence() {
     _setText("m365-kpi-oversized", oversized > 0 ? oversized : (licSummary.oversized_count > 0 ? licSummary.oversized_count : "—"));
     _setText("m365-kpi-savings",   totalSavings > 0 ? `${_fmt(totalSavings)} $` : "—");
 
-    // Pools de licences
+    // Pools de licences — vue DG
     const pools = licSummary.pools || [];
     let poolsHtml = "";
     if (pools.length) {
-      poolsHtml = `
-        <h4 style="margin:0 0 12px;font-size:.88rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em">Pools de licences</h4>
-        <div style="overflow-x:auto;margin-bottom:24px">
-          <table class="data-table">
-            <thead><tr><th>SKU</th><th>Total</th><th>Assignées</th><th>Non assignées</th><th>Coût/unité</th><th>Coût total/mois</th><th>Coût inutilisé</th></tr></thead>
-            <tbody>${pools.map(p => {
-              const waste = parseFloat(p.monthly_waste || 0);
-              const wasteColor = waste > 100 ? "#dc2626" : waste > 0 ? "#d97706" : "#16a34a";
-              return `<tr>
-                <td><strong>${esc(p.sku_name)}</strong></td>
-                <td>${p.quantity_total}</td>
-                <td>${p.quantity_assigned}</td>
-                <td style="color:${p.quantity_unassigned > 0 ? '#d97706' : '#16a34a'};font-weight:600">${p.quantity_unassigned}</td>
-                <td>${_fmt(p.unit_cost_monthly)} $</td>
-                <td>${_fmt(p.monthly_total)} $</td>
-                <td style="color:${wasteColor};font-weight:700">${_fmt(waste)} $/mo</td>
-              </tr>`;
-            }).join("")}</tbody>
-          </table>
+      const poolCards = pools.map(p => {
+        const total      = parseInt(p.quantity_total)    || 0;
+        const assigned   = parseInt(p.quantity_assigned) || 0;
+        const available  = parseInt(p.quantity_unassigned) || 0;
+        const unitCost   = parseFloat(p.unit_cost_monthly) || 0;
+        const budgetTotal  = parseFloat(p.monthly_total) || 0;
+        const budgetUsed   = assigned * unitCost;
+        const utilisationPct = total > 0 ? Math.round((assigned / total) * 100) : 0;
+
+        // Couleur du taux d'utilisation
+        const utilColor = utilisationPct >= 80 ? "#16a34a"
+                        : utilisationPct >= 50 ? "#d97706"
+                        : "#dc2626";
+
+        // Recommandation contextuelle
+        let recommHtml = "";
+        if (utilisationPct < 40 && available >= 5) {
+          recommHtml = `<div style="margin-top:10px;padding:8px 12px;background:#fef3c7;border-left:3px solid #d97706;border-radius:6px;font-size:.78rem;color:#92400e">
+            <strong>Renouvellement :</strong> Envisager de réduire le volume de ${available} licence${available > 1 ? "s" : ""} lors du prochain renouvellement. Économie potentielle : ${fmtCAD(available * unitCost)}/mois.
+          </div>`;
+        } else if (utilisationPct >= 95) {
+          recommHtml = `<div style="margin-top:10px;padding:8px 12px;background:#dcfce7;border-left:3px solid #16a34a;border-radius:6px;font-size:.78rem;color:#14532d">
+            <strong>Capacité :</strong> Presque à pleine utilisation — prévoir l'achat de licences supplémentaires avant la prochaine vague de recrutement.
+          </div>`;
+        }
+
+        return `
+        <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:14px;padding:18px 20px;margin-bottom:14px">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap">
+            <div>
+              <div style="font-size:1rem;font-weight:700;color:#1e293b;margin-bottom:2px">Microsoft 365 — ${esc(p.sku_name)}</div>
+              <div style="font-size:.82rem;color:#64748b">${unitCost.toFixed(2)} $/utilisateur/mois</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:1.4rem;font-weight:800;color:${utilColor}">${utilisationPct} %</div>
+              <div style="font-size:.75rem;color:#94a3b8;text-transform:uppercase;letter-spacing:.04em">Taux d'utilisation</div>
+            </div>
+          </div>
+
+          <div style="margin:14px 0 4px;background:#f1f5f9;border-radius:8px;height:8px;overflow:hidden">
+            <div style="width:${utilisationPct}%;height:100%;background:${utilColor};border-radius:8px;transition:width .4s"></div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:14px">
+            <div style="background:#f8fafc;border-radius:10px;padding:10px 14px">
+              <div style="font-size:1.1rem;font-weight:700;color:#1e293b">${assigned} / ${total}</div>
+              <div style="font-size:.75rem;color:#64748b">Licences assignées</div>
+            </div>
+            <div style="background:#f8fafc;border-radius:10px;padding:10px 14px">
+              <div style="font-size:1.1rem;font-weight:700;color:#2563eb">${fmtCAD(budgetUsed)}</div>
+              <div style="font-size:.75rem;color:#64748b">Budget consommé/mois</div>
+            </div>
+            <div style="background:#f8fafc;border-radius:10px;padding:10px 14px">
+              <div style="font-size:1.1rem;font-weight:700;color:#1e293b">${fmtCAD(budgetTotal)}</div>
+              <div style="font-size:.75rem;color:#64748b">Budget facturé/mois</div>
+            </div>
+            <div style="background:#f8fafc;border-radius:10px;padding:10px 14px">
+              <div style="font-size:1.1rem;font-weight:700;color:${available > 0 ? '#d97706' : '#16a34a'}">${available} disponible${available > 1 ? "s" : ""}</div>
+              <div style="font-size:.75rem;color:#64748b">Capacité restante</div>
+            </div>
+          </div>
+          ${recommHtml}
         </div>`;
+      }).join("");
+
+      poolsHtml = `
+        <h4 style="margin:0 0 14px;font-size:.88rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em">Vue d'ensemble des licences</h4>
+        ${poolCards}`;
     }
 
     // Risques détectés
@@ -4923,10 +4971,10 @@ async function _loadM365Intelligence() {
     };
 
     let risksHtml = "";
-    if (risks.length) {
+    if (m365Risks.length) {
       risksHtml = `
-        <h4 style="margin:0 0 12px;font-size:.88rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em">Risques détectés (${risks.length})</h4>
-        ${risks.slice(0, 30).map(r => {
+        <h4 style="margin:0 0 12px;font-size:.88rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em">Risques détectés (${m365Risks.length})</h4>
+        ${m365Risks.slice(0, 30).map(r => {
           const col = riskColors[r.severity] || "#64748b";
           const lbl = riskLabels[r.severity] || r.severity?.toUpperCase();
           const savings = r.cost_impact_monthly > 0
@@ -4951,7 +4999,7 @@ async function _loadM365Intelligence() {
           </div>`;
         }).join("")}`;
     } else {
-      risksHtml = `<p class="muted" style="text-align:center;padding:32px">Aucun risque M365 détecté — lancez l'analyse pour commencer.</p>`;
+      risksHtml = `<p class="muted" style="text-align:center;padding:32px">Aucun risque confirmé — les données d'activité seront disponibles sous 24-48h après la création des comptes.</p>`;
     }
 
     if (list) list.innerHTML = poolsHtml + risksHtml;
