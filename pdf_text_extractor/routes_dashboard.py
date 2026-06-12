@@ -228,6 +228,164 @@ def executive_dashboard(user: CurrentUser = Depends(require_min_role("admin"))):
     dept_scores = [d["score"] for d in departments]
     org_score = round(sum(dept_scores) / len(dept_scores), 1) if dept_scores else 0.0
 
+    # ── Module Gouvernance IT (M365 + Entra) ─────────────────────────────────
+    governance: dict = {}
+    try:
+        with get_db() as cur:
+            # Économies M365 identifiées
+            cur.execute(
+                """
+                SELECT COALESCE(SUM(cost_impact_monthly),0) AS m365_savings
+                FROM public.risk_findings
+                WHERE organization_id = %s
+                  AND finding_type = 'unused_license'
+                  AND resolved_at IS NULL AND is_acknowledged = false
+                """,
+                (org_id,),
+            )
+            m365_row = cur.fetchone()
+
+            # Posture sécurité Entra
+            cur.execute(
+                """
+                SELECT
+                  COUNT(*) FILTER (WHERE severity='critical') AS critical,
+                  COUNT(*) FILTER (WHERE severity='high')     AS high,
+                  COUNT(*) FILTER (WHERE severity='medium')   AS medium
+                FROM public.risk_findings
+                WHERE organization_id = %s
+                  AND finding_type IN ('admin_no_mfa','privileged_inactive','user_no_mfa','group_no_owner')
+                  AND resolved_at IS NULL AND is_acknowledged = false
+                """,
+                (org_id,),
+            )
+            entra_row = cur.fetchone()
+
+            # Taux utilisation licences M365
+            cur.execute(
+                """
+                SELECT
+                  COALESCE(SUM(total_licenses), 0) AS total,
+                  COALESCE(SUM(assigned_licenses), 0) AS assigned
+                FROM public.license_pools
+                WHERE organization_id = %s
+                """,
+                (org_id,),
+            )
+            lic_row = cur.fetchone()
+
+        m365_savings = float(m365_row["m365_savings"] or 0) if m365_row else 0
+        entra_critical = int(entra_row["critical"] or 0) if entra_row else 0
+        entra_high     = int(entra_row["high"]     or 0) if entra_row else 0
+        entra_medium   = int(entra_row["medium"]   or 0) if entra_row else 0
+        lic_total    = int(lic_row["total"]    or 0) if lic_row else 0
+        lic_assigned = int(lic_row["assigned"] or 0) if lic_row else 0
+        lic_rate = round(lic_assigned / lic_total * 100, 1) if lic_total > 0 else None
+
+        governance = {
+            "m365_savings_monthly": round(m365_savings, 2),
+            "m365_savings_annual":  round(m365_savings * 12, 2),
+            "lic_total":    lic_total,
+            "lic_assigned": lic_assigned,
+            "lic_rate":     lic_rate,
+            "entra_critical": entra_critical,
+            "entra_high":     entra_high,
+            "entra_medium":   entra_medium,
+            "entra_total":    entra_critical + entra_high + entra_medium,
+            "health": "red" if entra_critical > 0 else ("yellow" if entra_high > 0 or m365_savings > 0 else "green"),
+        }
+    except Exception:
+        pass
+
+    # ── Module Assets & Conformité (Intune) ───────────────────────────────────
+    assets_summary: dict = {}
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """
+                SELECT
+                  COUNT(*)                                                        AS total,
+                  COUNT(*) FILTER (WHERE compliance_state='compliant')           AS compliant,
+                  COUNT(*) FILTER (WHERE compliance_state='noncompliant')        AS noncompliant,
+                  COUNT(*) FILTER (WHERE is_encrypted = false)                   AS unencrypted
+                FROM public.assets
+                WHERE organization_id = %s AND source_connector = 'intune'
+                """,
+                (org_id,),
+            )
+            a_row = cur.fetchone()
+        a_total     = int(a_row["total"]       or 0) if a_row else 0
+        a_compliant = int(a_row["compliant"]   or 0) if a_row else 0
+        a_noncomp   = int(a_row["noncompliant"] or 0) if a_row else 0
+        a_unencrypt = int(a_row["unencrypted"] or 0) if a_row else 0
+        a_rate = round(a_compliant / a_total * 100, 1) if a_total > 0 else None
+
+        assets_summary = {
+            "total":           a_total,
+            "compliant":       a_compliant,
+            "noncompliant":    a_noncomp,
+            "unencrypted":     a_unencrypt,
+            "compliance_rate": a_rate,
+            "health": "green" if (a_rate or 0) >= 90 else ("yellow" if (a_rate or 0) >= 70 else ("red" if a_total > 0 else "grey")),
+        }
+    except Exception:
+        pass
+
+    # ── Module Transactions financières ───────────────────────────────────────
+    fin_summary: dict = {}
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """
+                SELECT
+                  COALESCE(SUM(amount) FILTER (WHERE status='paid'
+                    AND DATE_TRUNC('month', transaction_date) = DATE_TRUNC('month', CURRENT_DATE)), 0) AS this_month,
+                  COALESCE(SUM(amount) FILTER (WHERE status='paid'
+                    AND DATE_TRUNC('month', transaction_date) = DATE_TRUNC('month', CURRENT_DATE - interval '1 month')), 0) AS last_month,
+                  COUNT(*) FILTER (WHERE is_flagged = true AND status != 'cancelled') AS flagged,
+                  COUNT(DISTINCT vendor_id) FILTER (WHERE status='paid') AS vendor_count
+                FROM public.financial_transactions
+                WHERE organization_id = %s
+                """,
+                (org_id,),
+            )
+            f_row = cur.fetchone()
+
+            # Concentration fournisseur ce mois
+            cur.execute(
+                """
+                SELECT v.name, SUM(ft.amount) AS total
+                FROM public.financial_transactions ft
+                LEFT JOIN public.vendors v ON v.id = ft.vendor_id
+                WHERE ft.organization_id = %s
+                  AND ft.status = 'paid'
+                  AND DATE_TRUNC('month', ft.transaction_date) = DATE_TRUNC('month', CURRENT_DATE)
+                GROUP BY v.name
+                ORDER BY total DESC NULLS LAST
+                LIMIT 1
+                """,
+                (org_id,),
+            )
+            top_v = cur.fetchone()
+
+        this_month  = float(f_row["this_month"]  or 0) if f_row else 0
+        last_month  = float(f_row["last_month"]  or 0) if f_row else 0
+        flagged     = int(f_row["flagged"]        or 0) if f_row else 0
+        vendor_cnt  = int(f_row["vendor_count"]   or 0) if f_row else 0
+        mom_change  = round((this_month - last_month) / last_month * 100, 1) if last_month > 0 else None
+
+        fin_summary = {
+            "this_month":    round(this_month, 2),
+            "last_month":    round(last_month, 2),
+            "mom_change":    mom_change,
+            "flagged":       flagged,
+            "vendor_count":  vendor_cnt,
+            "top_vendor":    top_v["name"] if top_v else None,
+            "health": "red" if flagged > 0 else ("yellow" if mom_change is not None and mom_change > 20 else "green"),
+        }
+    except Exception:
+        pass
+
     return {
         "org_score": org_score,
         "org_badge": _health_badge(org_score),
@@ -241,6 +399,9 @@ def executive_dashboard(user: CurrentUser = Depends(require_min_role("admin"))):
             "depts_at_risk":   at_risk_count,
         },
         "departments": departments,
+        "governance":  governance,
+        "assets":      assets_summary,
+        "finance":     fin_summary,
     }
 
 

@@ -1851,6 +1851,139 @@ async function loadExecutiveDashboard() {
         </div>
       </div>
     </div>`).join("");
+
+  // ── Modules Gouvernance IT v2 ────────────────────────────────────────────
+  _renderGovernanceModules(data);
+}
+
+function _renderGovernanceModules(data) {
+  const wrap = $("exec-governance-modules");
+  if (!wrap) return;
+
+  const gov  = data.governance  || {};
+  const ast  = data.assets      || {};
+  const fin  = data.finance     || {};
+
+  const noData = !Object.keys(gov).length && !Object.keys(ast).length && !Object.keys(fin).length;
+  if (noData) { wrap.innerHTML = ""; return; }
+
+  const _hc = { green:"#16a34a", yellow:"#d97706", red:"#dc2626", grey:"#94a3b8" };
+  const _hl = { green:"Sain", yellow:"Attention", red:"Critique", grey:"Non configuré" };
+  const _he = { green:"🟢", yellow:"🟡", red:"🔴", grey:"⚪" };
+
+  function moduleCard(title, health, content) {
+    const col = _hc[health] || "#94a3b8";
+    const lbl = _hl[health] || health;
+    return `
+      <div style="background:#fff;border:1.5px solid ${col}40;border-top:3px solid ${col};border-radius:12px;padding:18px 20px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <span style="font-size:.88rem;font-weight:700;color:#1e293b">${title}</span>
+          <span style="font-size:.72rem;font-weight:700;color:${col};background:${col}18;padding:2px 9px;border-radius:20px">${_he[health]} ${lbl}</span>
+        </div>
+        ${content}
+      </div>`;
+  }
+
+  function kpi(label, value, sub, col) {
+    return `<div style="text-align:center;padding:4px 0">
+      <div style="font-size:1.25rem;font-weight:800;color:${col||"#1e293b"}">${value}</div>
+      <div style="font-size:.74rem;color:#475569;font-weight:600">${label}</div>
+      ${sub ? `<div style="font-size:.68rem;color:#94a3b8">${sub}</div>` : ""}
+    </div>`;
+  }
+
+  // Module 1 — Gouvernance IT (M365 + Entra)
+  let govHtml = "";
+  if (Object.keys(gov).length) {
+    const licRate = gov.lic_rate !== null && gov.lic_rate !== undefined ? `${gov.lic_rate}%` : "—";
+    const licSub  = gov.lic_total ? `${gov.lic_assigned}/${gov.lic_total} licences` : "";
+    const savCol  = gov.m365_savings_monthly > 0 ? "#16a34a" : "#94a3b8";
+    const crit    = gov.entra_critical || 0;
+    const high    = gov.entra_high     || 0;
+    const med     = gov.entra_medium   || 0;
+
+    govHtml = moduleCard("Gouvernance identités M365 + Entra", gov.health, `
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px">
+        ${kpi("Utilisation licences", licRate, licSub, gov.lic_rate >= 80 ? "#16a34a" : "#d97706")}
+        ${kpi("Économies/mois", `${_fmt(gov.m365_savings_monthly)} $`, `${_fmt(gov.m365_savings_annual)} $/an`, savCol)}
+        ${kpi("Risques critiques", crit, "Admin sans MFA", crit > 0 ? "#dc2626" : "#94a3b8")}
+        ${kpi("Risques élevés", high + med, `${high} élevés · ${med} moyens`, high > 0 ? "#d97706" : "#94a3b8")}
+      </div>
+      ${crit > 0 ? `<div style="font-size:.78rem;color:#dc2626;background:#fef2f2;padding:8px 12px;border-radius:6px;border-left:3px solid #dc2626">
+        Action requise : ${crit} administrateur${crit>1?"s":""} sans MFA — risque critique d'accès non autorisé.
+        <a href="#" onclick="switchTab('intelligence');return false" style="color:#dc2626;font-weight:700;margin-left:8px">Voir →</a>
+      </div>` : ""}
+      ${gov.m365_savings_annual > 0 ? `<div style="font-size:.78rem;color:#15803d;background:#f0fdf4;padding:8px 12px;border-radius:6px;border-left:3px solid #16a34a;${crit>0?"margin-top:6px":""}">
+        Opportunité : <strong>${_fmt(gov.m365_savings_annual)} $/an</strong> d'économies sur les licences M365 inutilisées.
+        <a href="#" onclick="switchTab('intelligence');return false" style="color:#15803d;font-weight:700;margin-left:8px">Optimiser →</a>
+      </div>` : ""}
+    `);
+  }
+
+  // Module 2 — Assets & Conformité Intune
+  let astHtml = "";
+  if (Object.keys(ast).length) {
+    const rate     = ast.compliance_rate !== null && ast.compliance_rate !== undefined ? `${ast.compliance_rate}%` : "—";
+    const rateCol  = (ast.compliance_rate || 0) >= 90 ? "#16a34a" : (ast.compliance_rate || 0) >= 70 ? "#d97706" : "#dc2626";
+    const noData   = ast.total === 0;
+
+    astHtml = moduleCard(
+      "Assets & Conformité Intune",
+      noData ? "grey" : ast.health,
+      noData
+        ? `<p style="font-size:.82rem;color:#94a3b8;margin:0">Aucun appareil Intune synchronisé. Ajoutez la permission <code>DeviceManagementManagedDevices.Read.All</code> et relancez une synchronisation.</p>`
+        : `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+            ${kpi("Conformité", rate, `${ast.compliant} conformes`, rateCol)}
+            ${kpi("Non conformes", ast.noncompliant || 0, "Politique de sécurité", ast.noncompliant > 0 ? "#dc2626" : "#94a3b8")}
+            ${kpi("Non chiffrés", ast.unencrypted || 0, `sur ${ast.total} appareils`, ast.unencrypted > 0 ? "#d97706" : "#94a3b8")}
+          </div>
+          ${ast.noncompliant > 0 || ast.unencrypted > 0 ? `
+          <div style="font-size:.78rem;color:#d97706;background:#fff7ed;padding:8px 12px;border-radius:6px;border-left:3px solid #d97706;margin-top:12px">
+            ${ast.noncompliant > 0 ? `${ast.noncompliant} appareil${ast.noncompliant>1?"s":""} hors conformité. ` : ""}
+            ${ast.unencrypted > 0 ? `${ast.unencrypted} appareil${ast.unencrypted>1?"s":""} non chiffré${ast.unencrypted>1?"s":""}.` : ""}
+            <a href="#" onclick="switchParcTab('transactions');switchTab('parc-it');return false" style="color:#d97706;font-weight:700;margin-left:8px">Voir Intune →</a>
+          </div>` : ""}
+        `
+    );
+  }
+
+  // Module 3 — Dépenses financières IT
+  let finHtml = "";
+  if (Object.keys(fin).length) {
+    const momSign  = fin.mom_change > 0 ? `▲ ${fin.mom_change}%` : fin.mom_change < 0 ? `▼ ${Math.abs(fin.mom_change)}%` : "—";
+    const momCol   = fin.mom_change > 20 ? "#dc2626" : fin.mom_change > 0 ? "#d97706" : "#16a34a";
+    const noTxn    = fin.this_month === 0 && fin.last_month === 0;
+
+    finHtml = moduleCard(
+      "Dépenses financières IT ce mois",
+      noTxn ? "grey" : fin.health,
+      noTxn
+        ? `<p style="font-size:.82rem;color:#94a3b8;margin:0">Aucune transaction enregistrée ce mois. Allez dans <strong>Parc IT → Transactions</strong> pour commencer le suivi.</p>`
+        : `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:${fin.flagged > 0 || fin.top_vendor ? "12px" : "0"}">
+            ${kpi("Dépenses ce mois", `${_fmt(fin.this_month)} $`, fin.last_month > 0 ? `vs ${_fmt(fin.last_month)} $ le mois dernier` : "", "#1e293b")}
+            ${kpi("Variation M/M", momSign, "", momCol)}
+            ${kpi("Anomalies", fin.flagged || 0, "Doublons détectés", fin.flagged > 0 ? "#dc2626" : "#94a3b8")}
+          </div>
+          ${fin.flagged > 0 ? `<div style="font-size:.78rem;color:#dc2626;background:#fef2f2;padding:8px 12px;border-radius:6px;border-left:3px solid #dc2626;margin-bottom:6px">
+            ${fin.flagged} anomalie${fin.flagged>1?"s":""} financière${fin.flagged>1?"s":""} détectée${fin.flagged>1?"s":""} (doublons potentiels).
+            <a href="#" onclick="switchParcTab('transactions');switchTab('parc-it');return false" style="color:#dc2626;font-weight:700;margin-left:8px">Voir →</a>
+          </div>` : ""}
+          ${fin.top_vendor ? `<div style="font-size:.78rem;color:#475569;background:#f8fafc;padding:6px 12px;border-radius:6px">
+            Top fournisseur ce mois : <strong>${esc(fin.top_vendor)}</strong> · ${fin.vendor_count} fournisseur${fin.vendor_count>1?"s":""} actifs
+          </div>` : ""}`
+    );
+  }
+
+  const cards = [govHtml, astHtml, finHtml].filter(Boolean);
+  if (!cards.length) { wrap.innerHTML = ""; return; }
+
+  wrap.innerHTML = `
+    <div style="margin-top:28px">
+      <h3 style="font-size:.88rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin:0 0 14px">Modules de gouvernance IT</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+        ${cards.join("")}
+      </div>
+    </div>`;
 }
 
 function toggleDeptAcc(btn) {
