@@ -7,6 +7,24 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).parent / ".env")
+
+# ── Sentry — monitoring erreurs en production (SENTRY_DSN requis) ─────────────
+_sentry_dsn = os.getenv("SENTRY_DSN")
+if _sentry_dsn:
+    import sentry_sdk
+    from sentry_sdk.integrations.fastapi import FastApiIntegration
+    from sentry_sdk.integrations.starlette import StarletteIntegration
+    sentry_sdk.init(
+        dsn=_sentry_dsn,
+        traces_sample_rate=float(os.getenv("SENTRY_TRACES_RATE", "0.05")),
+        environment=os.getenv("ENVIRONMENT", "production"),
+        integrations=[
+            StarletteIntegration(transaction_style="url"),
+            FastApiIntegration(),
+        ],
+        send_default_pii=False,
+    )
+
 from typing import Annotated
 
 from fastapi import BackgroundTasks, Body, Depends, FastAPI, File, Form, HTTPException, Request, UploadFile

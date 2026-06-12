@@ -4,7 +4,7 @@ from __future__ import annotations
 from datetime import date, datetime
 from typing import Any
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile
 from pydantic import BaseModel, Field
 
 from auth import CurrentUser
@@ -354,15 +354,112 @@ def create_vendor(
 
 @router.post("/import/csv")
 async def import_csv(
+    file: UploadFile = File(...),
     user: CurrentUser = Depends(require_min_role("admin")),
 ):
+    """Import CSV de transactions.
+
+    En-têtes acceptés (insensible à la casse) :
+    date, vendor/fournisseur, amount/montant, currency/devise,
+    description, reference, category/categorie, status/statut
     """
-    Import CSV de transactions. Format attendu :
-    date,vendor,amount,currency,description,reference,category,status
-    """
-    from fastapi import UploadFile, File
-    # Placeholder — implémenté si nécessaire
-    raise HTTPException(501, "Import CSV — à venir dans la prochaine version.")
+    import csv
+    import io as _io
+    from datetime import date as _date
+
+    if not file.filename or not file.filename.lower().endswith(".csv"):
+        raise HTTPException(400, "Fichier CSV requis (.csv).")
+
+    content = await file.read()
+    if len(content) > 5 * 1024 * 1024:
+        raise HTTPException(413, "Fichier trop volumineux (max 5 Mo).")
+
+    try:
+        text = content.decode("utf-8-sig")
+    except UnicodeDecodeError:
+        try:
+            text = content.decode("latin-1")
+        except Exception:
+            raise HTTPException(400, "Encodage non supporté — utilisez UTF-8.")
+
+    reader = csv.DictReader(_io.StringIO(text))
+    if not reader.fieldnames:
+        raise HTTPException(400, "Fichier CSV vide ou sans en-têtes.")
+
+    VALID_CATEGORIES = {"software", "hardware", "cloud", "telecom", "services", "maintenance", "other"}
+    VALID_STATUSES   = {"paid", "pending", "cancelled"}
+    org = user.organization_id
+
+    imported, skipped = 0, 0
+    errors: list[dict] = []
+    new_ids: list[str] = []
+
+    for line_no, raw in enumerate(reader, start=2):
+        row = {k.lower().strip().replace(" ", "_"): (v or "").strip() for k, v in raw.items() if k}
+
+        # Date
+        raw_date = row.get("date") or row.get("transaction_date") or ""
+        try:
+            txn_date = str(_date.fromisoformat(raw_date[:10]))
+        except (ValueError, TypeError):
+            errors.append({"row": line_no, "error": f"Date invalide : '{raw_date}'"})
+            skipped += 1
+            continue
+
+        # Montant
+        raw_amount = row.get("amount") or row.get("montant") or ""
+        try:
+            amount = float(raw_amount.replace(",", ".").replace("$", "").replace("\xa0", "").replace(" ", ""))
+            if amount < 0:
+                raise ValueError()
+        except (ValueError, TypeError):
+            errors.append({"row": line_no, "error": f"Montant invalide : '{raw_amount}'"})
+            skipped += 1
+            continue
+
+        vendor_name = row.get("vendor") or row.get("fournisseur") or None
+        currency    = (row.get("currency") or row.get("devise") or "CAD").upper()[:3]
+        description = row.get("description") or None
+        reference   = row.get("reference") or row.get("reference_number") or None
+        raw_cat     = (row.get("category") or row.get("categorie") or "other").lower()
+        category    = raw_cat if raw_cat in VALID_CATEGORIES else "other"
+        raw_status  = (row.get("status") or row.get("statut") or "paid").lower()
+        txn_status  = raw_status if raw_status in VALID_STATUSES else "paid"
+
+        try:
+            vendor_id = _resolve_vendor(org, vendor_name, None, category)
+            with get_db() as cur:
+                cur.execute(
+                    """
+                    INSERT INTO public.financial_transactions
+                      (organization_id, transaction_date, amount, currency,
+                       description, reference_number, category, status, vendor_id, source)
+                    VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,'csv')
+                    RETURNING id
+                    """,
+                    (org, txn_date, amount, currency,
+                     description, reference, category, txn_status, vendor_id),
+                )
+                result = cur.fetchone()
+            if result:
+                new_ids.append(str(result["id"]))
+                imported += 1
+        except Exception as exc:
+            errors.append({"row": line_no, "error": str(exc)[:200]})
+            skipped += 1
+
+    for tid in new_ids:
+        try:
+            _detect_anomalies(org, tid)
+        except Exception:
+            pass
+
+    return {
+        "imported":   imported,
+        "skipped":    skipped,
+        "total_rows": imported + skipped,
+        "errors":     errors[:50],
+    }
 
 
 # ─────────────────────────────────────────────────────────────────────────────

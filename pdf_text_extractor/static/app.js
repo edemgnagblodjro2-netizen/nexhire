@@ -4400,6 +4400,48 @@ async function deleteTxn(id) {
   } catch(e) { showToast(e.message, "error"); }
 }
 
+function importTxnCsv() {
+  const input = $("txn-csv-input");
+  if (input) { input.value = ""; input.click(); }
+}
+
+async function handleTxnCsvFile(input) {
+  const file = input.files?.[0];
+  if (!file) return;
+
+  const btn = document.querySelector("button[onclick='importTxnCsv()']");
+  const origText = btn?.textContent;
+  if (btn) { btn.disabled = true; btn.textContent = "Import en cours…"; }
+
+  try {
+    const fd = new FormData();
+    fd.append("file", file);
+    const resp = await fetch("/api/transactions/import/csv", {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${state.token}` },
+      body: fd,
+    });
+    const data = await resp.json();
+    if (!resp.ok) { showToast(data.detail || "Erreur import CSV.", "error"); return; }
+
+    let msg = `Import terminé — ${data.imported} transaction(s) ajoutée(s)`;
+    if (data.skipped) msg += `, ${data.skipped} ignorée(s)`;
+    showToast(msg, "success");
+
+    if (data.errors?.length) {
+      const detail = data.errors.slice(0, 5).map(e => `Ligne ${e.row} : ${e.error}`).join("\n");
+      setTimeout(() => alert(`⚠️ Erreurs de validation :\n\n${detail}${data.errors.length > 5 ? `\n…et ${data.errors.length - 5} autre(s)` : ""}`), 300);
+    }
+
+    loadTransactions();
+  } catch(e) {
+    showToast(`Erreur : ${e.message}`, "error");
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = origText; }
+    input.value = "";
+  }
+}
+
 // ── Budget CRUD ───────────────────────────────────────────────────────────────
 function openBudgetModal(entry = null) {
   $("bm-id").value = entry?.id || "";

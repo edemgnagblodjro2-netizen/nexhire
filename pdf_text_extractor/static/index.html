@@ -1957,7 +1957,11 @@
               <option value="cancelled">Annulé</option>
             </select>
           </div>
-          <button class="btn btn-primary btn-sm" onclick="openTxnModal()">+ Transaction</button>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-secondary btn-sm" onclick="importTxnCsv()">⬆ Importer CSV</button>
+            <button class="btn btn-primary btn-sm" onclick="openTxnModal()">+ Transaction</button>
+          </div>
+          <input type="file" id="txn-csv-input" accept=".csv" style="display:none" onchange="handleTxnCsvFile(this)">
         </div>
         <div id="txn-summary-wrap" style="margin-bottom:16px"></div>
         <div id="txn-table-wrap"><p class="muted">Chargement…</p></div>
@@ -2885,7 +2889,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="/static/app.js?v=20260612k"></script>
+<script src="/static/app.js?v=20260612l"></script>
 <script>
   // Service Worker registration
   if ("serviceWorker" in navigator) {
