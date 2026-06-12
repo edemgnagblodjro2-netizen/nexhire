@@ -61,15 +61,17 @@ def _refresh_if_needed(tokens: dict, connector_id: str) -> dict:
         if resp.status_code != 200:
             return tokens
         data = resp.json()
+        new_expires_at = (datetime.now(UTC) + timedelta(seconds=data.get("expires_in", 3600))).isoformat()
         tokens = {
             **tokens,
             "access_token":  data["access_token"],
             "refresh_token": data.get("refresh_token", tokens["refresh_token"]),
-            "expires_at":    (datetime.now(UTC) + timedelta(seconds=data.get("expires_in", 3600))).isoformat(),
+            "expires_at":    new_expires_at,
         }
         service_client().table("connectors").update({
             "encrypted_credentials": encrypt(json.dumps(tokens)),
-            "updated_at": datetime.now(UTC).isoformat(),
+            "token_expires_at":      new_expires_at,
+            "updated_at":            datetime.now(UTC).isoformat(),
         }).eq("id", connector_id).execute()
     except Exception:
         pass

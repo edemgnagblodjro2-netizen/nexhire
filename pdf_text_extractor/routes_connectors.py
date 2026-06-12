@@ -153,6 +153,54 @@ def connector_status(
     return result
 
 
+# ── Santé globale des connecteurs ─────────────────────────────────────────────
+
+@router.get("/health")
+def connectors_health(user: CurrentUser = Depends(require_min_role("manager"))):
+    """Retourne les connecteurs en erreur ou dont le token OAuth expire dans 7 jours."""
+    from datetime import timedelta
+    soon = (datetime.now(UTC) + timedelta(days=7)).isoformat()
+
+    with get_db() as cur:
+        cur.execute(
+            """
+            SELECT connector_type, status, last_error,
+                   token_expires_at, connected_at
+            FROM connectors
+            WHERE organization_id = %s
+              AND (
+                status = 'error'
+                OR (token_expires_at IS NOT NULL AND token_expires_at <= %s::timestamptz)
+              )
+            ORDER BY
+              CASE WHEN status = 'error' THEN 0 ELSE 1 END,
+              token_expires_at NULLS LAST
+            """,
+            (user.organization_id, soon),
+        )
+        raw = rows(cur)
+
+    alerts = []
+    for r in raw:
+        is_token_error = r["status"] == "error" and r.get("last_error") and (
+            "Token refresh" in (r["last_error"] or "") or "401" in (r["last_error"] or "")
+        )
+        alerts.append({
+            "connector_type":   r["connector_type"],
+            "status":           r["status"],
+            "last_error":       r["last_error"],
+            "token_expires_at": r["token_expires_at"].isoformat() if r["token_expires_at"] else None,
+            "alert_type":       "token_expired" if is_token_error else
+                                "error" if r["status"] == "error" else "expiring_soon",
+        })
+
+    return {
+        "alerts":         alerts,
+        "error_count":    sum(1 for a in alerts if a["status"] == "error"),
+        "expiring_count": sum(1 for a in alerts if a["status"] != "error"),
+    }
+
+
 # ── Gestion des accès par département ─────────────────────────────────────────
 
 @router.get("/{connector_type}/departments")

@@ -2691,7 +2691,8 @@ footer {
   gap: 12px;
   transition: box-shadow .15s;
 }
-.connector-card.connected { border-color: #86efac; background: linear-gradient(135deg,#f0fdf4 0%,#fff 100%); }
+.connector-card.connected      { border-color: #86efac; background: linear-gradient(135deg,#f0fdf4 0%,#fff 100%); }
+.connector-card.connector-error-card { border-color: #fca5a5; background: linear-gradient(135deg,#fef2f2 0%,#fff 100%); }
 .connector-card:hover { box-shadow: var(--shadow); }
 .connector-head { display: flex; align-items: flex-start; gap: 12px; }
 .connector-head-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
@@ -2721,6 +2722,7 @@ footer {
 .badge-connected    { background: var(--success-bg); color: var(--success); }
 .badge-disconnected { background: #f1f5f9; color: #64748b; }
 .badge-oauth        { background: var(--blue-light); color: var(--blue); }
+.badge-error        { background: #fef2f2; color: #991b1b; }
 .connector-meta  { font-size: .78rem; color: var(--slate); margin: 0; }
 .connector-error { font-size: .78rem; color: var(--error); margin: 0; }
 .connector-footer {

@@ -2031,13 +2031,54 @@ function openDeptDetail(deptId, deptName) {
 
 $("refresh-connectors").addEventListener("click", loadConnectors);
 
+function _renderConnectorHealthBanner(health) {
+  let banner = $("connector-health-banner");
+  if (!banner) {
+    banner = document.createElement("div");
+    banner.id = "connector-health-banner";
+    const grid = $("connector-grid");
+    grid.parentElement.insertBefore(banner, grid);
+  }
+  banner.innerHTML = "";
+  if (!health?.alerts?.length) return;
+
+  const tokenExpired = health.alerts.filter(a => a.alert_type === "token_expired");
+  const otherErrors  = health.alerts.filter(a => a.alert_type === "error");
+  const expiring     = health.alerts.filter(a => a.alert_type === "expiring_soon");
+
+  const _names = (list) => list.map(a => `<strong>${CONNECTORS[a.connector_type]?.label || a.connector_type}</strong>`).join(", ");
+
+  if (tokenExpired.length) {
+    const p = document.createElement("div");
+    p.style.cssText = "background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:.83rem;color:#991b1b";
+    p.innerHTML = `🔴 <strong>Token OAuth expiré</strong> — ${_names(tokenExpired)} : authentification révoquée. L'agent IA utilise des données fictives pour ces systèmes. Cliquez <em>Renouveler OAuth</em> sur la carte.`;
+    banner.appendChild(p);
+  }
+  if (otherErrors.length) {
+    const p = document.createElement("div");
+    p.style.cssText = "background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:.83rem;color:#991b1b";
+    p.innerHTML = `🔴 <strong>Connexion en erreur</strong> — ${_names(otherErrors)} : vérifiez les credentials ou reconnectez.`;
+    banner.appendChild(p);
+  }
+  if (expiring.length) {
+    const p = document.createElement("div");
+    p.style.cssText = "background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:.83rem;color:#78350f";
+    p.innerHTML = `⚠️ <strong>Token expirant dans 7 jours</strong> — ${_names(expiring)} : renouvelez l'OAuth maintenant pour éviter une interruption.`;
+    banner.appendChild(p);
+  }
+}
+
 async function loadConnectors() {
   const grid = $("connector-grid");
   grid.innerHTML = "<p class='muted'>Chargement…</p>";
   let connected = {};
   try {
-    const list = await apiCall("/api/connectors");
+    const [list, health] = await Promise.all([
+      apiCall("/api/connectors"),
+      apiCall("/api/connectors/health").catch(() => ({ alerts: [], error_count: 0, expiring_count: 0 })),
+    ]);
     list.forEach(c => { connected[c.connector_type] = c; });
+    _renderConnectorHealthBanner(health);
   } catch {
     grid.innerHTML = "<p class='error-text'>Impossible de charger les connecteurs.</p>";
     return;
@@ -2093,17 +2134,24 @@ async function loadConnectors() {
 }
 
 function buildConnectorCard(type, meta, info) {
-  const isConnected = info?.status === "connected";
-  const connectedAt = info?.connected_at ? new Date(info.connected_at).toLocaleString("fr-CA") : null;
-  const isOAuth     = meta.method === "oauth";
-  const isApiKey    = meta.method === "apikey";
+  const isConnected  = info?.status === "connected";
+  const isError      = info?.status === "error";
+  const connectedAt  = info?.connected_at ? new Date(info.connected_at).toLocaleString("fr-CA") : null;
+  const isOAuth      = meta.method === "oauth";
+  const isApiKey     = meta.method === "apikey";
+  const isTokenError = isError && (info?.last_error || "").match(/Token refresh|401|revok/i);
 
   const card = document.createElement("div");
-  card.className = `connector-card${isConnected ? " connected" : ""}`;
+  card.className = `connector-card${isConnected ? " connected" : isError ? " connector-error-card" : ""}`;
 
   const methodBadge = isOAuth ? "OAuth 2.0" : "API Key";
-  const statusText  = isConnected ? (isOAuth ? "OAuth ✓" : "Connecté") : "Déconnecté";
-  const badgeCls    = isConnected ? (isOAuth ? "badge-oauth" : "badge-connected") : "badge-disconnected";
+  const statusText  = isConnected ? (isOAuth ? "OAuth ✓" : "Connecté")
+                    : isTokenError ? "Token expiré"
+                    : isError      ? "Erreur"
+                    : "Déconnecté";
+  const badgeCls    = isConnected ? (isOAuth ? "badge-oauth" : "badge-connected")
+                    : isError     ? "badge-error"
+                    : "badge-disconnected";
 
   const depts = info?.departments || [];
   const deptBadges = depts.length

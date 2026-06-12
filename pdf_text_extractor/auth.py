@@ -15,6 +15,13 @@ SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET", "")
 JWT_AUDIENCE = "authenticated"
 
 
+def _hs256_fallback_allowed() -> bool:
+    """HS256 uniquement autorisé en développement local (ALLOW_HS256_FALLBACK=true).
+    En production ce flag n'est pas défini → fallback désactivé.
+    """
+    return os.getenv("ALLOW_HS256_FALLBACK", "false").lower() == "true"
+
+
 @lru_cache(maxsize=1)
 def _jwks_client() -> PyJWKClient:
     """Client JWKS mis en cache — récupère les clés publiques Supabase (ES256)."""
@@ -33,12 +40,14 @@ class CurrentUser:
 
 # ── Vérification du jeton ──────────────────────────────────────────────────
 # Supabase émet des tokens ES256 (ECDSA P-256) vérifiables via JWKS.
-# Fallback HS256 conservé pour compatibilité avec d'éventuels anciens tokens.
+# Fallback HS256 désactivé en production — uniquement en dev local via
+# ALLOW_HS256_FALLBACK=true et seulement si le JWKS est injoignable (réseau).
 # Extension SSO (Entra ID, Okta…) : même mécanique — ajouter le JWKS de
 # l'IdP et router selon le claim `iss`. Tout l'aval (get_current_user, RBAC)
 # ne dépend que des claims normalisés {sub, email}.
 def _verify_token(token: str) -> dict:
-    # Tentative ES256 via JWKS (chemin principal Supabase).
+    # Tentative ES256/RS256 via JWKS (chemin principal Supabase).
+    _network_error = None
     try:
         signing_key = _jwks_client().get_signing_key_from_jwt(token)
         return jwt.decode(
@@ -47,15 +56,27 @@ def _verify_token(token: str) -> dict:
             algorithms=["ES256", "RS256"],
             audience=JWT_AUDIENCE,
         )
+    except jwt.exceptions.PyJWKClientConnectionError as exc:
+        # Panne réseau uniquement → tentative HS256 en dev
+        _network_error = exc
     except jwt.exceptions.PyJWKClientError:
-        pass  # kid inconnu → essayer HS256
+        # Kid inconnu, JWKS corrompu, etc. → toujours 401, jamais HS256
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Jeton invalide ou expiré.",
+        )
     except jwt.PyJWTError as exc:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Jeton invalide ou expiré.",
         ) from exc
 
-    # Fallback HS256 (anciens tokens / tests locaux).
+    # Fallback HS256 — développement local uniquement (ALLOW_HS256_FALLBACK=true)
+    if not _hs256_fallback_allowed():
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Service d'authentification temporairement indisponible.",
+        )
     if not SUPABASE_JWT_SECRET:
         raise HTTPException(status_code=500, detail="SUPABASE_JWT_SECRET non configuré.")
     try:

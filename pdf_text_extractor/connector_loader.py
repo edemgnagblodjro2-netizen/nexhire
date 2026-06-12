@@ -70,17 +70,17 @@ def refresh_oauth(
             )
             return creds
         data = resp.json()
+        new_expires_at = (datetime.now(UTC) + timedelta(seconds=data.get("expires_in", 3600))).isoformat()
         creds = {
             **creds,
             "access_token":  data.get("access_token", creds["access_token"]),
             "refresh_token": data.get("refresh_token", refresh_token),
-            "expires_at":    (
-                datetime.now(UTC) + timedelta(seconds=data.get("expires_in", 3600))
-            ).isoformat(),
+            "expires_at":    new_expires_at,
         }
         service_client().table("connectors").update({
             "encrypted_credentials": encrypt(json.dumps(creds)),
-            "updated_at": datetime.now(UTC).isoformat(),
+            "token_expires_at":      new_expires_at,
+            "updated_at":            datetime.now(UTC).isoformat(),
         }).eq("id", connector_id).execute()
     except Exception as exc:
         _mark_connector_error(connector_id, f"Token refresh exception: {exc}")
