@@ -29,9 +29,9 @@ CREATE INDEX IF NOT EXISTS idx_identities_canonical_email
 CREATE INDEX IF NOT EXISTS idx_identity_accounts_source
   ON public.identity_accounts (identity_id, source_connector);
 
--- license_usage : requêtes par période + data_source
+-- license_usage : requêtes par période (FK réelle : assignment_id)
 CREATE INDEX IF NOT EXISTS idx_license_usage_period
-  ON public.license_usage (license_pool_id, period_start DESC);
+  ON public.license_usage (assignment_id, period_start DESC);
 
 -- financial_transactions : tri par montant pour top-vendor queries
 CREATE INDEX IF NOT EXISTS idx_ftxn_amount
