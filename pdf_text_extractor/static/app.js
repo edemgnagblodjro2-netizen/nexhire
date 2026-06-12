@@ -4900,17 +4900,26 @@ async function _loadM365Intelligence() {
         const budgetTotal  = parseFloat(p.monthly_total) || 0;
         const budgetUsed   = assigned * unitCost;
         const utilisationPct = total > 0 ? Math.round((assigned / total) * 100) : 0;
+        const coutParActif   = assigned > 0 ? budgetTotal / assigned : 0;
+        const economieMois   = available * unitCost;
+        const economieAn     = economieMois * 12;
 
         // Couleur du taux d'utilisation
         const utilColor = utilisationPct >= 80 ? "#16a34a"
                         : utilisationPct >= 50 ? "#d97706"
                         : "#dc2626";
 
-        // Recommandation contextuelle
+        // Recommandation contextuelle avec projection annuelle
         let recommHtml = "";
         if (utilisationPct < 40 && available >= 5) {
-          recommHtml = `<div style="margin-top:10px;padding:8px 12px;background:#fef3c7;border-left:3px solid #d97706;border-radius:6px;font-size:.78rem;color:#92400e">
-            <strong>Renouvellement :</strong> Envisager de réduire le volume de ${available} licence${available > 1 ? "s" : ""} lors du prochain renouvellement. Économie potentielle : ${fmtCAD(available * unitCost)}/mois.
+          recommHtml = `
+          <div style="margin-top:12px;padding:12px 16px;background:#fef3c7;border-left:3px solid #d97706;border-radius:8px;font-size:.82rem;color:#92400e">
+            <div style="font-weight:700;margin-bottom:6px">Opportunité au renouvellement</div>
+            <div style="display:flex;gap:24px;flex-wrap:wrap">
+              <div><span style="font-size:1.1rem;font-weight:800">${fmtCAD(economieMois)}</span><span style="color:#b45309"> /mois</span></div>
+              <div><span style="font-size:1.1rem;font-weight:800">${fmtCAD(economieAn)}</span><span style="color:#b45309"> /an</span></div>
+            </div>
+            <div style="margin-top:4px;font-size:.76rem">En réduisant de ${available} licence${available > 1 ? "s" : ""} lors du prochain renouvellement</div>
           </div>`;
         } else if (utilisationPct >= 95) {
           recommHtml = `<div style="margin-top:10px;padding:8px 12px;background:#dcfce7;border-left:3px solid #16a34a;border-radius:6px;font-size:.78rem;color:#14532d">
@@ -4923,7 +4932,7 @@ async function _loadM365Intelligence() {
           <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap">
             <div>
               <div style="font-size:1rem;font-weight:700;color:#1e293b;margin-bottom:2px">Microsoft 365 — ${esc(p.sku_name)}</div>
-              <div style="font-size:.82rem;color:#64748b">${unitCost.toFixed(2)} $/utilisateur/mois</div>
+              <div style="font-size:.82rem;color:#64748b">${unitCost.toFixed(2)} $/utilisateur/mois · tarif catalogue</div>
             </div>
             <div style="text-align:right">
               <div style="font-size:1.4rem;font-weight:800;color:${utilColor}">${utilisationPct} %</div>
@@ -4951,6 +4960,14 @@ async function _loadM365Intelligence() {
             <div style="background:#f8fafc;border-radius:10px;padding:10px 14px">
               <div style="font-size:1.1rem;font-weight:700;color:${available > 0 ? '#d97706' : '#16a34a'}">${available} disponible${available > 1 ? "s" : ""}</div>
               <div style="font-size:.75rem;color:#64748b">Capacité restante</div>
+            </div>
+            <div style="background:#eff6ff;border-radius:10px;padding:10px 14px;border:1px solid #bfdbfe">
+              <div style="font-size:1.1rem;font-weight:700;color:#1d4ed8">${fmtCAD(coutParActif)}</div>
+              <div style="font-size:.75rem;color:#3b82f6">Coût / utilisateur actif</div>
+            </div>
+            <div style="background:#f0fdf4;border-radius:10px;padding:10px 14px;border:1px solid #bbf7d0">
+              <div style="font-size:1.1rem;font-weight:700;color:#15803d">${fmtCAD(budgetTotal * 12)}</div>
+              <div style="font-size:.75rem;color:#16a34a">Projection annuelle</div>
             </div>
           </div>
           ${recommHtml}
