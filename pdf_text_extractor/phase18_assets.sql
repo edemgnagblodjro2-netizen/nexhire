@@ -55,8 +55,7 @@ ALTER TABLE public.assets ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "assets_org_isolation" ON public.assets
   USING (
-    organization_id IN (
-      SELECT organization_id FROM public.members
-      WHERE user_id = auth.uid()
+    organization_id = (
+      SELECT organization_id FROM public.users WHERE id = auth.uid()
     )
   );

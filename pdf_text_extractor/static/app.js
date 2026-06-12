@@ -3769,11 +3769,12 @@ async function loadParcIT() {
 }
 
 function _loadParcSection(name) {
-  if (name === "overview")  _loadParcOverview();
-  if (name === "budget")    loadBudget();
-  if (name === "licenses")  loadLicenses();
-  if (name === "servers")   loadServers();
-  if (name === "apps")      loadApps();
+  if (name === "overview")     _loadParcOverview();
+  if (name === "budget")       loadBudget();
+  if (name === "licenses")     loadLicenses();
+  if (name === "servers")      loadServers();
+  if (name === "apps")         loadApps();
+  if (name === "transactions")  loadTransactions();
 }
 
 async function _populateDeptSelects() {
@@ -3991,6 +3992,215 @@ async function loadApps() {
         </tr>`;
       }).join("") + `</tbody></table>`;
   } catch (e) { wrap.innerHTML = `<p class="muted" style="padding:20px">${e.message||"Erreur"}</p>`; }
+}
+
+// ── Transactions financières ─────────────────────────────────────────────────
+
+let _txnVendors = [];
+
+async function loadTransactions() {
+  const wrap    = $("txn-table-wrap");
+  const summary = $("txn-summary-wrap");
+  const year    = $("txn-year-filter")?.value   || "";
+  const vendor  = $("txn-vendor-filter")?.value || "";
+  const status  = $("txn-status-filter")?.value || "";
+
+  if (wrap) wrap.innerHTML = `<p class="muted">Chargement…</p>`;
+
+  try {
+    const qs = [year && `year=${year}`, vendor && `vendor_id=${vendor}`, status && `status=${status}`].filter(Boolean).join("&");
+    const [txns, sum, vendors] = await Promise.all([
+      apiCall(`/api/transactions${qs ? "?" + qs : ""}`),
+      apiCall(`/api/transactions/summary${year ? "?year=" + year : ""}`),
+      apiCall("/api/transactions/vendors").catch(() => []),
+    ]);
+
+    _txnVendors = vendors;
+
+    // Remplir les filtres si premiers chargement
+    const vendorSel = $("txn-vendor-filter");
+    if (vendorSel && vendorSel.options.length <= 1) {
+      vendorSel.innerHTML = `<option value="">Tous les fournisseurs</option>` +
+        vendors.map(v => `<option value="${v.id}">${esc(v.name)}</option>`).join("");
+    }
+    const yearSel = $("txn-year-filter");
+    if (yearSel && yearSel.options.length <= 1) {
+      const currentYear = new Date().getFullYear();
+      yearSel.innerHTML = `<option value="">Toutes les années</option>` +
+        [currentYear, currentYear - 1, currentYear - 2]
+          .map(y => `<option value="${y}"${y === currentYear ? " selected" : ""}>${y}</option>`).join("");
+    }
+
+    // ── KPI summary ─────────────────────────────────────────────────────────
+    const catColors = {
+      software:"#6366f1", cloud:"#0ea5e9", hardware:"#f59e0b",
+      telecom:"#10b981", services:"#8b5cf6", maintenance:"#64748b", other:"#94a3b8"
+    };
+    const catLabels = {
+      software:"Logiciels", cloud:"Cloud", hardware:"Matériel",
+      telecom:"Télécom", services:"Services", maintenance:"Maintenance", other:"Autre"
+    };
+
+    const topVendor = sum.top_vendors?.[0];
+    const concentration = topVendor?.share_pct || 0;
+    const concColor = concentration > 50 ? "#dc2626" : concentration > 35 ? "#d97706" : "#16a34a";
+
+    const burnLast = sum.burn_rate?.slice(-1)[0]?.paid || 0;
+    const burnPrev = sum.burn_rate?.slice(-2)[0]?.paid || 0;
+    const burnTrend = burnPrev > 0 ? ((burnLast - burnPrev) / burnPrev * 100).toFixed(0) : null;
+
+    if (summary) summary.innerHTML = `
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">
+        <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:14px 16px;text-align:center">
+          <div style="font-size:1.5rem;font-weight:800;color:#1e293b">${_fmt(sum.total_paid)} $</div>
+          <div style="font-size:.78rem;color:#64748b;margin-top:2px">Total payé</div>
+        </div>
+        <div style="background:#fff;border:1.5px solid ${sum.flagged_count > 0 ? "#dc2626" : "#e2e8f0"};border-radius:12px;padding:14px 16px;text-align:center">
+          <div style="font-size:1.5rem;font-weight:800;color:${sum.flagged_count > 0 ? "#dc2626" : "#94a3b8"}">${sum.flagged_count}</div>
+          <div style="font-size:.78rem;color:#64748b;margin-top:2px">Anomalies détectées</div>
+        </div>
+        <div style="background:#fff;border:1.5px solid ${concentration > 50 ? "#dc2626" : "#e2e8f0"};border-radius:12px;padding:14px 16px;text-align:center">
+          <div style="font-size:1.5rem;font-weight:800;color:${concColor}">${concentration}%</div>
+          <div style="font-size:.78rem;color:#64748b;margin-top:2px">Concentration ${topVendor ? esc(topVendor.vendor_name) : ""}</div>
+        </div>
+        <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:14px 16px;text-align:center">
+          <div style="font-size:1.5rem;font-weight:800;color:#1e293b">${_fmt(burnLast)} $
+            ${burnTrend !== null ? `<span style="font-size:.75rem;color:${burnTrend > 0 ? "#dc2626" : "#16a34a"};margin-left:4px">${burnTrend > 0 ? "▲" : "▼"}${Math.abs(burnTrend)}%</span>` : ""}
+          </div>
+          <div style="font-size:.78rem;color:#64748b;margin-top:2px">Dépenses ce mois</div>
+        </div>
+      </div>
+      ${sum.top_vendors?.length ? `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+        <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:10px;padding:14px 16px">
+          <div style="font-size:.8rem;font-weight:700;color:#475569;margin-bottom:10px">Top fournisseurs</div>
+          ${sum.top_vendors.slice(0,5).map(v => {
+            const barW = Math.round(v.share_pct);
+            return `<div style="margin-bottom:8px">
+              <div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:3px">
+                <span style="color:#475569">${esc(v.vendor_name)}</span>
+                <span style="font-weight:700">${_fmt(v.total)} $ <span style="color:#94a3b8;font-weight:400">(${v.share_pct}%)</span></span>
+              </div>
+              <div style="height:5px;background:#f1f5f9;border-radius:3px">
+                <div style="height:100%;width:${barW}%;background:#6366f1;border-radius:3px"></div>
+              </div>
+            </div>`;
+          }).join("")}
+        </div>
+        <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:10px;padding:14px 16px">
+          <div style="font-size:.8rem;font-weight:700;color:#475569;margin-bottom:10px">Par catégorie</div>
+          ${sum.by_category.map(c => `
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #f1f5f9">
+              <span style="font-size:.8rem;color:#475569">
+                <span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${catColors[c.category]||"#94a3b8"};margin-right:6px"></span>
+                ${catLabels[c.category] || c.category}
+              </span>
+              <span style="font-size:.8rem;font-weight:700">${_fmt(c.total)} $</span>
+            </div>`).join("")}
+        </div>
+      </div>` : ""}`;
+
+    // ── Table transactions ───────────────────────────────────────────────────
+    if (!txns.length) {
+      if (wrap) wrap.innerHTML = `<p class="muted" style="padding:20px">Aucune transaction enregistrée. Cliquez sur <strong>+ Transaction</strong> pour en ajouter.</p>`;
+      return;
+    }
+
+    const statusBadge = { paid:"badge-active", pending:"badge-unused", cancelled:"badge-expired" };
+    const statusLabel = { paid:"Payé", pending:"En attente", cancelled:"Annulé" };
+
+    if (wrap) wrap.innerHTML = `<table class="data-table"><thead><tr>
+      <th>Date</th><th>Fournisseur</th><th>Description</th><th>Catégorie</th>
+      <th>Montant</th><th>Statut</th><th>Dép.</th><th></th>
+    </tr></thead><tbody>` +
+      txns.map(t => `<tr class="${t.is_flagged ? "row-inactive" : ""}">
+        <td style="white-space:nowrap">${t.transaction_date?.slice(0,10) || "—"}</td>
+        <td><strong>${esc(t.vendor_name || "—")}</strong></td>
+        <td>${esc(t.description || t.reference_number || "—")}${t.is_flagged ? ` <span title="${esc(t.flag_reason||"")}" style="color:#dc2626;cursor:help">⚠</span>` : ""}</td>
+        <td>${esc(catLabels[t.category] || t.category || "—")}</td>
+        <td style="font-weight:700;white-space:nowrap">${_fmt(t.amount)} ${t.currency}</td>
+        <td><span class="badge ${statusBadge[t.status]||"badge-active"}">${statusLabel[t.status]||t.status}</span></td>
+        <td>${esc(t.department_name || "—")}</td>
+        <td><button class="btn-icon" onclick="editTxn('${t.id}')">✎</button> <button class="btn-icon btn-deactivate" onclick="deleteTxn('${t.id}')">✕</button></td>
+      </tr>`).join("") + `</tbody></table>`;
+
+  } catch (e) {
+    if (wrap) wrap.innerHTML = `<p class="muted" style="padding:20px">${e.message || "Erreur"}</p>`;
+  }
+}
+
+async function openTxnModal(entry = null) {
+  $("txm-id").value     = entry?.id || "";
+  $("txm-date").value   = entry?.transaction_date?.slice(0,10) || new Date().toISOString().slice(0,10);
+  $("txm-amount").value = entry?.amount || "";
+  $("txm-vendor").value = entry?.vendor_name || "";
+  $("txm-desc").value   = entry?.description || "";
+  $("txm-ref").value    = entry?.reference_number || "";
+  $("txm-cat").value    = entry?.category || "software";
+  $("txm-status").value = entry?.status || "paid";
+
+  // Datalist fournisseurs
+  $("txm-vendor-list").innerHTML = _txnVendors.map(v => `<option value="${esc(v.name)}"></option>`).join("");
+
+  // Depts
+  try {
+    const depts = await apiCall("/api/departments");
+    $("txm-dept").innerHTML = `<option value="">— Aucun —</option>` +
+      depts.map(d => `<option value="${d.id}"${d.id===entry?.department_id?" selected":""}>${esc(d.name)}</option>`).join("");
+  } catch(e) {}
+
+  // Contrats
+  try {
+    const contracts = await apiCall("/api/contracts");
+    $("txm-contract").innerHTML = `<option value="">— Aucun —</option>` +
+      contracts.map(c => `<option value="${c.id}"${c.id===entry?.contract_id?" selected":""}>${esc(c.vendor)} — ${_fmt(c.annual_value)} $/an</option>`).join("");
+  } catch(e) {}
+
+  $("txn-modal-title").textContent = entry ? "Modifier la transaction" : "Nouvelle transaction";
+  $("txn-modal").classList.remove("hidden");
+
+  $("txn-modal-form").onsubmit = async (e) => {
+    e.preventDefault();
+    const payload = {
+      transaction_date: $("txm-date").value,
+      amount:           parseFloat($("txm-amount").value),
+      description:      $("txm-desc").value || null,
+      reference_number: $("txm-ref").value  || null,
+      category:         $("txm-cat").value,
+      status:           $("txm-status").value,
+      vendor_name:      $("txm-vendor").value || null,
+      department_id:    $("txm-dept").value   || null,
+      contract_id:      $("txm-contract").value || null,
+      source:           "manual",
+    };
+    try {
+      const id = $("txm-id").value;
+      if (id) await apiCall(`/api/transactions/${id}`, "PUT", payload);
+      else    await apiCall("/api/transactions", "POST", payload);
+      closeParcModal("txn-modal");
+      loadTransactions();
+      showToast("Transaction enregistrée.", "success");
+    } catch (err) {
+      showToast(`Erreur : ${err.message}`, "error");
+    }
+  };
+}
+
+async function editTxn(id) {
+  try {
+    const txns = await apiCall("/api/transactions");
+    const t = txns.find(x => x.id === id);
+    if (t) openTxnModal(t);
+  } catch(e) { showToast("Impossible de charger la transaction.", "error"); }
+}
+
+async function deleteTxn(id) {
+  if (!confirm("Supprimer cette transaction ?")) return;
+  try {
+    await apiCall(`/api/transactions/${id}`, "DELETE");
+    loadTransactions();
+    showToast("Transaction supprimée.", "success");
+  } catch(e) { showToast(e.message, "error"); }
 }
 
 // ── Budget CRUD ───────────────────────────────────────────────────────────────

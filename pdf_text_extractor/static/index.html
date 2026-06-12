@@ -1850,7 +1850,8 @@
         <button class="parc-tab-btn"        data-parc="budget"   onclick="switchParcTab('budget')"   data-i18n="parc.tab.budget">Budget</button>
         <button class="parc-tab-btn"        data-parc="licenses" onclick="switchParcTab('licenses')" data-i18n="parc.tab.licenses">Licences</button>
         <button class="parc-tab-btn"        data-parc="servers"  onclick="switchParcTab('servers')"  data-i18n="parc.tab.servers">Serveurs</button>
-        <button class="parc-tab-btn"        data-parc="apps"     onclick="switchParcTab('apps')"     data-i18n="parc.tab.apps">Applications</button>
+        <button class="parc-tab-btn"        data-parc="apps"          onclick="switchParcTab('apps')"          data-i18n="parc.tab.apps">Applications</button>
+        <button class="parc-tab-btn"        data-parc="transactions"  onclick="switchParcTab('transactions')"  >Transactions</button>
       </div>
 
       <!-- Vue d'ensemble -->
@@ -1935,9 +1936,93 @@
         </div>
         <div id="apps-table-wrap"><p class="muted" data-i18n="loading">Chargement…</p></div>
       </div>
+
+      <!-- ── Transactions financières ──────────────────────────────────────── -->
+      <div id="parc-transactions" class="parc-content hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px">
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <select id="txn-year-filter" onchange="loadTransactions()">
+              <option value="">Toutes les années</option>
+            </select>
+            <select id="txn-vendor-filter" onchange="loadTransactions()">
+              <option value="">Tous les fournisseurs</option>
+            </select>
+            <select id="txn-status-filter" onchange="loadTransactions()">
+              <option value="">Tous les statuts</option>
+              <option value="paid">Payé</option>
+              <option value="pending">En attente</option>
+              <option value="cancelled">Annulé</option>
+            </select>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="openTxnModal()">+ Transaction</button>
+        </div>
+        <div id="txn-summary-wrap" style="margin-bottom:16px"></div>
+        <div id="txn-table-wrap"><p class="muted">Chargement…</p></div>
+      </div>
     </section>
 
     <!-- ── MODALS PARC IT ─────────────────────────────────────────────────── -->
+
+    <!-- Modal Transaction -->
+    <div id="txn-modal" class="modal-backdrop hidden">
+      <div class="modal-card">
+        <button class="modal-close" onclick="closeParcModal('txn-modal')">✕</button>
+        <h3 id="txn-modal-title">Nouvelle transaction</h3>
+        <input type="hidden" id="txm-id" />
+        <form id="txn-modal-form" class="settings-form" style="display:grid;gap:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Date</span>
+              <input type="date" id="txm-date" required />
+            </label>
+            <label class="auth-label"><span>Montant</span>
+              <input type="number" id="txm-amount" step="0.01" min="0" required placeholder="0.00" />
+            </label>
+          </div>
+          <label class="auth-label"><span>Fournisseur</span>
+            <input type="text" id="txm-vendor" required placeholder="Nom du fournisseur" list="txm-vendor-list" />
+            <datalist id="txm-vendor-list"></datalist>
+          </label>
+          <label class="auth-label"><span>Description</span>
+            <input type="text" id="txm-desc" placeholder="Facture #, abonnement, etc." />
+          </label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Catégorie</span>
+              <select id="txm-cat">
+                <option value="software">Logiciels / SaaS</option>
+                <option value="hardware">Matériel</option>
+                <option value="cloud">Cloud / Infrastructure</option>
+                <option value="telecom">Télécommunications</option>
+                <option value="services">Services professionnels</option>
+                <option value="maintenance">Maintenance</option>
+                <option value="other">Autre</option>
+              </select>
+            </label>
+            <label class="auth-label"><span>Statut</span>
+              <select id="txm-status">
+                <option value="paid">Payé</option>
+                <option value="pending">En attente</option>
+                <option value="cancelled">Annulé</option>
+              </select>
+            </label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Département</span>
+              <select id="txm-dept"><option value="">— Aucun —</option></select>
+            </label>
+            <label class="auth-label"><span>N° référence</span>
+              <input type="text" id="txm-ref" placeholder="INV-2026-001" />
+            </label>
+          </div>
+          <label class="auth-label"><span>Contrat associé (optionnel)</span>
+            <select id="txm-contract"><option value="">— Aucun —</option></select>
+          </label>
+          <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:6px">
+            <button type="button" class="btn btn-outline" onclick="closeParcModal('txn-modal')">Annuler</button>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+          </div>
+        </form>
+      </div>
+    </div>
 
     <!-- Modal Budget -->
     <div id="budget-modal" class="modal-backdrop hidden">
@@ -2797,7 +2882,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="/static/app.js?v=20260612g"></script>
+<script src="/static/app.js?v=20260612h"></script>
 <script>
   // Service Worker registration
   if ("serviceWorker" in navigator) {

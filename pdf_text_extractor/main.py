@@ -105,6 +105,7 @@ from routes_servers          import router as servers_router
 from routes_apps             import router as apps_router
 from routes_optimization     import router as optimization_router
 from routes_contracts        import router as contracts_router
+from routes_transactions     import router as transactions_router
 from routes_workforce        import router as workforce_router
 from routes_dashboard        import router as dashboard_router
 from routes_billing          import router as billing_router
@@ -195,6 +196,7 @@ def create_app(
     app.include_router(optimization_router)
     app.include_router(dashboard_router)
     app.include_router(contracts_router)
+    app.include_router(transactions_router)
     app.include_router(workforce_router)
     app.include_router(billing_router)
     app.include_router(sso_router)
