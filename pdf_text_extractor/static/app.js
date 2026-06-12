@@ -1502,6 +1502,22 @@ function renderAgentResult(data) {
     warnEl.style.display = "none";
   }
 
+  // Bannière données de démonstration
+  let demoWarnEl = $("agent-demo-warning");
+  if (!demoWarnEl) {
+    demoWarnEl = document.createElement("div");
+    demoWarnEl.id = "agent-demo-warning";
+    demoWarnEl.style.cssText = "display:none;background:#fef3c7;border:2px solid #f59e0b;border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:.83rem;color:#78350f";
+    $("agent-result").insertAdjacentElement("afterbegin", demoWarnEl);
+  }
+  if (data.has_simulated_data) {
+    const demoNames = (data.simulated_tools || []).map(t => CONNECTORS[t]?.label || t).join(", ");
+    demoWarnEl.innerHTML = `🧪 <strong>Données de démonstration</strong> — Les données affichées pour ${demoNames || "les connecteurs externes"} sont fictives. Elles illustrent les capacités de l'agent mais ne reflètent pas votre organisation réelle. <a href="#" onclick="switchTab('connectors');return false" style="color:#92400e;font-weight:700">Connecter vos systèmes →</a>`;
+    demoWarnEl.style.display = "block";
+  } else {
+    demoWarnEl.style.display = "none";
+  }
+
   const sources = $("agent-sources");
   sources.innerHTML = "";
   if (data.sources?.length) {

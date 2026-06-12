@@ -40,6 +40,8 @@ class AgentQueryResponse(BaseModel):
     tools_called: list[dict]
     audit_id: str | None = None
     connector_warnings: list[str] = []
+    has_simulated_data: bool = False
+    simulated_tools: list[str] = []
 
 
 def _error_connectors_for_user(user: CurrentUser) -> list[str]:
@@ -210,4 +212,6 @@ def agent_query(
         tools_called=result.tools_called,
         audit_id=audit_id,
         connector_warnings=error_connectors,
+        has_simulated_data=result.has_simulated_data,
+        simulated_tools=result.simulated_tools,
     )
