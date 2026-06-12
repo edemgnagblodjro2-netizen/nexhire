@@ -2889,7 +2889,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="/static/app.js?v=20260612l"></script>
+<script src="/static/app.js?v=20260612m"></script>
 <script>
   // Service Worker registration
   if ("serviceWorker" in navigator) {
@@ -2923,5 +2923,99 @@
     }, { once: true });
   }
 </script>
+
+<!-- ── ONBOARDING WIZARD ─────────────────────────────────────────────────── -->
+<div id="onboarding-wizard" class="ob-overlay hidden" role="dialog" aria-modal="true" aria-label="Assistant de configuration">
+  <div class="ob-card">
+
+    <!-- Header -->
+    <div class="ob-header">
+      <span class="ob-brand">NexHire</span>
+      <button class="ob-skip-all" onclick="skipOnboarding()">Passer la configuration →</button>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="ob-progress-track">
+      <div class="ob-progress-fill" id="ob-progress-fill" style="width:25%"></div>
+    </div>
+    <p class="ob-step-label" id="ob-step-label">Étape 1 sur 4</p>
+
+    <!-- ── Step 1 : Secteur + Départements ─────────────────── -->
+    <div class="ob-step" id="ob-step-1">
+      <div class="ob-step-icon">🏢</div>
+      <h2 class="ob-title">Bienvenue ! Quel type d'organisation êtes-vous ?</h2>
+      <p class="ob-desc">Nous créerons vos espaces de travail adaptés à votre secteur.</p>
+      <div class="ob-sector-grid" id="ob-sector-grid">
+        <button class="ob-sector-card" data-type="entreprise"        onclick="obSelectSector(this)"><span class="ob-sc-icon">🏢</span><span>Entreprise privée</span></button>
+        <button class="ob-sector-card" data-type="pme"               onclick="obSelectSector(this)"><span class="ob-sc-icon">🏪</span><span>PME / PMI</span></button>
+        <button class="ob-sector-card" data-type="hopital"           onclick="obSelectSector(this)"><span class="ob-sc-icon">🏥</span><span>Hôpital / Santé</span></button>
+        <button class="ob-sector-card" data-type="municipalite"      onclick="obSelectSector(this)"><span class="ob-sc-icon">🏛️</span><span>Municipalité</span></button>
+        <button class="ob-sector-card" data-type="universite"        onclick="obSelectSector(this)"><span class="ob-sc-icon">🎓</span><span>Université / École</span></button>
+        <button class="ob-sector-card" data-type="entrepreneur"      onclick="obSelectSector(this)"><span class="ob-sc-icon">🚀</span><span>Startup / Entrepreneur</span></button>
+      </div>
+      <div class="ob-actions">
+        <button class="btn btn-primary" id="ob-btn-step1" onclick="obInitDepts()" disabled>Créer les départements →</button>
+      </div>
+    </div>
+
+    <!-- ── Step 2 : Connecteur M365 ────────────────────────── -->
+    <div class="ob-step hidden" id="ob-step-2">
+      <div class="ob-step-icon">🔗</div>
+      <h2 class="ob-title">Connectez vos systèmes</h2>
+      <p class="ob-desc">Commencez par Microsoft 365 pour synchroniser licences, utilisateurs et appareils — ou connectez un autre outil.</p>
+      <div class="ob-connector-preview">
+        <div class="ob-connector-row">
+          <span class="ob-conn-icon" style="background:#0078d4">Ⓜ</span>
+          <div>
+            <strong>Microsoft 365</strong>
+            <span class="ob-conn-sub">Licences · Utilisateurs · Intune · Entra ID</span>
+          </div>
+          <button class="btn btn-primary btn-sm" id="ob-m365-btn" onclick="obConnectM365()">Connecter →</button>
+        </div>
+        <p id="ob-m365-status" class="ob-conn-status hidden"></p>
+      </div>
+      <div class="ob-actions">
+        <button class="btn btn-secondary" onclick="obGoTo(1)">← Retour</button>
+        <button class="btn btn-link" onclick="obGoTo(3)">Passer cette étape →</button>
+      </div>
+    </div>
+
+    <!-- ── Step 3 : Invitation membre ──────────────────────── -->
+    <div class="ob-step hidden" id="ob-step-3">
+      <div class="ob-step-icon">👥</div>
+      <h2 class="ob-title">Invitez votre équipe</h2>
+      <p class="ob-desc">Ajoutez un collègue administrateur pour gérer la plateforme avec vous.</p>
+      <div class="ob-invite-form">
+        <input type="email" id="ob-invite-email" placeholder="prenom.nom@organisation.com" class="input-field" style="width:100%;margin-bottom:10px">
+        <select id="ob-invite-role" class="input-field" style="width:100%;margin-bottom:10px">
+          <option value="admin">Administrateur</option>
+          <option value="manager">Gestionnaire</option>
+          <option value="user">Membre</option>
+        </select>
+        <button class="btn btn-primary btn-sm" onclick="obSendInvite()" id="ob-invite-btn">Envoyer l'invitation</button>
+        <p id="ob-invite-status" class="ob-conn-status hidden" style="margin-top:8px"></p>
+      </div>
+      <div class="ob-actions">
+        <button class="btn btn-secondary" onclick="obGoTo(2)">← Retour</button>
+        <button class="btn btn-link" onclick="obGoTo(4)">Passer cette étape →</button>
+      </div>
+    </div>
+
+    <!-- ── Step 4 : Terminé ─────────────────────────────────── -->
+    <div class="ob-step hidden" id="ob-step-4">
+      <div class="ob-step-icon">🎉</div>
+      <h2 class="ob-title">Votre espace est prêt !</h2>
+      <p class="ob-desc">Posez votre première question à l'agent IA ou explorez le tableau de bord.</p>
+      <ul class="ob-checklist" id="ob-checklist">
+        <!-- rempli dynamiquement -->
+      </ul>
+      <div class="ob-actions ob-actions-center">
+        <button class="btn btn-primary" onclick="finishOnboarding()">Accéder au tableau de bord →</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 </body>
 </html>

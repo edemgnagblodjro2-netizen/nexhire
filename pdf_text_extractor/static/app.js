@@ -1061,6 +1061,11 @@ function showApp() {
     _showSplash(state.user?.organization_name || state.orgName || "");
   }
 
+  // Onboarding wizard — affiché uniquement si aucun callback OAuth en cours
+  if (!params.get("connected") && !params.get("oauth_error")) {
+    setTimeout(checkOnboarding, 900);
+  }
+
   window.dispatchEvent(new Event("app:ready"));
 }
 
@@ -8712,4 +8717,164 @@ async function toggleOrgMfa() {
   } catch (e) {
     alert(e.message || "Erreur lors de la mise à jour.");
   }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ONBOARDING WIZARD
+// ═══════════════════════════════════════════════════════════════════════════
+
+let _obStep = 1;
+let _obSector = null;
+const _obSteps = 4;
+
+const _obDoneFlags = { departments: false, connector: false, member: false };
+
+async function checkOnboarding() {
+  try {
+    const role = state.user?.role;
+    if (!["owner", "admin", "manager"].includes(role)) return;
+
+    const orgId = state.user?.organization_id || state.orgId;
+    const dismissed = localStorage.getItem(`ob_done_${orgId}`);
+    if (dismissed) return;
+
+    const status = await apiCall("/api/onboarding/status").catch(() => null);
+    if (!status || !status.should_show) return;
+
+    _obDoneFlags.departments = status.has_departments;
+    _obDoneFlags.connector   = status.has_connector;
+    _obDoneFlags.member      = status.has_team_member;
+
+    obGoTo(1);
+    $("onboarding-wizard").classList.remove("hidden");
+  } catch { /* silent */ }
+}
+
+function skipOnboarding() {
+  const orgId = state.user?.organization_id || state.orgId;
+  if (orgId) localStorage.setItem(`ob_done_${orgId}`, "1");
+  $("onboarding-wizard").classList.add("hidden");
+}
+
+function finishOnboarding() {
+  skipOnboarding();
+  switchTab("org");
+}
+
+function obGoTo(step) {
+  _obStep = step;
+  for (let i = 1; i <= _obSteps; i++) {
+    const el = $(`ob-step-${i}`);
+    if (el) el.classList.toggle("hidden", i !== step);
+  }
+  const fill = $("ob-progress-fill");
+  if (fill) fill.style.width = `${(step / _obSteps) * 100}%`;
+  const lbl = $("ob-step-label");
+  if (lbl) lbl.textContent = `Étape ${step} sur ${_obSteps}`;
+
+  if (step === 4) _obBuildChecklist();
+}
+
+function obSelectSector(btn) {
+  document.querySelectorAll(".ob-sector-card").forEach(c => c.classList.remove("active"));
+  btn.classList.add("active");
+  _obSector = btn.dataset.type;
+  const nextBtn = $("ob-btn-step1");
+  if (nextBtn) nextBtn.disabled = false;
+}
+
+async function obInitDepts() {
+  if (!_obSector) return;
+  const btn = $("ob-btn-step1");
+  if (btn) { btn.disabled = true; btn.textContent = "Création en cours…"; }
+  try {
+    await apiCall(`/api/departments/initialize?org_type=${_obSector}`, "POST");
+    _obDoneFlags.departments = true;
+    obGoTo(2);
+  } catch (e) {
+    if (btn) { btn.disabled = false; btn.textContent = "Créer les départements →"; }
+    showToast(`Erreur : ${e.message}`, "error");
+  }
+}
+
+async function obConnectM365() {
+  const btn = $("ob-m365-btn");
+  if (btn) { btn.disabled = true; btn.textContent = "Ouverture…"; }
+  try {
+    const resp = await apiCall("/api/connectors/microsoft_365/authorize");
+    if (resp?.url) {
+      const win = window.open(resp.url, "oauth", "width=600,height=700");
+      // Vérifier la fermeture de la fenêtre OAuth
+      const poll = setInterval(async () => {
+        if (win?.closed) {
+          clearInterval(poll);
+          const health = await apiCall("/api/onboarding/status").catch(() => null);
+          if (health?.has_connector) {
+            _obDoneFlags.connector = true;
+            const statusEl = $("ob-m365-status");
+            if (statusEl) {
+              statusEl.textContent = "✓ Microsoft 365 connecté avec succès !";
+              statusEl.className = "ob-conn-status success";
+              statusEl.classList.remove("hidden");
+            }
+            if (btn) { btn.textContent = "Connecté ✓"; }
+            setTimeout(() => obGoTo(3), 1200);
+          } else {
+            if (btn) { btn.disabled = false; btn.textContent = "Connecter →"; }
+          }
+        }
+      }, 1000);
+    }
+  } catch (e) {
+    if (btn) { btn.disabled = false; btn.textContent = "Connecter →"; }
+    const statusEl = $("ob-m365-status");
+    if (statusEl) {
+      statusEl.textContent = `Erreur : ${e.message}`;
+      statusEl.className = "ob-conn-status error";
+      statusEl.classList.remove("hidden");
+    }
+  }
+}
+
+async function obSendInvite() {
+  const email = ($("ob-invite-email")?.value || "").trim();
+  const role  = $("ob-invite-role")?.value || "admin";
+  if (!email) { showToast("Entrez une adresse email.", "error"); return; }
+
+  const btn = $("ob-invite-btn");
+  if (btn) { btn.disabled = true; btn.textContent = "Envoi…"; }
+  try {
+    await apiCall("/api/members/invite", "POST", { email, role });
+    _obDoneFlags.member = true;
+    const statusEl = $("ob-invite-status");
+    if (statusEl) {
+      statusEl.textContent = `✓ Invitation envoyée à ${email}`;
+      statusEl.className = "ob-conn-status success";
+      statusEl.classList.remove("hidden");
+    }
+    setTimeout(() => obGoTo(4), 1200);
+  } catch (e) {
+    if (btn) { btn.disabled = false; btn.textContent = "Envoyer l'invitation"; }
+    const statusEl = $("ob-invite-status");
+    if (statusEl) {
+      statusEl.textContent = `Erreur : ${e.message}`;
+      statusEl.className = "ob-conn-status error";
+      statusEl.classList.remove("hidden");
+    }
+  }
+}
+
+function _obBuildChecklist() {
+  const list = $("ob-checklist");
+  if (!list) return;
+  const items = [
+    { done: _obDoneFlags.departments, label: "Espaces de travail créés" },
+    { done: _obDoneFlags.connector,   label: "Système connecté (Microsoft 365)" },
+    { done: _obDoneFlags.member,      label: "Collègue invité" },
+  ];
+  list.innerHTML = items.map(it => `
+    <li class="${it.done ? "done" : "skipped"}">
+      <span class="ob-check">${it.done ? "✅" : "⏭️"}</span>
+      <span>${it.label}${it.done ? "" : " — ignoré"}</span>
+    </li>`).join("");
 }

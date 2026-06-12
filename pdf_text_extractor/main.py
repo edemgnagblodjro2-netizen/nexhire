@@ -135,6 +135,7 @@ from routes_mfa                    import router as mfa_router
 from routes_compliance             import router as compliance_router
 from routes_security_dashboard     import router as security_dashboard_router
 from routes_intelligence           import router as intelligence_router
+from routes_onboarding             import router as onboarding_router
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -225,6 +226,7 @@ def create_app(
     app.include_router(compliance_router)
     app.include_router(security_dashboard_router)
     app.include_router(intelligence_router)
+    app.include_router(onboarding_router)
     app.state.storage = storage or DocumentStore.from_env()
     app.state.assistant = assistant or AssistantService.from_env()
 
