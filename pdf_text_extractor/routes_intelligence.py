@@ -158,6 +158,8 @@ def m365_sync(user: CurrentUser = Depends(require_min_role("admin"))):
         collected = collect_all_m365(org)
     except RuntimeError as exc:
         raise HTTPException(400, str(exc))
+    except PermissionError as exc:
+        raise HTTPException(403, f"Permission Microsoft Graph insuffisante. Reconnectez le connecteur M365 et accordez le consentement admin. Détail : {exc}")
 
     correlations = correlate_identities(org)
     optimizer    = run_m365_optimizer(org)
