@@ -316,8 +316,8 @@ def _fetch_usage_report(headers: dict) -> dict[str, dict]:
     """
     try:
         csv_rows = _get_csv(headers, f"{GRAPH}/reports/getM365AppUserDetail(period='D30')")
-    except PermissionError:
-        log.warning("Reports.Read.All absent — license_usage sera vide.")
+    except Exception as exc:
+        log.warning("Rapport usage non disponible (%s) — license_usage sera vide.", exc)
         return {}
 
     result: dict[str, dict] = {}
@@ -598,6 +598,7 @@ def collect_all_m365(org_id: str) -> dict:
     users = _fetch_users(headers)
 
     for u in users:
+      try:
         upn    = (u.get("userPrincipalName") or "").lower().strip()
         email  = (u.get("mail") or upn).lower().strip()
         if not email:
@@ -742,6 +743,10 @@ def collect_all_m365(org_id: str) -> dict:
                     risk_factors=factors,
                 )
                 stats["mfa"] += 1
+
+      except Exception as exc:
+        log.warning("Erreur traitement utilisateur %s : %s", u.get("userPrincipalName"), exc)
+        stats["errors"].append({"upn": u.get("userPrincipalName"), "error": str(exc)})
 
     log.info("M365 sync terminé : %s", stats)
     return stats
