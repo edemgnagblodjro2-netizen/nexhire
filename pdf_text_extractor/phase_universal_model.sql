@@ -165,14 +165,17 @@ ALTER TABLE public.license_assignments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.license_usage       ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.security_postures   ENABLE ROW LEVEL SECURITY;
 
-DO $$ BEGIN
-  FOR tbl IN SELECT unnest(ARRAY[
+DO $$
+DECLARE
+  tbl TEXT;
+BEGIN
+  FOREACH tbl IN ARRAY ARRAY[
     'org_units','identities','identity_accounts','applications',
     'license_pools','license_assignments','license_usage','security_postures'
-  ]) LOOP
+  ] LOOP
     EXECUTE format(
-      'DROP POLICY IF EXISTS "svc_%1$s" ON public.%1$s;
-       CREATE POLICY "svc_%1$s" ON public.%1$s USING (false) WITH CHECK (false);',
+      'DROP POLICY IF EXISTS "svc_%1$s" ON public.%1$s; '
+      'CREATE POLICY "svc_%1$s" ON public.%1$s USING (false) WITH CHECK (false);',
       tbl
     );
   END LOOP;
