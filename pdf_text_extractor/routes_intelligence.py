@@ -165,7 +165,7 @@ def m365_sync(user: CurrentUser = Depends(require_min_role("admin"))):
     except PermissionError as exc:
         raise HTTPException(403, f"Permission Microsoft Graph insuffisante. Reconnectez le connecteur M365 et accordez le consentement admin. Détail : {exc}")
 
-    # Entra ID — MFA réel + rôles admin + principals de service
+    # Entra ID — MFA réel + rôles admin + principals de service + groupes
     entra_stats: dict = {}
     try:
         from entra_collector import collect_entra_id
@@ -173,6 +173,15 @@ def m365_sync(user: CurrentUser = Depends(require_min_role("admin"))):
     except Exception as exc:
         log.warning("Entra ID sync partiel : %s", exc)
         entra_stats = {"warning": str(exc)}
+
+    # Analyse des risques Entra (admin sans MFA, inactifs privilégiés, groupes orphelins)
+    entra_risks: dict = {}
+    try:
+        from entra_risk_analyzer import run_entra_risk_analyzer
+        entra_risks = run_entra_risk_analyzer(org)
+    except Exception as exc:
+        log.warning("Entra risk analyzer partiel : %s", exc)
+        entra_risks = {"warning": str(exc)}
 
     correlations = correlate_identities(org)
     optimizer    = run_m365_optimizer(org)
@@ -186,7 +195,14 @@ def m365_sync(user: CurrentUser = Depends(require_min_role("admin"))):
             "privileged_users":   entra_stats.get("privileged_users", 0),
             "service_principals": entra_stats.get("service_principals", 0),
             "groups_synced":      entra_stats.get("groups_synced", 0),
+            "groups_no_owner":    entra_stats.get("groups_no_owner", 0),
             "warning":            entra_stats.get("warning"),
+        },
+        "security_posture": {
+            "critical": entra_risks.get("critical", 0),
+            "high":     entra_risks.get("high", 0),
+            "medium":   entra_risks.get("medium", 0),
+            "total":    entra_risks.get("findings_count", 0),
         },
         "correlations": {
             "orphans": correlations.get("orphans", 0),
@@ -214,7 +230,10 @@ def entra_sync(user: CurrentUser = Depends(require_min_role("admin"))):
         raise HTTPException(400, str(exc))
     except PermissionError as exc:
         raise HTTPException(403, str(exc))
-    return {"ok": True, "entra": stats}
+
+    from entra_risk_analyzer import run_entra_risk_analyzer
+    risks = run_entra_risk_analyzer(org)
+    return {"ok": True, "entra": stats, "security_posture": risks}
 
 
 @router.post("/m365/optimize")
@@ -245,17 +264,27 @@ def m365_users(user: CurrentUser = Depends(require_min_role("admin"))):
               lu.activity_score,
               lu.tier_needed,
               lu.metrics->>'days_inactive' AS days_inactive,
+              lu.metrics->>'data_source'   AS data_source,
               lp.unit_cost_monthly  AS sku_cost,
-              i.status              AS workday_status,
-              i.identity_type
+              i.status              AS identity_status,
+              i.identity_type,
+              sp.mfa_enabled,
+              sp.mfa_method,
+              sp.privileged_access,
+              sp.risk_score         AS security_risk_score,
+              sp.risk_factors
             FROM public.identity_accounts ia
-            LEFT JOIN public.identities i          ON i.id = ia.identity_id
-            LEFT JOIN public.license_assignments la ON la.account_id = ia.id AND la.is_active = true
-            LEFT JOIN public.license_pools lp       ON lp.id = la.pool_id
-            LEFT JOIN public.license_usage lu       ON lu.assignment_id = la.id
+            LEFT JOIN public.identities i           ON i.id = ia.identity_id
+            LEFT JOIN public.license_assignments la  ON la.account_id = ia.id AND la.is_active = true
+            LEFT JOIN public.license_pools lp        ON lp.id = la.pool_id
+            LEFT JOIN public.license_usage lu        ON lu.assignment_id = la.id
+            LEFT JOIN public.security_postures sp    ON sp.identity_id = ia.identity_id
+                                                    AND sp.organization_id = ia.organization_id
             WHERE ia.organization_id = %s
               AND ia.source_connector = 'microsoft_365'
-            ORDER BY lu.activity_score ASC NULLS FIRST, ia.display_name
+            ORDER BY sp.risk_score DESC NULLS LAST,
+                     sp.privileged_access DESC NULLS LAST,
+                     ia.display_name
             LIMIT 500
             """,
             (user.organization_id,),

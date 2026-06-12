@@ -4868,10 +4868,11 @@ async function _loadM365Intelligence() {
   if (list) list.innerHTML = `<p class="muted" style="padding:12px 0">Chargement…</p>`;
 
   try {
-    // Chargement parallèle : résumé licences + TOUS les risques M365
-    const [licSummary, risks] = await Promise.all([
+    // Chargement parallèle : licences + risques + utilisateurs avec posture MFA
+    const [licSummary, risks, users] = await Promise.all([
       apiCall("/api/intelligence/m365/licenses").catch(() => ({})),
       apiCall("/api/intelligence/risks").catch(() => []),
+      apiCall("/api/intelligence/m365/users").catch(() => []),
     ]);
 
     // KPI cards — comptage depuis les vrais findings actifs uniquement
@@ -4979,6 +4980,99 @@ async function _loadM365Intelligence() {
         ${poolCards}`;
     }
 
+    // ── Posture de sécurité Entra ID ────────────────────────────────────────
+    const entraRiskTypes = ["admin_no_mfa","privileged_inactive","user_no_mfa","group_no_owner"];
+    const entraRisks  = risks.filter(r => entraRiskTypes.includes(r.finding_type));
+    const critCount   = entraRisks.filter(r => r.severity === "critical").length;
+    const highCount   = entraRisks.filter(r => r.severity === "high").length;
+    const medCount    = entraRisks.filter(r => r.severity === "medium").length;
+
+    // Table utilisateurs avec MFA
+    const m365Users = (users || []).filter(u => u.identity_type !== "group" && u.identity_type !== "service_account");
+    const userRowsHtml = m365Users.map(u => {
+      const mfa      = u.mfa_enabled;
+      const mfaHtml  = mfa === true  ? `<span style="color:#16a34a;font-weight:700">✓ Activé</span>`
+                     : mfa === false ? `<span style="color:#dc2626;font-weight:700">✗ Absent</span>`
+                     : `<span style="color:#94a3b8">—</span>`;
+      const factors  = u.risk_factors || [];
+      const roles    = factors.filter(f => f.startsWith("role:")).map(f => f.replace("role:", ""));
+      const roleHtml = roles.length ? `<span style="font-size:.75rem;background:#eff6ff;color:#1d4ed8;padding:2px 6px;border-radius:10px">${esc(roles[0])}</span>` : `<span style="color:#94a3b8">—</span>`;
+      const priv     = u.privileged_access ? `<span style="font-size:.7rem;background:#fef2f2;color:#dc2626;padding:1px 6px;border-radius:10px;font-weight:700">ADMIN</span> ` : "";
+      const score    = (u.security_risk_score || 0);
+      const scoreCol = score >= 60 ? "#dc2626" : score >= 30 ? "#d97706" : "#16a34a";
+      const days     = u.days_inactive != null ? parseInt(u.days_inactive) : null;
+      const daysHtml = days != null
+        ? `<span style="color:${days > 90 ? '#dc2626' : days > 30 ? '#d97706' : '#64748b'}">${days}j</span>`
+        : `<span style="color:#94a3b8">—</span>`;
+      return `<tr>
+        <td><strong>${esc(u.display_name || u.email)}</strong><br><span style="font-size:.74rem;color:#94a3b8">${esc(u.email)}</span></td>
+        <td>${mfaHtml}</td>
+        <td>${priv}${roleHtml}</td>
+        <td>${daysHtml}</td>
+        <td style="color:${scoreCol};font-weight:700">${score}</td>
+      </tr>`;
+    }).join("");
+
+    let postureHtml = "";
+    if (m365Users.length || entraRisks.length) {
+      const noDataNote = critCount + highCount + medCount === 0
+        ? `<p style="font-size:.82rem;color:#64748b;margin:0 0 16px">Lancez <strong>Analyser M365 + Entra</strong> pour obtenir le statut MFA réel de chaque utilisateur.</p>`
+        : "";
+
+      postureHtml = `
+      <div style="margin-bottom:28px">
+        <h4 style="margin:0 0 14px;font-size:.88rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em">Posture de sécurité Entra ID</h4>
+        ${noDataNote}
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px">
+          <div style="background:${critCount > 0 ? '#fef2f2' : '#f8fafc'};border:2px solid ${critCount > 0 ? '#dc2626' : '#e2e8f0'};border-radius:12px;padding:14px 16px;text-align:center">
+            <div style="font-size:1.8rem;font-weight:800;color:${critCount > 0 ? '#dc2626' : '#94a3b8'}">${critCount}</div>
+            <div style="font-size:.78rem;font-weight:700;color:#64748b;text-transform:uppercase">Critique</div>
+            <div style="font-size:.72rem;color:#94a3b8;margin-top:2px">Admins sans MFA</div>
+          </div>
+          <div style="background:${highCount > 0 ? '#fff7ed' : '#f8fafc'};border:2px solid ${highCount > 0 ? '#d97706' : '#e2e8f0'};border-radius:12px;padding:14px 16px;text-align:center">
+            <div style="font-size:1.8rem;font-weight:800;color:${highCount > 0 ? '#d97706' : '#94a3b8'}">${highCount}</div>
+            <div style="font-size:.78rem;font-weight:700;color:#64748b;text-transform:uppercase">Élevé</div>
+            <div style="font-size:.72rem;color:#94a3b8;margin-top:2px">Admins inactifs</div>
+          </div>
+          <div style="background:${medCount > 0 ? '#faf5ff' : '#f8fafc'};border:2px solid ${medCount > 0 ? '#7c3aed' : '#e2e8f0'};border-radius:12px;padding:14px 16px;text-align:center">
+            <div style="font-size:1.8rem;font-weight:800;color:${medCount > 0 ? '#7c3aed' : '#94a3b8'}">${medCount}</div>
+            <div style="font-size:.78rem;font-weight:700;color:#64748b;text-transform:uppercase">Moyen</div>
+            <div style="font-size:.72rem;color:#94a3b8;margin-top:2px">Sans MFA / Sans propriétaire</div>
+          </div>
+        </div>
+        ${m365Users.length ? `
+        <div style="overflow-x:auto;margin-bottom:16px">
+          <table class="data-table" style="font-size:.82rem">
+            <thead><tr>
+              <th>Utilisateur</th>
+              <th>MFA</th>
+              <th>Rôle</th>
+              <th>Inactif depuis</th>
+              <th>Score risque</th>
+            </tr></thead>
+            <tbody>${userRowsHtml}</tbody>
+          </table>
+        </div>` : ""}
+        ${entraRisks.length ? `
+        <div>
+          ${entraRisks.slice(0,10).map(r => {
+            const col = {"critical":"#dc2626","high":"#d97706","medium":"#7c3aed"}[r.severity] || "#64748b";
+            const lbl = {"critical":"CRITIQUE","high":"ÉLEVÉ","medium":"MOYEN"}[r.severity] || r.severity?.toUpperCase();
+            return `<div style="display:flex;gap:12px;padding:12px 16px;margin-bottom:8px;background:#fff;border:1.5px solid #e2e8f0;border-left:4px solid ${col};border-radius:10px">
+              <div style="flex:1">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
+                  <span style="font-size:.67rem;font-weight:800;color:${col};background:${col}18;padding:2px 7px;border-radius:20px">${lbl}</span>
+                  <strong style="font-size:.88rem;color:#1e293b">${esc(r.title)}</strong>
+                </div>
+                <p style="margin:0 0 4px;font-size:.8rem;color:#64748b">${esc(r.description || "")}</p>
+                ${r.remediation ? `<p style="margin:0;font-size:.76rem;color:#475569;background:#f8fafc;padding:5px 9px;border-radius:5px;border-left:2px solid #cbd5e1">✅ ${esc(r.remediation)}</p>` : ""}
+              </div>
+            </div>`;
+          }).join("")}
+        </div>` : ""}
+      </div>`;
+    }
+
     // Risques détectés
     const riskColors = { critical: "#dc2626", high: "#d97706", medium: "#7c3aed", low: "#64748b" };
     const riskLabels = { critical: "CRITIQUE", high: "ÉLEVÉ", medium: "MOYEN", low: "FAIBLE" };
@@ -5019,7 +5113,7 @@ async function _loadM365Intelligence() {
       risksHtml = `<p class="muted" style="text-align:center;padding:32px">Aucun risque confirmé — les données d'activité seront disponibles sous 24-48h après la création des comptes.</p>`;
     }
 
-    if (list) list.innerHTML = poolsHtml + risksHtml;
+    if (list) list.innerHTML = poolsHtml + postureHtml + risksHtml;
   } catch (e) {
     if (list) list.innerHTML = `<p class="muted" style="padding:20px">Lancez d'abord une synchronisation pour voir les données M365.</p>`;
   }

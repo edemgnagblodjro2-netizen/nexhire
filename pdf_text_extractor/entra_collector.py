@@ -72,6 +72,7 @@ def collect_entra_id(org_id: str) -> dict:
         "privileged_users":   0,
         "service_principals": 0,
         "groups_synced":      0,
+        "groups_no_owner":    0,
         "postures_updated":   0,
         "errors":             [],
     }
@@ -141,8 +142,8 @@ def collect_entra_id(org_id: str) -> dict:
     # 4. Principals de service (comptes de service / apps d'entreprise)
     _sync_service_principals(headers, org_id, stats)
 
-    # 5. Groupes de sécurité (meta seulement, pas de table dédiée pour l'instant)
-    stats["groups_synced"] = _count_security_groups(headers, stats)
+    # 5. Groupes de sécurité avec détection des propriétaires
+    _sync_security_groups(headers, org_id, stats)
 
     log.info("Entra ID sync done : %s", stats)
     return stats
@@ -337,12 +338,14 @@ def _sync_service_principals(headers: dict, org_id: str, stats: dict) -> None:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Groupes de sécurité — comptage seulement (pas de table dédiée encore)
+# Groupes de sécurité — avec détection des propriétaires
 # ─────────────────────────────────────────────────────────────────────────────
 
-def _count_security_groups(headers: dict, stats: dict) -> int:
+def _sync_security_groups(headers: dict, org_id: str, stats: dict) -> None:
     """
-    Compte les groupes de sécurité Entra. Retourne le total pour les stats.
+    Récupère les groupes de sécurité Entra ID, détecte ceux sans propriétaire
+    et les stocke dans identities (type='group') pour l'analyseur de risques.
+    Limité aux 100 premiers groupes.
     """
     try:
         r = httpx.get(
@@ -350,17 +353,102 @@ def _count_security_groups(headers: dict, stats: dict) -> int:
             headers=headers,
             params={
                 "$filter": "securityEnabled eq true",
-                "$select": "id",
-                "$top":    "1",
-                "$count":  "true",
+                "$select": "id,displayName,createdDateTime,groupTypes",
+                "$top":    "100",
             },
-            timeout=15,
+            timeout=25,
         )
         r.raise_for_status()
-        return int(r.json().get("@odata.count", 0))
+        groups = r.json().get("value", [])
     except Exception as exc:
-        log.debug("Comptage groupes inaccessible : %s", exc)
-        return 0
+        log.warning("Groupes de sécurité inaccessibles : %s", exc)
+        stats["errors"].append({"source": "security_groups", "error": str(exc)})
+        return
+
+    groups_no_owner = 0
+    for group in groups:
+        group_id   = group.get("id", "")
+        group_name = group.get("displayName") or group_id
+        created    = group.get("createdDateTime")
+
+        if not group_id:
+            continue
+
+        # Vérifie s'il y a au moins un propriétaire
+        has_owner = _group_has_owner(headers, group_id)
+
+        fake_email = f"group:{group_id}@entra.group"
+
+        # Upsert dans identities
+        try:
+            with get_db() as cur:
+                cur.execute(
+                    """
+                    INSERT INTO public.identities
+                      (organization_id, identity_type, canonical_email, full_name,
+                       status, source_of_truth, created_at, updated_at)
+                    VALUES (%s, 'group', %s, %s, 'active', 'entra_id', now(), now())
+                    ON CONFLICT (organization_id, canonical_email) DO UPDATE SET
+                      full_name       = EXCLUDED.full_name,
+                      updated_at      = now()
+                    RETURNING id
+                    """,
+                    (org_id, fake_email, group_name),
+                )
+                row = cur.fetchone()
+                if not row:
+                    cur.execute(
+                        "SELECT id FROM public.identities WHERE organization_id=%s AND canonical_email=%s",
+                        (org_id, fake_email),
+                    )
+                    row = cur.fetchone()
+                identity_id = row["id"] if row else None
+
+            if identity_id:
+                with get_db() as cur:
+                    cur.execute(
+                        """
+                        INSERT INTO public.identity_accounts
+                          (organization_id, identity_id, source_connector, external_id,
+                           external_email, display_name, status, synced_at, raw_data)
+                        VALUES (%s,%s,'entra_group',%s,%s,%s,'active',now(),%s::jsonb)
+                        ON CONFLICT (organization_id, source_connector, external_id) DO UPDATE SET
+                          display_name = EXCLUDED.display_name,
+                          synced_at    = now(),
+                          raw_data     = EXCLUDED.raw_data
+                        """,
+                        (org_id, identity_id, group_id, fake_email, group_name,
+                         json.dumps({
+                             "has_owner": has_owner,
+                             "created":   created,
+                             "group_types": group.get("groupTypes", []),
+                         })),
+                    )
+
+            if not has_owner:
+                groups_no_owner += 1
+
+        except Exception as exc:
+            log.warning("Erreur groupe %s : %s", group_name, exc)
+
+    stats["groups_synced"]    = len(groups)
+    stats["groups_no_owner"]  = groups_no_owner
+    log.info("Groupes Entra : %d total, %d sans propriétaire", len(groups), groups_no_owner)
+
+
+def _group_has_owner(headers: dict, group_id: str) -> bool:
+    """Vérifie si un groupe a au moins un propriétaire."""
+    try:
+        r = httpx.get(
+            f"{GRAPH}/groups/{group_id}/owners",
+            headers=headers,
+            params={"$select": "id", "$top": "1"},
+            timeout=10,
+        )
+        r.raise_for_status()
+        return len(r.json().get("value", [])) > 0
+    except Exception:
+        return True  # En cas d'erreur, on suppose qu'il y a un propriétaire
 
 
 # ─────────────────────────────────────────────────────────────────────────────
