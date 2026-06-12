@@ -4832,12 +4832,21 @@ async function runM365Sync() {
   const btn = $("m365-sync-btn");
   if (btn) { btn.disabled = true; btn.textContent = "Analyse en cours…"; }
   try {
-    await apiCall("/api/intelligence/m365/sync", "POST");
+    const res = await apiCall("/api/intelligence/m365/sync", "POST");
+    const collected = res.collected || {};
+    const entra     = res.entra || {};
+    const parts = [];
+    if (collected.users) parts.push(`${collected.users} utilisateurs M365`);
+    if (entra.postures_updated) parts.push(`${entra.postures_updated} postures MFA`);
+    if (entra.privileged_users) parts.push(`${entra.privileged_users} admin(s) détectés`);
+    if (entra.service_principals) parts.push(`${entra.service_principals} apps de service`);
+    if (entra.warning) showToast(`Entra ID partiel : ${entra.warning}`, "warning");
+    else if (parts.length) showToast(`Synchronisé — ${parts.join(", ")}`, "success");
     await _loadM365Intelligence();
   } catch (e) {
     showToast("Erreur lors de l'analyse M365. Vérifiez la connexion.", "error");
   } finally {
-    if (btn) { btn.disabled = false; btn.textContent = "Analyser M365"; }
+    if (btn) { btn.disabled = false; btn.textContent = "Analyser M365 + Entra"; }
   }
 }
 

@@ -649,14 +649,17 @@ def collect_all_m365(org_id: str) -> dict:
             days_inactive = usage_row["days_inactive"]
             last_active   = usage_row["last_activity"]
             apps          = usage_row["apps"]
+            data_source   = "report"   # données réelles Graph Reports
         elif days_since_signin is not None:
             days_inactive = days_since_signin
             last_active   = last_sign_in_str
+            data_source   = "signin"   # données réelles signInActivity
         else:
             # Compte sans activité connue — utilise la date de création
             created_str  = u.get("createdDateTime")
             created_date = _parse_date(created_str) if created_str else None
             days_inactive = (date.today() - created_date).days if created_date else 0
+            data_source   = "created_date"  # aucune donnée d'activité — ne pas recommander suppression
 
         # 4b. Compte M365
         account_id = _upsert_account(
@@ -710,11 +713,12 @@ def collect_all_m365(org_id: str) -> dict:
                     assignment_id=assign_id,
                     metrics={
                         **apps,
-                        "days_inactive":  days_inactive,
-                        "last_activity":  last_active,
-                        "sign_in_days":   days_since_signin,
+                        "days_inactive":   days_inactive,
+                        "last_activity":   last_active,
+                        "sign_in_days":    days_since_signin,
                         "account_enabled": enabled,
-                        "sku":            sku_name,
+                        "sku":             sku_name,
+                        "data_source":     data_source,
                     },
                     score=score,
                     tier=tier,

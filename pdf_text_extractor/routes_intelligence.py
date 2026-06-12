@@ -1,11 +1,15 @@
 """API Intelligence organisationnelle — identités, corrélations, risques, M365."""
 from __future__ import annotations
 
+import logging
+
 from fastapi import APIRouter, Depends, HTTPException
 
 from auth import CurrentUser
 from db import get_db, rows as db_rows
 from rbac import require_min_role
+
+log = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/intelligence", tags=["intelligence"])
 
@@ -161,12 +165,29 @@ def m365_sync(user: CurrentUser = Depends(require_min_role("admin"))):
     except PermissionError as exc:
         raise HTTPException(403, f"Permission Microsoft Graph insuffisante. Reconnectez le connecteur M365 et accordez le consentement admin. Détail : {exc}")
 
+    # Entra ID — MFA réel + rôles admin + principals de service
+    entra_stats: dict = {}
+    try:
+        from entra_collector import collect_entra_id
+        entra_stats = collect_entra_id(org)
+    except Exception as exc:
+        log.warning("Entra ID sync partiel : %s", exc)
+        entra_stats = {"warning": str(exc)}
+
     correlations = correlate_identities(org)
     optimizer    = run_m365_optimizer(org)
 
     return {
         "ok":         True,
         "collected":  collected,
+        "entra": {
+            "postures_updated":   entra_stats.get("postures_updated", 0),
+            "mfa_enrolled":       entra_stats.get("mfa_enrolled", 0),
+            "privileged_users":   entra_stats.get("privileged_users", 0),
+            "service_principals": entra_stats.get("service_principals", 0),
+            "groups_synced":      entra_stats.get("groups_synced", 0),
+            "warning":            entra_stats.get("warning"),
+        },
         "correlations": {
             "orphans": correlations.get("orphans", 0),
             "ghosts":  correlations.get("ghosts", 0),
@@ -177,6 +198,23 @@ def m365_sync(user: CurrentUser = Depends(require_min_role("admin"))):
             "count":   optimizer["findings_count"],
         },
     }
+
+
+@router.post("/entra/sync")
+def entra_sync(user: CurrentUser = Depends(require_min_role("admin"))):
+    """
+    Synchronise uniquement les données Entra ID (MFA, rôles, principals).
+    Requiert le connecteur M365 configuré. Admin+.
+    """
+    from entra_collector import collect_entra_id
+    org = user.organization_id
+    try:
+        stats = collect_entra_id(org)
+    except RuntimeError as exc:
+        raise HTTPException(400, str(exc))
+    except PermissionError as exc:
+        raise HTTPException(403, str(exc))
+    return {"ok": True, "entra": stats}
 
 
 @router.post("/m365/optimize")

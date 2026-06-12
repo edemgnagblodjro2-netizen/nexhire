@@ -83,6 +83,7 @@ def _rule_unused_licenses(org_id: str) -> list[dict]:
                   la.sku_name,
                   lu.activity_score,
                   lu.metrics->>'days_inactive' AS days_inactive,
+                  lu.metrics->>'data_source'   AS data_source,
                   lp.unit_cost_monthly AS sku_cost
                 FROM public.license_usage lu
                 JOIN public.license_assignments la ON la.id = lu.assignment_id
@@ -93,6 +94,7 @@ def _rule_unused_licenses(org_id: str) -> list[dict]:
                   AND la.is_active = true
                   AND lu.activity_score = 0
                   AND (lu.metrics->>'days_inactive')::int > 90
+                  AND COALESCE(lu.metrics->>'data_source', 'report') != 'created_date'
                 ORDER BY sku_cost DESC
                 """,
                 (org_id,),
@@ -106,6 +108,9 @@ def _rule_unused_licenses(org_id: str) -> list[dict]:
         cost    = float(r.get("sku_cost") or _SKU_COST.get(r["sku_name"], 22))
         savings = cost  # économie = coût total de la licence
 
+        days_str   = r.get("days_inactive", "> 90")
+        source_map = {"report": "rapport d'usage Graph", "signin": "historique de connexion"}
+        source_lbl = source_map.get(r.get("data_source", "report"), "données Graph")
         _upsert_risk_finding(
             org_id=org_id,
             finding_type="unused_license",
@@ -114,7 +119,7 @@ def _rule_unused_licenses(org_id: str) -> list[dict]:
             description=(
                 f"Licence {r['sku_name']} ({cost:.0f} $/mois) assignée à "
                 f"{r['display_name'] or r['email']} sans aucune activité depuis "
-                f"{r.get('days_inactive', '> 90')} jours."
+                f"{days_str} jours (source : {source_lbl})."
             ),
             cost_impact_monthly=savings,
             remediation=f"Révoquer la licence {r['sku_name']} de {r['email']} et récupérer la licence.",
@@ -126,7 +131,7 @@ def _rule_unused_licenses(org_id: str) -> list[dict]:
             "current_sku":    r["sku_name"],
             "suggested_sku":  None,
             "savings_monthly": savings,
-            "reason":         f"Inactif depuis {r.get('days_inactive','90+')} jours",
+            "reason":         f"Inactif depuis {days_str} jours ({source_lbl})",
         })
     return findings
 
