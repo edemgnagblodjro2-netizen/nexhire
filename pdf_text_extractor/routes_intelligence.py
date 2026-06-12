@@ -138,8 +138,44 @@ def resolve_risk(risk_id: str, user: CurrentUser = Depends(require_min_role("adm
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# M365 License Optimizer
+# M365 — sync réel + optimiseur
 # ─────────────────────────────────────────────────────────────────────────────
+
+@router.post("/m365/sync")
+def m365_sync(user: CurrentUser = Depends(require_min_role("admin"))):
+    """
+    Collecte les données Microsoft 365 réelles via Graph API,
+    puis recalcule les corrélations et les optimisations de licences.
+    Nécessite le connecteur M365 configuré (OAuth). Admin+.
+    """
+    from m365_collector import collect_all_m365
+    from correlation_engine import correlate_identities
+    from m365_license_optimizer import run_m365_optimizer
+
+    org = user.organization_id
+
+    try:
+        collected = collect_all_m365(org)
+    except RuntimeError as exc:
+        raise HTTPException(400, str(exc))
+
+    correlations = correlate_identities(org)
+    optimizer    = run_m365_optimizer(org)
+
+    return {
+        "ok":         True,
+        "collected":  collected,
+        "correlations": {
+            "orphans": correlations.get("orphans", 0),
+            "ghosts":  correlations.get("ghosts", 0),
+        },
+        "savings": {
+            "monthly": optimizer["total_savings_monthly"],
+            "annual":  optimizer["total_savings_annual"],
+            "count":   optimizer["findings_count"],
+        },
+    }
+
 
 @router.post("/m365/optimize")
 def m365_optimize(user: CurrentUser = Depends(require_min_role("admin"))):

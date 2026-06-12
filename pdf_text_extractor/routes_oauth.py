@@ -35,11 +35,20 @@ _OAUTH_CFG: dict[str, dict] = {
     "microsoft_365": {
         "auth_url":    "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
         "token_url":   "https://login.microsoftonline.com/common/oauth2/v2.0/token",
-        "scopes":      "openid profile email offline_access Mail.Read Files.Read.All "
-                       "Sites.Read.All Calendars.Read Chat.Read User.Read",
+        # Scopes délégués — admin consent requis pour les scopes *.All
+        # Mail/Files/Calendar/Chat : recherche agent pour l'utilisateur connecté
+        # User.Read.All / Directory.Read.All : collecteur identités & licences tenant-wide
+        # Reports.Read.All : rapport d'utilisation M365 30j (activity score)
+        # UserAuthenticationMethod.Read.All : statut MFA (beta endpoint)
+        # AuditLog.Read.All : signInActivity (Entra ID P1/P2 — graceful fallback si absent)
+        "scopes":      "openid profile email offline_access "
+                       "Mail.Read Files.Read.All Sites.Read.All Calendars.Read Chat.Read "
+                       "User.Read User.Read.All Directory.Read.All "
+                       "Reports.Read.All UserAuthenticationMethod.Read.All AuditLog.Read.All",
         "client_id_env":     "M365_CLIENT_ID",
         "client_secret_env": "M365_CLIENT_SECRET",
         "redirect_uri_env":  "M365_REDIRECT_URI",
+        "extra_params": {"prompt": "consent"},  # force le consentement admin à chaque connexion
     },
     "salesforce": {
         "auth_url":   "https://login.salesforce.com/services/oauth2/authorize",

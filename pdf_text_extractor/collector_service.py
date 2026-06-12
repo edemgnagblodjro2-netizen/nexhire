@@ -396,36 +396,8 @@ def _compute_m365_score(features: list[str], days_inactive: int, sku: str) -> tu
 
 
 def _fetch_m365(org_id: str) -> list[tuple]:
-    """Retourne les données M365 (réelles ou démo)."""
-    try:
-        from m365_service import _load_tokens, _refresh_if_needed
-        import httpx
-        tokens, cid = _load_tokens(org_id)
-        if not tokens:
-            return _DEMO_M365
-
-        tokens = _refresh_if_needed(tokens, cid)
-        headers = {"Authorization": f"Bearer {tokens['access_token']}"}
-        r = httpx.get(
-            "https://graph.microsoft.com/v1.0/users",
-            headers=headers,
-            params={"$select": "id,displayName,userPrincipalName,department,accountEnabled,assignedLicenses",
-                    "$top": 500},
-            timeout=15,
-        )
-        r.raise_for_status()
-        result = []
-        for u in r.json().get("value", []):
-            skus = [lic.get("skuId", "") for lic in (u.get("assignedLicenses") or [])]
-            sku  = "E3"  # simplification — à enrichir avec SKU mapping réel
-            result.append((
-                u.get("userPrincipalName"), u.get("displayName"),
-                u.get("department"), u.get("accountEnabled", True),
-                sku, 22, 0, ["exchange"],
-            ))
-        return result or _DEMO_M365
-    except Exception:
-        return _DEMO_M365
+    """Retourne uniquement les données démo M365 (fallback)."""
+    return _DEMO_M365
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -507,8 +479,16 @@ def _resolve_identity_id(org_id: str, email: str) -> str | None:
 
 def collect_all(org_id: str) -> dict:
     """Lance la collecte complète pour tous les connecteurs."""
+    # Microsoft 365 : connecteur réel si configuré, sinon démo
+    try:
+        from m365_collector import collect_all_m365
+        m365_stats = collect_all_m365(org_id)
+        m365_count = m365_stats.get("users", 0)
+    except RuntimeError:
+        m365_count = collect_microsoft_365(org_id)
+
     return {
         "workday":       collect_workday(org_id),
-        "microsoft_365": collect_microsoft_365(org_id),
+        "microsoft_365": m365_count,
         "jira":          collect_jira(org_id),
     }

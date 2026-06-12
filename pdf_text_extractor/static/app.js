@@ -14,6 +14,21 @@ const state = {
 // ── Helpers globaux ────────────────────────────────────────────────────────
 const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 
+const fmtCAD = v => (v || 0).toLocaleString("fr-CA", { style: "currency", currency: "CAD", maximumFractionDigits: 0 });
+const fmtPct = v => `${(v || 0).toFixed(1)} %`;
+
+function showToast(msg, type = "info") {
+  const colors = { success: "#16a34a", error: "#dc2626", info: "#2563eb", warning: "#d97706" };
+  const t = document.createElement("div");
+  t.textContent = msg;
+  t.style.cssText = `position:fixed;bottom:24px;right:24px;z-index:9999;padding:12px 20px;
+    border-radius:10px;background:${colors[type] || colors.info};color:#fff;
+    font-size:.88rem;font-weight:600;box-shadow:0 4px 16px rgba(0,0,0,.18);
+    animation:fadeIn .2s ease;max-width:360px;line-height:1.4`;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3500);
+}
+
 // ── i18n ───────────────────────────────────────────────────────────────────
 const T = {
   fr: {
@@ -1706,8 +1721,6 @@ async function loadExecutiveDashboard() {
   const lang = state.lang || "fr";
 
   // ── Score Santé Organisationnelle ────────────────────────────────────────
-  const fmtCAD = v => (v || 0).toLocaleString("fr-CA", { style: "currency", currency: "CAD", maximumFractionDigits: 0 });
-  const fmtPct = v => `${(v || 0).toFixed(1)} %`;
 
   const orgScore = data.org_score || 0;
   const orgBadge = data.org_badge || "red";
@@ -4819,7 +4832,7 @@ async function runM365Sync() {
   const btn = $("m365-sync-btn");
   if (btn) { btn.disabled = true; btn.textContent = "Analyse en cours…"; }
   try {
-    await apiCall("/api/intelligence/sync", "POST");
+    await apiCall("/api/intelligence/m365/sync", "POST");
     await _loadM365Intelligence();
   } catch (e) {
     showToast("Erreur lors de l'analyse M365. Vérifiez la connexion.", "error");
