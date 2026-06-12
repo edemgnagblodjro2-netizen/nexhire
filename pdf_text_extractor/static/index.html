@@ -2194,13 +2194,13 @@
       <!-- Sub-nav -->
       <div class="parc-tabs" role="tablist">
         <button class="parc-tab-btn active" data-optim="dashboard"  onclick="switchOptimTab('dashboard')"  data-i18n="optim.tab.dashboard">Tableau de bord</button>
+        <button class="parc-tab-btn"        data-optim="m365"       onclick="switchOptimTab('m365')"       >Microsoft 365</button>
+        <button class="parc-tab-btn"        data-optim="identities" onclick="switchOptimTab('identities')" >Identités &amp; Accès</button>
         <button class="parc-tab-btn"        data-optim="licenses"   onclick="switchOptimTab('licenses')"   data-i18n="optim.tab.licenses">Licences inutilisées</button>
         <button class="parc-tab-btn"        data-optim="duplicates" onclick="switchOptimTab('duplicates')" data-i18n="optim.tab.duplicates">Outils en doublon</button>
         <button class="parc-tab-btn"        data-optim="contracts"  onclick="switchOptimTab('contracts')"  data-i18n="optim.tab.contracts">Contrats</button>
         <button class="parc-tab-btn"        data-optim="processes"  onclick="switchOptimTab('processes')"  data-i18n="optim.tab.processes">Processus RH</button>
-        <button class="parc-tab-btn"        data-optim="aiplan"          onclick="switchOptimTab('aiplan')"          data-i18n="optim.tab.aiplan">Plan IA</button>
         <button class="parc-tab-btn"        data-optim="recommandations" onclick="switchOptimTab('recommandations')" >Recommandations</button>
-        <button class="parc-tab-btn"        data-optim="previsions"      onclick="switchOptimTab('previsions')"      >Prévisions</button>
       </div>
 
       <!-- Dashboard -->
@@ -2273,6 +2273,52 @@
           <button class="btn btn-primary btn-sm" onclick="openProcessModal()" data-i18n="optim.proc.add">+ Processus</button>
         </div>
         <div id="processes-table-wrap"><p class="muted" data-i18n="loading">Chargement…</p></div>
+      </div>
+
+      <!-- Microsoft 365 Optimizer -->
+      <div id="optim-m365" class="parc-content hidden">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:12px">
+          <div>
+            <h3 style="margin:0 0 4px;font-size:1rem;font-weight:700;color:var(--navy)">Optimisation des licences Microsoft 365</h3>
+            <p style="margin:0;font-size:.84rem;color:#64748b">Détection automatique des licences inutilisées, surdimensionnées et des comptes orphelins.</p>
+          </div>
+          <button class="btn btn-primary btn-sm admin-only hidden" onclick="runM365Sync()" id="m365-sync-btn">Analyser M365</button>
+        </div>
+
+        <!-- KPI cards -->
+        <div id="m365-kpi-cards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:24px">
+          <div class="stat-card" style="border-left:4px solid #dc2626">
+            <div class="stat-num" id="m365-kpi-orphans">—</div>
+            <div class="stat-label">Comptes orphelins</div>
+          </div>
+          <div class="stat-card" style="border-left:4px solid #d97706">
+            <div class="stat-num" id="m365-kpi-unused">—</div>
+            <div class="stat-label">Licences inactives (&gt;90j)</div>
+          </div>
+          <div class="stat-card" style="border-left:4px solid #7c3aed">
+            <div class="stat-num" id="m365-kpi-oversized">—</div>
+            <div class="stat-label">Licences surdimensionnées</div>
+          </div>
+          <div class="stat-card" style="border-left:4px solid #16a34a">
+            <div class="stat-num" id="m365-kpi-savings" style="color:#16a34a">—</div>
+            <div class="stat-label">Économies / mois</div>
+          </div>
+        </div>
+
+        <!-- Détail par règle -->
+        <div id="m365-findings-list"></div>
+      </div>
+
+      <!-- Identités & Accès -->
+      <div id="optim-identities" class="parc-content hidden">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:12px">
+          <div>
+            <h3 style="margin:0 0 4px;font-size:1rem;font-weight:700;color:var(--navy)">Gouvernance des identités</h3>
+            <p style="margin:0;font-size:.84rem;color:#64748b">Corrélation cross-connecteurs — qui a accès à quoi dans tous vos systèmes.</p>
+          </div>
+          <button class="btn btn-primary btn-sm admin-only hidden" onclick="runIntelligenceSync()" id="intelligence-sync-btn">Synchroniser</button>
+        </div>
+        <div id="identities-risk-list"></div>
       </div>
 
       <!-- Recommandations IA -->

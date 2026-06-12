@@ -1,8 +1,10 @@
 """
-Moteur de corrélation cross-connecteurs.
-Regroupe les entités 'person' par email et détecte les anomalies d'identité :
-- Compte orphelin : inactif dans Workday (RH) mais encore actif dans M365/Jira
-- Compte fantôme  : actif dans des apps métier mais introuvable dans Workday
+Moteur de corrélation cross-connecteurs — modèle universel.
+Analyse les identity_accounts pour détecter :
+- Comptes orphelins : terminé dans Workday, encore actif ailleurs
+- Comptes fantômes  : actif dans des apps, absent de Workday
+- Licences orphelines : licence active pour une identité terminée
+Met à jour le statut des comptes et crée des risk_findings.
 """
 from __future__ import annotations
 
@@ -12,139 +14,165 @@ from db import get_db, rows as db_rows
 
 def correlate_identities(org_id: str) -> dict:
     """
-    Crée ou met à jour les lignes entity_correlations et risk_findings
-    pour toutes les identités de l'organisation.
+    Compare le statut Workday (RH, source de vérité) avec les comptes
+    dans chaque autre système. Génère risk_findings pour chaque anomalie.
     """
-    # Charge toutes les entités person avec un email
+    # Charge toutes les identités (source Workday)
     with get_db() as cur:
         cur.execute(
             """
-            SELECT id, source_connector, email, display_name,
-                   department_name, data, cost_monthly, status
-            FROM public.entities
-            WHERE organization_id = %s
-              AND entity_type = 'person'
-              AND email IS NOT NULL
-            ORDER BY email, source_connector
+            SELECT id, canonical_email, full_name, status
+            FROM public.identities
+            WHERE organization_id = %s AND source_of_truth = 'workday'
             """,
             (org_id,),
         )
-        entities = db_rows(cur)
+        identities = {str(r["id"]): dict(r) for r in cur.fetchall()}
 
-    # Groupe par email normalisé
-    by_email: dict[str, list[dict]] = {}
-    for e in entities:
-        key = (e["email"] or "").lower().strip()
-        if key:
-            by_email.setdefault(key, []).append(e)
+    # Charge tous les comptes non-Workday
+    with get_db() as cur:
+        cur.execute(
+            """
+            SELECT ia.id, ia.identity_id, ia.source_connector,
+                   ia.external_id, ia.external_email, ia.display_name, ia.status,
+                   i.status AS workday_status, i.full_name AS workday_name,
+                   i.canonical_email
+            FROM public.identity_accounts ia
+            LEFT JOIN public.identities i ON i.id = ia.identity_id
+            WHERE ia.organization_id = %s
+              AND ia.source_connector != 'workday'
+              AND ia.status = 'active'
+            """,
+            (org_id,),
+        )
+        accounts = db_rows(cur)
 
-    correlations_created = 0
-    risks_detected = 0
+    # Charge tous les comptes actifs M365 sans identité liée
+    with get_db() as cur:
+        cur.execute(
+            """
+            SELECT ia.id, ia.external_email, ia.display_name, ia.source_connector
+            FROM public.identity_accounts ia
+            WHERE ia.organization_id = %s
+              AND ia.identity_id IS NULL
+              AND ia.status = 'active'
+            """,
+            (org_id,),
+        )
+        unlinked = db_rows(cur)
 
-    for email, group in by_email.items():
-        connectors_present = sorted({e["source_connector"] for e in group})
+    orphans_found = 0
+    ghosts_found  = 0
 
-        # Workday est la source de vérité RH
-        wd_entries = [e for e in group if e["source_connector"] == "workday"]
-        m365_entries = [e for e in group if e["source_connector"] == "microsoft_365"]
-        jira_entries = [e for e in group if e["source_connector"] == "jira"]
-
-        wd_active   = any(e["status"] == "active"   for e in wd_entries)
-        wd_inactive = any(e["status"] == "inactive" for e in wd_entries)
-        wd_absent   = len(wd_entries) == 0
-        m365_active = any(e["status"] == "active"   for e in m365_entries)
-        jira_active = any(e["status"] == "active"   for e in jira_entries)
-
-        cost_monthly = sum(float(e["cost_monthly"] or 0) for e in group)
-        display_name = next((e["display_name"] for e in group if e["display_name"]), email)
-
-        status     = "normal"
-        risk_level = "low"
-        risk_reason: str | None = None
-
-        if wd_inactive and (m365_active or jira_active):
-            active_in = []
-            if m365_active: active_in.append("Microsoft 365")
-            if jira_active: active_in.append("Jira")
-            status      = "orphan"
-            risk_level  = "critical"
-            risk_reason = (
-                f"Employé marqué inactif dans Workday mais encore actif dans : "
-                f"{', '.join(active_in)}. Les accès n'ont pas été révoqués."
-            )
-
-        elif wd_absent and (m365_active or jira_active):
-            apps = []
-            if m365_active: apps.append("Microsoft 365")
-            if jira_active: apps.append("Jira")
-            status      = "ghost"
-            risk_level  = "high"
-            risk_reason = (
-                f"Utilisateur actif dans {', '.join(apps)} "
-                f"mais introuvable dans Workday. Compte non référencé RH."
-            )
-
-        entity_ids = [str(e["id"]) for e in group]
-
-        with get_db() as cur:
-            cur.execute(
-                """
-                INSERT INTO public.entity_correlations
-                  (organization_id, correlation_key, entity_ids, connectors_present,
-                   status, risk_level, risk_reason, cost_impact_monthly, updated_at)
-                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,now())
-                ON CONFLICT (organization_id, correlation_key)
-                DO UPDATE SET
-                  entity_ids          = EXCLUDED.entity_ids,
-                  connectors_present  = EXCLUDED.connectors_present,
-                  status              = EXCLUDED.status,
-                  risk_level          = EXCLUDED.risk_level,
-                  risk_reason         = EXCLUDED.risk_reason,
-                  cost_impact_monthly = EXCLUDED.cost_impact_monthly,
-                  updated_at          = now()
-                """,
-                (
-                    org_id, email, entity_ids, connectors_present,
-                    status, risk_level, risk_reason, cost_monthly,
+    # Règle 1 : compte orphelin (employé terminé mais accès non révoqués)
+    for acct in accounts:
+        wd_status = acct.get("workday_status")
+        if wd_status in ("terminated", "inactive") and acct["status"] == "active":
+            _flag_account(org_id, acct["id"], "orphan")
+            _create_risk(
+                org_id=org_id,
+                finding_type="orphan_account",
+                severity="critical",
+                title=f"Compte orphelin — {acct['display_name'] or acct['external_email']}",
+                description=(
+                    f"{acct['workday_name'] or acct['display_name']} est marqué "
+                    f"{'terminé' if wd_status == 'terminated' else 'inactif'} dans Workday "
+                    f"mais son compte {acct['source_connector'].replace('_', ' ').title()} "
+                    f"est toujours actif."
+                ),
+                entity_ref={
+                    "email":     acct["canonical_email"] or acct["external_email"],
+                    "name":      acct["workday_name"] or acct["display_name"],
+                    "connector": acct["source_connector"],
+                },
+                cost_impact_monthly=_license_cost(org_id, acct["id"]),
+                remediation=(
+                    f"Révoquer immédiatement l'accès de "
+                    f"{acct['workday_name'] or acct['display_name']} "
+                    f"dans {acct['source_connector']} et désactiver la licence associée."
                 ),
             )
-        correlations_created += 1
+            orphans_found += 1
 
-        if status in ("orphan", "ghost"):
-            risks_detected += 1
-            _upsert_identity_risk(org_id, status, display_name, email, cost_monthly, risk_reason)
+    # Règle 2 : compte fantôme (actif dans un système, pas dans Workday)
+    for acct in unlinked:
+        email = acct.get("external_email", "").lower()
+        if not email:
+            continue
+        # Vérifier que cette personne n'est vraiment pas dans Workday
+        with get_db() as cur:
+            cur.execute(
+                "SELECT id FROM public.identities WHERE organization_id=%s AND canonical_email=%s",
+                (org_id, email),
+            )
+            if cur.fetchone():
+                continue   # existe dans Workday, juste non liée → OK
+
+        _flag_account(org_id, acct["id"], "ghost")
+        _create_risk(
+            org_id=org_id,
+            finding_type="ghost_license",
+            severity="high",
+            title=f"Compte fantôme — {acct['display_name'] or email}",
+            description=(
+                f"L'utilisateur {acct['display_name'] or email} est actif dans "
+                f"{acct['source_connector'].replace('_', ' ').title()} "
+                f"mais introuvable dans Workday. Compte non référencé RH."
+            ),
+            entity_ref={"email": email, "name": acct["display_name"], "connector": acct["source_connector"]},
+            cost_impact_monthly=_license_cost(org_id, acct["id"]),
+            remediation=(
+                f"Vérifier si {acct['display_name'] or email} est un employé actif. "
+                f"Si non, supprimer le compte et annuler les licences."
+            ),
+        )
+        ghosts_found += 1
 
     return {
-        "correlations": correlations_created,
-        "risks_detected": risks_detected,
+        "correlations": len(accounts) + len(unlinked),
+        "orphans":       orphans_found,
+        "ghosts":        ghosts_found,
+        "risks_detected": orphans_found + ghosts_found,
     }
 
 
-def _upsert_identity_risk(
-    org_id: str,
-    status: str,
-    display_name: str,
-    email: str,
-    cost_monthly: float,
-    risk_reason: str | None,
-) -> None:
-    if status == "orphan":
-        finding_type = "orphan_account"
-        severity     = "critical"
-        title        = f"Compte orphelin — {display_name}"
-        remediation  = (
-            f"Révoquer immédiatement les accès de {display_name} ({email}) "
-            f"dans tous les systèmes actifs et archiver le compte."
-        )
-    else:
-        finding_type = "ghost_license"
-        severity     = "high"
-        title        = f"Compte fantôme — {display_name}"
-        remediation  = (
-            f"Vérifier si {display_name} ({email}) est un employé actif. "
-            f"Si non, supprimer le compte et annuler les licences associées."
+def _flag_account(org_id: str, account_id: str, new_status: str) -> None:
+    with get_db() as cur:
+        cur.execute(
+            "UPDATE public.identity_accounts SET status=%s WHERE id=%s AND organization_id=%s",
+            (new_status, account_id, org_id),
         )
 
+
+def _license_cost(org_id: str, account_id: str) -> float:
+    """Retourne le coût mensuel des licences actives pour ce compte."""
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """
+                SELECT COALESCE(SUM(lp.unit_cost_monthly), 0) AS total
+                FROM public.license_assignments la
+                JOIN public.license_pools lp ON lp.id = la.pool_id
+                WHERE la.account_id = %s AND la.is_active = true
+                """,
+                (account_id,),
+            )
+            r = cur.fetchone()
+        return float(r["total"]) if r else 0
+    except Exception:
+        return 0
+
+
+def _create_risk(
+    org_id: str,
+    finding_type: str,
+    severity: str,
+    title: str,
+    description: str,
+    entity_ref: dict,
+    cost_impact_monthly: float,
+    remediation: str,
+) -> None:
     with get_db() as cur:
         cur.execute(
             """
@@ -161,8 +189,7 @@ def _upsert_identity_risk(
               is_acknowledged     = false
             """,
             (
-                org_id, finding_type, severity, title, risk_reason,
-                json.dumps({"email": email, "name": display_name}),
-                cost_monthly, remediation,
+                org_id, finding_type, severity, title, description,
+                json.dumps(entity_ref), cost_impact_monthly, remediation,
             ),
         )

@@ -4519,6 +4519,11 @@ function _fmt(v) {
   return Number(v).toLocaleString("fr-CA", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
+function _setText(id, val) {
+  const el = $(id);
+  if (el) el.textContent = val ?? "—";
+}
+
 // ═══════════════════════════════════════════════════════════════════════════
 // TYPE D'ORGANISATION & INITIALISATION DÉPARTEMENTS
 // ═══════════════════════════════════════════════════════════════════════════
@@ -4665,13 +4670,14 @@ async function loadOptimization() {
 }
 
 function _loadOptimSection(name) {
-  if (name === "dashboard")      _loadOptimDashboard();
-  if (name === "licenses")       _loadUnusedLicenses();
-  if (name === "duplicates")     _loadDuplicateTools();
-  if (name === "contracts")    { _populateContractCatSelects(_activeDeptType()); loadContracts(); }
-  if (name === "processes")      loadProcesses();
+  if (name === "dashboard")       _loadOptimDashboard();
+  if (name === "m365")            _loadM365Intelligence();
+  if (name === "identities")      _loadIdentitiesRisks();
+  if (name === "licenses")        _loadUnusedLicenses();
+  if (name === "duplicates")      _loadDuplicateTools();
+  if (name === "contracts")     { _populateContractCatSelects(_activeDeptType()); loadContracts(); }
+  if (name === "processes")       loadProcesses();
   if (name === "recommandations") _loadRecommendations();
-  if (name === "previsions")     _loadPredictions();
 }
 
 function _activeDeptType() {
@@ -4750,7 +4756,54 @@ async function _loadOptimDashboard() {
         }).join("");
       }
     }
+
+
+    // Bandeau intelligence — économies AgentHub (risques détectés)
+    _loadIntelligenceBanner();
   } catch (e) { console.error(e); }
+}
+
+async function _loadIntelligenceBanner() {
+  try {
+    const savings = await apiCall("/api/intelligence/savings").catch(() => null);
+    if (!savings || savings.total_monthly <= 0) return;
+
+    const wrap = $("optim-top-opps");
+    if (!wrap) return;
+
+    const severityColor = { orphan_account:"#dc2626", ghost_license:"#d97706",
+      unused_license:"#7c3aed", budget_overspend:"#ea580c",
+      contract_expiry:"#0891b2", duplicate_tool:"#7c3aed" };
+    const typeLabel = {
+      orphan_account:  "🔴 Comptes orphelins",
+      ghost_license:   "🟠 Comptes fantômes",
+      unused_license:  "🟣 Licences inutilisées",
+      budget_overspend:"🟠 Dépassements budget",
+      contract_expiry: "🔵 Contrats expirants",
+      duplicate_tool:  "🟡 Outils en doublon",
+    };
+
+    const banner = document.createElement("div");
+    banner.style.cssText = "margin-bottom:16px;padding:16px 20px;background:linear-gradient(135deg,#0f172a,#1e3a5f);border-radius:14px;color:#fff";
+    banner.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+        <div>
+          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;margin-bottom:4px">Intelligence AgentHub</div>
+          <div style="font-size:1.5rem;font-weight:900;color:#4ade80">${_fmt(savings.total_monthly)} $/mois</div>
+          <div style="font-size:.82rem;color:#cbd5e1">d'économies potentielles identifiées — soit <strong style="color:#fbbf24">${_fmt(savings.total_annual)} $/an</strong></div>
+        </div>
+        <button class="btn btn-sm" onclick="switchOptimTab('m365')"
+          style="background:#4ade80;color:#0f172a;font-weight:700;border:none">Voir les détails →</button>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px">
+        ${(savings.by_type || []).map(t => `
+          <div style="background:rgba(255,255,255,.08);border-radius:8px;padding:8px 14px;min-width:140px">
+            <div style="font-size:.78rem;color:#94a3b8">${typeLabel[t.finding_type] || t.finding_type}</div>
+            <div style="font-size:1rem;font-weight:700;color:#fff">${t.count} cas — ${_fmt(t.monthly)} $/mo</div>
+          </div>`).join("")}
+      </div>`;
+    wrap.insertAdjacentElement("beforebegin", banner);
+  } catch (_) {}
 }
 
 function _setScoreDim(id, val, lblId) {
@@ -4758,6 +4811,208 @@ function _setScoreDim(id, val, lblId) {
   if (bar) bar.style.width = val + "%";
   const lbl = $(lblId);
   if (lbl) lbl.textContent = val.toFixed(0) + "%";
+}
+
+// ── Intelligence : M365 License Optimizer ────────────────────────────────────
+
+async function runM365Sync() {
+  const btn = $("m365-sync-btn");
+  if (btn) { btn.disabled = true; btn.textContent = "Analyse en cours…"; }
+  try {
+    await apiCall("/api/intelligence/sync", "POST");
+    await _loadM365Intelligence();
+  } catch (e) {
+    showToast("Erreur lors de l'analyse M365. Vérifiez la connexion.", "error");
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = "Analyser M365"; }
+  }
+}
+
+async function runIntelligenceSync() {
+  const btn = $("intelligence-sync-btn");
+  if (btn) { btn.disabled = true; btn.textContent = "Synchronisation…"; }
+  try {
+    await apiCall("/api/intelligence/sync", "POST");
+    await _loadIdentitiesRisks();
+  } catch (e) {
+    showToast("Erreur lors de la synchronisation.", "error");
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = "Synchroniser"; }
+  }
+}
+
+async function _loadM365Intelligence() {
+  const list = $("m365-findings-list");
+  if (list) list.innerHTML = `<p class="muted" style="padding:12px 0">Chargement…</p>`;
+
+  try {
+    // Chargement parallèle : résumé licences + risques M365
+    const [licSummary, risks] = await Promise.all([
+      apiCall("/api/intelligence/m365/licenses").catch(() => ({})),
+      apiCall("/api/intelligence/risks?finding_type=unused_license").catch(() => []),
+    ]);
+
+    // KPI cards
+    const orphans  = risks.filter(r => r.finding_type === "orphan_account").length;
+    const unused   = risks.filter(r => r.description?.includes("inactif") || r.description?.includes("inactive")).length;
+    const oversized = risks.filter(r => r.title?.includes("surdimensionn")).length;
+    const totalSavings = risks.reduce((s, r) => s + (r.cost_impact_monthly || 0), 0);
+
+    _setText("m365-kpi-orphans",  orphans || (licSummary.inactive_count ?? "—"));
+    _setText("m365-kpi-unused",   unused  || (licSummary.inactive_count ?? "—"));
+    _setText("m365-kpi-oversized", oversized || (licSummary.oversized_count ?? "—"));
+    _setText("m365-kpi-savings",  totalSavings > 0 ? `${_fmt(totalSavings)} $` : "—");
+
+    // Pools de licences
+    const pools = licSummary.pools || [];
+    let poolsHtml = "";
+    if (pools.length) {
+      poolsHtml = `
+        <h4 style="margin:0 0 12px;font-size:.88rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em">Pools de licences</h4>
+        <div style="overflow-x:auto;margin-bottom:24px">
+          <table class="data-table">
+            <thead><tr><th>SKU</th><th>Total</th><th>Assignées</th><th>Non assignées</th><th>Coût/unité</th><th>Coût total/mois</th><th>Coût inutilisé</th></tr></thead>
+            <tbody>${pools.map(p => {
+              const waste = parseFloat(p.monthly_waste || 0);
+              const wasteColor = waste > 100 ? "#dc2626" : waste > 0 ? "#d97706" : "#16a34a";
+              return `<tr>
+                <td><strong>${esc(p.sku_name)}</strong></td>
+                <td>${p.quantity_total}</td>
+                <td>${p.quantity_assigned}</td>
+                <td style="color:${p.quantity_unassigned > 0 ? '#d97706' : '#16a34a'};font-weight:600">${p.quantity_unassigned}</td>
+                <td>${_fmt(p.unit_cost_monthly)} $</td>
+                <td>${_fmt(p.monthly_total)} $</td>
+                <td style="color:${wasteColor};font-weight:700">${_fmt(waste)} $/mo</td>
+              </tr>`;
+            }).join("")}</tbody>
+          </table>
+        </div>`;
+    }
+
+    // Risques détectés
+    const riskColors = { critical: "#dc2626", high: "#d97706", medium: "#7c3aed", low: "#64748b" };
+    const riskLabels = { critical: "CRITIQUE", high: "ÉLEVÉ", medium: "MOYEN", low: "FAIBLE" };
+    const riskIcons  = {
+      orphan_account: "👻", unused_license: "💤", ghost_license: "🔍",
+      oversized_e5: "📉", oversized_e3: "📉", contractor_license: "🏷️",
+    };
+
+    let risksHtml = "";
+    if (risks.length) {
+      risksHtml = `
+        <h4 style="margin:0 0 12px;font-size:.88rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em">Risques détectés (${risks.length})</h4>
+        ${risks.slice(0, 30).map(r => {
+          const col = riskColors[r.severity] || "#64748b";
+          const lbl = riskLabels[r.severity] || r.severity?.toUpperCase();
+          const savings = r.cost_impact_monthly > 0
+            ? `<span style="color:#16a34a;font-weight:700;font-size:.9rem">−${_fmt(r.cost_impact_monthly)} $/mo</span>` : "";
+          return `
+          <div style="display:flex;gap:14px;padding:14px 18px;margin-bottom:10px;background:#fff;border:1.5px solid #e2e8f0;border-left:4px solid ${col};border-radius:12px">
+            <div style="flex:1;min-width:0">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap">
+                <span style="font-size:.68rem;font-weight:800;color:${col};background:${col}18;padding:2px 8px;border-radius:20px">${lbl}</span>
+                <strong style="font-size:.9rem;color:#1e293b">${esc(r.title)}</strong>
+              </div>
+              <p style="margin:0 0 6px;font-size:.82rem;color:#64748b;line-height:1.5">${esc(r.description || "")}</p>
+              ${r.remediation ? `<p style="margin:0;font-size:.78rem;color:#475569;background:#f8fafc;padding:6px 10px;border-radius:6px;border-left:2px solid #cbd5e1">✅ ${esc(r.remediation)}</p>` : ""}
+            </div>
+            <div style="flex-shrink:0;text-align:right;min-width:90px">
+              ${savings}
+              ${r.id && ["admin","owner"].includes(state.user?.role) ? `
+              <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px">
+                <button class="btn btn-outline btn-xs" onclick="resolveRisk('${r.id}')">Résolu ✓</button>
+              </div>` : ""}
+            </div>
+          </div>`;
+        }).join("")}`;
+    } else {
+      risksHtml = `<p class="muted" style="text-align:center;padding:32px">Aucun risque M365 détecté — lancez l'analyse pour commencer.</p>`;
+    }
+
+    if (list) list.innerHTML = poolsHtml + risksHtml;
+  } catch (e) {
+    if (list) list.innerHTML = `<p class="muted" style="padding:20px">Lancez d'abord une synchronisation pour voir les données M365.</p>`;
+  }
+}
+
+
+// ── Intelligence : Gouvernance des identités ─────────────────────────────────
+
+async function _loadIdentitiesRisks() {
+  const wrap = $("identities-risk-list");
+  if (wrap) wrap.innerHTML = `<p class="muted" style="padding:12px 0">Chargement…</p>`;
+
+  try {
+    const [risks, identities] = await Promise.all([
+      apiCall("/api/intelligence/risks").catch(() => []),
+      apiCall("/api/intelligence/identities").catch(() => []),
+    ]);
+
+    const identity_risks = risks.filter(r =>
+      ["orphan_account","ghost_license"].includes(r.finding_type));
+
+    const statsHtml = `
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:24px">
+        ${[
+          { label: "Identités totales", val: identities.length, color: "#6366f1" },
+          { label: "Actives",            val: identities.filter(i => i.status === "active").length, color: "#16a34a" },
+          { label: "Terminées",          val: identities.filter(i => i.status === "terminated").length, color: "#64748b" },
+          { label: "Risques identités",  val: identity_risks.length, color: "#dc2626" },
+        ].map(s => `
+          <div class="stat-card" style="border-left:4px solid ${s.color}">
+            <div class="stat-num" style="color:${s.color}">${s.val}</div>
+            <div class="stat-label">${s.label}</div>
+          </div>`).join("")}
+      </div>`;
+
+    const riskColors = { critical: "#dc2626", high: "#d97706", medium: "#7c3aed", low: "#64748b" };
+    const riskLabels = { critical: "CRITIQUE", high: "ÉLEVÉ", medium: "MOYEN", low: "FAIBLE" };
+
+    const risksHtml = identity_risks.length ? `
+      <h4 style="margin:0 0 12px;font-size:.88rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em">
+        Anomalies d'identité (${identity_risks.length})
+      </h4>
+      ${identity_risks.map(r => {
+        const col = riskColors[r.severity] || "#64748b";
+        const lbl = riskLabels[r.severity] || r.severity?.toUpperCase();
+        const ref = r.entity_ref || {};
+        return `
+        <div style="display:flex;gap:14px;padding:14px 18px;margin-bottom:10px;background:#fff;border:1.5px solid #e2e8f0;border-left:4px solid ${col};border-radius:12px">
+          <div style="flex:1;min-width:0">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap">
+              <span style="font-size:.68rem;font-weight:800;color:${col};background:${col}18;padding:2px 8px;border-radius:20px">${lbl}</span>
+              <strong style="font-size:.9rem;color:#1e293b">${esc(r.title)}</strong>
+            </div>
+            <p style="margin:0 0 4px;font-size:.82rem;color:#64748b">${esc(r.description || "")}</p>
+            ${ref.email ? `<code style="font-size:.78rem;color:#475569">${esc(ref.email)}</code>` : ""}
+            ${r.remediation ? `<p style="margin:6px 0 0;font-size:.78rem;color:#475569;background:#f8fafc;padding:6px 10px;border-radius:6px;border-left:2px solid #cbd5e1">✅ ${esc(r.remediation)}</p>` : ""}
+          </div>
+          <div style="flex-shrink:0;text-align:right">
+            ${r.cost_impact_monthly > 0 ? `<div style="color:#16a34a;font-weight:700;font-size:.9rem">−${_fmt(r.cost_impact_monthly)} $/mo</div>` : ""}
+            ${r.id && ["admin","owner"].includes(state.user?.role) ? `<button class="btn btn-outline btn-xs" style="margin-top:8px" onclick="resolveRisk('${r.id}')">Résolu ✓</button>` : ""}
+          </div>
+        </div>`;
+      }).join("")}` :
+      `<p class="muted" style="text-align:center;padding:32px">Aucune anomalie d'identité détectée. Lancez une synchronisation pour commencer.</p>`;
+
+    if (wrap) wrap.innerHTML = statsHtml + risksHtml;
+  } catch (e) {
+    if (wrap) wrap.innerHTML = `<p class="muted" style="padding:20px">Erreur de chargement. Vérifiez votre connexion.</p>`;
+  }
+}
+
+
+// ── Helper résoudre un risque ─────────────────────────────────────────────────
+
+async function resolveRisk(riskId) {
+  try {
+    await apiCall(`/api/intelligence/risks/${riskId}/resolve`, "POST");
+    showToast("Risque marqué comme résolu.", "success");
+    // Recharge l'onglet actif
+    _loadOptimSection(_optimTab);
+  } catch (e) {
+    showToast("Erreur lors de la résolution.", "error");
+  }
 }
 
 async function _loadUnusedLicenses() {

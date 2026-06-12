@@ -1,4 +1,4 @@
-"""API Intelligence organisationnelle — entités, corrélations, risques."""
+"""API Intelligence organisationnelle — identités, corrélations, risques, M365."""
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -10,7 +10,9 @@ from rbac import require_min_role
 router = APIRouter(prefix="/api/intelligence", tags=["intelligence"])
 
 
-# ── Sync ──────────────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────────────
+# Sync — collecte + corrélation + risques
+# ─────────────────────────────────────────────────────────────────────────────
 
 @router.post("/sync")
 def sync_intelligence(user: CurrentUser = Depends(require_min_role("admin"))):
@@ -18,36 +20,71 @@ def sync_intelligence(user: CurrentUser = Depends(require_min_role("admin"))):
     from collector_service import collect_all
     from correlation_engine import correlate_identities
     from risk_calculator import calculate_all_risks
+    from m365_license_optimizer import run_m365_optimizer
 
     org = user.organization_id
-    collected   = collect_all(org)
+    collected    = collect_all(org)
     correlations = correlate_identities(org)
     risks        = calculate_all_risks(org)
-    return {"ok": True, "collected": collected, "correlations": correlations, "risks": risks}
+    m365         = run_m365_optimizer(org)
+
+    return {
+        "ok": True,
+        "collected":    collected,
+        "correlations": correlations,
+        "risks":        risks,
+        "m365_savings": {
+            "monthly": m365["total_savings_monthly"],
+            "annual":  m365["total_savings_annual"],
+            "count":   m365["findings_count"],
+        },
+    }
 
 
-# ── Risques ───────────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────────────
+# Risques
+# ─────────────────────────────────────────────────────────────────────────────
 
 @router.get("/risks/summary")
 def risks_summary(user: CurrentUser = Depends(require_min_role("manager"))):
-    """Résumé des risques actifs (comptages + coût total). Manager+."""
+    """Résumé des risques actifs et économies potentielles. Manager+."""
     from risk_calculator import get_risk_summary
-    return get_risk_summary(user.organization_id)
+    summary = get_risk_summary(user.organization_id)
+
+    # Ajoute les économies M365 déjà calculées dans risk_findings
+    with get_db() as cur:
+        cur.execute(
+            """
+            SELECT COALESCE(SUM(cost_impact_monthly), 0) AS m365_savings
+            FROM public.risk_findings
+            WHERE organization_id = %s
+              AND finding_type = 'unused_license'
+              AND resolved_at IS NULL
+              AND is_acknowledged = false
+            """,
+            (user.organization_id,),
+        )
+        r = cur.fetchone()
+    summary["m365_savings_monthly"] = float(r["m365_savings"]) if r else 0
+    return summary
 
 
 @router.get("/risks")
 def list_risks(
     severity: str | None = None,
     finding_type: str | None = None,
+    acknowledged: bool = False,
     user: CurrentUser = Depends(require_min_role("manager")),
 ):
-    """Risques actifs filtrables par sévérité et type. Manager+."""
+    """Risques actifs filtrables. Manager+."""
     params = [user.organization_id]
     where  = "WHERE rf.organization_id = %s AND rf.resolved_at IS NULL"
     if severity:
         where += " AND rf.severity = %s"; params.append(severity)
     if finding_type:
         where += " AND rf.finding_type = %s"; params.append(finding_type)
+    if not acknowledged:
+        where += " AND rf.is_acknowledged = false"
 
     with get_db() as cur:
         cur.execute(
@@ -72,21 +109,12 @@ def list_risks(
 
 
 @router.post("/risks/{risk_id}/acknowledge")
-def acknowledge_risk(
-    risk_id: str,
-    user: CurrentUser = Depends(require_min_role("admin")),
-):
-    """Acquitte un risque (marque comme traité). Admin+."""
+def acknowledge_risk(risk_id: str, user: CurrentUser = Depends(require_min_role("admin"))):
     with get_db() as cur:
         cur.execute(
-            """
-            UPDATE public.risk_findings
-            SET is_acknowledged = true,
-                acknowledged_by = %s,
-                acknowledged_at = now()
-            WHERE id = %s AND organization_id = %s
-            RETURNING id
-            """,
+            """UPDATE public.risk_findings
+               SET is_acknowledged=true, acknowledged_by=%s, acknowledged_at=now()
+               WHERE id=%s AND organization_id=%s RETURNING id""",
             (user.id, risk_id, user.organization_id),
         )
         if not cur.fetchone():
@@ -95,20 +123,13 @@ def acknowledge_risk(
 
 
 @router.post("/risks/{risk_id}/resolve")
-def resolve_risk(
-    risk_id: str,
-    user: CurrentUser = Depends(require_min_role("admin")),
-):
-    """Marque un risque comme résolu. Admin+."""
+def resolve_risk(risk_id: str, user: CurrentUser = Depends(require_min_role("admin"))):
     with get_db() as cur:
         cur.execute(
-            """
-            UPDATE public.risk_findings
-            SET resolved_at = now(), is_acknowledged = true,
-                acknowledged_by = %s, acknowledged_at = now()
-            WHERE id = %s AND organization_id = %s AND resolved_at IS NULL
-            RETURNING id
-            """,
+            """UPDATE public.risk_findings
+               SET resolved_at=now(), is_acknowledged=true,
+                   acknowledged_by=%s, acknowledged_at=now()
+               WHERE id=%s AND organization_id=%s AND resolved_at IS NULL RETURNING id""",
             (user.id, risk_id, user.organization_id),
         )
         if not cur.fetchone():
@@ -116,14 +137,66 @@ def resolve_risk(
     return {"ok": True}
 
 
-# ── Corrélations ──────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────────────
+# M365 License Optimizer
+# ─────────────────────────────────────────────────────────────────────────────
 
-@router.get("/correlations")
-def list_correlations(
+@router.post("/m365/optimize")
+def m365_optimize(user: CurrentUser = Depends(require_min_role("admin"))):
+    """Lance l'optimiseur M365 et retourne les économies détectées. Admin+."""
+    from m365_license_optimizer import run_m365_optimizer
+    return run_m365_optimizer(user.organization_id)
+
+
+@router.get("/m365/licenses")
+def m365_licenses(user: CurrentUser = Depends(require_min_role("manager"))):
+    """Résumé des pools et utilisation de licences M365. Manager+."""
+    from m365_license_optimizer import get_license_summary
+    return get_license_summary(user.organization_id)
+
+
+@router.get("/m365/users")
+def m365_users(user: CurrentUser = Depends(require_min_role("admin"))):
+    """Liste les comptes M365 avec leur score d'activité. Admin+."""
+    with get_db() as cur:
+        cur.execute(
+            """
+            SELECT
+              ia.external_email     AS email,
+              ia.display_name,
+              ia.status,
+              la.sku_name,
+              lu.activity_score,
+              lu.tier_needed,
+              lu.metrics->>'days_inactive' AS days_inactive,
+              lp.unit_cost_monthly  AS sku_cost,
+              i.status              AS workday_status,
+              i.identity_type
+            FROM public.identity_accounts ia
+            LEFT JOIN public.identities i          ON i.id = ia.identity_id
+            LEFT JOIN public.license_assignments la ON la.account_id = ia.id AND la.is_active = true
+            LEFT JOIN public.license_pools lp       ON lp.id = la.pool_id
+            LEFT JOIN public.license_usage lu       ON lu.assignment_id = la.id
+            WHERE ia.organization_id = %s
+              AND ia.source_connector = 'microsoft_365'
+            ORDER BY lu.activity_score ASC NULLS FIRST, ia.display_name
+            LIMIT 500
+            """,
+            (user.organization_id,),
+        )
+        return db_rows(cur)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Identités
+# ─────────────────────────────────────────────────────────────────────────────
+
+@router.get("/identities")
+def list_identities(
     status: str | None = None,
     user: CurrentUser = Depends(require_min_role("admin")),
 ):
-    """Identités cross-connecteurs, filtrables par statut. Admin+."""
+    """Liste les identités maîtres de l'organisation. Admin+."""
     params = [user.organization_id]
     where  = "WHERE organization_id = %s"
     if status:
@@ -132,15 +205,11 @@ def list_correlations(
     with get_db() as cur:
         cur.execute(
             f"""
-            SELECT correlation_key, connectors_present, status,
-                   risk_level, risk_reason, cost_impact_monthly, updated_at
-            FROM public.entity_correlations
-            {where}
-            ORDER BY
-              CASE risk_level
-                WHEN 'critical' THEN 1 WHEN 'high' THEN 2
-                WHEN 'medium'   THEN 3 ELSE 4 END,
-              updated_at DESC
+            SELECT id, identity_type, canonical_email, full_name,
+                   org_unit_name, job_title, status, source_of_truth,
+                   cost_monthly, created_at, updated_at
+            FROM public.identities {where}
+            ORDER BY full_name
             LIMIT 500
             """,
             params,
@@ -148,33 +217,68 @@ def list_correlations(
         return db_rows(cur)
 
 
-# ── Entités ───────────────────────────────────────────────────────────────────
-
-@router.get("/entities")
-def list_entities(
-    entity_type: str | None = None,
-    source: str | None = None,
+@router.get("/identities/{identity_id}/accounts")
+def identity_accounts(
+    identity_id: str,
     user: CurrentUser = Depends(require_min_role("admin")),
 ):
-    """Entités normalisées, filtrables par type et connecteur source. Admin+."""
-    params = [user.organization_id]
-    where  = "WHERE organization_id = %s"
-    if entity_type:
-        where += " AND entity_type = %s"; params.append(entity_type)
-    if source:
-        where += " AND source_connector = %s"; params.append(source)
-
+    """Tous les comptes cross-systèmes d'une identité. Admin+."""
     with get_db() as cur:
         cur.execute(
-            f"""
-            SELECT id, entity_type, source_connector, source_id,
-                   email, display_name, department_name, status,
-                   cost_monthly, last_activity_at, synced_at
-            FROM public.entities
-            {where}
-            ORDER BY entity_type, source_connector, display_name
-            LIMIT 500
+            """
+            SELECT source_connector, external_id, external_email,
+                   display_name, status, last_activity_at, synced_at
+            FROM public.identity_accounts
+            WHERE identity_id = %s AND organization_id = %s
+            ORDER BY source_connector
             """,
-            params,
+            (identity_id, user.organization_id),
         )
         return db_rows(cur)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Économies globales (pour dashboard)
+# ─────────────────────────────────────────────────────────────────────────────
+
+@router.get("/savings")
+def savings_summary(user: CurrentUser = Depends(require_min_role("manager"))):
+    """
+    Économies potentielles identifiées toutes sources confondues.
+    Alimenté par les risk_findings avec cost_impact_monthly > 0.
+    """
+    with get_db() as cur:
+        cur.execute(
+            """
+            SELECT
+              finding_type,
+              COUNT(*)                          AS count,
+              SUM(cost_impact_monthly)          AS monthly,
+              SUM(cost_impact_monthly * 12)     AS annual
+            FROM public.risk_findings
+            WHERE organization_id = %s
+              AND resolved_at IS NULL
+              AND is_acknowledged = false
+              AND cost_impact_monthly > 0
+            GROUP BY finding_type
+            ORDER BY monthly DESC
+            """,
+            (user.organization_id,),
+        )
+        by_type = db_rows(cur)
+
+    total_monthly = sum(float(r["monthly"] or 0) for r in by_type)
+
+    return {
+        "total_monthly": round(total_monthly, 2),
+        "total_annual":  round(total_monthly * 12, 2),
+        "by_type":       [
+            {
+                "finding_type": r["finding_type"],
+                "count":        int(r["count"]),
+                "monthly":      round(float(r["monthly"] or 0), 2),
+                "annual":       round(float(r["annual"] or 0), 2),
+            }
+            for r in by_type
+        ],
+    }
