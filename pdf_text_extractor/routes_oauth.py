@@ -386,6 +386,21 @@ def oauth_callback(
     # Slack v2: bot token is under access_token but authed_user has a separate user token
     if connector_type == "slack" and "authed_user" in tokens:
         credentials["authed_user_token"] = tokens["authed_user"].get("access_token", "")
+    # Jira: fetch cloud_id now while the token is fresh — évite un aller-retour à chaque appel agent
+    if connector_type == "jira":
+        try:
+            r_res = httpx.get(
+                "https://api.atlassian.com/oauth/token/accessible-resources",
+                headers={"Authorization": f"Bearer {credentials['access_token']}"},
+                timeout=10,
+            )
+            if r_res.status_code == 200:
+                resources = r_res.json()
+                if resources:
+                    credentials["cloud_id"]  = resources[0]["id"]
+                    credentials["cloud_url"] = resources[0].get("url", "")
+        except Exception:
+            pass
 
     _upsert_connector(org_id, connector_type, credentials)
 

@@ -88,6 +88,17 @@ def refresh_oauth(
     return creds
 
 
+def save_creds(connector_id: str, creds: dict) -> None:
+    """Met à jour les credentials chiffrés d'un connecteur (ex: ajout de cloud_id dynamique)."""
+    try:
+        service_client().table("connectors").update({
+            "encrypted_credentials": encrypt(json.dumps(creds)),
+            "updated_at":            datetime.now(UTC).isoformat(),
+        }).eq("id", connector_id).execute()
+    except Exception:
+        pass
+
+
 def _mark_connector_error(connector_id: str, error_msg: str) -> None:
     """Passe le connecteur en status=error et persiste le message d'erreur."""
     try:
