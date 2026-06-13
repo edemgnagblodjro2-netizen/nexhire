@@ -153,6 +153,37 @@ def connector_status(
     return result
 
 
+# ── Maturité / confiance des connecteurs ─────────────────────────────────────
+
+@router.get("/trust")
+def connectors_trust(user: CurrentUser = Depends(require_min_role("manager"))):
+    """Retourne le niveau de maturité de chaque connecteur (mock vs réel validé)."""
+    from connector_trust import CONNECTOR_TRUST, get_trust_label, maturity_summary
+
+    with get_db() as cur:
+        cur.execute(
+            "SELECT connector_type, status FROM connectors WHERE organization_id = %s",
+            (user.organization_id,),
+        )
+        configured = {r["connector_type"]: r["status"] for r in rows(cur)}
+
+    result = []
+    for ctype, trust in CONNECTOR_TRUST.items():
+        result.append({
+            "connector_type": ctype,
+            "trust_level":    trust["trust_level"],
+            "trust_label":    get_trust_label(trust["trust_level"]),
+            "can_sandbox":    trust["can_sandbox"],
+            "validated_at":   trust["validated_at"],
+            "notes":          trust["notes"],
+            "configured":     ctype in configured,
+            "conn_status":    configured.get(ctype),
+        })
+
+    result.sort(key=lambda x: (-x["trust_level"], x["connector_type"]))
+    return {"connectors": result, "summary": maturity_summary()}
+
+
 # ── Santé globale des connecteurs ─────────────────────────────────────────────
 
 @router.get("/health")

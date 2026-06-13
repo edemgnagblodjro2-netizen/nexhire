@@ -1,100 +1,142 @@
-# NexHire Enterprise Assistant
+# AgentHub — NexHire Enterprise Intelligence Platform
 
-Application Python/FastAPI bilingue qui sert de base a un assistant IA unique
-pour les donnees, documents et processus d'une organisation canadienne.
+Assistant IA multi-connecteurs pour PME et grandes entreprises canadiennes.  
+Hébergé sur Render · Base Supabase PostgreSQL · FastAPI + Python
 
-Le portail couvre deux offres coherentes avec NexHire:
+---
 
-- **NexHire Enterprise Assistant**: assistant IA pour municipalites, organismes,
-  PME, universites, hopitaux et grandes entreprises.
-- **NexHire AI Recruiter Pro**: recruteur IA bilingue francais/anglais pour les
-  PME canadiennes.
+## Stack
 
-Le prototype actuel televerse un PDF, extrait le texte, genere un resume avec
-OpenAI et permet de poser des questions sur le document. Le schema Supabase
-prepare aussi les sources futures: Microsoft 365, Salesforce, ServiceNow, Jira,
-SAP et Workday.
+| Couche | Technologie |
+|---|---|
+| Backend | FastAPI + Python 3.12 |
+| Base de données | Supabase PostgreSQL (multi-tenant) |
+| IA | Claude claude-sonnet-4-6 (Anthropic) |
+| Auth | JWT HS256 + SSO OIDC (Entra ID / Google / Okta) |
+| Paiements | Stripe Checkout + webhooks |
+| Emails | Resend (invitations, rapports, alertes) |
+| Monitoring | Logfire (Pydantic) |
+| Chiffrement | Fernet (credentials connecteurs) |
 
-## Installation
+---
+
+## Connecteurs (22)
+
+| Catégorie | Connecteurs |
+|---|---|
+| Microsoft | Microsoft 365, Intune |
+| ITSM | ServiceNow, Jira, Zendesk |
+| CRM/Ventes | Salesforce, HubSpot |
+| Collaboration | Google Workspace, Slack |
+| Gestion projet | Asana, Monday, ClickUp |
+| Finance | QuickBooks, SAP, NetSuite |
+| RH | Workday, BambooHR, ADP |
+| Cloud | AWS |
+| Sécurité | CrowdStrike |
+| ERP/MSP | Epicor, Autotask |
+
+Tous les connecteurs ont un fallback mock automatique si non configurés.
+
+---
+
+## Variables d'environnement requises
+
+```bash
+# Core
+SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
+FERNET_KEYS=                      # clé Fernet pour chiffrement credentials
+JWT_SECRET=                       # secret JWT
+OPENAI_API_KEY=                   # ou ANTHROPIC_API_KEY
+ANTHROPIC_API_KEY=
+
+# Email
+RESEND_API_KEY=
+
+# Stripe
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+STRIPE_PRICE_ID_STARTER=
+STRIPE_PRICE_ID_PRO=
+STRIPE_PRICE_ID_ENTERPRISE=
+
+# Monitoring
+LOGFIRE_TOKEN=
+
+# OAuth connectors (chaque connecteur actif)
+JIRA_CLIENT_ID=
+JIRA_CLIENT_SECRET=
+JIRA_REDIRECT_URI=
+SALESFORCE_CLIENT_ID=
+SALESFORCE_CLIENT_SECRET=
+HUBSPOT_CLIENT_ID=
+HUBSPOT_CLIENT_SECRET=
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+SLACK_CLIENT_ID=
+SLACK_CLIENT_SECRET=
+QB_CLIENT_ID=
+QB_CLIENT_SECRET=
+
+# Environnement
+ENVIRONMENT=production
+BASE_URL=https://agenthub.nexhire.ca
+```
+
+---
+
+## Lancer en local
 
 ```bash
 cd pdf_text_extractor
-python3 -m venv .venv
-source .venv/bin/activate
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
+uvicorn main:app --reload --port 8000
 ```
 
-## Configuration
+Portail : http://127.0.0.1:8000
 
-Pour utiliser OpenAI en production:
+---
+
+## Smoke tests
 
 ```bash
-export OPENAI_API_KEY="sk-..."
-export OPENAI_MODEL="gpt-4o-mini"
+# Tous les tests mock (pas de credentials requis)
+python smoke_tests.py
+
+# Test réel d'un connecteur (credentials en Supabase requis)
+python smoke_tests.py --real intune <org_id>
+python smoke_tests.py --real jira <org_id>
+python smoke_tests.py --real microsoft_365 <org_id>
 ```
 
-Pour connecter Supabase:
+---
 
-```bash
-export SUPABASE_URL="https://PROJECT.supabase.co"
-export SUPABASE_SERVICE_ROLE_KEY="..."
-```
+## Migrations DB (ordre chronologique)
 
-Executez `supabase_schema.sql` dans Supabase SQL Editor pour creer les tables
-`organizations`, `users`, `documents` et `conversations`.
+| Fichier | Description |
+|---|---|
+| `supabase_schema.sql` | Schema initial |
+| `phase20_connector_expiry.sql` | Colonne token_expires_at |
+| `phase21_missing_indexes.sql` | Index de performance |
+| `phase22_drop_entities_legacy.sql` | Suppression tables legacy |
 
-Sans variables Supabase, l'application utilise un stockage memoire local. Pour
-tester sans cle OpenAI:
+---
 
-```bash
-export PDF_ASSISTANT_DEV_MODE=1
-```
+## Architecture multi-tenant
 
-## Lancer l'API et le portail
+- Chaque organisation a son `organization_id` (UUID)
+- Credentials connecteurs chiffrés par org en DB (`connectors.encrypted_credentials`)
+- RBAC : `user(1) < manager(2) < admin(3) < owner(4)`
+- Isolation totale : aucune donnée org A visible par org B
 
-```bash
-uvicorn main:app --reload
-```
+---
 
-Ouvrez ensuite <http://127.0.0.1:8000>, choisissez un mode d'assistant, une
-langue, un fichier `.pdf`, puis generez un resume et posez vos questions dans le
-chat.
+## Maturité connecteurs
 
-## Modes d'assistant
+- **Niveau 5** (validé en production) : Microsoft 365
+- **Niveau 1** (code uniquement) : les 21 autres
 
-- `enterprise`: rapports, courriels, tickets, tableaux de bord, politiques RH,
-  achats, depenses et operations.
-- `municipal`: demandes citoyennes, reglements, rapports municipaux, courriels,
-  tickets et statistiques.
-- `recruiting`: analyse de CV, matching avance, prequalification, questions
-  d'entrevue, classement des candidatures et assistant RH conversationnel.
-
-Chaque requete de resume ou de chat accepte aussi `language` avec `fr` ou `en`.
-
-## Endpoints principaux
-
-- `POST /api/documents`: televerse un PDF et stocke le texte extrait.
-- `POST /api/documents/{document_id}/summary`: genere et conserve le resume.
-- `POST /api/documents/{document_id}/chat`: repond a une question et conserve
-  l'historique dans `conversations`.
-- `GET /api/health`: verifie que l'API repond.
-
-Exemple chat:
-
-```json
-{
-  "assistant_mode": "recruiting",
-  "language": "en",
-  "question": "Screen this candidate and suggest interview questions."
-}
-```
-
-## Tests
-
-```bash
-pip install -r requirements-dev.txt
-pytest
-```
-
-Note: les PDF composes uniquement d'images scannees peuvent ne pas contenir de
-texte extractible sans OCR.
+Voir `connector_trust.py` pour le manifeste complet.  
+Endpoint : `GET /api/connectors/trust` (rôle manager minimum)

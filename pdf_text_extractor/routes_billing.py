@@ -19,8 +19,8 @@ router = APIRouter(prefix="/api/billing", tags=["billing"])
 
 STRIPE_SECRET_KEY     = os.environ.get("STRIPE_SECRET_KEY", "")
 STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
-STRIPE_PRICE_MONTHLY  = os.environ.get("STRIPE_PRICE_MONTHLY", "")
-STRIPE_PRICE_ANNUAL   = os.environ.get("STRIPE_PRICE_ANNUAL", "")
+STRIPE_PRICE_STARTER       = os.environ.get("STRIPE_PRICE_STARTER", "")
+STRIPE_PRICE_PROFESSIONAL  = os.environ.get("STRIPE_PRICE_PROFESSIONAL", "")
 APP_URL               = os.environ.get("APP_URL", "https://agenthub.nexhire.ca")
 
 STRIPE_API = "https://api.stripe.com/v1"
@@ -121,7 +121,7 @@ def billing_status(user: CurrentUser = Depends(require_min_role("manager"))):
 # ── POST /api/billing/checkout ────────────────────────────────────────────────
 
 class CheckoutRequest(BaseModel):
-    plan: str = Field(..., pattern="^(monthly|annual)$")
+    plan: str = Field(..., pattern="^(starter|professional)$")
 
 @router.post("/checkout")
 def create_checkout(
@@ -129,9 +129,9 @@ def create_checkout(
     user: CurrentUser = Depends(require_min_role("owner")),
 ):
     """Crée une session Stripe Checkout et retourne l'URL de paiement."""
-    live_monthly = os.environ.get("STRIPE_PRICE_MONTHLY", "") or STRIPE_PRICE_MONTHLY
-    live_annual  = os.environ.get("STRIPE_PRICE_ANNUAL",  "") or STRIPE_PRICE_ANNUAL
-    price_id = live_monthly if payload.plan == "monthly" else live_annual
+    live_starter       = os.environ.get("STRIPE_PRICE_STARTER", "")       or STRIPE_PRICE_STARTER
+    live_professional  = os.environ.get("STRIPE_PRICE_PROFESSIONAL", "")  or STRIPE_PRICE_PROFESSIONAL
+    price_id = live_starter if payload.plan == "starter" else live_professional
     if not price_id:
         raise HTTPException(status_code=503, detail=f"Prix Stripe non configuré pour le plan {payload.plan}.")
 
@@ -282,7 +282,7 @@ def _handle_subscription_upsert(sub: dict) -> None:
                 "plan": plan,
             })
             if nexhire_status == "active" and org_row.get("owner_email"):
-                amounts = {"monthly": "99 $/mois", "annual": "990 $/an"}
+                amounts = {"starter": "99 $/mois", "professional": "299 $/mois"}
                 send_subscription_confirmation(
                     to_email=org_row["owner_email"],
                     org_name=org_row.get("name", ""),

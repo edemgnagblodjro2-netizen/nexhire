@@ -473,7 +473,7 @@ button[type="submit"] { @extend .btn; @extend .btn-primary; width: 100%; }
 .trial-banner .trial-icon { font-size: 1.6rem; flex-shrink: 0; }
 .pricing-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 380px));
+  grid-template-columns: repeat(3, minmax(0, 320px));
   gap: 24px;
   justify-content: center;
   margin-top: 0;
@@ -524,6 +524,12 @@ button[type="submit"] { @extend .btn; @extend .btn-primary; width: 100%; }
 }
 .price-feat::before { content: "✓"; color: var(--success); font-weight: 800; flex-shrink: 0; }
 .price-trial { font-size: .82rem; color: var(--slate); text-align: center; }
+.price-target { font-size: .78rem; color: var(--slate); font-weight: 500; margin-bottom: 6px; }
+.price-nofeat { display:flex; align-items:flex-start; gap:10px; font-size:.88rem; color:#94a3b8; }
+.price-nofeat::before { content:"✕"; color:#cbd5e1; font-weight:800; flex-shrink:0; }
+.price-card.enterprise { background:linear-gradient(145deg,#1e1b4b,#312e81); border-color:#4338ca; }
+.price-card.enterprise .price-feat::before { color:#a5b4fc; }
+.price-card.enterprise .price-trial { color:rgba(255,255,255,.45); }
 
 /* ── Footer ──────────────────────────────────────────────────────────────── */
 footer {
@@ -2112,7 +2118,8 @@ footer {
   .features-grid { grid-template-columns: 1fr !important; }
 
   /* Pricing */
-  .pricing-grid { grid-template-columns: 1fr !important; }
+  .pricing-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .pricing-grid .price-card.enterprise { grid-column: 1 / -1; max-width: 420px; margin: 0 auto; }
 
   /* App top nav — tablette */
   .topnav { flex-wrap: wrap; gap: 6px; padding: 8px 12px; height: auto; min-height: 56px; }
@@ -2917,7 +2924,7 @@ tbody tr:hover { background: var(--blue-pale); transition: background .12s; }
   .hero-inner { grid-template-columns: 1fr; gap: 40px; }
   .dash-preview { transform: none; }
   .features-grid { grid-template-columns: repeat(2, 1fr); }
-  .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
+  .pricing-grid { grid-template-columns: 1fr; max-width: 420px; width: 100%; }
   .footer-top { grid-template-columns: 1fr 1fr; }
 }
 /* ── Dashboard exécutif Organisation ────────────────────────────────────── */

@@ -78,7 +78,7 @@ const T = {
     'auth.org':"Nom de l'organisation",'auth.fname':'Prénom','auth.lname':'Nom',
     'auth.password.new':'Mot de passe (min. 8 caractères)','auth.signup.btn':'Créer mon compte gratuitement',
     'auth.signup.switch':'Déjà un compte ?','auth.signup.switch.link':'Se connecter',
-    'app.trial':'Votre essai gratuit se termine bientôt.','app.trial.cta':'Passer au Premium — 99 $/mois',
+    'app.trial':'Votre essai gratuit se termine bientôt.','app.trial.cta':'Choisir un plan — Starter 99 $ · Pro 299 $',
     'app.tab.agent':'Assistant IA','app.tab.connectors':'Connecteurs','app.tab.documents':'Documents','app.tab.audit':'Audit','app.tab.settings':'Paramètres',
     'app.logout':'Déconnexion','app.notif.title':'Notifications',
     'agent.title':'Posez votre question','agent.mode.ent':'Enterprise','agent.mode.mun':'Municipal / Organisme','agent.mode.rec':'Recrutement',
@@ -271,7 +271,7 @@ const T = {
     'auth.org':'Organization name','auth.fname':'First name','auth.lname':'Last name',
     'auth.password.new':'Password (min. 8 characters)','auth.signup.btn':'Create my free account',
     'auth.signup.switch':'Already have an account?','auth.signup.switch.link':'Sign in',
-    'app.trial':'Your free trial ends soon.','app.trial.cta':'Upgrade to Premium — $99/mo',
+    'app.trial':'Your free trial ends soon.','app.trial.cta':'Choose a plan — Starter $99 · Pro $299',
     'app.tab.agent':'AI Assistant','app.tab.connectors':'Connectors','app.tab.documents':'Documents','app.tab.audit':'Audit','app.tab.settings':'Settings',
     'app.logout':'Sign out','app.notif.title':'Notifications',
     'agent.title':'Ask a question','agent.mode.ent':'Enterprise','agent.mode.mun':'Municipal / Organization','agent.mode.rec':'Recruiting',
@@ -465,7 +465,7 @@ const T = {
     'auth.org':'Nombre de la organización','auth.fname':'Nombre','auth.lname':'Apellido',
     'auth.password.new':'Contraseña (mín. 8 caracteres)','auth.signup.btn':'Crear mi cuenta gratuita',
     'auth.signup.switch':'¿Ya tienes cuenta?','auth.signup.switch.link':'Iniciar sesión',
-    'app.trial':'Tu prueba gratuita termina pronto.','app.trial.cta':'Pasar a Premium — 99 $/mes',
+    'app.trial':'Tu prueba gratuita termina pronto.','app.trial.cta':'Elegir un plan — Starter 99 $ · Pro 299 $',
     'app.tab.agent':'Asistente IA','app.tab.connectors':'Conectores','app.tab.documents':'Documentos','app.tab.audit':'Auditoría','app.tab.settings':'Configuración',
     'app.tab.stats':'Estadísticas','app.tab.team':'Equipo','app.tab.parc':'Activos TI','app.tab.optim':'Optimización IA','app.tab.marketplace':'Marketplace',
     'app.logout':'Cerrar sesión','app.notif.title':'Notificaciones',
@@ -1186,7 +1186,7 @@ document.addEventListener("click", e => {
 function buildNotifications() {
   const notifs = [];
   if (state.user?.subscription_status === "trialing") {
-    notifs.push({ icon: "🕐", title: "Essai gratuit actif", body: "Passez au Premium pour continuer après la période d'essai — 99 $/mois." });
+    notifs.push({ icon: "🕐", title: "Essai gratuit actif", body: "Choisissez votre plan pour continuer — Starter 99 $/mois · Professional 299 $/mois." });
   }
   notifs.push({ icon: "✅", title: "Système opérationnel", body: "Tous les services NexHire fonctionnent normalement." });
 
@@ -3309,7 +3309,7 @@ async function subscribeStripe(plan) {
     const res = await apiCall("/api/billing/checkout", "POST", { plan });
     window.location.href = res.checkout_url;
   } catch (e) {
-    if (btn) { btn.disabled = false; btn.textContent = plan === "monthly" ? "Mensuel — 99 $/mois" : "Annuel — 990 $/an"; }
+    if (btn) { btn.disabled = false; btn.textContent = plan === "starter" ? "Starter — 99 $/mois" : "Professional — 299 $/mois"; }
     alert(e.message || "Erreur Stripe.");
   }
 }

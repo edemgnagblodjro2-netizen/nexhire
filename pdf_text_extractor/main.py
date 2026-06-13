@@ -8,21 +8,14 @@ from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).parent / ".env")
 
-# ── Sentry — monitoring erreurs en production (SENTRY_DSN requis) ─────────────
-_sentry_dsn = os.getenv("SENTRY_DSN")
-if _sentry_dsn:
-    import sentry_sdk
-    from sentry_sdk.integrations.fastapi import FastApiIntegration
-    from sentry_sdk.integrations.starlette import StarletteIntegration
-    sentry_sdk.init(
-        dsn=_sentry_dsn,
-        traces_sample_rate=float(os.getenv("SENTRY_TRACES_RATE", "0.05")),
+# ── Logfire — monitoring erreurs en production (LOGFIRE_TOKEN requis) ────────
+_logfire_token = os.getenv("LOGFIRE_TOKEN")
+if _logfire_token:
+    import logfire
+    logfire.configure(
+        token=_logfire_token,
         environment=os.getenv("ENVIRONMENT", "production"),
-        integrations=[
-            StarletteIntegration(transaction_style="url"),
-            FastApiIntegration(),
-        ],
-        send_default_pii=False,
+        send_to_logfire=True,
     )
 
 from typing import Annotated
@@ -536,6 +529,9 @@ def _document_or_404(store: DocumentStore, document_id: str) -> dict:
 
 
 app = create_app()
+if _logfire_token:
+    import logfire
+    logfire.instrument_fastapi(app)
 
 # ── Scheduler — rapport mensuel le 1er de chaque mois à 8h UTC ───────────────
 try:

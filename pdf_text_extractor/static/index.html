@@ -477,40 +477,67 @@
         </div>
       </div>
       <div class="pricing-grid">
+
+        <!-- Starter -->
         <div class="price-card">
           <div>
-            <div class="price-period" data-i18n="price.monthly">Mensuel</div>
-            <div class="price-amount"><sup>$</sup>99<sub data-i18n="price.monthly.unit">/mois</sub></div>
+            <div class="price-target">PME · Cabinets · 10–50 employés</div>
+            <div class="price-period">Starter</div>
+            <div class="price-amount"><sup>$</sup>99<sub>/mois</sub></div>
           </div>
           <div class="price-features">
-            <div class="price-feat" data-i18n="price.f1">12 connecteurs (M365, SAP, Salesforce…)</div>
-            <div class="price-feat" data-i18n="price.f2">Agent IA — 1 000 requêtes / mois</div>
-            <div class="price-feat" data-i18n="price.f3">Analyse de documents PDF illimitée</div>
-            <div class="price-feat" data-i18n="price.f4">Journal d'audit complet</div>
-            <div class="price-feat" data-i18n="price.f5">Support courriel prioritaire</div>
-            <div class="price-feat" data-i18n="price.f6">Bilingue FR / EN</div>
+            <div class="price-feat">Microsoft 365 + Dashboard DG</div>
+            <div class="price-feat">Optimisation licences M365</div>
+            <div class="price-feat">Posture sécurité Entra ID</div>
+            <div class="price-feat">Journal d'audit complet</div>
+            <div class="price-feat">5 départements · 5 utilisateurs</div>
+            <div class="price-feat">Bilingue FR / EN</div>
+            <div class="price-nofeat">Jira · QuickBooks · Intune</div>
           </div>
-          <button class="btn btn-outline" onclick="showAuth('signup')" data-i18n="price.cta">Commencer l'essai</button>
-          <p class="price-trial" data-i18n="price.monthly.note">Sans engagement · Annulez à tout moment</p>
+          <button class="btn btn-outline" onclick="showAuth('signup')">Commencer l'essai gratuit</button>
+          <p class="price-trial">14 jours gratuits · Sans engagement</p>
         </div>
+
+        <!-- Professional -->
         <div class="price-card featured">
-          <div class="price-badge" data-i18n="price.best">🏆 Meilleure valeur — économisez 198 $</div>
+          <div class="price-badge">Plan principal</div>
           <div>
-            <div class="price-period" data-i18n="price.annual">Annuel</div>
-            <div class="price-amount"><sup>$</sup>990<sub data-i18n="price.annual.unit">/an</sub></div>
-            <div class="price-saving" data-i18n="price.annual.saving">Équivaut à 82,50 $ / mois — économisez 2 mois gratuits</div>
+            <div class="price-target">PME · Municipalités · 50–500 employés</div>
+            <div class="price-period">Professional</div>
+            <div class="price-amount"><sup>$</sup>299<sub>/mois</sub></div>
           </div>
           <div class="price-features">
-            <div class="price-feat" data-i18n="price.annual.f1">Tout le plan Mensuel inclus</div>
-            <div class="price-feat" data-i18n="price.annual.f2">Agent IA — 12 000 requêtes / an</div>
-            <div class="price-feat" data-i18n="price.annual.f3">Accès prioritaire aux nouveaux connecteurs</div>
-            <div class="price-feat" data-i18n="price.annual.f4">Rapport d'utilisation mensuel</div>
-            <div class="price-feat" data-i18n="price.annual.f5">Support téléphonique dédié</div>
-            <div class="price-feat" data-i18n="price.annual.f6">Onboarding personnalisé</div>
+            <div class="price-feat">Tout Starter inclus</div>
+            <div class="price-feat">Intune — appareils + conformité</div>
+            <div class="price-feat">Jira · QuickBooks</div>
+            <div class="price-feat">Slack · Google Workspace</div>
+            <div class="price-feat">Départements illimités · 25 utilisateurs</div>
+            <div class="price-feat">Support téléphonique dédié</div>
           </div>
-          <button class="btn btn-primary" onclick="showAuth('signup')" data-i18n="price.cta">Commencer l'essai</button>
-          <p class="price-trial" data-i18n="price.annual.note">Facturé annuellement · Annulez à tout moment</p>
+          <button class="btn btn-primary" onclick="showAuth('signup')">Commencer l'essai gratuit</button>
+          <p class="price-trial">14 jours gratuits · Sans engagement</p>
         </div>
+
+        <!-- Enterprise -->
+        <div class="price-card enterprise">
+          <div>
+            <div class="price-target" style="color:rgba(255,255,255,.55)">Hôpitaux · Universités · Grandes entreprises</div>
+            <div class="price-period" style="color:rgba(255,255,255,.7)">Enterprise</div>
+            <div class="price-amount" style="color:#fff"><sup>$</sup>999<sub style="color:rgba(255,255,255,.55)">/mois et +</sub></div>
+            <div class="price-saving" style="color:#a5b4fc">Sur devis · Contrat annuel</div>
+          </div>
+          <div class="price-features">
+            <div class="price-feat">Tout Professional inclus</div>
+            <div class="price-feat">SAP · Workday · ADP · NetSuite</div>
+            <div class="price-feat">ServiceNow · CrowdStrike</div>
+            <div class="price-feat">SSO / SAML</div>
+            <div class="price-feat">Utilisateurs illimités</div>
+            <div class="price-feat">Onboarding + accompagnement dédié</div>
+          </div>
+          <a href="#contact" class="btn btn-outline" style="border-color:rgba(255,255,255,.35);color:#fff;text-align:center;text-decoration:none;display:block">Nous contacter →</a>
+          <p class="price-trial">Déploiement accompagné · SLA garanti</p>
+        </div>
+
       </div>
     </div>
   </section>
@@ -1018,8 +1045,8 @@
   <div id="trial-banner" class="trial-app-banner hidden">
     <span>🕐</span>
     <span id="trial-text" data-i18n="app.trial">Votre essai gratuit se termine bientôt.</span>
-    <button class="btn btn-dark btn-sm" onclick="subscribeStripe('monthly')">Mensuel — 99 $/mois</button>
-    <button class="btn btn-sm" onclick="subscribeStripe('annual')" style="background:#6366f1;color:#fff;border:none;font-weight:700">Annuel — 990 $/an ⭐</button>
+    <button class="btn btn-dark btn-sm" onclick="subscribeStripe('starter')">Starter — 99 $/mois</button>
+    <button class="btn btn-sm" onclick="subscribeStripe('professional')" style="background:#6366f1;color:#fff;border:none;font-weight:700">Professional — 299 $/mois ⭐</button>
     <button class="dismiss" id="trial-dismiss" title="Fermer">✕</button>
   </div>
 
@@ -1759,12 +1786,13 @@
           <!-- Boutons Stripe — owner uniquement -->
           <div id="billing-subscribe-wrap" class="owner-only hidden" style="display:flex;flex-direction:column;gap:10px">
             <div style="display:flex;gap:8px;flex-wrap:wrap">
-              <button id="stripe-btn-monthly" class="btn btn-primary btn-sm" onclick="subscribeStripe('monthly')">
-                Mensuel — 99 $/mois
+              <button id="stripe-btn-starter" class="btn btn-outline btn-sm" onclick="subscribeStripe('starter')">
+                Starter — 99 $/mois
               </button>
-              <button id="stripe-btn-annual" class="btn btn-outline btn-sm" onclick="subscribeStripe('annual')" style="border-color:#16a34a;color:#16a34a">
-                Annuel — 990 $/an <span style="font-size:.75em;background:#dcfce7;color:#166534;padding:1px 6px;border-radius:8px;margin-left:4px">-2 mois</span>
+              <button id="stripe-btn-professional" class="btn btn-primary btn-sm" onclick="subscribeStripe('professional')">
+                Professional — 299 $/mois <span style="font-size:.75em;background:#e0e7ff;color:#3730a3;padding:1px 6px;border-radius:8px;margin-left:4px">Recommandé</span>
               </button>
+              <a href="#contact" style="font-size:.82rem;color:var(--slate);align-self:center;text-decoration:none">Enterprise → Sur devis</a>
             </div>
           </div>
           <button id="billing-portal-btn" class="btn btn-outline btn-sm hidden" onclick="openBillingPortal()">

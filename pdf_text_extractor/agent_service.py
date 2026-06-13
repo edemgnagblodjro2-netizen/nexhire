@@ -1033,6 +1033,8 @@ def _call_tool(name: str, arguments: dict[str, Any], org_id: str | None = None) 
 
     Retourne (result, is_simulated). is_simulated=True si les données viennent du mock de démonstration.
     """
+    import time as _time
+    _t0 = _time.perf_counter()
 
     # Outils internes NexHire — toujours réels, pas de mock
     if name in _INTERNAL_TOOL_NAMES and org_id:
@@ -1139,8 +1141,10 @@ def _call_tool(name: str, arguments: dict[str, Any], org_id: str | None = None) 
                 _real_matched = True
         except Exception:
             pass  # fallback vers mock
-        if _real_matched:
+        if _real_matched and _real_result is not None:
+            _logfire_track(name, True, False, _time.perf_counter() - _t0)
             return _real_result, False
+        # _real_result is None → connecteur non configuré → fallback mock
 
     # Mocks (démo / connecteur non configuré) — is_simulated=True
     handlers = {
@@ -1169,11 +1173,31 @@ def _call_tool(name: str, arguments: dict[str, Any], org_id: str | None = None) 
     }
     handler = handlers.get(name)
     if not handler:
+        _logfire_track(name, False, True, _time.perf_counter() - _t0, "unknown_tool")
         return {"error": f"Outil inconnu : {name}"}, False
     try:
-        return handler(arguments), True
+        result = handler(arguments)
+        _logfire_track(name, False, True, _time.perf_counter() - _t0)
+        return result, True
     except Exception as exc:
+        _logfire_track(name, False, True, _time.perf_counter() - _t0, str(exc))
         return {"error": str(exc)}, False
+
+
+def _logfire_track(tool: str, real: bool, simulated: bool, elapsed: float, error: str | None = None) -> None:
+    """Envoie une métrique Logfire pour chaque appel d'outil connecteur."""
+    try:
+        import logfire
+        logfire.info(
+            "connector.call",
+            tool=tool,
+            real=real,
+            simulated=simulated,
+            elapsed_ms=round(elapsed * 1000),
+            error=error,
+        )
+    except Exception:
+        pass  # Logfire optionnel — ne jamais bloquer l'agent
 
 
 # ── Résultat structuré ────────────────────────────────────────────────────────

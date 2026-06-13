@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NexHire EIP — Dossier Client</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --navy:    #0f172a;
+    --blue:    #2563eb;
+    --indigo:  #4f46e5;
+    --purple:  #7c3aed;
+    --green:   #16a34a;
+    --slate:   #64748b;
+    --light:   #f8fafc;
+    --border:  #e2e8f0;
+    --radius:  12px;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--navy);
+    background: #fff;
+    font-size: 10.5pt;
+    line-height: 1.6;
+  }
+
+  /* ── PAGE BREAKS ────────────────────────────────────── */
+  .page { page-break-after: always; min-height: 100vh; }
+  .page:last-child { page-break-after: avoid; }
+
+  @media print {
+    body { font-size: 10pt; }
+    .page { page-break-after: always; padding: 0; }
+    .no-print { display: none !important; }
+  }
+
+  /* ── COVER PAGE ─────────────────────────────────────── */
+  .cover {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 80px 72px;
+    min-height: 100vh;
+  }
+  .cover-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 80px;
+  }
+  .cover-logo-mark {
+    width: 48px;
+    height: 48px;
+    background: var(--blue);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 900;
+    color: #fff;
+  }
+  .cover-logo-text { font-size: 20px; font-weight: 700; }
+  .cover-logo-text span { color: #818cf8; }
+  .cover-eip-tag {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    background: rgba(129,140,248,.2);
+    border: 1px solid rgba(129,140,248,.3);
+    color: #818cf8;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+  .cover-headline {
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1.08;
+    margin-bottom: 24px;
+    letter-spacing: -.02em;
+  }
+  .cover-headline em { color: #818cf8; font-style: normal; }
+  .cover-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,.65);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+  .cover-pills {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 64px;
+  }
+  .cover-pill {
+    padding: 6px 16px;
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,.8);
+  }
+  .cover-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid rgba(255,255,255,.1);
+    padding-top: 24px;
+  }
+  .cover-footer-left { font-size: 11px; color: rgba(255,255,255,.4); }
+  .cover-footer-right { font-size: 13px; color: rgba(255,255,255,.6); font-weight: 500; }
+
+  /* ── INNER PAGES ─────────────────────────────────────── */
+  .inner {
+    padding: 56px 72px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--blue);
+    margin-bottom: 40px;
+  }
+  .page-header-brand { font-size: 12px; font-weight: 700; color: var(--blue); letter-spacing: .06em; text-transform: uppercase; }
+  .page-header-section { font-size: 12px; color: var(--slate); font-weight: 500; }
+
+  h1.section-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--navy);
+    letter-spacing: -.02em;
+    margin-bottom: 8px;
+  }
+  h2.section-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -.01em;
+    margin-bottom: 6px;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--blue);
+    margin-bottom: 8px;
+    display: block;
+  }
+  .section-sub {
+    font-size: 13px;
+    color: var(--slate);
+    line-height: 1.7;
+    margin-bottom: 32px;
+    max-width: 640px;
+  }
+
+  /* ── CARDS & GRIDS ────────────────────────────────────── */
+  .card {
+    background: var(--light);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+  }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  /* ── VALUE PROPS ──────────────────────────────────────── */
+  .value-card {
+    background: var(--light);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+  .value-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+  .value-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .value-desc  { font-size: 12px; color: var(--slate); line-height: 1.6; }
+
+  /* ── CONNECTOR GRID ───────────────────────────────────── */
+  .connector-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .connector-chip {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    border: 1.5px solid var(--border);
+    color: var(--navy);
+    background: #fff;
+  }
+  .connector-chip.validated {
+    background: #f0fdf4;
+    border-color: #86efac;
+    color: #15803d;
+  }
+  .connector-chip.coming {
+    background: #fafafa;
+    border-color: #e2e8f0;
+    color: #94a3b8;
+  }
+
+  /* ── KPI BOX ──────────────────────────────────────────── */
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 24px 0; }
+  .kpi-box {
+    background: var(--light);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .kpi-val { font-size: 28px; font-weight: 800; color: var(--blue); letter-spacing: -.02em; }
+  .kpi-label { font-size: 11px; color: var(--slate); font-weight: 500; margin-top: 4px; }
+
+  /* ── PRICING TABLE ────────────────────────────────────── */
+  .pricing-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 12px; }
+  .pricing-table th {
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    border-bottom: 2px solid var(--border);
+  }
+  .pricing-table td { padding: 12px 18px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .pricing-table tr:last-child td { border-bottom: none; }
+  .pricing-table .plan-col { font-weight: 700; font-size: 13px; }
+  .pricing-table .price-col { font-weight: 800; color: var(--blue); font-size: 15px; }
+  .pricing-table .featured-row { background: #eef4ff; }
+  .pricing-table .enterprise-row { background: linear-gradient(90deg, #f5f3ff, #fff); }
+  .check { color: var(--green); font-weight: 700; }
+  .cross { color: #cbd5e1; }
+
+  /* ── DASHBOARD MOCKUP ─────────────────────────────────── */
+  .mockup-frame {
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,.08);
+    margin: 24px 0;
+  }
+  .mockup-chrome {
+    background: #f1f5f9;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .mockup-url {
+    flex: 1;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: 10px;
+    color: var(--slate);
+    margin: 0 12px;
+  }
+  .mockup-body { padding: 24px; background: #fff; }
+
+  /* KPI row inside mockup */
+  .m-kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+  .m-kpi { background: var(--light); border: 1px solid var(--border); border-radius: 10px; padding: 14px 12px; text-align: center; }
+  .m-kpi-val { font-size: 20px; font-weight: 800; color: var(--navy); }
+  .m-kpi-sub { font-size: 9px; color: var(--slate); margin-top: 2px; }
+  .m-kpi.green .m-kpi-val { color: var(--green); }
+  .m-kpi.red .m-kpi-val { color: #dc2626; }
+  .m-kpi.blue .m-kpi-val { color: var(--blue); }
+
+  /* ── ROI SECTION ──────────────────────────────────────── */
+  .roi-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .roi-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  .roi-table .roi-label { color: var(--slate); font-weight: 500; }
+  .roi-table .roi-val { font-weight: 700; text-align: right; }
+  .roi-table .roi-total td { font-weight: 800; font-size: 14px; border-top: 2px solid var(--navy); }
+  .roi-total .roi-val { color: var(--green); }
+
+  /* ── STEPS ────────────────────────────────────────────── */
+  .steps { display: flex; flex-direction: column; gap: 16px; margin: 24px 0; }
+  .step { display: flex; gap: 20px; align-items: flex-start; }
+  .step-num {
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: var(--blue);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+  .step-desc  { font-size: 12px; color: var(--slate); line-height: 1.5; }
+
+  /* ── SECURITY BADGES ──────────────────────────────────── */
+  .badge-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+  .sec-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--light);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 11.5px;
+    font-weight: 600;
+  }
+
+  /* ── CONTACT PAGE ─────────────────────────────────────── */
+  .contact-cover {
+    background: linear-gradient(135deg, #1e1b4b 0%, #2563eb 100%);
+    color: #fff;
+    flex: 1;
+    border-radius: var(--radius);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .contact-cover h2 { font-size: 26px; font-weight: 800; margin-bottom: 16px; }
+  .contact-cover p { color: rgba(255,255,255,.7); font-size: 13px; line-height: 1.7; margin-bottom: 28px; }
+  .contact-item { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; font-size: 13px; }
+  .contact-item-icon { font-size: 18px; width: 32px; text-align: center; }
+
+  /* ── UTILITY ──────────────────────────────────────────── */
+  .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+  .tag-blue { background: #dbeafe; color: #1d4ed8; }
+  .tag-green { background: #dcfce7; color: #15803d; }
+  .tag-purple { background: #ede9fe; color: #6d28d9; }
+  .tag-slate { background: #f1f5f9; color: #475569; }
+
+  .highlight-box {
+    background: linear-gradient(135deg, #eff6ff, #f0fdf4);
+    border: 1.5px solid #93c5fd;
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+  .highlight-box strong { color: var(--blue); }
+
+  ul.feat-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  ul.feat-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 12.5px; }
+  ul.feat-list li::before { content: "✓"; color: var(--green); font-weight: 800; flex-shrink: 0; }
+
+  .page-num { font-size: 10px; color: #94a3b8; text-align: right; margin-top: auto; padding-top: 24px; }
+
+  /* Print button */
+  .print-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(37,99,235,.4);
+    z-index: 100;
+  }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">🖨 Imprimer / PDF</button>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 1 — COUVERTURE                                                        -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="cover">
+    <div>
+      <div class="cover-logo">
+        <div class="cover-logo-mark">N</div>
+        <div>
+          <div class="cover-logo-text">Nex<span>hire</span></div>
+        </div>
+        <div class="cover-eip-tag">EIP</div>
+      </div>
+
+      <div class="cover-headline">
+        L'intelligence de vos<br>systèmes.<br><em>En temps réel.</em>
+      </div>
+      <div class="cover-sub">
+        NexHire Enterprise Intelligence Platform connecte Microsoft 365, vos applications métier et vos outils financiers dans un seul assistant IA conversationnel — pour que vos dirigeants aient toujours la bonne information au bon moment.
+      </div>
+
+      <div class="cover-pills">
+        <div class="cover-pill">22 connecteurs</div>
+        <div class="cover-pill">Bilingue FR / EN</div>
+        <div class="cover-pill">Multi-tenant sécurisé</div>
+        <div class="cover-pill">Hébergé au Canada</div>
+        <div class="cover-pill">14 jours d'essai gratuit</div>
+      </div>
+    </div>
+
+    <div class="cover-footer">
+      <div class="cover-footer-left">
+        NexHire Inc. · Confidentiel · 2026<br>
+        agenthub.nexhire.ca
+      </div>
+      <div class="cover-footer-right">
+        Dossier préparé pour votre organisation
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 2 — LE PROBLÈME ET LA SOLUTION                                        -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <div class="page-header-brand">NexHire EIP</div>
+      <div class="page-header-section">Le problème</div>
+    </div>
+
+    <span class="section-label">Pourquoi ça change</span>
+    <h1 class="section-title">Vos données sont là.<br>Mais personne ne peut les lire.</h1>
+    <p class="section-sub">
+      Microsoft 365, Jira, QuickBooks, Intune — chaque outil a ses tableaux de bord, ses rapports, ses exports. Mais personne n'a une vue claire de ce qui se passe <em>en ce moment</em>, dans tous vos systèmes, sans chercher pendant 2 heures.
+    </p>
+
+    <div class="grid-2" style="margin-bottom: 28px;">
+      <div class="card" style="border-left: 4px solid #dc2626;">
+        <div style="font-size:20px;margin-bottom:10px">⚠️</div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:#dc2626">Avant NexHire EIP</div>
+        <ul class="feat-list" style="gap:6px">
+          <li style="list-style:none;display:flex;gap:8px"><span style="color:#dc2626;font-weight:800;flex-shrink:0">✕</span>Licences M365 payées, jamais utilisées</li>
+          <li style="list-style:none;display:flex;gap:8px"><span style="color:#dc2626;font-weight:800;flex-shrink:0">✕</span>Administrateurs sans MFA — risque non visible</li>
+          <li style="list-style:none;display:flex;gap:8px"><span style="color:#dc2626;font-weight:800;flex-shrink:0">✕</span>Appareils non conformes — personne ne le sait</li>
+          <li style="list-style:none;display:flex;gap:8px"><span style="color:#dc2626;font-weight:800;flex-shrink:0">✕</span>DG passe 3h à assembler un rapport mensuel</li>
+          <li style="list-style:none;display:flex;gap:8px"><span style="color:#dc2626;font-weight:800;flex-shrink:0">✕</span>Chaque outil a son propre écran, sa propre logique</li>
+        </ul>
+      </div>
+      <div class="card" style="border-left: 4px solid var(--green);">
+        <div style="font-size:20px;margin-bottom:10px">⚡</div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--green)">Avec NexHire EIP</div>
+        <ul class="feat-list">
+          <li>Licences inutilisées détectées automatiquement</li>
+          <li>Admins sans MFA — alertes en temps réel</li>
+          <li>État des appareils en un coup d'œil</li>
+          <li>Rapport hebdomadaire généré automatiquement</li>
+          <li>Une seule interface pour tous vos systèmes</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <strong>Un seul agent IA.</strong> Posez n'importe quelle question en français ou en anglais — il interroge vos systèmes connectés en temps réel et vous donne une réponse claire, avec les chiffres réels de votre organisation.
+    </div>
+
+    <div class="kpi-row" style="margin-top: 28px;">
+      <div class="kpi-box">
+        <div class="kpi-val">22</div>
+        <div class="kpi-label">Connecteurs disponibles</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-val">14j</div>
+        <div class="kpi-label">Essai gratuit complet</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-val">FR/EN</div>
+        <div class="kpi-label">Bilingue nativement</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-val">CA 🍁</div>
+        <div class="kpi-label">Hébergé au Canada</div>
+      </div>
+    </div>
+
+    <div class="page-num">2 / 7</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 3 — CE QUE VOUS VOYEZ (DASHBOARD)                                    -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <div class="page-header-brand">NexHire EIP</div>
+      <div class="page-header-section">Ce que vous voyez</div>
+    </div>
+
+    <span class="section-label">Tableaux de bord</span>
+    <h1 class="section-title">Tout ce qui compte.<br>En un seul écran.</h1>
+    <p class="section-sub">
+      Le tableau de bord DG affiche vos indicateurs les plus importants, alimentés par vos vrais systèmes. Pas de chiffres génériques — vos données réelles.
+    </p>
+
+    <!-- Mockup dashboard -->
+    <div class="mockup-frame">
+      <div class="mockup-chrome">
+        <div class="mockup-dot" style="background:#ef4444"></div>
+        <div class="mockup-dot" style="background:#f59e0b"></div>
+        <div class="mockup-dot" style="background:#22c55e"></div>
+        <div class="mockup-url">agenthub.nexhire.ca — Tableau de bord DG</div>
+      </div>
+      <div class="mockup-body">
+        <div style="font-size:11px;font-weight:700;color:var(--slate);margin-bottom:14px;text-transform:uppercase;letter-spacing:.06em">Gouvernance IT — Vue d'ensemble</div>
+        <div class="m-kpi-row">
+          <div class="m-kpi green">
+            <div class="m-kpi-val">87%</div>
+            <div class="m-kpi-sub">Score de santé org</div>
+          </div>
+          <div class="m-kpi blue">
+            <div class="m-kpi-val">2 340 $</div>
+            <div class="m-kpi-sub">Économies détectées/mois</div>
+          </div>
+          <div class="m-kpi red">
+            <div class="m-kpi-val">3</div>
+            <div class="m-kpi-sub">Admins sans MFA</div>
+          </div>
+          <div class="m-kpi">
+            <div class="m-kpi-val">142</div>
+            <div class="m-kpi-sub">Appareils actifs</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px">
+            <div style="font-size:10px;font-weight:700;color:var(--slate);margin-bottom:8px;text-transform:uppercase">Licences M365</div>
+            <div style="font-size:11px;color:var(--navy);line-height:1.8">
+              <span style="color:#dc2626;font-weight:700">12 licences E3</span> non utilisées depuis 60j+<br>
+              <span style="color:#d97706;font-weight:700">8 licences E5</span> candidates à rétrogradation<br>
+              <span style="color:var(--green);font-weight:700">Économie potentielle : 2 340 $/mois</span>
+            </div>
+          </div>
+          <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px">
+            <div style="font-size:10px;font-weight:700;color:var(--slate);margin-bottom:8px;text-transform:uppercase">Posture de sécurité</div>
+            <div style="font-size:11px;color:var(--navy);line-height:1.8">
+              <span style="color:#dc2626;font-weight:700">3 admins globaux</span> sans MFA activé<br>
+              <span style="color:#d97706;font-weight:700">14 appareils</span> non conformes Intune<br>
+              <span style="color:var(--green);font-weight:700">78% des utilisateurs</span> MFA actif
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px">
+      <div style="font-size:12px;font-weight:700;margin-bottom:10px;color:var(--navy)">Modules disponibles dans le tableau de bord</div>
+      <div class="grid-3" style="gap:10px">
+        <div class="card" style="padding:16px">
+          <div style="font-size:16px;margin-bottom:6px">📊</div>
+          <div style="font-size:12px;font-weight:700;margin-bottom:3px">Licences M365</div>
+          <div style="font-size:11px;color:var(--slate)">Taux d'utilisation, économies, recommandations</div>
+        </div>
+        <div class="card" style="padding:16px">
+          <div style="font-size:16px;margin-bottom:6px">🔐</div>
+          <div style="font-size:12px;font-weight:700;margin-bottom:3px">Sécurité Entra ID</div>
+          <div style="font-size:11px;color:var(--slate)">MFA, admins à risque, comptes orphelins</div>
+        </div>
+        <div class="card" style="padding:16px">
+          <div style="font-size:16px;margin-bottom:6px">💻</div>
+          <div style="font-size:12px;font-weight:700;margin-bottom:3px">Assets Intune</div>
+          <div style="font-size:11px;color:var(--slate)">Inventaire, conformité, OS, dernière synchro</div>
+        </div>
+        <div class="card" style="padding:16px">
+          <div style="font-size:16px;margin-bottom:6px">💰</div>
+          <div style="font-size:12px;font-weight:700;margin-bottom:3px">Transactions IT</div>
+          <div style="font-size:11px;color:var(--slate)">Fournisseurs, factures, dépenses par catégorie</div>
+        </div>
+        <div class="card" style="padding:16px">
+          <div style="font-size:16px;margin-bottom:6px">🏛</div>
+          <div style="font-size:12px;font-weight:700;margin-bottom:3px">Gouvernance IT</div>
+          <div style="font-size:11px;color:var(--slate)">Droits d'accès, politiques, audit complet</div>
+        </div>
+        <div class="card" style="padding:16px">
+          <div style="font-size:16px;margin-bottom:6px">🤖</div>
+          <div style="font-size:12px;font-weight:700;margin-bottom:3px">Agent IA</div>
+          <div style="font-size:11px;color:var(--slate)">Questions libres — réponses avec vos vraies données</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-num">3 / 7</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 4 — CONNECTEURS                                                       -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <div class="page-header-brand">NexHire EIP</div>
+      <div class="page-header-section">Intégrations</div>
+    </div>
+
+    <span class="section-label">Écosystème</span>
+    <h1 class="section-title">Connecté à vos outils.<br>Dès le premier jour.</h1>
+    <p class="section-sub">
+      NexHire EIP se connecte en quelques clics à vos systèmes existants via OAuth sécurisé. Aucun accès à vos données sans votre autorisation explicite. Vos credentials sont chiffrés et isolés par organisation.
+    </p>
+
+    <div style="margin-bottom:24px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <span class="tag tag-green">✓ Validé en production</span>
+        <span style="font-size:11px;color:var(--slate)">Testé avec données réelles, stable en prod</span>
+      </div>
+      <div class="connector-chip validated" style="display:inline-flex;margin-right:8px;margin-bottom:8px">✓ Microsoft 365</div>
+      <div class="connector-chip validated" style="display:inline-flex;margin-right:8px;margin-bottom:8px">✓ Intune</div>
+      <div class="connector-chip validated" style="display:inline-flex;margin-right:8px;margin-bottom:8px">✓ Entra ID</div>
+    </div>
+
+    <div style="margin-bottom:24px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <span class="tag tag-blue">Plan Professional</span>
+        <span style="font-size:11px;color:var(--slate)">Disponibles dès l'activation</span>
+      </div>
+      <div class="connector-grid" style="margin-top:0">
+        <div class="connector-chip">Jira / Confluence</div>
+        <div class="connector-chip">QuickBooks</div>
+        <div class="connector-chip">Slack</div>
+        <div class="connector-chip">Google Workspace</div>
+        <div class="connector-chip">Salesforce</div>
+        <div class="connector-chip">HubSpot</div>
+        <div class="connector-chip">Asana</div>
+        <div class="connector-chip">Monday.com</div>
+        <div class="connector-chip">ClickUp</div>
+        <div class="connector-chip">AWS (Cost Explorer)</div>
+        <div class="connector-chip">Zendesk</div>
+      </div>
+    </div>
+
+    <div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <span class="tag tag-purple">Plan Enterprise</span>
+        <span style="font-size:11px;color:var(--slate)">Systèmes d'entreprise et ERP</span>
+      </div>
+      <div class="connector-grid" style="margin-top:0">
+        <div class="connector-chip">SAP S/4HANA</div>
+        <div class="connector-chip">Workday</div>
+        <div class="connector-chip">ServiceNow</div>
+        <div class="connector-chip">NetSuite</div>
+        <div class="connector-chip">ADP</div>
+        <div class="connector-chip">BambooHR</div>
+        <div class="connector-chip">CrowdStrike</div>
+        <div class="connector-chip">Epicor</div>
+        <div class="connector-chip">Autotask (MSP)</div>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top:28px">
+      <strong>Pas encore votre système ?</strong> Notre architecture de connecteurs est conçue pour s'étendre rapidement. Contactez-nous — la plupart des systèmes avec une API REST peuvent être intégrés en quelques semaines.
+    </div>
+
+    <div class="kpi-row" style="margin-top:24px">
+      <div class="kpi-box">
+        <div class="kpi-val">22</div>
+        <div class="kpi-label">Connecteurs actifs</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-val">OAuth</div>
+        <div class="kpi-label">Connexion sécurisée</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-val">Fernet</div>
+        <div class="kpi-label">Chiffrement credentials</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-val">0</div>
+        <div class="kpi-label">Accès sans autorisation</div>
+      </div>
+    </div>
+
+    <div class="page-num">4 / 7</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 5 — ROI                                                               -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <div class="page-header-brand">NexHire EIP</div>
+      <div class="page-header-section">Retour sur investissement</div>
+    </div>
+
+    <span class="section-label">ROI concret</span>
+    <h1 class="section-title">Ce que ça rapporte.<br>Dès le premier mois.</h1>
+    <p class="section-sub">
+      Pour une organisation de 50 à 200 utilisateurs Microsoft 365, NexHire EIP identifie en moyenne plusieurs milliers de dollars d'économies potentielles dès la première semaine de connexion.
+    </p>
+
+    <div class="grid-2" style="gap:24px;margin-bottom:28px">
+
+      <div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:14px;color:var(--navy)">Exemple — Organisation 100 utilisateurs M365</div>
+        <table class="roi-table">
+          <tr>
+            <td class="roi-label">Licences E3/E5 non utilisées détectées</td>
+            <td class="roi-val">12 licences</td>
+          </tr>
+          <tr>
+            <td class="roi-label">Économie mensuelle sur licences</td>
+            <td class="roi-val" style="color:var(--green)">1 440 $/mois</td>
+          </tr>
+          <tr>
+            <td class="roi-label">Rétrogradation E5 → E3 potentielle</td>
+            <td class="roi-val" style="color:var(--green)">900 $/mois</td>
+          </tr>
+          <tr>
+            <td class="roi-label">Admins sans MFA — risque évité</td>
+            <td class="roi-val">3 comptes</td>
+          </tr>
+          <tr>
+            <td class="roi-label">Abonnement NexHire EIP Professional</td>
+            <td class="roi-val" style="color:#dc2626">-299 $/mois</td>
+          </tr>
+          <tr class="roi-total">
+            <td class="roi-label">Économie nette mensuelle estimée</td>
+            <td class="roi-val">2 041 $/mois</td>
+          </tr>
+        </table>
+        <div style="font-size:10px;color:var(--slate);margin-top:8px;font-style:italic">* Chiffres à titre illustratif. Les résultats réels varient selon l'organisation.</div>
+      </div>
+
+      <div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:14px;color:var(--navy)">Au-delà des licences</div>
+        <div class="card" style="margin-bottom:12px;padding:16px 20px">
+          <div style="font-size:12px;font-weight:700;margin-bottom:4px">⏱ Temps récupéré</div>
+          <div style="font-size:12px;color:var(--slate)">Plus de 3h de préparation de rapport par semaine pour le DG ou le DSI — l'agent génère l'essentiel automatiquement.</div>
+        </div>
+        <div class="card" style="margin-bottom:12px;padding:16px 20px">
+          <div style="font-size:12px;font-weight:700;margin-bottom:4px">🛡 Risque réduit</div>
+          <div style="font-size:12px;color:var(--slate)">Un administrateur sans MFA peut coûter des dizaines de milliers en cas d'incident de sécurité. La détection proactive vaut son pesant d'or.</div>
+        </div>
+        <div class="card" style="padding:16px 20px">
+          <div style="font-size:12px;font-weight:700;margin-bottom:4px">📈 Visibilité accrue</div>
+          <div style="font-size:12px;color:var(--slate)">Les décisions sont prises sur la base de données réelles, pas d'estimations. Budgets, effectifs, performance — tout est aligné.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:linear-gradient(135deg,#eff6ff,#ecfdf5);border:1.5px solid #93c5fd;border-radius:var(--radius);padding:24px;text-align:center">
+      <div style="font-size:13px;color:var(--slate);margin-bottom:6px">Retour sur investissement moyen</div>
+      <div style="font-size:40px;font-weight:900;color:var(--navy)">6× à 15×</div>
+      <div style="font-size:12px;color:var(--slate);margin-top:4px">Pour une PME de 50–200 employés avec Microsoft 365 actif</div>
+    </div>
+
+    <div class="page-num">5 / 7</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 6 — PLANS ET TARIFICATION                                             -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <div class="page-header-brand">NexHire EIP</div>
+      <div class="page-header-section">Plans et tarification</div>
+    </div>
+
+    <span class="section-label">Tarifs</span>
+    <h1 class="section-title">Simple. Transparent.<br>Sans surprise.</h1>
+    <p class="section-sub">
+      14 jours d'essai gratuit sur tous les plans. Aucune carte de crédit requise. Annulez à tout moment.
+    </p>
+
+    <table class="pricing-table">
+      <thead>
+        <tr>
+          <th style="width:20%">Plan</th>
+          <th style="width:15%">Prix</th>
+          <th style="width:30%">Pour qui</th>
+          <th style="width:35%">Ce qui est inclus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="plan-col">Starter</td>
+          <td class="price-col">99 $<span style="font-size:10px;color:var(--slate);font-weight:500">/mois</span></td>
+          <td style="font-size:11.5px">PME, Cabinets, Organismes<br><span style="color:var(--slate)">10–50 employés</span></td>
+          <td style="font-size:11px;line-height:1.7">
+            <span class="check">✓</span> Microsoft 365 + Dashboard DG<br>
+            <span class="check">✓</span> Optimisation licences<br>
+            <span class="check">✓</span> Posture sécurité Entra ID<br>
+            <span class="check">✓</span> Journal d'audit complet<br>
+            <span class="check">✓</span> 5 départements · 5 utilisateurs AgentHub<br>
+            <span class="cross">✕</span> <span style="color:#94a3b8">Jira · QuickBooks · Intune avancé</span>
+          </td>
+        </tr>
+        <tr class="featured-row">
+          <td class="plan-col">Professional <span class="tag tag-blue" style="margin-left:4px">Recommandé</span></td>
+          <td class="price-col">299 $<span style="font-size:10px;color:var(--slate);font-weight:500">/mois</span></td>
+          <td style="font-size:11.5px">PME en croissance, Municipalités<br><span style="color:var(--slate)">50–500 employés</span></td>
+          <td style="font-size:11px;line-height:1.7">
+            <span class="check">✓</span> Tout Starter inclus<br>
+            <span class="check">✓</span> Intune — appareils + conformité<br>
+            <span class="check">✓</span> Jira · QuickBooks<br>
+            <span class="check">✓</span> Slack · Google Workspace<br>
+            <span class="check">✓</span> Départements illimités · 25 utilisateurs<br>
+            <span class="check">✓</span> Support téléphonique dédié
+          </td>
+        </tr>
+        <tr class="enterprise-row">
+          <td class="plan-col">Enterprise</td>
+          <td class="price-col" style="color:var(--purple)">Sur devis<br><span style="font-size:10px;color:var(--slate);font-weight:500">à partir de 999 $/mois</span></td>
+          <td style="font-size:11.5px">Hôpitaux, Universités,<br>Grandes entreprises, Municipalités<br><span style="color:var(--slate)">500+ employés</span></td>
+          <td style="font-size:11px;line-height:1.7">
+            <span class="check">✓</span> Tout Professional inclus<br>
+            <span class="check">✓</span> SAP · Workday · ADP · NetSuite<br>
+            <span class="check">✓</span> ServiceNow · CrowdStrike<br>
+            <span class="check">✓</span> SSO / SAML<br>
+            <span class="check">✓</span> Utilisateurs illimités<br>
+            <span class="check">✓</span> Onboarding + accompagnement dédié
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="grid-2" style="margin-top:20px;gap:16px">
+      <div class="card" style="border-left:3px solid var(--green)">
+        <div style="font-size:12px;font-weight:700;margin-bottom:6px">🎁 Essai gratuit — 14 jours</div>
+        <div style="font-size:11.5px;color:var(--slate)">Accès complet à tous les connecteurs et fonctionnalités. Aucune carte requise. Pas d'engagement.</div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--blue)">
+        <div style="font-size:12px;font-weight:700;margin-bottom:6px">📅 Contrat annuel</div>
+        <div style="font-size:11.5px;color:var(--slate)">Disponible pour les plans Professional et Enterprise. Remise sur demande pour engagement 12 mois.</div>
+      </div>
+    </div>
+
+    <div class="page-num">6 / 7</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 7 — SÉCURITÉ + PROCHAINES ÉTAPES                                     -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <div class="page-header-brand">NexHire EIP</div>
+      <div class="page-header-section">Sécurité · Prochaines étapes</div>
+    </div>
+
+    <div class="grid-2" style="gap:32px;flex:1">
+      <div>
+        <span class="section-label">Sécurité</span>
+        <h2 class="section-title">Conçu pour<br>les organisations sérieuses.</h2>
+        <p style="font-size:12px;color:var(--slate);margin-bottom:20px;line-height:1.7">
+          Vos données restent les vôtres. NexHire EIP n'accède qu'en lecture seule aux systèmes que vous connectez, et uniquement avec votre autorisation.
+        </p>
+        <div class="badge-row">
+          <div class="sec-badge">🔒 HTTPS / TLS 1.3</div>
+          <div class="sec-badge">🛡 Fernet AES-128</div>
+          <div class="sec-badge">🔑 JWT HS256</div>
+          <div class="sec-badge">👥 RBAC multi-rôles</div>
+          <div class="sec-badge">📋 Audit log complet</div>
+          <div class="sec-badge">🍁 Hébergé au Canada</div>
+          <div class="sec-badge">🔐 SSO / SAML (Enterprise)</div>
+          <div class="sec-badge">🏢 Multi-tenant isolé</div>
+        </div>
+        <div class="card" style="margin-top:20px;padding:16px 20px">
+          <div style="font-size:12px;font-weight:700;margin-bottom:6px">Isolation totale</div>
+          <div style="font-size:11.5px;color:var(--slate)">Les données de votre organisation ne sont jamais accessibles à d'autres clients. Isolation technique garantie par architecture multi-tenant.</div>
+        </div>
+      </div>
+
+      <div>
+        <span class="section-label">Prochaines étapes</span>
+        <h2 class="section-title">Commencer en<br>moins de 15 minutes.</h2>
+        <div class="steps" style="margin-top:16px">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">Créer votre compte</div>
+              <div class="step-desc">agenthub.nexhire.ca — essai gratuit 14 jours, aucune carte requise.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">Connecter Microsoft 365</div>
+              <div class="step-desc">Connexion OAuth en 2 clics avec votre compte administrateur. AgentHub lit vos licences et votre posture de sécurité.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">Voir vos résultats</div>
+              <div class="step-desc">En moins de 2 minutes, votre tableau de bord affiche les économies détectées, les risques identifiés et votre score de santé.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-title">Poser vos questions</div>
+              <div class="step-desc">«Combien de licences sont inutilisées ?» — l'agent vous répond en 10 secondes avec vos vraies données.</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:linear-gradient(135deg,#1e1b4b,#2563eb);border-radius:var(--radius);padding:20px 24px;margin-top:20px;color:#fff">
+          <div style="font-size:13px;font-weight:700;margin-bottom:6px">Démarrer maintenant</div>
+          <div style="font-size:11.5px;color:rgba(255,255,255,.75);margin-bottom:12px">14 jours gratuits · Aucune carte · Support inclus</div>
+          <div style="font-size:13px;font-weight:800;color:#818cf8">agenthub.nexhire.ca</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:4px">Questions : contact@nexhire.ca</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-num">7 / 7 · © 2026 NexHire Inc. · Confidentiel</div>
+  </div>
+</div>
+
+</body>
+</html>
