@@ -29,10 +29,10 @@ CONNECTOR_TRUST: dict[str, dict] = {
         "notes": "Même App Registration que M365 — sandbox M365 Developer Program disponible",
     },
     "jira": {
-        "trust_level": 1,
+        "trust_level": 3,
         "can_sandbox": True,
-        "validated_at": None,
-        "notes": "Atlassian Free (10 users, permanent) — developer.atlassian.com",
+        "validated_at": "2026-06-13",
+        "notes": "OAuth connecté sur edemgnagblodjro2.atlassian.net — scopes jira-user, jira-work, confluence",
     },
     "quickbooks": {
         "trust_level": 1,
