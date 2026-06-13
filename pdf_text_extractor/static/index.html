@@ -1075,6 +1075,11 @@
       <button class="tab-btn"        data-tab="optim"      role="tab" data-i18n="app.tab.optim">Optimisation IA</button>
     </div>
     <div class="nav-right">
+      <!-- Command palette trigger -->
+      <button class="cmd-palette-btn" id="cmd-palette-btn" onclick="openCmdPalette()" title="Recherche rapide (Ctrl+K)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span class="cmd-palette-hint">Ctrl+K</span>
+      </button>
       <!-- Notification bell -->
       <div class="notif-wrap">
         <button class="notif-btn" id="notif-btn" title="Notifications">
@@ -1942,8 +1947,12 @@
 
       <!-- Licences -->
       <div id="parc-licenses" class="parc-content hidden">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <div class="table-toolbar">
           <div class="controls-inline">
+            <div class="table-search-wrap">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" class="table-search-input" placeholder="Filtrer les licences…" oninput="_tableSearch(this,'licenses-table-wrap')" />
+            </div>
             <select id="lic-filter" onchange="loadLicenses()">
               <option value="" data-i18n="parc.all">Toutes</option>
               <option value="30" data-i18n="parc.lic.expiring30">Expirent &lt;30j</option>
@@ -1957,13 +1966,19 @@
 
       <!-- Serveurs -->
       <div id="parc-servers" class="parc-content hidden">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-          <select id="srv-status-filter" onchange="loadServers()">
-            <option value="" data-i18n="parc.all">Tous statuts</option>
-            <option value="active" data-i18n="parc.srv.active">Actifs</option>
-            <option value="idle" data-i18n="parc.srv.idle">Inactifs</option>
-            <option value="to_decommission" data-i18n="parc.srv.decom">À décommissionner</option>
-          </select>
+        <div class="table-toolbar">
+          <div class="controls-inline">
+            <div class="table-search-wrap">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" class="table-search-input" id="srv-text-filter" placeholder="Filtrer par nom, IP, emplacement…" oninput="_tableSearch(this,'servers-table-wrap')" />
+            </div>
+            <select id="srv-status-filter" onchange="loadServers()">
+              <option value="" data-i18n="parc.all">Tous statuts</option>
+              <option value="active" data-i18n="parc.srv.active">Actifs</option>
+              <option value="idle" data-i18n="parc.srv.idle">Inactifs</option>
+              <option value="to_decommission" data-i18n="parc.srv.decom">À décommissionner</option>
+            </select>
+          </div>
           <button class="btn btn-primary btn-sm admin-only hidden" onclick="openServerModal()" data-i18n="parc.srv.add">+ Serveur</button>
         </div>
         <div id="servers-table-wrap"><p class="muted" data-i18n="loading">Chargement…</p></div>
@@ -1971,13 +1986,19 @@
 
       <!-- Applications -->
       <div id="parc-apps" class="parc-content hidden">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-          <select id="app-status-filter" onchange="loadApps()">
-            <option value="" data-i18n="parc.all">Tous statuts</option>
-            <option value="active" data-i18n="parc.app.active">Actives</option>
-            <option value="unused" data-i18n="parc.app.unused">Non utilisées</option>
-            <option value="decommissioned" data-i18n="parc.app.decom">Décommissionnées</option>
-          </select>
+        <div class="table-toolbar">
+          <div class="controls-inline">
+            <div class="table-search-wrap">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" class="table-search-input" placeholder="Filtrer par nom, fournisseur…" oninput="_tableSearch(this,'apps-table-wrap')" />
+            </div>
+            <select id="app-status-filter" onchange="loadApps()">
+              <option value="" data-i18n="parc.all">Tous statuts</option>
+              <option value="active" data-i18n="parc.app.active">Actives</option>
+              <option value="unused" data-i18n="parc.app.unused">Non utilisées</option>
+              <option value="decommissioned" data-i18n="parc.app.decom">Décommissionnées</option>
+            </select>
+          </div>
           <button class="btn btn-primary btn-sm" onclick="openAppModal()" data-i18n="parc.app.add">+ Application</button>
         </div>
         <div id="apps-table-wrap"><p class="muted" data-i18n="loading">Chargement…</p></div>
@@ -3057,6 +3078,20 @@
       </div>
     </div>
 
+  </div>
+</div>
+
+<!-- ── Command Palette ──────────────────────────────────────────────────────── -->
+<div class="cmd-overlay hidden" id="cmd-overlay" onclick="closeCmdPalette()">
+  <div class="cmd-modal" id="cmd-modal" onclick="event.stopPropagation()">
+    <div class="cmd-search-row">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="cmd-input" class="cmd-input" placeholder="Rechercher un espace de travail…"
+        oninput="_cmdFilter(this.value)" onkeydown="_cmdKey(event)" autocomplete="off" />
+      <kbd class="cmd-esc-hint">Esc</kbd>
+    </div>
+    <div class="cmd-results" id="cmd-results"></div>
+    <div class="cmd-footer">↑↓ Naviguer &nbsp;·&nbsp; ↵ Ouvrir &nbsp;·&nbsp; Esc Fermer</div>
   </div>
 </div>
 

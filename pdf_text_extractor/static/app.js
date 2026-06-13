@@ -4079,6 +4079,137 @@ function _deptSearchKey(e) {
   items[_deptSearchFocusIdx]?.scrollIntoView({ block: "nearest" });
 }
 
+// ── Filtre texte inline sur tables ───────────────────────────────────────────
+function _tableSearch(inp, wrapId) {
+  const q = inp.value.toLowerCase().trim();
+  const table = $(wrapId)?.querySelector("table");
+  if (!table) return;
+  table.querySelectorAll("tbody tr").forEach(tr => {
+    tr.style.display = (q && !tr.textContent.toLowerCase().includes(q)) ? "none" : "";
+  });
+}
+
+// ── Command Palette ───────────────────────────────────────────────────────────
+const _CMD_WORKSPACES = [
+  { tab:"agent",      label:"Assistant IA",    icon:"🤖", parent:null },
+  { tab:"parc-it",    label:"Parc IT",          icon:"💻", parent:null },
+  { tab:"parc-it",    label:"Vue d'ensemble",   icon:"📊", parent:"Parc IT", parc:"overview" },
+  { tab:"parc-it",    label:"Budget",           icon:"💰", parent:"Parc IT", parc:"budget" },
+  { tab:"parc-it",    label:"Licences",         icon:"🔑", parent:"Parc IT", parc:"licenses" },
+  { tab:"parc-it",    label:"Équipements TI",   icon:"🖥",  parent:"Parc IT", parc:"servers" },
+  { tab:"parc-it",    label:"Applications",     icon:"📦", parent:"Parc IT", parc:"apps" },
+  { tab:"parc-it",    label:"Transactions",     icon:"💳", parent:"Parc IT", parc:"transactions" },
+  { tab:"optim",      label:"Optimisation IA",  icon:"⚡", parent:null },
+  { tab:"optim",      label:"Microsoft 365",    icon:"☁️", parent:"Optimisation", optim:"m365" },
+  { tab:"optim",      label:"Identités & Accès",icon:"🔐", parent:"Optimisation", optim:"identities" },
+  { tab:"optim",      label:"Licences inutilisées",icon:"🗑",parent:"Optimisation", optim:"licenses" },
+  { tab:"stats",      label:"Statistiques",     icon:"📈", parent:null },
+  { tab:"documents",  label:"Documents",        icon:"📄", parent:null },
+  { tab:"connectors", label:"Connecteurs",      icon:"🔌", parent:null, adminOnly:true },
+  { tab:"org",        label:"Organisation",     icon:"🏛️", parent:null, adminOnly:true },
+  { tab:"audit",      label:"Audit",            icon:"🔍", parent:null, adminOnly:true },
+  { tab:"security",   label:"Sécurité",         icon:"🛡",  parent:null, adminOnly:true },
+  { tab:"marketplace",label:"Marketplace",      icon:"🏪", parent:null, adminOnly:true },
+  { tab:"settings",   label:"Paramètres",       icon:"⚙️", parent:null },
+];
+
+let _cmdFocusIdx = -1;
+
+function openCmdPalette() {
+  const overlay = $("cmd-overlay");
+  const inp = $("cmd-input");
+  if (!overlay) return;
+  overlay.classList.remove("hidden");
+  if (inp) { inp.value = ""; inp.focus(); }
+  _cmdRender("");
+}
+
+function closeCmdPalette() {
+  $("cmd-overlay")?.classList.add("hidden");
+}
+
+function _cmdFilter(val) { _cmdRender(val); }
+
+function _cmdRender(query) {
+  const res = $("cmd-results");
+  if (!res) return;
+  const q = query.toLowerCase().trim();
+  _cmdFocusIdx = -1;
+
+  const isAdmin = state.user?.role === "admin" || state.user?.role === "owner" || state.user?.is_superadmin;
+  const items = _CMD_WORKSPACES.filter(w => {
+    if (w.adminOnly && !isAdmin) return false;
+    if (!q) return true;
+    return w.label.toLowerCase().includes(q) || (w.parent || "").toLowerCase().includes(q);
+  });
+
+  if (!items.length) {
+    res.innerHTML = `<div class="cmd-empty">Aucun résultat pour « ${esc(query)} »</div>`;
+    return;
+  }
+
+  const highlight = (str) => q ? str.replace(new RegExp(`(${esc(q)})`, "gi"), "<strong>$1</strong>") : str;
+
+  let html = "";
+  let lastParent = undefined;
+  items.forEach((w, i) => {
+    if (w.parent !== lastParent) {
+      html += `<div class="cmd-group-label">${w.parent || "Espaces de travail"}</div>`;
+      lastParent = w.parent;
+    }
+    html += `<div class="cmd-item" data-idx="${i}" onclick="_cmdGo(${i})">
+      <span class="cmd-item-icon">${w.icon}</span>
+      <span class="cmd-item-label">${highlight(esc(w.label))}</span>
+      ${w.parent ? `<span class="cmd-item-parent">${esc(w.parent)}</span>` : ""}
+    </div>`;
+  });
+  res.innerHTML = html;
+  res.dataset.items = JSON.stringify(items);
+}
+
+function _cmdGo(idx) {
+  const res = $("cmd-results");
+  if (!res) return;
+  let items;
+  try { items = JSON.parse(res.dataset.items || "[]"); } catch { return; }
+  const w = items[idx];
+  if (!w) return;
+  closeCmdPalette();
+  switchTab(w.tab);
+  if (w.parc)  setTimeout(() => switchParcTab(w.parc), 80);
+  if (w.optim) setTimeout(() => switchOptimTab(w.optim), 80);
+}
+
+function _cmdKey(e) {
+  const res = $("cmd-results");
+  const items = res?.querySelectorAll(".cmd-item");
+  if (e.key === "Escape") { closeCmdPalette(); return; }
+  if (!items?.length) return;
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+    _cmdFocusIdx = Math.min(_cmdFocusIdx + 1, items.length - 1);
+  } else if (e.key === "ArrowUp") {
+    e.preventDefault();
+    _cmdFocusIdx = Math.max(_cmdFocusIdx - 1, 0);
+  } else if (e.key === "Enter") {
+    e.preventDefault();
+    if (_cmdFocusIdx >= 0) items[_cmdFocusIdx]?.click();
+    return;
+  }
+  items.forEach((el, i) => el.classList.toggle("focused", i === _cmdFocusIdx));
+  items[_cmdFocusIdx]?.scrollIntoView({ block: "nearest" });
+}
+
+// Ctrl+K global shortcut
+document.addEventListener("keydown", e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+    e.preventDefault();
+    const overlay = $("cmd-overlay");
+    if (overlay?.classList.contains("hidden")) openCmdPalette();
+    else closeCmdPalette();
+  }
+});
+
 async function _loadParcOverview() {
   const deptId = $("parc-dept-select")?.value || "";
   try {
