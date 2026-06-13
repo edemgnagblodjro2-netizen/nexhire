@@ -5881,16 +5881,15 @@ async function _loadIdentitiesRisks() {
       ["orphan_account","ghost_license"].includes(r.finding_type));
 
     // Breakdown pour les sous-textes
-    const nUsers    = identities.filter(i => !i.identity_type || i.identity_type === "user").length;
-    const nSystem   = identities.filter(i => i.identity_type === "service_account" || i.identity_type === "system").length;
     const nActive   = identities.filter(i => i.status === "active").length;
     const nTermin   = identities.filter(i => i.status === "terminated").length;
+    const nOther    = identities.length - nActive - nTermin;
     const nRisks    = identity_risks.length;
     const nOrphan   = identity_risks.filter(r => r.finding_type === "orphan_account").length;
     const nGhost    = identity_risks.filter(r => r.finding_type === "ghost_license").length;
 
-    const totalSub  = nSystem > 0 ? `${nUsers} utilisateur${nUsers>1?"s":""} · ${nSystem} système${nSystem>1?"s":""}` : `${nUsers} utilisateur${nUsers>1?"s":""}`;
-    const activeSub = nActive === identities.length ? "Tous les comptes actifs" : `${identities.length - nActive} inactif${identities.length-nActive>1?"s":""}`;
+    const totalSub  = `${nActive} actif${nActive>1?"s":""} · ${nTermin} terminé${nTermin>1?"s":""}${nOther>0?` · ${nOther} autre${nOther>1?"s":""}` : ""}`;
+    const activeSub = "Comptes opérationnels";
     const terminSub = nTermin === 0 ? "Aucun compte archivé" : `Compte${nTermin>1?"s":""} désactivé${nTermin>1?"s":""} ou archivé${nTermin>1?"s":""}`;
     const riskSub   = nRisks === 0 ? "Aucune anomalie détectée ✓" : `${nOrphan > 0 ? `${nOrphan} orphelin${nOrphan>1?"s":""}` : ""}${nOrphan>0&&nGhost>0?" · ":""}${nGhost > 0 ? `${nGhost} licence fantôme${nGhost>1?"s":""}` : ""}`;
 
