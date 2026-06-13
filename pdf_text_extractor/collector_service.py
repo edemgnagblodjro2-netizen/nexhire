@@ -229,11 +229,17 @@ def _upsert_usage(
 # ─────────────────────────────────────────────────────────────────────────────
 
 def collect_workday(org_id: str) -> int:
+    # identities accepte 'terminated' ; identity_accounts n'accepte pas ce statut
+    _IDENTITY_STATUS = {"active": "active", "terminated": "terminated",
+                        "inactive": "inactive", "on_leave": "on_leave"}
+    _ACCOUNT_STATUS  = {"active": "active", "terminated": "inactive",
+                        "inactive": "inactive", "on_leave": "active"}
+
     workers = _fetch_workday(org_id)
     for w in workers:
-        status_map = {"active": "active", "terminated": "terminated",
-                      "inactive": "inactive", "on_leave": "on_leave"}
-        wd_status = status_map.get(w.get("status", "active"), "active")
+        raw = w.get("status", "active")
+        wd_status      = _IDENTITY_STATUS.get(raw, "active")
+        account_status = _ACCOUNT_STATUS.get(raw, "inactive")
 
         identity_id = _upsert_identity(
             org_id=org_id,
@@ -253,7 +259,7 @@ def collect_workday(org_id: str) -> int:
             external_id=w["id"],
             external_email=w["email"],
             display_name=w.get("name"),
-            status=wd_status,
+            status=account_status,
             last_activity_at=None,
             data=w,
         )
