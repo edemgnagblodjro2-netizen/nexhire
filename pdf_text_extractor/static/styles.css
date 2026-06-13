@@ -2266,6 +2266,59 @@ footer {
 .parc-tab-btn:hover:not(.active) { background: rgba(129,140,248,.05); }
 .parc-content { /* shown/hidden by JS */ }
 
+/* ── Parc IT — barre de recherche département ─────────────────────────────── */
+.parc-filter-bar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 0 14px;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 18px;
+}
+.dept-search-wrap {
+  position: relative; display: flex; align-items: center;
+  background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 8px;
+  padding: 0 10px; gap: 6px; min-width: 260px; max-width: 360px;
+  transition: border-color .15s, box-shadow .15s;
+}
+.dept-search-wrap:focus-within {
+  border-color: var(--indigo); box-shadow: 0 0 0 3px rgba(129,140,248,.15);
+  background: #fff;
+}
+.dept-search-icon { font-size: .9rem; flex-shrink: 0; opacity: .6; }
+.dept-search-input {
+  flex: 1; border: none; background: transparent; outline: none;
+  font-size: .86rem; padding: 7px 0; color: var(--navy);
+  min-width: 0;
+}
+.dept-search-input::placeholder { color: #94a3b8; }
+.dept-search-clear {
+  background: none; border: none; cursor: pointer; color: #94a3b8;
+  font-size: .8rem; padding: 0 2px; line-height: 1; flex-shrink: 0;
+}
+.dept-search-clear:hover { color: #475569; }
+.dept-search-dropdown {
+  position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 200;
+  background: #fff; border: 1.5px solid #e2e8f0; border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(30,41,59,.12);
+  max-height: 240px; overflow-y: auto;
+}
+.dept-search-dropdown.hidden { display: none; }
+.dept-dd-item {
+  padding: 9px 14px; font-size: .86rem; cursor: pointer;
+  color: var(--navy); transition: background .1s;
+  display: flex; align-items: center; gap: 8px;
+}
+.dept-dd-item:hover, .dept-dd-item.focused { background: #f1f5f9; }
+.dept-dd-item.all-item { color: #64748b; font-style: italic; }
+.dept-dd-item strong { color: var(--indigo); }
+.dept-dd-empty { padding: 10px 14px; font-size: .84rem; color: #94a3b8; }
+.dept-search-active-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(129,140,248,.12); color: var(--indigo);
+  border: 1px solid rgba(129,140,248,.3); border-radius: 99px;
+  padding: 4px 10px; font-size: .8rem; font-weight: 600;
+}
+.dept-search-active-tag.hidden { display: none; }
+
 /* Status badges */
 .badge {
   display: inline-flex; align-items: center; gap: 4px;

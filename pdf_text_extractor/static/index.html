@@ -1868,7 +1868,7 @@
       <div class="section-header">
         <h2 data-i18n="parc.title">Parc IT</h2>
         <div class="controls-inline">
-          <select id="parc-dept-select" onchange="_loadParcSection(_parcTab)">
+          <select id="parc-dept-select" onchange="_loadParcSection(_parcTab)" style="display:none">
             <option value="" data-i18n="parc.dept.all">Tous les départements</option>
           </select>
           <button class="btn btn-outline btn-sm" onclick="loadParcIT()" data-i18n="conn.refresh">↻ Actualiser</button>
@@ -1883,6 +1883,21 @@
         <button class="parc-tab-btn"        data-parc="servers"  onclick="switchParcTab('servers')"  data-i18n="parc.tab.servers">Serveurs</button>
         <button class="parc-tab-btn"        data-parc="apps"          onclick="switchParcTab('apps')"          data-i18n="parc.tab.apps">Applications</button>
         <button class="parc-tab-btn"        data-parc="transactions"  onclick="switchParcTab('transactions')"  >Transactions</button>
+      </div>
+
+      <!-- Barre de recherche / filtre département -->
+      <div class="parc-filter-bar">
+        <div class="dept-search-wrap" id="dept-search-wrap">
+          <span class="dept-search-icon">🏢</span>
+          <input type="text" id="dept-search-input" class="dept-search-input"
+            placeholder="Rechercher un département…" autocomplete="off"
+            oninput="_deptSearchFilter(this.value)"
+            onfocus="_deptSearchOpen()"
+            onkeydown="_deptSearchKey(event)" />
+          <button class="dept-search-clear hidden" id="dept-search-clear" onclick="_deptSearchReset()" title="Tous les départements">✕</button>
+          <div class="dept-search-dropdown hidden" id="dept-search-dropdown"></div>
+        </div>
+        <span class="dept-search-active-tag hidden" id="dept-search-tag"></span>
       </div>
 
       <!-- Vue d'ensemble -->

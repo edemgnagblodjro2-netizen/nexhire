@@ -3979,9 +3979,12 @@ function _loadParcSection(name) {
   if (name === "transactions")  loadTransactions();
 }
 
+let _allDepts = [];
+
 async function _populateDeptSelects() {
   try {
     const depts = await apiCall("/api/departments");
+    _allDepts = depts;
     const parcSel = $("parc-dept-select");
     const allOpt = `<option value="">${T[_lang]["parc.dept.all"] || "Tous les départements"}</option>`;
     const opts = depts.map(d => `<option value="${d.id}">${esc(d.name)}</option>`).join("");
@@ -3990,7 +3993,90 @@ async function _populateDeptSelects() {
       const baseOpt = sel === parcSel ? allOpt : `<option value="">— Aucun —</option>`;
       sel.innerHTML = baseOpt + opts;
     });
+    _deptSearchRender("");
   } catch (_) {}
+}
+
+// ── Recherche département ─────────────────────────────────────────────────────
+let _deptSearchFocusIdx = -1;
+
+function _deptSearchRender(query) {
+  const dd = $("dept-search-dropdown");
+  if (!dd) return;
+  const q = query.toLowerCase().trim();
+  const matches = q ? _allDepts.filter(d => d.name.toLowerCase().includes(q)) : _allDepts;
+  _deptSearchFocusIdx = -1;
+
+  const allItem = `<div class="dept-dd-item all-item" onclick="_deptSearchSelect('','')">🏢 Tous les départements</div>`;
+  if (!matches.length) {
+    dd.innerHTML = allItem + `<div class="dept-dd-empty">Aucun département trouvé</div>`;
+  } else {
+    dd.innerHTML = allItem + matches.map(d => {
+      const highlighted = q ? esc(d.name).replace(new RegExp(`(${esc(q)})`, "gi"), "<strong>$1</strong>") : esc(d.name);
+      return `<div class="dept-dd-item" onclick="_deptSearchSelect('${esc(d.id)}','${esc(d.name).replace(/'/g,"&#39;")}')">${highlighted}</div>`;
+    }).join("");
+  }
+}
+
+function _deptSearchOpen() {
+  const dd = $("dept-search-dropdown");
+  if (dd) { dd.classList.remove("hidden"); _deptSearchRender($("dept-search-input")?.value || ""); }
+  document.addEventListener("click", _deptSearchOutsideClick, { once: true });
+}
+
+function _deptSearchFilter(val) {
+  const dd = $("dept-search-dropdown");
+  if (dd) { dd.classList.remove("hidden"); _deptSearchRender(val); }
+}
+
+function _deptSearchSelect(id, name) {
+  const sel = $("parc-dept-select");
+  const inp = $("dept-search-input");
+  const dd  = $("dept-search-dropdown");
+  const tag = $("dept-search-tag");
+  const clr = $("dept-search-clear");
+  if (sel) { sel.value = id; }
+  if (inp) inp.value = id ? name : "";
+  if (dd)  dd.classList.add("hidden");
+  if (tag) { tag.textContent = id ? `🏢 ${name}` : ""; tag.classList.toggle("hidden", !id); }
+  if (clr) clr.classList.toggle("hidden", !id);
+  _loadParcSection(_parcTab);
+}
+
+function _deptSearchReset() {
+  _deptSearchSelect("", "");
+  const inp = $("dept-search-input");
+  if (inp) { inp.value = ""; inp.focus(); }
+}
+
+function _deptSearchOutsideClick(e) {
+  const wrap = $("dept-search-wrap");
+  if (wrap && !wrap.contains(e.target)) {
+    const dd = $("dept-search-dropdown");
+    if (dd) dd.classList.add("hidden");
+  }
+}
+
+function _deptSearchKey(e) {
+  const dd = $("dept-search-dropdown");
+  if (!dd || dd.classList.contains("hidden")) return;
+  const items = dd.querySelectorAll(".dept-dd-item");
+  if (!items.length) return;
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+    _deptSearchFocusIdx = Math.min(_deptSearchFocusIdx + 1, items.length - 1);
+  } else if (e.key === "ArrowUp") {
+    e.preventDefault();
+    _deptSearchFocusIdx = Math.max(_deptSearchFocusIdx - 1, 0);
+  } else if (e.key === "Enter") {
+    e.preventDefault();
+    if (_deptSearchFocusIdx >= 0) items[_deptSearchFocusIdx]?.click();
+    return;
+  } else if (e.key === "Escape") {
+    dd.classList.add("hidden"); return;
+  }
+  items.forEach((el, i) => el.classList.toggle("focused", i === _deptSearchFocusIdx));
+  items[_deptSearchFocusIdx]?.scrollIntoView({ block: "nearest" });
 }
 
 async function _loadParcOverview() {
