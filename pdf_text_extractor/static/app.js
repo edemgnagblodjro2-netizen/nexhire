@@ -5880,17 +5880,32 @@ async function _loadIdentitiesRisks() {
     const identity_risks = risks.filter(r =>
       ["orphan_account","ghost_license"].includes(r.finding_type));
 
+    // Breakdown pour les sous-textes
+    const nUsers    = identities.filter(i => !i.identity_type || i.identity_type === "user").length;
+    const nSystem   = identities.filter(i => i.identity_type === "service_account" || i.identity_type === "system").length;
+    const nActive   = identities.filter(i => i.status === "active").length;
+    const nTermin   = identities.filter(i => i.status === "terminated").length;
+    const nRisks    = identity_risks.length;
+    const nOrphan   = identity_risks.filter(r => r.finding_type === "orphan_account").length;
+    const nGhost    = identity_risks.filter(r => r.finding_type === "ghost_license").length;
+
+    const totalSub  = nSystem > 0 ? `${nUsers} utilisateur${nUsers>1?"s":""} · ${nSystem} système${nSystem>1?"s":""}` : `${nUsers} utilisateur${nUsers>1?"s":""}`;
+    const activeSub = nActive === identities.length ? "Tous les comptes actifs" : `${identities.length - nActive} inactif${identities.length-nActive>1?"s":""}`;
+    const terminSub = nTermin === 0 ? "Aucun compte archivé" : `Compte${nTermin>1?"s":""} désactivé${nTermin>1?"s":""} ou archivé${nTermin>1?"s":""}`;
+    const riskSub   = nRisks === 0 ? "Aucune anomalie détectée ✓" : `${nOrphan > 0 ? `${nOrphan} orphelin${nOrphan>1?"s":""}` : ""}${nOrphan>0&&nGhost>0?" · ":""}${nGhost > 0 ? `${nGhost} licence fantôme${nGhost>1?"s":""}` : ""}`;
+
     const statsHtml = `
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:24px">
         ${[
-          { label: "Identités totales", val: identities.length, color: "#6366f1" },
-          { label: "Actives",            val: identities.filter(i => i.status === "active").length, color: "#16a34a" },
-          { label: "Terminées",          val: identities.filter(i => i.status === "terminated").length, color: "#64748b" },
-          { label: "Risques identités",  val: identity_risks.length, color: "#dc2626" },
+          { label: "Identités totales", val: identities.length, color: "#6366f1", sub: totalSub },
+          { label: "Actives",           val: nActive,           color: "#16a34a", sub: activeSub },
+          { label: "Terminées",         val: nTermin,           color: "#64748b", sub: terminSub },
+          { label: "Risques identités", val: nRisks,            color: nRisks > 0 ? "#dc2626" : "#94a3b8", sub: riskSub },
         ].map(s => `
           <div class="stat-card" style="border-left:4px solid ${s.color}">
             <div class="stat-num" style="color:${s.color}">${s.val}</div>
             <div class="stat-label">${s.label}</div>
+            <div class="stat-sub">${s.sub}</div>
           </div>`).join("")}
       </div>`;
 
