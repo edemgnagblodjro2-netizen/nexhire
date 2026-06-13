@@ -21,26 +21,54 @@ router = APIRouter(prefix="/api/intelligence", tags=["intelligence"])
 @router.post("/sync")
 def sync_intelligence(user: CurrentUser = Depends(require_min_role("admin"))):
     """Collecte, corrèle et calcule les risques pour l'organisation. Admin+."""
+    import logging
     from collector_service import collect_all
     from correlation_engine import correlate_identities
     from risk_calculator import calculate_all_risks
     from m365_license_optimizer import run_m365_optimizer
 
+    log = logging.getLogger(__name__)
     org = user.organization_id
-    collected    = collect_all(org)
-    correlations = correlate_identities(org)
-    risks        = calculate_all_risks(org)
-    m365         = run_m365_optimizer(org)
+    errors: list[str] = []
+
+    try:
+        collected = collect_all(org)
+    except Exception as exc:
+        log.exception("collect_all failed org=%s", org)
+        collected = {}
+        errors.append(f"collect: {exc}")
+
+    try:
+        correlations = correlate_identities(org)
+    except Exception as exc:
+        log.exception("correlate_identities failed org=%s", org)
+        correlations = {}
+        errors.append(f"correlate: {exc}")
+
+    try:
+        risks = calculate_all_risks(org)
+    except Exception as exc:
+        log.exception("calculate_all_risks failed org=%s", org)
+        risks = {}
+        errors.append(f"risks: {exc}")
+
+    try:
+        m365 = run_m365_optimizer(org)
+    except Exception as exc:
+        log.exception("run_m365_optimizer failed org=%s", org)
+        m365 = {"total_savings_monthly": 0, "total_savings_annual": 0, "findings_count": 0}
+        errors.append(f"optimizer: {exc}")
 
     return {
-        "ok": True,
+        "ok":    len(errors) == 0,
+        "errors": errors,
         "collected":    collected,
         "correlations": correlations,
         "risks":        risks,
         "m365_savings": {
-            "monthly": m365["total_savings_monthly"],
-            "annual":  m365["total_savings_annual"],
-            "count":   m365["findings_count"],
+            "monthly": m365.get("total_savings_monthly", 0),
+            "annual":  m365.get("total_savings_annual", 0),
+            "count":   m365.get("findings_count", 0),
         },
     }
 

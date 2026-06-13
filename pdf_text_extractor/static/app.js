@@ -5527,10 +5527,15 @@ async function runIntelligenceSync() {
   const btn = $("intelligence-sync-btn");
   if (btn) { btn.disabled = true; btn.textContent = "Synchronisation…"; }
   try {
-    await apiCall("/api/intelligence/sync", "POST");
+    const result = await apiCall("/api/intelligence/sync", "POST");
+    if (result.errors && result.errors.length) {
+      showToast(`Sync partielle — ${result.errors[0]}`, "warning");
+    } else {
+      showToast("Synchronisation réussie.", "success");
+    }
     await _loadIdentitiesRisks();
   } catch (e) {
-    showToast("Erreur lors de la synchronisation.", "error");
+    showToast(`Erreur sync : ${e.message || "voir les logs Render"}`, "error");
   } finally {
     if (btn) { btn.disabled = false; btn.textContent = "Synchroniser"; }
   }
