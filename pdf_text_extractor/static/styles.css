@@ -528,7 +528,9 @@ button[type="submit"] { @extend .btn; @extend .btn-primary; width: 100%; }
 .price-nofeat { display:flex; align-items:flex-start; gap:10px; font-size:.88rem; color:#94a3b8; }
 .price-nofeat::before { content:"✕"; color:#cbd5e1; font-weight:800; flex-shrink:0; }
 .price-card.enterprise { background:linear-gradient(145deg,#1e1b4b,#312e81); border-color:#4338ca; }
+.price-card.enterprise .price-feat { color:rgba(255,255,255,.88); }
 .price-card.enterprise .price-feat::before { color:#a5b4fc; }
+.price-card.enterprise .price-nofeat { color:rgba(255,255,255,.35); }
 .price-card.enterprise .price-trial { color:rgba(255,255,255,.45); }
 
 /* ── Footer ──────────────────────────────────────────────────────────────── */
