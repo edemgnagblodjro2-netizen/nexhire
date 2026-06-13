@@ -194,4 +194,19 @@ Si un test échoue, ne pas déployer avant correction.
 | Resend | resend.com → dashboard |
 | Stripe | dashboard.stripe.com |
 | Atlassian Dev | developer.atlassian.com/console/myapps |
+| Jira (test) | edemgnagblodjro2.atlassian.net — plan Free, espace "AgentHub Demo" |
 | Intuit Dev | developer.intuit.com |
+
+---
+
+## Instance Jira de test
+
+- **Site :** `edemgnagblodjro2.atlassian.net`
+- **Plan :** Free (10 users, permanent)
+- **Espace :** AgentHub Demo (Scrum) — types : Task · Story · Feature · Request · Bug
+- **Statuts :** To Do → In Progress → In Review → Done
+- **OAuth App :** developer.atlassian.com/console/myapps
+- **Callback :** `https://agenthub.nexhire.ca/api/connectors/oauth/callback`
+- **Env vars Render :** `JIRA_CLIENT_ID` · `JIRA_CLIENT_SECRET` · `JIRA_REDIRECT_URI`
+
+> ⚠️ Passer au plan **Standard** (7 $/user/mois) quand un client dépasse 10 users ou a besoin d'automatisations avancées.
