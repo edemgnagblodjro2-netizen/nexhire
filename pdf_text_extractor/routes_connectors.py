@@ -532,9 +532,18 @@ def ping_connector(
                 from connector_loader import refresh_oauth
                 _TOKEN_URL = "https://auth.atlassian.com/oauth/token"
                 creds = refresh_oauth(creds, _, _TOKEN_URL, "JIRA_CLIENT_ID", "JIRA_CLIENT_SECRET")
-                cloud_id, err = _get_cloud_id(creds)
+                # Vérifie les scopes réels du token via accessible-resources
+                r_res = httpx.get(
+                    "https://api.atlassian.com/oauth/token/accessible-resources",
+                    headers={**bearer(creds), "Accept": "application/json"},
+                    timeout=10,
+                )
+                resources = r_res.json() if r_res.status_code == 200 else []
+                token_scopes = resources[0].get("scopes", []) if resources else []
+                cloud_id = resources[0].get("id") if resources else None
                 if not cloud_id:
-                    return {"ok": False, "mode": "oauth", "cloud_id": None, "error": err}
+                    return {"ok": False, "mode": "oauth", "token_scopes": token_scopes,
+                            "error": f"accessible-resources HTTP {r_res.status_code}"}
                 # Test search
                 search_url = f"https://api.atlassian.com/ex/jira/{cloud_id}/rest/api/3/issue/search"
                 rs = httpx.post(
@@ -550,6 +559,7 @@ def ping_connector(
                     "ok": search_ok,
                     "mode": "oauth",
                     "cloud_id": cloud_id,
+                    "token_scopes": token_scopes,
                     "search_status": rs.status_code,
                     "search_total": rs.json().get("total") if search_ok else None,
                     "search_error": None if search_ok else rs.text[:400],
