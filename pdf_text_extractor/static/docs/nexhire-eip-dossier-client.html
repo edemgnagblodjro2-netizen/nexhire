@@ -370,6 +370,17 @@
 
   .page-num { font-size: 10px; color: #94a3b8; text-align: right; margin-top: auto; padding-top: 24px; }
 
+  /* ── QUESTIONNAIRE ──────────────────────────────────────── */
+  .q-table { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-bottom: 12px; }
+  .q-col-header th { padding: 6px 10px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--slate); background: #f8fafc; border-bottom: 2px solid var(--border); text-align: center; }
+  .q-col-header th:nth-child(2) { text-align: left; }
+  .q-shdr td { padding: 5px 10px; font-weight: 800; font-size: 10px; color: #fff; letter-spacing: .06em; text-transform: uppercase; }
+  .q-row td { padding: 5px 8px; border-bottom: 1px solid #f1f5f9; vertical-align: top; line-height: 1.4; }
+  .q-row:nth-child(even) td { background: #f8fafc; }
+  .q-num { width: 22px; font-weight: 700; font-size: 9.5px; color: var(--slate); white-space: nowrap; }
+  .q-text { color: var(--navy); }
+  .q-cb { width: 36px; text-align: center; font-size: 13px; color: #cbd5e1; }
+
   /* Print button */
   .print-btn {
     position: fixed;
@@ -436,7 +447,131 @@
 
 
 <!-- ══════════════════════════════════════════════════════════════════════════ -->
-<!-- PAGE 2 — LE PROBLÈME ET LA SOLUTION                                        -->
+<!-- PAGE 2 — QUESTIONNAIRE PARTIE 1                                             -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <div class="page-header-brand">NexHire EIP</div>
+      <div class="page-header-section">Évaluation organisationnelle</div>
+    </div>
+
+    <span class="section-label">Auto-diagnostic</span>
+    <h1 class="section-title">Où en êtes-vous<br>aujourd'hui ?</h1>
+    <p class="section-sub" style="margin-bottom:16px">
+      Ce questionnaire vous permet d'identifier rapidement vos zones à risque et vos opportunités d'optimisation. Aucune bonne ou mauvaise réponse — seulement une image honnête de votre situation actuelle.
+    </p>
+
+    <table class="q-table">
+      <tr class="q-col-header">
+        <th style="width:22px">#</th>
+        <th>Question</th>
+        <th>Oui</th>
+        <th>Partiel</th>
+        <th>Non</th>
+      </tr>
+
+      <tr class="q-shdr"><td colspan="5" style="background:#1e3a5f">📋 Gouvernance des licences et des accès</td></tr>
+      <tr class="q-row"><td class="q-num">1.</td><td class="q-text">Savez-vous exactement combien de licences Microsoft 365, Google Workspace ou autres SaaS votre organisation paie actuellement ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">2.</td><td class="q-text">Savez-vous combien de ces licences sont réellement utilisées chaque mois ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">3.</td><td class="q-text">Avez-vous déjà identifié des licences payées mais non utilisées ou sous-utilisées ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">4.</td><td class="q-text">Disposez-vous d'un processus formel pour retirer rapidement les accès des employés qui quittent l'organisation ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">5.</td><td class="q-text">Êtes-vous certain qu'aucun ancien employé ne possède encore un accès actif à vos systèmes ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">6.</td><td class="q-text">Savez-vous quels utilisateurs disposent de privilèges administratifs élevés dans votre environnement informatique ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">7.</td><td class="q-text">Tous vos comptes administrateurs utilisent-ils l'authentification multifactorielle (MFA) ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+
+      <tr class="q-shdr"><td colspan="5" style="background:#14532d">💰 Gestion des coûts et des abonnements</td></tr>
+      <tr class="q-row"><td class="q-num">8.</td><td class="q-text">Disposez-vous d'une vue centralisée de tous les logiciels et abonnements utilisés par votre organisation ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">9.</td><td class="q-text">Savez-vous quels départements consomment le plus de licences, d'outils ou de services numériques ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">10.</td><td class="q-text">Êtes-vous capable d'identifier rapidement les dépenses informatiques qui pourraient être réduites ou optimisées ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">11.</td><td class="q-text">Disposez-vous d'indicateurs permettant de mesurer le retour sur investissement de vos outils numériques ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">12.</td><td class="q-text">Savez-vous quels contrats logiciels arriveront à échéance dans les 90 prochains jours ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+
+      <tr class="q-shdr"><td colspan="5" style="background:#7f1d1d">🔐 Sécurité et conformité</td></tr>
+      <tr class="q-row"><td class="q-num">13.</td><td class="q-text">Êtes-vous capable d'identifier rapidement les comptes inactifs ou à risque dans votre organisation ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">14.</td><td class="q-text">Disposez-vous d'un tableau de bord centralisé des risques de sécurité ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">15.</td><td class="q-text">Savez-vous quels appareils ne respectent pas les politiques de conformité de votre organisation ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">16.</td><td class="q-text">Êtes-vous en mesure de démontrer rapidement votre niveau de conformité lors d'un audit interne ou externe ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">17.</td><td class="q-text">Les journaux d'audit de vos systèmes sont-ils centralisés et facilement consultables ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+    </table>
+
+    <div style="font-size:10px;color:var(--slate);font-style:italic;text-align:right;margin-top:4px">Suite page suivante →</div>
+    <div class="page-num">2 / 9</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 3 — QUESTIONNAIRE PARTIE 2 + SCORING                                  -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <div class="page-header-brand">NexHire EIP</div>
+      <div class="page-header-section">Évaluation organisationnelle (suite)</div>
+    </div>
+
+    <table class="q-table">
+      <tr class="q-col-header">
+        <th style="width:22px">#</th>
+        <th>Question</th>
+        <th>Oui</th>
+        <th>Partiel</th>
+        <th>Non</th>
+      </tr>
+
+      <tr class="q-shdr"><td colspan="5" style="background:#4c1d95">👥 Ressources humaines et gouvernance des identités</td></tr>
+      <tr class="q-row"><td class="q-num">18.</td><td class="q-text">Combien de temps faut-il actuellement pour intégrer un nouvel employé dans tous vos systèmes ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">19.</td><td class="q-text">Combien de temps faut-il pour désactiver complètement les accès d'un employé quittant l'organisation ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">20.</td><td class="q-text">Les rôles et permissions accordés aux employés sont-ils régulièrement révisés ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">21.</td><td class="q-text">Disposez-vous d'une visibilité complète sur les accès accordés à vos employés, consultants et fournisseurs externes ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+
+      <tr class="q-shdr"><td colspan="5" style="background:#78350f">⚙️ Gestion opérationnelle</td></tr>
+      <tr class="q-row"><td class="q-num">22.</td><td class="q-text">Disposez-vous d'une vue consolidée des principaux indicateurs de performance de votre organisation ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">23.</td><td class="q-text">Les responsables de département disposent-ils des informations nécessaires pour prendre des décisions rapidement ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">24.</td><td class="q-text">Êtes-vous capable d'identifier les services ou départements qui consomment le plus de ressources ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">25.</td><td class="q-text">Les informations nécessaires à la prise de décision sont-elles réparties dans plusieurs systèmes ou centralisées ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+
+      <tr class="q-shdr"><td colspan="5" style="background:#1e1b4b">🎯 Vision stratégique</td></tr>
+      <tr class="q-row"><td class="q-num">26.</td><td class="q-text">Si vous deviez réduire vos dépenses opérationnelles de 10 % cette année, savez-vous précisément où agir en priorité ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">27.</td><td class="q-text">Pensez-vous que votre organisation exploite pleinement les outils numériques qu'elle paie actuellement ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">28.</td><td class="q-text">Combien de temps votre équipe consacre-t-elle chaque mois à rechercher manuellement des informations dans différents systèmes ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">29.</td><td class="q-text">Avez-vous une vision claire des risques financiers, opérationnels et technologiques de votre organisation ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+      <tr class="q-row"><td class="q-num">30.</td><td class="q-text">Si une décision stratégique devait être prise aujourd'hui, disposez-vous immédiatement des données nécessaires pour la justifier ?</td><td class="q-cb">□</td><td class="q-cb">□</td><td class="q-cb">□</td></tr>
+    </table>
+
+    <div style="margin-top:16px">
+      <div style="font-size:11px;font-weight:700;color:var(--navy);margin-bottom:10px">Interprétation de vos résultats</div>
+      <div class="grid-3" style="gap:10px">
+        <div style="background:#fef9c3;border:1.5px solid #fde047;border-radius:var(--radius);padding:12px 14px">
+          <div style="font-size:12px;font-weight:800;color:#854d0e;margin-bottom:4px">20 « Non » ou plus</div>
+          <div style="font-size:10.5px;color:#78350f;line-height:1.5">Risque élevé. Votre organisation présente des lacunes significatives en gouvernance IT, sécurité et visibilité opérationnelle.</div>
+        </div>
+        <div style="background:#dcfce7;border:1.5px solid #86efac;border-radius:var(--radius);padding:12px 14px">
+          <div style="font-size:12px;font-weight:800;color:#14532d;margin-bottom:4px">10 à 19 « Non »</div>
+          <div style="font-size:10.5px;color:#14532d;line-height:1.5">Marge d'amélioration. Des opportunités concrètes d'optimisation et de réduction des risques sont identifiables.</div>
+        </div>
+        <div style="background:#eff6ff;border:1.5px solid #93c5fd;border-radius:var(--radius);padding:12px 14px">
+          <div style="font-size:12px;font-weight:800;color:#1d4ed8;margin-bottom:4px">Moins de 10 « Non »</div>
+          <div style="font-size:10.5px;color:#1d4ed8;line-height:1.5">Bonne base. NexHire EIP consolide votre visibilité et vous aide à anticiper les prochains enjeux.</div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(135deg,#1e1b4b,#2563eb);border-radius:var(--radius);padding:14px 20px;margin-top:12px;color:#fff;display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:12px;font-weight:700">NexHire EIP répond à chacune de ces questions — automatiquement.</div>
+          <div style="font-size:10.5px;color:rgba(255,255,255,.7);margin-top:3px">Connectez vos systèmes. Obtenez les réponses en temps réel.</div>
+        </div>
+        <div style="font-size:12px;font-weight:800;color:#818cf8;white-space:nowrap;margin-left:20px">agenthub.nexhire.ca</div>
+      </div>
+    </div>
+
+    <div class="page-num">3 / 9</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 4 — LE PROBLÈME ET LA SOLUTION                                        -->
 <!-- ══════════════════════════════════════════════════════════════════════════ -->
 <div class="page">
   <div class="inner">
@@ -499,7 +634,7 @@
       </div>
     </div>
 
-    <div class="page-num">2 / 7</div>
+    <div class="page-num">4 / 9</div>
   </div>
 </div>
 
@@ -605,7 +740,7 @@
       </div>
     </div>
 
-    <div class="page-num">3 / 7</div>
+    <div class="page-num">5 / 9</div>
   </div>
 </div>
 
@@ -697,7 +832,7 @@
       </div>
     </div>
 
-    <div class="page-num">4 / 7</div>
+    <div class="page-num">6 / 9</div>
   </div>
 </div>
 
@@ -774,7 +909,7 @@
       <div style="font-size:12px;color:var(--slate);margin-top:4px">Pour une PME de 50–200 employés avec Microsoft 365 actif</div>
     </div>
 
-    <div class="page-num">5 / 7</div>
+    <div class="page-num">7 / 9</div>
   </div>
 </div>
 
@@ -858,7 +993,7 @@
       </div>
     </div>
 
-    <div class="page-num">6 / 7</div>
+    <div class="page-num">8 / 9</div>
   </div>
 </div>
 
@@ -939,7 +1074,7 @@
       </div>
     </div>
 
-    <div class="page-num">7 / 7 · © 2026 NexHire Inc. · Confidentiel</div>
+    <div class="page-num">9 / 9 · © 2026 NexHire Inc. · Confidentiel</div>
   </div>
 </div>
 
