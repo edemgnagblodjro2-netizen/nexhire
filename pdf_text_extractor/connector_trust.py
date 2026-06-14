@@ -59,10 +59,10 @@ CONNECTOR_TRUST: dict[str, dict] = {
         "notes": "Google Cloud Console + compte Gmail personnel suffisant pour test",
     },
     "slack": {
-        "trust_level": 1,
+        "trust_level": 3,
         "can_sandbox": True,
-        "validated_at": None,
-        "notes": "Workspace Slack Free créable en 5 minutes",
+        "validated_at": "2026-06-14",
+        "notes": "OAuth v2 validé — bot scopes (channels:read, history, files, users) + user scope search:read séparé. auth.test + channels list OK.",
     },
     "servicenow": {
         "trust_level": 1,
