@@ -90,9 +90,10 @@ def _search_issues(
     if project:
         jql_parts.append(f'project = "{project}"')
 
-    jql = (" AND ".join(jql_parts) if jql_parts else "ORDER BY updated DESC")
     if jql_parts:
-        jql += " ORDER BY updated DESC"
+        jql = " AND ".join(jql_parts) + " ORDER BY updated DESC"
+    else:
+        jql = "project is not EMPTY ORDER BY updated DESC"
 
     try:
         r = httpx.get(

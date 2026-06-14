@@ -514,7 +514,7 @@ def ping_connector(
                 r2 = httpx.get(
                     f"{base_url}/rest/api/3/search/jql",
                     headers=headers,
-                    params={"jql": "ORDER BY updated DESC", "maxResults": 1,
+                    params={"jql": "project is not EMPTY ORDER BY updated DESC", "maxResults": 1,
                             "fields": "summary,status"},
                     timeout=12,
                 )
@@ -550,7 +550,7 @@ def ping_connector(
                 rs = httpx.get(
                     search_url,
                     headers={**bearer(creds), "Accept": "application/json"},
-                    params={"jql": "ORDER BY updated DESC", "maxResults": 1,
+                    params={"jql": "project is not EMPTY ORDER BY updated DESC", "maxResults": 1,
                             "fields": "summary,status"},
                     timeout=12,
                 )
