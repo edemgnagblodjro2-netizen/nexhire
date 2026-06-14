@@ -540,12 +540,13 @@ def ping_connector(
                 )
                 resources = r_res.json() if r_res.status_code == 200 else []
                 token_scopes = resources[0].get("scopes", []) if resources else []
-                cloud_id = resources[0].get("id") if resources else None
-                if not cloud_id:
+                cloud_id  = resources[0].get("id") if resources else None
+                cloud_url = (resources[0].get("url") or "").rstrip("/") if resources else ""
+                if not cloud_url:
                     return {"ok": False, "mode": "oauth", "token_scopes": token_scopes,
                             "error": f"accessible-resources HTTP {r_res.status_code}"}
-                # Test search
-                search_url = f"https://api.atlassian.com/ex/jira/{cloud_id}/rest/api/3/issue/search"
+                # Test search via URL directe (évite contrainte audience JWT)
+                search_url = f"{cloud_url}/rest/api/3/issue/search"
                 rs = httpx.post(
                     search_url,
                     headers={**bearer(creds), "Accept": "application/json",
@@ -559,7 +560,9 @@ def ping_connector(
                     "ok": search_ok,
                     "mode": "oauth",
                     "cloud_id": cloud_id,
+                    "cloud_url": cloud_url,
                     "token_scopes": token_scopes,
+                    "search_url": search_url,
                     "search_status": rs.status_code,
                     "search_total": rs.json().get("total") if search_ok else None,
                     "search_error": None if search_ok else rs.text[:400],

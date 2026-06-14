@@ -6,10 +6,8 @@ import base64
 import httpx
 from connector_loader import bearer, load_creds, refresh_oauth, save_creds
 
-_TOKEN_URL  = "https://auth.atlassian.com/oauth/token"
-_RESOURCES  = "https://api.atlassian.com/oauth/token/accessible-resources"
-_SEARCH_OAUTH = "https://api.atlassian.com/ex/jira/{cloud_id}/rest/api/3/issue/search"
-_SEARCH_PAT   = "{base_url}/rest/api/3/issue/search"
+_TOKEN_URL = "https://auth.atlassian.com/oauth/token"
+_RESOURCES = "https://api.atlassian.com/oauth/token/accessible-resources"
 
 
 # ── Auth helpers ──────────────────────────────────────────────────────────────
@@ -24,23 +22,27 @@ def _basic_auth(creds: dict) -> dict[str, str]:
             "Content-Type": "application/json"}
 
 
-def _get_cloud_id(creds: dict) -> tuple[str | None, str | None]:
-    """Retourne (cloud_id, error_detail) pour auth OAuth."""
+def _get_cloud_info(creds: dict) -> tuple[str | None, str | None, str | None]:
+    """Retourne (cloud_id, cloud_url, error_detail).
+
+    Utilise accessible-resources pour obtenir l'URL directe du site Jira.
+    L'URL directe (ex: https://site.atlassian.net) fonctionne avec les Bearer tokens
+    OAuth sans nécessiter la claim `aud: api.atlassian.com`.
+    """
     try:
         r = httpx.get(_RESOURCES, headers=bearer(creds), timeout=10)
         if r.status_code != 200:
-            return None, f"accessible-resources HTTP {r.status_code}: {r.text[:300]}"
+            return None, None, f"accessible-resources HTTP {r.status_code}: {r.text[:300]}"
         resources = r.json()
         if not resources:
-            return None, "accessible-resources: aucun site Jira accessible pour ce token"
-        # Préférer un resource ayant explicitement read:jira-work
+            return None, None, "accessible-resources: aucun site Jira accessible pour ce token"
         jira_res = next(
             (res for res in resources if "read:jira-work" in res.get("scopes", [])),
             resources[0],
         )
-        return jira_res["id"], None
+        return jira_res["id"], jira_res.get("url", "").rstrip("/"), None
     except Exception as exc:
-        return None, str(exc)
+        return None, None, str(exc)
 
 
 # ── Recherche principale ──────────────────────────────────────────────────────
@@ -54,31 +56,23 @@ def search_jira(
 
     # ── Mode API Token (Basic Auth) ───────────────────────────────────────────
     if _is_api_token(creds):
-        return _search_with_pat(creds, query, status, project, limit)
+        url = f"{creds['base_url'].rstrip('/')}/rest/api/3/issue/search"
+        return _search_issues(url, _basic_auth(creds), query, status, project, limit)
 
-    # ── Mode OAuth ────────────────────────────────────────────────────────────
+    # ── Mode OAuth — URL directe du site (évite la contrainte audience JWT) ──
     creds = refresh_oauth(creds, cid, _TOKEN_URL, "JIRA_CLIENT_ID", "JIRA_CLIENT_SECRET")
 
-    cloud_id = creds.get("cloud_id")
-    if not cloud_id:
-        cloud_id, cloud_err = _get_cloud_id(creds)
-        if not cloud_id:
+    cloud_url = creds.get("cloud_url")
+    if not cloud_url:
+        cloud_id, cloud_url, cloud_err = _get_cloud_info(creds)
+        if not cloud_url:
             return [{"error": f"Impossible d'accéder au cloud Jira — {cloud_err}"}]
-        creds["cloud_id"] = cloud_id
+        creds["cloud_id"]  = cloud_id
+        creds["cloud_url"] = cloud_url
         save_creds(cid, creds)
 
-    return _search_issues(
-        _SEARCH_OAUTH.format(cloud_id=cloud_id),
-        bearer(creds),
-        query, status, project, limit,
-    )
-
-
-def _search_with_pat(
-    creds: dict, query: str, status: str, project: str | None, limit: int
-) -> list[dict]:
-    url = _SEARCH_PAT.format(base_url=creds["base_url"].rstrip("/"))
-    return _search_issues(url, _basic_auth(creds), query, status, project, limit)
+    url = f"{cloud_url}/rest/api/3/issue/search"
+    return _search_issues(url, bearer(creds), query, status, project, limit)
 
 
 def _search_issues(
