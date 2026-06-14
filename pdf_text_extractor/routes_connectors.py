@@ -605,6 +605,31 @@ def ping_connector(
                 "error": r.text[:400],
             }
 
+        elif connector_type == "intune":
+            from connector_loader import load_creds
+            from intune_service import _get_token
+            import httpx
+            creds, _ = load_creds("intune", org_id)
+            if not creds:
+                return {"ok": False, "error": "Connecteur Intune non trouvé — sauvegarder tenant_id/client_id/client_secret."}
+            tenant_id     = creds.get("tenant_id", "").strip()
+            client_id     = creds.get("client_id", "").strip()
+            client_secret = creds.get("client_secret", "").strip()
+            if not tenant_id or not client_id or not client_secret:
+                return {"ok": False, "error": "Credentials incomplets."}
+            token = _get_token(tenant_id, client_id, client_secret)
+            # Test 1 : devices
+            r = httpx.get(
+                "https://graph.microsoft.com/v1.0/deviceManagement/managedDevices",
+                headers={"Authorization": f"Bearer {token}", "Accept": "application/json"},
+                params={"$top": 1, "$select": "id,deviceName,complianceState"},
+                timeout=12,
+            )
+            if r.status_code == 200:
+                devices = r.json().get("value", [])
+                return {"ok": True, "devices_status": 200, "sample_device": devices[0] if devices else None}
+            return {"ok": False, "devices_status": r.status_code, "error": r.text[:400]}
+
         return {"ok": False, "error": f"Ping non supporté pour le connecteur '{connector_type}'."}
 
     except Exception as exc:
