@@ -511,11 +511,11 @@ def ping_connector(
                             "http_status": r1.status_code, "error": r1.text[:300]}
                 account = r1.json().get("displayName")
                 # Test 2 : recherche d'issues
-                r2 = httpx.post(
+                r2 = httpx.get(
                     f"{base_url}/rest/api/3/issue/search",
                     headers=headers,
-                    json={"jql": "ORDER BY updated DESC", "maxResults": 1,
-                          "fields": ["summary", "status"]},
+                    params={"jql": "ORDER BY updated DESC", "maxResults": 1,
+                            "fields": "summary,status"},
                     timeout=12,
                 )
                 search_ok = r2.status_code == 200
@@ -547,12 +547,11 @@ def ping_connector(
                             "error": f"accessible-resources HTTP {r_res.status_code}"}
                 # Test search via URL directe (évite contrainte audience JWT)
                 search_url = f"{cloud_url}/rest/api/3/issue/search"
-                rs = httpx.post(
+                rs = httpx.get(
                     search_url,
-                    headers={**bearer(creds), "Accept": "application/json",
-                             "Content-Type": "application/json"},
-                    json={"jql": "ORDER BY updated DESC", "maxResults": 1,
-                          "fields": ["summary", "status"]},
+                    headers={**bearer(creds), "Accept": "application/json"},
+                    params={"jql": "ORDER BY updated DESC", "maxResults": 1,
+                            "fields": "summary,status"},
                     timeout=12,
                 )
                 search_ok = rs.status_code == 200

@@ -95,11 +95,11 @@ def _search_issues(
         jql += " ORDER BY updated DESC"
 
     try:
-        r = httpx.post(
+        r = httpx.get(
             url,
             headers=headers,
-            json={"jql": jql, "maxResults": limit,
-                  "fields": ["summary", "status", "priority", "assignee", "duedate", "project"]},
+            params={"jql": jql, "maxResults": limit,
+                    "fields": "summary,status,priority,assignee,duedate,project"},
             timeout=12,
         )
         if not r.is_success:
