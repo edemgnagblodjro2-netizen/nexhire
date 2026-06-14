@@ -41,10 +41,10 @@ CONNECTOR_TRUST: dict[str, dict] = {
         "notes": "Sandbox Intuit connecté — realm_id 9341457237782000, 20 factures réelles retournées (5852 CAD). QUICKBOOKS_SANDBOX=true sur Render.",
     },
     "salesforce": {
-        "trust_level": 1,
+        "trust_level": 3,
         "can_sandbox": True,
-        "validated_at": None,
-        "notes": "Salesforce Developer Edition — developer.salesforce.com (permanent)",
+        "validated_at": "2026-06-14",
+        "notes": "Developer Edition validé — orgfarm-cbcdb7cc80-dev-ed.develop.my.salesforce.com, 15 000 req/jour disponibles.",
     },
     "hubspot": {
         "trust_level": 1,
