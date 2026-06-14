@@ -71,10 +71,10 @@ CONNECTOR_TRUST: dict[str, dict] = {
         "notes": "Personal Developer Instance (PDI) — developer.servicenow.com (gratuit, 24h d'activation)",
     },
     "aws": {
-        "trust_level": 1,
+        "trust_level": 3,
         "can_sandbox": True,
-        "validated_at": None,
-        "notes": "AWS Free Tier 12 mois — Cost Explorer disponible même sur compte vide",
+        "validated_at": "2026-06-14",
+        "notes": "Free Tier validé — account 483772923489, IAM user nexhire-agent-api, region us-east-1, STS OK.",
     },
     "zendesk": {
         "trust_level": 1,
