@@ -231,6 +231,15 @@ def test_mock_hubspot():
         assert ok, msg
     run("hubspot", "mock_schema", _t)
 
+def test_mock_slack():
+    from agent_service import _mock_slack
+    def _t():
+        data = _mock_slack("rapport")
+        ok, msg = _assert_list_has_keys(data, ["canal", "auteur", "message"])
+        assert ok, msg
+        assert len(data) >= 1, "mock retourne une liste vide"
+    run("slack", "mock_schema", _t)
+
 def test_trust_manifest():
     """Vérifie que connector_trust.py couvre tous les connecteurs de VALID_TYPES."""
     from routes_connectors import VALID_TYPES
@@ -301,6 +310,33 @@ def test_real_m365(org_id: str):
         assert isinstance(data, list), f"attendu une liste, reçu {type(data).__name__}"
     run("microsoft_365", "real_search", _t)
 
+def test_real_slack(org_id: str):
+    """Requiert : Slack OAuth v2 connecté (bot token + user token search:read)."""
+    from slack_service import get_workspace_info, list_channels, search_slack
+
+    def _t_workspace():
+        info = get_workspace_info(org_id)
+        assert not info.get("error"), f"auth.test échoué : {info.get('error')}"
+        assert info.get("team"), "team manquant dans auth.test"
+        assert info.get("team_id"), "team_id manquant"
+    run("slack", "real_workspace_info", _t_workspace)
+
+    def _t_channels():
+        channels = list_channels(org_id, limit=10)
+        assert isinstance(channels, list), f"attendu une liste, reçu {type(channels).__name__}"
+        assert len(channels) >= 1, "aucun canal public retourné"
+        ok, msg = _assert_list_has_keys(channels, ["id", "name", "members"])
+        assert ok, msg
+    run("slack", "real_list_channels", _t_channels)
+
+    def _t_search():
+        results = search_slack(query="", org_id=org_id, limit=3)
+        assert isinstance(results, list), f"attendu une liste, reçu {type(results).__name__}"
+        # Accepte liste vide si workspace sans messages (pas d'erreur = OK)
+        if results and isinstance(results[0], dict):
+            assert "error" not in results[0], f"search_slack retourne une erreur : {results[0].get('error')}"
+    run("slack", "real_search_messages", _t_search)
+
 
 # ── Entrypoint ────────────────────────────────────────────────────────────────
 
@@ -321,6 +357,7 @@ def run_all_mocks(filter_connector: str | None = None):
         test_mock_aws,
         test_mock_crowdstrike,
         test_mock_hubspot,
+        test_mock_slack,
         test_trust_manifest,
         test_call_tool_none_fallback,
     ]
@@ -340,6 +377,7 @@ def run_real(connector: str, org_id: str):
         "jira":        lambda: test_real_jira(org_id),
         "quickbooks":  lambda: test_real_quickbooks(org_id),
         "microsoft_365": lambda: test_real_m365(org_id),
+        "slack":         lambda: test_real_slack(org_id),
     }
 
     fn = real_tests.get(connector)
