@@ -8239,7 +8239,7 @@ async function loadDirectionAggregate() {
   const activeConns = uniqueConns.filter(c => c.status === "connected").length;
   const _connHtml =
     (uniqueConns.length
-      ? uniqueConns.slice(0, 5).map(c => {
+      ? uniqueConns.map(c => {
           const ok = c.status === "connected";
           const label = _CONN_LABELS[c.connector_type] || c.connector_type;
           return `<div class="eid-list-row">
