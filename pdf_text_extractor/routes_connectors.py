@@ -405,6 +405,7 @@ async def save_credentials(
                        encrypted_credentials = %s,
                        connected_at = %s,
                        last_error = NULL,
+                       token_expires_at = NULL,
                        updated_at = %s
                    WHERE id = %s""",
                 (encrypted, now, now, existing["id"]),
