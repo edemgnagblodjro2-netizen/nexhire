@@ -89,23 +89,20 @@ def _search_issues(
         if status in status_map:
             jql_parts.append(f'status = "{status_map[status]}"')
 
-    if query.strip():
-        clean = query.replace('"', '\\"').replace("\\", "\\\\")[:80]
-        jql_parts.append(f'summary ~ "{clean}"')
-
     jql = " AND ".join(jql_parts) + " ORDER BY updated DESC"
 
     try:
-        r = httpx.post(
+        r = httpx.get(
             url,
-            headers={**headers, "Content-Type": "application/json"},
-            json={"jql": jql, "maxResults": limit,
-                  "fields": ["summary", "status", "priority", "assignee", "duedate", "project"]},
+            headers=headers,
+            params={"jql": jql, "maxResults": limit,
+                    "fields": "summary,status,priority,assignee,duedate,project"},
             timeout=12,
         )
         if not r.is_success:
             return [{"error": f"Jira HTTP {r.status_code}: {r.text[:400]}", "source": "jira"}]
-        issues = r.json().get("issues") or r.json().get("values", [])
+        data   = r.json()
+        issues = data.get("issues") or data.get("values", [])
         return [
             {
                 "id":       issue.get("key"),
