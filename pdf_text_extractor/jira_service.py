@@ -56,7 +56,7 @@ def search_jira(
 
     # ── Mode API Token (Basic Auth) ───────────────────────────────────────────
     if _is_api_token(creds):
-        url = f"{creds['base_url'].rstrip('/')}/rest/api/3/search"
+        url = f"{creds['base_url'].rstrip('/')}/rest/api/3/search/jql"
         return _search_issues(url, _basic_auth(creds), query, status, project, limit)
 
     # ── Mode OAuth — URL directe du site (évite la contrainte audience JWT) ──
@@ -71,7 +71,7 @@ def search_jira(
         creds["cloud_url"] = cloud_url
         save_creds(cid, creds)
 
-    url = f"{cloud_url}/rest/api/3/search"
+    url = f"{cloud_url}/rest/api/3/search/jql"
     return _search_issues(url, bearer(creds), query, status, project, limit)
 
 

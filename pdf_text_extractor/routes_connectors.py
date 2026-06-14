@@ -512,7 +512,7 @@ def ping_connector(
                 account = r1.json().get("displayName")
                 # Test 2 : recherche d'issues
                 r2 = httpx.get(
-                    f"{base_url}/rest/api/3/search",
+                    f"{base_url}/rest/api/3/search/jql",
                     headers=headers,
                     params={"jql": "ORDER BY updated DESC", "maxResults": 1,
                             "fields": "summary,status"},
