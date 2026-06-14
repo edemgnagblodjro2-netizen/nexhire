@@ -529,9 +529,8 @@ def _document_or_404(store: DocumentStore, document_id: str) -> dict:
 
 
 app = create_app()
-if _logfire_token:
-    import logfire
-    logfire.instrument_fastapi(app)
+# logfire.instrument_fastapi désactivé — crash _IncludedRouter avec FastAPI 0.116+
+# Les spans manuels logfire.span() dans les routes restent actifs
 
 # ── Scheduler — rapport mensuel le 1er de chaque mois à 8h UTC ───────────────
 try:
