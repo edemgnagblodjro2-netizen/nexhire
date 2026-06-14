@@ -952,7 +952,7 @@ def create_department(
         )
         if row(cur):
             raise HTTPException(409, f"Un département « {payload.name} » existe déjà dans cette organisation.")
-        if payload.dept_type:
+        if payload.dept_type and payload.dept_type != "general":
             cur.execute(
                 "SELECT name FROM departments WHERE organization_id = %s AND dept_type = %s LIMIT 1",
                 (user.organization_id, payload.dept_type),
