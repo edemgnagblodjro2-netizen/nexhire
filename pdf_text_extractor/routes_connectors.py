@@ -656,6 +656,22 @@ def ping_connector(
                 "channels_total":  len(channels),
             }
 
+        elif connector_type == "hubspot":
+            from hubspot_service import get_hubspot_info
+            info = get_hubspot_info(org_id)
+            if info.get("error"):
+                return {"ok": False, "error": info["error"]}
+            return {
+                "ok":        True,
+                "portal_id": info.get("portal_id"),
+                "company":   info.get("company"),
+                "timezone":  info.get("timezone"),
+                "currency":  info.get("currency"),
+                "contacts":  info.get("contacts"),
+                "companies": info.get("companies"),
+                "deals":     info.get("deals"),
+            }
+
         elif connector_type == "servicenow":
             from servicenow_service import get_servicenow_info
             info = get_servicenow_info(org_id)

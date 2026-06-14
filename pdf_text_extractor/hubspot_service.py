@@ -8,6 +8,39 @@ _TOKEN_URL = "https://api.hubapi.com/oauth/v1/token"
 _BASE       = "https://api.hubapi.com"
 
 
+def get_hubspot_info(org_id: str) -> dict:
+    """Ping HubSpot — retourne le portail et les compteurs CRM."""
+    creds, cid = load_creds("hubspot", org_id)
+    if not creds:
+        return {"error": "HubSpot non connecté"}
+    creds = refresh_oauth(creds, cid, _TOKEN_URL, "HUBSPOT_CLIENT_ID", "HUBSPOT_CLIENT_SECRET")
+    try:
+        r = httpx.get(f"{_BASE}/account-info/v3/details",
+                      headers=bearer(creds), timeout=10)
+        if r.status_code != 200:
+            return {"error": f"HTTP {r.status_code} — {r.text[:200]}"}
+        info = r.json()
+        counts: dict = {}
+        for obj in ("contacts", "companies", "deals"):
+            try:
+                rc = httpx.post(f"{_BASE}/crm/v3/objects/{obj}/search",
+                                headers={**bearer(creds), "Content-Type": "application/json"},
+                                json={"limit": 1}, timeout=8)
+                if rc.status_code == 200:
+                    counts[obj] = rc.json().get("total", 0)
+            except Exception:
+                pass
+        return {
+            "portal_id":   info.get("portalId"),
+            "company":     info.get("companyName"),
+            "timezone":    info.get("timeZone"),
+            "currency":    info.get("companyCurrency"),
+            **counts,
+        }
+    except Exception as exc:
+        return {"error": str(exc)}
+
+
 def search_hubspot(
     query: str, org_id: str, object_type: str = "all", limit: int = 5
 ) -> list[dict]:
