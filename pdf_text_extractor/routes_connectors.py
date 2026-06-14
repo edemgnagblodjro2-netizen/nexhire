@@ -494,6 +494,38 @@ def ping_connector(
             return {"ok": ok, "http_status": resp.status_code,
                     "error": None if ok else f"HTTP {resp.status_code} — vérifiez vos credentials Autotask."}
 
+        elif connector_type == "jira":
+            from jira_service import _is_api_token, _basic_auth, _get_cloud_id
+            from connector_loader import load_creds, bearer
+            import httpx
+            creds, _ = load_creds("jira", org_id)
+            if not creds:
+                return {"ok": False, "error": "Connecteur Jira non trouvé en DB."}
+            if _is_api_token(creds):
+                base_url = creds["base_url"].rstrip("/")
+                resp = httpx.get(
+                    f"{base_url}/rest/api/3/myself",
+                    headers=_basic_auth(creds),
+                    timeout=10,
+                )
+                ok = resp.status_code == 200
+                body = resp.json() if ok else resp.text[:300]
+                return {
+                    "ok": ok,
+                    "http_status": resp.status_code,
+                    "mode": "api_token",
+                    "account": body.get("displayName") if ok else None,
+                    "error": None if ok else f"HTTP {resp.status_code}: {body}",
+                }
+            else:
+                cloud_id, err = _get_cloud_id(creds)
+                return {
+                    "ok": bool(cloud_id),
+                    "mode": "oauth",
+                    "cloud_id": cloud_id,
+                    "error": err,
+                }
+
         return {"ok": False, "error": f"Ping non supporté pour le connecteur '{connector_type}'."}
 
     except Exception as exc:
