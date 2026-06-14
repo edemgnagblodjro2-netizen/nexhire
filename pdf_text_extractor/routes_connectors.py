@@ -656,6 +656,18 @@ def ping_connector(
                 "channels_total":  len(channels),
             }
 
+        elif connector_type == "servicenow":
+            from servicenow_service import get_servicenow_info
+            info = get_servicenow_info(org_id)
+            if info.get("error"):
+                return {"ok": False, "error": info["error"]}
+            return {
+                "ok":               True,
+                "instance_url":     info.get("instance_url"),
+                "username":         info.get("username"),
+                "incidents_actifs": info.get("incidents_actifs"),
+            }
+
         elif connector_type == "salesforce":
             from salesforce_service import get_salesforce_info
             info = get_salesforce_info(org_id)

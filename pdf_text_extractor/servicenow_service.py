@@ -9,6 +9,34 @@ import httpx
 from connector_loader import load_creds
 
 
+def get_servicenow_info(org_id: str) -> dict:
+    """Ping ServiceNow — vérifie l'auth et retourne le nombre d'incidents."""
+    creds, _ = load_creds("servicenow", org_id)
+    if not creds:
+        return {"error": "ServiceNow non connecté"}
+    instance = creds.get("instance_url", "").rstrip("/")
+    username = creds.get("username", "")
+    password = creds.get("password", "")
+    if not instance or not username:
+        return {"error": "Credentials ServiceNow incomplets"}
+    try:
+        r = httpx.get(
+            f"{instance}/api/now/table/incident",
+            auth=(username, password),
+            params={"sysparm_limit": 1, "sysparm_fields": "number",
+                    "sysparm_query": "active=true"},
+            headers={"Accept": "application/json"},
+            timeout=12,
+        )
+        if r.status_code == 401:
+            return {"error": "Authentification échouée — vérifiez username/password"}
+        r.raise_for_status()
+        total = int(r.headers.get("X-Total-Count", 0))
+        return {"instance_url": instance, "username": username, "incidents_actifs": total}
+    except Exception as exc:
+        return {"error": str(exc)}
+
+
 def search_servicenow(
     query: str, org_id: str, status: str = "all", priority: str = "all", limit: int = 5
 ) -> list[dict]:
