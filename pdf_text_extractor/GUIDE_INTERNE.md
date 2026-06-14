@@ -46,15 +46,13 @@ Document opérationnel pour l'équipe NexHire. Mis à jour le 2026-06-12.
 - [ ] Lancer : `python smoke_tests.py --real intune <org_id_test>`
 - [ ] Si OK → mettre `trust_level: 3` dans `connector_trust.py`
 
-#### Jira
-- [ ] Créer site Jira Free sur [atlassian.com](https://atlassian.com) (10 users, permanent)
-- [ ] Créer OAuth App sur [developer.atlassian.com/console/myapps](https://developer.atlassian.com/console/myapps)
-  - Type : OAuth 2.0 (3LO)
-  - Callback : `https://agenthub.nexhire.ca/api/connectors/oauth/callback`
-  - Scopes : `read:jira-work read:jira-user read:confluence-content.all read:confluence-space.summary offline_access`
-- [ ] Ajouter sur Render : `JIRA_CLIENT_ID`, `JIRA_CLIENT_SECRET`, `JIRA_REDIRECT_URI`
-- [ ] Lancer : `python smoke_tests.py --real jira <org_id_test>`
-- [ ] Si OK → mettre `trust_level: 3` dans `connector_trust.py`
+#### Jira ✅
+- [x] Site Jira Free : `edemgnagblodjro2.atlassian.net` (espace AgentHub Demo)
+- [x] Auth via API Token (Basic Auth) — OAuth Bearer non supporté sur URL directe sans claim JWT audience
+- [x] Endpoint `/rest/api/3/search/jql` (GET) — `/rest/api/3/search` est déprécié (410)
+- [x] Agent retourne tickets réels (SCRUM-2, SCRUM-5, SCRUM-6 validés 2026-06-14)
+- [x] `trust_level: 3` dans `connector_trust.py`
+- ⚠️ Token API expire le 2026-06-20 — renouveler avant cette date sur id.atlassian.com
 
 #### QuickBooks
 - [ ] Créer compte Intuit Developer sur [developer.intuit.com](https://developer.intuit.com)
@@ -161,7 +159,7 @@ Si un test échoue, ne pas déployer avant correction.
 |---|---|---|---|
 | Microsoft 365 | 5 — Validé prod | Oui | 2026-06-12 |
 | Intune | 1 — Code only | Oui | — |
-| Jira | 1 — Code only | Oui | — |
+| Jira | 3 — Données collectées | Oui | 2026-06-14 |
 | QuickBooks | 1 — Code only | Oui | — |
 | Salesforce | 1 — Code only | Oui | — |
 | HubSpot | 1 — Code only | Oui | — |
