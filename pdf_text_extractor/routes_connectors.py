@@ -568,6 +568,43 @@ def ping_connector(
                     "search_error": None if search_ok else rs.text[:400],
                 }
 
+        elif connector_type == "quickbooks":
+            from connector_loader import load_creds, refresh_oauth, bearer
+            import httpx
+            _QB_TOKEN_URL = "https://oauth.platform.intuit.com/oauth2/v1/tokens/bearer"
+            creds, cid = load_creds("quickbooks", org_id)
+            if not creds:
+                return {"ok": False, "error": "Connecteur QuickBooks non trouvé en DB."}
+            creds = refresh_oauth(creds, cid, _QB_TOKEN_URL, "QUICKBOOKS_CLIENT_ID", "QUICKBOOKS_CLIENT_SECRET")
+            realm_id = creds.get("realm_id", "")
+            sandbox  = creds.get("sandbox", True)
+            base     = "https://sandbox-quickbooks.api.intuit.com/v3/company" if sandbox else "https://quickbooks.api.intuit.com/v3/company"
+            if not realm_id:
+                return {"ok": False, "error": "realm_id manquant — reconnectez QuickBooks via OAuth."}
+            # Test : récupère les infos de la company
+            r = httpx.get(
+                f"{base}/{realm_id}/companyinfo/{realm_id}",
+                headers={**bearer(creds), "Accept": "application/json"},
+                params={"minorversion": "65"},
+                timeout=12,
+            )
+            if r.status_code == 200:
+                info = r.json().get("CompanyInfo", {})
+                return {
+                    "ok": True,
+                    "sandbox": sandbox,
+                    "realm_id": realm_id,
+                    "company_name": info.get("CompanyName"),
+                    "country": info.get("Country"),
+                    "fiscal_year_start": info.get("FiscalYearStartMonth"),
+                }
+            return {
+                "ok": False,
+                "sandbox": sandbox,
+                "http_status": r.status_code,
+                "error": r.text[:400],
+            }
+
         return {"ok": False, "error": f"Ping non supporté pour le connecteur '{connector_type}'."}
 
     except Exception as exc:

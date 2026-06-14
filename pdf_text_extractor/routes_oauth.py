@@ -381,8 +381,11 @@ def oauth_callback(
     if connector_type == "salesforce" and "instance_url" in tokens:
         credentials["instance_url"] = tokens["instance_url"]
     # QuickBooks realmId (company ID) arrives as a query param, not in the token
+    # QUICKBOOKS_SANDBOX=true → sandbox-quickbooks.api.intuit.com (dev/test)
     if connector_type == "quickbooks" and realmId:
         credentials["realm_id"] = realmId
+        import os
+        credentials["sandbox"] = os.environ.get("QUICKBOOKS_SANDBOX", "true").lower() == "true"
     # Slack v2: bot token is under access_token but authed_user has a separate user token
     if connector_type == "slack" and "authed_user" in tokens:
         credentials["authed_user_token"] = tokens["authed_user"].get("access_token", "")

@@ -8,12 +8,17 @@ from __future__ import annotations
 import httpx
 from connector_loader import bearer, load_creds, refresh_oauth
 
-_TOKEN_URL = "https://oauth.platform.intuit.com/oauth2/v1/tokens/bearer"
-_BASE      = "https://quickbooks.api.intuit.com/v3/company"
+_TOKEN_URL   = "https://oauth.platform.intuit.com/oauth2/v1/tokens/bearer"
+_BASE_PROD   = "https://quickbooks.api.intuit.com/v3/company"
+_BASE_SANDBOX= "https://sandbox-quickbooks.api.intuit.com/v3/company"
+
+
+def _base(creds: dict) -> str:
+    return _BASE_SANDBOX if creds.get("sandbox") else _BASE_PROD
 
 
 def _query(realm_id: str, creds: dict, sql: str) -> list[dict]:
-    url = f"{_BASE}/{realm_id}/query"
+    url = f"{_base(creds)}/{realm_id}/query"
     r = httpx.get(url, headers={**bearer(creds), "Accept": "application/json"},
                   params={"query": sql, "minorversion": "65"}, timeout=12)
     r.raise_for_status()
@@ -73,7 +78,7 @@ def query_quickbooks(category: str, org_id: str,
             }
 
         if category in ("balance_sheet", "bilan"):
-            url = f"{_BASE}/{realm_id}/reports/BalanceSheet"
+            url = f"{_base(creds)}/{realm_id}/reports/BalanceSheet"
             r = httpx.get(url, headers={**bearer(creds), "Accept": "application/json"},
                           params={"minorversion": "65"}, timeout=15)
             r.raise_for_status()
@@ -87,7 +92,7 @@ def query_quickbooks(category: str, org_id: str,
             }
 
         if category in ("profit_loss", "compte_résultat"):
-            url = f"{_BASE}/{realm_id}/reports/ProfitAndLoss"
+            url = f"{_base(creds)}/{realm_id}/reports/ProfitAndLoss"
             r = httpx.get(url, headers={**bearer(creds), "Accept": "application/json"},
                           params={"minorversion": "65"}, timeout=15)
             r.raise_for_status()
