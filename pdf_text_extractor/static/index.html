@@ -35,7 +35,7 @@
   <meta name="twitter:description" content="Connect your systems. Detect savings. Reduce risk. Optimize every department." />
   <meta name="twitter:image"       content="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&h=630&q=80" />
 
-  <link rel="stylesheet" href="/static/styles.css?v=20260608d" />
+  <link rel="stylesheet" href="/static/styles.css?v=20260614a" />
 </head>
 <body>
 
@@ -1050,101 +1050,137 @@
     <button class="dismiss" id="trial-dismiss" title="Fermer">✕</button>
   </div>
 
-  <!-- Top nav -->
-  <nav class="topnav">
-    <a href="/" class="nav-brand" style="text-decoration:none;cursor:pointer">
-      <div class="brand-mark">N</div>
-      <div style="display:flex;flex-direction:column;line-height:1.1">
-        <span>Nex<span style="color:#818CF8">hire</span> <span class="eip-badge" style="font-size:.55rem;padding:1px 5px;vertical-align:middle">EIP</span></span>
-        <span style="font-size:.55rem;color:rgba(255,255,255,.45);font-weight:400;letter-spacing:.03em">Enterprise Intelligence Platform</span>
-      </div>
-      <span class="org-logo-sep hidden" id="org-logo-sep">|</span>
-      <img id="org-logo-topnav" class="org-logo-topnav hidden" alt="Logo organisation" />
-    </a>
-    <div class="nav-tabs" role="tablist">
-      <button class="tab-btn active" data-tab="agent"      role="tab" data-i18n="app.tab.agent">Assistant IA</button>
-      <button class="tab-btn admin-only hidden" data-tab="connectors" role="tab" data-i18n="app.tab.connectors">Connecteurs</button>
-      <button class="tab-btn"        data-tab="documents"  role="tab" data-i18n="app.tab.documents">Documents</button>
-      <button class="tab-btn admin-only hidden" data-tab="org"          role="tab">🏛️ Organisation</button>
-      <button class="tab-btn admin-only hidden" data-tab="audit"        role="tab" data-i18n="app.tab.audit">Audit</button>
-      <button class="tab-btn admin-only hidden" data-tab="security"     role="tab">🔐 Sécurité</button>
-      <button class="tab-btn admin-only hidden" data-tab="marketplace"  role="tab">🏪 Marketplace</button>
-      <button class="tab-btn hidden" id="superadmin-tab-btn" data-tab="superadmin" role="tab">🛡️ Super Admin</button>
-      <button class="tab-btn"        data-tab="stats"      role="tab" data-i18n="app.tab.stats">Statistiques</button>
-      <button class="tab-btn"        data-tab="parc-it"    role="tab" data-i18n="app.tab.parc">Parc IT</button>
-      <button class="tab-btn"        data-tab="optim"      role="tab" data-i18n="app.tab.optim">Optimisation IA</button>
-    </div>
-    <div class="nav-right">
-      <!-- Command palette trigger -->
-      <button class="cmd-palette-btn" id="cmd-palette-btn" onclick="openCmdPalette()" title="Recherche rapide (Ctrl+K)">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <span class="cmd-palette-hint">Ctrl+K</span>
-      </button>
-      <!-- Notification bell -->
-      <div class="notif-wrap">
-        <button class="notif-btn" id="notif-btn" title="Notifications">
-          🔔
-          <span class="notif-dot" id="notif-dot"></span>
-        </button>
-        <div class="notif-dropdown hidden" id="notif-dropdown">
-          <div class="notif-header" data-i18n="app.notif.title">Notifications</div>
-          <div id="notif-list"></div>
+  <!-- App layout: sidebar + right panel -->
+  <div class="app-layout">
+
+    <!-- ══ SIDEBAR ══ -->
+    <aside class="app-sidebar" id="app-sidebar">
+
+      <!-- Brand -->
+      <a href="/" class="sidebar-brand" style="text-decoration:none">
+        <div class="brand-mark">N</div>
+        <div style="display:flex;flex-direction:column;line-height:1.1">
+          <span>Nex<span style="color:#818CF8">hire</span> <span class="eip-badge" style="font-size:.52rem;padding:1px 5px;vertical-align:middle">EIP</span></span>
+          <span style="font-size:.5rem;color:rgba(255,255,255,.35);font-weight:400;letter-spacing:.03em">Enterprise Intelligence Platform</span>
+        </div>
+      </a>
+      <span class="org-logo-sep hidden" id="org-logo-sep" style="color:rgba(255,255,255,.3);padding:0 12px;font-size:.75rem">·</span>
+      <img id="org-logo-topnav" class="org-logo-topnav hidden" alt="Logo organisation" style="margin:0 12px 8px;max-height:28px;max-width:160px;object-fit:contain;border-radius:4px;background:#fff;padding:2px 4px" />
+
+      <!-- Main nav -->
+      <div class="sidebar-section-label">Principal</div>
+      <nav class="sidebar-nav" role="tablist">
+        <button class="tab-btn active" data-tab="agent"    role="tab" data-i18n="app.tab.agent">🤖 Assistant IA</button>
+        <button class="tab-btn"  data-tab="optim"  role="tab" data-i18n="app.tab.optim">📊 Optimisation IA</button>
+        <button class="tab-btn"  data-tab="parc-it" role="tab" data-i18n="app.tab.parc">💻 Parc IT</button>
+        <button class="tab-btn"  data-tab="documents" role="tab" data-i18n="app.tab.documents">📄 Documents</button>
+        <button class="tab-btn"  data-tab="stats"  role="tab" data-i18n="app.tab.stats">📈 Statistiques</button>
+      </nav>
+
+      <!-- Admin nav -->
+      <div class="sidebar-section-label admin-only hidden">Administration</div>
+      <nav class="sidebar-nav admin-only hidden" role="tablist">
+        <button class="tab-btn admin-only hidden" data-tab="connectors" role="tab" data-i18n="app.tab.connectors">🔌 Connecteurs</button>
+        <button class="tab-btn admin-only hidden" data-tab="org"        role="tab">🏛️ Organisation</button>
+        <button class="tab-btn admin-only hidden" data-tab="audit"      role="tab" data-i18n="app.tab.audit">🔍 Audit</button>
+        <button class="tab-btn admin-only hidden" data-tab="security"   role="tab">🔐 Sécurité</button>
+        <button class="tab-btn admin-only hidden" data-tab="marketplace" role="tab">🏪 Marketplace</button>
+        <button class="tab-btn hidden" id="superadmin-tab-btn" data-tab="superadmin" role="tab">🛡️ Super Admin</button>
+      </nav>
+
+      <!-- Compte -->
+      <div class="sidebar-section-label">Compte</div>
+      <nav class="sidebar-nav" role="tablist">
+        <button class="tab-btn" data-tab="settings" role="tab" data-i18n="app.tab.settings">⚙️ Paramètres</button>
+        <button class="tab-btn admin-only hidden" data-tab="team" role="tab" data-i18n="app.tab.team">👥 Équipe</button>
+      </nav>
+
+      <!-- Workspace section (moved from workspace-bar) -->
+      <div id="workspace-bar" class="sidebar-workspace hidden">
+        <div class="workspace-bar-inner">
+          <div class="workspace-current">
+            <span class="workspace-dot" id="ws-dot"></span>
+            <span id="ws-label">Workspace</span>
+          </div>
+          <div class="workspace-chips" id="ws-chips"></div>
+          <button class="btn btn-outline btn-sm ws-marketplace-btn admin-only hidden"
+                  onclick="switchTab('marketplace')">🏪 Marketplace</button>
         </div>
       </div>
-      <!-- Quota indicator -->
-      <div class="quota-pill" id="quota-pill" title="Requêtes ce mois">
-        <div class="quota-bar-wrap"><div class="quota-bar" id="quota-bar"></div></div>
-        <span id="quota-text">—</span>
+
+      <!-- Sidebar bottom: quota -->
+      <div class="sidebar-bottom">
+        <div class="quota-pill" id="quota-pill" title="Requêtes ce mois">
+          <div class="quota-bar-wrap"><div class="quota-bar" id="quota-bar"></div></div>
+          <span id="quota-text">—</span>
+        </div>
       </div>
-      <!-- User dropdown -->
-      <div class="user-menu-wrap" id="user-menu-wrap">
-        <button class="user-chip" id="user-chip-btn" onclick="toggleUserMenu()" aria-haspopup="true" aria-expanded="false">
-          <div class="user-avatar" id="user-avatar">?</div>
-          <span class="user-email-nav" id="nav-user-email"></span>
-          <svg class="user-menu-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </aside>
+
+    <!-- Sidebar backdrop (mobile) -->
+    <div class="sidebar-backdrop" id="sidebar-backdrop" onclick="closeSidebar()"></div>
+
+    <!-- ══ RIGHT PANEL ══ -->
+    <div class="app-right">
+
+      <!-- Top bar -->
+      <header class="app-topbar">
+        <button class="sidebar-toggle" onclick="openSidebar()" title="Menu" aria-label="Ouvrir le menu">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
-        <div class="user-menu-dropdown hidden" id="user-menu-dropdown" role="menu">
-          <div class="user-menu-header">
-            <div class="user-avatar user-avatar-lg" id="user-avatar-menu">?</div>
-            <div>
-              <div class="user-menu-email" id="user-menu-email-text"></div>
-              <span class="role-badge" id="nav-user-role"></span>
+        <div class="topbar-right">
+          <!-- Command palette -->
+          <button class="cmd-palette-btn" id="cmd-palette-btn" onclick="openCmdPalette()" title="Recherche rapide (Ctrl+K)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span class="cmd-palette-hint">Ctrl+K</span>
+          </button>
+          <!-- Notification bell -->
+          <div class="notif-wrap">
+            <button class="notif-btn" id="notif-btn" title="Notifications">
+              🔔
+              <span class="notif-dot" id="notif-dot"></span>
+            </button>
+            <div class="notif-dropdown hidden" id="notif-dropdown">
+              <div class="notif-header" data-i18n="app.notif.title">Notifications</div>
+              <div id="notif-list"></div>
             </div>
           </div>
-          <div class="user-menu-divider"></div>
-          <button class="user-menu-item" onclick="switchTab('settings');closeUserMenu()">
-            <span>⚙️</span> <span data-i18n="app.tab.settings">Paramètres</span>
-          </button>
-          <button class="user-menu-item admin-only hidden" onclick="switchTab('team');closeUserMenu()">
-            <span>👥</span> <span data-i18n="app.tab.team">Équipe</span>
-          </button>
-          <div class="user-menu-divider"></div>
-          <button class="user-menu-item" onclick="toggleLang();closeUserMenu()">
-            <span>🌐</span> <span id="user-menu-lang-label">Passer en anglais</span>
-          </button>
-          <button class="user-menu-item user-menu-item-danger" id="logout-btn">
-            <span>🚪</span> <span data-i18n="app.logout">Déconnexion</span>
-          </button>
+          <!-- User dropdown -->
+          <div class="user-menu-wrap" id="user-menu-wrap">
+            <button class="user-chip" id="user-chip-btn" onclick="toggleUserMenu()" aria-haspopup="true" aria-expanded="false">
+              <div class="user-avatar" id="user-avatar">?</div>
+              <span class="user-email-nav" id="nav-user-email"></span>
+              <svg class="user-menu-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="user-menu-dropdown hidden" id="user-menu-dropdown" role="menu">
+              <div class="user-menu-header">
+                <div class="user-avatar user-avatar-lg" id="user-avatar-menu">?</div>
+                <div>
+                  <div class="user-menu-email" id="user-menu-email-text"></div>
+                  <span class="role-badge" id="nav-user-role"></span>
+                </div>
+              </div>
+              <div class="user-menu-divider"></div>
+              <button class="user-menu-item" onclick="switchTab('settings');closeUserMenu()">
+                <span>⚙️</span> <span data-i18n="app.tab.settings">Paramètres</span>
+              </button>
+              <button class="user-menu-item admin-only hidden" onclick="switchTab('team');closeUserMenu()">
+                <span>👥</span> <span data-i18n="app.tab.team">Équipe</span>
+              </button>
+              <div class="user-menu-divider"></div>
+              <button class="user-menu-item" onclick="toggleLang();closeUserMenu()">
+                <span>🌐</span> <span id="user-menu-lang-label">Passer en anglais</span>
+              </button>
+              <button class="user-menu-item user-menu-item-danger" id="logout-btn">
+                <span>🚪</span> <span data-i18n="app.logout">Déconnexion</span>
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </nav>
+      </header>
 
-  <!-- Workspace bar -->
-  <div id="workspace-bar" class="workspace-bar hidden">
-    <div class="workspace-bar-inner">
-      <div class="workspace-current">
-        <span class="workspace-dot" id="ws-dot"></span>
-        <span id="ws-label">Workspace</span>
-      </div>
-      <div class="workspace-chips" id="ws-chips"></div>
-      <button class="btn btn-outline btn-sm ws-marketplace-btn admin-only hidden"
-              onclick="switchTab('marketplace')">🏪 Marketplace</button>
-    </div>
-  </div>
-
-  <!-- Main content -->
-  <main class="app-main">
+      <!-- Main content -->
+      <main class="app-main">
 
     <!-- ── AGENT ────────────────────────────────────────────────────────── -->
     <section id="tab-agent" class="tab-content" role="tabpanel">
@@ -2872,6 +2908,8 @@
     </section>
 
   </main>
+    </div><!-- /app-right -->
+  </div><!-- /app-layout -->
 
   <!-- ── Mobile Bottom Navigation ─────────────────────────────────────────── -->
   <nav id="mobile-bottom-nav" class="mobile-bottom-nav">
@@ -2953,7 +2991,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="/static/app.js?v=20260612m"></script>
+<script src="/static/app.js?v=20260614a"></script>
 <script>
   // Service Worker registration
   if ("serviceWorker" in navigator) {

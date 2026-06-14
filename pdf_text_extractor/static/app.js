@@ -9114,3 +9114,20 @@ function _obBuildChecklist() {
       <span>${it.label}${it.done ? "" : " — ignoré"}</span>
     </li>`).join("");
 }
+
+// ── Sidebar mobile toggle ──────────────────────────────────────────────────
+function openSidebar() {
+  $("app-sidebar")?.classList.add("open");
+  $("sidebar-backdrop")?.classList.add("visible");
+  document.body.style.overflow = "hidden";
+}
+function closeSidebar() {
+  $("app-sidebar")?.classList.remove("open");
+  $("sidebar-backdrop")?.classList.remove("visible");
+  document.body.style.overflow = "";
+}
+// Close sidebar when a tab is selected on mobile
+document.addEventListener("click", e => {
+  const btn = e.target.closest(".app-sidebar .tab-btn");
+  if (btn && window.innerWidth <= 768) closeSidebar();
+});

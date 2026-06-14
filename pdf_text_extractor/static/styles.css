@@ -4027,3 +4027,253 @@ tbody tr:hover { background: var(--blue-pale); transition: background .12s; }
 .ob-checklist li.done   { color: var(--success); }
 .ob-checklist li.skipped{ color: var(--slate); }
 .ob-checklist li .ob-check { font-size: 1rem; }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   APP SHELL — SIDEBAR LAYOUT
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/* App view fills the full viewport when active */
+#view-app:not(.hidden) {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* App layout: sidebar + right panel side by side */
+.app-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ── Sidebar ──────────────────────────────────────────────────────────────── */
+.app-sidebar {
+  width: 220px;
+  min-width: 220px;
+  background: linear-gradient(180deg, #0c1220 0%, #0f172a 100%);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  border-right: 1px solid rgba(255,255,255,.07);
+  flex-shrink: 0;
+  transition: transform .25s cubic-bezier(.4,0,.2,1);
+  z-index: 50;
+}
+.app-sidebar::-webkit-scrollbar { display: none; }
+
+/* Sidebar brand */
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 18px 14px 16px;
+  color: #fff;
+  font-weight: 800;
+  font-size: .9rem;
+  text-decoration: none !important;
+  cursor: pointer;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  margin-bottom: 6px;
+}
+
+/* Sidebar section label */
+.sidebar-section-label {
+  padding: 10px 16px 4px;
+  font-size: .63rem;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.25);
+  flex-shrink: 0;
+}
+
+/* Sidebar nav container */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 0 8px 4px;
+}
+
+/* Tab buttons — sidebar variant (override horizontal .tab-btn) */
+.app-sidebar .tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  min-height: 40px;
+  padding: 0 12px;
+  border-radius: 9px;
+  font-size: .845rem;
+  font-weight: 500;
+  color: rgba(255,255,255,.52);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background .12s, color .12s;
+  white-space: nowrap;
+  text-align: left;
+  box-shadow: none;
+  position: relative;
+  flex-shrink: 0;
+}
+.app-sidebar .tab-btn::after { display: none; }
+.app-sidebar .tab-btn:hover  { background: rgba(255,255,255,.07); color: rgba(255,255,255,.88); }
+.app-sidebar .tab-btn.active {
+  background: rgba(99,102,241,.22);
+  color: #c4b5fd;
+  font-weight: 700;
+}
+.app-sidebar .tab-btn.active::before {
+  content: '';
+  position: absolute;
+  left: -8px; top: 8px; bottom: 8px;
+  width: 3px;
+  background: #818CF8;
+  border-radius: 0 3px 3px 0;
+}
+
+/* Workspace section inside sidebar */
+.sidebar-workspace {
+  margin: 8px 10px 4px;
+  padding: 10px 12px;
+  background: rgba(255,255,255,.04);
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.07);
+  flex-shrink: 0;
+}
+.sidebar-workspace .workspace-bar-inner  { flex-direction: column; align-items: flex-start; gap: 6px; }
+.sidebar-workspace .workspace-current    { color: rgba(255,255,255,.62); font-size: .75rem; font-weight: 700; }
+.sidebar-workspace .workspace-dot        { background: var(--blue); }
+.sidebar-workspace .workspace-chips      { flex-direction: column; gap: 4px; overflow: visible; width: 100%; }
+.sidebar-workspace .ws-chip              { font-size: .73rem; padding: 4px 10px; border-radius: 7px; width: 100%; justify-content: flex-start; }
+.sidebar-workspace .ws-marketplace-btn  { margin-left: 0; width: 100%; justify-content: center; font-size: .75rem; }
+
+/* Sidebar bottom */
+.sidebar-bottom {
+  padding: 10px 10px 14px;
+  border-top: 1px solid rgba(255,255,255,.06);
+  margin-top: auto;
+  flex-shrink: 0;
+}
+.sidebar-bottom .quota-pill {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 8px;
+  padding: 6px 10px;
+  width: 100%;
+  min-width: 0;
+  gap: 7px;
+  color: rgba(255,255,255,.55);
+}
+.sidebar-bottom #quota-text { color: rgba(255,255,255,.55); font-size: .75rem; }
+
+/* Sidebar backdrop for mobile */
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  z-index: 149;
+  animation: fadeIn .18s ease;
+}
+
+/* ── App right panel ──────────────────────────────────────────────────────── */
+.app-right {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* Top bar */
+.app-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 54px;
+  padding: 0 20px;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  gap: 8px;
+  position: relative;
+  z-index: 100;
+}
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Mobile sidebar toggle button */
+.sidebar-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--slate);
+  box-shadow: none;
+  margin-right: auto;
+  transition: background .12s;
+  flex-shrink: 0;
+}
+.sidebar-toggle:hover { background: var(--blue-pale); color: var(--blue); }
+
+/* App main — scrollable content, wider now that sidebar handles left space */
+.app-main {
+  flex: 1 !important;
+  overflow-y: auto !important;
+  padding: 28px 32px 80px !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+}
+
+/* Fix user-menu-dropdown position for new topbar height */
+.user-menu-dropdown { top: 54px !important; }
+
+/* Quota pill color in dark sidebar */
+.sidebar-bottom .quota-pill.quota-pill-warn     { border-color: rgba(251,191,36,.3);  background: rgba(251,191,36,.08); }
+.sidebar-bottom .quota-pill.quota-pill-critical { border-color: rgba(239,68,68,.3);   background: rgba(239,68,68,.08); }
+.sidebar-bottom .quota-pill.quota-pill-warn     #quota-text { color: #fbbf24; }
+.sidebar-bottom .quota-pill.quota-pill-critical #quota-text { color: #f87171; }
+
+/* ── Mobile: sidebar becomes a fixed drawer ──────────────────────────────── */
+@media (max-width: 768px) {
+  .app-sidebar {
+    position: fixed;
+    left: 0; top: 0;
+    height: 100dvh;
+    transform: translateX(-100%);
+    z-index: 150;
+    width: 240px;
+    min-width: 240px;
+    box-shadow: 4px 0 24px rgba(0,0,0,.35);
+  }
+  .app-sidebar.open { transform: translateX(0); }
+  .sidebar-backdrop.visible { display: block; }
+
+  .sidebar-toggle { display: flex; }
+  .app-topbar     { justify-content: space-between; }
+
+  .app-main { padding: 16px 16px 80px !important; }
+}
+
+/* Ensure trial banner stays above layout */
+#trial-banner { flex-shrink: 0; }
+
+/* Keep sidebar quota visible regardless of viewport (overrides topnav media-query hide) */
+.sidebar-bottom .quota-pill { display: flex !important; }
