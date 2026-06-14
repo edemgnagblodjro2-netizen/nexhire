@@ -36,7 +36,7 @@ def query_quickbooks(category: str, org_id: str,
     if not creds:
         return {"error": "QuickBooks non connecté"}
 
-    creds = refresh_oauth(creds, cid, _TOKEN_URL, "QB_CLIENT_ID", "QB_CLIENT_SECRET")
+    creds = refresh_oauth(creds, cid, _TOKEN_URL, "QUICKBOOKS_CLIENT_ID", "QUICKBOOKS_CLIENT_SECRET")
     realm_id = creds.get("realm_id") or creds.get("realmId", "")
     if not realm_id:
         return {"error": "realm_id QuickBooks manquant dans les credentials"}
