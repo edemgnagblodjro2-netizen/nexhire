@@ -618,17 +618,27 @@ def ping_connector(
             if not tenant_id or not client_id or not client_secret:
                 return {"ok": False, "error": "Credentials incomplets."}
             token = _get_token(tenant_id, client_id, client_secret)
-            # Test 1 : devices
+            headers = {"Authorization": f"Bearer {token}", "Accept": "application/json"}
+            # Test 1 : endpoint racine deviceManagement
+            r0 = httpx.get("https://graph.microsoft.com/v1.0/deviceManagement",
+                           headers=headers, timeout=12)
+            # Test 2 : managedDevices
             r = httpx.get(
                 "https://graph.microsoft.com/v1.0/deviceManagement/managedDevices",
-                headers={"Authorization": f"Bearer {token}", "Accept": "application/json"},
+                headers=headers,
                 params={"$top": 1, "$select": "id,deviceName,complianceState"},
                 timeout=12,
             )
             if r.status_code == 200:
                 devices = r.json().get("value", [])
                 return {"ok": True, "devices_status": 200, "sample_device": devices[0] if devices else None}
-            return {"ok": False, "devices_status": r.status_code, "error": r.text[:400]}
+            return {
+                "ok": False,
+                "root_status": r0.status_code,
+                "root_body": r0.json().get("intuneAccountId", r0.text[:200]),
+                "devices_status": r.status_code,
+                "error": r.text[:400],
+            }
 
         return {"ok": False, "error": f"Ping non supporté pour le connecteur '{connector_type}'."}
 
