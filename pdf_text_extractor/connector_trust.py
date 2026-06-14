@@ -47,10 +47,10 @@ CONNECTOR_TRUST: dict[str, dict] = {
         "notes": "Developer Edition validé — orgfarm-cbcdb7cc80-dev-ed.develop.my.salesforce.com, 15 000 req/jour disponibles.",
     },
     "hubspot": {
-        "trust_level": 1,
+        "trust_level": 3,
         "can_sandbox": True,
-        "validated_at": None,
-        "notes": "HubSpot Developer Account — developers.hubspot.com (CRM sandbox permanent)",
+        "validated_at": "2026-06-14",
+        "notes": "Developer Account validé — portal_id 343341852, timezone US/Eastern, contacts/companies/deals OK.",
     },
     "google_workspace": {
         "trust_level": 3,
