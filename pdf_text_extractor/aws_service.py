@@ -29,6 +29,36 @@ def _boto_query(service: str, region: str, access_key: str, secret_key: str,
         raise RuntimeError("boto3 non installé — ajouter boto3 aux dépendances")
 
 
+def get_aws_info(org_id: str) -> dict:
+    """Ping AWS — STS get_caller_identity (fonctionne avec tout compte IAM valide)."""
+    creds, _ = load_creds("aws", org_id)
+    if not creds:
+        return {"error": "AWS non connecté"}
+    access_key = creds.get("access_key_id", "").strip()
+    secret_key = creds.get("secret_access_key", "").strip()
+    region     = creds.get("region", "us-east-1").strip()
+    if not access_key or not secret_key:
+        return {"error": "Credentials AWS incomplets"}
+    try:
+        import boto3
+        sts = boto3.Session(
+            aws_access_key_id=access_key,
+            aws_secret_access_key=secret_key,
+            region_name=region,
+        ).client("sts")
+        identity = sts.get_caller_identity()
+        return {
+            "account_id": identity.get("Account"),
+            "user_arn":   identity.get("Arn"),
+            "user_id":    identity.get("UserId"),
+            "region":     region,
+        }
+    except ImportError:
+        return {"error": "boto3 non installé"}
+    except Exception as exc:
+        return {"error": str(exc)}
+
+
 def query_aws(category: str, org_id: str, period: str = "current_month") -> dict:
     creds, _ = load_creds("aws", org_id)
     if not creds:
