@@ -529,12 +529,30 @@ def ping_connector(
                     "search_error": None if search_ok else r2.text[:400],
                 }
             else:
+                from connector_loader import refresh_oauth
+                _TOKEN_URL = "https://auth.atlassian.com/oauth/token"
+                creds = refresh_oauth(creds, _, _TOKEN_URL, "JIRA_CLIENT_ID", "JIRA_CLIENT_SECRET")
                 cloud_id, err = _get_cloud_id(creds)
+                if not cloud_id:
+                    return {"ok": False, "mode": "oauth", "cloud_id": None, "error": err}
+                # Test search
+                search_url = f"https://api.atlassian.com/ex/jira/{cloud_id}/rest/api/3/issue/search"
+                rs = httpx.post(
+                    search_url,
+                    headers={**bearer(creds), "Accept": "application/json",
+                             "Content-Type": "application/json"},
+                    json={"jql": "ORDER BY updated DESC", "maxResults": 1,
+                          "fields": ["summary", "status"]},
+                    timeout=12,
+                )
+                search_ok = rs.status_code == 200
                 return {
-                    "ok": bool(cloud_id),
+                    "ok": search_ok,
                     "mode": "oauth",
                     "cloud_id": cloud_id,
-                    "error": err,
+                    "search_status": rs.status_code,
+                    "search_total": rs.json().get("total") if search_ok else None,
+                    "search_error": None if search_ok else rs.text[:400],
                 }
 
         return {"ok": False, "error": f"Ping non supporté pour le connecteur '{connector_type}'."}
