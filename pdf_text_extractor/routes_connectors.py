@@ -495,7 +495,7 @@ def ping_connector(
                     "error": None if ok else f"HTTP {resp.status_code} — vérifiez vos credentials Autotask."}
 
         elif connector_type == "jira":
-            from jira_service import _is_api_token, _basic_auth, _get_cloud_id
+            from jira_service import _is_api_token, _basic_auth, _get_cloud_info
             from connector_loader import load_creds, bearer
             import httpx
             creds, _ = load_creds("jira", org_id)
