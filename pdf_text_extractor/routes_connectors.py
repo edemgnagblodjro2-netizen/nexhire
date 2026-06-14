@@ -656,6 +656,21 @@ def ping_connector(
                 "channels_total":  len(channels),
             }
 
+        elif connector_type == "google_workspace":
+            from google_workspace_service import get_workspace_info as gw_info
+            info = gw_info(org_id)
+            if info.get("error"):
+                return {"ok": False, "error": info["error"]}
+            return {
+                "ok":             True,
+                "email":          info.get("email"),
+                "messages_total": info.get("messages_total"),
+                "threads_total":  info.get("threads_total"),
+                "drive_user":     info.get("drive_user"),
+                "drive_used_gb":  info.get("drive_used_gb"),
+                "drive_limit_gb": info.get("drive_limit_gb"),
+            }
+
         return {"ok": False, "error": f"Ping non supporté pour le connecteur '{connector_type}'."}
 
     except Exception as exc:

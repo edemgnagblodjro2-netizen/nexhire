@@ -240,6 +240,19 @@ def test_mock_slack():
         assert len(data) >= 1, "mock retourne une liste vide"
     run("slack", "mock_schema", _t)
 
+def test_mock_google_workspace():
+    from agent_service import _mock_google_workspace
+    def _t():
+        data = _mock_google_workspace("rapport")
+        assert isinstance(data, list), f"attendu une liste, reçu {type(data).__name__}"
+        assert len(data) >= 1, "mock retourne une liste vide"
+        ok, msg = _assert_list_has_keys(data, ["type", "source"])
+        assert ok, msg
+        # Vérifier que les 3 sources sont représentées
+        sources = {r.get("source") for r in data}
+        assert sources & {"gmail", "drive", "google_calendar"}, f"aucune source GW connue : {sources}"
+    run("google_workspace", "mock_schema", _t)
+
 def test_trust_manifest():
     """Vérifie que connector_trust.py couvre tous les connecteurs de VALID_TYPES."""
     from routes_connectors import VALID_TYPES
@@ -338,6 +351,32 @@ def test_real_slack(org_id: str):
     run("slack", "real_search_messages", _t_search)
 
 
+def test_real_google_workspace(org_id: str):
+    """Requiert : Google OAuth connecté (gmail, drive, calendar scopes)."""
+    from google_workspace_service import get_workspace_info, search_google_workspace
+
+    def _t_ping():
+        info = get_workspace_info(org_id)
+        assert not info.get("error"), f"ping échoué : {info.get('error')}"
+        assert info.get("email"), "email manquant dans le profil Gmail"
+        assert isinstance(info.get("messages_total"), int), "messages_total doit être un entier"
+    run("google_workspace", "real_ping", _t_ping)
+
+    def _t_gmail():
+        results = search_google_workspace(query="", org_id=org_id, source="email", limit=3)
+        assert isinstance(results, list), f"attendu une liste, reçu {type(results).__name__}"
+        if results:
+            assert "error" not in results[0], f"erreur Gmail : {results[0].get('error')}"
+    run("google_workspace", "real_gmail_search", _t_gmail)
+
+    def _t_drive():
+        results = search_google_workspace(query="a", org_id=org_id, source="drive", limit=3)
+        assert isinstance(results, list), f"attendu une liste, reçu {type(results).__name__}"
+        if results:
+            assert "error" not in results[0], f"erreur Drive : {results[0].get('error')}"
+    run("google_workspace", "real_drive_search", _t_drive)
+
+
 # ── Entrypoint ────────────────────────────────────────────────────────────────
 
 def run_all_mocks(filter_connector: str | None = None):
@@ -358,6 +397,7 @@ def run_all_mocks(filter_connector: str | None = None):
         test_mock_crowdstrike,
         test_mock_hubspot,
         test_mock_slack,
+        test_mock_google_workspace,
         test_trust_manifest,
         test_call_tool_none_fallback,
     ]
@@ -377,7 +417,8 @@ def run_real(connector: str, org_id: str):
         "jira":        lambda: test_real_jira(org_id),
         "quickbooks":  lambda: test_real_quickbooks(org_id),
         "microsoft_365": lambda: test_real_m365(org_id),
-        "slack":         lambda: test_real_slack(org_id),
+        "slack":             lambda: test_real_slack(org_id),
+        "google_workspace":  lambda: test_real_google_workspace(org_id),
     }
 
     fn = real_tests.get(connector)
