@@ -7587,8 +7587,9 @@ async function _updateWorkspaceBar() {
         const resolved = _resolveDeptType(d.dept_type || "", d.name);
         const cfg = _typeConfig[resolved] || _typeConfig[d.dept_type] || _typeConfig.general;
         return `<span class="ws-chip" style="--chip-color:${cfg.color}" title="${esc(d.name)}"
-                      data-dept-id="${d.id}"
-                      onclick="activateWorkspace('${d.id}','${d.dept_type}','${esc(d.name)}')">${cfg.icon} ${esc(d.name)}</span>`;
+                      data-dept-id="${esc(d.id)}"
+                      data-dept-type="${esc(d.dept_type)}"
+                      data-dept-name="${esc(d.name)}">${cfg.icon} ${esc(d.name)}</span>`;
       }).join("");
     }
 
@@ -9178,4 +9179,11 @@ function closeSidebar() {
 document.addEventListener("click", e => {
   const btn = e.target.closest(".app-sidebar .tab-btn");
   if (btn && window.innerWidth <= 768) closeSidebar();
+});
+
+// Workspace chip clicks — délégué pour éviter les problèmes d'apostrophe dans onclick inline
+document.addEventListener("click", e => {
+  const chip = e.target.closest(".ws-chip[data-dept-id]");
+  if (!chip) return;
+  activateWorkspace(chip.dataset.deptId, chip.dataset.deptType, chip.dataset.deptName);
 });
