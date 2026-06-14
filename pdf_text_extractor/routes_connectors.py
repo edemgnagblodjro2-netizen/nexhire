@@ -519,6 +519,9 @@ def ping_connector(
                     timeout=12,
                 )
                 search_ok = r2.status_code == 200
+                # Test 3 : appel identique à ce que fait l'agent
+                from jira_service import search_jira as _sj
+                agent_result = _sj(query="", org_id=org_id, status="all", limit=3)
                 return {
                     "ok": search_ok,
                     "mode": "api_token",
@@ -527,6 +530,7 @@ def ping_connector(
                     "search_status": r2.status_code,
                     "search_total": r2.json().get("total") if search_ok else None,
                     "search_error": None if search_ok else r2.text[:400],
+                    "agent_result": agent_result,
                 }
             else:
                 from connector_loader import refresh_oauth
