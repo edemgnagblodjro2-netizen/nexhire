@@ -16,6 +16,25 @@ def _get(path: str, creds: dict, params: dict | None = None) -> dict:
     return r.json()
 
 
+def get_salesforce_info(org_id: str) -> dict:
+    """Ping Salesforce — retourne org info + limites API."""
+    creds, cid = load_creds("salesforce", org_id)
+    if not creds:
+        return {"error": "Salesforce non connecté"}
+    creds = refresh_oauth(creds, cid, _TOKEN_URL, "SF_CLIENT_ID", "SF_CLIENT_SECRET")
+    try:
+        limits = _get("limits/", creds)
+        daily = limits.get("DailyApiRequests", {})
+        return {
+            "instance_url":        creds.get("instance_url"),
+            "api_requests_used":   daily.get("Max", 0) - daily.get("Remaining", 0),
+            "api_requests_max":    daily.get("Max"),
+            "api_requests_left":   daily.get("Remaining"),
+        }
+    except Exception as exc:
+        return {"error": str(exc)}
+
+
 def search_salesforce(query: str, org_id: str, object_type: str = "all", limit: int = 5) -> list[dict]:
     creds, cid = load_creds("salesforce", org_id)
     if not creds:

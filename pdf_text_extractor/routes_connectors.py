@@ -656,6 +656,19 @@ def ping_connector(
                 "channels_total":  len(channels),
             }
 
+        elif connector_type == "salesforce":
+            from salesforce_service import get_salesforce_info
+            info = get_salesforce_info(org_id)
+            if info.get("error"):
+                return {"ok": False, "error": info["error"]}
+            return {
+                "ok":                  True,
+                "instance_url":        info.get("instance_url"),
+                "api_requests_used":   info.get("api_requests_used"),
+                "api_requests_max":    info.get("api_requests_max"),
+                "api_requests_left":   info.get("api_requests_left"),
+            }
+
         elif connector_type == "google_workspace":
             from google_workspace_service import get_workspace_info as gw_info
             info = gw_info(org_id)
