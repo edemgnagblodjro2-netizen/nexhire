@@ -79,7 +79,7 @@ def refresh_oauth(
         }
         service_client().table("connectors").update({
             "encrypted_credentials": encrypt(json.dumps(creds)),
-            "token_expires_at":      new_expires_at,
+            "token_expires_at":      None,
             "updated_at":            datetime.now(UTC).isoformat(),
         }).eq("id", connector_id).execute()
     except Exception as exc:
