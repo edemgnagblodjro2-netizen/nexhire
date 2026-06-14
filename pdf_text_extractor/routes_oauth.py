@@ -169,6 +169,7 @@ def _upsert_connector(org_id: str, connector_type: str, credentials: dict, extra
         "connected_at":          now,
         "last_error":            None,
         "updated_at":            now,
+        "token_expires_at":      None,  # réinitialisé à chaque reconnexion OAuth
         **(extra or {}),
     }
 
