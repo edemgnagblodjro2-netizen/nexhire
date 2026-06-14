@@ -54,14 +54,13 @@ Document opérationnel pour l'équipe NexHire. Mis à jour le 2026-06-12.
 - [x] `trust_level: 3` dans `connector_trust.py`
 - ⚠️ Token API expire le 2026-06-20 — renouveler avant cette date sur id.atlassian.com
 
-#### QuickBooks
-- [ ] Créer compte Intuit Developer sur [developer.intuit.com](https://developer.intuit.com)
-- [ ] Créer app sandbox (données fictives incluses)
-  - Callback : `https://agenthub.nexhire.ca/api/connectors/oauth/callback`
-  - Scopes : `com.intuit.quickbooks.accounting`
-- [ ] Ajouter sur Render : `QB_CLIENT_ID`, `QB_CLIENT_SECRET`
-- [ ] Lancer : `python smoke_tests.py --real quickbooks <org_id_test>`
-- [ ] Si OK → mettre `trust_level: 3` dans `connector_trust.py`
+#### QuickBooks ✅
+- [x] App Intuit Developer créée — sandbox Development keys sur Render
+- [x] Env vars Render : `QUICKBOOKS_CLIENT_ID`, `QUICKBOOKS_CLIENT_SECRET`, `QUICKBOOKS_REDIRECT_URI`, `QUICKBOOKS_SANDBOX=true`
+- [x] Sandbox connecté — realm_id `9341457237782000`, company "Sandbox Company US 7492"
+- [x] Ping `/companyinfo` → ok:true (2026-06-14)
+- [x] `trust_level: 3` dans `connector_trust.py`
+- ⚠️ Passer `QUICKBOOKS_SANDBOX=false` + clés Production Intuit quand premier client QB réel
 
 ### Priorité 2 — Variables Render à vérifier
 
@@ -160,7 +159,7 @@ Si un test échoue, ne pas déployer avant correction.
 | Microsoft 365 | 5 — Validé prod | Oui | 2026-06-12 |
 | Intune | 1 — Code only | Oui | — |
 | Jira | 3 — Données collectées | Oui | 2026-06-14 |
-| QuickBooks | 1 — Code only | Oui | — |
+| QuickBooks | 3 — Données collectées | Oui | 2026-06-14 |
 | Salesforce | 1 — Code only | Oui | — |
 | HubSpot | 1 — Code only | Oui | — |
 | Google Workspace | 1 — Code only | Oui | — |

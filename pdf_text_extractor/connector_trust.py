@@ -35,10 +35,10 @@ CONNECTOR_TRUST: dict[str, dict] = {
         "notes": "OAuth connecté sur edemgnagblodjro2.atlassian.net — scopes jira-user, jira-work, confluence",
     },
     "quickbooks": {
-        "trust_level": 1,
+        "trust_level": 3,
         "can_sandbox": True,
-        "validated_at": None,
-        "notes": "Intuit Developer Sandbox — developer.intuit.com (permanent, données fictives incluses)",
+        "validated_at": "2026-06-14",
+        "notes": "Sandbox Intuit connecté — realm_id 9341457237782000, company 'Sandbox Company US 7492'. QUICKBOOKS_SANDBOX=true sur Render.",
     },
     "salesforce": {
         "trust_level": 1,
