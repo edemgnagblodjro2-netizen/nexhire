@@ -590,15 +590,13 @@ def ping_connector(
             )
             if r.status_code == 200:
                 info = r.json().get("CompanyInfo", {})
-                from quickbooks_service import query_quickbooks as _qb
-                agent_result = _qb(category="invoices", org_id=org_id)
                 return {
                     "ok": True,
                     "sandbox": sandbox,
                     "realm_id": realm_id,
                     "company_name": info.get("CompanyName"),
-                    "token_scope": creds.get("scope"),
-                    "agent_result": agent_result,
+                    "country": info.get("Country"),
+                    "fiscal_year_start": info.get("FiscalYearStartMonth"),
                 }
             return {
                 "ok": False,
