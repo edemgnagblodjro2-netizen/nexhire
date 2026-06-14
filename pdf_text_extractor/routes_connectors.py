@@ -503,19 +503,30 @@ def ping_connector(
                 return {"ok": False, "error": "Connecteur Jira non trouvé en DB."}
             if _is_api_token(creds):
                 base_url = creds["base_url"].rstrip("/")
-                resp = httpx.get(
-                    f"{base_url}/rest/api/3/myself",
-                    headers=_basic_auth(creds),
-                    timeout=10,
+                headers = _basic_auth(creds)
+                # Test 1 : authentification
+                r1 = httpx.get(f"{base_url}/rest/api/3/myself", headers=headers, timeout=10)
+                if r1.status_code != 200:
+                    return {"ok": False, "mode": "api_token", "step": "myself",
+                            "http_status": r1.status_code, "error": r1.text[:300]}
+                account = r1.json().get("displayName")
+                # Test 2 : recherche d'issues
+                r2 = httpx.post(
+                    f"{base_url}/rest/api/3/issue/search",
+                    headers=headers,
+                    json={"jql": "ORDER BY updated DESC", "maxResults": 1,
+                          "fields": ["summary", "status"]},
+                    timeout=12,
                 )
-                ok = resp.status_code == 200
-                body = resp.json() if ok else resp.text[:300]
+                search_ok = r2.status_code == 200
                 return {
-                    "ok": ok,
-                    "http_status": resp.status_code,
+                    "ok": search_ok,
                     "mode": "api_token",
-                    "account": body.get("displayName") if ok else None,
-                    "error": None if ok else f"HTTP {resp.status_code}: {body}",
+                    "account": account,
+                    "myself_status": 200,
+                    "search_status": r2.status_code,
+                    "search_total": r2.json().get("total") if search_ok else None,
+                    "search_error": None if search_ok else r2.text[:400],
                 }
             else:
                 cloud_id, err = _get_cloud_id(creds)
