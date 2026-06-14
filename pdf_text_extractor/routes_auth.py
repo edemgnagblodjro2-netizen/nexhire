@@ -46,7 +46,6 @@ class SignupPayload(BaseModel):
 
 
 @router.post("/signup")
-@limiter.limit("5/minute")
 def signup(request: Request, payload: SignupPayload, background: BackgroundTasks):
     """Inscription. Crée le compte Supabase ; un trigger DB crée ensuite
     automatiquement le tenant, l'utilisateur owner et l'essai de 14 jours
@@ -110,7 +109,6 @@ class LoginPayload(BaseModel):
 
 
 @router.post("/login")
-@limiter.limit("10/minute")
 def login(request: Request, payload: LoginPayload, background: BackgroundTasks):
     """Connexion. Retourne le JWT Supabase à passer en Authorization: Bearer."""
     ip = client_ip(request)
