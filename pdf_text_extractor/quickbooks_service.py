@@ -20,7 +20,7 @@ def _base(creds: dict) -> str:
 def _query(realm_id: str, creds: dict, sql: str) -> list[dict]:
     url = f"{_base(creds)}/{realm_id}/query"
     r = httpx.get(url, headers={**bearer(creds), "Accept": "application/json"},
-                  params={"query": sql, "minorversion": "65"}, timeout=12)
+                  params={"query": sql}, timeout=12)
     r.raise_for_status()
     data = r.json().get("QueryResponse", {})
     # Retourne la première liste trouvée (Invoice, Bill, Account…)

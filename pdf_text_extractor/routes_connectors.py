@@ -597,8 +597,7 @@ def ping_connector(
                     "sandbox": sandbox,
                     "realm_id": realm_id,
                     "company_name": info.get("CompanyName"),
-                    "country": info.get("Country"),
-                    "fiscal_year_start": info.get("FiscalYearStartMonth"),
+                    "token_scope": creds.get("scope"),
                     "agent_result": agent_result,
                 }
             return {
