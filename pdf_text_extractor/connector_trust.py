@@ -23,10 +23,10 @@ CONNECTOR_TRUST: dict[str, dict] = {
         "notes": "Validé sur tenant Adminfortinassocies.onmicrosoft.com — données réelles Graph API",
     },
     "intune": {
-        "trust_level": 1,
+        "trust_level": 2,
         "can_sandbox": True,
-        "validated_at": None,
-        "notes": "Même App Registration que M365 — sandbox M365 Developer Program disponible",
+        "validated_at": "2026-06-14",
+        "notes": "Auth Graph OK (token client_credentials). Bloqué sur MDM authority non configurée sur tenant Developer Program — validé dès premier client avec Intune actif.",
     },
     "jira": {
         "trust_level": 3,
