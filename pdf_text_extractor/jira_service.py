@@ -78,33 +78,34 @@ def search_jira(
 def _search_issues(
     url: str, headers: dict, query: str, status: str, project: str | None, limit: int
 ) -> list[dict]:
-    jql_parts = []
-    if query.strip():
-        clean = query.replace('"', '\\"')
-        jql_parts.append(f'text ~ "{clean}"')
+    jql_parts = ["project is not EMPTY"]
+
+    if project:
+        jql_parts = [f'project = "{project}"']
+
     if status != "all":
         status_map = {"todo": "To Do", "in_progress": "In Progress",
                       "done": "Done", "blocked": "Blocked"}
         if status in status_map:
             jql_parts.append(f'status = "{status_map[status]}"')
-    if project:
-        jql_parts.append(f'project = "{project}"')
 
-    if jql_parts:
-        jql = " AND ".join(jql_parts) + " ORDER BY updated DESC"
-    else:
-        jql = "project is not EMPTY ORDER BY updated DESC"
+    if query.strip():
+        clean = query.replace('"', '\\"').replace("\\", "\\\\")[:80]
+        jql_parts.append(f'summary ~ "{clean}"')
+
+    jql = " AND ".join(jql_parts) + " ORDER BY updated DESC"
 
     try:
-        r = httpx.get(
+        r = httpx.post(
             url,
-            headers=headers,
-            params={"jql": jql, "maxResults": limit,
-                    "fields": "summary,status,priority,assignee,duedate,project"},
+            headers={**headers, "Content-Type": "application/json"},
+            json={"jql": jql, "maxResults": limit,
+                  "fields": ["summary", "status", "priority", "assignee", "duedate", "project"]},
             timeout=12,
         )
         if not r.is_success:
             return [{"error": f"Jira HTTP {r.status_code}: {r.text[:400]}", "source": "jira"}]
+        issues = r.json().get("issues") or r.json().get("values", [])
         return [
             {
                 "id":       issue.get("key"),
@@ -116,7 +117,7 @@ def _search_issues(
                 "échéance": issue["fields"].get("duedate"),
                 "source":   "jira",
             }
-            for issue in r.json().get("issues", [])
+            for issue in issues
         ]
     except Exception as exc:
         return [{"error": str(exc), "source": "jira"}]
