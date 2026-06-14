@@ -1764,6 +1764,7 @@ footer {
   transition: opacity .15s, border-color .15s;
   color: #fff;
   opacity: .75;
+  background: var(--chip-color, #64748b);
 }
 .ws-chip:hover { opacity: 1; }
 .ws-chip.active { opacity: 1; border-color: rgba(0,0,0,.18); }
@@ -4152,8 +4153,48 @@ tbody tr:hover { background: var(--blue-pale); transition: background .12s; }
 .sidebar-workspace .workspace-current    { color: rgba(255,255,255,.62); font-size: .75rem; font-weight: 700; }
 .sidebar-workspace .workspace-dot        { background: var(--blue); }
 .sidebar-workspace .workspace-chips      { flex-direction: column; gap: 4px; overflow: visible; width: 100%; }
-.sidebar-workspace .ws-chip              { font-size: .73rem; padding: 4px 10px; border-radius: 7px; width: 100%; justify-content: flex-start; }
-.sidebar-workspace .ws-marketplace-btn  { margin-left: 0; width: 100%; justify-content: center; font-size: .75rem; }
+/* Chips — dark sidebar style; left border picks up the dept family color via --chip-color */
+.sidebar-workspace .ws-chip {
+  font-size: .73rem;
+  padding: 4px 10px 4px 11px;
+  border-radius: 7px;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.08);
+  border-left: 3px solid var(--chip-color, rgba(255,255,255,.25));
+  color: rgba(255,255,255,.82);
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.35;
+  display: flex;
+  opacity: 1;
+}
+.sidebar-workspace .ws-chip:hover {
+  background: rgba(255,255,255,.12);
+  color: #fff;
+}
+.sidebar-workspace .ws-chip.ws-chip-active {
+  background: rgba(99,102,241,.25);
+  border-left-color: #818CF8;
+  color: #c4b5fd;
+}
+/* Marketplace button — visible on dark sidebar */
+.sidebar-workspace .ws-marketplace-btn {
+  margin-left: 0;
+  width: 100%;
+  justify-content: center;
+  font-size: .75rem;
+  color: rgba(255,255,255,.6) !important;
+  border-color: rgba(255,255,255,.18) !important;
+  background: rgba(255,255,255,.04) !important;
+}
+.sidebar-workspace .ws-marketplace-btn:hover {
+  color: #fff !important;
+  border-color: rgba(255,255,255,.35) !important;
+  background: rgba(255,255,255,.09) !important;
+}
 
 /* Sidebar bottom */
 .sidebar-bottom {

@@ -640,6 +640,22 @@ def ping_connector(
                 "error": r.text[:400],
             }
 
+        elif connector_type == "slack":
+            from slack_service import get_workspace_info, list_channels
+            info = get_workspace_info(org_id)
+            if info.get("error"):
+                return {"ok": False, "error": info["error"]}
+            channels = list_channels(org_id, limit=5)
+            return {
+                "ok":           True,
+                "team":         info.get("team"),
+                "team_id":      info.get("team_id"),
+                "bot_id":       info.get("bot_id"),
+                "url":          info.get("url"),
+                "channels_sample": [c["name"] for c in channels[:5]],
+                "channels_total":  len(channels),
+            }
+
         return {"ok": False, "error": f"Ping non supporté pour le connecteur '{connector_type}'."}
 
     except Exception as exc:

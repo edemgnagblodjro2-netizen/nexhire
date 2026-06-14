@@ -92,10 +92,12 @@ _OAUTH_CFG: dict[str, dict] = {
         "extra_params": {"access_type": "offline", "prompt": "consent"},
     },
     "slack": {
-        "auth_url":  "https://slack.com/oauth/v2/authorize",
-        "token_url": "https://slack.com/api/oauth.v2.access",
-        "scopes":    "channels:read channels:history files:read users:read "
-                     "team:read search:read",
+        "auth_url":   "https://slack.com/oauth/v2/authorize",
+        "token_url":  "https://slack.com/api/oauth.v2.access",
+        # Bot scopes — installed at workspace level
+        "scopes":     "channels:read channels:history files:read users:read team:read",
+        # User scope — search:read is user-only in Slack v2; passed as user_scope in auth URL
+        "user_scopes": "search:read",
         "client_id_env":     "SLACK_CLIENT_ID",
         "client_secret_env": "SLACK_CLIENT_SECRET",
         "redirect_uri_env":  "SLACK_REDIRECT_URI",
@@ -324,6 +326,11 @@ def oauth_start(
         params["response_mode"] = "query"
         params["prompt"] = "select_account"
 
+    # Slack v2: user scopes (e.g. search:read) go in a separate user_scope param
+    cfg_entry_full = _OAUTH_CFG.get(connector_type, {})
+    if cfg_entry_full.get("user_scopes"):
+        params["user_scope"] = cfg_entry_full["user_scopes"]
+
     return {"authorization_url": f"{c['auth_url']}?{urlencode(params)}"}
 
 
@@ -405,7 +412,13 @@ def oauth_callback(
         except Exception:
             pass
 
-    _upsert_connector(org_id, connector_type, credentials)
+    # QuickBooks refresh tokens expire after 101 days (Intuit policy).
+    # Write token_expires_at so the health endpoint can alert 7 days before.
+    db_extra: dict | None = None
+    if connector_type == "quickbooks":
+        db_extra = {"token_expires_at": (datetime.now(UTC) + timedelta(days=101)).isoformat()}
+
+    _upsert_connector(org_id, connector_type, credentials, extra=db_extra)
 
     background.add_task(log_audit, AuditEvent(
         action="connector_connect",

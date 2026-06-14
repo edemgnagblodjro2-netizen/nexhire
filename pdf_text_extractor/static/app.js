@@ -3954,6 +3954,7 @@ function onAppSelectChange(val) {
 let _parcTab = "overview";
 let _parcBudgetChart = null;
 let _parcForecastChart = null;
+let _parcDonutChart = null;
 
 function switchParcTab(name, push = true) {
   _parcTab = name;
@@ -4260,6 +4261,48 @@ async function _loadParcOverview() {
     } else if (_parcForecastChart) {
       _parcForecastChart.destroy();
       _parcForecastChart = null;
+    }
+
+    // Donut — répartition du budget alloué par catégorie
+    const donutCanvas = $("parc-donut-chart");
+    const donutCats = cats.filter(c => (c.allocated || 0) > 0);
+    if (_parcDonutChart) { _parcDonutChart.destroy(); _parcDonutChart = null; }
+    if (donutCanvas) {
+      const donutPanel = $("parc-donut-panel");
+      if (!donutCats.length) {
+        if (donutPanel) donutPanel.style.display = "none";
+      } else {
+        if (donutPanel) donutPanel.style.display = "";
+        const COLORS = ["#818cf8","#6366f1","#34d399","#fbbf24","#f87171","#38bdf8","#a78bfa","#fb923c","#4ade80","#e879f9"];
+        _parcDonutChart = new Chart(donutCanvas, {
+          type: "doughnut",
+          data: {
+            labels: donutCats.map(c => c.category.toUpperCase()),
+            datasets: [{
+              data: donutCats.map(c => c.allocated),
+              backgroundColor: COLORS.slice(0, donutCats.length),
+              borderWidth: 2,
+              borderColor: "rgba(255,255,255,.8)",
+            }],
+          },
+          options: {
+            responsive: true,
+            cutout: "60%",
+            plugins: {
+              legend: { position: "right", labels: { font: { size: 11 }, boxWidth: 12, padding: 10 } },
+              tooltip: {
+                callbacks: {
+                  label: ctx => {
+                    const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                    const pct = total > 0 ? ((ctx.parsed / total) * 100).toFixed(1) : 0;
+                    return ` ${_fmt(ctx.parsed)} (${pct}%)`;
+                  }
+                }
+              }
+            },
+          },
+        });
+      }
     }
   } catch (e) { console.error(e); }
 }
@@ -5450,6 +5493,10 @@ async function _loadOptimDashboard() {
 async function _loadIntelligenceBanner() {
   try {
     const savings = await apiCall("/api/intelligence/savings").catch(() => null);
+
+    // Supprime le banner précédent pour éviter le doublon si la fonction est rappelée
+    document.getElementById("intelligence-savings-banner")?.remove();
+
     if (!savings || savings.total_monthly <= 0) return;
 
     const wrap = $("optim-top-opps");
@@ -5468,6 +5515,7 @@ async function _loadIntelligenceBanner() {
     };
 
     const banner = document.createElement("div");
+    banner.id = "intelligence-savings-banner";
     banner.style.cssText = "margin-bottom:16px;padding:16px 20px;background:linear-gradient(135deg,#0f172a,#1e3a5f);border-radius:14px;color:#fff";
     banner.innerHTML = `
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
@@ -7538,7 +7586,7 @@ async function _updateWorkspaceBar() {
       chips.innerHTML = unique.map(d => {
         const resolved = _resolveDeptType(d.dept_type || "", d.name);
         const cfg = _typeConfig[resolved] || _typeConfig[d.dept_type] || _typeConfig.general;
-        return `<span class="ws-chip" style="background:${cfg.color}" title="${esc(d.name)}"
+        return `<span class="ws-chip" style="--chip-color:${cfg.color}" title="${esc(d.name)}"
                       data-dept-id="${d.id}"
                       onclick="activateWorkspace('${d.id}','${d.dept_type}','${esc(d.name)}')">${cfg.icon} ${esc(d.name)}</span>`;
       }).join("");

@@ -35,7 +35,7 @@
   <meta name="twitter:description" content="Connect your systems. Detect savings. Reduce risk. Optimize every department." />
   <meta name="twitter:image"       content="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&h=630&q=80" />
 
-  <link rel="stylesheet" href="/static/styles.css?v=20260614a" />
+  <link rel="stylesheet" href="/static/styles.css?v=20260614d" />
 </head>
 <body>
 
@@ -1954,6 +1954,10 @@
             <h3 data-i18n="parc.chart.budget">Budget par catégorie</h3>
             <canvas id="parc-budget-chart" height="220"></canvas>
           </div>
+          <div class="chart-panel" id="parc-donut-panel">
+            <h3>Répartition du budget</h3>
+            <canvas id="parc-donut-chart" height="220"></canvas>
+          </div>
           <div class="chart-panel">
             <h3 data-i18n="parc.chart.forecast">Prévision 3 mois (k$)</h3>
             <canvas id="parc-forecast-chart" height="220"></canvas>
@@ -2991,7 +2995,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="/static/app.js?v=20260614a"></script>
+<script src="/static/app.js?v=20260614d"></script>
 <script>
   // Service Worker registration
   if ("serviceWorker" in navigator) {
