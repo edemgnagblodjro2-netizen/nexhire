@@ -62,7 +62,7 @@ CONNECTOR_TRUST: dict[str, dict] = {
         "trust_level": 3,
         "can_sandbox": True,
         "validated_at": "2026-06-14",
-        "notes": "OAuth v2 validé — bot scopes (channels:read, history, files, users) + user scope search:read séparé. auth.test + channels list OK.",
+        "notes": "OAuth v2 validé — workspace Nexhire_EPI (T0B8GDS3895), 3 canaux réels (social, new-channel, all-nexhireepi). Bot token OK. User scope search:read séparé pour search.messages.",
     },
     "servicenow": {
         "trust_level": 1,
