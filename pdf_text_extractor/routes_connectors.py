@@ -512,7 +512,7 @@ def ping_connector(
                 account = r1.json().get("displayName")
                 # Test 2 : recherche d'issues
                 r2 = httpx.get(
-                    f"{base_url}/rest/api/3/issue/search",
+                    f"{base_url}/rest/api/3/search",
                     headers=headers,
                     params={"jql": "ORDER BY updated DESC", "maxResults": 1,
                             "fields": "summary,status"},
@@ -546,7 +546,7 @@ def ping_connector(
                     return {"ok": False, "mode": "oauth", "token_scopes": token_scopes,
                             "error": f"accessible-resources HTTP {r_res.status_code}"}
                 # Test search via URL directe (évite contrainte audience JWT)
-                search_url = f"{cloud_url}/rest/api/3/issue/search"
+                search_url = f"{cloud_url}/rest/api/3/search"
                 rs = httpx.get(
                     search_url,
                     headers={**bearer(creds), "Accept": "application/json"},
