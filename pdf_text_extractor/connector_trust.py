@@ -53,10 +53,10 @@ CONNECTOR_TRUST: dict[str, dict] = {
         "notes": "HubSpot Developer Account — developers.hubspot.com (CRM sandbox permanent)",
     },
     "google_workspace": {
-        "trust_level": 1,
+        "trust_level": 3,
         "can_sandbox": True,
-        "validated_at": None,
-        "notes": "Google Cloud Console + compte Gmail personnel suffisant pour test",
+        "validated_at": "2026-06-14",
+        "notes": "OAuth validé — compte attentezero5@gmail.com, 135 emails, Drive OK (AttenteZero). Scopes : gmail.readonly, drive.readonly, calendar.readonly.",
     },
     "slack": {
         "trust_level": 3,
