@@ -103,18 +103,19 @@ def _search_issues(
             return [{"error": f"Jira HTTP {r.status_code}: {r.text[:400]}", "source": "jira"}]
         data   = r.json()
         issues = data.get("issues") or data.get("values", [])
-        return [
-            {
+        result = []
+        for issue in issues:
+            fields = issue.get("fields") or {}
+            result.append({
                 "id":       issue.get("key"),
-                "titre":    issue["fields"].get("summary"),
-                "statut":   issue["fields"].get("status", {}).get("name"),
-                "priorité": issue["fields"].get("priority", {}).get("name"),
-                "assigné":  (issue["fields"].get("assignee") or {}).get("displayName"),
-                "projet":   issue["fields"].get("project", {}).get("name"),
-                "échéance": issue["fields"].get("duedate"),
+                "titre":    fields.get("summary"),
+                "statut":   (fields.get("status") or {}).get("name"),
+                "priorité": (fields.get("priority") or {}).get("name"),
+                "assigné":  (fields.get("assignee") or {}).get("displayName"),
+                "projet":   (fields.get("project") or {}).get("name"),
+                "échéance": fields.get("duedate"),
                 "source":   "jira",
-            }
-            for issue in issues
-        ]
+            })
+        return result
     except Exception as exc:
         return [{"error": str(exc), "source": "jira"}]
