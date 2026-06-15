@@ -1775,6 +1775,13 @@
       <button class="btn-primary btn-full" id="btn-login-submit" data-i18n="modal.login.btn">Sign in</button>
       <div class="modal-divider"><span>or</span></div>
       <button class="btn-ghost btn-full" data-action="switch-to-register" data-i18n="modal.login.create">Create an account</button>
+      <div id="login-ext-skip" style="display:none;margin-top:4px">
+        <button class="btn-ghost btn-full" onclick="skipLoginExternal()"
+                data-i18n="modal.login.skip"
+                style="color:var(--muted);font-size:13px;border-style:dashed">
+          Continue without account →
+        </button>
+      </div>
       <div style="text-align:center;margin-top:12px"><a href="#" data-action="show-forgot" class="link-sm" data-i18n="modal.login.forgot">Forgot password?</a></div>
     </div>
   </div>

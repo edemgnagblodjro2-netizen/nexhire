@@ -46,6 +46,7 @@ const state = {
 
 // ── Session timeout warning ────────────────────────────────
 let sessionTimer, sessionWarningTimer;
+let _pendingExternal = null; // { url, extId, source, category, region }
 const SESSION_TIMEOUT = 15 * 60 * 1000; // 15 min
 const WARNING_BEFORE  = 60 * 1000;       // avertir 1 min avant
 
@@ -682,7 +683,7 @@ const T = {
     'modal.apply.submit':'Submit application','modal.apply.note':'Your profile info will be shared with the employer',
     'modal.apply.ph':"Briefly explain why you're a great fit for this role...",
     'modal.login.title':'Sign in to Nexhire','modal.login.email':'Email','modal.login.pw':'Password',
-    'modal.login.btn':'Sign in','modal.login.create':'Create an account','modal.login.forgot':'Forgot password?',
+    'modal.login.btn':'Sign in','modal.login.create':'Create an account','modal.login.forgot':'Forgot password?','modal.login.skip':'Continue without account →',
     'modal.reg.title':'Create your account','modal.reg.candidate':'Candidate','modal.reg.employer':'Employer',
     'modal.reg.first':'First name','modal.reg.last':'Last name','modal.reg.email':'Email','modal.reg.pw':'Password',
     'modal.reg.company':'Company name','modal.reg.btn':'Create account',
@@ -958,7 +959,7 @@ const T = {
     'modal.apply.submit':'Soumettre ma candidature','modal.apply.note':"Votre profil sera partagé avec l'employeur",
     'modal.apply.ph':"Expliquez brièvement pourquoi vous êtes le candidat idéal pour ce poste...",
     'modal.login.title':'Connexion à Nexhire','modal.login.email':'Courriel','modal.login.pw':'Mot de passe',
-    'modal.login.btn':'Connexion','modal.login.create':'Créer un compte','modal.login.forgot':'Mot de passe oublié ?',
+    'modal.login.btn':'Connexion','modal.login.create':'Créer un compte','modal.login.forgot':'Mot de passe oublié ?','modal.login.skip':'Continuer sans compte →',
     'modal.reg.title':'Créer votre compte','modal.reg.candidate':'Candidat','modal.reg.employer':'Employeur',
     'modal.reg.first':'Prénom','modal.reg.last':'Nom de famille','modal.reg.email':'Courriel','modal.reg.pw':'Mot de passe',
     'modal.reg.company':"Nom de l'entreprise",'modal.reg.btn':'Créer le compte',
@@ -1542,7 +1543,11 @@ async function loadJoobleIntoMainList(q, prov, listEl) {
   jobs.forEach(j => {
     const card = document.createElement('div');
     card.className = 'job-list-item js-job-card';
-    card.dataset.adzunaUrl = j.url;
+    card.dataset.adzunaUrl  = j.url;
+    card.dataset.externalId = j.id;
+    card.dataset.source     = j.source   || '';
+    card.dataset.category   = j.category || '';
+    card.dataset.region     = j.region   || '';
     card.innerHTML = `
       <div class="jli-top">
         <div class="jli-badges">
@@ -1620,7 +1625,11 @@ async function loadAdzunaIntoMainList(q, prov, listEl) {
   jobs.forEach(j => {
     const card = document.createElement('div');
     card.className = 'job-list-item js-job-card';
-    card.dataset.adzunaUrl = j.url;
+    card.dataset.adzunaUrl  = j.url;
+    card.dataset.externalId = j.id;
+    card.dataset.source     = j.source   || '';
+    card.dataset.category   = j.category || '';
+    card.dataset.region     = j.region   || '';
     card.innerHTML = `
       <div class="jli-top">
         <div class="jli-badges">
@@ -2109,6 +2118,22 @@ document.addEventListener('click', e => { if (!e.target.closest('.user-menu')) d
   };
 })();
 
+function skipLoginExternal() {
+  const m = _pendingExternal;
+  _pendingExternal = null;
+  const skipEl = document.getElementById('login-ext-skip');
+  if (skipEl) skipEl.style.display = 'none';
+  hideModal('modal-login');
+  if (m) {
+    // Premier et unique enregistrement — anonyme (user_id NULL côté serveur)
+    api('POST', `${BASE}/api/jobs/external/intent`, {
+      job_external_id: m.extId, source: m.source,
+      category: m.category, region: m.region,
+    }).catch(() => {});
+    window.open(m.url, '_blank', 'noopener,noreferrer');
+  }
+}
+
 async function login() {
   const email = document.getElementById('login-email').value.trim();
   const pw = document.getElementById('login-pw').value;
@@ -2119,6 +2144,16 @@ async function login() {
   if (d.success) {
     state.user = d.user; state.lang = d.user.preferred_lang || state.lang;
     setLangUI(state.lang); hideModal('modal-login'); showUserNav(); startSSE();
+    if (_pendingExternal) {
+      api('POST', `${BASE}/api/jobs/external/intent`, {
+        job_external_id: _pendingExternal.extId, source: _pendingExternal.source,
+        category: _pendingExternal.category, region: _pendingExternal.region,
+      }).catch(() => {});
+      window.open(_pendingExternal.url, '_blank', 'noopener,noreferrer');
+      _pendingExternal = null;
+      const skipEl = document.getElementById('login-ext-skip');
+      if (skipEl) skipEl.style.display = 'none';
+    }
     toast(`Welcome back, ${d.user.first_name}!`, 'success');
     loadVerifiedSkills();
     if (d.user.role === 'candidate') { loadSavedJobIds(); goto('candidate-dash'); }
@@ -2143,6 +2178,16 @@ async function register() {
   const d = await api('POST', `${BASE}/api/auth/register`, body);
   if (d.success) {
     state.user = d.user; hideModal('modal-register'); showUserNav(); startSSE();
+    if (_pendingExternal) {
+      api('POST', `${BASE}/api/jobs/external/intent`, {
+        job_external_id: _pendingExternal.extId, source: _pendingExternal.source,
+        category: _pendingExternal.category, region: _pendingExternal.region,
+      }).catch(() => {});
+      window.open(_pendingExternal.url, '_blank', 'noopener,noreferrer');
+      _pendingExternal = null;
+      const skipEl = document.getElementById('login-ext-skip');
+      if (skipEl) skipEl.style.display = 'none';
+    }
     toast(`Welcome to Nexhire, ${d.user.first_name}!`, 'success');
     loadVerifiedSkills();
     // Apply referral code if present
@@ -6453,10 +6498,30 @@ document.addEventListener('click', e => {
     return;
   }
 
-  // ── Adzuna card click → open external URL ────────────────
+  // ── External card click (Adzuna / Jooble) ────────────────
   const adzunaCard = e.target.closest('[data-adzuna-url]');
   if (adzunaCard) {
-    window.open(adzunaCard.dataset.adzunaUrl, '_blank', 'noopener,noreferrer');
+    e.preventDefault(); // bloque la double-navigation du <a> interne
+    const meta = {
+      url:      adzunaCard.dataset.adzunaUrl,
+      extId:    adzunaCard.dataset.externalId || '',
+      source:   adzunaCard.dataset.source     || '',
+      category: adzunaCard.dataset.category   || '',
+      region:   adzunaCard.dataset.region     || '',
+    };
+    if (state.user) {
+      api('POST', `${BASE}/api/jobs/external/intent`, {
+        job_external_id: meta.extId, source: meta.source,
+        category: meta.category, region: meta.region,
+      }).catch(() => {});
+      window.open(meta.url, '_blank', 'noopener,noreferrer');
+    } else {
+      // Ne PAS enregistrer ici — on attend le choix de l'utilisateur
+      _pendingExternal = meta;
+      const skipEl = document.getElementById('login-ext-skip');
+      if (skipEl) skipEl.style.display = '';
+      showModal('modal-login');
+    }
     return;
   }
 

@@ -35,7 +35,8 @@ function buildQuery(source, q, prov, category) {
 
   return {
     sql: `SELECT external_id, source, title, company, city, province,
-                 salary_min, salary_max, redirect_url, posted_at, description
+                 salary_min, salary_max, redirect_url, posted_at, description,
+                 category, region
           FROM   nh_jobs_external
           WHERE  ${conds.join(' AND ')}
           ORDER  BY posted_at DESC NULLS LAST
@@ -56,6 +57,8 @@ function mapRow(r) {
     description: r.description || '',
     external:    true,
     source:      r.source,
+    category:    r.category || null,
+    region:      r.region   || null,
   };
 }
 
@@ -82,6 +85,25 @@ router.get('/jooble', async (req, res) => {
   } catch (e) {
     console.error('[jobs/external/jooble]', e.message);
     res.json({ success: false, jobs: [], error: e.message });
+  }
+});
+
+// POST /api/jobs/external/intent
+// Pas d'auth requise — user_id vient de req.session si connecté, NULL sinon
+router.post('/intent', async (req, res) => {
+  try {
+    const { job_external_id, source, category, region } = req.body;
+    if (!job_external_id) return res.status(400).json({ success: false, error: 'job_external_id required' });
+    const user_id = req.session?.user?.id || null;
+    await db.query(
+      `INSERT INTO nh_application_intents (user_id, job_external_id, source, category, region)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [user_id, job_external_id, source || null, category || null, region || null]
+    );
+    res.json({ success: true });
+  } catch (e) {
+    console.error('[jobs/external/intent]', e.message);
+    res.status(500).json({ success: false, error: e.message });
   }
 });
 
