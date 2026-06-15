@@ -1155,6 +1155,169 @@ app.get(BASE_PATH + '/interview/:token', (req, res) => res.sendFile(path.join(__
 // Public recommendation form
 app.get(BASE_PATH + '/recommend/:token', (req, res) => res.sendFile(path.join(__dirname, 'public', 'recommend.html')));
 
+// ── Shareable external job page ─────────────────────────────
+app.get(BASE_PATH + '/offre/:external_id', async (req, res) => {
+  const { pool } = require('./models/db');
+  const BASE_URL = process.env.BASE_URL || 'https://nexhire.ca';
+  const { external_id } = req.params;
+
+  function esc(v) {
+    return String(v || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  function pageShell(status, title, bodyHtml) {
+    return `<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${esc(title)} | Nexhire</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--dark:#023448;--indigo:#6366f1;--surface:#fff;--bg:#f8fafc;--border:#e2e8f0;--text:#0f172a;--muted:#64748b}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+    .top-bar{background:var(--dark);color:#fff;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+    .logo{font-weight:800;font-size:18px;letter-spacing:-.5px;color:#fff;text-decoration:none}
+    .logo span{color:#6ee7f7}
+    .nav-links{display:flex;align-items:center;gap:12px}
+    .nav-link{color:rgba(255,255,255,.8);font-size:14px;font-weight:500;text-decoration:none}
+    .nav-link:hover{color:#fff}
+    .btn-nav{background:var(--indigo);color:#fff;font-size:13px;font-weight:600;padding:7px 14px;border-radius:8px;text-decoration:none}
+    .btn-nav:hover{background:#4f46e5}
+    .container{max-width:780px;margin:0 auto;padding:32px 20px 80px}
+    .breadcrumb{font-size:13px;color:var(--muted);margin-bottom:24px}
+    .breadcrumb a{color:var(--indigo);text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+    .job-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:32px;margin-bottom:20px}
+    .source-badge{display:inline-flex;align-items:center;gap:5px;background:#f1f5f9;color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:4px 10px;border-radius:99px;margin-bottom:16px}
+    h1{font-size:26px;font-weight:800;line-height:1.25;margin-bottom:10px}
+    .job-meta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:0}
+    .meta-item{display:flex;align-items:center;gap:5px;font-size:14px;color:var(--muted)}
+    .salary-badge{background:#dcfce7;color:#15803d;font-size:13px;font-weight:600;padding:4px 10px;border-radius:8px}
+    .description{font-size:15px;line-height:1.7;color:#334155;border-top:1px solid var(--border);padding-top:20px;margin-top:20px;white-space:pre-wrap;word-break:break-word}
+    .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+    .btn-apply{display:inline-flex;align-items:center;gap:8px;background:var(--indigo);color:#fff;font-size:15px;font-weight:700;padding:13px 28px;border-radius:12px;text-decoration:none;transition:background .15s}
+    .btn-apply:hover{background:#4f46e5}
+    .btn-back{display:inline-flex;align-items:center;gap:6px;background:transparent;color:var(--muted);font-size:14px;font-weight:500;padding:13px 20px;border-radius:12px;text-decoration:none;border:1px solid var(--border);transition:all .15s}
+    .btn-back:hover{background:var(--bg);color:var(--text)}
+    .cta-register{background:linear-gradient(135deg,#6366f1 0%,#4f46e5 100%);color:#fff;border-radius:18px;padding:24px 28px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    .cta-register p{font-size:15px;line-height:1.5;opacity:.95}
+    .btn-register{background:#fff;color:var(--indigo);font-size:13px;font-weight:700;padding:10px 20px;border-radius:10px;text-decoration:none;white-space:nowrap;flex-shrink:0}
+    .btn-register:hover{background:#f1f5f9}
+    .attribution{font-size:12px;color:var(--muted);text-align:center;padding-top:8px}
+    @media(max-width:600px){h1{font-size:21px}.job-card{padding:20px}.cta-register{flex-direction:column;text-align:center}}
+  </style>
+</head>
+<body>
+<nav class="top-bar">
+  <a href="${BASE_PATH}/" class="logo">Nex<span>hire</span></a>
+  <div class="nav-links">
+    <a href="${BASE_PATH}/#login" class="nav-link">Connexion</a>
+    <a href="${BASE_PATH}/#register" class="btn-nav">Créer un compte</a>
+  </div>
+</nav>
+<div class="container">
+${bodyHtml}
+</div>
+</body>
+</html>`;
+  }
+
+  try {
+    const { rows } = await pool.query(
+      `SELECT external_id, source, title, company, description,
+              city, province, salary_min, salary_max, salary_currency, salary_period,
+              redirect_url, category, region
+       FROM nh_jobs_external WHERE external_id = $1`,
+      [external_id]
+    );
+
+    if (!rows.length) {
+      const body404 = `
+  <p class="breadcrumb"><a href="${BASE_PATH}/#jobs">← Retour aux offres</a></p>
+  <div class="job-card" style="text-align:center;padding:48px 32px">
+    <div style="font-size:48px;margin-bottom:16px">🔍</div>
+    <h1 style="font-size:22px;margin-bottom:8px">Offre introuvable</h1>
+    <p style="color:var(--muted);margin-bottom:24px">Cette offre a peut-être expiré ou été retirée.</p>
+    <a href="${BASE_PATH}/#jobs" class="btn-apply">Voir les offres disponibles</a>
+  </div>`;
+      return res.status(404).send(pageShell(404, 'Offre introuvable', body404));
+    }
+
+    const job = rows[0];
+    const title   = job.title   || 'Offre d\'emploi';
+    const company = job.company || '';
+    const location = [job.city, job.province].filter(Boolean).join(', ');
+    const sourceLabel = job.source === 'adzuna' ? 'Adzuna' : job.source === 'jooble' ? 'Jooble' : esc(job.source);
+
+    let salary = '';
+    if (job.salary_min && job.salary_max) {
+      const cur = job.salary_currency || 'CAD';
+      const per = job.salary_period   || 'an';
+      salary = `${Math.round(job.salary_min).toLocaleString('fr-CA')} – ${Math.round(job.salary_max).toLocaleString('fr-CA')} ${cur}/${per}`;
+    } else if (job.salary_min) {
+      salary = `À partir de ${Math.round(job.salary_min).toLocaleString('fr-CA')} ${job.salary_currency || 'CAD'}/${job.salary_period || 'an'}`;
+    }
+
+    const rawDesc   = job.description || '';
+    const plainDesc = rawDesc.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    const excerpt   = plainDesc.length > 150 ? plainDesc.slice(0, 147).replace(/\s+\S*$/, '') + '…' : plainDesc;
+    const ogDesc    = [company, location, excerpt].filter(Boolean).join(' · ');
+    const canonicalUrl = `${BASE_URL}${BASE_PATH}/offre/${encodeURIComponent(external_id)}`;
+
+    const safeRedirect = /^https?:\/\//.test(job.redirect_url) ? job.redirect_url : '#';
+
+    const bodyHtml = `
+  <p class="breadcrumb"><a href="${BASE_PATH}/#jobs">← Toutes les offres</a></p>
+  <div class="job-card">
+    <span class="source-badge"><i class="ti ti-world"></i> Via ${esc(sourceLabel)}</span>
+    <h1>${esc(title)}</h1>
+    <div class="job-meta">
+      ${company  ? `<span class="meta-item"><i class="ti ti-building"></i> ${esc(company)}</span>`  : ''}
+      ${location ? `<span class="meta-item"><i class="ti ti-map-pin"></i> ${esc(location)}</span>` : ''}
+      ${salary   ? `<span class="salary-badge">${esc(salary)}</span>` : ''}
+    </div>
+    ${plainDesc ? `<div class="description">${esc(plainDesc)}</div>` : ''}
+    <div class="cta-row">
+      <a href="${esc(safeRedirect)}" target="_blank" rel="noopener noreferrer" class="btn-apply">
+        <i class="ti ti-external-link"></i> Postuler${company ? ` chez ${esc(company)}` : ''}
+      </a>
+      <a href="${BASE_PATH}/#jobs" class="btn-back">
+        <i class="ti ti-arrow-left"></i> Autres offres
+      </a>
+    </div>
+  </div>
+  <div class="cta-register">
+    <p>Crée ton profil gratuit pour suivre tes candidatures et découvrir des offres similaires</p>
+    <a href="${BASE_PATH}/#register" class="btn-register">Créer mon profil →</a>
+  </div>
+  <p class="attribution">Offre fournie via ${esc(sourceLabel)} · Nexhire n'est pas l'employeur de cette offre</p>`;
+
+    const html = pageShell(200, `${title} — ${company}`, bodyHtml)
+      .replace('<title>', `<meta name="description" content="${esc(ogDesc)}">
+  <link rel="canonical" href="${esc(canonicalUrl)}">
+  <meta property="og:type"        content="article">
+  <meta property="og:title"       content="${esc(title)} — ${esc(company)}">
+  <meta property="og:description" content="${esc(ogDesc)}">
+  <meta property="og:url"         content="${esc(canonicalUrl)}">
+  <meta property="og:image"       content="${BASE_URL}/img/og-image.png">
+  <meta property="og:site_name"   content="Nexhire">
+  <meta name="twitter:card"       content="summary_large_image">
+  <meta name="twitter:title"      content="${esc(title)} — ${esc(company)}">
+  <meta name="twitter:description" content="${esc(ogDesc)}">
+  <meta name="twitter:image"      content="${BASE_URL}/img/og-image.png">
+  <title>`);
+
+    res.send(html);
+  } catch (e) {
+    console.error('[offre/:external_id] error:', e.message);
+    res.status(500).send('Erreur serveur.');
+  }
+});
+
 // ── Health check ───────────────────────────────────────────
 app.get(BASE_PATH + '/healthz', (req, res) => res.json({ status: 'ok', service: 'nexhire' }));
 
