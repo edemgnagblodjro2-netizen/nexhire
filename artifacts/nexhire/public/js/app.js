@@ -1553,10 +1553,16 @@ async function loadJoobleIntoMainList(q, prov, listEl) {
         <div class="jli-badges">
           <span class="job-tag source-adzuna">🍁 Jooble</span>
         </div>
-        <a href="${j.url}" target="_blank" rel="noopener noreferrer"
-           class="jli-apply-ext" data-onclick="event.stopPropagation()">
-          ${isFr ? 'Postuler' : 'Apply'} <i class="ti ti-external-link" style="font-size:12px"></i>
-        </a>
+        <div style="display:flex;align-items:center;gap:6px">
+          <button class="btn-share-ext" data-share-ext-id="${j.id}"
+                  title="${isFr ? 'Partager' : 'Share'}" aria-label="${isFr ? 'Partager' : 'Share'}">
+            <i class="ti ti-share-2"></i>
+          </button>
+          <a href="${j.url}" target="_blank" rel="noopener noreferrer"
+             class="jli-apply-ext" data-onclick="event.stopPropagation()">
+            ${isFr ? 'Postuler' : 'Apply'} <i class="ti ti-external-link" style="font-size:12px"></i>
+          </a>
+        </div>
       </div>
       <div class="jli-title">${esc(j.title)}</div>
       <div class="jli-meta">
@@ -1635,10 +1641,16 @@ async function loadAdzunaIntoMainList(q, prov, listEl) {
         <div class="jli-badges">
           <span class="job-tag source-adzuna">🌐 Adzuna</span>
         </div>
-        <a href="${j.url}" target="_blank" rel="noopener noreferrer"
-           class="jli-apply-ext" data-onclick="event.stopPropagation()">
-          ${isFr ? 'Postuler' : 'Apply'} <i class="ti ti-external-link" style="font-size:12px"></i>
-        </a>
+        <div style="display:flex;align-items:center;gap:6px">
+          <button class="btn-share-ext" data-share-ext-id="${j.id}"
+                  title="${isFr ? 'Partager' : 'Share'}" aria-label="${isFr ? 'Partager' : 'Share'}">
+            <i class="ti ti-share-2"></i>
+          </button>
+          <a href="${j.url}" target="_blank" rel="noopener noreferrer"
+             class="jli-apply-ext" data-onclick="event.stopPropagation()">
+            ${isFr ? 'Postuler' : 'Apply'} <i class="ti ti-external-link" style="font-size:12px"></i>
+          </a>
+        </div>
       </div>
       <div class="jli-title">${esc(j.title)}</div>
       <div class="jli-meta">
@@ -6575,6 +6587,32 @@ function togglePw(id) {
   if (!el) return;
   el.type = el.type === 'password' ? 'text' : 'password';
 }
+function _showSharePanel(btn, shareUrl, isFr) {
+  document.querySelectorAll('.ext-share-panel').forEach(p => p.remove());
+  const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
+  const panel = document.createElement('div');
+  panel.className = 'ext-share-panel';
+  panel.innerHTML = `
+    <button class="esp-item" id="esp-copy-btn">
+      <i class="ti ti-clipboard-copy"></i> ${isFr ? 'Copier le lien' : 'Copy link'}
+    </button>
+    <a class="esp-item" href="${linkedinUrl}" target="_blank" rel="noopener noreferrer">
+      <i class="ti ti-brand-linkedin"></i> LinkedIn
+    </a>`;
+  const rect = btn.getBoundingClientRect();
+  panel.style.top   = `${rect.bottom + 4}px`;
+  panel.style.right = `${window.innerWidth - rect.right}px`;
+  document.body.appendChild(panel);
+  panel.querySelector('#esp-copy-btn').addEventListener('click', ev => {
+    ev.stopPropagation();
+    panel.remove();
+    navigator.clipboard.writeText(shareUrl)
+      .then(() => toast(isFr ? 'Lien copié !' : 'Link copied!', 'success'))
+      .catch(() => window.prompt(isFr ? 'Copie ce lien :' : 'Copy this link:', shareUrl));
+  });
+  setTimeout(() => document.addEventListener('click', () => panel.remove(), { once: true }), 0);
+}
+
 function toast(msg, type = 'success') {
   const c = document.getElementById('toasts');
   if (!c) return;
@@ -6595,6 +6633,22 @@ document.addEventListener('click', e => {
   if (saveBtn) {
     e.stopPropagation();
     toggleSave(saveBtn.dataset.saveId, e);
+    return;
+  }
+
+  // ── Share button on external cards — must run BEFORE adzuna-url ──
+  const shareExtBtn = e.target.closest('[data-share-ext-id]');
+  if (shareExtBtn) {
+    e.stopPropagation();
+    const extId    = shareExtBtn.dataset.shareExtId;
+    const shareUrl = `${window.location.origin}/offre/${extId}`;
+    const isFr     = state.lang === 'fr';
+    const title    = shareExtBtn.closest('[data-adzuna-url]')?.querySelector('.jli-title')?.textContent?.trim() || '';
+    if (navigator.share) {
+      navigator.share({ title: title || (isFr ? 'Offre d\'emploi' : 'Job listing'), url: shareUrl }).catch(() => {});
+    } else {
+      _showSharePanel(shareExtBtn, shareUrl, isFr);
+    }
     return;
   }
 
