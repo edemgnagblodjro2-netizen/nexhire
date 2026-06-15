@@ -1601,7 +1601,7 @@ async function loadAdzunaIntoMainList(q, prov, listEl) {
   if (prov && prov !== 'REMOTE' && !prov.startsWith('c:')) params.set('prov', prov);
 
   params.set('_t', Date.now());
-  const d = await api('GET', `${BASE}/api/jobbank/search?${params}`);
+  const d = await api('GET', `${BASE}/api/jobs/external/adzuna?${params}`);
 
   // Remove skeleton (it might be gone if list was re-rendered)
   document.getElementById(skeletonId)?.remove();
