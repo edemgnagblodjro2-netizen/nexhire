@@ -1,0 +1,88 @@
+'use strict';
+const express = require('express');
+const router  = express.Router();
+const db      = require('../models/db');
+
+function fmtSalary(min, max) {
+  if (!min && !max) return '';
+  if (min && max) return `$${Math.round(min).toLocaleString('en-CA')} – $${Math.round(max).toLocaleString('en-CA')}`;
+  return `From $${Math.round(min).toLocaleString('en-CA')}`;
+}
+
+function fmtLocation(city, province) {
+  if (city && province) return `${city}, ${province}`;
+  return city || province || '';
+}
+
+function buildQuery(source, q, prov, category) {
+  const conds  = ['source = $1'];
+  const values = [source];
+  let   n      = 2;
+
+  if (q) {
+    conds.push(`(title ILIKE $${n} OR company ILIKE $${n})`);
+    values.push(`%${q}%`);
+    n++;
+  }
+  if (prov) {
+    conds.push(`province = $${n++}`);
+    values.push(prov.toUpperCase());
+  }
+  if (category) {
+    conds.push(`category = $${n++}`);
+    values.push(category);
+  }
+
+  return {
+    sql: `SELECT external_id, source, title, company, city, province,
+                 salary_min, salary_max, redirect_url, posted_at, description
+          FROM   nh_jobs_external
+          WHERE  ${conds.join(' AND ')}
+          ORDER  BY posted_at DESC NULLS LAST
+          LIMIT  100`,
+    values,
+  };
+}
+
+function mapRow(r) {
+  return {
+    id:          r.external_id,
+    title:       r.title    || '',
+    company:     r.company  || '',
+    location:    fmtLocation(r.city, r.province),
+    salary:      fmtSalary(r.salary_min, r.salary_max),
+    date:        r.posted_at ? new Date(r.posted_at).toLocaleDateString('en-CA') : '',
+    url:         r.redirect_url,
+    description: r.description || '',
+    external:    true,
+    source:      r.source,
+  };
+}
+
+// GET /api/jobs/external/adzuna?q=developer&prov=QC&category=Développement
+router.get('/adzuna', async (req, res) => {
+  try {
+    const { q = '', prov = '', category = '' } = req.query;
+    const { sql, values } = buildQuery('adzuna', q, prov, category);
+    const { rows } = await db.query(sql, values);
+    res.json({ success: true, jobs: rows.map(mapRow), total: rows.length });
+  } catch (e) {
+    console.error('[jobs/external/adzuna]', e.message);
+    res.json({ success: false, jobs: [], error: e.message });
+  }
+});
+
+// GET /api/jobs/external/jooble?q=developer&prov=QC&category=Développement
+router.get('/jooble', async (req, res) => {
+  try {
+    const { q = '', prov = '', category = '' } = req.query;
+    const { sql, values } = buildQuery('jooble', q, prov, category);
+    const { rows } = await db.query(sql, values);
+    res.json({ success: true, jobs: rows.map(mapRow), total: rows.length });
+  } catch (e) {
+    console.error('[jobs/external/jooble]', e.message);
+    res.json({ success: false, jobs: [], error: e.message });
+  }
+});
+
+module.exports = router;

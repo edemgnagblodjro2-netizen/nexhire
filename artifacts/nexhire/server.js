@@ -1107,6 +1107,7 @@ app.use(session({
 // ── API Routes ─────────────────────────────────────────────
 const apiBase = BASE_PATH + '/api';
 app.use(apiBase + '/auth',             require('./routes/auth'));
+app.use(apiBase + '/jobs/external',    require('./routes/jobsExternal'));
 app.use(apiBase + '/jobs',             require('./routes/jobs'));
 app.use(apiBase + '/companies',        require('./routes/companies'));
 app.use(apiBase + '/applications',     require('./routes/applications'));
