@@ -1553,16 +1553,10 @@ async function loadJoobleIntoMainList(q, prov, listEl) {
         <div class="jli-badges">
           <span class="job-tag source-adzuna">🍁 Jooble</span>
         </div>
-        <div style="display:flex;align-items:center;gap:6px">
-          <button class="btn-share-ext" data-share-ext-id="${j.id}"
-                  title="${isFr ? 'Partager' : 'Share'}" aria-label="${isFr ? 'Partager' : 'Share'}">
-            <i class="ti ti-share-2"></i>
-          </button>
-          <a href="${j.url}" target="_blank" rel="noopener noreferrer"
-             class="jli-apply-ext" data-onclick="event.stopPropagation()">
-            ${isFr ? 'Postuler' : 'Apply'} <i class="ti ti-external-link" style="font-size:12px"></i>
-          </a>
-        </div>
+        <a href="${j.url}" target="_blank" rel="noopener noreferrer"
+           class="jli-apply-ext" data-onclick="event.stopPropagation()">
+          ${isFr ? 'Postuler' : 'Apply'} <i class="ti ti-external-link" style="font-size:12px"></i>
+        </a>
       </div>
       <div class="jli-title">${esc(j.title)}</div>
       <div class="jli-meta">
