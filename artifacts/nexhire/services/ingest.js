@@ -3,6 +3,7 @@ const https  = require('https');
 const crypto = require('crypto');
 const db     = require('../models/db');
 const { isGig } = require('./gigFilter');
+const { getCategory, getRegion } = require('./classifier');
 
 // ── HTTP helper — même implémentation que routes/jobbank.js ─────
 function httpsGet(url) {
@@ -121,7 +122,8 @@ async function ingestAdzuna(appId, appKey) {
           if (isGig(j.title, j.company?.display_name)) { result.excluded++; continue; }
 
           const locationStr = j.location?.display_name || '';
-          const city = locationStr.split(',')[0]?.trim() || null;
+          const city        = locationStr.split(',')[0]?.trim() || null;
+          const province    = detectProvince(locationStr) || provCode;
 
           const wasInserted = await upsertJob({
             external_id:     `az_${j.id}`,
@@ -130,7 +132,7 @@ async function ingestAdzuna(appId, appKey) {
             company:         j.company?.display_name || null,
             description:     j.description || null,
             city,
-            province:        detectProvince(locationStr) || provCode,
+            province,
             country:         'Canada',
             work_mode:       null,
             job_type:        j.contract_time || j.contract_type || null,
@@ -139,8 +141,8 @@ async function ingestAdzuna(appId, appKey) {
             salary_currency: 'CAD',
             salary_period:   'year',
             skills:          null,
-            category:        null,
-            region:          null,
+            category:        getCategory(j.title || null, j.description || null),
+            region:          getRegion(province, city),
             redirect_url:    j.redirect_url,
             posted_at:       j.created || null,
             raw:             j,
@@ -215,8 +217,8 @@ async function ingestJooble(key) {
           salary_currency: null,
           salary_period:   null,
           skills:          null,
-          category:        null,
-          region:          null,
+          category:        getCategory(j.title || null, j.snippet || null),
+          region:          getRegion(null, j.location || null),
           redirect_url:    j.link,
           posted_at:       j.updated || null,
           raw:             j,
@@ -246,7 +248,7 @@ async function ingestAll() {
   } else {
     try {
       const r = await ingestAdzuna(appId, appKey);
-      summary.sources.adzuna = { ok: true, inserted: r.inserted, updated: r.updated, skipped: r.skipped, errors: r.errors };
+      summary.sources.adzuna = { ok: true, inserted: r.inserted, updated: r.updated, skipped: r.skipped, excluded: r.excluded, errors: r.errors };
       console.log(`[ingest] Adzuna: ${r.inserted} inserted, ${r.updated} updated, ${r.skipped} skipped, ${r.excluded} excluded`);
     } catch (e) {
       summary.sources.adzuna = { ok: false, error: e.message };
@@ -261,7 +263,7 @@ async function ingestAll() {
   } else {
     try {
       const r = await ingestJooble(joobleKey);
-      summary.sources.jooble = { ok: true, inserted: r.inserted, updated: r.updated, skipped: r.skipped, errors: r.errors };
+      summary.sources.jooble = { ok: true, inserted: r.inserted, updated: r.updated, skipped: r.skipped, excluded: r.excluded, errors: r.errors };
       console.log(`[ingest] Jooble: ${r.inserted} inserted, ${r.updated} updated, ${r.skipped} skipped, ${r.excluded} excluded`);
     } catch (e) {
       summary.sources.jooble = { ok: false, error: e.message };
