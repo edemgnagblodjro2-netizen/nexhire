@@ -66,7 +66,7 @@ def send_invite_email(
       <p style="color:#94a3b8;font-size:.8rem;text-align:center;margin:0">Ce lien est valide 7 jours. Si vous ne reconnaissez pas cette invitation, ignorez cet email.</p>
     </div>
     <div style="background:#f8fafc;padding:16px 32px;text-align:center;border-top:1px solid #e2e8f0">
-      <p style="margin:0;color:#94a3b8;font-size:.78rem">© 2026 Nexhire Inc. · <a href="{APP_URL}" style="color:#6366f1">agenthub.nexhire.ca</a> · Conçu pour les organisations canadiennes 🍁</p>
+      <p style="margin:0;color:#94a3b8;font-size:.78rem">© 2026 CivicAI Inc. · <a href="{APP_URL}" style="color:#6366f1">agenthub.nexhire.ca</a> · Conçu pour les organisations canadiennes 🍁</p>
     </div>
   </div>
 </body>
@@ -119,7 +119,7 @@ def send_license_expiry_alert(
       </div>
     </div>
     <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
-      <p style="margin:0;color:#94a3b8;font-size:.78rem">© 2026 Nexhire Inc. · Vous recevez cet email car vous êtes admin de {org_name}.</p>
+      <p style="margin:0;color:#94a3b8;font-size:.78rem">© 2026 CivicAI Inc. · Vous recevez cet email car vous êtes admin de {org_name}.</p>
     </div>
   </div>
 </body>
@@ -178,7 +178,7 @@ def send_monthly_report(
       </div>
     </div>
     <div style="background:#f8fafc;padding:16px 32px;text-align:center;border-top:1px solid #e2e8f0">
-      <p style="margin:0;color:#94a3b8;font-size:.78rem">© 2026 Nexhire Inc. · <a href="{APP_URL}" style="color:#6366f1">agenthub.nexhire.ca</a> · Vous recevez ce rapport car vous êtes admin de {org_name}.</p>
+      <p style="margin:0;color:#94a3b8;font-size:.78rem">© 2026 CivicAI Inc. · <a href="{APP_URL}" style="color:#6366f1">agenthub.nexhire.ca</a> · Vous recevez ce rapport car vous êtes admin de {org_name}.</p>
     </div>
   </div>
 </body>
@@ -283,7 +283,7 @@ def send_monthly_report_rich(
 
     <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
       <p style="margin:0;color:#94a3b8;font-size:.76rem">
-        © 2026 Nexhire Inc. · <a href="{APP_URL}" style="color:#6366f1">agenthub.nexhire.ca</a> ·
+        © 2026 CivicAI Inc. · <a href="{APP_URL}" style="color:#6366f1">agenthub.nexhire.ca</a> ·
         Vous recevez ce rapport car vous êtes admin de {org_name}.
         <a href="{APP_URL}#settings" style="color:#6366f1">Se désabonner</a>
       </p>
@@ -335,7 +335,7 @@ def send_welcome_email(
       <p style="color:#94a3b8;font-size:.82rem;text-align:center;margin:0">Des questions ? Répondez à cet email — nous sommes là pour vous aider.</p>
     </div>
     <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
-      <p style="margin:0;color:#94a3b8;font-size:.76rem">© 2026 Nexhire Inc. · <a href="{APP_URL}" style="color:#6366f1">agenthub.nexhire.ca</a> 🍁</p>
+      <p style="margin:0;color:#94a3b8;font-size:.76rem">© 2026 CivicAI Inc. · <a href="{APP_URL}" style="color:#6366f1">agenthub.nexhire.ca</a> 🍁</p>
     </div>
   </div>
 </body>
@@ -376,7 +376,7 @@ def send_trial_expiry_warning(
       </div>
     </div>
     <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
-      <p style="margin:0;color:#94a3b8;font-size:.76rem">© 2026 Nexhire Inc. · <a href="{APP_URL}" style="color:#6366f1">agenthub.nexhire.ca</a></p>
+      <p style="margin:0;color:#94a3b8;font-size:.76rem">© 2026 CivicAI Inc. · <a href="{APP_URL}" style="color:#6366f1">agenthub.nexhire.ca</a></p>
     </div>
   </div>
 </body>
@@ -409,7 +409,7 @@ def send_subscription_cancelled_email(
       </div>
     </div>
     <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
-      <p style="margin:0;color:#94a3b8;font-size:.78rem">© 2026 Nexhire Inc. · contact@nexhire.ca</p>
+      <p style="margin:0;color:#94a3b8;font-size:.78rem">© 2026 CivicAI Inc. · contact@nexhire.ca</p>
     </div>
   </div>
 </body>
@@ -489,7 +489,7 @@ def send_connector_alert(
 
     <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
       <p style="margin:0;color:#94a3b8;font-size:.76rem">
-        © 2026 Nexhire Inc. · <a href="{APP_URL}" style="color:#6366f1">agenthub.nexhire.ca</a> ·
+        © 2026 CivicAI Inc. · <a href="{APP_URL}" style="color:#6366f1">agenthub.nexhire.ca</a> ·
         Vous recevez cet email car vous êtes admin de {org_name}.
       </p>
     </div>
@@ -610,7 +610,7 @@ def send_executive_briefing(
     <a href="{APP_URL}" style="display:inline-block;background:linear-gradient(135deg,#818CF8,#6366f1);color:#fff;text-decoration:none;padding:13px 32px;border-radius:8px;font-weight:700;font-size:.92rem">Ouvrir NexHire EIP →</a>
   </div>
   <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
-    <p style="margin:0;color:#94a3b8;font-size:.75rem">© 2026 NexHire Inc. · Briefing automatique chaque lundi · <a href="{APP_URL}" style="color:#818CF8;text-decoration:none">nexhire.ca</a></p>
+    <p style="margin:0;color:#94a3b8;font-size:.75rem">© 2026 CivicAI Inc. · Briefing automatique chaque lundi · <a href="{APP_URL}" style="color:#818CF8;text-decoration:none">nexhire.ca</a></p>
   </div>
 </div>
 </body></html>"""
@@ -650,7 +650,7 @@ def send_subscription_confirmation(
       </div>
     </div>
     <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
-      <p style="margin:0;color:#94a3b8;font-size:.78rem">© 2026 Nexhire Inc. · contact@nexhire.ca</p>
+      <p style="margin:0;color:#94a3b8;font-size:.78rem">© 2026 CivicAI Inc. · contact@nexhire.ca</p>
     </div>
   </div>
 </body>

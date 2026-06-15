@@ -70,7 +70,7 @@ const T = {
     'footer.features':'Fonctionnalités','footer.connectors':'Connecteurs','footer.pricing':'Tarifs',
     'footer.docs':'Documentation','footer.help':"Centre d'aide",'footer.contact':'Contact',
     'footer.terms':"Conditions d'utilisation",'footer.privacy':'Politique de confidentialité','footer.security':'Sécurité',
-    'footer.copyright':'© 2026 Nexhire Inc. Tous droits réservés.','footer.tagline':'Conçu pour les organisations canadiennes 🍁',
+    'footer.copyright':'© 2026 CivicAI Inc. Tous droits réservés.','footer.tagline':'Conçu pour les organisations canadiennes 🍁',
     'auth.back':"← Retour à l'accueil",'auth.login.title':'Connexion','auth.login.sub':'Accédez à votre espace Nexhire.',
     'auth.email':'Adresse courriel','auth.email.ph':'vous@organisation.ca','auth.password':'Mot de passe',
     'auth.login.btn':'Se connecter','auth.login.switch':'Pas encore de compte ?','auth.login.switch.link':'Essai gratuit 14 jours',
@@ -263,7 +263,7 @@ const T = {
     'footer.features':'Features','footer.connectors':'Connectors','footer.pricing':'Pricing',
     'footer.docs':'Documentation','footer.help':'Help center','footer.contact':'Contact',
     'footer.terms':'Terms of service','footer.privacy':'Privacy policy','footer.security':'Security',
-    'footer.copyright':'© 2026 Nexhire Inc. All rights reserved.','footer.tagline':'Built for Canadian organizations 🍁',
+    'footer.copyright':'© 2026 CivicAI Inc. All rights reserved.','footer.tagline':'Built for Canadian organizations 🍁',
     'auth.back':'← Back to home','auth.login.title':'Sign in','auth.login.sub':'Access your Nexhire workspace.',
     'auth.email':'Email address','auth.email.ph':'you@organization.ca','auth.password':'Password',
     'auth.login.btn':'Sign in','auth.login.switch':'No account yet?','auth.login.switch.link':'14-day free trial',
@@ -457,7 +457,7 @@ const T = {
     'footer.features':'Funcionalidades','footer.connectors':'Conectores','footer.pricing':'Precios',
     'footer.docs':'Documentación','footer.help':'Centro de ayuda','footer.contact':'Contacto',
     'footer.terms':'Términos de uso','footer.privacy':'Política de privacidad','footer.security':'Seguridad',
-    'footer.copyright':'© 2026 Nexhire Inc. Todos los derechos reservados.','footer.tagline':'Diseñado para organizaciones canadienses 🍁',
+    'footer.copyright':'© 2026 CivicAI Inc. Todos los derechos reservados.','footer.tagline':'Diseñado para organizaciones canadienses 🍁',
     'auth.back':'← Volver al inicio','auth.login.title':'Iniciar sesión','auth.login.sub':'Accede a tu espacio Nexhire.',
     'auth.email':'Correo electrónico','auth.email.ph':'tu@organizacion.ca','auth.password':'Contraseña',
     'auth.login.btn':'Iniciar sesión','auth.login.switch':'¿Aún no tienes cuenta?','auth.login.switch.link':'Prueba gratuita 14 días',
@@ -7808,7 +7808,7 @@ const _LEGAL_CONTENT = {
 <h4>5. Données et confidentialité</h4>
 <p>NexHire traite vos données conformément à sa Politique de confidentialité. Les tokens d'accès OAuth sont chiffrés (Fernet AES-128) avant tout stockage. NexHire ne stocke ni ne lit le contenu de vos systèmes connectés au-delà de ce qui est nécessaire pour répondre à vos questions.</p>
 <h4>6. Propriété intellectuelle</h4>
-<p>Le Service, incluant son interface, son code et sa documentation, est la propriété exclusive de Nexhire Inc. Vous bénéficiez d'une licence d'utilisation limitée, non exclusive et non transférable.</p>
+<p>Le Service, incluant son interface, son code et sa documentation, est la propriété exclusive de CivicAI Inc. Vous bénéficiez d'une licence d'utilisation limitée, non exclusive et non transférable.</p>
 <h4>7. Limitation de responsabilité</h4>
 <p>NexHire ne peut être tenu responsable des dommages indirects, consécutifs ou accessoires résultant de l'utilisation du Service. La responsabilité totale de NexHire est limitée au montant payé par l'organisation au cours des 3 derniers mois.</p>
 <h4>8. Résiliation</h4>
@@ -7830,7 +7830,7 @@ const _LEGAL_CONTENT = {
 <h4>5. Data and Privacy</h4>
 <p>NexHire processes your data in accordance with its Privacy Policy. OAuth access tokens are encrypted (Fernet AES-128) before storage. NexHire does not store or read your connected systems' content beyond what is necessary to answer your questions.</p>
 <h4>6. Intellectual Property</h4>
-<p>The Service, including its interface, code, and documentation, is the exclusive property of Nexhire Inc. You receive a limited, non-exclusive, non-transferable license to use the Service.</p>
+<p>The Service, including its interface, code, and documentation, is the exclusive property of CivicAI Inc. You receive a limited, non-exclusive, non-transferable license to use the Service.</p>
 <h4>7. Limitation of Liability</h4>
 <p>NexHire shall not be liable for indirect, consequential, or incidental damages arising from the use of the Service. NexHire's total liability is limited to the amount paid by the organization in the past 3 months.</p>
 <h4>8. Termination</h4>
@@ -7846,7 +7846,7 @@ const _LEGAL_CONTENT = {
     title: { fr: "Politique de confidentialité", en: "Privacy Policy" },
     body: { fr: `
 <h4>1. Responsable du traitement</h4>
-<p>Nexhire Inc., société enregistrée au Québec, Canada, est responsable du traitement des données personnelles collectées via le Service.</p>
+<p>CivicAI Inc., société enregistrée au Québec, Canada, est responsable du traitement des données personnelles collectées via le Service.</p>
 <h4>2. Données collectées</h4>
 <ul>
 <li><strong>Données de compte :</strong> adresse courriel, nom complet, nom de l'organisation</li>
@@ -7872,11 +7872,11 @@ const _LEGAL_CONTENT = {
 <h4>8. Transferts internationaux</h4>
 <p>Certaines données peuvent transiter via des serveurs situés aux États-Unis (OpenAI, Stripe). Ces transferts sont encadrés par des clauses contractuelles types conformes aux standards internationaux.</p>
 <h4>9. Contact</h4>
-<p>Pour toute question relative à vos données personnelles : <strong>privacy@nexhire.ca</strong> ou en écrivant à Nexhire Inc., Montréal, Québec, Canada.</p>
+<p>Pour toute question relative à vos données personnelles : <strong>privacy@nexhire.ca</strong> ou en écrivant à CivicAI Inc., Montréal, Québec, Canada.</p>
 <p style="margin-top:20px;color:var(--slate);font-size:.82rem">Dernière mise à jour : Juin 2026</p>
     `, en: `
 <h4>1. Data Controller</h4>
-<p>Nexhire Inc., a company registered in Quebec, Canada, is the controller of personal data collected through the Service.</p>
+<p>CivicAI Inc., a company registered in Quebec, Canada, is the controller of personal data collected through the Service.</p>
 <h4>2. Data Collected</h4>
 <ul>
 <li><strong>Account data:</strong> email address, full name, organization name</li>
@@ -7902,7 +7902,7 @@ const _LEGAL_CONTENT = {
 <h4>8. International Transfers</h4>
 <p>Some data may transit through servers located in the United States (OpenAI, Stripe). These transfers are governed by standard contractual clauses compliant with international standards.</p>
 <h4>9. Contact</h4>
-<p>For any questions regarding your personal data: <strong>privacy@nexhire.ca</strong> or by writing to Nexhire Inc., Montreal, Quebec, Canada.</p>
+<p>For any questions regarding your personal data: <strong>privacy@nexhire.ca</strong> or by writing to CivicAI Inc., Montreal, Quebec, Canada.</p>
 <p style="margin-top:20px;color:var(--slate);font-size:.82rem">Last updated: June 2026</p>
     `},
   },
