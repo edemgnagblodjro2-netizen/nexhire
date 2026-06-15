@@ -2,6 +2,7 @@
 const https  = require('https');
 const crypto = require('crypto');
 const db     = require('../models/db');
+const { isGig } = require('./gigFilter');
 
 // ── HTTP helper — même implémentation que routes/jobbank.js ─────
 function httpsGet(url) {
@@ -107,7 +108,7 @@ async function fetchAdzunaPage(appId, appKey, where, page) {
 }
 
 async function ingestAdzuna(appId, appKey) {
-  const result = { inserted: 0, updated: 0, skipped: 0, errors: [] };
+  const result = { inserted: 0, updated: 0, skipped: 0, excluded: 0, errors: [] };
 
   for (const [provCode, provName] of Object.entries(ADZUNA_PROVINCES)) {
     for (let page = 1; page <= 3; page++) {
@@ -117,6 +118,7 @@ async function ingestAdzuna(appId, appKey) {
 
         for (const j of data.results) {
           if (!j.redirect_url) { result.skipped++; continue; }
+          if (isGig(j.title, j.company?.display_name)) { result.excluded++; continue; }
 
           const locationStr = j.location?.display_name || '';
           const city = locationStr.split(',')[0]?.trim() || null;
@@ -187,7 +189,7 @@ async function fetchJooble(key, keywords, page) {
 
 async function ingestJooble(key) {
   const KEYWORDS = ['developer', 'analyst', 'manager'];
-  const result = { inserted: 0, updated: 0, skipped: 0, errors: [] };
+  const result = { inserted: 0, updated: 0, skipped: 0, excluded: 0, errors: [] };
 
   for (const kw of KEYWORDS) {
     try {
@@ -195,6 +197,7 @@ async function ingestJooble(key) {
 
       for (const j of (data.jobs || [])) {
         if (!j.link) { result.skipped++; continue; }
+        if (isGig(j.title, j.company)) { result.excluded++; continue; }
 
         const wasInserted = await upsertJob({
           external_id:     joobleId(j),
@@ -244,7 +247,7 @@ async function ingestAll() {
     try {
       const r = await ingestAdzuna(appId, appKey);
       summary.sources.adzuna = { ok: true, inserted: r.inserted, updated: r.updated, skipped: r.skipped, errors: r.errors };
-      console.log(`[ingest] Adzuna: ${r.inserted} inserted, ${r.updated} updated, ${r.skipped} skipped`);
+      console.log(`[ingest] Adzuna: ${r.inserted} inserted, ${r.updated} updated, ${r.skipped} skipped, ${r.excluded} excluded`);
     } catch (e) {
       summary.sources.adzuna = { ok: false, error: e.message };
       console.error('[ingest] Adzuna fatal:', e.message);
@@ -259,7 +262,7 @@ async function ingestAll() {
     try {
       const r = await ingestJooble(joobleKey);
       summary.sources.jooble = { ok: true, inserted: r.inserted, updated: r.updated, skipped: r.skipped, errors: r.errors };
-      console.log(`[ingest] Jooble: ${r.inserted} inserted, ${r.updated} updated, ${r.skipped} skipped`);
+      console.log(`[ingest] Jooble: ${r.inserted} inserted, ${r.updated} updated, ${r.skipped} skipped, ${r.excluded} excluded`);
     } catch (e) {
       summary.sources.jooble = { ok: false, error: e.message };
       console.error('[ingest] Jooble fatal:', e.message);

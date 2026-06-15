@@ -1,6 +1,7 @@
-const express = require('express');
-const router  = express.Router();
-const https   = require('https');
+const express  = require('express');
+const router   = express.Router();
+const https    = require('https');
+const { isGig } = require('../services/gigFilter');
 
 function httpsGet(url) {
   return new Promise((resolve, reject) => {
@@ -37,15 +38,6 @@ const PROV_TO_WHERE = {
 
 const EXTRA_PROVINCES = ['ON', 'BC', 'AB', 'MB', 'SK'];
 
-const EXCLUDED = ['uber', 'lyft', 'doordash', 'instacart', 'delivery driver',
-  'deliver with', 'conduisez', 'chauffeur', 'door dash'];
-
-function filterGigs(jobs) {
-  return jobs.filter(j => {
-    const text = (j.title + ' ' + j.company).toLowerCase();
-    return !EXCLUDED.some(k => text.includes(k));
-  });
-}
 
 function mapJobs(results) {
   return (results || []).map(j => ({
@@ -120,7 +112,7 @@ router.get('/jooble', async (req, res) => {
       url:      j.link || '',
       external: true,
       source:   'jooble',
-    }));
+    })).filter(j => !isGig(j.title, j.company));
 
     res.json({ success: true, jobs, total: data.totalCount || jobs.length });
   } catch (e) {
@@ -148,7 +140,7 @@ router.get('/search', async (req, res) => {
       return res.json({ success: false, jobs: [], error: main.exception || 'No results from Adzuna' });
     }
 
-    let jobs = filterGigs(mapJobs(main.results));
+    let jobs = mapJobs(main.results).filter(j => !isGig(j.title, j.company));
     const seenIds = new Set(jobs.map(j => j.id));
 
     const extras = await Promise.allSettled(
@@ -156,7 +148,7 @@ router.get('/search', async (req, res) => {
     );
     for (const r of extras) {
       if (r.status === 'fulfilled' && r.value.results) {
-        for (const j of filterGigs(mapJobs(r.value.results))) {
+        for (const j of mapJobs(r.value.results).filter(j => !isGig(j.title, j.company))) {
           if (!seenIds.has(j.id)) { seenIds.add(j.id); jobs.push(j); }
         }
       }
