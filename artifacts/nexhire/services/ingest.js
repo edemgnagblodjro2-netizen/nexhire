@@ -87,12 +87,13 @@ async function upsertJob(job) {
 }
 
 // ── Adzuna ──────────────────────────────────────────────────────
-const ADZUNA_PROVINCES = {
-  QC: 'Quebec',
-  ON: 'Ontario',
-  BC: 'British Columbia',
-  AB: 'Alberta',
-  MB: 'Manitoba',
+// Nombre de pages par province — QC prioritaire, ajuster ici sans toucher à la boucle
+const ADZUNA_STRATEGY = {
+  QC: { where: 'Quebec',           pages: 10 },
+  ON: { where: 'Ontario',          pages: 3  },
+  BC: { where: 'British Columbia', pages: 2  },
+  AB: { where: 'Alberta',          pages: 2  },
+  MB: { where: 'Manitoba',         pages: 1  },
 };
 
 async function fetchAdzunaPage(appId, appKey, where, page) {
@@ -111,8 +112,8 @@ async function fetchAdzunaPage(appId, appKey, where, page) {
 async function ingestAdzuna(appId, appKey) {
   const result = { inserted: 0, updated: 0, skipped: 0, excluded: 0, errors: [] };
 
-  for (const [provCode, provName] of Object.entries(ADZUNA_PROVINCES)) {
-    for (let page = 1; page <= 3; page++) {
+  for (const [provCode, { where: provName, pages }] of Object.entries(ADZUNA_STRATEGY)) {
+    for (let page = 1; page <= pages; page++) {
       try {
         const data = await fetchAdzunaPage(appId, appKey, provName, page);
         if (!data.results?.length) continue;
