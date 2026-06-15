@@ -80,6 +80,19 @@ const CATEGORY_RULES = [
     ],
   },
   {
+    category: 'Restauration/Hôtellerie',
+    keywords: [
+      'cuisinier', 'cuisinière', 'cook',
+      'chef de quart', 'sous-chef',
+      'serveur', 'serveuse', 'waiter', 'waitress',
+      'barista', 'busser', 'bartender', 'barman',
+      'foh', 'boh',
+      'restaurant',
+      'hôtellerie', 'hospitality',
+      'dishwasher', 'plongeur',
+    ],
+  },
+  {
     category: 'Design',
     keywords: [
       'designer', 'ux designer', 'ui designer', 'ux/ui', 'ui/ux',
@@ -180,6 +193,14 @@ const CATEGORY_RULES = [
       'procurement', 'warehouse', 'entrepôt',
       'coordinator', 'coordinateur',
       'administrator', 'administrateur', 'office manager',
+      'general manager', 'operations manager',
+      'production manager', 'maintenance manager', 'plant manager',
+    ],
+  },
+  {
+    category: 'Technicien',
+    keywords: [
+      'technician', 'technicien', 'technicienne',
     ],
   },
 ];

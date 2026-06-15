@@ -14,6 +14,11 @@ const GIG_EXCLUSIONS = [
   'deliver with',
   'conduisez',
   'chauffeur',
+  // Sondages & pseudo-emplois
+  'survey', 'earn cash', 'earn money', 'per survey', 'paid survey',
+  'sondage rémunéré', 'work from home and earn',
+  // Services perso (pas des emplois formels)
+  'house cleaning', 'babysitter', 'nanny', 'gardiennage', 'childcare',
 ];
 
 function isGig(title, company) {
