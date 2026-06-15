@@ -80,14 +80,14 @@ def billing_debug(user: CurrentUser = Depends(require_min_role("admin"))):
         return val[:8] + "****" if val and len(val) > 8 else ("(vide)" if not val else val)
 
     key      = os.environ.get("STRIPE_SECRET_KEY", "")
-    monthly  = os.environ.get("STRIPE_PRICE_MONTHLY", "")
-    annual   = os.environ.get("STRIPE_PRICE_ANNUAL", "")
-    webhook  = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
+    starter      = os.environ.get("STRIPE_PRICE_STARTER", "")
+    professional = os.environ.get("STRIPE_PRICE_PROFESSIONAL", "")
+    webhook      = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
     return {
-        "STRIPE_SECRET_KEY":     {"set": bool(key),     "preview": _masked(key)},
-        "STRIPE_PRICE_MONTHLY":  {"set": bool(monthly),  "preview": _masked(monthly)},
-        "STRIPE_PRICE_ANNUAL":   {"set": bool(annual),   "preview": _masked(annual)},
-        "STRIPE_WEBHOOK_SECRET": {"set": bool(webhook),  "preview": _masked(webhook)},
+        "STRIPE_SECRET_KEY":          {"set": bool(key),          "preview": _masked(key)},
+        "STRIPE_PRICE_STARTER":       {"set": bool(starter),      "preview": _masked(starter)},
+        "STRIPE_PRICE_PROFESSIONAL":  {"set": bool(professional),  "preview": _masked(professional)},
+        "STRIPE_WEBHOOK_SECRET":      {"set": bool(webhook),       "preview": _masked(webhook)},
     }
 
 
@@ -113,8 +113,8 @@ def billing_status(user: CurrentUser = Depends(require_min_role("manager"))):
         "trial_ends_at": r.get("trial_ends_at"),
         "has_stripe":    bool(r.get("stripe_customer_id")),
         "stripe_configured": bool(live_key),
-        "price_monthly_set": bool(os.environ.get("STRIPE_PRICE_MONTHLY", "") or STRIPE_PRICE_MONTHLY),
-        "price_annual_set":  bool(os.environ.get("STRIPE_PRICE_ANNUAL", "") or STRIPE_PRICE_ANNUAL),
+        "price_starter_set":       bool(os.environ.get("STRIPE_PRICE_STARTER", "")       or STRIPE_PRICE_STARTER),
+        "price_professional_set":  bool(os.environ.get("STRIPE_PRICE_PROFESSIONAL", "")  or STRIPE_PRICE_PROFESSIONAL),
     }
 
 
@@ -236,9 +236,9 @@ def _handle_subscription_upsert(sub: dict) -> None:
     price_id    = items[0]["price"]["id"] if items else ""
 
     # Détermine le plan
-    plan = "monthly"
-    if price_id == STRIPE_PRICE_ANNUAL:
-        plan = "annual"
+    plan = "starter"
+    if price_id == STRIPE_PRICE_PROFESSIONAL:
+        plan = "professional"
 
     # Mappe le statut Stripe → statut NexHire
     status_map = {
