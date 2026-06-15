@@ -570,6 +570,52 @@ async function runMigrations() {
         }
       }
     }
+    // ── Aggregation tables ─────────────────────────────────────
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_jobs_external (
+        id              SERIAL PRIMARY KEY,
+        external_id     TEXT UNIQUE NOT NULL,
+        source          TEXT NOT NULL,
+        title           TEXT,
+        company         TEXT,
+        description     TEXT,
+        city            TEXT,
+        province        TEXT,
+        country         TEXT,
+        work_mode       TEXT,
+        job_type        TEXT,
+        salary_min      NUMERIC,
+        salary_max      NUMERIC,
+        salary_currency TEXT,
+        salary_period   TEXT,
+        skills          JSONB,
+        category        TEXT,
+        region          TEXT,
+        redirect_url    TEXT NOT NULL,
+        posted_at       TIMESTAMPTZ,
+        raw             JSONB,
+        created_at      TIMESTAMPTZ DEFAULT NOW(),
+        updated_at      TIMESTAMPTZ DEFAULT NOW()
+      )
+    `);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_jobs_ext_extid   ON nh_jobs_external(external_id)`);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_jobs_ext_cat_reg ON nh_jobs_external(category, region)`);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_jobs_ext_source  ON nh_jobs_external(source)`);
+
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS nh_application_intents (
+        id              SERIAL PRIMARY KEY,
+        user_id         TEXT REFERENCES nh_users(id) ON DELETE SET NULL,
+        job_external_id TEXT,
+        job_id          TEXT,
+        source          TEXT,
+        category        TEXT,
+        region          TEXT,
+        created_at      TIMESTAMPTZ DEFAULT NOW()
+      )
+    `);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_nh_intents_cat_reg ON nh_application_intents(category, region, created_at)`);
+
     console.log('[Nexhire] ✅ DB ready');
   } catch (err) {
     console.error('[Nexhire] Migration error:', err.message);
