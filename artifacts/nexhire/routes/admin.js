@@ -205,6 +205,57 @@ router.get('/jobs/processed', async (req, res) => {
   } catch (e) { res.status(500).json({ success: false, error: e.message }); }
 });
 
+// ── Demande du marché (intentions de candidature) ─────────────
+router.get('/demand', async (req, res) => {
+  try {
+    const [summary, byCategory, byRegion, byWeek] = await Promise.all([
+      db.query(`
+        SELECT COUNT(*)                                 AS total,
+               COUNT(DISTINCT user_id)                 AS unique_users,
+               COUNT(*) FILTER (WHERE user_id IS NULL) AS anonymous
+        FROM nh_application_intents
+        WHERE created_at > NOW() - INTERVAL '30 days'
+      `),
+      db.query(`
+        SELECT COALESCE(category, 'Non catégorisé') AS category,
+               COUNT(*)                              AS n,
+               COUNT(user_id)                        AS identified,
+               COUNT(*) - COUNT(user_id)             AS anonymous
+        FROM nh_application_intents
+        WHERE created_at > NOW() - INTERVAL '30 days'
+        GROUP BY COALESCE(category, 'Non catégorisé')
+        ORDER BY n DESC
+        LIMIT 15
+      `),
+      db.query(`
+        SELECT COALESCE(region, 'Non précisé') AS region,
+               COUNT(*)                         AS n
+        FROM nh_application_intents
+        WHERE created_at > NOW() - INTERVAL '30 days'
+        GROUP BY COALESCE(region, 'Non précisé')
+        ORDER BY n DESC
+      `),
+      db.query(`
+        SELECT DATE_TRUNC('week', created_at) AS week,
+               COUNT(*)                        AS n
+        FROM nh_application_intents
+        WHERE created_at > NOW() - INTERVAL '8 weeks'
+        GROUP BY week
+        ORDER BY week
+      `),
+    ]);
+    res.json({
+      success:    true,
+      summary:    summary.rows[0],
+      byCategory: byCategory.rows,
+      byRegion:   byRegion.rows,
+      byWeek:     byWeek.rows,
+    });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
 // ── Ingestion manuelle ────────────────────────────────────────
 router.post('/ingest', async (req, res) => {
   try {

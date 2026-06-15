@@ -5376,11 +5376,111 @@ function showAdmTab(tabId, el) {
   if (tabId === 'adm-moderation') loadAdmModeration();
   if (tabId === 'adm-jobs')       loadAdmPendingJobs();
   if (tabId === 'adm-history')    loadAdmHistory();
+  if (tabId === 'adm-demand')     loadAdmDemand();
 }
 
 async function loadAdminDash() {
   if (!state.user || state.user.role !== 'admin') { goto('home'); return; }
   loadAdmOverview();
+}
+
+async function loadAdmDemand() {
+  const c = document.getElementById('adm-demand-container');
+  if (!c) return;
+  c.innerHTML = `<div class="adm-empty"><i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:24px"></i></div>`;
+
+  const d = await api('GET', `${BASE}/api/admin/demand`);
+  if (!d.success) { c.innerHTML = `<div class="adm-empty">Erreur : ${d.error}</div>`; return; }
+
+  const { summary, byCategory, byRegion, byWeek } = d;
+  const total     = parseInt(summary.total        || 0);
+  const unique    = parseInt(summary.unique_users  || 0);
+  const anonymous = parseInt(summary.anonymous    || 0);
+  const anonPct   = total ? Math.round(anonymous / total * 100) : 0;
+  const maxWeek   = Math.max(...byWeek.map(r => parseInt(r.n)), 1);
+
+  c.innerHTML = `
+    <div class="adm-stats-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:28px">
+      <div class="adm-stat-card">
+        <div class="adm-stat-ico" style="background:#eef2ff;color:#6366f1"><i class="ti ti-mouse-2"></i></div>
+        <div class="adm-stat-n">${total}</div>
+        <div class="adm-stat-l">Intentions 30 jours</div>
+      </div>
+      <div class="adm-stat-card">
+        <div class="adm-stat-ico" style="background:#f0fdf4;color:#16a34a"><i class="ti ti-user-check"></i></div>
+        <div class="adm-stat-n">${unique}</div>
+        <div class="adm-stat-l">Candidats uniques identifiés</div>
+      </div>
+      <div class="adm-stat-card">
+        <div class="adm-stat-ico" style="background:#fffbeb;color:#d97706"><i class="ti ti-ghost"></i></div>
+        <div class="adm-stat-n">${anonPct}%</div>
+        <div class="adm-stat-l">Part anonyme (${anonymous} clics)</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px">
+      <div class="adm-card">
+        <div class="adm-card-hdr">
+          Demande par catégorie
+          <span style="font-size:12px;color:#94a3b8;font-weight:400">30 jours</span>
+        </div>
+        <table class="adm-tbl">
+          <thead><tr>
+            <th>Catégorie</th><th>Total</th><th>Identifiées</th><th>Anonymes</th>
+          </tr></thead>
+          <tbody>
+            ${byCategory.length
+              ? byCategory.map(r => `<tr>
+                  <td>${r.category}</td>
+                  <td><strong>${r.n}</strong></td>
+                  <td>${r.identified}</td>
+                  <td style="color:#94a3b8">${r.anonymous}</td>
+                </tr>`).join('')
+              : '<tr><td colspan="4" class="adm-empty">Aucune donnée</td></tr>'}
+          </tbody>
+        </table>
+      </div>
+      <div class="adm-card">
+        <div class="adm-card-hdr">
+          Demande par région
+          <span style="font-size:12px;color:#94a3b8;font-weight:400">30 jours</span>
+        </div>
+        <table class="adm-tbl">
+          <thead><tr><th>Région</th><th>Intentions</th></tr></thead>
+          <tbody>
+            ${byRegion.length
+              ? byRegion.map(r => `<tr>
+                  <td>${r.region}</td>
+                  <td><strong>${r.n}</strong></td>
+                </tr>`).join('')
+              : '<tr><td colspan="2" class="adm-empty">Aucune donnée</td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="adm-card">
+      <div class="adm-card-hdr">
+        Tendance hebdomadaire
+        <span style="font-size:12px;color:#94a3b8;font-weight:400">8 semaines</span>
+      </div>
+      <div style="padding:20px">
+        ${byWeek.length
+          ? byWeek.map(r => {
+              const pct  = Math.round(parseInt(r.n) / maxWeek * 100);
+              const week = new Date(r.week).toLocaleDateString('fr-CA', { month: 'short', day: 'numeric' });
+              return `<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+                <span style="font-size:12px;color:#64748b;width:72px;flex-shrink:0">${week}</span>
+                <div style="flex:1;background:#f1f5f9;border-radius:4px;height:22px">
+                  <div style="background:#6366f1;width:${pct}%;height:100%;border-radius:4px;transition:width .3s"></div>
+                </div>
+                <span style="font-size:13px;font-weight:700;color:#0f172a;width:32px;text-align:right">${r.n}</span>
+              </div>`;
+            }).join('')
+          : '<p style="color:#94a3b8;font-size:13px">Aucune donnée</p>'}
+      </div>
+    </div>
+  `;
 }
 
 async function loadAdmOverview() {
