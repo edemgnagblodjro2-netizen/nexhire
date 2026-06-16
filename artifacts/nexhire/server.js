@@ -1251,7 +1251,7 @@ ${bodyHtml}
     const title   = job.title   || 'Offre d\'emploi';
     const company = job.company || '';
     const location = [job.city, job.province].filter(Boolean).join(', ');
-    const sourceLabel = job.source === 'adzuna' ? 'Adzuna' : esc(job.source);
+    const sourceLabel = job.source === 'adzuna' ? 'Adzuna' : job.source === 'jooble' ? 'Jooble' : esc(job.source);
 
     let salary = '';
     if (job.salary_min && job.salary_max) {
