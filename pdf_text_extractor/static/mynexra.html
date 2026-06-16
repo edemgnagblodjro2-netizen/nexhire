@@ -9,12 +9,13 @@
 
     :root {
       --navy:   #0f172a;
+      --navy2:  #1e293b;
       --indigo: #6366f1;
       --ind2:   #818cf8;
       --teal:   #14b8a6;
+      --purple: #a855f7;
       --slate:  #64748b;
       --slate2: #94a3b8;
-      --white:  #ffffff;
       --border: #e2e8f0;
       --text:   #1e293b;
     }
@@ -32,10 +33,13 @@
     header {
       background: #fff;
       border-bottom: 1px solid var(--border);
-      padding: 14px 40px;
+      padding: 14px 48px;
       display: flex;
       align-items: center;
       gap: 14px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
     .logo-mark {
       width: 36px; height: 36px; border-radius: 9px; flex-shrink: 0;
@@ -45,9 +49,9 @@
     }
     .logo-text { font-weight: 900; font-size: 1.05rem; color: var(--navy); }
     .logo-text span { color: var(--indigo); }
-    .logo-by   { font-size: .65rem; color: var(--slate2); margin-top: 1px; }
-    .hdiv { width: 1px; height: 28px; background: var(--border); margin: 0 6px; }
-    .htagline { font-size: .75rem; color: var(--slate); flex: 1; }
+    .logo-by { font-size: .63rem; color: var(--slate2); margin-top: 1px; }
+    .hdiv { width: 1px; height: 26px; background: var(--border); margin: 0 8px; }
+    .htagline { font-size: .74rem; color: var(--slate); flex: 1; }
 
     .lang-sw {
       display: flex; align-items: center;
@@ -60,102 +64,250 @@
     }
     .lang-btn:not(:last-child) { border-right: 1px solid var(--border); }
     .lang-btn.active { background: var(--indigo); color: #fff; }
-    .lang-btn:not(.active):hover { background: #f1f5f9; color: var(--navy); }
+    .lang-btn:not(.active):hover { background: #f8fafc; color: var(--navy); }
 
-    /* ── Main ── */
-    main {
-      flex: 1;
+    /* ── Hero ── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 57px - 53px);
+      align-items: center;
+    }
+
+    .hero-left {
+      padding: 64px 56px 64px 48px;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      padding: 60px 24px;
     }
 
-    .portal-head {
-      text-align: center;
-      margin-bottom: 48px;
-    }
-    .portal-head h1 {
-      font-size: 1.9rem; font-weight: 900; color: var(--navy);
-      letter-spacing: -.02em; line-height: 1.2; margin-bottom: 10px;
-    }
-    .portal-head h1 span { color: var(--indigo); }
-    .portal-head p {
-      font-size: .88rem; color: var(--slate); max-width: 460px; line-height: 1.7;
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: .68rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--indigo);
+      background: #6366f110; border: 1px solid #6366f120;
+      padding: 4px 12px; border-radius: 20px;
+      width: fit-content; margin-bottom: 24px;
     }
 
-    /* ── Produits ── */
-    .prod-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      width: 100%;
-      max-width: 860px;
+    .hero-left h1 {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 900; color: var(--navy);
+      letter-spacing: -.025em; line-height: 1.15;
+      margin-bottom: 16px;
     }
+    .hero-left h1 span { color: var(--indigo); }
+
+    .hero-left p {
+      font-size: .92rem; color: var(--slate);
+      line-height: 1.75; max-width: 420px;
+      margin-bottom: 40px;
+    }
+
+    /* Product cards */
+    .prod-list { display: flex; flex-direction: column; gap: 12px; }
 
     .prod-card {
-      background: #fff;
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 20px;
       border: 1.5px solid var(--border);
-      border-radius: 14px;
-      padding: 28px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      text-decoration: none;
-      color: inherit;
+      border-radius: 12px;
+      text-decoration: none; color: inherit;
       transition: border-color .2s, box-shadow .2s, transform .2s;
+      background: #fff;
     }
-    .prod-card.clickable:hover {
-      border-color: #6366f160;
-      box-shadow: 0 6px 24px #6366f112;
-      transform: translateY(-3px);
+    .prod-card.link:hover {
+      border-color: #6366f155;
+      box-shadow: 0 4px 18px #6366f110;
+      transform: translateX(4px);
     }
-    .prod-card.soon { opacity: .6; cursor: default; }
+    .prod-card.dim { opacity: .55; cursor: default; }
 
     .prod-icon {
-      width: 48px; height: 48px; border-radius: 13px;
-      display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+      width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1.15rem;
     }
-    .ic-indigo { background: #6366f112; border: 1px solid #6366f120; }
-    .ic-purple { background: #a855f710; border: 1px solid #a855f720; }
-    .ic-teal   { background: #14b8a610; border: 1px solid #14b8a620; }
+    .ic-i { background: #6366f110; border: 1px solid #6366f118; }
+    .ic-p { background: #a855f710; border: 1px solid #a855f718; }
+    .ic-t { background: #14b8a610; border: 1px solid #14b8a618; }
+
+    .prod-info { flex: 1; }
+    .prod-name { font-size: .88rem; font-weight: 800; color: var(--navy); }
+    .prod-sub  { font-size: .73rem; color: var(--slate); margin-top: 1px; }
 
     .prod-badge {
-      display: inline-flex; align-items: center;
-      font-size: .62rem; font-weight: 700; letter-spacing: .8px; text-transform: uppercase;
-      padding: 3px 9px; border-radius: 20px; width: fit-content;
+      font-size: .6rem; font-weight: 700; letter-spacing: .7px; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 20px; flex-shrink: 0;
     }
-    .badge-live { background: #22c55e12; color: #16a34a; border: 1px solid #22c55e25; }
-    .badge-soon { background: #f1f5f9; color: var(--slate); border: 1px solid var(--border); }
+    .bl { background: #22c55e10; color: #16a34a; border: 1px solid #22c55e20; }
+    .bs { background: #f1f5f9; color: var(--slate2); border: 1px solid var(--border); }
 
-    .prod-name { font-size: 1rem; font-weight: 900; color: var(--navy); }
-    .prod-desc { font-size: .8rem; color: var(--slate); line-height: 1.6; flex: 1; }
+    .prod-arr { color: var(--slate2); font-size: .85rem; flex-shrink: 0; }
+    .prod-card.dim .prod-arr { display: none; }
 
-    .prod-cta {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: .78rem; font-weight: 700; color: var(--indigo);
-      margin-top: 4px;
+    /* ── Hero right — visual ── */
+    .hero-right {
+      background: linear-gradient(145deg, #f8faff 0%, #eef2ff 50%, #f0fdfa 100%);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 40px;
+      position: relative;
+      overflow: hidden;
     }
-    .prod-card.soon .prod-cta { display: none; }
+    .hero-right::before {
+      content: "";
+      position: absolute; top: -80px; right: -80px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, #6366f118, transparent 70%);
+    }
+    .hero-right::after {
+      content: "";
+      position: absolute; bottom: -60px; left: -60px;
+      width: 250px; height: 250px;
+      background: radial-gradient(circle, #14b8a612, transparent 70%);
+    }
+
+    /* ── Slideshow ── */
+    .slideshow-wrap {
+      width: 100%; max-width: 420px;
+      position: relative; z-index: 1;
+    }
+    .slides-track {
+      display: grid;
+      grid-template-columns: repeat(4, 100%);
+      transition: transform .55s cubic-bezier(.4,0,.2,1);
+    }
+    .slide {
+      aspect-ratio: 1 / 1;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px #00000020, 0 4px 16px #00000010;
+      display: flex; flex-direction: column;
+    }
+
+    /* Slide 1 — AgentHub dashboard */
+    .s1 { background: var(--navy); }
+    .s1-bar {
+      background: #0a1221; padding: 12px 16px;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .sdot { width: 7px; height: 7px; border-radius: 50%; }
+    .stitle { font-size: .6rem; font-weight: 700; color: #475569; margin-left: 6px; letter-spacing: .5px; }
+    .s1-body { padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+    .s1-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+    .s1-stat { background: #1e2d40; border-radius: 8px; padding: 10px; }
+    .s1-val { font-size: 1.2rem; font-weight: 900; line-height: 1; }
+    .s1-lbl { font-size: .55rem; color: #64748b; margin-top: 3px; }
+    .s1-chart { display: flex; align-items: flex-end; gap: 4px; height: 50px; }
+    .s1-bar2 { flex: 1; border-radius: 3px 3px 0 0; }
+    .s1-pills { display: flex; flex-wrap: wrap; gap: 5px; }
+    .s1-pill {
+      font-size: .55rem; font-weight: 600; padding: 2px 7px; border-radius: 20px;
+      background: #1e3a5f; color: #818cf8; border: 1px solid #6366f125;
+    }
+    .s1-alert {
+      display: flex; align-items: center; gap: 6px;
+      background: #052e1640; border: 1px solid #166534;
+      border-radius: 6px; padding: 7px 10px; margin-top: auto;
+    }
+    .s1-adot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; flex-shrink: 0; }
+    .s1-atxt { font-size: .57rem; color: #86efac; }
+
+    /* Slide 2 — NexHire */
+    .s2 { background: #faf5ff; }
+    .s2-bar { background: #581c87; padding: 12px 16px; display: flex; align-items: center; gap: 7px; }
+    .s2-body { padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+    .s2-title { font-size: .7rem; font-weight: 800; color: #581c87; }
+    .s2-job {
+      background: #fff; border: 1.5px solid #e9d5ff; border-radius: 9px; padding: 10px 12px;
+    }
+    .s2-jtitle { font-size: .7rem; font-weight: 800; color: #1e293b; }
+    .s2-jmeta  { font-size: .58rem; color: #9333ea; margin-top: 2px; }
+    .s2-tags   { display: flex; gap: 5px; margin-top: 6px; flex-wrap: wrap; }
+    .s2-tag {
+      font-size: .55rem; padding: 2px 7px; border-radius: 20px;
+      background: #f3e8ff; color: #7e22ce; border: 1px solid #e9d5ff;
+    }
+    .s2-cands { display: flex; gap: -4px; margin-top: 4px; }
+    .s2-av {
+      width: 20px; height: 20px; border-radius: 50%; border: 2px solid #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .45rem; font-weight: 700; color: #fff; margin-left: -4px;
+    }
+    .s2-av:first-child { margin-left: 0; }
+    .s2-cand-lbl { font-size: .57rem; color: #64748b; margin-left: 6px; align-self: center; }
+
+    /* Slide 3 — Attente Zéro */
+    .s3 { background: #f0fdfa; }
+    .s3-bar { background: #134e4a; padding: 12px 16px; display: flex; align-items: center; gap: 7px; }
+    .s3-body { padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+    .s3-title { font-size: .7rem; font-weight: 800; color: #0f766e; }
+    .s3-kpi { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .s3-kpi-box { background: #fff; border: 1.5px solid #ccfbf1; border-radius: 9px; padding: 10px; text-align: center; }
+    .s3-kpi-val { font-size: 1.4rem; font-weight: 900; color: #0d9488; line-height: 1; }
+    .s3-kpi-lbl { font-size: .57rem; color: #64748b; margin-top: 3px; }
+    .s3-soon {
+      background: #fff; border: 1.5px dashed #99f6e4; border-radius: 9px;
+      padding: 12px; text-align: center;
+    }
+    .s3-soon-icon { font-size: 1.5rem; margin-bottom: 4px; }
+    .s3-soon-txt { font-size: .67rem; font-weight: 700; color: #0f766e; }
+    .s3-soon-sub { font-size: .58rem; color: #64748b; margin-top: 2px; }
+
+    /* Slide 4 — CivicAI ecosystem */
+    .s4 { background: linear-gradient(135deg, #0f172a, #1e1b4b); }
+    .s4-body { padding: 20px; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
+    .s4-logo { font-size: 2rem; font-weight: 900; color: #fff; letter-spacing: -.03em; }
+    .s4-logo span { color: #818cf8; }
+    .s4-sub { font-size: .65rem; color: #64748b; text-align: center; }
+    .s4-nodes { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 8px 0; }
+    .s4-node {
+      background: #1e293b; border: 1px solid #334155;
+      border-radius: 8px; padding: 7px 10px;
+      font-size: .57rem; font-weight: 700; color: #94a3b8;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .s4-node.active { border-color: #6366f140; color: #818cf8; background: #1e1e3f; }
+    .s4-tag {
+      font-size: .6rem; font-weight: 700; color: #c7d2fe;
+      background: #312e81; border: 1px solid #6366f140;
+      padding: 3px 10px; border-radius: 20px;
+    }
+
+    /* Slideshow nav dots */
+    .slide-dots {
+      display: flex; justify-content: center; gap: 8px; margin-top: 16px;
+    }
+    .sdot2 {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #cbd5e1; border: none; cursor: pointer; padding: 0;
+      transition: background .2s, transform .2s;
+    }
+    .sdot2.active { background: var(--indigo); transform: scale(1.3); }
 
     /* ── Footer ── */
     footer {
       background: #fff;
       border-top: 1px solid var(--border);
-      padding: 16px 40px;
+      padding: 16px 48px;
       display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
     }
-    .footer-copy { font-size: .72rem; color: var(--slate2); }
+    .footer-copy { font-size: .71rem; color: var(--slate2); }
     .footer-links { display: flex; gap: 20px; }
-    .footer-links a { font-size: .72rem; color: var(--slate); text-decoration: none; }
+    .footer-links a { font-size: .71rem; color: var(--slate); text-decoration: none; }
     .footer-links a:hover { color: var(--indigo); }
 
-    @media (max-width: 700px) {
-      .prod-grid { grid-template-columns: 1fr; }
-      header { padding: 14px 20px; }
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-right { min-height: 320px; }
+      .hero-left { padding: 40px 24px; }
+      header, footer { padding-left: 20px; padding-right: 20px; }
       .htagline { display: none; }
-      footer { padding: 16px 20px; }
+    }
+    @media (max-width: 500px) {
+      .hero-right { display: none; }
     }
   </style>
 </head>
@@ -177,43 +329,200 @@
   </div>
 </header>
 
-<!-- Main -->
-<main>
-  <div class="portal-head">
-    <h1 data-i18n="hero.title">Bienvenue sur <span>MyNexRA</span></h1>
-    <p data-i18n="hero.desc">Choisissez le produit CivicAI auquel vous souhaitez accéder.</p>
-  </div>
+<!-- Hero -->
+<div class="hero">
 
-  <div class="prod-grid">
+  <!-- Gauche -->
+  <div class="hero-left">
+    <div class="hero-eyebrow">✦ <span data-i18n="eyebrow">Écosystème CivicAI</span></div>
+    <h1 data-i18n="hero.title">Bienvenue sur<br/><span>MyNexRA</span></h1>
+    <p data-i18n="hero.desc">Accédez à tous les produits CivicAI depuis un seul portail. Choisissez votre application ci-dessous.</p>
 
-    <!-- AgentHub -->
-    <a href="https://agenthub.nexhire.ca" class="prod-card clickable">
-      <div class="prod-icon ic-indigo">🛡️</div>
-      <span class="prod-badge badge-live" data-i18n="badge.live">Disponible</span>
-      <div class="prod-name">AgentHub</div>
-      <div class="prod-desc" data-i18n="prod.ah.desc">Gouvernance IT, sécurité et optimisation par IA — connectez tous vos systèmes d'entreprise.</div>
-      <div class="prod-cta" data-i18n="cta.access">Accéder →</div>
-    </a>
+    <div class="prod-list">
 
-    <!-- NexHire -->
-    <a href="https://nexhire.ca" class="prod-card clickable">
-      <div class="prod-icon ic-purple">👥</div>
-      <span class="prod-badge badge-live" data-i18n="badge.live">Disponible</span>
-      <div class="prod-name">NexHire Recrutement</div>
-      <div class="prod-desc" data-i18n="prod.nh.desc">Publiez vos offres d'emploi, gérez vos candidatures et trouvez les meilleurs talents.</div>
-      <div class="prod-cta" data-i18n="cta.access">Accéder →</div>
-    </a>
+      <a href="https://agenthub.nexhire.ca" class="prod-card link">
+        <div class="prod-icon ic-i">🛡️</div>
+        <div class="prod-info">
+          <div class="prod-name">AgentHub</div>
+          <div class="prod-sub" data-i18n="prod.ah.sub">Gouvernance IT · Sécurité · Optimisation IA</div>
+        </div>
+        <span class="prod-badge bl" data-i18n="badge.live">Disponible</span>
+        <span class="prod-arr">→</span>
+      </a>
 
-    <!-- Attente Zéro -->
-    <div class="prod-card soon">
-      <div class="prod-icon ic-teal">⏱️</div>
-      <span class="prod-badge badge-soon" data-i18n="badge.soon">Bientôt</span>
-      <div class="prod-name">Attente Zéro</div>
-      <div class="prod-desc" data-i18n="prod.az.desc">Plateforme de réduction des délais par analyse prédictive — en développement.</div>
+      <a href="https://nexhire.ca" class="prod-card link">
+        <div class="prod-icon ic-p">👥</div>
+        <div class="prod-info">
+          <div class="prod-name">NexHire Recrutement</div>
+          <div class="prod-sub" data-i18n="prod.nh.sub">Offres d'emploi · Candidatures · ATS</div>
+        </div>
+        <span class="prod-badge bl" data-i18n="badge.live">Disponible</span>
+        <span class="prod-arr">→</span>
+      </a>
+
+      <div class="prod-card dim">
+        <div class="prod-icon ic-t">⏱️</div>
+        <div class="prod-info">
+          <div class="prod-name">Attente Zéro</div>
+          <div class="prod-sub" data-i18n="prod.az.sub">Réduction des délais · Analyse prédictive</div>
+        </div>
+        <span class="prod-badge bs" data-i18n="badge.soon">Bientôt</span>
+      </div>
+
     </div>
-
   </div>
-</main>
+
+  <!-- Droite — slideshow -->
+  <div class="hero-right">
+    <div class="slideshow-wrap">
+      <div style="overflow:hidden;border-radius:18px;">
+        <div class="slides-track" id="slides-track">
+
+          <!-- Slide 1 : AgentHub -->
+          <div class="slide s1">
+            <div class="s1-bar">
+              <div class="sdot" style="background:#ef4444"></div>
+              <div class="sdot" style="background:#f59e0b"></div>
+              <div class="sdot" style="background:#22c55e"></div>
+              <span class="stitle">AGENTHUB · TABLEAU DE BORD</span>
+            </div>
+            <div class="s1-body">
+              <div class="s1-stats">
+                <div class="s1-stat"><div class="s1-val" style="color:#22c55e">94%</div><div class="s1-lbl">Score santé</div></div>
+                <div class="s1-stat"><div class="s1-val" style="color:#818cf8">9</div><div class="s1-lbl">Connecteurs</div></div>
+                <div class="s1-stat"><div class="s1-val" style="color:#2dd4bf">0</div><div class="s1-lbl">Alertes</div></div>
+              </div>
+              <div>
+                <div style="font-size:.58rem;color:#475569;margin-bottom:5px;">Activité — 7 jours</div>
+                <div class="s1-chart">
+                  <div class="s1-bar2" style="height:45%;background:#6366f130;"></div>
+                  <div class="s1-bar2" style="height:60%;background:#6366f145;"></div>
+                  <div class="s1-bar2" style="height:38%;background:#6366f130;"></div>
+                  <div class="s1-bar2" style="height:72%;background:#6366f160;"></div>
+                  <div class="s1-bar2" style="height:55%;background:#6366f145;"></div>
+                  <div class="s1-bar2" style="height:90%;background:#6366f1;"></div>
+                  <div class="s1-bar2" style="height:65%;background:#6366f160;"></div>
+                </div>
+              </div>
+              <div>
+                <div style="font-size:.58rem;color:#475569;margin-bottom:5px;">Systèmes connectés</div>
+                <div class="s1-pills">
+                  <div class="s1-pill">M365</div>
+                  <div class="s1-pill">Salesforce</div>
+                  <div class="s1-pill">Jira</div>
+                  <div class="s1-pill">AWS</div>
+                  <div class="s1-pill">Slack</div>
+                  <div class="s1-pill">QuickBooks</div>
+                </div>
+              </div>
+              <div class="s1-alert">
+                <div class="s1-adot"></div>
+                <div class="s1-atxt">Tous les systèmes opérationnels · Agent IA actif</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2 : NexHire -->
+          <div class="slide s2">
+            <div class="s2-bar">
+              <div class="sdot" style="background:#c084fc"></div>
+              <div class="sdot" style="background:#e879f9"></div>
+              <div class="sdot" style="background:#a855f7"></div>
+              <span class="stitle" style="color:#d8b4fe">NEXHIRE · RECRUTEMENT</span>
+            </div>
+            <div class="s2-body">
+              <div class="s2-title">Offres actives (3)</div>
+              <div class="s2-job">
+                <div class="s2-jtitle">Développeur Full-Stack</div>
+                <div class="s2-jmeta">Montréal · Temps plein · 85 000 $</div>
+                <div class="s2-tags">
+                  <span class="s2-tag">React</span>
+                  <span class="s2-tag">Python</span>
+                  <span class="s2-tag">AWS</span>
+                </div>
+                <div class="s2-cands" style="margin-top:8px">
+                  <div class="s2-av" style="background:#6366f1">A</div>
+                  <div class="s2-av" style="background:#a855f7">B</div>
+                  <div class="s2-av" style="background:#ec4899">C</div>
+                  <div class="s2-av" style="background:#14b8a6">D</div>
+                  <span class="s2-cand-lbl">+12 candidats</span>
+                </div>
+              </div>
+              <div class="s2-job">
+                <div class="s2-jtitle">Analyste RH</div>
+                <div class="s2-jmeta">Trois-Rivières · Hybride · 65 000 $</div>
+                <div class="s2-tags">
+                  <span class="s2-tag">RH</span>
+                  <span class="s2-tag">SIRH</span>
+                </div>
+                <div class="s2-cands" style="margin-top:8px">
+                  <div class="s2-av" style="background:#f59e0b">E</div>
+                  <div class="s2-av" style="background:#22c55e">F</div>
+                  <span class="s2-cand-lbl">+5 candidats</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3 : Attente Zéro -->
+          <div class="slide s3">
+            <div class="s3-bar">
+              <div class="sdot" style="background:#2dd4bf"></div>
+              <div class="sdot" style="background:#14b8a6"></div>
+              <div class="sdot" style="background:#0d9488"></div>
+              <span class="stitle" style="color:#99f6e4">ATTENTE ZÉRO · DÉLAIS</span>
+            </div>
+            <div class="s3-body">
+              <div class="s3-title">Tableau de bord prédictif</div>
+              <div class="s3-kpi">
+                <div class="s3-kpi-box"><div class="s3-kpi-val">-42%</div><div class="s3-kpi-lbl">Réduction délais</div></div>
+                <div class="s3-kpi-box"><div class="s3-kpi-val">8 min</div><div class="s3-kpi-lbl">Délai moyen</div></div>
+                <div class="s3-kpi-box"><div class="s3-kpi-val">97%</div><div class="s3-kpi-lbl">Satisfaction</div></div>
+                <div class="s3-kpi-box"><div class="s3-kpi-val">1 204</div><div class="s3-kpi-lbl">Usagers / jour</div></div>
+              </div>
+              <div class="s3-soon">
+                <div class="s3-soon-icon">⏳</div>
+                <div class="s3-soon-txt">Plateforme en développement</div>
+                <div class="s3-soon-sub">Lancement prévu — 2026</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 4 : Écosystème CivicAI -->
+          <div class="slide s4">
+            <div class="s4-body">
+              <div style="font-size:.6rem;color:#6366f1;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;">Écosystème</div>
+              <div class="s4-logo">Civic<span>AI</span></div>
+              <div class="s4-sub">Une seule plateforme.<br/>Tous vos systèmes. Une seule intelligence.</div>
+              <div class="s4-nodes">
+                <div class="s4-node active">🛡️ AgentHub</div>
+                <div class="s4-node active">👥 NexHire</div>
+                <div class="s4-node">⏱️ Attente Zéro</div>
+              </div>
+              <div style="font-size:.58rem;color:#475569;text-align:center;">connecté à</div>
+              <div class="s4-nodes">
+                <div class="s4-node">M365</div>
+                <div class="s4-node">Salesforce</div>
+                <div class="s4-node">Jira</div>
+                <div class="s4-node">AWS</div>
+                <div class="s4-node">Slack</div>
+              </div>
+              <div class="s4-tag">🇨🇦 Made in Québec · FR / EN</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="slide-dots" id="slide-dots">
+        <button class="sdot2 active" onclick="goSlide(0)"></button>
+        <button class="sdot2" onclick="goSlide(1)"></button>
+        <button class="sdot2" onclick="goSlide(2)"></button>
+        <button class="sdot2" onclick="goSlide(3)"></button>
+      </div>
+    </div>
+  </div>
+
+</div>
 
 <!-- Footer -->
 <footer>
@@ -228,43 +537,43 @@
 <script>
   const T = {
     fr: {
-      tagline:        "Portail d'accès aux produits CivicAI",
-      "hero.title":   "Bienvenue sur <span>MyNexRA</span>",
-      "hero.desc":    "Choisissez le produit CivicAI auquel vous souhaitez accéder.",
-      "badge.live":   "Disponible",
-      "badge.soon":   "Bientôt",
-      "prod.ah.desc": "Gouvernance IT, sécurité et optimisation par IA — connectez tous vos systèmes d'entreprise.",
-      "prod.nh.desc": "Publiez vos offres d'emploi, gérez vos candidatures et trouvez les meilleurs talents.",
-      "prod.az.desc": "Plateforme de réduction des délais par analyse prédictive — en développement.",
-      "cta.access":   "Accéder →",
+      tagline:      "Portail d'accès aux produits CivicAI",
+      eyebrow:      "Écosystème CivicAI",
+      "hero.title": "Bienvenue sur<br/><span>MyNexRA</span>",
+      "hero.desc":  "Accédez à tous les produits CivicAI depuis un seul portail. Choisissez votre application ci-dessous.",
+      "prod.ah.sub":"Gouvernance IT · Sécurité · Optimisation IA",
+      "prod.nh.sub":"Offres d'emploi · Candidatures · ATS",
+      "prod.az.sub":"Réduction des délais · Analyse prédictive",
+      "badge.live": "Disponible",
+      "badge.soon": "Bientôt",
       "footer.tos":     "Conditions",
       "footer.privacy": "Confidentialité",
       "footer.contact": "Nous contacter",
     },
     en: {
-      tagline:        "CivicAI product access portal",
-      "hero.title":   "Welcome to <span>MyNexRA</span>",
-      "hero.desc":    "Choose the CivicAI product you want to access.",
-      "badge.live":   "Available",
-      "badge.soon":   "Coming soon",
-      "prod.ah.desc": "IT governance, security and AI optimization — connect all your enterprise systems.",
-      "prod.nh.desc": "Post job offers, manage applications and find the best talent.",
-      "prod.az.desc": "Delay reduction platform through predictive analysis — in development.",
-      "cta.access":   "Access →",
+      tagline:      "CivicAI product access portal",
+      eyebrow:      "CivicAI Ecosystem",
+      "hero.title": "Welcome to<br/><span>MyNexRA</span>",
+      "hero.desc":  "Access all CivicAI products from a single portal. Choose your application below.",
+      "prod.ah.sub":"IT Governance · Security · AI Optimization",
+      "prod.nh.sub":"Job postings · Applications · ATS",
+      "prod.az.sub":"Delay reduction · Predictive analytics",
+      "badge.live": "Available",
+      "badge.soon": "Coming soon",
       "footer.tos":     "Terms",
       "footer.privacy": "Privacy",
       "footer.contact": "Contact us",
     },
     es: {
-      tagline:        "Portal de acceso a los productos CivicAI",
-      "hero.title":   "Bienvenido a <span>MyNexRA</span>",
-      "hero.desc":    "Elija el producto CivicAI al que desea acceder.",
-      "badge.live":   "Disponible",
-      "badge.soon":   "Próximamente",
-      "prod.ah.desc": "Gobernanza IT, seguridad y optimización por IA — conecte todos sus sistemas empresariales.",
-      "prod.nh.desc": "Publique ofertas de empleo, gestione candidaturas y encuentre los mejores talentos.",
-      "prod.az.desc": "Plataforma de reducción de tiempos por análisis predictivo — en desarrollo.",
-      "cta.access":   "Acceder →",
+      tagline:      "Portal de acceso a los productos CivicAI",
+      eyebrow:      "Ecosistema CivicAI",
+      "hero.title": "Bienvenido a<br/><span>MyNexRA</span>",
+      "hero.desc":  "Acceda a todos los productos CivicAI desde un único portal. Elija su aplicación a continuación.",
+      "prod.ah.sub":"Gobernanza IT · Seguridad · Optimización IA",
+      "prod.nh.sub":"Ofertas de empleo · Candidaturas · ATS",
+      "prod.az.sub":"Reducción de tiempos · Análisis predictivo",
+      "badge.live": "Disponible",
+      "badge.soon": "Próximamente",
       "footer.tos":     "Términos",
       "footer.privacy": "Privacidad",
       "footer.contact": "Contáctenos",
@@ -288,6 +597,18 @@
   }
 
   setLang(_lang);
+
+  // ── Slideshow ─────────────────────────────────────────────
+  let _slide = 0;
+  const TOTAL = 4;
+
+  function goSlide(n) {
+    _slide = n;
+    document.getElementById("slides-track").style.transform = `translateX(-${n * 100}%)`;
+    document.querySelectorAll(".sdot2").forEach((d, i) => d.classList.toggle("active", i === n));
+  }
+
+  setInterval(() => goSlide((_slide + 1) % TOTAL), 3500);
 </script>
 </body>
 </html>
