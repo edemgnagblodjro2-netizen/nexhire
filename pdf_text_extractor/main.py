@@ -261,7 +261,14 @@ def create_app(
         )
 
     @app.get("/")
-    def portal():
+    def root(request: Request):
+        host = request.headers.get("host", "")
+        if host.startswith("mynexra."):
+            return FileResponse(
+                STATIC_DIR / "mynexra.html",
+                media_type="text/html",
+                headers={"Cache-Control": "no-store, no-cache, must-revalidate, max-age=0"},
+            )
         return FileResponse(
             STATIC_DIR / "index.html",
             headers={
