@@ -676,7 +676,7 @@
       });
       const d = await r.json();
       if (!r.ok) throw new Error(d.detail || "Identifiants incorrects.");
-      window.location.href = `${API}?token=${encodeURIComponent(d.token)}`;
+      window.location.href = `${API}?token=${encodeURIComponent(d.access_token)}`;
     } catch (err) {
       showErr("login-err", err.message);
       btn.disabled = false; btn.textContent = "Se connecter →";

@@ -3666,6 +3666,15 @@ $("settings-pwd-form")?.addEventListener("submit", async e => {
 async function init() {
   const handledInvite = await _handleInviteToken();
   if (handledInvite) return;  // signup form shown — ne pas continuer vers landing
+
+  // Token passé en URL depuis MyNexRA ou un lien partagé
+  const _up = new URLSearchParams(window.location.search);
+  const _urlToken = _up.get("token");
+  if (_urlToken) {
+    saveToken(_urlToken, null);
+    window.history.replaceState({}, "", "/");
+  }
+
   const stored = localStorage.getItem("nexhire_token");
   if (!stored) { showLanding(); return; }
   state.token = stored;
