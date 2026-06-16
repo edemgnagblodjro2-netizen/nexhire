@@ -228,7 +228,7 @@ def create_app(
     app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
     # CORS — origines explicites uniquement
-    _raw = os.environ.get("ALLOWED_ORIGINS", "https://agenthub.nexhire.ca,https://nexhire.ca")
+    _raw = os.environ.get("ALLOWED_ORIGINS", "https://agenthub.nexhire.ca,https://nexhire.ca,https://mynexra.nexhire.ca")
     _origins = [o.strip() for o in _raw.split(",") if o.strip()]
     app.add_middleware(SecurityHeadersMiddleware)
     app.add_middleware(NoCacheStaticMiddleware)
@@ -268,6 +268,14 @@ def create_app(
                 "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
                 "Pragma": "no-cache",
             },
+        )
+
+    @app.get("/portal")
+    def mynexra_portal():
+        return FileResponse(
+            STATIC_DIR / "mynexra.html",
+            media_type="text/html",
+            headers={"Cache-Control": "no-store, no-cache, must-revalidate, max-age=0"},
         )
 
     @app.get("/legal/privacy")

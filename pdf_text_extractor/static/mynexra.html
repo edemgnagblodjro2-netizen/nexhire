@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>MyNexRA — Portail CivicAI</title>
+  <meta name="description" content="Accédez à tous vos produits CivicAI depuis un seul portail."/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #0f172a;
+      --navy2:   #1e293b;
+      --navy3:   #263148;
+      --indigo:  #6366f1;
+      --indigo2: #818cf8;
+      --teal:    #14b8a6;
+      --slate:   #94a3b8;
+      --white:   #f1f5f9;
+      --green:   #22c55e;
+      --radius:  14px;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 40px 20px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-logo {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, #6366f1, #14b8a6);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 1rem; color: #fff;
+    }
+    .brand-name { font-weight: 800; font-size: 1.2rem; }
+    .brand-name span { color: var(--teal); }
+    .brand-sub { font-size: .7rem; color: var(--slate); margin-top: 1px; }
+    .civic-tag {
+      font-size: .72rem; font-weight: 600; color: var(--slate);
+      border: 1px solid #ffffff15; border-radius: 20px; padding: 4px 12px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 60px 20px 40px;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: .72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--teal); background: #14b8a615; border: 1px solid #14b8a630;
+      padding: 4px 14px; border-radius: 20px; margin-bottom: 20px;
+    }
+    .hero h1 { font-size: 2.4rem; font-weight: 900; line-height: 1.15; margin-bottom: 14px; }
+    .hero h1 span { color: var(--indigo2); }
+    .hero p { color: var(--slate); font-size: 1rem; max-width: 500px; margin: 0 auto; }
+
+    /* ── Produits ── */
+    .products-section { padding: 20px 40px 50px; max-width: 1100px; margin: 0 auto; width: 100%; }
+    .section-title { font-size: .75rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--slate); margin-bottom: 20px; }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .product-card {
+      background: var(--navy2);
+      border: 1.5px solid #ffffff0f;
+      border-radius: var(--radius);
+      padding: 24px;
+      cursor: pointer;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .product-card:hover:not(.soon) {
+      border-color: var(--indigo);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px #6366f120;
+    }
+    .product-card.active { border-color: var(--teal); box-shadow: 0 0 0 2px #14b8a630; }
+    .product-card.soon { opacity: .55; cursor: default; }
+    .soon-badge {
+      position: absolute; top: 14px; right: 14px;
+      font-size: .65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      background: #ffffff10; color: var(--slate); padding: 3px 10px; border-radius: 20px;
+    }
+
+    .product-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 14px;
+    }
+    .product-icon.agenthub { background: linear-gradient(135deg, #6366f130, #818cf820); border: 1px solid #6366f130; }
+    .product-icon.nexhire  { background: linear-gradient(135deg, #a855f730, #7c3aed20); border: 1px solid #a855f730; }
+    .product-icon.attente  { background: linear-gradient(135deg, #14b8a630, #0d9488 20); border: 1px solid #14b8a630; }
+
+    .product-name { font-size: 1.05rem; font-weight: 800; margin-bottom: 4px; }
+    .product-tag  { font-size: .72rem; font-weight: 600; color: var(--teal); margin-bottom: 10px; }
+    .product-desc { font-size: .82rem; color: var(--slate); line-height: 1.5; }
+
+    .product-features { margin-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+    .product-feat {
+      display: flex; align-items: center; gap: 8px;
+      font-size: .75rem; color: var(--slate);
+    }
+    .product-feat::before { content: "◆"; color: var(--teal); font-size: .55rem; }
+
+    .product-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 18px; font-size: .8rem; font-weight: 700;
+      color: var(--indigo2); text-decoration: none;
+      transition: gap .15s;
+    }
+    .product-card:hover .product-cta { gap: 10px; }
+
+    /* ── Auth panel ── */
+    .auth-section {
+      max-width: 440px; margin: 0 auto 60px; width: 100%; padding: 0 20px;
+    }
+    .auth-card {
+      background: var(--navy2);
+      border: 1.5px solid #ffffff0f;
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+    .auth-tabs { display: flex; gap: 0; margin-bottom: 28px; border-bottom: 1px solid #ffffff10; }
+    .auth-tab {
+      flex: 1; padding: 10px; text-align: center;
+      font-size: .85rem; font-weight: 700; color: var(--slate);
+      cursor: pointer; border-bottom: 2px solid transparent;
+      transition: color .15s, border-color .15s;
+      background: none; border-top: none; border-left: none; border-right: none;
+    }
+    .auth-tab.active { color: var(--indigo2); border-bottom-color: var(--indigo2); }
+
+    .auth-form { display: none; flex-direction: column; gap: 14px; }
+    .auth-form.visible { display: flex; }
+
+    .auth-label { font-size: .78rem; font-weight: 600; color: var(--slate); margin-bottom: 5px; display: block; }
+    .auth-input {
+      width: 100%; padding: 11px 14px;
+      background: var(--navy3); border: 1.5px solid #ffffff12;
+      border-radius: 8px; color: var(--white); font-size: .88rem;
+      transition: border-color .15s; outline: none;
+    }
+    .auth-input:focus { border-color: var(--indigo); }
+
+    .auth-btn {
+      width: 100%; padding: 13px;
+      background: linear-gradient(135deg, var(--indigo), #818cf8);
+      color: #fff; font-weight: 800; font-size: .92rem;
+      border: none; border-radius: 8px; cursor: pointer;
+      transition: opacity .15s; margin-top: 4px;
+    }
+    .auth-btn:hover { opacity: .92; }
+    .auth-btn:disabled { opacity: .5; cursor: default; }
+
+    .auth-divider { text-align: center; font-size: .75rem; color: var(--slate); }
+    .auth-err  { font-size: .78rem; color: #f87171; background: #f8717115; padding: 8px 12px; border-radius: 6px; display: none; }
+    .auth-suc  { font-size: .78rem; color: var(--green); background: #22c55e15; padding: 8px 12px; border-radius: 6px; display: none; }
+    .auth-cgu  { font-size: .73rem; color: var(--slate); }
+    .auth-cgu a { color: var(--indigo2); }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: auto; padding: 20px 40px;
+      border-top: 1px solid #ffffff0f;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: .73rem; color: var(--slate);
+    }
+    footer a { color: var(--slate); text-decoration: none; }
+    footer a:hover { color: var(--white); }
+
+    @media (max-width: 768px) {
+      .products-grid { grid-template-columns: 1fr; }
+      header { padding: 16px 20px; }
+      .products-section { padding: 20px; }
+      .hero { padding: 40px 20px 30px; }
+      .hero h1 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ───────────────────────────────────────────── -->
+<header>
+  <div class="brand">
+    <div class="brand-logo">C</div>
+    <div>
+      <div class="brand-name">My<span>NexRA</span></div>
+      <div class="brand-sub">Portail d'accès CivicAI</div>
+    </div>
+  </div>
+  <div class="civic-tag">🏢 CivicAI Inc.</div>
+</header>
+
+<!-- ── Hero ─────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-eyebrow">Portail unifié</div>
+  <h1>Tous vos produits<br/><span>CivicAI</span> en un seul endroit</h1>
+  <p>Connectez-vous une fois, accédez à tous vos outils — NexHire, AgentHub et Attente Zéro.</p>
+</div>
+
+<!-- ── Produits ──────────────────────────────────────────── -->
+<div class="products-section">
+  <div class="section-title">Produits disponibles</div>
+  <div class="products-grid">
+
+    <!-- NexHire -->
+    <div class="product-card soon">
+      <span class="soon-badge">Bientôt</span>
+      <div class="product-icon nexhire">👥</div>
+      <div class="product-name">NexHire</div>
+      <div class="product-tag">Recrutement</div>
+      <div class="product-desc">Trouvez les meilleurs talents et connectez votre organisation aux opportunités qui font avancer votre mission.</div>
+      <div class="product-features">
+        <div class="product-feat">Affichage de postes</div>
+        <div class="product-feat">Suivi des candidatures</div>
+        <div class="product-feat">Intégration ATS</div>
+      </div>
+    </div>
+
+    <!-- AgentHub -->
+    <div class="product-card active" onclick="scrollToAuth('agenthub')">
+      <div class="product-icon agenthub">🛡️</div>
+      <div class="product-name">AgentHub</div>
+      <div class="product-tag">Gouvernance · Sécurité · Optimisation</div>
+      <div class="product-desc">Renforcez la gouvernance, sécurisez vos données et optimisez vos processus pour une performance durable.</div>
+      <div class="product-features">
+        <div class="product-feat">Gouvernance et conformité</div>
+        <div class="product-feat">Protection des données</div>
+        <div class="product-feat">Efficacité opérationnelle</div>
+      </div>
+      <a class="product-cta" href="#auth">Accéder →</a>
+    </div>
+
+    <!-- Attente Zéro -->
+    <div class="product-card soon">
+      <span class="soon-badge">Bientôt</span>
+      <div class="product-icon attente">⏱️</div>
+      <div class="product-name">Attente Zéro</div>
+      <div class="product-tag">Réduction des délais</div>
+      <div class="product-desc">Réduisez les temps d'attente et améliorez l'expérience de vos usagers grâce à l'intelligence artificielle.</div>
+      <div class="product-features">
+        <div class="product-feat">Analyse des files d'attente</div>
+        <div class="product-feat">Prédiction des délais</div>
+        <div class="product-feat">Tableau de bord temps réel</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── Auth ──────────────────────────────────────────────── -->
+<div class="auth-section" id="auth">
+  <div class="auth-card">
+    <div style="text-align:center;margin-bottom:22px">
+      <div style="font-size:.75rem;font-weight:700;color:var(--teal);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">AgentHub</div>
+      <div style="font-size:1.05rem;font-weight:800">Connexion à votre espace</div>
+    </div>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchAuthTab('login')">Connexion</button>
+      <button class="auth-tab" onclick="switchAuthTab('register')">Inscription</button>
+    </div>
+
+    <!-- LOGIN -->
+    <form class="auth-form visible" id="form-login" onsubmit="doLogin(event)">
+      <div id="login-err" class="auth-err"></div>
+      <div>
+        <label class="auth-label">Adresse courriel</label>
+        <input class="auth-input" type="email" id="login-email" placeholder="vous@organisation.ca" required autocomplete="email"/>
+      </div>
+      <div>
+        <label class="auth-label">Mot de passe</label>
+        <input class="auth-input" type="password" id="login-pwd" placeholder="••••••••" required autocomplete="current-password"/>
+      </div>
+      <button class="auth-btn" type="submit" id="login-btn">Se connecter</button>
+    </form>
+
+    <!-- REGISTER -->
+    <form class="auth-form" id="form-register" onsubmit="doRegister(event)">
+      <div id="reg-err" class="auth-err"></div>
+      <div id="reg-suc" class="auth-suc"></div>
+      <div>
+        <label class="auth-label">Nom complet</label>
+        <input class="auth-input" type="text" id="reg-name" placeholder="Prénom Nom" required autocomplete="name"/>
+      </div>
+      <div>
+        <label class="auth-label">Adresse courriel</label>
+        <input class="auth-input" type="email" id="reg-email" placeholder="vous@organisation.ca" required autocomplete="email"/>
+      </div>
+      <div>
+        <label class="auth-label">Nom de l'organisation</label>
+        <input class="auth-input" type="text" id="reg-org" placeholder="Mon Organisation" required/>
+      </div>
+      <div>
+        <label class="auth-label">Mot de passe</label>
+        <input class="auth-input" type="password" id="reg-pwd" placeholder="Minimum 8 caractères" required autocomplete="new-password" minlength="8"/>
+      </div>
+      <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer">
+        <input type="checkbox" id="reg-cgu" style="margin-top:2px;accent-color:var(--indigo)"/>
+        <span class="auth-cgu">J'accepte les <a href="https://agenthub.nexhire.ca/legal/tos" target="_blank">Conditions d'utilisation</a> et la <a href="https://agenthub.nexhire.ca/legal/privacy" target="_blank">Politique de confidentialité</a> de CivicAI Inc.</span>
+      </label>
+      <button class="auth-btn" type="submit" id="reg-btn">Créer mon compte</button>
+    </form>
+  </div>
+
+  <p style="text-align:center;font-size:.73rem;color:var(--slate);margin-top:14px">
+    Connexion sécurisée · Essai gratuit 14 jours · Aucune carte requise
+  </p>
+</div>
+
+<!-- ── Footer ────────────────────────────────────────────── -->
+<footer>
+  <span>© 2026 CivicAI Inc. — Montréal, Québec, Canada 🍁</span>
+  <div style="display:flex;gap:20px">
+    <a href="https://agenthub.nexhire.ca/legal/tos" target="_blank">Conditions</a>
+    <a href="https://agenthub.nexhire.ca/legal/privacy" target="_blank">Confidentialité</a>
+    <a href="mailto:contact@nexhire.ca">Contact</a>
+  </div>
+</footer>
+
+<script>
+  const API = "https://agenthub.nexhire.ca";
+
+  function switchAuthTab(tab) {
+    document.querySelectorAll(".auth-tab").forEach((t, i) => {
+      t.classList.toggle("active", (i === 0 && tab === "login") || (i === 1 && tab === "register"));
+    });
+    document.getElementById("form-login").classList.toggle("visible", tab === "login");
+    document.getElementById("form-register").classList.toggle("visible", tab === "register");
+  }
+
+  function scrollToAuth(product) {
+    document.getElementById("auth").scrollIntoView({ behavior: "smooth" });
+  }
+
+  function showErr(id, msg) {
+    const el = document.getElementById(id);
+    el.textContent = msg; el.style.display = "block";
+  }
+  function hideErr(id) {
+    document.getElementById(id).style.display = "none";
+  }
+
+  async function doLogin(e) {
+    e.preventDefault();
+    hideErr("login-err");
+    const btn = document.getElementById("login-btn");
+    btn.disabled = true; btn.textContent = "Connexion…";
+
+    const email = document.getElementById("login-email").value.trim();
+    const pwd   = document.getElementById("login-pwd").value;
+
+    try {
+      const r = await fetch(`${API}/api/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password: pwd }),
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.detail || "Identifiants incorrects.");
+      // Redirection vers AgentHub avec le token
+      window.location.href = `${API}?token=${encodeURIComponent(data.token)}`;
+    } catch (err) {
+      showErr("login-err", err.message);
+      btn.disabled = false; btn.textContent = "Se connecter";
+    }
+  }
+
+  async function doRegister(e) {
+    e.preventDefault();
+    hideErr("reg-err");
+    document.getElementById("reg-suc").style.display = "none";
+
+    if (!document.getElementById("reg-cgu").checked) {
+      showErr("reg-err", "Veuillez accepter les Conditions d'utilisation.");
+      return;
+    }
+
+    const btn = document.getElementById("reg-btn");
+    btn.disabled = true; btn.textContent = "Création…";
+
+    const name  = document.getElementById("reg-name").value.trim();
+    const email = document.getElementById("reg-email").value.trim();
+    const org   = document.getElementById("reg-org").value.trim();
+    const pwd   = document.getElementById("reg-pwd").value;
+
+    try {
+      const r = await fetch(`${API}/api/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ full_name: name, email, organization_name: org, password: pwd }),
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.detail || "Erreur lors de la création du compte.");
+      const suc = document.getElementById("reg-suc");
+      suc.textContent = "Compte créé ! Redirection vers AgentHub…";
+      suc.style.display = "block";
+      setTimeout(() => {
+        window.location.href = `${API}?token=${encodeURIComponent(data.token)}`;
+      }, 1500);
+    } catch (err) {
+      showErr("reg-err", err.message);
+      btn.disabled = false; btn.textContent = "Créer mon compte";
+    }
+  }
+</script>
+</body>
+</html>
