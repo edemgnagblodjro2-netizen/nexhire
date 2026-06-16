@@ -3,655 +3,338 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>MyNexRA — Plateforme IA d'entreprise · CivicAI Inc.</title>
-  <meta name="description" content="CivicAI connecte vos systèmes d'entreprise à une intelligence artificielle bilingue. Gouvernance, recrutement et optimisation des délais — en un seul écosystème."/>
+  <title>MyNexRA — Portail CivicAI</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy:    #080f1e;
-      --navy2:   #0f1a2e;
-      --navy3:   #162035;
-      --navy4:   #1e293b;
-      --indigo:  #6366f1;
-      --indigo2: #818cf8;
-      --indigo3: #a5b4fc;
-      --teal:    #14b8a6;
-      --teal2:   #2dd4bf;
-      --purple:  #a855f7;
-      --slate:   #94a3b8;
-      --slate2:  #64748b;
-      --white:   #f8fafc;
-      --green:   #22c55e;
-      --radius:  16px;
+      --navy:   #0f172a;
+      --indigo: #6366f1;
+      --ind2:   #818cf8;
+      --teal:   #14b8a6;
+      --slate:  #64748b;
+      --slate2: #94a3b8;
+      --bg:     #f1f5f9;
+      --white:  #ffffff;
+      --border: #e2e8f0;
+      --text:   #1e293b;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
       font-family: system-ui, -apple-system, 'Segoe UI', Helvetica, sans-serif;
-      background: var(--navy);
-      color: var(--white);
-      line-height: 1.6;
-      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-
-    /* ── Utilities ── */
-    .container { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
-    .tag {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: .7rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-      padding: 5px 14px; border-radius: 20px;
-    }
-    .tag-teal  { color: var(--teal);   background: #14b8a615; border: 1px solid #14b8a630; }
-    .tag-indigo{ color: var(--indigo2);background: #6366f115; border: 1px solid #6366f130; }
-    .tag-purple{ color: var(--purple); background: #a855f715; border: 1px solid #a855f730; }
-    .grad-text { background: linear-gradient(135deg, var(--indigo2), var(--teal2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
     /* ── Header ── */
-    .header {
-      position: sticky; top: 0; z-index: 100;
-      background: #080f1ef0;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid #ffffff08;
-      padding: 16px 0;
-    }
-    .header-inner { display: flex; align-items: center; justify-content: space-between; }
-    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-    .logo-mark {
-      width: 40px; height: 40px; border-radius: 11px;
-      background: linear-gradient(135deg, var(--indigo), var(--teal));
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 900; font-size: 1.1rem; color: #fff; flex-shrink: 0;
-    }
-    .logo-text { font-weight: 900; font-size: 1.15rem; color: var(--white); }
-    .logo-text span { color: var(--teal2); }
-    .logo-by { font-size: .65rem; color: var(--slate2); margin-top: -2px; }
-    .header-cta {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: linear-gradient(135deg, var(--indigo), var(--indigo2));
-      color: #fff; font-weight: 700; font-size: .82rem;
-      padding: 10px 22px; border-radius: 8px; border: none; cursor: pointer;
-      text-decoration: none; transition: opacity .15s, transform .15s;
-    }
-    .header-cta:hover { opacity: .9; transform: translateY(-1px); }
-
-    /* ── Hero ── */
-    .hero {
-      padding: 100px 0 80px;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: "";
-      position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
-      width: 800px; height: 800px;
-      background: radial-gradient(circle, #6366f118 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero::after {
-      content: "";
-      position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, #6366f130, transparent);
-    }
-    .hero-eyebrow { margin-bottom: 24px; }
-    .hero h1 {
-      font-size: clamp(2.4rem, 5vw, 3.6rem);
-      font-weight: 900; line-height: 1.1; letter-spacing: -.02em;
-      margin-bottom: 22px; max-width: 760px;
-    }
-    .hero p {
-      font-size: 1.1rem; color: var(--slate); max-width: 560px;
-      margin-bottom: 40px; line-height: 1.7;
-    }
-    .hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: linear-gradient(135deg, var(--indigo), var(--indigo2));
-      color: #fff; font-weight: 800; font-size: .95rem;
-      padding: 14px 28px; border-radius: 10px; border: none; cursor: pointer;
-      text-decoration: none; transition: opacity .15s, transform .15s;
-      box-shadow: 0 8px 30px #6366f135;
-    }
-    .btn-primary:hover { opacity: .9; transform: translateY(-2px); }
-    .btn-secondary {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: transparent; color: var(--slate);
-      font-weight: 600; font-size: .9rem;
-      padding: 14px 24px; border-radius: 10px;
-      border: 1.5px solid #ffffff15; cursor: pointer;
-      text-decoration: none; transition: all .15s;
-    }
-    .btn-secondary:hover { color: var(--white); border-color: #ffffff30; }
-
-    .hero-stats {
-      display: flex; gap: 48px; margin-top: 64px;
-      padding-top: 40px;
-      border-top: 1px solid #ffffff0a;
-      flex-wrap: wrap;
-    }
-    .stat-item { }
-    .stat-num {
-      font-size: 2.2rem; font-weight: 900; line-height: 1;
-      background: linear-gradient(135deg, var(--white), var(--indigo3));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .stat-label { font-size: .78rem; color: var(--slate); margin-top: 4px; }
-
-    /* ── Section ── */
-    section { padding: 90px 0; }
-    .section-head { text-align: center; margin-bottom: 60px; }
-    .section-head h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 900; letter-spacing: -.02em; margin: 14px 0 16px; }
-    .section-head p { color: var(--slate); font-size: .95rem; max-width: 520px; margin: 0 auto; }
-    .divider { height: 1px; background: linear-gradient(90deg, transparent, #ffffff0a, transparent); }
-
-    /* ── Produits ── */
-    .products { background: var(--navy2); }
-    .products-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr 1fr;
-      gap: 20px;
-      align-items: start;
-    }
-    .prod-card {
-      background: var(--navy3);
-      border: 1.5px solid #ffffff0a;
-      border-radius: var(--radius);
-      padding: 28px;
-      transition: border-color .25s, transform .25s, box-shadow .25s;
-    }
-    .prod-card.featured {
-      border-color: #6366f140;
-      background: linear-gradient(160deg, #1a2540, var(--navy3));
-      box-shadow: 0 20px 60px #6366f115;
-      transform: translateY(-8px);
-    }
-    .prod-card:not(.soon):not(.featured):hover {
-      border-color: #ffffff18; transform: translateY(-4px);
-    }
-    .prod-card.soon { opacity: .6; }
-    .prod-badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      font-size: .65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
-      padding: 3px 10px; border-radius: 20px; margin-bottom: 18px;
-    }
-    .badge-live    { background: #22c55e15; color: var(--green); border: 1px solid #22c55e30; }
-    .badge-soon    { background: #ffffff08; color: var(--slate); border: 1px solid #ffffff15; }
-    .badge-featured{ background: #6366f118; color: var(--indigo2); border: 1px solid #6366f130; }
-
-    .prod-icon {
-      width: 52px; height: 52px; border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem; margin-bottom: 16px;
-    }
-    .prod-name { font-size: 1.25rem; font-weight: 900; margin-bottom: 6px; }
-    .prod-sub  { font-size: .72rem; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 14px; }
-    .prod-desc { font-size: .84rem; color: var(--slate); line-height: 1.65; margin-bottom: 18px; }
-    .prod-feats { display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
-    .prod-feat  {
-      display: flex; align-items: center; gap: 8px;
-      font-size: .78rem; color: #cbd5e1;
-    }
-    .feat-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-    .prod-cta {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: .82rem; font-weight: 700; text-decoration: none;
-      padding: 10px 20px; border-radius: 8px;
-      background: linear-gradient(135deg, var(--indigo), var(--indigo2));
-      color: #fff; border: none; cursor: pointer;
-      transition: opacity .15s, transform .15s;
-    }
-    .prod-cta:hover { opacity: .9; transform: translateY(-1px); }
-    .prod-cta-ghost {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: .8rem; font-weight: 600; color: var(--slate);
-      padding: 10px 18px; border-radius: 8px;
-      border: 1.5px solid #ffffff12; background: transparent;
-    }
-
-    /* ── Pourquoi CivicAI ── */
-    .why-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-    .why-card {
-      background: var(--navy2);
-      border: 1px solid #ffffff08;
-      border-radius: var(--radius);
-      padding: 28px;
-    }
-    .why-icon {
-      width: 48px; height: 48px; border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem; margin-bottom: 16px;
-      background: linear-gradient(135deg, #6366f115, #14b8a615);
-      border: 1px solid #6366f120;
-    }
-    .why-title { font-size: .95rem; font-weight: 800; margin-bottom: 8px; }
-    .why-desc  { font-size: .82rem; color: var(--slate); line-height: 1.6; }
-
-    /* ── Pour qui ── */
-    .sectors { background: var(--navy2); }
-    .sectors-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
       gap: 14px;
     }
-    .sector-pill {
-      background: var(--navy3);
-      border: 1px solid #ffffff08;
-      border-radius: 10px;
-      padding: 16px 18px;
-      display: flex; align-items: center; gap: 10px;
-      font-size: .82rem; font-weight: 600;
+    .logo-mark {
+      width: 36px; height: 36px; border-radius: 9px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--indigo), var(--teal));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 1rem; color: #fff;
     }
-    .sector-pill span:first-child { font-size: 1.1rem; }
+    .logo-text { font-weight: 900; font-size: 1.05rem; color: var(--navy); }
+    .logo-text span { color: var(--indigo); }
+    .logo-by   { font-size: .65rem; color: var(--slate2); margin-top: 1px; }
+    .header-divider { width: 1px; height: 28px; background: var(--border); margin: 0 6px; }
+    .header-tagline { font-size: .75rem; color: var(--slate); }
 
-    /* ── CTA Section ── */
-    .cta-section {
-      text-align: center;
-      padding: 100px 0;
-      background: linear-gradient(180deg, var(--navy) 0%, #0d1628 100%);
-      position: relative;
-      overflow: hidden;
-    }
-    .cta-section::before {
-      content: "";
-      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, #6366f112 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .cta-section h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 900; letter-spacing: -.02em; margin-bottom: 16px; }
-    .cta-section p  { color: var(--slate); font-size: .95rem; margin-bottom: 36px; max-width: 480px; margin-left: auto; margin-right: auto; }
+    /* ── Main layout ── */
+    main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 48px 24px; }
 
-    /* ── Auth ── */
-    .auth-section { padding: 80px 0; background: var(--navy2); }
-    .auth-wrap { max-width: 460px; margin: 0 auto; }
+    .portal-wrap {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 40px;
+      width: 100%;
+      max-width: 1040px;
+      align-items: start;
+    }
+
+    /* ── Left: intro + produits ── */
+    .portal-intro h1 {
+      font-size: 2rem; font-weight: 900; color: var(--navy);
+      letter-spacing: -.02em; line-height: 1.2; margin-bottom: 12px;
+    }
+    .portal-intro h1 span { color: var(--indigo); }
+    .portal-intro p {
+      font-size: .9rem; color: var(--slate); line-height: 1.7;
+      max-width: 500px; margin-bottom: 36px;
+    }
+
+    /* Produits */
+    .prod-list { display: flex; flex-direction: column; gap: 12px; }
+    .prod-row {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: border-color .2s, box-shadow .2s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .prod-row.active { border-color: #6366f140; box-shadow: 0 2px 12px #6366f110; }
+    .prod-row.active:hover { border-color: #6366f170; box-shadow: 0 4px 20px #6366f118; }
+    .prod-icon {
+      width: 44px; height: 44px; border-radius: 11px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+    }
+    .prod-icon-indigo { background: #6366f112; border: 1px solid #6366f120; }
+    .prod-icon-purple { background: #a855f710; border: 1px solid #a855f720; }
+    .prod-icon-teal   { background: #14b8a610; border: 1px solid #14b8a620; }
+    .prod-info { flex: 1; }
+    .prod-name { font-size: .9rem; font-weight: 800; color: var(--navy); }
+    .prod-desc { font-size: .77rem; color: var(--slate); margin-top: 2px; }
+    .prod-badge {
+      font-size: .62rem; font-weight: 700; letter-spacing: .8px; text-transform: uppercase;
+      padding: 3px 9px; border-radius: 20px; flex-shrink: 0;
+    }
+    .badge-live { background: #22c55e12; color: #16a34a; border: 1px solid #22c55e25; }
+    .badge-soon { background: #f1f5f9; color: var(--slate); border: 1px solid var(--border); }
+    .prod-arrow { color: var(--slate2); font-size: .9rem; flex-shrink: 0; }
+
+    /* ── Right: auth card ── */
     .auth-card {
-      background: var(--navy3);
-      border: 1.5px solid #ffffff0a;
-      border-radius: var(--radius);
-      padding: 36px;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 32px 28px;
+      box-shadow: 0 4px 24px #0000000a;
     }
-    .auth-card-head { text-align: center; margin-bottom: 28px; }
-    .auth-card-head h3 { font-size: 1.2rem; font-weight: 900; margin-top: 8px; }
-    .auth-card-head p  { font-size: .8rem; color: var(--slate); margin-top: 4px; }
+    .auth-card-logo {
+      display: flex; flex-direction: column; align-items: center; margin-bottom: 22px;
+    }
+    .auth-card-logo .logo-mark { width: 48px; height: 48px; font-size: 1.2rem; border-radius: 13px; margin-bottom: 10px; }
+    .auth-card-logo h2 { font-size: 1rem; font-weight: 900; color: var(--navy); }
+    .auth-card-logo p  { font-size: .76rem; color: var(--slate); margin-top: 2px; text-align: center; }
+
     .auth-tabs {
-      display: flex; margin-bottom: 24px;
-      background: var(--navy4); border-radius: 8px; padding: 3px;
+      display: flex; background: var(--bg); border-radius: 8px;
+      padding: 3px; margin-bottom: 20px;
     }
     .auth-tab {
-      flex: 1; padding: 8px; text-align: center;
-      font-size: .82rem; font-weight: 700; color: var(--slate);
-      cursor: pointer; border-radius: 6px; border: none; background: transparent;
+      flex: 1; padding: 8px; border: none; background: transparent; cursor: pointer;
+      font-size: .8rem; font-weight: 700; color: var(--slate); border-radius: 6px;
       transition: all .15s;
     }
-    .auth-tab.active { background: var(--navy2); color: var(--white); box-shadow: 0 2px 8px #00000030; }
-    .auth-form { display: none; flex-direction: column; gap: 14px; }
+    .auth-tab.active { background: var(--white); color: var(--navy); box-shadow: 0 1px 6px #00000012; }
+
+    .auth-form { display: none; flex-direction: column; gap: 13px; }
     .auth-form.visible { display: flex; }
-    .auth-label { font-size: .75rem; font-weight: 600; color: var(--slate); margin-bottom: 5px; display: block; }
-    .auth-input {
-      width: 100%; padding: 11px 14px;
-      background: var(--navy4); border: 1.5px solid #ffffff10;
-      border-radius: 8px; color: var(--white); font-size: .88rem;
+
+    .field-label { font-size: .73rem; font-weight: 600; color: var(--slate); margin-bottom: 5px; display: block; }
+    .field-input {
+      width: 100%; padding: 10px 13px;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      font-size: .86rem; color: var(--text); background: var(--white);
       transition: border-color .15s; outline: none;
     }
-    .auth-input:focus { border-color: var(--indigo); }
+    .field-input:focus { border-color: var(--indigo); }
+
     .auth-btn {
-      width: 100%; padding: 13px;
-      background: linear-gradient(135deg, var(--indigo), var(--indigo2));
-      color: #fff; font-weight: 800; font-size: .9rem;
+      width: 100%; padding: 12px;
+      background: linear-gradient(135deg, var(--indigo), var(--ind2));
+      color: #fff; font-weight: 800; font-size: .88rem;
       border: none; border-radius: 8px; cursor: pointer;
-      transition: opacity .15s; margin-top: 4px;
-      box-shadow: 0 6px 20px #6366f125;
+      transition: opacity .15s; box-shadow: 0 4px 16px #6366f120;
+      margin-top: 2px;
     }
     .auth-btn:hover { opacity: .9; }
     .auth-btn:disabled { opacity: .5; cursor: default; }
-    .auth-err { font-size: .76rem; color: #f87171; background: #f8717112; padding: 8px 12px; border-radius: 6px; display: none; }
-    .auth-suc { font-size: .76rem; color: var(--green); background: #22c55e12; padding: 8px 12px; border-radius: 6px; display: none; }
-    .auth-cgu { font-size: .72rem; color: var(--slate); }
-    .auth-cgu a { color: var(--indigo3); }
-    .auth-note { text-align: center; font-size: .73rem; color: var(--slate2); margin-top: 14px; }
+
+    .auth-err { font-size: .74rem; color: #dc2626; background: #fee2e2; padding: 8px 11px; border-radius: 6px; display: none; }
+    .auth-suc { font-size: .74rem; color: #16a34a; background: #dcfce7; padding: 8px 11px; border-radius: 6px; display: none; }
+    .cgu-row  { display: flex; align-items: flex-start; gap: 7px; }
+    .cgu-text { font-size: .7rem; color: var(--slate); line-height: 1.5; }
+    .cgu-text a { color: var(--indigo); }
+    .auth-note { text-align: center; font-size: .7rem; color: var(--slate2); margin-top: 16px; }
+
+    /* SSO separator */
+    .sso-sep { display: flex; align-items: center; gap: 10px; margin: 4px 0; }
+    .sso-sep span { font-size: .7rem; color: var(--slate2); white-space: nowrap; }
+    .sso-sep::before, .sso-sep::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+    .sso-btn {
+      width: 100%; padding: 10px 12px;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      background: var(--white); font-size: .82rem; font-weight: 600; color: var(--text);
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: border-color .15s, background .15s;
+    }
+    .sso-btn:hover { border-color: #6366f160; background: #f8f9ff; }
 
     /* ── Footer ── */
     footer {
-      background: var(--navy);
-      border-top: 1px solid #ffffff08;
-      padding: 36px 0;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      padding: 16px 40px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
     }
-    .footer-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 16px;
-    }
-    .footer-links { display: flex; gap: 24px; }
-    .footer-links a { font-size: .75rem; color: var(--slate2); text-decoration: none; }
-    .footer-links a:hover { color: var(--white); }
-    .footer-copy { font-size: .73rem; color: var(--slate2); }
+    .footer-copy { font-size: .72rem; color: var(--slate2); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: .72rem; color: var(--slate); text-decoration: none; }
+    .footer-links a:hover { color: var(--indigo); }
 
     /* ── Responsive ── */
-    @media (max-width: 900px) {
-      .products-grid { grid-template-columns: 1fr; }
-      .prod-card.featured { transform: none; }
-      .why-grid { grid-template-columns: 1fr 1fr; }
-      .sectors-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 600px) {
-      .container { padding: 0 20px; }
-      .hero { padding: 70px 0 60px; }
-      .hero-stats { gap: 28px; }
-      .why-grid, .sectors-grid { grid-template-columns: 1fr; }
-      .footer-inner { flex-direction: column; align-items: flex-start; }
-      section { padding: 60px 0; }
+    @media (max-width: 800px) {
+      .portal-wrap { grid-template-columns: 1fr; }
+      .portal-intro { order: 2; }
+      .auth-card { order: 1; }
+      main { align-items: flex-start; padding: 28px 16px; }
     }
   </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════
-     HEADER
-════════════════════════════════════════════ -->
-<header class="header">
-  <div class="container">
-    <div class="header-inner">
-      <a href="#" class="logo">
-        <div class="logo-mark">C</div>
-        <div>
-          <div class="logo-text">My<span>NexRA</span></div>
-          <div class="logo-by">by CivicAI Inc.</div>
-        </div>
-      </a>
-      <a href="#demo" class="header-cta">Réserver une démo →</a>
-    </div>
+<!-- Header -->
+<header>
+  <div class="logo-mark">C</div>
+  <div>
+    <div class="logo-text">My<span>NexRA</span></div>
+    <div class="logo-by">by CivicAI Inc.</div>
   </div>
+  <div class="header-divider"></div>
+  <div class="header-tagline">Portail d'accès aux produits CivicAI</div>
 </header>
 
-<!-- ══════════════════════════════════════════
-     HERO
-════════════════════════════════════════════ -->
-<div class="hero">
-  <div class="container">
-    <div class="hero-eyebrow">
-      <span class="tag tag-teal">🇨🇦 Conçu pour les organisations québécoises</span>
-    </div>
-    <h1>L'intelligence artificielle<br/>au service de votre <span class="grad-text">organisation</span></h1>
-    <p>CivicAI connecte vos systèmes d'entreprise à une IA bilingue qui gouverne, recrute et optimise — automatiquement.</p>
-    <div class="hero-actions">
-      <a href="#demo" class="btn-primary">Réserver une démo gratuite →</a>
-      <a href="#products" class="btn-secondary">Voir nos produits</a>
-    </div>
-    <div class="hero-stats">
-      <div class="stat-item">
-        <div class="stat-num">9+</div>
-        <div class="stat-label">Connecteurs d'entreprise</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">14j</div>
-        <div class="stat-label">Essai gratuit sans carte</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">FR / EN</div>
-        <div class="stat-label">Agent IA bilingue</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">∞</div>
-        <div class="stat-label">Données 100 % sécurisées</div>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- Main -->
+<main>
+  <div class="portal-wrap">
 
-<div class="divider"></div>
+    <!-- Gauche : intro + produits -->
+    <div class="portal-intro">
+      <h1>Bienvenue sur<br/><span>MyNexRA</span></h1>
+      <p>MyNexRA vous donne accès à l'écosystème CivicAI — gouvernance IA, recrutement et optimisation des délais, depuis un seul portail sécurisé.</p>
 
-<!-- ══════════════════════════════════════════
-     PRODUITS
-════════════════════════════════════════════ -->
-<section class="products" id="products">
-  <div class="container">
-    <div class="section-head">
-      <span class="tag tag-indigo">Écosystème CivicAI</span>
-      <h2>Trois produits.<br/>Un seul portail d'accès.</h2>
-      <p>Chaque produit répond à un enjeu précis de votre organisation. Ils partagent une identité, une sécurité et une vision communes.</p>
-    </div>
+      <div class="prod-list">
 
-    <div class="products-grid">
+        <a href="https://agenthub.nexhire.ca" class="prod-row active">
+          <div class="prod-icon prod-icon-indigo">🛡️</div>
+          <div class="prod-info">
+            <div class="prod-name">AgentHub</div>
+            <div class="prod-desc">Gouvernance IT, sécurité et optimisation par IA</div>
+          </div>
+          <span class="prod-badge badge-live">Disponible</span>
+          <span class="prod-arrow">→</span>
+        </a>
 
-      <!-- NexHire Recrutement -->
-      <div class="prod-card soon">
-        <span class="prod-badge badge-soon">⏳ Bientôt disponible</span>
-        <div class="prod-icon" style="background:linear-gradient(135deg,#a855f720,#7c3aed15);border:1px solid #a855f725;">👥</div>
-        <div class="prod-name">NexHire</div>
-        <div class="prod-sub" style="color:var(--purple)">Recrutement & Talents</div>
-        <div class="prod-desc">Trouvez les meilleurs talents et connectez votre organisation aux opportunités qui font avancer votre mission.</div>
-        <div class="prod-feats">
-          <div class="prod-feat"><span class="feat-dot" style="background:var(--purple)"></span>Affichage de postes intelligent</div>
-          <div class="prod-feat"><span class="feat-dot" style="background:var(--purple)"></span>Suivi des candidatures (ATS)</div>
-          <div class="prod-feat"><span class="feat-dot" style="background:var(--purple)"></span>Intégration RH automatisée</div>
-        </div>
-        <span class="prod-cta-ghost">Être notifié au lancement</span>
-      </div>
-
-      <!-- AgentHub — Featured -->
-      <div class="prod-card featured">
-        <span class="prod-badge badge-live">✦ Disponible maintenant</span>
-        <div class="prod-icon" style="background:linear-gradient(135deg,#6366f125,#818cf815);border:1px solid #6366f130;">🛡️</div>
-        <div class="prod-name">AgentHub</div>
-        <div class="prod-sub" style="color:var(--indigo2)">Gouvernance · Sécurité · Optimisation</div>
-        <div class="prod-desc">Renforcez la gouvernance IT, sécurisez vos données et optimisez vos processus avec un agent IA conversationnel connecté à tous vos systèmes.</div>
-        <div class="prod-feats">
-          <div class="prod-feat"><span class="feat-dot" style="background:var(--indigo2)"></span>Microsoft 365, Salesforce, Jira, AWS…</div>
-          <div class="prod-feat"><span class="feat-dot" style="background:var(--indigo2)"></span>Tableau de bord exécutif temps réel</div>
-          <div class="prod-feat"><span class="feat-dot" style="background:var(--indigo2)"></span>Détection d'anomalies et risques</div>
-          <div class="prod-feat"><span class="feat-dot" style="background:var(--indigo2)"></span>Rapports automatiques (hebdo / mensuel)</div>
-          <div class="prod-feat"><span class="feat-dot" style="background:var(--indigo2)"></span>Agent IA bilingue FR / EN</div>
-        </div>
-        <a href="#auth" class="prod-cta" onclick="scrollToAuth()">Commencer l'essai gratuit →</a>
-      </div>
-
-      <!-- Attente Zéro -->
-      <div class="prod-card soon">
-        <span class="prod-badge badge-soon">⏳ Bientôt disponible</span>
-        <div class="prod-icon" style="background:linear-gradient(135deg,#14b8a620,#0d948815);border:1px solid #14b8a625;">⏱️</div>
-        <div class="prod-name">Attente Zéro</div>
-        <div class="prod-sub" style="color:var(--teal)">Réduction des délais</div>
-        <div class="prod-desc">Réduisez les temps d'attente et améliorez l'expérience de vos usagers grâce à l'analyse prédictive.</div>
-        <div class="prod-feats">
-          <div class="prod-feat"><span class="feat-dot" style="background:var(--teal)"></span>Analyse des files en temps réel</div>
-          <div class="prod-feat"><span class="feat-dot" style="background:var(--teal)"></span>Prédiction des délais par IA</div>
-          <div class="prod-feat"><span class="feat-dot" style="background:var(--teal)"></span>Tableau de bord usagers</div>
-        </div>
-        <span class="prod-cta-ghost">Être notifié au lancement</span>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ══════════════════════════════════════════
-     POURQUOI CIVICAI
-════════════════════════════════════════════ -->
-<section>
-  <div class="container">
-    <div class="section-head">
-      <span class="tag tag-teal">Pourquoi CivicAI ?</span>
-      <h2>Construit pour les organisations<br/>qui veulent aller plus loin</h2>
-      <p>Nous ne vendons pas des logiciels. Nous construisons l'infrastructure IA qui fait fonctionner les organisations modernes.</p>
-    </div>
-    <div class="why-grid">
-      <div class="why-card">
-        <div class="why-icon">🔗</div>
-        <div class="why-title">Tout connecté</div>
-        <div class="why-desc">Microsoft 365, Salesforce, Jira, QuickBooks, AWS, Slack, Google Workspace — tous vos systèmes parlent enfin le même langage.</div>
-      </div>
-      <div class="why-card">
-        <div class="why-icon">🇨🇦</div>
-        <div class="why-title">100 % bilingue</div>
-        <div class="why-desc">Agent IA nativement francophone et anglophone. Conçu pour les réalités des organisations québécoises et canadiennes.</div>
-      </div>
-      <div class="why-card">
-        <div class="why-icon">🔒</div>
-        <div class="why-title">Sécurité maximale</div>
-        <div class="why-desc">Chiffrement AES-128, authentification multi-facteurs, conformité LPRPDE. Vos données restent les vôtres, toujours.</div>
-      </div>
-      <div class="why-card">
-        <div class="why-icon">⚡</div>
-        <div class="why-title">Déploiement rapide</div>
-        <div class="why-desc">Opérationnel en moins d'une heure. Pas d'installation, pas de serveur à gérer. Essai gratuit 14 jours sans carte de crédit.</div>
-      </div>
-      <div class="why-card">
-        <div class="why-icon">📊</div>
-        <div class="why-title">Décisions éclairées</div>
-        <div class="why-desc">Tableaux de bord exécutifs, rapports automatiques chaque lundi, alertes proactives — votre direction toujours informée.</div>
-      </div>
-      <div class="why-card">
-        <div class="why-icon">🤝</div>
-        <div class="why-title">Support humain</div>
-        <div class="why-desc">Une équipe locale disponible. Nous accompagnons chaque organisation dans sa transformation numérique, pas à pas.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ══════════════════════════════════════════
-     SECTEURS
-════════════════════════════════════════════ -->
-<section class="sectors">
-  <div class="container">
-    <div class="section-head">
-      <span class="tag tag-indigo">Pour qui ?</span>
-      <h2>Des secteurs multiples,<br/>une seule plateforme</h2>
-      <p>CivicAI s'adapte à votre secteur, votre taille et vos systèmes existants.</p>
-    </div>
-    <div class="sectors-grid">
-      <div class="sector-pill"><span>🏛️</span>Gouvernements et municipalités</div>
-      <div class="sector-pill"><span>🏥</span>Santé et services sociaux</div>
-      <div class="sector-pill"><span>🎓</span>Éducation et universités</div>
-      <div class="sector-pill"><span>🏗️</span>Construction et ingénierie</div>
-      <div class="sector-pill"><span>💼</span>Services professionnels</div>
-      <div class="sector-pill"><span>🏪</span>Commerce de détail</div>
-      <div class="sector-pill"><span>🌾</span>Agroalimentaire</div>
-      <div class="sector-pill"><span>📦</span>Logistique et transport</div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ══════════════════════════════════════════
-     CTA DÉMO
-════════════════════════════════════════════ -->
-<section class="cta-section" id="demo">
-  <div class="container" style="position:relative;z-index:1">
-    <span class="tag tag-teal" style="margin-bottom:20px;display:inline-flex">📅 Rencontrons-nous</span>
-    <h2>Prêt à voir CivicAI<br/>en action dans votre organisation ?</h2>
-    <p>30 minutes. Pas de présentation générique — une démonstration avec vos propres données et vos propres défis.</p>
-    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
-      <a href="mailto:contact@nexhire.ca?subject=Demande de démo — CivicAI&body=Bonjour,%0A%0AJe souhaite planifier une démonstration de la plateforme CivicAI pour mon organisation.%0A%0ANom:%0AOrganisation:%0ATéléphone:%0ADisponibilités:" class="btn-primary">📧 Écrire à notre équipe →</a>
-      <a href="#auth" class="btn-secondary" onclick="scrollToAuth()">Essai gratuit 14 jours</a>
-    </div>
-    <p style="margin-top:28px;font-size:.78rem;color:var(--slate2)">contact@nexhire.ca · Montréal, Québec 🍁</p>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     AUTH
-════════════════════════════════════════════ -->
-<section class="auth-section" id="auth">
-  <div class="container">
-    <div class="auth-wrap">
-      <div class="auth-card">
-        <div class="auth-card-head">
-          <span class="tag tag-indigo">AgentHub</span>
-          <h3>Accédez à votre espace</h3>
-          <p>Connectez-vous ou créez votre organisation en 2 minutes.</p>
+        <div class="prod-row" style="cursor:default">
+          <div class="prod-icon prod-icon-purple">👥</div>
+          <div class="prod-info">
+            <div class="prod-name">NexHire Recrutement</div>
+            <div class="prod-desc">Gestion des talents et des candidatures (ATS)</div>
+          </div>
+          <span class="prod-badge badge-soon">Bientôt</span>
         </div>
 
-        <div class="auth-tabs">
-          <button class="auth-tab active" onclick="switchTab('login')">Connexion</button>
-          <button class="auth-tab" onclick="switchTab('register')">Créer un compte</button>
+        <div class="prod-row" style="cursor:default">
+          <div class="prod-icon prod-icon-teal">⏱️</div>
+          <div class="prod-info">
+            <div class="prod-name">Attente Zéro</div>
+            <div class="prod-desc">Réduction des délais par analyse prédictive</div>
+          </div>
+          <span class="prod-badge badge-soon">Bientôt</span>
         </div>
 
-        <!-- LOGIN -->
-        <form class="auth-form visible" id="form-login" onsubmit="doLogin(event)">
-          <div id="login-err" class="auth-err"></div>
-          <div>
-            <label class="auth-label">Adresse courriel</label>
-            <input class="auth-input" type="email" id="login-email" placeholder="vous@organisation.ca" required autocomplete="email"/>
-          </div>
-          <div>
-            <label class="auth-label">Mot de passe</label>
-            <input class="auth-input" type="password" id="login-pwd" placeholder="••••••••" required autocomplete="current-password"/>
-          </div>
-          <button class="auth-btn" type="submit" id="login-btn">Se connecter →</button>
-        </form>
-
-        <!-- REGISTER -->
-        <form class="auth-form" id="form-register" onsubmit="doRegister(event)">
-          <div id="reg-err" class="auth-err"></div>
-          <div id="reg-suc" class="auth-suc"></div>
-          <div>
-            <label class="auth-label">Nom complet</label>
-            <input class="auth-input" type="text" id="reg-name" placeholder="Prénom Nom" required autocomplete="name"/>
-          </div>
-          <div>
-            <label class="auth-label">Adresse courriel</label>
-            <input class="auth-input" type="email" id="reg-email" placeholder="vous@organisation.ca" required autocomplete="email"/>
-          </div>
-          <div>
-            <label class="auth-label">Nom de l'organisation</label>
-            <input class="auth-input" type="text" id="reg-org" placeholder="Mon Organisation" required/>
-          </div>
-          <div>
-            <label class="auth-label">Mot de passe</label>
-            <input class="auth-input" type="password" id="reg-pwd" placeholder="Minimum 8 caractères" required minlength="8" autocomplete="new-password"/>
-          </div>
-          <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer">
-            <input type="checkbox" id="reg-cgu" style="margin-top:3px;accent-color:var(--indigo);flex-shrink:0"/>
-            <span class="auth-cgu">J'accepte les <a href="https://agenthub.nexhire.ca/legal/tos" target="_blank">Conditions d'utilisation</a> et la <a href="https://agenthub.nexhire.ca/legal/privacy" target="_blank">Politique de confidentialité</a> de CivicAI Inc.</span>
-          </label>
-          <button class="auth-btn" type="submit" id="reg-btn">Créer mon organisation →</button>
-        </form>
       </div>
-      <p class="auth-note">🔒 Connexion chiffrée · Essai gratuit 14 jours · Aucune carte requise</p>
     </div>
-  </div>
-</section>
 
-<!-- ══════════════════════════════════════════
-     FOOTER
-════════════════════════════════════════════ -->
+    <!-- Droite : carte auth -->
+    <div class="auth-card">
+      <div class="auth-card-logo">
+        <div class="logo-mark">C</div>
+        <h2>Accédez à votre espace</h2>
+        <p>Connectez-vous pour accéder aux produits CivicAI</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" onclick="switchTab('login')">Connexion</button>
+        <button class="auth-tab" onclick="switchTab('register')">Créer un compte</button>
+      </div>
+
+      <!-- LOGIN -->
+      <form class="auth-form visible" id="form-login" onsubmit="doLogin(event)">
+        <div id="login-err" class="auth-err"></div>
+        <div>
+          <label class="field-label">Courriel</label>
+          <input class="field-input" type="email" id="login-email" placeholder="vous@organisation.ca" required autocomplete="email"/>
+        </div>
+        <div>
+          <label class="field-label">Mot de passe</label>
+          <input class="field-input" type="password" id="login-pwd" placeholder="••••••••" required autocomplete="current-password"/>
+        </div>
+        <button class="auth-btn" type="submit" id="login-btn">Se connecter →</button>
+        <div class="sso-sep"><span>ou</span></div>
+        <button type="button" class="sso-btn" onclick="loginSSO('microsoft')">
+          <svg width="16" height="16" viewBox="0 0 21 21"><rect x="1" y="1" width="9" height="9" fill="#f25022"/><rect x="11" y="1" width="9" height="9" fill="#7fba00"/><rect x="1" y="11" width="9" height="9" fill="#00a4ef"/><rect x="11" y="11" width="9" height="9" fill="#ffb900"/></svg>
+          Continuer avec Microsoft
+        </button>
+        <button type="button" class="sso-btn" onclick="loginSSO('google')">
+          <svg width="16" height="16" viewBox="0 0 48 48"><path fill="#4285F4" d="M44.5 20H24v8.5h11.7C34.2 33.4 29.7 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.8 1.1 7.9 2.9l6-6C34.4 6.1 29.5 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20c11 0 19.7-8 19.7-20 0-1.3-.1-2.7-.2-4z"/></svg>
+          Continuer avec Google
+        </button>
+      </form>
+
+      <!-- REGISTER -->
+      <form class="auth-form" id="form-register" onsubmit="doRegister(event)">
+        <div id="reg-err" class="auth-err"></div>
+        <div id="reg-suc" class="auth-suc"></div>
+        <div>
+          <label class="field-label">Nom complet</label>
+          <input class="field-input" type="text" id="reg-name" placeholder="Prénom Nom" required autocomplete="name"/>
+        </div>
+        <div>
+          <label class="field-label">Courriel</label>
+          <input class="field-input" type="email" id="reg-email" placeholder="vous@organisation.ca" required autocomplete="email"/>
+        </div>
+        <div>
+          <label class="field-label">Organisation</label>
+          <input class="field-input" type="text" id="reg-org" placeholder="Nom de votre organisation" required/>
+        </div>
+        <div>
+          <label class="field-label">Mot de passe</label>
+          <input class="field-input" type="password" id="reg-pwd" placeholder="Minimum 8 caractères" required minlength="8" autocomplete="new-password"/>
+        </div>
+        <div class="cgu-row">
+          <input type="checkbox" id="reg-cgu" style="margin-top:3px;accent-color:var(--indigo);flex-shrink:0"/>
+          <span class="cgu-text">J'accepte les <a href="https://agenthub.nexhire.ca/legal/tos" target="_blank">Conditions d'utilisation</a> et la <a href="https://agenthub.nexhire.ca/legal/privacy" target="_blank">Politique de confidentialité</a></span>
+        </div>
+        <button class="auth-btn" type="submit" id="reg-btn">Créer mon compte →</button>
+      </form>
+
+      <p class="auth-note">🔒 Connexion sécurisée · Essai gratuit 14 jours · Aucune carte requise</p>
+    </div>
+
+  </div>
+</main>
+
+<!-- Footer -->
 <footer>
-  <div class="container">
-    <div class="footer-inner">
-      <div>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
-          <div class="logo-mark" style="width:28px;height:28px;font-size:.8rem">C</div>
-          <span style="font-weight:800;font-size:.9rem">CivicAI Inc.</span>
-        </div>
-        <div class="footer-copy">© 2026 CivicAI Inc. — Montréal, Québec, Canada 🍁</div>
-      </div>
-      <div class="footer-links">
-        <a href="https://agenthub.nexhire.ca/legal/tos" target="_blank">Conditions</a>
-        <a href="https://agenthub.nexhire.ca/legal/privacy" target="_blank">Confidentialité</a>
-        <a href="https://agenthub.nexhire.ca/legal/security" target="_blank">Sécurité</a>
-        <a href="mailto:contact@nexhire.ca">contact@nexhire.ca</a>
-      </div>
-    </div>
+  <div class="footer-copy">© 2026 CivicAI Inc. — Montréal, Québec, Canada</div>
+  <div class="footer-links">
+    <a href="https://agenthub.nexhire.ca/legal/tos" target="_blank">Conditions</a>
+    <a href="https://agenthub.nexhire.ca/legal/privacy" target="_blank">Confidentialité</a>
+    <a href="mailto:contact@nexhire.ca">Nous contacter</a>
   </div>
 </footer>
 
 <script>
   const API = "https://agenthub.nexhire.ca";
-
-  function scrollToAuth() {
-    setTimeout(() => document.getElementById("auth").scrollIntoView({ behavior: "smooth" }), 50);
-  }
 
   function switchTab(tab) {
     document.querySelectorAll(".auth-tab").forEach((t, i) => {
@@ -662,7 +345,11 @@
   }
 
   function showErr(id, msg) { const e = document.getElementById(id); e.textContent = msg; e.style.display = "block"; }
-  function hideEl(id)        { document.getElementById(id).style.display = "none"; }
+  function hideEl(id) { document.getElementById(id).style.display = "none"; }
+
+  function loginSSO(provider) {
+    window.location.href = `${API}/api/auth/sso/${provider}`;
+  }
 
   async function doLogin(e) {
     e.preventDefault();
@@ -671,8 +358,12 @@
     btn.disabled = true; btn.textContent = "Connexion…";
     try {
       const r = await fetch(`${API}/api/auth/login`, {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: document.getElementById("login-email").value.trim(), password: document.getElementById("login-pwd").value }),
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: document.getElementById("login-email").value.trim(),
+          password: document.getElementById("login-pwd").value,
+        }),
       });
       const d = await r.json();
       if (!r.ok) throw new Error(d.detail || "Identifiants incorrects.");
@@ -687,17 +378,21 @@
     e.preventDefault();
     hideEl("reg-err");
     document.getElementById("reg-suc").style.display = "none";
-    if (!document.getElementById("reg-cgu").checked) { showErr("reg-err", "Veuillez accepter les Conditions d'utilisation."); return; }
+    if (!document.getElementById("reg-cgu").checked) {
+      showErr("reg-err", "Veuillez accepter les Conditions d'utilisation.");
+      return;
+    }
     const btn = document.getElementById("reg-btn");
     btn.disabled = true; btn.textContent = "Création…";
     try {
       const r = await fetch(`${API}/api/auth/register`, {
-        method: "POST", headers: { "Content-Type": "application/json" },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          full_name: document.getElementById("reg-name").value.trim(),
-          email:     document.getElementById("reg-email").value.trim(),
+          full_name:         document.getElementById("reg-name").value.trim(),
+          email:             document.getElementById("reg-email").value.trim(),
           organization_name: document.getElementById("reg-org").value.trim(),
-          password:  document.getElementById("reg-pwd").value,
+          password:          document.getElementById("reg-pwd").value,
         }),
       });
       const d = await r.json();
@@ -705,10 +400,10 @@
       const s = document.getElementById("reg-suc");
       s.textContent = "Compte créé ! Redirection vers AgentHub…";
       s.style.display = "block";
-      setTimeout(() => { window.location.href = `${API}?token=${encodeURIComponent(d.token)}`; }, 1500);
+      setTimeout(() => { window.location.href = `${API}?token=${encodeURIComponent(d.access_token)}`; }, 1500);
     } catch (err) {
       showErr("reg-err", err.message);
-      btn.disabled = false; btn.textContent = "Créer mon organisation →";
+      btn.disabled = false; btn.textContent = "Créer mon compte →";
     }
   }
 </script>
