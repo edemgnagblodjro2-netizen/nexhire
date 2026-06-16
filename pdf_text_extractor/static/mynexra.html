@@ -35,7 +35,7 @@
     header {
       background: var(--white);
       border-bottom: 1px solid var(--border);
-      padding: 16px 40px;
+      padding: 14px 40px;
       display: flex;
       align-items: center;
       gap: 14px;
@@ -50,7 +50,21 @@
     .logo-text span { color: var(--indigo); }
     .logo-by   { font-size: .65rem; color: var(--slate2); margin-top: 1px; }
     .header-divider { width: 1px; height: 28px; background: var(--border); margin: 0 6px; }
-    .header-tagline { font-size: .75rem; color: var(--slate); }
+    .header-tagline { font-size: .75rem; color: var(--slate); flex: 1; }
+
+    /* Lang switcher */
+    .lang-sw {
+      display: flex; align-items: center; gap: 0;
+      border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden;
+    }
+    .lang-btn {
+      padding: 5px 11px; font-size: .72rem; font-weight: 700;
+      border: none; background: transparent; cursor: pointer; color: var(--slate);
+      transition: background .15s, color .15s;
+    }
+    .lang-btn:not(:last-child) { border-right: 1px solid var(--border); }
+    .lang-btn.active { background: var(--indigo); color: #fff; }
+    .lang-btn:not(.active):hover { background: #f1f5f9; color: var(--navy); }
 
     /* ── Main layout ── */
     main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 48px 24px; }
@@ -75,7 +89,6 @@
       max-width: 500px; margin-bottom: 36px;
     }
 
-    /* Produits */
     .prod-list { display: flex; flex-direction: column; gap: 12px; }
     .prod-row {
       background: var(--white);
@@ -91,6 +104,7 @@
     }
     .prod-row.active { border-color: #6366f140; box-shadow: 0 2px 12px #6366f110; }
     .prod-row.active:hover { border-color: #6366f170; box-shadow: 0 4px 20px #6366f118; }
+    .prod-row.soon { cursor: default; opacity: .7; }
     .prod-icon {
       width: 44px; height: 44px; border-radius: 11px; flex-shrink: 0;
       display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
@@ -125,7 +139,7 @@
     .auth-card-logo p  { font-size: .76rem; color: var(--slate); margin-top: 2px; text-align: center; }
 
     .auth-tabs {
-      display: flex; background: var(--bg); border-radius: 8px;
+      display: flex; background: #f1f5f9; border-radius: 8px;
       padding: 3px; margin-bottom: 20px;
     }
     .auth-tab {
@@ -165,8 +179,7 @@
     .cgu-text a { color: var(--indigo); }
     .auth-note { text-align: center; font-size: .7rem; color: var(--slate2); margin-top: 16px; }
 
-    /* SSO separator */
-    .sso-sep { display: flex; align-items: center; gap: 10px; margin: 4px 0; }
+    .sso-sep { display: flex; align-items: center; gap: 10px; margin: 2px 0; }
     .sso-sep span { font-size: .7rem; color: var(--slate2); white-space: nowrap; }
     .sso-sep::before, .sso-sep::after { content: ""; flex: 1; height: 1px; background: var(--border); }
     .sso-btn {
@@ -190,12 +203,14 @@
     .footer-links a { font-size: .72rem; color: var(--slate); text-decoration: none; }
     .footer-links a:hover { color: var(--indigo); }
 
-    /* ── Responsive ── */
     @media (max-width: 800px) {
       .portal-wrap { grid-template-columns: 1fr; }
       .portal-intro { order: 2; }
       .auth-card { order: 1; }
       main { align-items: flex-start; padding: 28px 16px; }
+      header { padding: 14px 20px; }
+      .header-tagline { display: none; }
+      footer { padding: 16px 20px; }
     }
   </style>
 </head>
@@ -209,7 +224,12 @@
     <div class="logo-by">by CivicAI Inc.</div>
   </div>
   <div class="header-divider"></div>
-  <div class="header-tagline">Portail d'accès aux produits CivicAI</div>
+  <div class="header-tagline" data-i18n="tagline">Portail d'accès aux produits CivicAI</div>
+  <div class="lang-sw">
+    <button class="lang-btn active" onclick="setLang('fr')">FR</button>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('es')">ES</button>
+  </div>
 </header>
 
 <!-- Main -->
@@ -218,8 +238,8 @@
 
     <!-- Gauche : intro + produits -->
     <div class="portal-intro">
-      <h1>Bienvenue sur<br/><span>MyNexRA</span></h1>
-      <p>MyNexRA vous donne accès à l'écosystème CivicAI — gouvernance IA, recrutement et optimisation des délais, depuis un seul portail sécurisé.</p>
+      <h1 data-i18n="hero.title">Bienvenue sur<br/><span>MyNexRA</span></h1>
+      <p data-i18n="hero.desc">MyNexRA vous donne accès à l'écosystème CivicAI — gouvernance IA, recrutement et optimisation des délais, depuis un seul portail sécurisé.</p>
 
       <div class="prod-list">
 
@@ -227,9 +247,9 @@
           <div class="prod-icon prod-icon-indigo">🛡️</div>
           <div class="prod-info">
             <div class="prod-name">AgentHub</div>
-            <div class="prod-desc">Gouvernance IT, sécurité et optimisation par IA</div>
+            <div class="prod-desc" data-i18n="prod.ah.desc">Gouvernance IT, sécurité et optimisation par IA</div>
           </div>
-          <span class="prod-badge badge-live">Disponible</span>
+          <span class="prod-badge badge-live" data-i18n="badge.live">Disponible</span>
           <span class="prod-arrow">→</span>
         </a>
 
@@ -237,19 +257,19 @@
           <div class="prod-icon prod-icon-purple">👥</div>
           <div class="prod-info">
             <div class="prod-name">NexHire Recrutement</div>
-            <div class="prod-desc">Offres d'emploi, candidatures et gestion des talents (ATS)</div>
+            <div class="prod-desc" data-i18n="prod.nh.desc">Offres d'emploi, candidatures et gestion des talents (ATS)</div>
           </div>
-          <span class="prod-badge badge-live">Disponible</span>
+          <span class="prod-badge badge-live" data-i18n="badge.live">Disponible</span>
           <span class="prod-arrow">→</span>
         </a>
 
-        <div class="prod-row" style="cursor:default">
+        <div class="prod-row soon">
           <div class="prod-icon prod-icon-teal">⏱️</div>
           <div class="prod-info">
             <div class="prod-name">Attente Zéro</div>
-            <div class="prod-desc">Plateforme de réduction des délais — en développement</div>
+            <div class="prod-desc" data-i18n="prod.az.desc">Plateforme de réduction des délais — en développement</div>
           </div>
-          <span class="prod-badge badge-soon">Bientôt</span>
+          <span class="prod-badge badge-soon" data-i18n="badge.soon">Bientôt</span>
         </div>
 
       </div>
@@ -259,35 +279,35 @@
     <div class="auth-card">
       <div class="auth-card-logo">
         <div class="logo-mark">C</div>
-        <h2>Accédez à votre espace</h2>
-        <p>Connectez-vous pour accéder aux produits CivicAI</p>
+        <h2 data-i18n="auth.title">Accédez à votre espace</h2>
+        <p data-i18n="auth.sub">Connectez-vous pour accéder aux produits CivicAI</p>
       </div>
 
       <div class="auth-tabs">
-        <button class="auth-tab active" onclick="switchTab('login')">Connexion</button>
-        <button class="auth-tab" onclick="switchTab('register')">Créer un compte</button>
+        <button class="auth-tab active" onclick="switchTab('login')" data-i18n="tab.login">Connexion</button>
+        <button class="auth-tab" onclick="switchTab('register')" data-i18n="tab.register">Créer un compte</button>
       </div>
 
       <!-- LOGIN -->
       <form class="auth-form visible" id="form-login" onsubmit="doLogin(event)">
         <div id="login-err" class="auth-err"></div>
         <div>
-          <label class="field-label">Courriel</label>
-          <input class="field-input" type="email" id="login-email" placeholder="vous@organisation.ca" required autocomplete="email"/>
+          <label class="field-label" data-i18n="field.email">Courriel</label>
+          <input class="field-input" type="email" id="login-email" data-i18n-ph="ph.email" placeholder="vous@organisation.ca" required autocomplete="email"/>
         </div>
         <div>
-          <label class="field-label">Mot de passe</label>
+          <label class="field-label" data-i18n="field.pwd">Mot de passe</label>
           <input class="field-input" type="password" id="login-pwd" placeholder="••••••••" required autocomplete="current-password"/>
         </div>
-        <button class="auth-btn" type="submit" id="login-btn">Se connecter →</button>
-        <div class="sso-sep"><span>ou</span></div>
+        <button class="auth-btn" type="submit" id="login-btn" data-i18n="btn.login">Se connecter →</button>
+        <div class="sso-sep"><span data-i18n="sso.or">ou</span></div>
         <button type="button" class="sso-btn" onclick="loginSSO('microsoft')">
           <svg width="16" height="16" viewBox="0 0 21 21"><rect x="1" y="1" width="9" height="9" fill="#f25022"/><rect x="11" y="1" width="9" height="9" fill="#7fba00"/><rect x="1" y="11" width="9" height="9" fill="#00a4ef"/><rect x="11" y="11" width="9" height="9" fill="#ffb900"/></svg>
-          Continuer avec Microsoft
+          <span data-i18n="sso.ms">Continuer avec Microsoft</span>
         </button>
         <button type="button" class="sso-btn" onclick="loginSSO('google')">
           <svg width="16" height="16" viewBox="0 0 48 48"><path fill="#4285F4" d="M44.5 20H24v8.5h11.7C34.2 33.4 29.7 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.8 1.1 7.9 2.9l6-6C34.4 6.1 29.5 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20c11 0 19.7-8 19.7-20 0-1.3-.1-2.7-.2-4z"/></svg>
-          Continuer avec Google
+          <span data-i18n="sso.gg">Continuer avec Google</span>
         </button>
       </form>
 
@@ -296,29 +316,29 @@
         <div id="reg-err" class="auth-err"></div>
         <div id="reg-suc" class="auth-suc"></div>
         <div>
-          <label class="field-label">Nom complet</label>
-          <input class="field-input" type="text" id="reg-name" placeholder="Prénom Nom" required autocomplete="name"/>
+          <label class="field-label" data-i18n="field.name">Nom complet</label>
+          <input class="field-input" type="text" id="reg-name" data-i18n-ph="ph.name" placeholder="Prénom Nom" required autocomplete="name"/>
         </div>
         <div>
-          <label class="field-label">Courriel</label>
-          <input class="field-input" type="email" id="reg-email" placeholder="vous@organisation.ca" required autocomplete="email"/>
+          <label class="field-label" data-i18n="field.email">Courriel</label>
+          <input class="field-input" type="email" id="reg-email" data-i18n-ph="ph.email" placeholder="vous@organisation.ca" required autocomplete="email"/>
         </div>
         <div>
-          <label class="field-label">Organisation</label>
-          <input class="field-input" type="text" id="reg-org" placeholder="Nom de votre organisation" required/>
+          <label class="field-label" data-i18n="field.org">Organisation</label>
+          <input class="field-input" type="text" id="reg-org" data-i18n-ph="ph.org" placeholder="Nom de votre organisation" required/>
         </div>
         <div>
-          <label class="field-label">Mot de passe</label>
-          <input class="field-input" type="password" id="reg-pwd" placeholder="Minimum 8 caractères" required minlength="8" autocomplete="new-password"/>
+          <label class="field-label" data-i18n="field.pwd">Mot de passe</label>
+          <input class="field-input" type="password" id="reg-pwd" data-i18n-ph="ph.pwd" placeholder="Minimum 8 caractères" required minlength="8" autocomplete="new-password"/>
         </div>
         <div class="cgu-row">
           <input type="checkbox" id="reg-cgu" style="margin-top:3px;accent-color:var(--indigo);flex-shrink:0"/>
-          <span class="cgu-text">J'accepte les <a href="https://agenthub.nexhire.ca/legal/tos" target="_blank">Conditions d'utilisation</a> et la <a href="https://agenthub.nexhire.ca/legal/privacy" target="_blank">Politique de confidentialité</a></span>
+          <span class="cgu-text" data-i18n="cgu">J'accepte les <a href="https://agenthub.nexhire.ca/legal/tos" target="_blank">Conditions d'utilisation</a> et la <a href="https://agenthub.nexhire.ca/legal/privacy" target="_blank">Politique de confidentialité</a></span>
         </div>
-        <button class="auth-btn" type="submit" id="reg-btn">Créer mon compte →</button>
+        <button class="auth-btn" type="submit" id="reg-btn" data-i18n="btn.register">Créer mon compte →</button>
       </form>
 
-      <p class="auth-note">🔒 Connexion sécurisée · Essai gratuit 14 jours · Aucune carte requise</p>
+      <p class="auth-note" data-i18n="auth.note">🔒 Connexion sécurisée · Essai gratuit 14 jours · Aucune carte requise</p>
     </div>
 
   </div>
@@ -328,15 +348,152 @@
 <footer>
   <div class="footer-copy">© 2026 CivicAI Inc. — Montréal, Québec, Canada</div>
   <div class="footer-links">
-    <a href="https://agenthub.nexhire.ca/legal/tos" target="_blank">Conditions</a>
-    <a href="https://agenthub.nexhire.ca/legal/privacy" target="_blank">Confidentialité</a>
-    <a href="mailto:contact@nexhire.ca">Nous contacter</a>
+    <a href="https://agenthub.nexhire.ca/legal/tos" target="_blank" data-i18n="footer.tos">Conditions</a>
+    <a href="https://agenthub.nexhire.ca/legal/privacy" target="_blank" data-i18n="footer.privacy">Confidentialité</a>
+    <a href="mailto:contact@nexhire.ca" data-i18n="footer.contact">Nous contacter</a>
   </div>
 </footer>
 
 <script>
   const API = "https://agenthub.nexhire.ca";
 
+  // ── Traductions ────────────────────────────────────────────
+  const T = {
+    fr: {
+      tagline:      "Portail d'accès aux produits CivicAI",
+      "hero.title": "Bienvenue sur<br/><span>MyNexRA</span>",
+      "hero.desc":  "MyNexRA vous donne accès à l'écosystème CivicAI — gouvernance IA, recrutement et optimisation des délais, depuis un seul portail sécurisé.",
+      "prod.ah.desc": "Gouvernance IT, sécurité et optimisation par IA",
+      "prod.nh.desc": "Offres d'emploi, candidatures et gestion des talents (ATS)",
+      "prod.az.desc": "Plateforme de réduction des délais — en développement",
+      "badge.live":   "Disponible",
+      "badge.soon":   "Bientôt",
+      "auth.title":   "Accédez à votre espace",
+      "auth.sub":     "Connectez-vous pour accéder aux produits CivicAI",
+      "tab.login":    "Connexion",
+      "tab.register": "Créer un compte",
+      "field.email":  "Courriel",
+      "field.pwd":    "Mot de passe",
+      "field.name":   "Nom complet",
+      "field.org":    "Organisation",
+      "ph.email":     "vous@organisation.ca",
+      "ph.name":      "Prénom Nom",
+      "ph.org":       "Nom de votre organisation",
+      "ph.pwd":       "Minimum 8 caractères",
+      "btn.login":    "Se connecter →",
+      "btn.register": "Créer mon compte →",
+      "sso.or":       "ou",
+      "sso.ms":       "Continuer avec Microsoft",
+      "sso.gg":       "Continuer avec Google",
+      "cgu":          `J'accepte les <a href="https://agenthub.nexhire.ca/legal/tos" target="_blank">Conditions d'utilisation</a> et la <a href="https://agenthub.nexhire.ca/legal/privacy" target="_blank">Politique de confidentialité</a>`,
+      "auth.note":    "🔒 Connexion sécurisée · Essai gratuit 14 jours · Aucune carte requise",
+      "err.cgu":      "Veuillez accepter les Conditions d'utilisation.",
+      "err.login":    "Identifiants incorrects.",
+      "err.register": "Erreur lors de la création du compte.",
+      "suc.register": "Compte créé ! Redirection vers AgentHub…",
+      "loading.login":    "Connexion…",
+      "loading.register": "Création…",
+      "footer.tos":     "Conditions",
+      "footer.privacy": "Confidentialité",
+      "footer.contact": "Nous contacter",
+    },
+    en: {
+      tagline:      "CivicAI product access portal",
+      "hero.title": "Welcome to<br/><span>MyNexRA</span>",
+      "hero.desc":  "MyNexRA gives you access to the CivicAI ecosystem — AI governance, recruitment and delay optimization, from a single secure portal.",
+      "prod.ah.desc": "IT governance, security and AI optimization",
+      "prod.nh.desc": "Job postings, applications and talent management (ATS)",
+      "prod.az.desc": "Delay reduction platform — in development",
+      "badge.live":   "Available",
+      "badge.soon":   "Coming soon",
+      "auth.title":   "Access your workspace",
+      "auth.sub":     "Sign in to access CivicAI products",
+      "tab.login":    "Sign in",
+      "tab.register": "Create account",
+      "field.email":  "Email",
+      "field.pwd":    "Password",
+      "field.name":   "Full name",
+      "field.org":    "Organization",
+      "ph.email":     "you@organization.com",
+      "ph.name":      "First Last",
+      "ph.org":       "Your organization name",
+      "ph.pwd":       "Minimum 8 characters",
+      "btn.login":    "Sign in →",
+      "btn.register": "Create my account →",
+      "sso.or":       "or",
+      "sso.ms":       "Continue with Microsoft",
+      "sso.gg":       "Continue with Google",
+      "cgu":          `I accept the <a href="https://agenthub.nexhire.ca/legal/tos" target="_blank">Terms of Use</a> and the <a href="https://agenthub.nexhire.ca/legal/privacy" target="_blank">Privacy Policy</a>`,
+      "auth.note":    "🔒 Secure connection · 14-day free trial · No credit card required",
+      "err.cgu":      "Please accept the Terms of Use.",
+      "err.login":    "Incorrect credentials.",
+      "err.register": "Error creating account.",
+      "suc.register": "Account created! Redirecting to AgentHub…",
+      "loading.login":    "Signing in…",
+      "loading.register": "Creating…",
+      "footer.tos":     "Terms",
+      "footer.privacy": "Privacy",
+      "footer.contact": "Contact us",
+    },
+    es: {
+      tagline:      "Portal de acceso a los productos CivicAI",
+      "hero.title": "Bienvenido a<br/><span>MyNexRA</span>",
+      "hero.desc":  "MyNexRA le da acceso al ecosistema CivicAI — gobernanza IA, reclutamiento y optimización de tiempos, desde un único portal seguro.",
+      "prod.ah.desc": "Gobernanza IT, seguridad y optimización por IA",
+      "prod.nh.desc": "Ofertas de empleo, candidaturas y gestión del talento (ATS)",
+      "prod.az.desc": "Plataforma de reducción de tiempos — en desarrollo",
+      "badge.live":   "Disponible",
+      "badge.soon":   "Próximamente",
+      "auth.title":   "Acceda a su espacio",
+      "auth.sub":     "Inicie sesión para acceder a los productos CivicAI",
+      "tab.login":    "Iniciar sesión",
+      "tab.register": "Crear cuenta",
+      "field.email":  "Correo electrónico",
+      "field.pwd":    "Contraseña",
+      "field.name":   "Nombre completo",
+      "field.org":    "Organización",
+      "ph.email":     "usted@organizacion.com",
+      "ph.name":      "Nombre Apellido",
+      "ph.org":       "Nombre de su organización",
+      "ph.pwd":       "Mínimo 8 caracteres",
+      "btn.login":    "Iniciar sesión →",
+      "btn.register": "Crear mi cuenta →",
+      "sso.or":       "o",
+      "sso.ms":       "Continuar con Microsoft",
+      "sso.gg":       "Continuar con Google",
+      "cgu":          `Acepto los <a href="https://agenthub.nexhire.ca/legal/tos" target="_blank">Términos de uso</a> y la <a href="https://agenthub.nexhire.ca/legal/privacy" target="_blank">Política de privacidad</a>`,
+      "auth.note":    "🔒 Conexión segura · Prueba gratuita 14 días · Sin tarjeta requerida",
+      "err.cgu":      "Por favor acepte los Términos de uso.",
+      "err.login":    "Credenciales incorrectas.",
+      "err.register": "Error al crear la cuenta.",
+      "suc.register": "¡Cuenta creada! Redirigiendo a AgentHub…",
+      "loading.login":    "Iniciando sesión…",
+      "loading.register": "Creando…",
+      "footer.tos":     "Términos",
+      "footer.privacy": "Privacidad",
+      "footer.contact": "Contáctenos",
+    },
+  };
+
+  let _lang = localStorage.getItem("mynexra_lang") || "fr";
+
+  function setLang(l) {
+    _lang = l;
+    localStorage.setItem("mynexra_lang", l);
+    document.documentElement.lang = l;
+    document.querySelectorAll(".lang-btn").forEach(b => b.classList.toggle("active", b.textContent.toLowerCase() === l));
+    const tr = T[l] || T.fr;
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const key = el.dataset.i18n;
+      if (tr[key] !== undefined) el.innerHTML = tr[key];
+    });
+    document.querySelectorAll("[data-i18n-ph]").forEach(el => {
+      const key = el.dataset.i18nPh;
+      if (tr[key] !== undefined) el.placeholder = tr[key];
+    });
+  }
+
+  // ── Auth tabs ──────────────────────────────────────────────
   function switchTab(tab) {
     document.querySelectorAll(".auth-tab").forEach((t, i) => {
       t.classList.toggle("active", (i === 0 && tab === "login") || (i === 1 && tab === "register"));
@@ -355,23 +512,24 @@
   async function doLogin(e) {
     e.preventDefault();
     hideEl("login-err");
+    const tr  = T[_lang] || T.fr;
     const btn = document.getElementById("login-btn");
-    btn.disabled = true; btn.textContent = "Connexion…";
+    btn.disabled = true; btn.textContent = tr["loading.login"];
     try {
       const r = await fetch(`${API}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: document.getElementById("login-email").value.trim(),
+          email:    document.getElementById("login-email").value.trim(),
           password: document.getElementById("login-pwd").value,
         }),
       });
       const d = await r.json();
-      if (!r.ok) throw new Error(d.detail || "Identifiants incorrects.");
+      if (!r.ok) throw new Error(d.detail || tr["err.login"]);
       window.location.href = `${API}?token=${encodeURIComponent(d.access_token)}`;
     } catch (err) {
       showErr("login-err", err.message);
-      btn.disabled = false; btn.textContent = "Se connecter →";
+      btn.disabled = false; btn.innerHTML = tr["btn.login"];
     }
   }
 
@@ -379,12 +537,13 @@
     e.preventDefault();
     hideEl("reg-err");
     document.getElementById("reg-suc").style.display = "none";
+    const tr = T[_lang] || T.fr;
     if (!document.getElementById("reg-cgu").checked) {
-      showErr("reg-err", "Veuillez accepter les Conditions d'utilisation.");
+      showErr("reg-err", tr["err.cgu"]);
       return;
     }
     const btn = document.getElementById("reg-btn");
-    btn.disabled = true; btn.textContent = "Création…";
+    btn.disabled = true; btn.textContent = tr["loading.register"];
     try {
       const r = await fetch(`${API}/api/auth/register`, {
         method: "POST",
@@ -397,16 +556,19 @@
         }),
       });
       const d = await r.json();
-      if (!r.ok) throw new Error(d.detail || "Erreur lors de la création du compte.");
+      if (!r.ok) throw new Error(d.detail || tr["err.register"]);
       const s = document.getElementById("reg-suc");
-      s.textContent = "Compte créé ! Redirection vers AgentHub…";
+      s.textContent = tr["suc.register"];
       s.style.display = "block";
       setTimeout(() => { window.location.href = `${API}?token=${encodeURIComponent(d.access_token)}`; }, 1500);
     } catch (err) {
       showErr("reg-err", err.message);
-      btn.disabled = false; btn.textContent = "Créer mon compte →";
+      btn.disabled = false; btn.innerHTML = tr["btn.register"];
     }
   }
+
+  // Init
+  setLang(_lang);
 </script>
 </body>
 </html>
