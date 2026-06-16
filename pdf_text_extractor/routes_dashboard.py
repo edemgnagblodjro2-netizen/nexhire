@@ -13,7 +13,7 @@ router = APIRouter(prefix="/api/dashboard", tags=["dashboard"])
 
 # Seuils pour le score de santé
 _GREEN  = 70   # score >= 70 → 🟢
-_YELLOW = 40   # score >= 40 → 🟡 sinon 🔴
+_YELLOW = 50   # score >= 50 → 🟡 sinon 🔴
 
 
 def _health_badge(score: float) -> str:

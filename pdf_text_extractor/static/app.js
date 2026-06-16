@@ -1747,7 +1747,7 @@ async function loadExecutiveDashboard() {
   const orgBadge = data.org_badge || "red";
   const _sc = { green: "#22c55e", yellow: "#f59e0b", red: "#ef4444" };
   const scoreColor = _sc[orgBadge] || "#ef4444";
-  const scoreLabel = orgScore >= 70 ? "Excellente" : orgScore >= 40 ? "À surveiller" : "Critique";
+  const scoreLabel = orgScore >= 70 ? "Bonne santé" : orgScore >= 50 ? "À surveiller" : "Critique";
   const circumference = 2 * Math.PI * 38;
   const scoreEl = $("exec-org-score");
   if (scoreEl) {
@@ -1832,9 +1832,9 @@ async function loadExecutiveDashboard() {
   }
 
   const groups = [
-    { key: "red",    emoji: "🔴", label: "À risque",  color: "#ef4444", open: true,  depts: [] },
-    { key: "yellow", emoji: "🟡", label: "Attention", color: "#f59e0b", open: true,  depts: [] },
-    { key: "green",  emoji: "🟢", label: "Sain",      color: "#22c55e", open: false, depts: [] },
+    { key: "red",    emoji: "🔴", label: "Critique",      color: "#ef4444", open: true,  depts: [] },
+    { key: "yellow", emoji: "🟡", label: "À surveiller",  color: "#f59e0b", open: true,  depts: [] },
+    { key: "green",  emoji: "🟢", label: "Bonne santé",   color: "#22c55e", open: true,  depts: [] },
   ];
   depts.forEach(d => { const g = groups.find(g => g.key === (d.badge || "green")); if (g) g.depts.push(d); });
 
