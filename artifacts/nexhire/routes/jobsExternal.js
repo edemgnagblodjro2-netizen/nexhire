@@ -75,19 +75,6 @@ router.get('/adzuna', async (req, res) => {
   }
 });
 
-// GET /api/jobs/external/jooble?q=developer&prov=QC&category=Développement
-router.get('/jooble', async (req, res) => {
-  try {
-    const { q = '', prov = '', category = '' } = req.query;
-    const { sql, values } = buildQuery('jooble', q, prov, category);
-    const { rows } = await db.query(sql, values);
-    res.json({ success: true, jobs: rows.map(mapRow), total: rows.length });
-  } catch (e) {
-    console.error('[jobs/external/jooble]', e.message);
-    res.json({ success: false, jobs: [], error: e.message });
-  }
-});
-
 // POST /api/jobs/external/intent
 // Pas d'auth requise — user_id vient de req.session si connecté, NULL sinon
 router.post('/intent', async (req, res) => {

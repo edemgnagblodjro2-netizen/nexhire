@@ -1432,7 +1432,6 @@ async function filterJobs(page = 1) {
     list.innerHTML = `<div class="empty-state"><i class="ti ti-search-off"></i><p>${t['jobs.noresult']}</p>${hasActiveFilters ? `<button class="btn-ghost" data-onclick="clearFilters()" style="margin-top:12px;font-size:13px"><i class="ti ti-x"></i> ${t['jobs.clear']}</button>` : ''}</div>`;
    if (page === 1) {
       loadAdzunaIntoMainList(q, locVal, list);
-      loadJoobleIntoMainList(q, locVal, list);
     }
     return;
   }
@@ -1508,66 +1507,6 @@ async function filterJobs(page = 1) {
   // Append Adzuna jobs into the same list (Canada only, page 1)
  if (page === 1) {
     loadAdzunaIntoMainList(q, locVal, list);
-    loadJoobleIntoMainList(q, locVal, list);
-  }
-}
-async function loadJoobleIntoMainList(q, prov, listEl) {
-  if (!listEl) return;
-  const isFr = state.lang === 'fr';
-
-  const skeletonId = 'jooble-loading-row';
-  const skeleton = document.createElement('div');
-  skeleton.id = skeletonId;
-  skeleton.className = 'adzuna-loading-row';
-  skeleton.innerHTML = `<i class="ti ti-loader" style="animation:spin 1s linear infinite;font-size:16px;color:var(--indigo)"></i>
-    <span>${isFr ? 'Chargement Jooble…' : 'Loading Jooble jobs…'}</span>`;
-  listEl.appendChild(skeleton);
-
-  const params = new URLSearchParams();
-  params.set('q', q || 'developer');
-  if (prov && prov !== 'REMOTE' && !prov.startsWith('c:')) params.set('prov', prov);
-  params.set('_t', Date.now());
-
-  const d = await api('GET', `${BASE}/api/jobbank/jooble?${params}`);
-  document.getElementById(skeletonId)?.remove();
-  if (!listEl.isConnected) return;
-
-  const jobs = (d.jobs || []).slice(0, 30);
-  if (!jobs.length) return;
-
-  const divider = document.createElement('div');
-  divider.className = 'adzuna-divider';
-  divider.innerHTML = `<span>${isFr ? 'Offres via' : 'Jobs via'} <a href="https://jooble.org" target="_blank" rel="noopener">Jooble</a> · ${jobs.length} offre${jobs.length > 1 ? 's' : ''}</span>`;
-  listEl.appendChild(divider);
-
-  jobs.forEach(j => {
-    const card = document.createElement('div');
-    card.className = 'job-list-item js-job-card';
-    card.dataset.adzunaUrl  = j.url;
-    card.dataset.externalId = j.id;
-    card.dataset.source     = j.source   || '';
-    card.dataset.category   = j.category || '';
-    card.dataset.region     = j.region   || '';
-    card.innerHTML = `
-      <div class="jli-top">
-        <div class="jli-badges">
-          <span class="job-tag source-adzuna">🍁 Jooble</span>
-        </div>
-        <a href="${j.url}" target="_blank" rel="noopener noreferrer"
-           class="jli-apply-ext" data-onclick="event.stopPropagation()">
-          ${isFr ? 'Postuler' : 'Apply'} <i class="ti ti-external-link" style="font-size:12px"></i>
-        </a>
-      </div>
-      <div class="jli-title">${esc(j.title)}</div>
-      <div class="jli-meta">
-        ${j.company ? `<span class="jli-company">${esc(j.company)}</span>` : ''}
-        ${j.location ? `<span class="jli-loc"><i class="ti ti-map-pin"></i> ${esc(j.location)}</span>` : ''}
-        ${j.salary ? `<span class="jli-sal"><i class="ti ti-currency-dollar"></i> ${esc(j.salary)}</span>` : ''}
-        ${j.date ? `<span class="jli-date">${esc(j.date)}</span>` : ''}
-      </div>`;
-    listEl.appendChild(card);
-  });
-}
 
 function clearFilters() {
   const ids = ['fq','fwork','ftype','fsal','fdate','flang','fsort'];
@@ -1661,11 +1600,9 @@ async function loadAdzunaIntoMainList(q, prov, listEl) {
 if (countLabel) {
   const nexhireCount = listEl.querySelectorAll('[data-job-id]').length;
   const adzunaCount = listEl.querySelectorAll('[data-adzuna-url]').length;
-  const joobleCount = jobs.length;
-  const total = nexhireCount + adzunaCount + joobleCount;
   countLabel.textContent = state.lang === 'fr'
-    ? `${nexhireCount} native${nexhireCount > 1 ? 's' : ''} + ${adzunaCount} Adzuna + ${joobleCount} Jooble`
-    : `${nexhireCount} native${nexhireCount !== 1 ? 's' : ''} + ${adzunaCount} Adzuna + ${joobleCount} Jooble`;
+    ? `${nexhireCount} native${nexhireCount > 1 ? 's' : ''} + ${adzunaCount} Adzuna`
+    : `${nexhireCount} native${nexhireCount !== 1 ? 's' : ''} + ${adzunaCount} Adzuna`;
 }
 }
 
@@ -6646,7 +6583,7 @@ document.addEventListener('click', e => {
     return;
   }
 
-  // ── External card click (Adzuna / Jooble) ────────────────
+  // ── External card click (Adzuna) ─────────────────────────
   const adzunaCard = e.target.closest('[data-adzuna-url]');
   if (adzunaCard) {
     e.preventDefault(); // bloque la double-navigation du <a> interne

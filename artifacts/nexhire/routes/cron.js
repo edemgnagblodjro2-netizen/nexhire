@@ -28,17 +28,11 @@ router.post('/ingest', (req, res) => {
   ingestAll()
     .then(summary => {
       const az = summary.sources?.adzuna;
-      const jb = summary.sources?.jooble;
       console.log(`[cron/ingest] Terminé en ${summary.duration_ms}ms`);
       if (az?.ok) {
         console.log(`[cron/ingest] Adzuna — inserted:${az.inserted} updated:${az.updated} excluded:${az.excluded} skipped:${az.skipped} errors:${az.errors?.length || 0}`);
       } else {
         console.warn(`[cron/ingest] Adzuna FAILED — ${az?.error || 'unknown error'}`);
-      }
-      if (jb?.ok) {
-        console.log(`[cron/ingest] Jooble  — inserted:${jb.inserted} updated:${jb.updated} excluded:${jb.excluded} skipped:${jb.skipped} errors:${jb.errors?.length || 0}`);
-      } else {
-        console.warn(`[cron/ingest] Jooble  FAILED — ${jb?.error || 'unknown error'}`);
       }
     })
     .catch(e => {

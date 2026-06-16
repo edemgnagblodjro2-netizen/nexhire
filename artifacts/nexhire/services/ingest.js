@@ -161,81 +161,6 @@ async function ingestAdzuna(appId, appKey) {
   return result;
 }
 
-// ── Jooble ──────────────────────────────────────────────────────
-function joobleId(j) {
-  const raw = `${j.title || ''}|${j.company || ''}|${j.link || ''}`;
-  return 'jb_' + crypto.createHash('sha256').update(raw).digest('hex').slice(0, 16);
-}
-
-async function fetchJooble(key, keywords, page) {
-  const body = JSON.stringify({ keywords, location: 'Canada', page, resultonpage: 100 });
-  return new Promise((resolve, reject) => {
-    const options = {
-      hostname: 'jooble.org',
-      path:     `/api/${key}`,
-      method:   'POST',
-      headers:  { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) },
-    };
-    const req = https.request(options, r => {
-      let raw = '';
-      r.on('data', c => raw += c);
-      r.on('end', () => {
-        try { resolve(JSON.parse(raw)); } catch (e) { reject(e); }
-      });
-    });
-    req.on('error', reject);
-    req.setTimeout(12000, () => { req.destroy(); reject(new Error('timeout')); });
-    req.write(body);
-    req.end();
-  });
-}
-
-async function ingestJooble(key) {
-  const KEYWORDS = ['developer', 'analyst', 'manager'];
-  const result = { inserted: 0, updated: 0, skipped: 0, excluded: 0, errors: [] };
-
-  for (const kw of KEYWORDS) {
-    try {
-      const data = await fetchJooble(key, kw, 1);
-
-      for (const j of (data.jobs || [])) {
-        if (!j.link) { result.skipped++; continue; }
-        if (isGig(j.title, j.company)) { result.excluded++; continue; }
-
-        const wasInserted = await upsertJob({
-          external_id:     joobleId(j),
-          source:          'jooble',
-          title:           j.title || null,
-          company:         j.company || null,
-          description:     j.snippet || null,
-          city:            j.location || null,
-          province:        null,
-          country:         'Canada',
-          work_mode:       null,
-          job_type:        j.type || null,
-          salary_min:      null,
-          salary_max:      null,
-          salary_currency: null,
-          salary_period:   null,
-          skills:          null,
-          category:        getCategory(j.title || null, j.snippet || null),
-          region:          getRegion(null, j.location || null),
-          redirect_url:    j.link,
-          posted_at:       j.updated || null,
-          raw:             j,
-        });
-
-        if (wasInserted) result.inserted++;
-        else result.updated++;
-      }
-    } catch (e) {
-      result.errors.push(`keyword "${kw}": ${e.message}`);
-    }
-  }
-
-  return result;
-}
-
 // ── Point d'entrée principal ─────────────────────────────────────
 async function ingestAll() {
   const start = Date.now();
@@ -254,21 +179,6 @@ async function ingestAll() {
     } catch (e) {
       summary.sources.adzuna = { ok: false, error: e.message };
       console.error('[ingest] Adzuna fatal:', e.message);
-    }
-  }
-
-  // Jooble — try/catch isolé
-  const joobleKey = process.env.JOOBLE_API_KEY;
-  if (!joobleKey) {
-    summary.sources.jooble = { ok: false, error: 'JOOBLE_API_KEY not configured' };
-  } else {
-    try {
-      const r = await ingestJooble(joobleKey);
-      summary.sources.jooble = { ok: true, inserted: r.inserted, updated: r.updated, skipped: r.skipped, excluded: r.excluded, errors: r.errors };
-      console.log(`[ingest] Jooble: ${r.inserted} inserted, ${r.updated} updated, ${r.skipped} skipped, ${r.excluded} excluded`);
-    } catch (e) {
-      summary.sources.jooble = { ok: false, error: e.message };
-      console.error('[ingest] Jooble fatal:', e.message);
     }
   }
 
