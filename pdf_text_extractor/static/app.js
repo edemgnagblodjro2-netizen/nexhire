@@ -1312,6 +1312,7 @@ $("signup-form").addEventListener("submit", async e => {
       full_name: fullName,
       email: $("signup-email").value.trim(),
       password: $("signup-password").value,
+      org_type: $("signup-org-type")?.value || "entreprise",
     };
     const phone = $("signup-phone")?.value.trim();
     if (phone) signupBody.phone = phone;

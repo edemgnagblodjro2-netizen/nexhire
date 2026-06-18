@@ -24,6 +24,7 @@ class OrgUpdate(BaseModel):
     org_name:    str | None = Field(None, min_length=1, max_length=255)
     logo_url:    str | None = Field(None, max_length=2048)
     brand_color: str | None = Field(None, pattern=r"^#[0-9a-fA-F]{6}$")
+    org_type:    str | None = Field(None, pattern=r"^(entreprise|entrepreneur|hopital|municipalite|universite)$")
 
 class PasswordChange(BaseModel):
     current_password: str = Field(..., min_length=1)
@@ -142,6 +143,8 @@ def update_org(
         fields.append("logo_url = %s"); values.append(payload.logo_url or None)
     if payload.brand_color is not None:
         fields.append("brand_color = %s"); values.append(payload.brand_color)
+    if payload.org_type is not None:
+        fields.append("org_type = %s"); values.append(payload.org_type)
     if not fields:
         return {"ok": True}
     values.append(user.organization_id)

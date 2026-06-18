@@ -38,6 +38,7 @@ class SignupPayload(BaseModel):
     password: str = Field(min_length=12)
     phone: str | None = Field(default=None, max_length=30)
     invite_token: str | None = None
+    org_type: str = Field(default="entreprise", pattern="^(entreprise|entrepreneur|hopital|municipalite|universite)$")
 
     @field_validator("password")
     @classmethod
@@ -55,6 +56,7 @@ def signup(request: Request, payload: SignupPayload, background: BackgroundTasks
         meta: dict = {
             "org_name":  payload.organization_name,
             "full_name": payload.full_name,
+            "org_type":  payload.org_type,
         }
         if payload.phone:
             meta["phone"] = payload.phone

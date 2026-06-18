@@ -698,26 +698,14 @@ def _rule_based_analysis(org_id: str, org_type: str = "entreprise") -> dict:
     for c in contracts[:2]:
         steps.append({"step": len(steps)+1, "action": f"Renégocier contrat {c['vendor']} avant expiration ({c['days_to_renewal']}j)", "savings": c.get("potential_savings", 0), "impact": "medium", "timeline": "1-3 mois"})
 
-    # Ajoute les opportunités sectorielles si peu de données internes
-    sector_opps = SECTOR_OPPORTUNITIES.get(org_type, [])
-    if len(steps) < 4 and sector_opps:
-        budget_ref = 500_000
-        for opp in sector_opps[:max(0, 5 - len(steps))]:
-            est_savings = round(budget_ref * opp["savings_pct"], 2)
-            if data_total > 0:
-                est_savings = round(data_total * opp["savings_pct"] / 0.10, 2)
-            steps.append({"step": len(steps)+1, "action": opp["action"], "savings": est_savings, "impact": opp["impact"], "timeline": opp["timeline"]})
-            data_total += est_savings
-
-    # Insights : données réelles + sectoriels
+    # Insights : données réelles uniquement
     base_insights = [
         f"{len(unused)} produits licenciés ont un taux d'utilisation inférieur à 80%.",
         f"{len(dups)} catégories d'outils présentent des doublons potentiels.",
         f"{sum(p['automatable_hours_monthly'] for p in procs):.0f} heures/mois pourraient être automatisées.",
         f"{len(contracts)} contrats arrivent à renouvellement dans les 180 prochains jours.",
     ]
-    sector_insights = SECTOR_INSIGHTS.get(org_type, [])
-    all_insights = [i for i in base_insights if not i.startswith("0 ")] + sector_insights[:2]
+    all_insights = [i for i in base_insights if not i.startswith("0 ")]
 
     sector_labels = {"entreprise": "entreprise privée", "hopital": "hôpital", "municipalite": "municipalité", "universite": "université"}
     steps_total = round(sum(s["savings"] for s in steps), 2)
