@@ -131,6 +131,45 @@ def security_dashboard(user: CurrentUser = Depends(require_min_role("admin"))):
     except Exception:
         pending_deletions = 0
 
+    # ── Findings Entra ID (risk_findings) ──────────────────────────────────────
+    _ENTRA_TYPES = (
+        "admin_no_mfa", "privileged_inactive", "user_no_mfa",
+        "group_no_owner", "service_account_risk",
+    )
+    entra_findings: list[dict] = []
+    entra_critical = entra_high = entra_medium = 0
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """
+                SELECT finding_type, severity, title, description, remediation, detected_at
+                FROM public.risk_findings
+                WHERE organization_id = %s
+                  AND finding_type = ANY(%s)
+                  AND resolved_at IS NULL
+                  AND is_acknowledged = false
+                ORDER BY
+                  CASE severity WHEN 'critical' THEN 1 WHEN 'high' THEN 2
+                               WHEN 'medium' THEN 3 ELSE 4 END,
+                  detected_at DESC
+                LIMIT 50
+                """,
+                (org_id, list(_ENTRA_TYPES)),
+            )
+            entra_findings = [
+                {**dict(r), "detected_at": str(r["detected_at"])}
+                for r in rows(cur)
+            ]
+        for f in entra_findings:
+            if f["severity"] == "critical":
+                entra_critical += 1
+            elif f["severity"] == "high":
+                entra_high += 1
+            elif f["severity"] == "medium":
+                entra_medium += 1
+    except Exception:
+        pass
+
     # ── Score de sécurité ────────────────────────────────────────────────────
     unacked_critical = sum(
         r["cnt"] for r in alert_summary if r["severity"] in ("critical", "high")
@@ -142,6 +181,7 @@ def security_dashboard(user: CurrentUser = Depends(require_min_role("admin"))):
         "mfa_complet":        mfa_pct >= 80,
         "mfa_requis_org":     bool(org_row.get("require_mfa")),
         "alertes_critiques":  unacked_critical == 0,
+        "entra_admin_mfa":    entra_critical == 0,
         "conformite_loi25":   pending_deletions == 0,
     }
     score = round(sum(checklist.values()) / len(checklist) * 100)
@@ -160,6 +200,13 @@ def security_dashboard(user: CurrentUser = Depends(require_min_role("admin"))):
             "critiques_hautes":     unacked_critical,
             "par_type":             alert_summary,
             "recentes":             recent_alerts,
+        },
+        "entra_id": {
+            "critical": entra_critical,
+            "high":     entra_high,
+            "medium":   entra_medium,
+            "total":    len(entra_findings),
+            "findings": entra_findings,
         },
         "activite_login": login_activity,
         "ips_recentes":   recent_ips,

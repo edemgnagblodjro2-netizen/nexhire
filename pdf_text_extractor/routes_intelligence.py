@@ -280,7 +280,94 @@ def entra_sync(user: CurrentUser = Depends(require_min_role("admin"))):
 
     from entra_risk_analyzer import run_entra_risk_analyzer
     risks = run_entra_risk_analyzer(org)
-    return {"ok": True, "entra": stats, "security_posture": risks}
+    return {
+        "ok": True,
+        "entra": {
+            "postures_updated":   stats.get("postures_updated", 0),
+            "mfa_enrolled":       stats.get("mfa_enrolled", 0),
+            "privileged_users":   stats.get("privileged_users", 0),
+            "service_principals": stats.get("service_principals", 0),
+            "groups_synced":      stats.get("groups_synced", 0),
+            "groups_no_owner":    stats.get("groups_no_owner", 0),
+            "group_members_synced": stats.get("group_members_synced", 0),
+            "warning":            stats.get("warning"),
+        },
+        "security_posture": risks,
+    }
+
+
+@router.get("/entra/groups")
+def entra_groups(user: CurrentUser = Depends(require_min_role("admin"))):
+    """Liste les groupes de sécurité Entra ID avec leur nombre de membres. Admin+."""
+    org = str(user.organization_id)
+    with get_db() as cur:
+        cur.execute(
+            """
+            SELECT
+              sgm.group_id,
+              sgm.group_name,
+              COUNT(sgm.member_id)                          AS member_count,
+              SUM(CASE WHEN sgm.member_type='user' THEN 1 ELSE 0 END) AS user_count,
+              SUM(CASE WHEN sgm.member_type='servicePrincipal' THEN 1 ELSE 0 END) AS sp_count,
+              MAX(sgm.synced_at)                            AS synced_at,
+              BOOL_OR(
+                COALESCE((ia.data->>'has_owner')::boolean, true) = false
+              )                                             AS no_owner
+            FROM public.security_group_members sgm
+            LEFT JOIN public.identity_accounts ia
+                   ON ia.source_connector = 'entra_group'
+                  AND ia.external_id      = sgm.group_id
+                  AND ia.organization_id  = sgm.organization_id
+            WHERE sgm.organization_id = %s
+            GROUP BY sgm.group_id, sgm.group_name
+            ORDER BY member_count DESC, sgm.group_name
+            LIMIT 200
+            """,
+            (org,),
+        )
+        return db_rows(cur)
+
+
+@router.get("/entra/groups/{group_id}/members")
+def entra_group_members(
+    group_id: str,
+    user: CurrentUser = Depends(require_min_role("admin")),
+):
+    """Membres d'un groupe de sécurité Entra ID. Admin+."""
+    org = str(user.organization_id)
+    with get_db() as cur:
+        cur.execute(
+            """
+            SELECT
+              sgm.member_id, sgm.member_upn, sgm.member_name, sgm.member_type,
+              sgm.synced_at,
+              sp.mfa_enabled, sp.privileged_access, sp.risk_score
+            FROM public.security_group_members sgm
+            LEFT JOIN public.identities i
+                   ON i.canonical_email = sgm.member_upn
+                  AND i.organization_id = sgm.organization_id
+            LEFT JOIN public.security_postures sp
+                   ON sp.identity_id    = i.id
+                  AND sp.organization_id = sgm.organization_id
+            WHERE sgm.organization_id = %s
+              AND sgm.group_id        = %s
+            ORDER BY sgm.member_type, sgm.member_name
+            LIMIT 500
+            """,
+            (org, group_id),
+        )
+        members = db_rows(cur)
+
+    if not members and group_id:
+        with get_db() as cur:
+            cur.execute(
+                "SELECT 1 FROM public.security_group_members WHERE organization_id=%s AND group_id=%s LIMIT 1",
+                (org, group_id),
+            )
+            if not cur.fetchone():
+                raise HTTPException(404, "Groupe introuvable ou aucun membre synchronisé.")
+
+    return {"group_id": group_id, "members": members, "count": len(members)}
 
 
 # ─────────────────────────────────────────────────────────────────────────────

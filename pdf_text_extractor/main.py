@@ -557,6 +557,7 @@ try:
         check_trial_expiry_all_orgs,
         check_connector_health_all_orgs,
         send_weekly_briefing_all_orgs,
+        sync_entra_all_orgs,
     )
 
     _scheduler = BackgroundScheduler(timezone="UTC")
@@ -592,6 +593,13 @@ try:
         send_weekly_briefing_all_orgs,
         CronTrigger(day_of_week="mon", hour=7, minute=30),
         id="weekly_briefing",
+        replace_existing=True,
+        misfire_grace_time=3600,
+    )
+    _scheduler.add_job(
+        sync_entra_all_orgs,
+        CronTrigger(hour=3, minute=0),
+        id="entra_daily_sync",
         replace_existing=True,
         misfire_grace_time=3600,
     )

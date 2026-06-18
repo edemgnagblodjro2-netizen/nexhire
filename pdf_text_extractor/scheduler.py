@@ -7,6 +7,50 @@ from datetime import datetime
 logger = logging.getLogger(__name__)
 
 
+def sync_entra_all_orgs() -> None:
+    """Synchronise Entra ID (MFA, rôles, groupes, membres) pour toutes les orgs M365 actives."""
+    try:
+        from db import get_db, rows
+        from entra_collector import collect_entra_id
+        from entra_risk_analyzer import run_entra_risk_analyzer
+    except Exception as exc:
+        logger.error("scheduler import error (entra sync): %s", exc)
+        return
+
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """
+                SELECT DISTINCT c.organization_id
+                FROM connectors c
+                WHERE c.connector_type = 'microsoft_365'
+                  AND c.status = 'active'
+                """
+            )
+            orgs = [r["organization_id"] for r in rows(cur)]
+    except Exception as exc:
+        logger.error("scheduler DB error (entra sync): %s", exc)
+        return
+
+    synced = errors = 0
+    for org_id in orgs:
+        try:
+            stats = collect_entra_id(str(org_id))
+            risks = run_entra_risk_analyzer(str(org_id))
+            logger.info(
+                "Entra sync org=%s postures=%d findings=%d",
+                org_id,
+                stats.get("postures_updated", 0),
+                risks.get("findings_count", 0),
+            )
+            synced += 1
+        except Exception as exc:
+            logger.error("Entra sync failed org=%s : %s", org_id, exc)
+            errors += 1
+
+    logger.info("Entra sync quotidien — %d orgs OK, %d erreurs", synced, errors)
+
+
 def check_license_expiry_all_orgs() -> None:
     """Envoie des notifications webhook pour les licences expirant dans 30 jours."""
     try:
