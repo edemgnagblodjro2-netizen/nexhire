@@ -73,6 +73,7 @@ def collect_entra_id(org_id: str) -> dict:
         "service_principals": 0,
         "groups_synced":      0,
         "groups_no_owner":    0,
+        "group_members_synced": 0,
         "postures_updated":   0,
         "errors":             [],
     }
@@ -410,12 +411,12 @@ def _sync_security_groups(headers: dict, org_id: str, stats: dict) -> None:
                         """
                         INSERT INTO public.identity_accounts
                           (organization_id, identity_id, source_connector, external_id,
-                           external_email, display_name, status, synced_at, raw_data)
+                           external_email, display_name, status, synced_at, data)
                         VALUES (%s,%s,'entra_group',%s,%s,%s,'active',now(),%s::jsonb)
                         ON CONFLICT (organization_id, source_connector, external_id) DO UPDATE SET
                           display_name = EXCLUDED.display_name,
                           synced_at    = now(),
-                          raw_data     = EXCLUDED.raw_data
+                          data         = EXCLUDED.data
                         """,
                         (org_id, identity_id, group_id, fake_email, group_name,
                          json.dumps({
@@ -424,6 +425,8 @@ def _sync_security_groups(headers: dict, org_id: str, stats: dict) -> None:
                              "group_types": group.get("groupTypes", []),
                          })),
                     )
+                members_synced = _sync_group_members(headers, org_id, group_id, group_name)
+                stats["group_members_synced"] += members_synced
 
             if not has_owner:
                 groups_no_owner += 1
@@ -434,6 +437,57 @@ def _sync_security_groups(headers: dict, org_id: str, stats: dict) -> None:
     stats["groups_synced"]    = len(groups)
     stats["groups_no_owner"]  = groups_no_owner
     log.info("Groupes Entra : %d total, %d sans propriétaire", len(groups), groups_no_owner)
+
+
+def _sync_group_members(headers: dict, org_id: str, group_id: str, group_name: str) -> int:
+    """Récupère les membres d'un groupe et les stocke dans security_group_members."""
+    try:
+        r = httpx.get(
+            f"{GRAPH}/groups/{group_id}/members",
+            headers=headers,
+            params={"$select": "id,displayName,userPrincipalName", "$top": "100"},
+            timeout=20,
+        )
+        r.raise_for_status()
+        members = r.json().get("value", [])
+    except Exception as exc:
+        log.warning("Membres groupe %s inaccessibles : %s", group_name, exc)
+        return 0
+
+    count = 0
+    for m in members:
+        member_id   = m.get("id", "")
+        member_upn  = m.get("userPrincipalName") or ""
+        member_name = m.get("displayName") or member_upn
+        odata_type  = m.get("@odata.type", "")
+        if "servicePrincipal" in odata_type:
+            member_type = "servicePrincipal"
+        elif "group" in odata_type.lower():
+            member_type = "group"
+        else:
+            member_type = "user"
+        if not member_id:
+            continue
+        try:
+            with get_db() as cur:
+                cur.execute(
+                    """
+                    INSERT INTO public.security_group_members
+                      (organization_id, group_id, group_name, member_id,
+                       member_upn, member_name, member_type, synced_at)
+                    VALUES (%s,%s,%s,%s,%s,%s,%s,now())
+                    ON CONFLICT (organization_id, group_id, member_id) DO UPDATE SET
+                      member_name = EXCLUDED.member_name,
+                      member_upn  = EXCLUDED.member_upn,
+                      synced_at   = now()
+                    """,
+                    (org_id, group_id, group_name, member_id,
+                     member_upn, member_name, member_type),
+                )
+            count += 1
+        except Exception as exc:
+            log.warning("Erreur membre %s/%s : %s", group_name, member_id, exc)
+    return count
 
 
 def _group_has_owner(headers: dict, group_id: str) -> bool:

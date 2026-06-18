@@ -3,10 +3,11 @@ Analyseur de risques Entra ID.
 Lit les données security_postures + identity_accounts et génère risk_findings.
 
 Règles :
-  1. admin_no_mfa         — Admin Entra sans MFA → CRITIQUE
-  2. privileged_inactive  — Admin inactif > 30 jours → ÉLEVÉ
-  3. user_no_mfa          — Utilisateur actif sans MFA → MOYEN
-  4. group_no_owner       — Groupe de sécurité sans propriétaire → MOYEN
+  1. admin_no_mfa          — Admin Entra sans MFA → CRITIQUE
+  2. privileged_inactive   — Admin inactif > 30 jours → ÉLEVÉ
+  3. user_no_mfa           — Utilisateur actif sans MFA → MOYEN
+  4. group_no_owner        — Groupe de sécurité sans propriétaire → MOYEN
+  5. service_account_risk  — Compte de service à privilèges élevés → ÉLEVÉ
 """
 from __future__ import annotations
 
@@ -22,6 +23,7 @@ _ENTRA_FINDING_TYPES = (
     "privileged_inactive",
     "user_no_mfa",
     "group_no_owner",
+    "service_account_risk",
 )
 
 
@@ -38,6 +40,7 @@ def run_entra_risk_analyzer(org_id: str) -> dict:
     findings += _rule_privileged_inactive(org_id)
     findings += _rule_user_no_mfa(org_id)
     findings += _rule_group_no_owner(org_id)
+    findings += _rule_service_account_risk(org_id)
 
     by_severity: dict[str, int] = {"critical": 0, "high": 0, "medium": 0, "low": 0}
     for f in findings:
@@ -126,8 +129,8 @@ def _rule_privileged_inactive(org_id: str) -> list[dict]:
                 """
                 SELECT i.full_name, i.canonical_email,
                        sp.risk_factors,
-                       (ia.raw_data->>'days_inactive')::int   AS days_inactive,
-                       ia.raw_data->>'data_source'            AS data_source
+                       (ia.data->>'days_inactive')::int   AS days_inactive,
+                       ia.data->>'data_source'            AS data_source
                 FROM public.security_postures sp
                 JOIN public.identities i        ON i.id = sp.identity_id
                 JOIN public.identity_accounts ia ON ia.identity_id = i.id
@@ -135,10 +138,10 @@ def _rule_privileged_inactive(org_id: str) -> list[dict]:
                   AND ia.organization_id  = sp.organization_id
                 WHERE sp.organization_id = %s
                   AND sp.privileged_access = true
-                  AND (ia.raw_data->>'days_inactive')::int > 30
-                  AND COALESCE(ia.raw_data->>'data_source', 'report') != 'created_date'
+                  AND (ia.data->>'days_inactive')::int > 30
+                  AND COALESCE(ia.data->>'data_source', 'report') != 'created_date'
                   AND i.status = 'active'
-                ORDER BY (ia.raw_data->>'days_inactive')::int DESC
+                ORDER BY (ia.data->>'days_inactive')::int DESC
                 """,
                 (org_id,),
             )
@@ -199,7 +202,6 @@ def _rule_user_no_mfa(org_id: str) -> list[dict]:
                 WHERE sp.organization_id = %s
                   AND sp.privileged_access = false
                   AND sp.mfa_enabled = false
-                  AND sp.mfa_method != 'unknown'
                   AND i.identity_type NOT IN ('group','service_account')
                   AND i.status = 'active'
                 ORDER BY i.full_name
@@ -270,7 +272,7 @@ def _rule_group_no_owner(org_id: str) -> list[dict]:
                   AND ia.source_connector = 'entra_group'
                 WHERE i.organization_id = %s
                   AND i.identity_type = 'group'
-                  AND (ia.raw_data->>'has_owner')::boolean = false
+                  AND (ia.data->>'has_owner')::boolean = false
                 ORDER BY i.full_name
                 """,
                 (org_id,),
@@ -303,6 +305,78 @@ def _rule_group_no_owner(org_id: str) -> list[dict]:
         )
         findings.append({"finding_type": "group_no_owner", "severity": "medium",
                          "group_name": name})
+    return findings
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Règle 5 — Comptes de service à privilèges élevés (ÉLEVÉ)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _rule_service_account_risk(org_id: str) -> list[dict]:
+    """Service accounts avec privileged_access=true — risque de mouvement latéral."""
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """
+                SELECT i.full_name, i.canonical_email,
+                       sp.mfa_enabled, sp.risk_factors,
+                       (ia.data->>'days_inactive')::int AS days_inactive
+                FROM public.security_postures sp
+                JOIN public.identities i        ON i.id = sp.identity_id
+                LEFT JOIN public.identity_accounts ia ON ia.identity_id = i.id
+                  AND ia.source_connector = 'microsoft_365'
+                  AND ia.organization_id  = sp.organization_id
+                WHERE sp.organization_id = %s
+                  AND i.identity_type = 'service_account'
+                  AND sp.privileged_access = true
+                  AND i.status = 'active'
+                ORDER BY i.full_name
+                """,
+                (org_id,),
+            )
+            rows = db_rows(cur)
+    except Exception as exc:
+        log.warning("service_account_risk query failed: %s", exc)
+        return []
+
+    findings = []
+    for r in rows:
+        name     = r["full_name"] or r["canonical_email"]
+        factors  = r.get("risk_factors") or []
+        roles    = [f.replace("role:", "") for f in factors if f.startswith("role:")]
+        role_lbl = ", ".join(roles) if roles else "rôle privilégié"
+        days     = r.get("days_inactive")
+        inactive_note = (
+            f" Il est inactif depuis {days} jours." if days and days > 30 else ""
+        )
+
+        _upsert_entra_finding(
+            org_id=org_id,
+            finding_type="service_account_risk",
+            severity="high",
+            title=f"Compte de service privilégié — {name}",
+            description=(
+                f"Le compte de service « {name} » détient {role_lbl}."
+                f"{inactive_note} "
+                f"Un compte de service compromis permet un mouvement latéral "
+                f"sans déclencher d'alerte MFA."
+            ),
+            remediation=(
+                f"Appliquer le principe du moindre privilège : retirer les rôles admin "
+                f"non essentiels de {r['canonical_email']}. "
+                f"Remplacer les credentials longs par des Managed Identities ou Workload Identity Federation. "
+                f"Si inactif, désactiver immédiatement."
+            ),
+            cost_impact_monthly=0,
+        )
+        findings.append({
+            "finding_type":  "service_account_risk",
+            "severity":      "high",
+            "email":         r["canonical_email"],
+            "display_name":  r["full_name"],
+            "roles":         roles,
+            "days_inactive": days,
+        })
     return findings
 
 
