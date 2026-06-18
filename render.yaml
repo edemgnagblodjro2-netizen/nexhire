@@ -1,4 +1,14 @@
 services:
+  - type: static
+    name: civicai-myportal
+    buildCommand: mkdir -p portal_dist && cp pdf_text_extractor/static/myportal.html portal_dist/index.html
+    staticPublishPath: ./portal_dist
+    pullRequestPreviewsEnabled: false
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-store, no-cache, must-revalidate, max-age=0
+
   - type: web
     name: civicai-agenthub
     runtime: python

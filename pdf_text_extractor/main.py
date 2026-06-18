@@ -228,7 +228,7 @@ def create_app(
     app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
     # CORS — origines explicites uniquement
-    _raw = os.environ.get("ALLOWED_ORIGINS", "https://agenthub.nexhire.ca,https://nexhire.ca,https://myportal.nexhire.ca")
+    _raw = os.environ.get("ALLOWED_ORIGINS", "https://agenthub.nexhire.ca,https://nexhire.ca,https://myportal.nexhire.ca,https://civicai-myportal.onrender.com,https://mynexra.nexhire.ca")
     _origins = [o.strip() for o in _raw.split(",") if o.strip()]
     app.add_middleware(SecurityHeadersMiddleware)
     app.add_middleware(NoCacheStaticMiddleware)
