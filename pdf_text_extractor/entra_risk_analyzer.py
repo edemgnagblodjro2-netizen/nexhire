@@ -11,6 +11,8 @@ Règles :
   6. guest_privileged      — Utilisateur invité avec rôle admin → CRITIQUE
   7. missing_ca_policy     — Aucune CA Policy MFA globale → CRITIQUE
   8. ca_policy_report_only — CA Policy MFA en mode rapport seulement → ÉLEVÉ
+  9. risky_user_detected   — Utilisateur signalé par Identity Protection → CRITIQUE/ÉLEVÉ
+ 10. signin_anomaly        — Pic d'échecs de connexion sur 24h (>10) → ÉLEVÉ
 """
 from __future__ import annotations
 
@@ -30,6 +32,8 @@ _ENTRA_FINDING_TYPES = (
     "guest_privileged",
     "missing_ca_policy",
     "ca_policy_report_only",
+    "risky_user_detected",
+    "signin_anomaly",
 )
 
 
@@ -49,6 +53,8 @@ def run_entra_risk_analyzer(org_id: str) -> dict:
     findings += _rule_service_account_risk(org_id)
     findings += _rule_guest_privileged(org_id)
     findings += _rule_ca_policy_coverage(org_id)
+    findings += _rule_risky_user(org_id)
+    findings += _rule_signin_anomaly(org_id)
 
     by_severity: dict[str, int] = {"critical": 0, "high": 0, "medium": 0, "low": 0}
     for f in findings:
@@ -546,6 +552,143 @@ def _rule_ca_policy_coverage(org_id: str) -> list[dict]:
         )
         findings.append({"finding_type": "ca_policy_report_only", "severity": "high"})
 
+    return findings
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Règle 9 — Utilisateurs signalés par Identity Protection (CRITIQUE / ÉLEVÉ)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _rule_risky_user(org_id: str) -> list[dict]:
+    """
+    Utilisateurs dans entra_risky_users avec risk_state actif (atRisk / confirmedCompromised).
+    CRITIQUE si risk_level=high ou confirmedCompromised, ÉLEVÉ si medium.
+    """
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """
+                SELECT user_principal_name, display_name, risk_state, risk_level,
+                       risk_detail, risk_last_updated
+                FROM public.entra_risky_users
+                WHERE organization_id = %s
+                  AND risk_state NOT IN ('dismissed','confirmedSafe','remediated','none')
+                ORDER BY
+                  CASE risk_level WHEN 'high' THEN 1 WHEN 'medium' THEN 2 ELSE 3 END,
+                  risk_last_updated DESC NULLS LAST
+                """,
+                (org_id,),
+            )
+            rows = db_rows(cur)
+    except Exception as exc:
+        log.warning("risky_user query failed: %s", exc)
+        return []
+
+    findings = []
+    for r in rows:
+        upn    = r["user_principal_name"] or ""
+        name   = r["display_name"] or upn
+        level  = r["risk_level"]
+        state  = r["risk_state"]
+        detail = r.get("risk_detail") or "risque détecté automatiquement"
+
+        severity = "critical" if level == "high" or state == "confirmedCompromised" else "high"
+
+        state_fr = {
+            "atRisk":               "À risque",
+            "confirmedCompromised": "Compromis confirmé",
+        }.get(state, state)
+
+        level_fr = {"high": "élevé", "medium": "moyen"}.get(level, level)
+
+        _upsert_entra_finding(
+            org_id=org_id,
+            finding_type="risky_user_detected",
+            severity=severity,
+            title=f"Utilisateur risqué détecté — {name} ({level_fr})",
+            description=(
+                f"Microsoft Identity Protection a signalé « {name} » ({upn}) "
+                f"avec un risque {level_fr} — état : {state_fr}. "
+                f"Détail : {detail}."
+            ),
+            remediation=(
+                f"1. Forcer immédiatement une réinitialisation de mot de passe pour {upn}. "
+                f"2. Vérifier l'activité récente dans Entra ID → Users → {name} → Sign-in logs. "
+                f"3. Si l'activité est légitime, marquer comme sécurisé dans Identity Protection. "
+                f"4. Sinon, désactiver le compte et enquêter sur les accès récents."
+            ),
+            cost_impact_monthly=0,
+        )
+        findings.append({
+            "finding_type": "risky_user_detected",
+            "severity":     severity,
+            "email":        upn,
+            "display_name": name,
+            "risk_level":   level,
+            "risk_state":   state,
+        })
+    return findings
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Règle 10 — Pics d'échecs de connexion (ÉLEVÉ)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _rule_signin_anomaly(org_id: str) -> list[dict]:
+    """
+    Utilisateurs avec un spike d'échecs de connexion détecté sur 24h.
+    Source : entra_signin_anomalies (peuplé par _sync_signin_anomalies).
+    """
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """
+                SELECT user_principal_name, display_name, failure_count,
+                       anomaly_type, detected_at
+                FROM public.entra_signin_anomalies
+                WHERE organization_id = %s
+                  AND detected_at > now() - INTERVAL '48 hours'
+                ORDER BY failure_count DESC
+                LIMIT 50
+                """,
+                (org_id,),
+            )
+            rows = db_rows(cur)
+    except Exception as exc:
+        log.warning("signin_anomaly query failed: %s", exc)
+        return []
+
+    findings = []
+    for r in rows:
+        upn    = r["user_principal_name"] or ""
+        name   = r["display_name"] or upn
+        count  = int(r["failure_count"])
+
+        _upsert_entra_finding(
+            org_id=org_id,
+            finding_type="signin_anomaly",
+            severity="high",
+            title=f"Pic d'échecs de connexion — {name} ({count} en 24h)",
+            description=(
+                f"{count} tentatives de connexion échouées ont été détectées pour "
+                f"« {name} » ({upn}) sur les 24 dernières heures. "
+                f"Ce pic peut indiquer une attaque par force brute ou credential stuffing."
+            ),
+            remediation=(
+                f"1. Vérifier si {upn} est victime d'une attaque externe ou a oublié son mot de passe. "
+                f"2. Bloquer temporairement le compte si l'activité paraît malveillante. "
+                f"3. Activer Smart Lockout dans Entra ID (Protection → Password protection). "
+                f"4. Vérifier les IPs sources dans Sign-in logs et les bloquer si nécessaires."
+            ),
+            cost_impact_monthly=0,
+        )
+        findings.append({
+            "finding_type":  "signin_anomaly",
+            "severity":      "high",
+            "email":         upn,
+            "display_name":  name,
+            "failure_count": count,
+        })
     return findings
 
 

@@ -239,6 +239,8 @@ def m365_sync(user: CurrentUser = Depends(require_min_role("admin"))):
             "groups_no_owner":      entra_stats.get("groups_no_owner", 0),
             "group_members_synced": entra_stats.get("group_members_synced", 0),
             "ca_policies_synced":   entra_stats.get("ca_policies_synced", 0),
+            "risky_users_synced":   entra_stats.get("risky_users_synced", 0),
+            "signin_anomalies":     entra_stats.get("signin_anomalies", 0),
             "warning":              entra_stats.get("warning"),
         },
         "security_posture": {
@@ -295,6 +297,8 @@ def entra_sync(user: CurrentUser = Depends(require_min_role("admin"))):
             "groups_no_owner":      stats.get("groups_no_owner", 0),
             "group_members_synced": stats.get("group_members_synced", 0),
             "ca_policies_synced":   stats.get("ca_policies_synced", 0),
+            "risky_users_synced":   stats.get("risky_users_synced", 0),
+            "signin_anomalies":     stats.get("signin_anomalies", 0),
             "warning":              stats.get("warning"),
         },
         "security_posture": risks,

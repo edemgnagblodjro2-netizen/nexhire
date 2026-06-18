@@ -2,18 +2,22 @@
 Collecteur Entra ID (Azure Active Directory) — Sécurité des identités.
 
 Peuple :
-  security_postures    → MFA réel par utilisateur + rôles admin → privileged_access
-  identities           → principals de service + guests privilégiés
-  identity_accounts    → source_connector = 'entra_id'
-  entra_ca_policies    → Conditional Access Policies (état, cibles, MFA)
+  security_postures      → MFA réel par utilisateur + rôles admin → privileged_access
+  identities             → principals de service + guests privilégiés
+  identity_accounts      → source_connector = 'entra_id'
+  entra_ca_policies      → Conditional Access Policies (état, cibles, MFA)
+  entra_risky_users      → utilisateurs signalés par Identity Protection (P4)
+  entra_signin_anomalies → pics d'échecs de connexion détectés sur 24h (P4)
 
-Permissions Graph requises (déjà dans le connecteur M365) :
+Permissions Graph requises :
   User.Read.All
   UserAuthenticationMethod.Read.All        — méthodes MFA par utilisateur
   RoleManagement.Read.Directory            — rôles d'admin + membres
   Application.Read.All                     — principals de service
   Directory.Read.All                       — groupes de sécurité
   Policy.Read.All                          — Conditional Access Policies (P3)
+  IdentityRiskyUser.Read.All               — risky users Identity Protection (P4, Entra P2)
+  AuditLog.Read.All                        — sign-in logs (P4)
 """
 from __future__ import annotations
 
@@ -77,6 +81,8 @@ def collect_entra_id(org_id: str) -> dict:
         "groups_no_owner":      0,
         "group_members_synced": 0,
         "ca_policies_synced":   0,
+        "risky_users_synced":   0,
+        "signin_anomalies":     0,
         "postures_updated":     0,
         "errors":               [],
     }
@@ -154,6 +160,12 @@ def collect_entra_id(org_id: str) -> dict:
 
     # 7. Conditional Access Policies
     _sync_ca_policies(headers, org_id, stats)
+
+    # 8. Risky users (Identity Protection — Entra P2, fallback gracieux)
+    _sync_risky_users(headers, org_id, stats)
+
+    # 9. Anomalies sign-in (AuditLog — pics d'échecs sur 24h)
+    _sync_signin_anomalies(headers, org_id, stats)
 
     log.info("Entra ID sync done : %s", stats)
     return stats
@@ -503,6 +515,187 @@ def _sync_group_members(headers: dict, org_id: str, group_id: str, group_name: s
         except Exception as exc:
             log.warning("Erreur membre %s/%s : %s", group_name, member_id, exc)
     return count
+
+
+def _sync_risky_users(headers: dict, org_id: str, stats: dict) -> None:
+    """
+    Récupère les utilisateurs signalés comme risqués par Microsoft Identity Protection.
+    Requiert IdentityRiskyUser.Read.All + licence Entra ID P2.
+    Fallback gracieux si permission manquante ou pas de licence P2.
+    """
+    try:
+        r = httpx.get(
+            f"{GRAPH}/identityProtection/riskyUsers",
+            headers=headers,
+            params={
+                "$filter": "riskState eq 'atRisk' or riskState eq 'confirmedCompromised'",
+                "$select": "id,userPrincipalName,userDisplayName,riskState,"
+                           "riskLevel,riskDetail,riskLastUpdatedDateTime",
+                "$top": "200",
+            },
+            timeout=25,
+        )
+        r.raise_for_status()
+        users = r.json().get("value", [])
+    except httpx.HTTPStatusError as exc:
+        code = exc.response.status_code
+        if code in (403, 404):
+            log.info("Risky users inaccessibles (code %d) — IdentityRiskyUser.Read.All ou licence Entra P2 manquante.", code)
+            return
+        log.warning("Risky users erreur HTTP %d.", code)
+        return
+    except Exception as exc:
+        log.warning("Erreur fetch risky users : %s", exc)
+        stats["errors"].append({"source": "risky_users", "error": str(exc)})
+        return
+
+    for u in users:
+        user_id   = u.get("id", "")
+        upn       = u.get("userPrincipalName", "")
+        name      = u.get("userDisplayName", upn)
+        state     = u.get("riskState", "atRisk")
+        level     = u.get("riskLevel", "medium")
+        detail    = u.get("riskDetail")
+        updated   = u.get("riskLastUpdatedDateTime")
+
+        if not user_id:
+            continue
+
+        try:
+            with get_db() as cur:
+                cur.execute(
+                    """
+                    INSERT INTO public.entra_risky_users
+                      (organization_id, user_id, user_principal_name, display_name,
+                       risk_state, risk_level, risk_detail, risk_last_updated, synced_at)
+                    VALUES (%s,%s,%s,%s,%s,%s,%s,%s,now())
+                    ON CONFLICT (organization_id, user_id) DO UPDATE SET
+                      user_principal_name = EXCLUDED.user_principal_name,
+                      display_name        = EXCLUDED.display_name,
+                      risk_state          = EXCLUDED.risk_state,
+                      risk_level          = EXCLUDED.risk_level,
+                      risk_detail         = EXCLUDED.risk_detail,
+                      risk_last_updated   = EXCLUDED.risk_last_updated,
+                      synced_at           = now()
+                    """,
+                    (org_id, user_id, upn, name, state, level, detail, updated),
+                )
+            stats["risky_users_synced"] += 1
+
+            # Remonte le risk_score dans security_postures si le compte est dans la DB
+            with get_db() as cur:
+                cur.execute(
+                    """
+                    UPDATE public.security_postures sp
+                    SET risk_score  = GREATEST(sp.risk_score, %s),
+                        risk_factors = (
+                          SELECT jsonb_agg(DISTINCT e)
+                          FROM jsonb_array_elements_text(
+                            COALESCE(sp.risk_factors,'[]'::jsonb) ||
+                            '["risky_user","identity_protection"]'::jsonb
+                          ) e
+                        ),
+                        updated_at = now()
+                    FROM public.identity_accounts ia
+                    WHERE ia.external_id       = %s
+                      AND ia.source_connector  = 'microsoft_365'
+                      AND ia.organization_id   = %s
+                      AND sp.identity_id       = ia.identity_id
+                      AND sp.organization_id   = %s
+                    """,
+                    (90 if level == "high" else 70, user_id, org_id, org_id),
+                )
+        except Exception as exc:
+            log.warning("Erreur upsert risky user %s : %s", upn, exc)
+
+    log.info("Risky users : %d synchronisés", stats["risky_users_synced"])
+
+
+def _sync_signin_anomalies(headers: dict, org_id: str, stats: dict) -> None:
+    """
+    Analyse les sign-in logs des 24 dernières heures.
+    Signale les utilisateurs avec > 10 échecs en 24h (spike d'authentification).
+    Requiert AuditLog.Read.All.
+    """
+    from datetime import timezone, timedelta
+    since = (datetime.now(timezone.utc) - timedelta(hours=24)).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    try:
+        r = httpx.get(
+            f"{GRAPH}/auditLogs/signIns",
+            headers=headers,
+            params={
+                "$filter": f"createdDateTime ge {since} and status/errorCode ne 0",
+                "$select": "userId,userPrincipalName,userDisplayName,status,createdDateTime",
+                "$top":    "500",
+            },
+            timeout=30,
+        )
+        r.raise_for_status()
+        signins = r.json().get("value", [])
+    except httpx.HTTPStatusError as exc:
+        code = exc.response.status_code
+        if code in (403, 404):
+            log.info("Sign-in logs inaccessibles (code %d) — AuditLog.Read.All manquant.", code)
+            return
+        log.warning("Sign-in logs erreur HTTP %d.", code)
+        return
+    except Exception as exc:
+        log.warning("Erreur fetch sign-in logs : %s", exc)
+        stats["errors"].append({"source": "signin_anomalies", "error": str(exc)})
+        return
+
+    # Agrège les échecs par utilisateur
+    from collections import defaultdict
+    failures: dict[str, dict] = defaultdict(lambda: {"count": 0, "upn": "", "name": ""})
+    for s in signins:
+        uid = s.get("userId", "")
+        if not uid:
+            continue
+        failures[uid]["count"] += 1
+        failures[uid]["upn"]    = s.get("userPrincipalName", "")
+        failures[uid]["name"]   = s.get("userDisplayName", "")
+
+    threshold = 10
+    for user_id, data in failures.items():
+        if data["count"] < threshold:
+            continue
+        try:
+            with get_db() as cur:
+                cur.execute(
+                    """
+                    INSERT INTO public.entra_signin_anomalies
+                      (organization_id, user_id, user_principal_name, display_name,
+                       anomaly_type, failure_count, period_hours, detected_at, synced_at)
+                    VALUES (%s,%s,%s,%s,'failed_logins_spike',%s,24,now(),now())
+                    ON CONFLICT (organization_id, user_id, anomaly_type) DO UPDATE SET
+                      user_principal_name = EXCLUDED.user_principal_name,
+                      display_name        = EXCLUDED.display_name,
+                      failure_count       = EXCLUDED.failure_count,
+                      detected_at         = now(),
+                      synced_at           = now()
+                    """,
+                    (org_id, user_id, data["upn"], data["name"], data["count"]),
+                )
+            stats["signin_anomalies"] += 1
+        except Exception as exc:
+            log.warning("Erreur signin anomaly %s : %s", data["upn"], exc)
+
+    # Purge les anomalies datant de plus de 48h (résolues automatiquement)
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """
+                DELETE FROM public.entra_signin_anomalies
+                WHERE organization_id = %s
+                  AND detected_at < now() - INTERVAL '48 hours'
+                """,
+                (org_id,),
+            )
+    except Exception:
+        pass
+
+    log.info("Sign-in anomalies : %d pics détectés (seuil >%d en 24h)", stats["signin_anomalies"], threshold)
 
 
 def _sync_guest_users(
