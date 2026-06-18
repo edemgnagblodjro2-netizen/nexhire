@@ -187,76 +187,137 @@
       display: flex; flex-direction: column;
     }
 
-    /* Slide 1 — AgentHub dashboard */
-    .s1 { background: var(--navy); }
-    .s1-bar {
-      background: #0a1221; padding: 12px 16px;
-      display: flex; align-items: center; gap: 7px;
+    /* ── Slide 1 — Attente Zéro ── */
+    .s1 { background: #f0f9ff; }
+    .s1-header {
+      background: linear-gradient(135deg,#1d4ed8,#0369a1);
+      padding: 14px 16px; display: flex; align-items: center; gap: 10px;
     }
-    .sdot { width: 7px; height: 7px; border-radius: 50%; }
-    .stitle { font-size: .6rem; font-weight: 700; color: #475569; margin-left: 6px; letter-spacing: .5px; }
-    .s1-body { padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
-    .s1-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
-    .s1-stat { background: #1e2d40; border-radius: 8px; padding: 10px; }
-    .s1-val { font-size: 1.2rem; font-weight: 900; line-height: 1; }
-    .s1-lbl { font-size: .55rem; color: #64748b; margin-top: 3px; }
-    .s1-chart { display: flex; align-items: flex-end; gap: 4px; height: 50px; }
-    .s1-bar2 { flex: 1; border-radius: 3px 3px 0 0; }
-    .s1-pills { display: flex; flex-wrap: wrap; gap: 5px; }
-    .s1-pill {
-      font-size: .55rem; font-weight: 600; padding: 2px 7px; border-radius: 20px;
-      background: #1e3a5f; color: #818cf8; border: 1px solid #6366f125;
+    .s1-logo {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: rgba(255,255,255,.18); display: flex; align-items: center;
+      justify-content: center; font-size: 1rem; flex-shrink: 0;
     }
-    .s1-alert {
-      display: flex; align-items: center; gap: 6px;
-      background: #052e1640; border: 1px solid #166534;
-      border-radius: 6px; padding: 7px 10px; margin-top: auto;
+    .s1-htitle { font-size: .72rem; font-weight: 900; color: #fff; }
+    .s1-hsub   { font-size: .56rem; color: #bfdbfe; margin-top: 1px; }
+    .s1-kpis {
+      display: grid; grid-template-columns: repeat(2,1fr); gap: 6px;
+      padding: 10px 12px 6px;
     }
-    .s1-adot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; flex-shrink: 0; }
-    .s1-atxt { font-size: .57rem; color: #86efac; }
-
-    /* Slide 2 — NexHire */
-    .s2 { background: #faf5ff; }
-    .s2-bar { background: #581c87; padding: 12px 16px; display: flex; align-items: center; gap: 7px; }
-    .s2-body { padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
-    .s2-title { font-size: .7rem; font-weight: 800; color: #581c87; }
-    .s2-job {
-      background: #fff; border: 1.5px solid #e9d5ff; border-radius: 9px; padding: 10px 12px;
-    }
-    .s2-jtitle { font-size: .7rem; font-weight: 800; color: #1e293b; }
-    .s2-jmeta  { font-size: .58rem; color: #9333ea; margin-top: 2px; }
-    .s2-tags   { display: flex; gap: 5px; margin-top: 6px; flex-wrap: wrap; }
-    .s2-tag {
-      font-size: .55rem; padding: 2px 7px; border-radius: 20px;
-      background: #f3e8ff; color: #7e22ce; border: 1px solid #e9d5ff;
-    }
-    .s2-cands { display: flex; gap: -4px; margin-top: 4px; }
-    .s2-av {
-      width: 20px; height: 20px; border-radius: 50%; border: 2px solid #fff;
+    .s1-kpi { background: #fff; border: 1px solid #dbeafe; border-radius: 8px; padding: 8px 10px; }
+    .s1-kval { font-size: 1.05rem; font-weight: 900; color: #1e40af; line-height: 1; }
+    .s1-klbl { font-size: .52rem; color: #64748b; margin-top: 2px; }
+    .s1-kdelta { font-size: .52rem; font-weight: 700; margin-top: 1px; }
+    .s1-kdelta.dn { color: #16a34a; }
+    .s1-kdelta.up { color: #dc2626; }
+    .s1-chart-wrap { padding: 6px 12px; flex: 1; display: flex; flex-direction: column; gap: 4px; }
+    .s1-chart-title { font-size: .58rem; font-weight: 700; color: #1e40af; }
+    .s1-chart { position: relative; height: 44px; display: flex; align-items: flex-end; gap: 3px; }
+    .s1-cbar { flex: 1; border-radius: 2px 2px 0 0; }
+    .s1-donut-row { display: flex; gap: 8px; padding: 6px 12px 10px; }
+    .s1-donut {
+      width: 54px; height: 54px; border-radius: 50%; flex-shrink: 0;
+      background: conic-gradient(
+        #ef4444 0% 18%, #f59e0b 18% 45%, #3b82f6 45% 90%, #22c55e 90% 100%
+      );
       display: flex; align-items: center; justify-content: center;
-      font-size: .45rem; font-weight: 700; color: #fff; margin-left: -4px;
     }
-    .s2-av:first-child { margin-left: 0; }
-    .s2-cand-lbl { font-size: .57rem; color: #64748b; margin-left: 6px; align-self: center; }
-
-    /* Slide 3 — Attente Zéro */
-    .s3 { background: #f0fdfa; }
-    .s3-bar { background: #134e4a; padding: 12px 16px; display: flex; align-items: center; gap: 7px; }
-    .s3-body { padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
-    .s3-title { font-size: .7rem; font-weight: 800; color: #0f766e; }
-    .s3-kpi { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .s3-kpi-box { background: #fff; border: 1.5px solid #ccfbf1; border-radius: 9px; padding: 10px; text-align: center; }
-    .s3-kpi-val { font-size: 1.4rem; font-weight: 900; color: #0d9488; line-height: 1; }
-    .s3-kpi-lbl { font-size: .57rem; color: #64748b; margin-top: 3px; }
-    .s3-soon {
-      background: #fff; border: 1.5px dashed #99f6e4; border-radius: 9px;
-      padding: 12px; text-align: center;
+    .s1-donut-inner {
+      width: 34px; height: 34px; background: #f0f9ff; border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
     }
-    .s3-soon-icon { font-size: 1.5rem; margin-bottom: 4px; }
-    .s3-soon-txt { font-size: .67rem; font-weight: 700; color: #0f766e; }
-    .s3-soon-sub { font-size: .58rem; color: #64748b; margin-top: 2px; }
+    .s1-donut-n { font-size: .72rem; font-weight: 900; color: #1e293b; line-height: 1; }
+    .s1-donut-l { font-size: .4rem; color: #64748b; }
+    .s1-legend { display: flex; flex-direction: column; gap: 3px; flex: 1; justify-content: center; }
+    .s1-leg { display: flex; align-items: center; gap: 5px; }
+    .s1-legdot { width: 7px; height: 7px; border-radius: 2px; flex-shrink: 0; }
+    .s1-legtxt { font-size: .52rem; color: #475569; }
+    .s1-legval { font-size: .52rem; font-weight: 700; color: #1e293b; margin-left: auto; }
+    .s1-impact {
+      background: #1d4ed8; margin: 0 12px 10px;
+      border-radius: 8px; padding: 7px 10px;
+      display: flex; justify-content: space-around;
+    }
+    .s1-imp { text-align: center; }
+    .s1-impv { font-size: .78rem; font-weight: 900; color: #fff; line-height: 1; }
+    .s1-impl { font-size: .46rem; color: #bfdbfe; margin-top: 1px; }
 
-    /* Slide 4 — CivicAI ecosystem */
+    /* ── Slide 2 — NexHire Recrutement ── */
+    .s2 { background: #faf5ff; display: flex; flex-direction: row !important; }
+    .s2-side {
+      width: 90px; background: #3b0764; flex-shrink: 0;
+      display: flex; flex-direction: column; padding: 14px 10px; gap: 6px;
+    }
+    .s2-logo { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+    .s2-logodot { width: 22px; height: 22px; border-radius: 6px; background: #7c3aed; display: flex; align-items: center; justify-content: center; font-size: .7rem; }
+    .s2-logotxt { font-size: .62rem; font-weight: 900; color: #fff; line-height: 1.2; }
+    .s2-nav { font-size: .52rem; color: #a855f7; font-weight: 700; padding: 4px 6px; border-radius: 5px; cursor: default; }
+    .s2-nav.act { background: #7c3aed22; color: #e9d5ff; }
+    .s2-main { flex: 1; padding: 12px 10px; display: flex; flex-direction: column; gap: 8px; overflow: hidden; }
+    .s2-htitle { font-size: .65rem; font-weight: 900; color: #1e293b; }
+    .s2-stats4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 4px; }
+    .s2-st { background: #fff; border: 1px solid #e9d5ff; border-radius: 7px; padding: 6px 4px; text-align: center; }
+    .s2-stv { font-size: .85rem; font-weight: 900; color: #7c3aed; line-height: 1; }
+    .s2-stl { font-size: .44rem; color: #64748b; margin-top: 1px; }
+    .s2-sec { font-size: .58rem; font-weight: 700; color: #581c87; }
+    .s2-pipe { display: flex; flex-direction: column; gap: 3px; }
+    .s2-prow { display: flex; align-items: center; gap: 6px; }
+    .s2-plbl { font-size: .5rem; color: #64748b; width: 52px; flex-shrink: 0; text-align: right; }
+    .s2-pbar-wrap { flex: 1; background: #f3e8ff; border-radius: 3px; height: 9px; overflow: hidden; }
+    .s2-pbar { height: 100%; border-radius: 3px; }
+    .s2-pval { font-size: .52rem; font-weight: 700; color: #7c3aed; width: 22px; flex-shrink: 0; }
+    .s2-activity { display: flex; flex-direction: column; gap: 3px; }
+    .s2-act { display: flex; align-items: center; gap: 5px; background: #fff; border: 1px solid #ede9fe; border-radius: 6px; padding: 5px 7px; }
+    .s2-actdot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .s2-acttxt { font-size: .5rem; color: #475569; flex: 1; }
+    .s2-acttime { font-size: .48rem; color: #94a3b8; }
+
+    /* ── Slide 3 — AgentHub ── */
+    .s3 {
+      background: linear-gradient(145deg,#050e1f 0%,#0d1b35 50%,#0a1628 100%);
+      position: relative; overflow: hidden;
+    }
+    .s3::before {
+      content: ""; position: absolute;
+      top: -60px; right: -60px; width: 200px; height: 200px;
+      background: radial-gradient(circle,#6366f130,transparent 70%);
+    }
+    .s3::after {
+      content: ""; position: absolute;
+      bottom: -40px; left: -40px; width: 160px; height: 160px;
+      background: radial-gradient(circle,#0ea5e920,transparent 70%);
+    }
+    .s3-body { padding: 18px 16px; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; position: relative; z-index: 1; }
+    .s3-shield {
+      width: 66px; height: 66px; position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .s3-shield-svg { width: 66px; height: 66px; }
+    .s3-ai-badge {
+      position: absolute; top: -4px; right: -4px;
+      background: #6366f1; border-radius: 50%; width: 20px; height: 20px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .55rem; font-weight: 900; color: #fff; border: 2px solid #050e1f;
+    }
+    .s3-title { font-size: 1.1rem; font-weight: 900; color: #fff; letter-spacing: -.02em; text-align: center; }
+    .s3-sub { font-size: .58rem; color: #64748b; text-align: center; line-height: 1.5; }
+    .s3-feats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; width: 100%; }
+    .s3-feat {
+      background: #0f1f38; border: 1px solid #1e3a5f;
+      border-radius: 8px; padding: 7px 9px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .s3-ficon { font-size: .75rem; flex-shrink: 0; }
+    .s3-ftxt { font-size: .52rem; font-weight: 600; color: #93c5fd; line-height: 1.3; }
+    .s3-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #052e16; border: 1px solid #166534;
+      border-radius: 20px; padding: 5px 12px;
+    }
+    .s3-bdot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; }
+    .s3-btxt { font-size: .6rem; font-weight: 700; color: #86efac; }
+
+    /* ── Slide 4 — CivicAI ecosystem ── */
     .s4 { background: linear-gradient(135deg, #0f172a, #1e1b4b); }
     .s4-body { padding: 20px; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
     .s4-logo { font-size: 2rem; font-weight: 900; color: #fff; letter-spacing: -.03em; }
@@ -275,6 +336,7 @@
       background: #312e81; border: 1px solid #6366f140;
       padding: 3px 10px; border-radius: 20px;
     }
+    .sdot { width: 7px; height: 7px; border-radius: 50%; }
 
     /* Slideshow nav dots */
     .slide-dots {
@@ -382,119 +444,140 @@
       <div style="overflow:hidden;border-radius:18px;">
         <div class="slides-track" id="slides-track">
 
-          <!-- Slide 1 : AgentHub -->
+          <!-- Slide 1 : Attente Zéro -->
           <div class="slide s1">
-            <div class="s1-bar">
-              <div class="sdot" style="background:#ef4444"></div>
-              <div class="sdot" style="background:#f59e0b"></div>
-              <div class="sdot" style="background:#22c55e"></div>
-              <span class="stitle">AGENTHUB · TABLEAU DE BORD</span>
+            <div class="s1-header">
+              <div class="s1-logo">⏱️</div>
+              <div>
+                <div class="s1-htitle">Attente Zéro</div>
+                <div class="s1-hsub">Réduction des délais · Analyse prédictive</div>
+              </div>
             </div>
-            <div class="s1-body">
-              <div class="s1-stats">
-                <div class="s1-stat"><div class="s1-val" style="color:#22c55e">94%</div><div class="s1-lbl">Score santé</div></div>
-                <div class="s1-stat"><div class="s1-val" style="color:#818cf8">9</div><div class="s1-lbl">Connecteurs</div></div>
-                <div class="s1-stat"><div class="s1-val" style="color:#2dd4bf">0</div><div class="s1-lbl">Alertes</div></div>
+            <div class="s1-kpis">
+              <div class="s1-kpi">
+                <div class="s1-kval">2h 45</div>
+                <div class="s1-klbl">Délai moyen actuel</div>
+                <div class="s1-kdelta dn">▼ -32%</div>
               </div>
-              <div>
-                <div style="font-size:.58rem;color:#475569;margin-bottom:5px;">Activité — 7 jours</div>
-                <div class="s1-chart">
-                  <div class="s1-bar2" style="height:45%;background:#6366f130;"></div>
-                  <div class="s1-bar2" style="height:60%;background:#6366f145;"></div>
-                  <div class="s1-bar2" style="height:38%;background:#6366f130;"></div>
-                  <div class="s1-bar2" style="height:72%;background:#6366f160;"></div>
-                  <div class="s1-bar2" style="height:55%;background:#6366f145;"></div>
-                  <div class="s1-bar2" style="height:90%;background:#6366f1;"></div>
-                  <div class="s1-bar2" style="height:65%;background:#6366f160;"></div>
+              <div class="s1-kpi">
+                <div class="s1-kval">42%</div>
+                <div class="s1-klbl">Réduction des délais</div>
+                <div class="s1-kdelta dn">▼ -18% vs mois dernier</div>
+              </div>
+              <div class="s1-kpi">
+                <div class="s1-kval">12</div>
+                <div class="s1-klbl">Tâches à risque</div>
+                <div class="s1-kdelta up">▲ +3 vs hier</div>
+              </div>
+              <div class="s1-kpi">
+                <div class="s1-kval">91%</div>
+                <div class="s1-klbl">Précision des prédictions</div>
+                <div class="s1-kdelta dn">▲ +6%</div>
+              </div>
+            </div>
+            <div class="s1-chart-wrap">
+              <div class="s1-chart-title">Évolution des délais — 30 derniers jours</div>
+              <div class="s1-chart">
+                <div class="s1-cbar" style="height:82%;background:#93c5fd80;"></div>
+                <div class="s1-cbar" style="height:74%;background:#93c5fd80;"></div>
+                <div class="s1-cbar" style="height:79%;background:#93c5fd80;"></div>
+                <div class="s1-cbar" style="height:68%;background:#3b82f680;"></div>
+                <div class="s1-cbar" style="height:62%;background:#3b82f680;"></div>
+                <div class="s1-cbar" style="height:55%;background:#3b82f680;"></div>
+                <div class="s1-cbar" style="height:48%;background:#1d4ed880;"></div>
+                <div class="s1-cbar" style="height:42%;background:#1d4ed8;"></div>
+                <div class="s1-cbar" style="height:38%;background:#1d4ed8;border:1.5px solid #60a5fa;"></div>
+              </div>
+            </div>
+            <div class="s1-donut-row">
+              <div class="s1-donut">
+                <div class="s1-donut-inner">
+                  <div class="s1-donut-n">128</div>
+                  <div class="s1-donut-l">tâches</div>
                 </div>
               </div>
-              <div>
-                <div style="font-size:.58rem;color:#475569;margin-bottom:5px;">Systèmes connectés</div>
-                <div class="s1-pills">
-                  <div class="s1-pill">M365</div>
-                  <div class="s1-pill">Salesforce</div>
-                  <div class="s1-pill">Jira</div>
-                  <div class="s1-pill">AWS</div>
-                  <div class="s1-pill">Slack</div>
-                  <div class="s1-pill">QuickBooks</div>
-                </div>
+              <div class="s1-legend">
+                <div class="s1-leg"><div class="s1-legdot" style="background:#ef4444"></div><span class="s1-legtxt">En retard</span><span class="s1-legval">18%</span></div>
+                <div class="s1-leg"><div class="s1-legdot" style="background:#f59e0b"></div><span class="s1-legtxt">À risque</span><span class="s1-legval">27%</span></div>
+                <div class="s1-leg"><div class="s1-legdot" style="background:#3b82f6"></div><span class="s1-legtxt">Dans les délais</span><span class="s1-legval">45%</span></div>
+                <div class="s1-leg"><div class="s1-legdot" style="background:#22c55e"></div><span class="s1-legtxt">En avance</span><span class="s1-legval">10%</span></div>
               </div>
-              <div class="s1-alert">
-                <div class="s1-adot"></div>
-                <div class="s1-atxt">Tous les systèmes opérationnels · Agent IA actif</div>
-              </div>
+            </div>
+            <div class="s1-impact">
+              <div class="s1-imp"><div class="s1-impv">128h</div><div class="s1-impl">Temps gagné</div></div>
+              <div class="s1-imp"><div class="s1-impv">24%</div><div class="s1-impl">Productivité</div></div>
+              <div class="s1-imp"><div class="s1-impv">32 450€</div><div class="s1-impl">Économies</div></div>
             </div>
           </div>
 
-          <!-- Slide 2 : NexHire -->
+          <!-- Slide 2 : NexHire Recrutement -->
           <div class="slide s2">
-            <div class="s2-bar">
-              <div class="sdot" style="background:#c084fc"></div>
-              <div class="sdot" style="background:#e879f9"></div>
-              <div class="sdot" style="background:#a855f7"></div>
-              <span class="stitle" style="color:#d8b4fe">NEXHIRE · RECRUTEMENT</span>
-            </div>
-            <div class="s2-body">
-              <div class="s2-title">Offres actives (3)</div>
-              <div class="s2-job">
-                <div class="s2-jtitle">Développeur Full-Stack</div>
-                <div class="s2-jmeta">Montréal · Temps plein · 85 000 $</div>
-                <div class="s2-tags">
-                  <span class="s2-tag">React</span>
-                  <span class="s2-tag">Python</span>
-                  <span class="s2-tag">AWS</span>
-                </div>
-                <div class="s2-cands" style="margin-top:8px">
-                  <div class="s2-av" style="background:#6366f1">A</div>
-                  <div class="s2-av" style="background:#a855f7">B</div>
-                  <div class="s2-av" style="background:#ec4899">C</div>
-                  <div class="s2-av" style="background:#14b8a6">D</div>
-                  <span class="s2-cand-lbl">+12 candidats</span>
-                </div>
+            <div class="s2-side">
+              <div class="s2-logo">
+                <div class="s2-logodot">👥</div>
               </div>
-              <div class="s2-job">
-                <div class="s2-jtitle">Analyste RH</div>
-                <div class="s2-jmeta">Trois-Rivières · Hybride · 65 000 $</div>
-                <div class="s2-tags">
-                  <span class="s2-tag">RH</span>
-                  <span class="s2-tag">SIRH</span>
-                </div>
-                <div class="s2-cands" style="margin-top:8px">
-                  <div class="s2-av" style="background:#f59e0b">E</div>
-                  <div class="s2-av" style="background:#22c55e">F</div>
-                  <span class="s2-cand-lbl">+5 candidats</span>
-                </div>
+              <div style="font-size:.65rem;font-weight:900;color:#fff;line-height:1.2;margin-bottom:10px;">Nex<br/>Hire</div>
+              <div class="s2-nav act">Tableau de bord</div>
+              <div class="s2-nav">Offres d'emploi</div>
+              <div class="s2-nav">Candidatures</div>
+              <div class="s2-nav">Entretiens</div>
+              <div class="s2-nav">Talents</div>
+              <div class="s2-nav">Analyses</div>
+            </div>
+            <div class="s2-main">
+              <div class="s2-htitle">Tableau de bord</div>
+              <div class="s2-stats4">
+                <div class="s2-st"><div class="s2-stv">24</div><div class="s2-stl">Offres actives</div></div>
+                <div class="s2-st"><div class="s2-stv">352</div><div class="s2-stl">Candidatures</div></div>
+                <div class="s2-st"><div class="s2-stv">18</div><div class="s2-stl">Entretiens</div></div>
+                <div class="s2-st"><div class="s2-stv">7</div><div class="s2-stl">Embauches</div></div>
+              </div>
+              <div class="s2-sec">Pipeline de recrutement</div>
+              <div class="s2-pipe">
+                <div class="s2-prow"><span class="s2-plbl">Candidatures</span><div class="s2-pbar-wrap"><div class="s2-pbar" style="width:100%;background:#7c3aed;"></div></div><span class="s2-pval">352</span></div>
+                <div class="s2-prow"><span class="s2-plbl">Screening</span><div class="s2-pbar-wrap"><div class="s2-pbar" style="width:55%;background:#9333ea;"></div></div><span class="s2-pval">192</span></div>
+                <div class="s2-prow"><span class="s2-plbl">Entretiens</span><div class="s2-pbar-wrap"><div class="s2-pbar" style="width:21%;background:#a855f7;"></div></div><span class="s2-pval">74</span></div>
+                <div class="s2-prow"><span class="s2-plbl">Offres</span><div class="s2-pbar-wrap"><div class="s2-pbar" style="width:9%;background:#c084fc;"></div></div><span class="s2-pval">32</span></div>
+                <div class="s2-prow"><span class="s2-plbl">Embauches</span><div class="s2-pbar-wrap"><div class="s2-pbar" style="width:2%;background:#e9d5ff;"></div></div><span class="s2-pval">7</span></div>
+              </div>
+              <div class="s2-sec">Activité récente</div>
+              <div class="s2-activity">
+                <div class="s2-act"><div class="s2-actdot" style="background:#7c3aed"></div><span class="s2-acttxt">Nouvelle candidature — Dév. Fullstack</span><span class="s2-acttime">10 min</span></div>
+                <div class="s2-act"><div class="s2-actdot" style="background:#0ea5e9"></div><span class="s2-acttxt">Entretien planifié — Chef de projet IT</span><span class="s2-acttime">1h</span></div>
               </div>
             </div>
           </div>
 
-          <!-- Slide 3 : Attente Zéro -->
+          <!-- Slide 3 : AgentHub -->
           <div class="slide s3">
-            <div class="s3-bar">
-              <div class="sdot" style="background:#2dd4bf"></div>
-              <div class="sdot" style="background:#14b8a6"></div>
-              <div class="sdot" style="background:#0d9488"></div>
-              <span class="stitle" style="color:#99f6e4">ATTENTE ZÉRO · DÉLAIS</span>
-            </div>
             <div class="s3-body">
-              <div class="s3-title">Tableau de bord prédictif</div>
-              <div class="s3-kpi">
-                <div class="s3-kpi-box"><div class="s3-kpi-val">-42%</div><div class="s3-kpi-lbl">Réduction délais</div></div>
-                <div class="s3-kpi-box"><div class="s3-kpi-val">8 min</div><div class="s3-kpi-lbl">Délai moyen</div></div>
-                <div class="s3-kpi-box"><div class="s3-kpi-val">97%</div><div class="s3-kpi-lbl">Satisfaction</div></div>
-                <div class="s3-kpi-box"><div class="s3-kpi-val">1 204</div><div class="s3-kpi-lbl">Usagers / jour</div></div>
+              <div class="s3-shield">
+                <svg class="s3-shield-svg" viewBox="0 0 66 66" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="sg" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#6366f1"/>
+                      <stop offset="100%" stop-color="#0ea5e9"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M33 4L8 14v18c0 14 10.5 27 25 31 14.5-4 25-17 25-31V14L33 4z" fill="url(#sg)" opacity=".18"/>
+                  <path d="M33 4L8 14v18c0 14 10.5 27 25 31 14.5-4 25-17 25-31V14L33 4z" stroke="url(#sg)" stroke-width="1.5" fill="none"/>
+                  <text x="33" y="37" text-anchor="middle" font-size="18" font-weight="900" fill="#6366f1">AI</text>
+                </svg>
+                <div class="s3-ai-badge">AI</div>
               </div>
-              <div class="s3-soon" style="background:#f0fdf9;border:1.5px solid #99f6e4;border-radius:9px;padding:10px;display:flex;flex-direction:column;gap:6px;">
-                <div style="display:flex;align-items:center;gap:6px;">
-                  <span style="width:7px;height:7px;border-radius:50%;background:#10b981;display:inline-block;flex-shrink:0;"></span>
-                  <span style="font-size:.62rem;font-weight:800;color:#0d9488;">Plateforme en production</span>
-                </div>
-                <div style="display:flex;gap:5px;flex-wrap:wrap;">
-                  <span style="font-size:.55rem;background:#fff;border:1px solid #ccfbf1;border-radius:6px;padding:2px 7px;color:#0f766e;font-weight:600;">✅ File numérique</span>
-                  <span style="font-size:.55rem;background:#fff;border:1px solid #ccfbf1;border-radius:6px;padding:2px 7px;color:#0f766e;font-weight:600;">📅 Calendrier</span>
-                  <span style="font-size:.55rem;background:#fff;border:1px solid #ccfbf1;border-radius:6px;padding:2px 7px;color:#0f766e;font-weight:600;">📊 Dashboard agent</span>
-                </div>
-                <a href="https://attentezero.ca/signup" target="_blank" style="font-size:.58rem;font-weight:700;color:#fff;background:#0d9488;border-radius:7px;padding:5px 10px;text-decoration:none;text-align:center;margin-top:2px;">Essayer gratuitement — 14 jours →</a>
+              <div class="s3-title">AgentHub</div>
+              <div class="s3-sub">Gouvernance IT · Sécurité · Optimisation IA</div>
+              <div class="s3-feats">
+                <div class="s3-feat"><span class="s3-ficon">🗄️</span><span class="s3-ftxt">Données sécurisées</span></div>
+                <div class="s3-feat"><span class="s3-ficon">🤖</span><span class="s3-ftxt">IA Intégrée</span></div>
+                <div class="s3-feat"><span class="s3-ficon">✅</span><span class="s3-ftxt">Conformité assurée</span></div>
+                <div class="s3-feat"><span class="s3-ficon">📊</span><span class="s3-ftxt">Performance optimisée</span></div>
+                <div class="s3-feat"><span class="s3-ficon">🔍</span><span class="s3-ftxt">Contrôle et visibilité</span></div>
+                <div class="s3-feat"><span class="s3-ficon">🔗</span><span class="s3-ftxt">Multi-connecteurs</span></div>
+              </div>
+              <div class="s3-badge">
+                <div class="s3-bdot"></div>
+                <span class="s3-btxt">Disponible</span>
               </div>
             </div>
           </div>
