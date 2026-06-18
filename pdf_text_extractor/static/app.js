@@ -914,9 +914,6 @@ function showLanding() {
 }
 
 function showAuth(mode = "login") {
-  // Toute authentification passe par le portail MyNexRA
-  window.location.href = "https://mynexra.nexhire.ca";
-  return;
   $("view-landing").classList.add("hidden");
   $("view-auth").classList.remove("hidden");
   $("view-app").classList.add("hidden");
