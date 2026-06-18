@@ -2,17 +2,18 @@
 Collecteur Entra ID (Azure Active Directory) — Sécurité des identités.
 
 Peuple :
-  security_postures  → MFA réel par utilisateur (per-user v1.0, pas le rapport beta)
-                       + rôles admin → privileged_access
-  identities         → principals de service (comptes de service / apps)
-  identity_accounts  → source_connector = 'entra_id'
+  security_postures    → MFA réel par utilisateur + rôles admin → privileged_access
+  identities           → principals de service + guests privilégiés
+  identity_accounts    → source_connector = 'entra_id'
+  entra_ca_policies    → Conditional Access Policies (état, cibles, MFA)
 
 Permissions Graph requises (déjà dans le connecteur M365) :
   User.Read.All
-  UserAuthenticationMethod.Read.All   — méthodes MFA par utilisateur
-  RoleManagement.Read.Directory        — rôles d'admin + membres
-  Application.Read.All                 — principals de service
-  Directory.Read.All                   — groupes de sécurité
+  UserAuthenticationMethod.Read.All        — méthodes MFA par utilisateur
+  RoleManagement.Read.Directory            — rôles d'admin + membres
+  Application.Read.All                     — principals de service
+  Directory.Read.All                       — groupes de sécurité
+  Policy.Read.All                          — Conditional Access Policies (P3)
 """
 from __future__ import annotations
 
@@ -67,15 +68,17 @@ def collect_entra_id(org_id: str) -> dict:
     headers = _auth_headers(org_id)  # lève RuntimeError si non connecté
 
     stats: dict = {
-        "users_processed":    0,
-        "mfa_enrolled":       0,
-        "privileged_users":   0,
-        "service_principals": 0,
-        "groups_synced":      0,
-        "groups_no_owner":    0,
+        "users_processed":      0,
+        "mfa_enrolled":         0,
+        "privileged_users":     0,
+        "guest_users_flagged":  0,
+        "service_principals":   0,
+        "groups_synced":        0,
+        "groups_no_owner":      0,
         "group_members_synced": 0,
-        "postures_updated":   0,
-        "errors":             [],
+        "ca_policies_synced":   0,
+        "postures_updated":     0,
+        "errors":               [],
     }
 
     # 1. Rôles admins → dict user_id → [role_name, ...]
@@ -143,8 +146,14 @@ def collect_entra_id(org_id: str) -> dict:
     # 4. Principals de service (comptes de service / apps d'entreprise)
     _sync_service_principals(headers, org_id, stats)
 
-    # 5. Groupes de sécurité avec détection des propriétaires
+    # 5. Groupes de sécurité avec détection des propriétaires (paginé)
     _sync_security_groups(headers, org_id, stats)
+
+    # 6. Utilisateurs invités (guests) avec rôles privilégiés
+    _sync_guest_users(headers, org_id, admin_roles, stats)
+
+    # 7. Conditional Access Policies
+    _sync_ca_policies(headers, org_id, stats)
 
     log.info("Entra ID sync done : %s", stats)
     return stats
@@ -241,19 +250,24 @@ def _fetch_admin_roles(headers: dict, stats: dict) -> dict[str, list[str]]:
 def _sync_service_principals(headers: dict, org_id: str, stats: dict) -> None:
     """
     Récupère les principals de service (apps d'entreprise, managed identities)
-    et les inscrit comme identités de type 'service_account'.
+    et les inscrit comme identités de type 'service_account'. Paginé.
     """
-    url = f"{GRAPH}/servicePrincipals"
+    url: str | None = f"{GRAPH}/servicePrincipals"
     params = {
         "$select": "id,displayName,appId,servicePrincipalType,accountEnabled,"
                    "createdDateTime,appOwnerOrganizationId",
         "$filter": "servicePrincipalType eq 'Application' or servicePrincipalType eq 'ManagedIdentity'",
-        "$top":    "100",
+        "$top":    "200",
     }
+    principals: list[dict] = []
     try:
-        r = httpx.get(url, headers=headers, params=params, timeout=25)
-        r.raise_for_status()
-        principals = r.json().get("value", [])
+        while url:
+            r = httpx.get(url, headers=headers, params=params, timeout=25)
+            r.raise_for_status()
+            body = r.json()
+            principals.extend(body.get("value", []))
+            url    = body.get("@odata.nextLink")
+            params = {}  # nextLink contient déjà tous les params
     except httpx.HTTPStatusError as exc:
         log.warning("Service principals inaccessibles (%s).", exc)
         return
@@ -315,13 +329,13 @@ def _sync_service_principals(headers: dict, org_id: str, stats: dict) -> None:
                     INSERT INTO public.identity_accounts
                       (organization_id, identity_id, source_connector, external_id,
                        external_email, display_name, status, synced_at,
-                       raw_data)
+                       data)
                     VALUES (%s,%s,'entra_id',%s,%s,%s,%s,now(),%s::jsonb)
                     ON CONFLICT (organization_id, source_connector, external_id) DO UPDATE SET
                       display_name = EXCLUDED.display_name,
                       status       = EXCLUDED.status,
                       synced_at    = now(),
-                      raw_data     = EXCLUDED.raw_data
+                      data         = EXCLUDED.data
                     """,
                     (org_id, identity_id, sp_id, fake_email, name,
                      "active" if enabled else "inactive",
@@ -344,23 +358,24 @@ def _sync_service_principals(headers: dict, org_id: str, stats: dict) -> None:
 
 def _sync_security_groups(headers: dict, org_id: str, stats: dict) -> None:
     """
-    Récupère les groupes de sécurité Entra ID, détecte ceux sans propriétaire
-    et les stocke dans identities (type='group') pour l'analyseur de risques.
-    Limité aux 100 premiers groupes.
+    Récupère tous les groupes de sécurité Entra ID (paginé), détecte ceux sans
+    propriétaire et les stocke dans identities (type='group').
     """
+    url: str | None = f"{GRAPH}/groups"
+    params = {
+        "$filter": "securityEnabled eq true",
+        "$select": "id,displayName,createdDateTime,groupTypes",
+        "$top":    "200",
+    }
+    groups: list[dict] = []
     try:
-        r = httpx.get(
-            f"{GRAPH}/groups",
-            headers=headers,
-            params={
-                "$filter": "securityEnabled eq true",
-                "$select": "id,displayName,createdDateTime,groupTypes",
-                "$top":    "100",
-            },
-            timeout=25,
-        )
-        r.raise_for_status()
-        groups = r.json().get("value", [])
+        while url:
+            r = httpx.get(url, headers=headers, params=params, timeout=25)
+            r.raise_for_status()
+            body = r.json()
+            groups.extend(body.get("value", []))
+            url    = body.get("@odata.nextLink")
+            params = {}
     except Exception as exc:
         log.warning("Groupes de sécurité inaccessibles : %s", exc)
         stats["errors"].append({"source": "security_groups", "error": str(exc)})
@@ -488,6 +503,166 @@ def _sync_group_members(headers: dict, org_id: str, group_id: str, group_name: s
         except Exception as exc:
             log.warning("Erreur membre %s/%s : %s", group_name, member_id, exc)
     return count
+
+
+def _sync_guest_users(
+    headers: dict, org_id: str, admin_roles: dict[str, list[str]], stats: dict
+) -> None:
+    """
+    Récupère les utilisateurs invités (userType=Guest) et marque ceux qui ont
+    des rôles admin dans security_postures (privileged_access=true + risk_factor 'guest').
+    """
+    url: str | None = f"{GRAPH}/users"
+    params = {
+        "$filter": "userType eq 'Guest'",
+        "$select": "id,displayName,userPrincipalName,mail,accountEnabled",
+        "$top":    "200",
+    }
+    guests: list[dict] = []
+    try:
+        while url:
+            r = httpx.get(url, headers=headers, params=params, timeout=25)
+            r.raise_for_status()
+            body = r.json()
+            guests.extend(body.get("value", []))
+            url    = body.get("@odata.nextLink")
+            params = {}
+    except httpx.HTTPStatusError as exc:
+        log.warning("Guests inaccessibles (%s).", exc)
+        return
+    except Exception as exc:
+        log.warning("Erreur fetch guests : %s", exc)
+        stats["errors"].append({"source": "guest_users", "error": str(exc)})
+        return
+
+    for g in guests:
+        user_id = g.get("id", "")
+        roles   = admin_roles.get(user_id, [])
+        if not roles:
+            continue  # guest sans rôle admin — pas de risque immédiat
+
+        upn     = g.get("userPrincipalName") or g.get("mail") or f"guest:{user_id}"
+        name    = g.get("displayName") or upn
+        enabled = g.get("accountEnabled", True)
+
+        try:
+            with get_db() as cur:
+                cur.execute(
+                    """
+                    SELECT ia.identity_id
+                    FROM public.identity_accounts ia
+                    WHERE ia.organization_id = %s
+                      AND ia.source_connector = 'microsoft_365'
+                      AND ia.external_id = %s
+                    LIMIT 1
+                    """,
+                    (org_id, user_id),
+                )
+                row = cur.fetchone()
+
+            if not row:
+                continue
+
+            identity_id = row["identity_id"]
+            risk_factors = ["guest", "privileged_guest"] + [f"role:{r}" for r in roles]
+
+            with get_db() as cur:
+                cur.execute(
+                    """
+                    INSERT INTO public.security_postures
+                      (organization_id, identity_id, mfa_enabled, mfa_method,
+                       privileged_access, risk_score, risk_factors, updated_at)
+                    VALUES (%s,%s,false,'unknown',true,80,%s::jsonb,now())
+                    ON CONFLICT (organization_id, identity_id) DO UPDATE SET
+                      privileged_access = true,
+                      risk_factors      = (
+                        SELECT jsonb_agg(DISTINCT e)
+                        FROM jsonb_array_elements_text(
+                          COALESCE(security_postures.risk_factors,'[]'::jsonb) ||
+                          EXCLUDED.risk_factors
+                        ) e
+                      ),
+                      risk_score  = GREATEST(security_postures.risk_score, 80),
+                      updated_at  = now()
+                    """,
+                    (org_id, identity_id, json.dumps(risk_factors)),
+                )
+            stats["guest_users_flagged"] += 1
+            log.info("Guest privilégié détecté : %s (%s)", name, ", ".join(roles))
+
+        except Exception as exc:
+            log.warning("Erreur guest %s : %s", upn, exc)
+
+
+def _sync_ca_policies(headers: dict, org_id: str, stats: dict) -> None:
+    """
+    Récupère les Conditional Access Policies et les stocke dans entra_ca_policies.
+    Nécessite Policy.Read.All.
+    """
+    try:
+        r = httpx.get(
+            f"{GRAPH}/policies/conditionalAccessPolicies",
+            headers=headers,
+            params={"$select": "id,displayName,state,conditions,grantControls"},
+            timeout=25,
+        )
+        r.raise_for_status()
+        policies = r.json().get("value", [])
+    except httpx.HTTPStatusError as exc:
+        if exc.response.status_code == 403:
+            log.info("CA Policies inaccessibles — Policy.Read.All manquant.")
+            return
+        log.warning("CA Policies erreur HTTP %s.", exc.response.status_code)
+        return
+    except Exception as exc:
+        log.warning("Erreur fetch CA policies : %s", exc)
+        stats["errors"].append({"source": "ca_policies", "error": str(exc)})
+        return
+
+    for p in policies:
+        policy_id    = p.get("id", "")
+        display_name = p.get("displayName", "")
+        state        = p.get("state", "disabled")
+        conditions   = p.get("conditions") or {}
+        grant        = p.get("grantControls") or {}
+
+        if not policy_id:
+            continue
+
+        # Détecte si la policy cible "All users"
+        users_incl = conditions.get("users", {}).get("includeUsers", [])
+        targets_all = "All" in users_incl
+
+        # Détecte si la policy requiert le MFA
+        built_in = grant.get("builtInControls", [])
+        requires_mfa = "mfa" in [c.lower() for c in built_in]
+
+        try:
+            with get_db() as cur:
+                cur.execute(
+                    """
+                    INSERT INTO public.entra_ca_policies
+                      (organization_id, policy_id, display_name, state,
+                       targets_all_users, requires_mfa, conditions, grant_controls, synced_at)
+                    VALUES (%s,%s,%s,%s,%s,%s,%s::jsonb,%s::jsonb,now())
+                    ON CONFLICT (organization_id, policy_id) DO UPDATE SET
+                      display_name      = EXCLUDED.display_name,
+                      state             = EXCLUDED.state,
+                      targets_all_users = EXCLUDED.targets_all_users,
+                      requires_mfa      = EXCLUDED.requires_mfa,
+                      conditions        = EXCLUDED.conditions,
+                      grant_controls    = EXCLUDED.grant_controls,
+                      synced_at         = now()
+                    """,
+                    (org_id, policy_id, display_name, state,
+                     targets_all, requires_mfa,
+                     json.dumps(conditions), json.dumps(grant)),
+                )
+            stats["ca_policies_synced"] += 1
+        except Exception as exc:
+            log.warning("Erreur upsert CA policy %s : %s", display_name, exc)
+
+    log.info("CA Policies : %d synchronisées", stats["ca_policies_synced"])
 
 
 def _group_has_owner(headers: dict, group_id: str) -> bool:

@@ -8,6 +8,9 @@ Règles :
   3. user_no_mfa           — Utilisateur actif sans MFA → MOYEN
   4. group_no_owner        — Groupe de sécurité sans propriétaire → MOYEN
   5. service_account_risk  — Compte de service à privilèges élevés → ÉLEVÉ
+  6. guest_privileged      — Utilisateur invité avec rôle admin → CRITIQUE
+  7. missing_ca_policy     — Aucune CA Policy MFA globale → CRITIQUE
+  8. ca_policy_report_only — CA Policy MFA en mode rapport seulement → ÉLEVÉ
 """
 from __future__ import annotations
 
@@ -24,6 +27,9 @@ _ENTRA_FINDING_TYPES = (
     "user_no_mfa",
     "group_no_owner",
     "service_account_risk",
+    "guest_privileged",
+    "missing_ca_policy",
+    "ca_policy_report_only",
 )
 
 
@@ -41,6 +47,8 @@ def run_entra_risk_analyzer(org_id: str) -> dict:
     findings += _rule_user_no_mfa(org_id)
     findings += _rule_group_no_owner(org_id)
     findings += _rule_service_account_risk(org_id)
+    findings += _rule_guest_privileged(org_id)
+    findings += _rule_ca_policy_coverage(org_id)
 
     by_severity: dict[str, int] = {"critical": 0, "high": 0, "medium": 0, "low": 0}
     for f in findings:
@@ -377,6 +385,167 @@ def _rule_service_account_risk(org_id: str) -> list[dict]:
             "roles":         roles,
             "days_inactive": days,
         })
+    return findings
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Règle 6 — Utilisateurs invités avec rôle admin (CRITIQUE)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _rule_guest_privileged(org_id: str) -> list[dict]:
+    """Comptes guests (invités externes) qui ont privileged_access=true."""
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """
+                SELECT i.full_name, i.canonical_email, sp.risk_factors
+                FROM public.security_postures sp
+                JOIN public.identities i ON i.id = sp.identity_id
+                WHERE sp.organization_id = %s
+                  AND sp.privileged_access = true
+                  AND EXISTS (
+                    SELECT 1 FROM jsonb_array_elements_text(sp.risk_factors) rf
+                    WHERE rf = 'guest'
+                  )
+                  AND i.status = 'active'
+                ORDER BY i.full_name
+                """,
+                (org_id,),
+            )
+            rows = db_rows(cur)
+    except Exception as exc:
+        log.warning("guest_privileged query failed: %s", exc)
+        return []
+
+    findings = []
+    for r in rows:
+        factors  = r.get("risk_factors") or []
+        roles    = [f.replace("role:", "") for f in factors if f.startswith("role:")]
+        role_lbl = ", ".join(roles) if roles else "rôle admin"
+        name     = r["full_name"] or r["canonical_email"]
+
+        _upsert_entra_finding(
+            org_id=org_id,
+            finding_type="guest_privileged",
+            severity="critical",
+            title=f"Invité avec accès admin — {name}",
+            description=(
+                f"L'utilisateur invité externe « {name} » détient {role_lbl}. "
+                f"Un compte guest n'est pas soumis aux politiques de sécurité "
+                f"de votre organisation (MFA, accès conditionnel, cycle de vie)."
+            ),
+            remediation=(
+                f"Révoquer immédiatement les rôles admin de {r['canonical_email']}. "
+                f"Si l'accès est nécessaire, créer un compte membre interne ou "
+                f"utiliser Azure AD B2B avec accès conditionnel forcé."
+            ),
+            cost_impact_monthly=0,
+        )
+        findings.append({
+            "finding_type": "guest_privileged",
+            "severity":     "critical",
+            "email":        r["canonical_email"],
+            "display_name": r["full_name"],
+            "roles":        roles,
+        })
+    return findings
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Règle 7 — Couverture Conditional Access (CRITIQUE / ÉLEVÉ)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _rule_ca_policy_coverage(org_id: str) -> list[dict]:
+    """
+    Vérifie si une CA Policy active force le MFA pour tous les utilisateurs.
+    - Aucune policy active → CRITIQUE (missing_ca_policy)
+    - Policy existante mais en mode rapport seulement → ÉLEVÉ (ca_policy_report_only)
+    """
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """
+                SELECT state, targets_all_users, requires_mfa, display_name
+                FROM public.entra_ca_policies
+                WHERE organization_id = %s
+                ORDER BY
+                  CASE state WHEN 'enabled' THEN 1
+                             WHEN 'enabledForReportingButNotEnforced' THEN 2
+                             ELSE 3 END
+                """,
+                (org_id,),
+            )
+            policies = db_rows(cur)
+    except Exception as exc:
+        log.warning("ca_policy_coverage query failed: %s", exc)
+        return []
+
+    if not policies:
+        return []
+
+    # Cherche une policy active qui force le MFA pour tous
+    has_global_mfa_enforced    = any(
+        p["state"] == "enabled"
+        and p["requires_mfa"]
+        and p["targets_all_users"]
+        for p in policies
+    )
+    has_global_mfa_report_only = any(
+        p["state"] == "enabledForReportingButNotEnforced"
+        and p["requires_mfa"]
+        and p["targets_all_users"]
+        for p in policies
+    )
+
+    findings = []
+
+    if not has_global_mfa_enforced and not has_global_mfa_report_only:
+        _upsert_entra_finding(
+            org_id=org_id,
+            finding_type="missing_ca_policy",
+            severity="critical",
+            title="Aucune politique d'accès conditionnel MFA globale",
+            description=(
+                "Il n'existe aucune Conditional Access Policy active qui impose "
+                "le MFA à l'ensemble des utilisateurs. Sans cette protection, "
+                "un mot de passe compromis donne un accès direct à Microsoft 365."
+            ),
+            remediation=(
+                "Créer une CA Policy dans Entra ID → Security → Conditional Access : "
+                "Cible = All users, Cloud apps = All cloud apps, "
+                "Grant = Require multifactor authentication. "
+                "Commencer en mode Rapport pour valider l'impact avant d'activer."
+            ),
+            cost_impact_monthly=0,
+        )
+        findings.append({"finding_type": "missing_ca_policy", "severity": "critical"})
+
+    elif has_global_mfa_report_only and not has_global_mfa_enforced:
+        report_names = [
+            p["display_name"] for p in policies
+            if p["state"] == "enabledForReportingButNotEnforced"
+            and p["requires_mfa"] and p["targets_all_users"]
+        ]
+        names_str = ", ".join(report_names[:3])
+        _upsert_entra_finding(
+            org_id=org_id,
+            finding_type="ca_policy_report_only",
+            severity="high",
+            title="CA Policy MFA en mode rapport — non appliquée",
+            description=(
+                f"La politique « {names_str} » exige le MFA mais est en mode "
+                f"« Rapport uniquement » — elle ne bloque pas les connexions sans MFA. "
+                f"La protection est inactive en production."
+            ),
+            remediation=(
+                f"Passer la politique « {names_str} » de "
+                f"« Report-only » à « On » dans Entra ID → Conditional Access. "
+                f"Vérifier d'abord que tous les admins ont le MFA configuré."
+            ),
+            cost_impact_monthly=0,
+        )
+        findings.append({"finding_type": "ca_policy_report_only", "severity": "high"})
+
     return findings
 
 
