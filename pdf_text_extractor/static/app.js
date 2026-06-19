@@ -3058,7 +3058,7 @@ async function loadAnalytics() {
             datalabels: {
               formatter: (value) => {
                 const pct = Math.round(value / connTotal * 100);
-                return pct >= 6 ? `${pct}%` : "";
+                return pct >= 4 ? `${pct}%` : "";
               },
               color: "#fff",
               font: { size: 11, weight: "bold" },
