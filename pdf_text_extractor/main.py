@@ -542,11 +542,18 @@ def create_app(
             return {"success": False, "error": "Aucun texte extractible.", "extracted": {}, "doc_type": doc_type}
 
         type_prompts = {
-            "facture":    "Extract: vendor_name, invoice_number, date, due_date, total_amount, currency, subtotal, tax_amount, line_items (array of {description, qty, unit_price, total}), payment_status",
-            "contrat":    "Extract: parties (array of names), contract_type, start_date, end_date, total_value, currency, key_obligations (array), renewal_type, governing_law, notice_period",
-            "formulaire": "Extract: form_title, submitter_name, submission_date, fields (object of key:value pairs from the form)",
-            "rapport":    "Extract: title, author, date, period_covered, executive_summary (1-2 sentences), key_metrics (object), recommendations (array of strings)",
-            "auto":       "Detect the document type (facture/contrat/formulaire/rapport/autre) and set it in 'doc_type', then extract the most relevant structured fields for that type.",
+            "facture":          "Extract: vendor_name, invoice_number, date, due_date, total_amount, currency, subtotal, tax_amount, line_items (array of {description, qty, unit_price, total}), payment_status",
+            "contrat":          "Extract: parties (array of names), contract_type, start_date, end_date, total_value, currency, key_obligations (array), renewal_type, governing_law, notice_period",
+            "formulaire":       "Extract: form_title, submitter_name, submission_date, fields (object of key:value pairs from the form)",
+            "rapport":          "Extract: title, author, date, period_covered, executive_summary (1-2 sentences), key_metrics (object), recommendations (array of strings)",
+            "cv":               "Extract: candidate_name, email, phone, location, current_title, years_of_experience, education (array of {degree, institution, year}), work_experience (array of {title, company, start_year, end_year, highlights}), skills (array), languages (array), certifications (array)",
+            "clause_contrat":   "Extract: document_title, parties (array), key_clauses (array of {clause_title, summary}), termination_conditions, confidentiality_terms, liability_caps, dispute_resolution, jurisdiction",
+            "bon_commande":     "Extract: po_number, issuer, vendor_name, issue_date, delivery_date, line_items (array of {description, qty, unit_price, total}), total_amount, currency, payment_terms, approved_by",
+            "rapport_incident": "Extract: incident_title, incident_date, reported_by, location, description, impact_summary, root_cause, actions_taken (array), follow_up_actions (array of {task, responsible, deadline}), status",
+            "note_reunion":     "Extract: meeting_title, date, location, attendees (array), facilitator, agenda_items (array), decisions_made (array of {item, decision, responsible}), action_items (array of {task, responsible, deadline}), next_meeting_date",
+            "politique_rh":     "Extract: policy_title, effective_date, version, scope, key_rules (array of {rule_title, summary}), eligibility, procedures (array), exceptions, contact_person",
+            "appel_offres":     "Extract: rfp_title, issuing_organization, issue_date, deadline, project_description, requirements (array), evaluation_criteria (array of {criterion, weight_pct}), budget_estimate, contact_info, submission_instructions",
+            "auto":             "Detect the document type (facture/contrat/cv/bon_commande/note_reunion/rapport_incident/politique_rh/appel_offres/formulaire/rapport/autre) and set it in 'doc_type', then extract the most relevant structured fields for that type.",
         }
         prompt = type_prompts.get(doc_type, type_prompts["auto"])
 

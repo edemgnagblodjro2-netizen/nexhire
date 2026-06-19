@@ -9402,7 +9402,13 @@ async function extractDocumentFields() {
       return;
     }
 
-    const TYPE_LABELS = { facture:"🧾 Facture", contrat:"📜 Contrat", formulaire:"📋 Formulaire", rapport:"📊 Rapport", auto:"📄 Document", autre:"📄 Document" };
+    const TYPE_LABELS = {
+      facture:"🧾 Facture", contrat:"📜 Contrat", formulaire:"📋 Formulaire",
+      rapport:"📊 Rapport", cv:"👤 CV / Candidat", clause_contrat:"⚖️ Clauses contractuelles",
+      bon_commande:"📦 Bon de commande", rapport_incident:"🚨 Rapport d'incident",
+      note_reunion:"🗒️ Compte-rendu de réunion", politique_rh:"📗 Politique RH",
+      appel_offres:"📣 Appel d'offres", auto:"📄 Document", autre:"📄 Document",
+    };
     const typeLabel = TYPE_LABELS[res.doc_type] || `📄 ${esc(res.doc_type || "Document")}`;
 
     const fields = res.extracted || {};

@@ -1444,12 +1444,27 @@
           <h3>🧠 Extraction IA — Champs structurés</h3>
           <p class="muted" style="font-size:.82rem;margin-bottom:10px">Détecte automatiquement le type de document et en extrait les champs clés.</p>
           <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-            <select id="extract-doc-type" style="flex:1;min-width:160px">
+            <select id="extract-doc-type" style="flex:1;min-width:200px">
               <option value="auto">🔍 Détection automatique</option>
-              <option value="facture">🧾 Facture</option>
-              <option value="contrat">📜 Contrat</option>
-              <option value="formulaire">📋 Formulaire</option>
-              <option value="rapport">📊 Rapport</option>
+              <optgroup label="─── Finance &amp; Achats">
+                <option value="facture">🧾 Facture</option>
+                <option value="bon_commande">📦 Bon de commande</option>
+              </optgroup>
+              <optgroup label="─── Juridique &amp; Conformité">
+                <option value="contrat">📜 Contrat</option>
+                <option value="clause_contrat">⚖️ Clauses contractuelles</option>
+                <option value="appel_offres">📣 Appel d'offres / RFP</option>
+              </optgroup>
+              <optgroup label="─── RH">
+                <option value="cv">👤 CV / Profil candidat</option>
+                <option value="politique_rh">📗 Politique RH</option>
+              </optgroup>
+              <optgroup label="─── Opérations &amp; Direction">
+                <option value="rapport">📊 Rapport</option>
+                <option value="note_reunion">🗒️ Note / Compte-rendu</option>
+                <option value="rapport_incident">🚨 Rapport d'incident</option>
+                <option value="formulaire">📋 Formulaire</option>
+              </optgroup>
             </select>
             <button id="extract-btn" disabled onclick="extractDocumentFields()" class="btn btn-primary btn-sm">Extraire les champs</button>
           </div>
@@ -1507,10 +1522,47 @@
             placeholder="Ex : Quelle est notre politique de remboursement des frais ?" />
           <button class="btn btn-primary" onclick="doInternalSearch()" id="search-btn">Rechercher</button>
         </div>
-        <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap" id="search-suggestions">
-          <button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">Politique de remboursement</button>
-          <button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">Conditions du contrat fournisseur</button>
-          <button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">Processus d'approbation</button>
+        <div id="search-suggestions" style="margin-top:14px;display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap">
+            <span style="font-size:.72rem;font-weight:700;color:#0369a1;background:#e0f2fe;border-radius:20px;padding:3px 10px;white-space:nowrap;margin-top:2px">💰 Finance</span>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">Quelles factures sont en attente de paiement ?</button>
+              <button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">Résumé des dépenses du dernier trimestre</button>
+              <button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">Quels sont nos principaux fournisseurs ?</button>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap">
+            <span style="font-size:.72rem;font-weight:700;color:#7c3aed;background:#ede9fe;border-radius:20px;padding:3px 10px;white-space:nowrap;margin-top:2px">👥 RH</span>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">Politique de vacances et congés</button>
+              <button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">Processus et critères de recrutement</button>
+              <button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">Formations obligatoires pour les employés</button>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap">
+            <span style="font-size:.72rem;font-weight:700;color:#b45309;background:#fef3c7;border-radius:20px;padding:3px 10px;white-space:nowrap;margin-top:2px">⚖️ Juridique</span>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">Clauses de résiliation des contrats fournisseurs</button>
+              <button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">Obligations contractuelles en cours</button>
+              <button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">Délais de préavis dans nos contrats</button>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap">
+            <span style="font-size:.72rem;font-weight:700;color:#0f766e;background:#ccfbf1;border-radius:20px;padding:3px 10px;white-space:nowrap;margin-top:2px">🖥️ TI</span>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">Procédures de sécurité informatique</button>
+              <button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">Liste des licences logicielles actives</button>
+              <button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">Plan de reprise après sinistre</button>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap">
+            <span style="font-size:.72rem;font-weight:700;color:#be185d;background:#fce7f3;border-radius:20px;padding:3px 10px;white-space:nowrap;margin-top:2px">🏢 Direction</span>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">Objectifs stratégiques de l'organisation</button>
+              <button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">Décisions du dernier conseil d'administration</button>
+              <button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">Indicateurs clés de performance</button>
+            </div>
+          </div>
         </div>
       </div>
       <div id="search-result" class="hidden">
