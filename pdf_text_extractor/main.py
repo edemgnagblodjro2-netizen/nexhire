@@ -20,7 +20,7 @@ if _logfire_token:
 
 from typing import Annotated
 
-from fastapi import BackgroundTasks, Body, Depends, FastAPI, File, Form, HTTPException, Request, UploadFile
+from fastapi import BackgroundTasks, Body, Depends, FastAPI, File, Form, HTTPException, Query, Request, UploadFile
 from auth import CurrentUser
 from rbac import require_min_role
 from fastapi.middleware.cors import CORSMiddleware
