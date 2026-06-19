@@ -14,6 +14,18 @@ from rbac import ROLE_RANK, require_min_role
 router = APIRouter(prefix="/api/transactions", tags=["transactions"])
 
 
+def _allowed_dept_ids(user: CurrentUser) -> list[str] | None:
+    """None = admin/owner/service → pas de filtre. Liste = IDs autorisés (peut être vide)."""
+    if ROLE_RANK.get(user.role, 0) >= 3 or user.is_service_account:
+        return None
+    with get_db() as cur:
+        cur.execute(
+            "SELECT department_id FROM department_members WHERE user_id = %s",
+            (user.id,),
+        )
+        return [r["department_id"] for r in rows(cur)]
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Modèles
 # ─────────────────────────────────────────────────────────────────────────────
@@ -53,12 +65,19 @@ def list_transactions(
     dept_id:   str | None = None,
     status:    str | None = None,
     flagged:   bool | None = None,
-    user: CurrentUser = Depends(require_min_role("manager")),
+    user: CurrentUser = Depends(require_min_role("user")),
 ):
-    """Liste les transactions, filtrables. Manager+."""
+    """Liste les transactions, filtrables. Filtre par département si non-manager."""
+    allowed = _allowed_dept_ids(user)
+    if allowed is not None and not allowed:
+        return []
+
     params: list[Any] = [user.organization_id]
     where = "WHERE ft.organization_id = %s"
 
+    if allowed is not None:
+        where += " AND ft.department_id = ANY(%s::uuid[])"
+        params.append(allowed)
     if year:
         where += " AND EXTRACT(YEAR FROM ft.transaction_date) = %s"
         params.append(year)
@@ -107,12 +126,20 @@ def list_transactions(
 def transactions_summary(
     year:    int | None = Query(None),
     dept_id: str | None = Query(None),
-    user: CurrentUser = Depends(require_min_role("manager")),
+    user: CurrentUser = Depends(require_min_role("user")),
 ):
     """KPIs financiers : total réel, top fournisseurs, burn rate mensuel, anomalies."""
+    allowed = _allowed_dept_ids(user)
+    if allowed is not None and not allowed:
+        return {"total_paid": 0, "total_pending": 0, "count_paid": 0,
+                "flagged_count": 0, "vendor_count": 0,
+                "burn_rate": [], "top_vendors": [], "by_category": []}
+
     org = user.organization_id
-    y_filter   = f"AND EXTRACT(YEAR FROM transaction_date) = {year}" if year else ""
-    d_filter   = f"AND department_id = '{dept_id}'"                  if dept_id else ""
+    y_filter = f"AND EXTRACT(YEAR FROM transaction_date) = {year}" if year else ""
+    d_filter = f"AND department_id = '{dept_id}'"                  if dept_id else ""
+    # Filtre dept pour utilisateurs non-manager
+    a_filter = f"AND department_id = ANY(ARRAY{allowed!r}::uuid[])" if allowed is not None else ""
 
     with get_db() as cur:
         # Totaux globaux
@@ -125,7 +152,7 @@ def transactions_summary(
               COUNT(*) FILTER (WHERE is_flagged = true)                   AS flagged_count,
               COUNT(DISTINCT vendor_id)                                   AS vendor_count
             FROM public.financial_transactions
-            WHERE organization_id = %s {y_filter} {d_filter}
+            WHERE organization_id = %s {y_filter} {d_filter} {a_filter}
             """,
             (org,),
         )
@@ -133,13 +160,14 @@ def transactions_summary(
 
         # Burn rate mensuel (12 derniers mois)
         cur.execute(
-            """
+            f"""
             SELECT
               TO_CHAR(DATE_TRUNC('month', transaction_date), 'YYYY-MM') AS month,
               SUM(amount) FILTER (WHERE status='paid')                   AS paid
             FROM public.financial_transactions
             WHERE organization_id = %s
               AND transaction_date >= CURRENT_DATE - INTERVAL '12 months'
+              {a_filter}
             GROUP BY DATE_TRUNC('month', transaction_date)
             ORDER BY DATE_TRUNC('month', transaction_date)
             """,
@@ -156,7 +184,7 @@ def transactions_summary(
               COUNT(*)                                         AS count
             FROM public.financial_transactions ft
             LEFT JOIN public.vendors v ON v.id = ft.vendor_id
-            WHERE ft.organization_id = %s {y_filter}
+            WHERE ft.organization_id = %s {y_filter} {a_filter}
             GROUP BY v.name
             ORDER BY total DESC NULLS LAST
             LIMIT 10
@@ -173,7 +201,7 @@ def transactions_summary(
               SUM(amount) FILTER (WHERE status='paid') AS total,
               COUNT(*) AS count
             FROM public.financial_transactions
-            WHERE organization_id = %s {y_filter}
+            WHERE organization_id = %s {y_filter} {a_filter}
             GROUP BY category
             ORDER BY total DESC NULLS LAST
             """,
@@ -308,7 +336,7 @@ def delete_transaction(
 # ─────────────────────────────────────────────────────────────────────────────
 
 @router.get("/vendors")
-def list_vendors(user: CurrentUser = Depends(require_min_role("manager"))):
+def list_vendors(user: CurrentUser = Depends(require_min_role("user"))):
     with get_db() as cur:
         cur.execute(
             """
