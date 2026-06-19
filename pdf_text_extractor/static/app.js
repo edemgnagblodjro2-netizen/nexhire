@@ -1406,7 +1406,7 @@ window.addEventListener("popstate", (e) => {
 
 function loadActiveTab() {
   const loaders = {
-    "agent":       loadDeptDashboard,  // rafraîchit le dashboard département
+    "agent":       loadDeptDashboard,
     "connectors":  loadConnectors,
     "org":         loadExecutiveDashboard,
     "audit":       loadAudit,
@@ -1418,6 +1418,8 @@ function loadActiveTab() {
     "marketplace": buildMarketplace,
     "superadmin":  loadSuperAdmin,
     "security":    loadSecurityDashboard,
+    "finance":     loadFinance,
+    "recherche":   loadRecherche,
   };
   const fn = loaders[state.tab];
   if (fn) Promise.resolve().then(() => fn()).catch(err => console.warn(`[${state.tab}] load error:`, err));
@@ -2738,6 +2740,8 @@ $("upload-form").addEventListener("submit", async e => {
     $("summary").classList.toggle("muted", Boolean(data.warning));
     $("chat-log").innerHTML = '<div class="message assistant">Document chargé. Posez votre question en français ou en anglais.</div>';
     $("doc-delete-btn")?.classList.remove("hidden");
+    if ($("extract-btn")) { $("extract-btn").disabled = false; }
+    $("extract-result")?.classList.add("hidden");
     toggleDoc(false);
   } catch (ex) {
     state.docId = null; st.textContent = ex.message; st.classList.add("error");
@@ -2756,6 +2760,8 @@ async function deleteCurrentDocument() {
     $("summary").classList.add("muted");
     $("chat-log").innerHTML = '<div class="message assistant">Document supprimé. Téléversez un nouveau PDF.</div>';
     $("doc-delete-btn")?.classList.add("hidden");
+    if ($("extract-btn")) { $("extract-btn").disabled = true; }
+    $("extract-result")?.classList.add("hidden");
     $("file-label").textContent = "Choisir un fichier PDF";
     toggleDoc(true);
   } catch(e) { alert("Erreur suppression : " + e.message); }
@@ -9197,3 +9203,234 @@ document.addEventListener("click", e => {
   if (!chip) return;
   activateWorkspace(chip.dataset.deptId, chip.dataset.deptType, chip.dataset.deptName);
 });
+
+// ═══════════════════════════════════════════════════════════════════════════
+// FINANCE
+// ═══════════════════════════════════════════════════════════════════════════
+
+async function loadFinance() {
+  // Initialise le filtre année si vide
+  const ySel = $("finance-year");
+  if (ySel && !ySel.options.length) {
+    const now = new Date().getFullYear();
+    for (let y = now; y >= now - 3; y--) {
+      const o = document.createElement("option");
+      o.value = y; o.textContent = y;
+      ySel.appendChild(o);
+    }
+  }
+  const year  = $("finance-year")?.value  || "";
+  const month = $("finance-month")?.value || "";
+
+  try {
+    const params = new URLSearchParams();
+    if (year)  params.set("year",  year);
+    if (month) params.set("month", month);
+
+    const [summary, txns] = await Promise.all([
+      apiCall(`/api/transactions/summary?${params}`),
+      apiCall(`/api/transactions?${params}`),
+    ]);
+
+    // KPIs
+    const kpiEl = $("finance-kpis");
+    if (kpiEl) {
+      const fmt = v => Number(v || 0).toLocaleString("fr-CA", { style:"currency", currency:"CAD", maximumFractionDigits:0 });
+      kpiEl.innerHTML = `
+        <div class="exec-kpi-card"><div class="exec-kpi-val">${fmt(summary.total_paid)}</div><div class="exec-kpi-lbl">Total payé</div></div>
+        <div class="exec-kpi-card"><div class="exec-kpi-val">${fmt(summary.total_pending)}</div><div class="exec-kpi-lbl">En attente</div></div>
+        <div class="exec-kpi-card"><div class="exec-kpi-val">${summary.count_paid || 0}</div><div class="exec-kpi-lbl">Transactions</div></div>
+        <div class="exec-kpi-card" style="${(summary.flagged_count || 0) > 0 ? 'border-color:#fca5a5;background:#fff1f2' : ''}">
+          <div class="exec-kpi-val" style="${(summary.flagged_count || 0) > 0 ? 'color:#dc2626' : ''}">${summary.flagged_count || 0}</div>
+          <div class="exec-kpi-lbl">Anomalies</div>
+        </div>
+        <div class="exec-kpi-card"><div class="exec-kpi-val">${summary.vendor_count || 0}</div><div class="exec-kpi-lbl">Fournisseurs</div></div>
+      `;
+    }
+
+    // Anomalies
+    const anomEl = $("finance-anomalies");
+    if (anomEl) {
+      const flagged = (txns || []).filter(t => t.is_flagged);
+      anomEl.innerHTML = flagged.length ? `
+        <div style="background:#fff7ed;border:1px solid #fdba74;border-radius:10px;padding:12px 16px;margin-bottom:16px">
+          <strong style="color:#c2410c">⚠️ ${flagged.length} anomalie(s) détectée(s)</strong>
+          <ul style="margin:8px 0 0;padding-left:18px;font-size:.82rem;color:#7c2d12">
+            ${flagged.map(t => `<li><strong>${esc(t.vendor_name || '—')}</strong> — ${esc(t.flag_reason || 'Doublon potentiel')} (${Number(t.amount).toLocaleString("fr-CA", {style:"currency",currency:"CAD"})})</li>`).join("")}
+          </ul>
+        </div>` : "";
+    }
+
+    // Table transactions
+    const tbl = $("finance-table");
+    if (tbl) {
+      if (!txns || !txns.length) {
+        tbl.innerHTML = "<p class='muted' style='padding:20px'>Aucune transaction. Cliquez sur «+ Ajouter» pour en créer une.</p>";
+      } else {
+        const CATEGORY_FR = { software:"Logiciels", hardware:"Matériel", cloud:"Cloud", telecom:"Télécom", marketing:"Marketing", hr:"RH", legal:"Juridique", finance:"Finance", facilities:"Locaux", travel:"Voyage", consulting:"Conseil", training:"Formation", utilities:"Services", insurance:"Assurance", other:"Autre" };
+        const STATUS_BADGE = { paid:"<span class='badge bl'>Payé</span>", pending:"<span class='badge' style='background:#fef3c7;color:#92400e;border:1px solid #fde68a'>En attente</span>", cancelled:"<span class='badge bs'>Annulé</span>" };
+        tbl.innerHTML = `<table class="data-table"><thead><tr>
+          <th>Date</th><th>Fournisseur</th><th>Description</th><th>Montant</th><th>Catégorie</th><th>Statut</th><th>IA</th>
+        </tr></thead><tbody>
+          ${txns.map(t => `<tr ${t.is_flagged ? 'style="background:#fff7ed"' : ''}>
+            <td>${(t.transaction_date||"").slice(0,10)}</td>
+            <td>${esc(t.vendor_name || "—")}</td>
+            <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(t.description||"")}">${esc(t.description||"—")}</td>
+            <td style="font-weight:700;color:${t.is_flagged ? '#dc2626':'#1e293b'}">${Number(t.amount).toLocaleString("fr-CA",{style:"currency",currency:"CAD"})}</td>
+            <td><span class="badge bs">${CATEGORY_FR[t.category] || t.category || "—"}</span></td>
+            <td>${STATUS_BADGE[t.status] || t.status}</td>
+            <td><button class="btn btn-outline btn-sm" onclick="aiCategorizeTransaction('${t.id}','${esc(t.description||"")}',${t.amount},'${esc(t.vendor_name||"")}')" title="Catégoriser avec l'IA">🤖</button></td>
+          </tr>`).join("")}
+        </tbody></table>`;
+      }
+    }
+  } catch(e) {
+    const tbl = $("finance-table");
+    if (tbl) tbl.innerHTML = `<p class="muted" style="padding:20px;color:#dc2626">Erreur : ${e.message}</p>`;
+  }
+}
+
+async function aiCategorizeTransaction(txnId, description, amount, vendorName) {
+  try {
+    const res = await apiCall("/api/transactions/categorize-ai", "POST", { description, amount, vendor_name: vendorName });
+    if (res.success) {
+      const CATEGORY_FR = { software:"Logiciels", hardware:"Matériel", cloud:"Cloud", telecom:"Télécom", marketing:"Marketing", hr:"RH", legal:"Juridique", finance:"Finance", facilities:"Locaux", travel:"Voyage", consulting:"Conseil", training:"Formation", utilities:"Services", insurance:"Assurance", other:"Autre" };
+      const conf = Math.round((res.confidence || 0) * 100);
+      if (confirm(`IA suggère : ${CATEGORY_FR[res.category] || res.category} (confiance ${conf}%)\nRaison : ${res.reason || "—"}\n\nAppliquer cette catégorie ?`)) {
+        await apiCall(`/api/transactions/${txnId}`, "PATCH", { category: res.category });
+        loadFinance();
+      }
+    } else {
+      alert("Erreur IA : " + (res.error || "indisponible"));
+    }
+  } catch(e) { alert("Erreur : " + e.message); }
+}
+
+function openAddTransactionModal() {
+  alert("Fonctionnalité d'ajout de transaction — à connecter au modal existant du Parc IT → Transactions.");
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// RECHERCHE INTERNE
+// ═══════════════════════════════════════════════════════════════════════════
+
+async function loadRecherche() {
+  // Charge la liste des documents pour informer l'utilisateur
+  try {
+    const { documents } = await apiCall("/api/documents");
+    const emptyEl = $("search-empty");
+    if (emptyEl) emptyEl.classList.toggle("hidden", documents && documents.length > 0);
+  } catch(_) {}
+}
+
+function setSearchQuery(btn) {
+  const q = $("search-query");
+  if (q) { q.value = btn.textContent; q.focus(); }
+}
+
+async function doInternalSearch() {
+  const query = $("search-query")?.value?.trim();
+  if (!query) return;
+
+  const btn = $("search-btn");
+  const resultEl  = $("search-result");
+  const answerEl  = $("search-answer");
+  const sourcesEl = $("search-sources");
+  const emptyEl   = $("search-empty");
+
+  if (btn) { btn.disabled = true; btn.textContent = "Recherche…"; }
+  resultEl?.classList.add("hidden");
+  emptyEl?.classList.add("hidden");
+
+  try {
+    const language = $("search-lang")?.value || "fr";
+    const res = await apiCall("/api/search/internal", "POST", { query, language });
+
+    if (!res.success && !res.sources?.length) {
+      emptyEl?.classList.remove("hidden");
+      if (answerEl) answerEl.textContent = res.answer || "";
+      resultEl?.classList.remove("hidden");
+      return;
+    }
+
+    if (answerEl) answerEl.textContent = res.answer || "";
+
+    if (sourcesEl) {
+      sourcesEl.innerHTML = (res.sources || []).map(s => `
+        <div style="background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:10px 14px;display:flex;gap:10px;align-items:flex-start">
+          <span style="font-size:1.1rem;flex-shrink:0">📄</span>
+          <div>
+            <div style="font-size:.85rem;font-weight:700;color:var(--navy)">${esc(s.filename)}</div>
+            ${s.created_at ? `<div style="font-size:.72rem;color:var(--slate2);margin-top:1px">${s.created_at}</div>` : ""}
+            ${s.preview ? `<div style="font-size:.78rem;color:var(--slate);margin-top:4px;line-height:1.5">${esc(s.preview)}…</div>` : ""}
+          </div>
+        </div>`).join("");
+    }
+
+    resultEl?.classList.remove("hidden");
+  } catch(e) {
+    if (answerEl) answerEl.textContent = "Erreur : " + e.message;
+    resultEl?.classList.remove("hidden");
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = "Rechercher"; }
+  }
+}
+
+// Soumettre avec Entrée
+$("search-query")?.addEventListener("keydown", e => {
+  if (e.key === "Enter") doInternalSearch();
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// EXTRACTION IA DOCUMENTS
+// ═══════════════════════════════════════════════════════════════════════════
+
+async function extractDocumentFields() {
+  if (!state.docId) return;
+  const docType = $("extract-doc-type")?.value || "auto";
+  const btn     = $("extract-btn");
+  const resEl   = $("extract-result");
+
+  if (btn) { btn.disabled = true; btn.textContent = "Extraction…"; }
+  if (resEl) resEl.classList.add("hidden");
+
+  try {
+    const res = await apiCall(`/api/documents/${state.docId}/extract?doc_type=${docType}`, "POST");
+
+    if (!res.success) {
+      if (resEl) { resEl.innerHTML = `<p class="muted" style="color:#dc2626">Erreur : ${esc(res.error || "indisponible")}</p>`; resEl.classList.remove("hidden"); }
+      return;
+    }
+
+    const TYPE_LABELS = { facture:"🧾 Facture", contrat:"📜 Contrat", formulaire:"📋 Formulaire", rapport:"📊 Rapport", auto:"📄 Document", autre:"📄 Document" };
+    const typeLabel = TYPE_LABELS[res.doc_type] || `📄 ${esc(res.doc_type || "Document")}`;
+
+    const fields = res.extracted || {};
+    const rows = Object.entries(fields).map(([k, v]) => {
+      if (v === null || v === undefined) return "";
+      const label = k.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+      let display;
+      if (Array.isArray(v)) {
+        display = `<ul style="margin:0;padding-left:16px">${v.map(item => `<li>${typeof item === "object" ? Object.entries(item).map(([ik,iv]) => `<em>${ik}</em>: ${iv}`).join(" · ") : esc(String(item))}</li>`).join("")}</ul>`;
+      } else if (typeof v === "object") {
+        display = Object.entries(v).map(([ik,iv]) => `<strong>${ik}</strong>: ${esc(String(iv))}`).join("<br>");
+      } else {
+        display = `<strong>${esc(String(v))}</strong>`;
+      }
+      return `<tr><td style="color:var(--slate);white-space:nowrap;font-size:.8rem;padding:6px 12px 6px 0;vertical-align:top">${label}</td><td style="font-size:.85rem;padding:6px 0">${display}</td></tr>`;
+    }).filter(Boolean).join("");
+
+    if (resEl) {
+      resEl.innerHTML = `
+        <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:10px;padding:14px 18px">
+          <div style="font-size:.82rem;font-weight:700;color:#0369a1;margin-bottom:10px">${typeLabel} — Champs extraits</div>
+          <table style="width:100%;border-collapse:collapse">${rows || "<tr><td class='muted'>Aucun champ extrait.</td></tr>"}</table>
+        </div>`;
+      resEl.classList.remove("hidden");
+    }
+  } catch(e) {
+    if (resEl) { resEl.innerHTML = `<p class="muted" style="color:#dc2626">Erreur : ${esc(e.message)}</p>`; resEl.classList.remove("hidden"); }
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = "Extraire les champs"; }
+  }
+}

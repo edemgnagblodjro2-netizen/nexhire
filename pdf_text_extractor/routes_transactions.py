@@ -486,6 +486,61 @@ def _resolve_vendor(org_id: str, vendor_name: str | None, vendor_id: str | None,
         return str(cur.fetchone()["id"])
 
 
+class CategorizePayload(BaseModel):
+    description: str = Field(..., min_length=1)
+    amount:      float = Field(..., ge=0)
+    vendor_name: str | None = None
+
+
+_AI_CATEGORIES = [
+    "software", "hardware", "cloud", "telecom", "marketing",
+    "hr", "legal", "finance", "facilities", "travel",
+    "consulting", "training", "utilities", "insurance", "other",
+]
+
+
+@router.post("/categorize-ai")
+async def categorize_transaction_ai(
+    payload: CategorizePayload,
+    user: CurrentUser = Depends(require_min_role("manager")),
+):
+    """Catégorise automatiquement une transaction avec l'IA."""
+    try:
+        import json as _json
+        from openai import OpenAI
+        import os as _os
+        client = OpenAI(api_key=_os.environ.get("OPENAI_API_KEY", ""))
+        resp = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        f"You are a financial categorization expert. "
+                        f"Categorize the transaction into exactly ONE of: {', '.join(_AI_CATEGORIES)}. "
+                        'Return JSON: {"category":"...","confidence":0.0,"reason":"brief reason in French"}'
+                    ),
+                },
+                {
+                    "role": "user",
+                    "content": (
+                        f"Description: {payload.description} | "
+                        f"Amount: {payload.amount} | "
+                        f"Vendor: {payload.vendor_name or 'inconnu'}"
+                    ),
+                },
+            ],
+            response_format={"type": "json_object"},
+            max_tokens=150,
+        )
+        result = _json.loads(resp.choices[0].message.content)
+        if result.get("category") not in _AI_CATEGORIES:
+            result["category"] = "other"
+        return {"success": True, **result}
+    except Exception as exc:
+        return {"success": False, "category": "other", "confidence": 0.0, "error": type(exc).__name__}
+
+
 def _detect_anomalies(org_id: str, txn_id: str) -> None:
     """Détecte les doublons potentiels et marque is_flagged si besoin."""
     try:

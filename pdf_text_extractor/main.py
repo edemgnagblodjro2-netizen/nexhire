@@ -129,6 +129,7 @@ from routes_compliance             import router as compliance_router
 from routes_security_dashboard     import router as security_dashboard_router
 from routes_intelligence           import router as intelligence_router
 from routes_onboarding             import router as onboarding_router
+from routes_search                 import router as search_router
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -220,6 +221,7 @@ def create_app(
     app.include_router(security_dashboard_router)
     app.include_router(intelligence_router)
     app.include_router(onboarding_router)
+    app.include_router(search_router)
     app.state.storage = storage or DocumentStore.from_env()
     app.state.assistant = assistant or AssistantService.from_env()
 
@@ -496,6 +498,77 @@ def create_app(
             answer=answer,
             conversation_id=conversation["id"],
         )
+
+    @app.get("/api/documents")
+    def list_documents(
+        user: CurrentUser = Depends(require_min_role("user")),
+        store: DocumentStore = Depends(get_storage),
+    ):
+        """Liste les documents de l'organisation (sans le texte complet)."""
+        if store.supabase is not None:
+            resp = (
+                store.supabase.table("documents")
+                .select("id, filename, created_at, summary")
+                .eq("organization_id", str(user.organization_id))
+                .order("created_at", desc=True)
+                .limit(100)
+                .execute()
+            )
+            return {"documents": resp.data or []}
+        docs = [
+            {k: v for k, v in d.items() if k != "content_text"}
+            for d in store.documents.values()
+            if str(d.get("organization_id") or "") == str(user.organization_id)
+        ]
+        return {"documents": docs}
+
+    @app.post("/api/documents/{document_id}/extract")
+    def extract_document_fields(
+        document_id: str,
+        request: Request,
+        doc_type: str = Query(default="auto"),
+        store: DocumentStore = Depends(get_storage),
+        user: CurrentUser = Depends(require_min_role("user")),
+    ):
+        """Extraction structurée des champs clés d'un document (facture, contrat, etc.)."""
+        import json as _json
+        document = _document_or_404(store, document_id)
+        doc_org  = str(document.get("organization_id") or "")
+        if doc_org and doc_org != str(user.organization_id):
+            raise HTTPException(status_code=403, detail="Accès refusé.")
+
+        text = (document.get("content_text") or "")[:8000]
+        if not text.strip():
+            return {"success": False, "error": "Aucun texte extractible.", "extracted": {}, "doc_type": doc_type}
+
+        type_prompts = {
+            "facture":    "Extract: vendor_name, invoice_number, date, due_date, total_amount, currency, subtotal, tax_amount, line_items (array of {description, qty, unit_price, total}), payment_status",
+            "contrat":    "Extract: parties (array of names), contract_type, start_date, end_date, total_value, currency, key_obligations (array), renewal_type, governing_law, notice_period",
+            "formulaire": "Extract: form_title, submitter_name, submission_date, fields (object of key:value pairs from the form)",
+            "rapport":    "Extract: title, author, date, period_covered, executive_summary (1-2 sentences), key_metrics (object), recommendations (array of strings)",
+            "auto":       "Detect the document type (facture/contrat/formulaire/rapport/autre) and set it in 'doc_type', then extract the most relevant structured fields for that type.",
+        }
+        prompt = type_prompts.get(doc_type, type_prompts["auto"])
+
+        ai = request.app.state.assistant
+        system = (
+            f"You are a document data extraction expert. {prompt} "
+            "Return a valid JSON object. Use null for missing fields. "
+            "Keep values in the original document language. Respond ONLY with JSON."
+        )
+        if ai.backend is None:
+            return {"success": False, "error": "Service IA non configuré.", "extracted": {}, "doc_type": doc_type}
+
+        try:
+            raw = ai.backend.complete(system, f"Extract structured data from this document:\n\n{text}")
+            # Extrait le JSON même si le modèle ajoute du texte autour
+            start = raw.find("{")
+            end   = raw.rfind("}") + 1
+            extracted = _json.loads(raw[start:end]) if start >= 0 else {}
+            detected  = extracted.pop("doc_type", doc_type)
+            return {"success": True, "doc_type": detected, "extracted": extracted}
+        except Exception as exc:
+            return {"success": False, "error": type(exc).__name__, "extracted": {}, "doc_type": doc_type}
 
     @app.delete("/api/documents/{document_id}", status_code=204)
     async def delete_document_endpoint(

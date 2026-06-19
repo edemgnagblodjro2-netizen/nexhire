@@ -1084,6 +1084,8 @@
         <button class="tab-btn"  data-tab="optim"  role="tab" data-i18n="app.tab.optim">📊 Optimisation IA</button>
         <button class="tab-btn"  data-tab="parc-it" role="tab" data-i18n="app.tab.parc">💻 Parc IT</button>
         <button class="tab-btn"  data-tab="documents" role="tab" data-i18n="app.tab.documents">📄 Documents</button>
+        <button class="tab-btn"  data-tab="finance"   role="tab">💰 Finance</button>
+        <button class="tab-btn"  data-tab="recherche" role="tab">🔍 Recherche interne</button>
         <button class="tab-btn"  data-tab="stats"  role="tab" data-i18n="app.tab.stats">📈 Statistiques</button>
       </nav>
 
@@ -1438,6 +1440,92 @@
           <h3 data-i18n="docs.preview.title">Aperçu du texte extrait</h3>
           <pre id="preview" class="preview" data-i18n="docs.preview.empty">Aucun document téléversé.</pre>
         </div>
+        <div class="panel wide">
+          <h3>🧠 Extraction IA — Champs structurés</h3>
+          <p class="muted" style="font-size:.82rem;margin-bottom:10px">Détecte automatiquement le type de document et en extrait les champs clés.</p>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <select id="extract-doc-type" style="flex:1;min-width:160px">
+              <option value="auto">🔍 Détection automatique</option>
+              <option value="facture">🧾 Facture</option>
+              <option value="contrat">📜 Contrat</option>
+              <option value="formulaire">📋 Formulaire</option>
+              <option value="rapport">📊 Rapport</option>
+            </select>
+            <button id="extract-btn" disabled onclick="extractDocumentFields()" class="btn btn-primary btn-sm">Extraire les champs</button>
+          </div>
+          <div id="extract-result" class="hidden" style="margin-top:14px"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FINANCE & TRANSACTIONS ──────────────────────────────────────── -->
+    <section id="tab-finance" class="tab-content hidden" role="tabpanel">
+      <div class="section-header">
+        <h2>💰 Finance &amp; Transactions</h2>
+        <div class="controls-inline">
+          <select id="finance-year" onchange="loadFinance()"></select>
+          <select id="finance-month" onchange="loadFinance()">
+            <option value="">Tous les mois</option>
+            <option value="1">Janvier</option><option value="2">Février</option>
+            <option value="3">Mars</option><option value="4">Avril</option>
+            <option value="5">Mai</option><option value="6">Juin</option>
+            <option value="7">Juillet</option><option value="8">Août</option>
+            <option value="9">Septembre</option><option value="10">Octobre</option>
+            <option value="11">Novembre</option><option value="12">Décembre</option>
+          </select>
+          <button class="btn btn-outline btn-sm" onclick="loadFinance()">↻ Actualiser</button>
+        </div>
+      </div>
+      <div id="finance-kpis" class="exec-kpi-grid" style="margin-bottom:20px">
+        <div class="exec-kpi-loading"><div class="spinner" style="margin:auto"></div></div>
+      </div>
+      <div id="finance-anomalies"></div>
+      <div class="section-header" style="margin-top:8px">
+        <h3 style="font-size:.92rem;font-weight:700;color:var(--navy)">Transactions</h3>
+        <button class="btn btn-primary btn-sm" onclick="openAddTransactionModal()">+ Ajouter</button>
+      </div>
+      <div id="finance-table" class="table-wrap">
+        <p class="muted" style="padding:20px">Chargement…</p>
+      </div>
+    </section>
+
+    <!-- ── RECHERCHE INTERNE ─────────────────────────────────────────── -->
+    <section id="tab-recherche" class="tab-content hidden" role="tabpanel">
+      <div class="section-header">
+        <h2>🔍 Recherche interne</h2>
+        <select id="search-lang">
+          <option value="fr">Français</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+      <div class="panel" style="margin-bottom:16px">
+        <p class="muted" style="font-size:.85rem;margin-bottom:14px">
+          Interrogez vos documents internes en langage naturel. L'IA lit vos fichiers et génère une réponse avec les sources.
+        </p>
+        <div style="display:flex;gap:10px">
+          <input id="search-query" type="text" style="flex:1"
+            placeholder="Ex : Quelle est notre politique de remboursement des frais ?" />
+          <button class="btn btn-primary" onclick="doInternalSearch()" id="search-btn">Rechercher</button>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap" id="search-suggestions">
+          <button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">Politique de remboursement</button>
+          <button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">Conditions du contrat fournisseur</button>
+          <button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">Processus d'approbation</button>
+        </div>
+      </div>
+      <div id="search-result" class="hidden">
+        <div class="panel" style="background:#f0fdf4;border-color:#86efac">
+          <div style="display:flex;gap:10px;align-items:flex-start">
+            <span style="font-size:1.4rem;flex-shrink:0">🤖</span>
+            <div id="search-answer" style="font-size:.9rem;line-height:1.7;white-space:pre-wrap;color:#1e293b"></div>
+          </div>
+        </div>
+        <h4 style="font-size:.8rem;font-weight:700;color:var(--slate2);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px">Sources consultées</h4>
+        <div id="search-sources" style="display:flex;flex-direction:column;gap:8px"></div>
+      </div>
+      <div id="search-empty" class="panel hidden" style="text-align:center;padding:40px 20px">
+        <div style="font-size:2rem;margin-bottom:8px">📂</div>
+        <p style="color:var(--slate);font-size:.88rem">Aucun document trouvé. Téléversez des fichiers dans <strong>Documents</strong> pour activer la recherche.</p>
       </div>
     </section>
 
