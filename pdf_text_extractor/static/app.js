@@ -2982,6 +2982,7 @@ let _financeDonutChart  = null;
 let _financeSelectedCat = null;
 let _financeCatData     = null;
 let _financeExecChart   = null;
+let _rhExecChart        = null;
 
 async function loadAnalytics() {
   const days = $("stats-days")?.value || 30;
@@ -3261,7 +3262,7 @@ const HIERARCHY_COLORS = ["#7c3aed","#2563eb","#0891b2","#16a34a","#d97706","#64
 const HIERARCHY_ICONS  = ["🏛️","🎯","🗂️","👔","🔍","👤"];
 
 async function loadTeam() {
-  await Promise.all([_loadMembers(), _loadPendingInvitations()]);
+  await Promise.all([_loadMembers(), _loadPendingInvitations(), _loadRHCopilot()]);
   loadDepartments();
   loadOrgChart();
   loadAllExternalContractors();
@@ -10013,14 +10014,218 @@ async function aiCategorizeTransaction(txnId, description, amount, vendorName) {
 }
 
 function switchFinanceTab(tab) {
-  document.querySelectorAll('[data-finance-tab]').forEach(el => {
+  const sec = document.getElementById('tab-finance');
+  if (!sec) return;
+  sec.querySelectorAll('[data-finance-tab]').forEach(el => {
     el.style.display = el.dataset.financeTab === tab ? '' : 'none';
   });
-  document.querySelectorAll('.finance-tab-btn').forEach(btn => {
+  sec.querySelectorAll('.finance-tab-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.ftab === tab);
   });
   if (tab === 'previsions') setTimeout(() => { if (_financeBarChart) _financeBarChart.resize(); if (_financeDonutChart) _financeDonutChart.resize(); }, 50);
   if (tab === 'executive') setTimeout(() => { if (_financeExecChart) _financeExecChart.resize(); }, 50);
+}
+
+function switchTeamTab(tab) {
+  const sec = document.getElementById('tab-team');
+  if (!sec) return;
+  sec.querySelectorAll('[data-team-tab]').forEach(el => {
+    el.style.display = el.dataset.teamTab === tab ? '' : 'none';
+  });
+  sec.querySelectorAll('.finance-tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.ftab === tab);
+  });
+  if (tab === 'executive') setTimeout(() => { if (_rhExecChart) _rhExecChart.resize(); }, 50);
+}
+
+async function _loadRHCopilot() {
+  try {
+    const [membersData, depts, contractorsRaw] = await Promise.all([
+      apiCall('/api/members'),
+      apiCall('/api/departments'),
+      apiCall('/api/external-contractors').catch(() => []),
+    ]);
+    const members       = membersData?.members || [];
+    const activeMembers = members.filter(m => m.is_active !== false);
+    const inactiveMbrs  = members.filter(m => m.is_active === false);
+    const contractors   = Array.isArray(contractorsRaw) ? contractorsRaw : (contractorsRaw?.contractors || contractorsRaw?.data || []);
+    const emptyDepts    = depts.filter(d => (d.member_count||0) === 0);
+    const activePct     = members.length > 0 ? Math.round(activeMembers.length / members.length * 100) : 0;
+
+    // Score RH
+    let rhScore = 100;
+    rhScore -= emptyDepts.length * 5;
+    rhScore -= Math.min(30, inactiveMbrs.length * 5);
+    if (!depts.length) rhScore -= 20;
+    rhScore = Math.max(0, Math.min(100, Math.round(rhScore)));
+    const scoreColor = rhScore >= 80 ? '#15803d' : rhScore >= 60 ? '#d97706' : '#dc2626';
+
+    // KPIs
+    const kpiEl = $("rh-kpis");
+    if (kpiEl) {
+      const actCol = activePct >= 90 ? '#15803d' : activePct >= 70 ? '#d97706' : '#dc2626';
+      kpiEl.innerHTML = `
+        <div class="exec-kpi-card">
+          <div class="exec-kpi-icon">👥</div>
+          <div class="exec-kpi-body"><div class="exec-kpi-val">${members.length}</div><div class="exec-kpi-lbl">Effectif total</div></div>
+        </div>
+        <div class="exec-kpi-card">
+          <div class="exec-kpi-icon">🏢</div>
+          <div class="exec-kpi-body"><div class="exec-kpi-val">${depts.length}</div><div class="exec-kpi-lbl">Départements</div></div>
+        </div>
+        <div class="exec-kpi-card ${inactiveMbrs.length > 0 ? 'exec-kpi-warn' : 'highlight'}">
+          <div class="exec-kpi-icon">${inactiveMbrs.length > 0 ? '⚠️' : '✅'}</div>
+          <div class="exec-kpi-body"><div class="exec-kpi-val" style="${inactiveMbrs.length > 0 ? 'color:#dc2626' : ''}">${inactiveMbrs.length}</div><div class="exec-kpi-lbl">Membres inactifs</div></div>
+        </div>
+        <div class="exec-kpi-card">
+          <div class="exec-kpi-icon">📊</div>
+          <div class="exec-kpi-body"><div class="exec-kpi-val" style="color:${actCol}">${activePct}%</div><div class="exec-kpi-lbl">Taux d'activation</div></div>
+        </div>
+        <div class="exec-kpi-card">
+          <div class="exec-kpi-icon">🤝</div>
+          <div class="exec-kpi-body"><div class="exec-kpi-val">${contractors.length}</div><div class="exec-kpi-lbl">Prestataires externes</div></div>
+        </div>
+        <div class="exec-kpi-card" style="border-color:${scoreColor}">
+          <div style="width:50px;height:50px;border-radius:50%;border:4px solid ${scoreColor};display:flex;align-items:center;justify-content:center;font-size:1.05rem;font-weight:800;color:${scoreColor};flex-shrink:0">${rhScore}</div>
+          <div class="exec-kpi-body"><div class="exec-kpi-val" style="color:${scoreColor}">/100</div><div class="exec-kpi-lbl">Score RH</div></div>
+        </div>
+      `;
+    }
+
+    // Maturité RH
+    const matEl = $("rh-maturity");
+    if (matEl) {
+      const coverScore  = depts.length > 0 ? Math.round(depts.filter(d => (d.member_count||0) > 0).length / depts.length * 100) : 0;
+      const actScore    = activePct;
+      const strucScore  = depts.length > 0 ? Math.min(100, Math.round(depts.filter(d => (d.member_count||0) >= 2).length / depts.length * 100 + 20)) : 0;
+      const matScore    = Math.round(coverScore * 0.4 + actScore * 0.35 + strucScore * 0.25);
+      const matLevel    = matScore >= 85 ? "Avancé" : matScore >= 70 ? "Intermédiaire" : matScore >= 50 ? "Basique" : "Initial";
+      const matColor    = matScore >= 85 ? "#15803d" : matScore >= 70 ? "#d97706" : "#dc2626";
+      matEl.innerHTML = '<div class="ai-card" style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">' +
+        '<div style="text-align:center;flex-shrink:0"><div style="width:64px;height:64px;border-radius:50%;border:4px solid ' + matColor + ';display:flex;align-items:center;justify-content:center;font-size:1.35rem;font-weight:900;color:' + matColor + ';margin:0 auto">' + matScore + '</div><div style="font-size:.7rem;font-weight:600;color:var(--slate);margin-top:4px">/100</div></div>' +
+        '<div style="flex:1;min-width:200px"><div style="font-size:.72rem;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">🏢 Maturité RH</div>' +
+        '<div style="font-size:1.05rem;font-weight:800;color:' + matColor + ';margin-bottom:10px">Niveau ' + matLevel + '</div>' +
+        _maturityBar("Couverture des départements", coverScore, "#6366f1") +
+        _maturityBar("Taux d'activation", actScore, "#34d399") +
+        _maturityBar("Richesse de la structure", strucScore, "#fbbf24") +
+        '</div></div>';
+    }
+
+    // Graphique — Effectif par département
+    const ecEl = $("rh-exec-chart");
+    if (ecEl) {
+      if (_rhExecChart) { _rhExecChart.destroy(); _rhExecChart = null; }
+      const deptsWithData = depts.filter(d => d.member_count != null);
+      if (deptsWithData.length) {
+        const sorted = [...deptsWithData].sort((a, b) => (b.member_count||0) - (a.member_count||0));
+        ecEl.innerHTML = '<div class="chart-panel"><h3>👥 Effectif par département</h3><canvas id="rh-exec-bar" height="' + Math.min(320, Math.max(140, sorted.length * 38)) + '"></canvas></div>';
+        _rhExecChart = new Chart($("rh-exec-bar"), {
+          type: "bar",
+          plugins: [ChartDataLabels],
+          data: {
+            labels: sorted.map(d => d.name),
+            datasets: [{ label: "Membres", data: sorted.map(d => d.member_count||0), backgroundColor: "rgba(99,102,241,.75)", borderColor: "#6366f1", borderWidth: 1 }],
+          },
+          options: {
+            responsive: true,
+            indexAxis: "y",
+            plugins: {
+              legend: { display: false },
+              datalabels: { anchor:"end", align:"end", font:{ size:10, weight:"bold" }, color:"#475569", formatter: v => v + " pers." },
+            },
+            scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } },
+          },
+        });
+      } else { ecEl.innerHTML = ""; }
+    }
+
+    // Synthèse IA
+    const synthEl = $("rh-ai-synthesis");
+    if (synthEl) {
+      let txt = "L'organisation compte " + members.length + " membre" + (members.length>1?"s":"") + " réparti" + (members.length>1?"s":"") + " dans " + depts.length + " département" + (depts.length>1?"s":"") + ", avec un taux d'activation de " + activePct + "%.";
+      if (emptyDepts.length > 0) txt += " " + emptyDepts.length + " département" + (emptyDepts.length>1?"s sont":"  est") + " sans effectif assigné.";
+      if (contractors.length > 0) txt += " L'organisation collabore avec " + contractors.length + " prestataire" + (contractors.length>1?"s":"") + " externe" + (contractors.length>1?"s":"") + ".";
+      if (inactiveMbrs.length > 0) txt += " " + inactiveMbrs.length + " membre" + (inactiveMbrs.length>1?"s":"") + " inactif" + (inactiveMbrs.length>1?"s":"") + " nécessite" + (inactiveMbrs.length>1?"nt":"") + " une révision.";
+      synthEl.innerHTML = !members.length && !depts.length
+        ? '<div class="ai-card"><span class="ai-badge">🤖 Synthèse IA</span><p class="muted" style="margin:8px 0 0">Aucune donnée RH disponible. Commencez par inviter des membres et créer des départements.</p></div>'
+        : '<div class="ai-card"><span class="ai-badge">🤖 Synthèse IA</span><p style="margin:8px 0 0;line-height:1.6;color:var(--navy);font-size:.9rem">' + txt + '</p></div>';
+    }
+
+    // Questions rapides
+    const quickEl = $("rh-quick-questions");
+    if (quickEl) {
+      quickEl.innerHTML = '<div class="ai-card"><span class="ai-badge">🤖 Questions rapides</span>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">' +
+        '<button class="btn btn-outline btn-sm" onclick="_rhQuickQuestion(\'score\')">Pourquoi ce score RH ?</button>' +
+        '<button class="btn btn-outline btn-sm" onclick="_rhQuickQuestion(\'empty\')">Départements sans effectif ?</button>' +
+        '<button class="btn btn-outline btn-sm" onclick="_rhQuickQuestion(\'growth\')">Prévoir l\'effectif 2027</button>' +
+        '<button class="btn btn-outline btn-sm" onclick="_rhQuickQuestion(\'ratio\')">Ratio prestataires / employés ?</button>' +
+        '</div><div id="rh-quick-response" style="display:none"></div></div>';
+    }
+
+    // Stocker pour les questions rapides
+    window._rhData = { members, activeMembers, inactiveMbrs, depts, contractors, emptyDepts, rhScore, activePct };
+
+    // Recommandations IA
+    const recsEl = $("rh-ai-recs");
+    if (recsEl) {
+      const recs = [];
+      emptyDepts.slice(0, 4).forEach(d => {
+        recs.push({ type:"danger", icon:"🔴",
+          txt:"<strong>" + esc(d.name) + "</strong> : aucun membre assigné",
+          why:["Ce département existe dans la structure mais ne compte aucun membre actif", "Un département vide n'a aucun impact sur la couverture organisationnelle", "→ Assigner un responsable ou supprimer ce département"] });
+      });
+      if (inactiveMbrs.length > 0) {
+        recs.push({ type:"warn", icon:"🟡",
+          txt:"<strong>" + inactiveMbrs.length + " membre" + (inactiveMbrs.length>1?"s":"") + " inactif" + (inactiveMbrs.length>1?"s":"") + "</strong> dans l'organisation",
+          why:["Les membres inactifs occupent une place dans le quota de l'organisation", "Ils ne peuvent pas accéder à la plateforme ni être assignés", "→ Réactiver les comptes nécessaires ou les supprimer"] });
+      }
+      if (members.length > 0 && contractors.length / members.length > 0.3) {
+        const ratio = Math.round(contractors.length / members.length * 100);
+        recs.push({ type:"warn", icon:"⚠️",
+          txt:"Ratio prestataires élevé : <strong>" + ratio + "%</strong> de l'effectif interne",
+          why:["Les prestataires représentent " + ratio + "% de l'effectif total", "Une dépendance élevée peut être un risque opérationnel et financier", "→ Évaluer les compétences critiques et envisager des embauches stratégiques"] });
+      }
+      if (!recs.length) recs.push({ type:"ok", icon:"✅", txt:"Structure RH saine. Aucune alerte détectée.", why:["Tous les départements ont des membres assignés", "Le taux d'activation est satisfaisant", "→ Maintenir la structure et planifier les besoins futurs en recrutement"] });
+      const bgMap = { danger:"#fff1f2", warn:"#fffbeb", ok:"#f0fdf4" };
+      recsEl.innerHTML = '<div class="ai-card"><span class="ai-badge">💡 Recommandations IA</span><ul style="margin:10px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px">' +
+        recs.map(r => '<li style="border-radius:8px;background:' + bgMap[r.type] + ';overflow:hidden"><div style="display:flex;align-items:flex-start;gap:8px;padding:8px 10px"><span style="flex-shrink:0">' + r.icon + '</span><div style="flex:1"><span style="font-size:.88rem;color:var(--navy);line-height:1.5">' + r.txt + '</span>' +
+          '<button onclick="toggleRHWhyPanel(this)" style="background:none;border:none;cursor:pointer;font-size:.75rem;color:var(--indigo);font-weight:600;padding:2px 0 0;display:block">📋 Pourquoi ? ▾</button>' +
+          '<div style="display:none;margin-top:6px;padding:8px 10px;background:rgba(255,255,255,.75);border-radius:6px">' + r.why.map(w => '<div style="font-size:.8rem;color:var(--slate);line-height:1.6">' + w + '</div>').join("") + '</div>' +
+          '</div></div></li>').join("") +
+        "</ul></div>";
+    }
+  } catch(e) { console.error("RH Copilot:", e); }
+}
+
+function _rhQuickQuestion(q) {
+  const d = window._rhData;
+  if (!d) return;
+  let ans = "";
+  if (q === 'score') {
+    ans = "Le score RH (" + d.rhScore + "/100) reflète la couverture des départements, le taux d'activation (" + d.activePct + "%) et la présence de membres inactifs (" + d.inactiveMbrs.length + "). Un score ≥ 80 indique une organisation RH bien structurée.";
+  } else if (q === 'empty') {
+    ans = d.emptyDepts.length > 0 ? d.emptyDepts.length + " département" + (d.emptyDepts.length>1?"s":"") + " sans effectif : " + d.emptyDepts.map(e => e.name).join(", ") + "." : "Tous les départements ont au moins un membre assigné.";
+  } else if (q === 'growth') {
+    const cur = d.members.length;
+    const proj = Math.round(cur * 1.1);
+    ans = "En supposant 10% de croissance par an, l'effectif 2027 est estimé à " + proj + " membres (+" + (proj - cur) + " par rapport à aujourd'hui).";
+  } else if (q === 'ratio') {
+    const ratio = d.members.length > 0 ? Math.round(d.contractors.length / d.members.length * 100) : 0;
+    ans = "Ratio prestataires / employés : " + d.contractors.length + " prestataire" + (d.contractors.length>1?"s":"") + " pour " + d.members.length + " membre" + (d.members.length>1?"s":"") + " (" + ratio + "%). " + (ratio > 30 ? "Ce ratio est élevé — risque de dépendance." : "Ce ratio est dans une fourchette normale.");
+  }
+  const respEl = $("rh-quick-response");
+  if (respEl && ans) {
+    respEl.style.display = '';
+    respEl.innerHTML = '<div style="margin-top:10px;padding:10px 12px;background:#fff;border-radius:8px;border:1px solid #c7d2fe"><p style="margin:0;font-size:.88rem;line-height:1.6;color:var(--navy)">🤖 ' + ans + '</p></div>';
+  }
+}
+
+function toggleRHWhyPanel(btn) {
+  const panel = btn.nextElementSibling;
+  const open = panel.style.display !== '' && panel.style.display !== 'none';
+  panel.style.display = open ? 'none' : 'block';
+  btn.innerHTML = open ? '📋 Pourquoi ? ▾' : '📋 Pourquoi ? ▴';
 }
 
 function _maturityBar(label, pct, color) {

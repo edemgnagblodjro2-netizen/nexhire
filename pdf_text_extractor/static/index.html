@@ -1667,27 +1667,47 @@
     <!-- ── ÉQUIPE ────────────────────────────────────────────────────────── -->
     <section id="tab-team" class="tab-content hidden admin-only" role="tabpanel">
       <div class="section-header">
-        <h2 data-i18n="team.title">Gestion de l'équipe</h2>
+        <div>
+          <span class="finance-copilot-label">🤖 CivicAI RH Copilot</span>
+          <h2 data-i18n="team.title">👥 Ressources Humaines</h2>
+        </div>
         <button class="btn btn-primary btn-sm" onclick="openInviteModal()" data-i18n="team.invite.btn">+ Inviter un membre</button>
       </div>
-      <p class="section-desc" data-i18n="team.desc">
-        Les membres invités rejoignent votre organisation et partagent le quota mensuel de requêtes.
-      </p>
 
-      <!-- Member table -->
-      <div class="table-wrap" id="team-table-wrap">
-        <p class="muted" style="padding:20px" data-i18n="loading">Chargement…</p>
+      <nav class="finance-subnav">
+        <button class="finance-tab-btn active" onclick="switchTeamTab('executive')" data-ftab="executive">🎯 Vue Exécutive</button>
+        <button class="finance-tab-btn" onclick="switchTeamTab('effectifs')" data-ftab="effectifs">👥 Effectifs</button>
+        <button class="finance-tab-btn" onclick="switchTeamTab('departements')" data-ftab="departements">🏢 Départements</button>
+        <button class="finance-tab-btn" onclick="switchTeamTab('structure')" data-ftab="structure">📊 Structure</button>
+        <button class="finance-tab-btn" onclick="switchTeamTab('prestataires')" data-ftab="prestataires">🤝 Prestataires</button>
+      </nav>
+
+      <!-- Vue Exécutive -->
+      <div class="ftab-content" data-team-tab="executive">
+        <div id="rh-kpis" class="exec-kpi-grid" style="margin-bottom:16px">
+          <div class="exec-kpi-loading"><div class="spinner" style="margin:auto"></div></div>
+        </div>
+        <div id="rh-maturity" style="margin-bottom:16px"></div>
+        <div id="rh-exec-chart" style="margin-bottom:20px"></div>
+        <div id="rh-ai-synthesis" style="margin-bottom:16px"></div>
+        <div id="rh-quick-questions" style="margin-bottom:16px"></div>
+        <div id="rh-ai-recs" style="margin-bottom:16px"></div>
       </div>
 
-      <!-- Pending invitations -->
-      <div id="pending-inv-wrap" style="margin-top:24px">
-        <h3 style="font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:12px" data-i18n="team.pending">Invitations en attente</h3>
-        <div id="pending-inv-list" class="pending-inv-list"></div>
+      <!-- Effectifs -->
+      <div class="ftab-content" data-team-tab="effectifs" style="display:none">
+        <div class="table-wrap" id="team-table-wrap">
+          <p class="muted" style="padding:20px" data-i18n="loading">Chargement…</p>
+        </div>
+        <div id="pending-inv-wrap" style="margin-top:24px">
+          <h3 style="font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:12px" data-i18n="team.pending">Invitations en attente</h3>
+          <div id="pending-inv-list" class="pending-inv-list"></div>
+        </div>
       </div>
 
       <!-- Départements -->
-      <div style="margin-top:32px">
-        <div class="section-header" style="margin-bottom:8px">
+      <div class="ftab-content" data-team-tab="departements" style="display:none">
+        <div class="section-header" style="margin-bottom:8px;margin-top:4px">
           <h3 style="font-size:.95rem;font-weight:700;color:var(--navy)" data-i18n="dept.title">Départements</h3>
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
             <button class="btn btn-outline btn-sm" onclick="openDeptModal()">+ Département</button>
@@ -1703,18 +1723,18 @@
         <div id="dept-list-wrap"><p class="muted" data-i18n="loading">Chargement…</p></div>
       </div>
 
-      <!-- Organigramme -->
-      <div style="margin-top:32px">
-        <div class="section-header" style="margin-bottom:8px">
+      <!-- Structure -->
+      <div class="ftab-content" data-team-tab="structure" style="display:none">
+        <div class="section-header" style="margin-bottom:8px;margin-top:4px">
           <h3 style="font-size:.95rem;font-weight:700;color:var(--navy)">📊 Organigramme</h3>
           <button class="btn btn-outline btn-sm" onclick="loadOrgChart()">↻ Actualiser</button>
         </div>
         <div id="orgchart-wrap"><p class="muted">Chargement…</p></div>
       </div>
 
-      <!-- Collaborateurs externes -->
-      <div style="margin-top:32px" id="external-contractors-section">
-        <div class="section-header" style="margin-bottom:8px">
+      <!-- Prestataires -->
+      <div class="ftab-content" data-team-tab="prestataires" style="display:none" id="external-contractors-section">
+        <div class="section-header" style="margin-bottom:8px;margin-top:4px">
           <h3 style="font-size:.95rem;font-weight:700;color:var(--navy)">🤝 Collaborateurs externes</h3>
           <button class="btn btn-primary btn-sm" onclick="openContractorModal()">+ Ajouter</button>
         </div>
