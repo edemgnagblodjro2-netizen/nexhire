@@ -2077,12 +2077,12 @@
         </div>
         <div class="stats-charts" style="margin-top:20px">
           <div class="chart-panel">
-            <h3 data-i18n="parc.chart.budget">Budget par catégorie</h3>
+            <h3 id="parc-budget-chart-title" data-i18n="parc.chart.budget">Budget par catégorie</h3>
             <canvas id="parc-budget-chart" height="220"></canvas>
           </div>
           <div class="chart-panel" id="parc-donut-panel">
             <h3>Répartition du budget</h3>
-            <canvas id="parc-donut-chart" height="220"></canvas>
+            <canvas id="parc-donut-chart" height="220" style="cursor:pointer" title="Cliquez sur un segment pour filtrer le graphique"></canvas>
           </div>
           <div class="chart-panel">
             <h3 data-i18n="parc.chart.forecast">Prévision 3 mois (k$)</h3>

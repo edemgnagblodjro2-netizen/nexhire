@@ -4223,9 +4223,11 @@ function onAppSelectChange(val) {
 // ═══════════════════════════════════════════════════════════════════════════
 
 let _parcTab = "overview";
-let _parcBudgetChart = null;
+let _parcBudgetChart   = null;
 let _parcForecastChart = null;
-let _parcDonutChart = null;
+let _parcDonutChart    = null;
+let _parcCatsData      = null;
+let _parcSelectedCat   = null;
 
 function switchParcTab(name, push = true) {
   _parcTab = name;
@@ -4501,9 +4503,12 @@ async function _loadParcOverview() {
 
     // Budget by category chart
     const cats = summary.by_category || [];
+    _parcCatsData    = cats;
+    _parcSelectedCat = null;
     if (_parcBudgetChart) _parcBudgetChart.destroy();
     _parcBudgetChart = new Chart($("parc-budget-chart"), {
       type: "bar",
+      plugins: [ChartDataLabels],
       data: {
         labels: cats.map(c => c.category.toUpperCase()),
         datasets: [
@@ -4511,7 +4516,19 @@ async function _loadParcOverview() {
           { label: "Réel",   data: cats.map(c => c.actual),    backgroundColor: "rgba(99,102,241,.8)",  borderColor: "#6366f1", borderWidth: 1 },
         ],
       },
-      options: { responsive: true, plugins: { legend: { display: true } }, scales: { y: { beginAtZero: true } } },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: true },
+          datalabels: {
+            anchor: "end", align: "top",
+            font: { size: 9, weight: "bold" },
+            color: "#475569",
+            formatter: v => v > 0 ? _fmt(v) : "",
+          },
+        },
+        scales: { y: { beginAtZero: true } },
+      },
     });
 
     // Forecast chart — masqué si toutes les valeurs sont nulles
@@ -4545,8 +4562,11 @@ async function _loadParcOverview() {
       } else {
         if (donutPanel) donutPanel.style.display = "";
         const COLORS = ["#818cf8","#6366f1","#34d399","#fbbf24","#f87171","#38bdf8","#a78bfa","#fb923c","#4ade80","#e879f9"];
+        donutCanvas.style.cursor = "pointer";
+        donutCanvas.title = "Cliquez sur un segment pour filtrer le graphique";
         _parcDonutChart = new Chart(donutCanvas, {
           type: "doughnut",
+          plugins: [ChartDataLabels],
           data: {
             labels: donutCats.map(c => c.category.toUpperCase()),
             datasets: [{
@@ -4559,8 +4579,38 @@ async function _loadParcOverview() {
           options: {
             responsive: true,
             cutout: "60%",
+            onClick: (evt, els) => {
+              if (!els.length) {
+                if (_parcSelectedCat) { _parcSelectedCat = null; _filterParcBudgetByCategory(null, null); }
+                return;
+              }
+              const idx = els[0].index;
+              const key = donutCats[idx].category;
+              const lbl = key.toUpperCase();
+              if (_parcSelectedCat === key) {
+                _parcSelectedCat = null;
+                _filterParcBudgetByCategory(null, null);
+              } else {
+                _parcSelectedCat = key;
+                _filterParcBudgetByCategory(key, lbl);
+              }
+            },
             plugins: {
-              legend: { position: "right", labels: { font: { size: 11 }, boxWidth: 12, padding: 10 } },
+              legend: {
+                position: "right",
+                labels: {
+                  font: { size: 11 }, boxWidth: 12, padding: 10,
+                  generateLabels: chart => {
+                    const ds = chart.data.datasets[0];
+                    const total = ds.data.reduce((a, b) => a + b, 0);
+                    return chart.data.labels.map((lbl, i) => {
+                      const val = ds.data[i];
+                      const pct = total > 0 ? (val / total * 100).toFixed(1) : 0;
+                      return { text: `${lbl}  ${_fmt(val)} (${pct}%)`, fillStyle: ds.backgroundColor[i], strokeStyle: "transparent", index: i, hidden: false };
+                    });
+                  },
+                },
+              },
               tooltip: {
                 callbacks: {
                   label: ctx => {
@@ -4569,13 +4619,45 @@ async function _loadParcOverview() {
                     return ` ${_fmt(ctx.parsed)} (${pct}%)`;
                   }
                 }
-              }
+              },
+              datalabels: {
+                color: "#fff",
+                font: { size: 11, weight: "bold" },
+                formatter: (val, ctx) => {
+                  const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                  const pct = total > 0 ? (val / total * 100) : 0;
+                  return pct >= 4 ? pct.toFixed(1) + "%" : "";
+                },
+              },
             },
           },
         });
       }
     }
   } catch (e) { console.error(e); }
+}
+
+function _filterParcBudgetByCategory(catKey, catLabel) {
+  if (!_parcBudgetChart || !_parcCatsData) return;
+  const titleEl = document.getElementById("parc-budget-chart-title");
+  if (!catKey) {
+    _parcBudgetChart.data.labels = _parcCatsData.map(c => c.category.toUpperCase());
+    _parcBudgetChart.data.datasets[0].data = _parcCatsData.map(c => c.allocated);
+    _parcBudgetChart.data.datasets[1].data = _parcCatsData.map(c => c.actual);
+    if (titleEl) titleEl.textContent = titleEl.dataset.orig || "Budget par catégorie";
+    _parcBudgetChart.update();
+    return;
+  }
+  const cat = _parcCatsData.find(c => c.category === catKey);
+  if (!cat) return;
+  _parcBudgetChart.data.labels = [catLabel];
+  _parcBudgetChart.data.datasets[0].data = [cat.allocated];
+  _parcBudgetChart.data.datasets[1].data = [cat.actual];
+  if (titleEl) {
+    if (!titleEl.dataset.orig) titleEl.dataset.orig = titleEl.textContent;
+    titleEl.textContent = `Budget — ${catLabel}`;
+  }
+  _parcBudgetChart.update();
 }
 
 async function loadBudget() {
