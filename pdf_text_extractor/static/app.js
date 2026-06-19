@@ -9616,21 +9616,71 @@ async function loadFinance() {
     ]);
     _financeCache = { summary, txns, budgetSummary, year, month, deptId };
 
-    // KPIs
+    // KPIs — CivicAI Finance Copilot
     const kpiEl = $("finance-kpis");
     if (kpiEl) {
-      const tr = T[_lang] || T.fr;
-      const fmt = v => fmtCurrency(v);
+      const tot = budgetSummary?.total || {};
+      const totalAlloc  = tot.allocated  || 0;
+      const totalActual = tot.actual     || 0;
+      const variance    = tot.variance   || 0;
+      const utilPct     = tot.utilization_pct || 0;
+      const risques     = summary?.flagged_count || 0;
+      const overDepts   = (budgetSummary?.by_department || []).filter(d => (d.actual||0) > (d.allocated||0));
+      let score = 100;
+      if (utilPct > 100)      score -= 25;
+      else if (utilPct > 90)  score -= 10;
+      else if (utilPct > 80)  score -= 5;
+      score -= Math.min(30, risques * 5);
+      score -= overDepts.length * 5;
+      score = Math.max(0, Math.min(100, Math.round(score)));
+      const scoreColor = score >= 80 ? '#15803d' : score >= 60 ? '#d97706' : '#dc2626';
+      const utilColor  = utilPct > 100 ? '#dc2626' : utilPct > 90 ? '#d97706' : 'var(--navy)';
+      const varStyle   = variance >= 0 ? 'color:#15803d;font-weight:700' : 'color:#dc2626;font-weight:700';
       kpiEl.innerHTML = `
-        <div class="exec-kpi-card"><div class="exec-kpi-val">${fmt(summary.total_paid)}</div><div class="exec-kpi-lbl">${tr['finance.kpi.paid']}</div></div>
-        <div class="exec-kpi-card"><div class="exec-kpi-val">${fmt(summary.total_pending)}</div><div class="exec-kpi-lbl">${tr['finance.kpi.pending']}</div></div>
-        <div class="exec-kpi-card"><div class="exec-kpi-val">${summary.count_paid || 0}</div><div class="exec-kpi-lbl">${tr['finance.kpi.txns']}</div></div>
-        <div class="exec-kpi-card" style="${(summary.flagged_count || 0) > 0 ? 'border-color:#fca5a5;background:#fff1f2' : ''}">
-          <div class="exec-kpi-val" style="${(summary.flagged_count || 0) > 0 ? 'color:#dc2626' : ''}">${summary.flagged_count || 0}</div>
-          <div class="exec-kpi-lbl">${tr['finance.kpi.anomaly']}</div>
+        <div class="exec-kpi-card">
+          <div class="exec-kpi-icon">💰</div>
+          <div class="exec-kpi-body"><div class="exec-kpi-val">${fmtCurrency(totalAlloc)}</div><div class="exec-kpi-lbl">Budget total</div></div>
         </div>
-        <div class="exec-kpi-card"><div class="exec-kpi-val">${summary.vendor_count || 0}</div><div class="exec-kpi-lbl">${tr['finance.kpi.vendors']}</div></div>
+        <div class="exec-kpi-card">
+          <div class="exec-kpi-icon">📤</div>
+          <div class="exec-kpi-body"><div class="exec-kpi-val">${fmtCurrency(totalActual)}</div><div class="exec-kpi-lbl">Dépenses réelles</div></div>
+        </div>
+        <div class="exec-kpi-card ${variance >= 0 ? 'highlight' : 'exec-kpi-warn'}">
+          <div class="exec-kpi-icon">${variance >= 0 ? '✅' : '⚠️'}</div>
+          <div class="exec-kpi-body"><div class="exec-kpi-val" style="${varStyle}">${variance >= 0 ? '+' : ''}${fmtCurrency(variance)}</div><div class="exec-kpi-lbl">Écart budgétaire</div></div>
+        </div>
+        <div class="exec-kpi-card ${utilPct > 90 ? 'exec-kpi-warn' : ''}">
+          <div class="exec-kpi-icon">📊</div>
+          <div class="exec-kpi-body"><div class="exec-kpi-val" style="color:${utilColor}">${utilPct}%</div><div class="exec-kpi-lbl">Taux d'utilisation</div></div>
+        </div>
+        <div class="exec-kpi-card ${risques > 0 ? 'exec-kpi-warn' : ''}">
+          <div class="exec-kpi-icon">🚨</div>
+          <div class="exec-kpi-body"><div class="exec-kpi-val" style="${risques > 0 ? 'color:#dc2626' : ''}">${risques}</div><div class="exec-kpi-lbl">Risques détectés</div></div>
+        </div>
+        <div class="exec-kpi-card" style="border-color:${scoreColor}">
+          <div style="width:50px;height:50px;border-radius:50%;border:4px solid ${scoreColor};display:flex;align-items:center;justify-content:center;font-size:1.05rem;font-weight:800;color:${scoreColor};flex-shrink:0">${score}</div>
+          <div class="exec-kpi-body"><div class="exec-kpi-val" style="color:${scoreColor}">/100</div><div class="exec-kpi-lbl">Score financier</div></div>
+        </div>
       `;
+    }
+
+    // Synthèse IA
+    const synthEl = $("finance-ai-synthesis");
+    if (synthEl) {
+      const tAlloc = budgetSummary?.total?.allocated || 0;
+      const tActual = budgetSummary?.total?.actual || 0;
+      const tUtil = budgetSummary?.total?.utilization_pct || 0;
+      const rCount = summary?.flagged_count || 0;
+      const overNames = (budgetSummary?.by_department || []).filter(d => (d.actual||0) > (d.allocated||0)).map(d => esc(d.department_name));
+      if (!tAlloc) {
+        synthEl.innerHTML = '<div class="ai-card"><span class="ai-badge">🤖 Synthèse IA</span><p class="muted" style="margin:8px 0 0">Aucune donnée budgétaire disponible pour cette période.</p></div>';
+      } else {
+        let txt = "Sur " + (budgetSummary?.year || new Date().getFullYear()) + ", le budget total s'élève à " + fmtCurrency(tAlloc) + " avec " + fmtCurrency(tActual) + " de dépenses réelles, soit un taux d'utilisation de " + tUtil + "%.";
+        if (overNames.length > 0) txt += " " + overNames.length + " département" + (overNames.length > 1 ? "s sont" : " est") + " en dépassement : " + overNames.slice(0, 3).join(", ") + (overNames.length > 3 ? "…" : "") + ".";
+        else if (tUtil > 0) txt += " Aucun département n'est en dépassement de budget.";
+        if (rCount > 0) txt += " " + rCount + " transaction" + (rCount > 1 ? "s anormales ont" : " anormale a") + " été détectée" + (rCount > 1 ? "s" : "") + " et nécessite" + (rCount > 1 ? "nt" : "") + " une vérification.";
+        synthEl.innerHTML = '<div class="ai-card"><span class="ai-badge">🤖 Synthèse IA</span><p style="margin:8px 0 0;line-height:1.6;color:var(--navy);font-size:.9rem">' + txt + "</p></div>";
+      }
     }
 
     // Graphes Finance — Dépenses par catégorie + Répartition
@@ -9743,34 +9793,96 @@ async function loadFinance() {
         </div>` : "";
     }
 
-    // Tableau budget par catégorie (Écart $ + %)
+    // Tableau budget par département
     const budgetCatEl = $("finance-budget-cat");
     if (budgetCatEl) {
-      const by_cat = (budgetSummary?.by_category || []).filter(c => (c.allocated||0) > 0 || (c.actual||0) > 0);
-      if (by_cat.length) {
+      const by_dept = (budgetSummary?.by_department || []).filter(d => (d.allocated||0) > 0 || (d.actual||0) > 0);
+      const tActual3 = budgetSummary?.total?.actual || 0;
+      const forecastSum = (budgetSummary?.forecast || []).reduce((s, f) => s + (f.predicted||0), 0);
+      if (by_dept.length) {
         budgetCatEl.innerHTML = `
           <div class="section-header" style="margin-top:4px;margin-bottom:8px">
-            <h3 style="font-size:.92rem;font-weight:700;color:var(--navy)">📊 Analyse budgétaire par catégorie</h3>
+            <h3 style="font-size:.92rem;font-weight:700;color:var(--navy)">📊 Analyse budgétaire par département</h3>
           </div>
           <div class="table-wrap" style="margin-bottom:20px"><table class="data-table"><thead><tr>
-            <th>Catégorie</th><th>Alloué</th><th>Réel</th><th>Écart ($)</th><th>Écart (%)</th>
+            <th>Département</th><th>Alloué</th><th>Réel</th><th>Écart ($)</th><th>Écart (%)</th><th>Statut</th><th>Niveau de risque</th><th>Prévision IA</th>
           </tr></thead><tbody>
-            ${by_cat.map(c => {
-              const var_ = (c.allocated||0) - (c.actual||0);
+            ${by_dept.map(d => {
+              const alloc = d.allocated||0, actual = d.actual||0;
+              const var_ = alloc - actual;
+              const utilD = alloc > 0 ? actual/alloc*100 : 0;
               const vc = var_ >= 0 ? "color:#15803d;font-weight:600" : "color:#dc2626;font-weight:600";
-              const pct = (c.allocated||0) > 0 ? ((var_ / c.allocated) * 100).toFixed(1) : null;
-              const pctStr = pct !== null ? `${var_ >= 0 ? "+" : ""}${pct}%` : "—";
+              const pctStr = alloc > 0 ? (var_ >= 0 ? "+" : "") + (var_/alloc*100).toFixed(1) + "%" : "—";
+              const statut = actual > alloc ? "🔴 Dépassement" : utilD >= 85 ? "🟡 Alerte" : "🟢 OK";
+              const statutStyle = actual > alloc ? "color:#dc2626;font-weight:600" : utilD >= 85 ? "color:#d97706;font-weight:600" : "color:#15803d;font-weight:600";
+              const risqueBadge = actual > alloc ? "badge badge-danger" : utilD >= 80 ? "badge badge-warn" : "badge badge-active";
+              const risqueLabel = actual > alloc ? "Élevé" : utilD >= 80 ? "Moyen" : "Faible";
+              const prevision = (tActual3 > 0 && forecastSum > 0) ? fmtCurrency(actual + (actual/tActual3)*forecastSum) : "—";
               return `<tr>
-                <td><span class="badge badge-active">${esc(c.category.toUpperCase())}</span></td>
-                <td>${_fmt(c.allocated)}</td>
-                <td>${_fmt(c.actual)}</td>
+                <td><strong>${esc(d.department_name)}</strong></td>
+                <td>${_fmt(alloc)}</td>
+                <td>${_fmt(actual)}</td>
                 <td style="${vc}">${var_ >= 0 ? "+" : ""}${_fmt(var_)}</td>
                 <td style="${vc}">${pctStr}</td>
+                <td style="${statutStyle}">${statut}</td>
+                <td><span class="${risqueBadge}">${risqueLabel}</span></td>
+                <td>${prevision}</td>
               </tr>`;
             }).join("")}
           </tbody></table></div>`;
       } else {
         budgetCatEl.innerHTML = "";
+      }
+    }
+
+    // Recommandations IA
+    const recsEl = $("finance-ai-recs");
+    if (recsEl) {
+      const byDept = budgetSummary?.by_department || [];
+      const recs = [];
+      byDept.filter(d => (d.actual||0) > (d.allocated||0)).forEach(d => {
+        const over = (d.actual||0) - (d.allocated||0);
+        recs.push({ type:"danger", icon:"🔴", txt:"<strong>" + esc(d.department_name) + "</strong> : dépassement de " + fmtCurrency(over) + " — réduire les dépenses ou réviser l'allocation." });
+      });
+      byDept.filter(d => (d.allocated||0) > 0 && (d.actual||0) <= (d.allocated||0) && (d.actual||0)/(d.allocated||0) >= 0.8).forEach(d => {
+        const pct = Math.round((d.actual||0)/(d.allocated||0)*100);
+        recs.push({ type:"warn", icon:"🟡", txt:"<strong>" + esc(d.department_name) + "</strong> : taux d'utilisation à " + pct + "% — surveiller les dépenses restantes." });
+      });
+      const fCount = summary?.flagged_count || 0;
+      if (fCount > 0) recs.push({ type:"warn", icon:"⚠️", txt:"<strong>" + fCount + " transaction" + (fCount > 1 ? "s" : "") + " anormale" + (fCount > 1 ? "s" : "") + "</strong> détectée" + (fCount > 1 ? "s" : "") + " — revue manuelle recommandée." });
+      if (!recs.length) recs.push({ type:"ok", icon:"✅", txt:"Aucune alerte budgétaire. La situation financière est sous contrôle." });
+      const bgMap = { danger:"#fff1f2", warn:"#fffbeb", ok:"#f0fdf4" };
+      recsEl.innerHTML = '<div class="ai-card"><span class="ai-badge">💡 Recommandations IA</span><ul style="margin:10px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px">' +
+        recs.map(r => '<li style="display:flex;align-items:flex-start;gap:8px;padding:6px 8px;border-radius:6px;background:' + bgMap[r.type] + '"><span style="flex-shrink:0">' + r.icon + '</span><span style="font-size:.88rem;color:var(--navy);line-height:1.5">' + r.txt + '</span></li>').join("") +
+        "</ul></div>";
+    }
+
+    // Prévision IA
+    const forecastEl = $("finance-forecast");
+    if (forecastEl) {
+      const forecast = budgetSummary?.forecast || [];
+      const tAlloc4 = budgetSummary?.total?.allocated || 0;
+      const tActual4 = budgetSummary?.total?.actual || 0;
+      if (!forecast.length || !tAlloc4) {
+        forecastEl.innerHTML = "";
+      } else {
+        const fSum = forecast.reduce((s, f) => s + (f.predicted||0), 0);
+        const projYear = tActual4 + fSum;
+        const projVar = tAlloc4 - projYear;
+        const projPct = Math.round(projYear / tAlloc4 * 100);
+        const varCol = projVar >= 0 ? "#15803d" : "#dc2626";
+        const projCol = projPct > 100 ? "#dc2626" : projPct > 90 ? "#d97706" : "#15803d";
+        const atRisk = (budgetSummary?.by_department || []).filter(d => (d.allocated||0) > 0 && (d.actual||0)/(d.allocated||0) >= 0.75).map(d => esc(d.department_name));
+        const forecastYear = budgetSummary?.year || new Date().getFullYear();
+        forecastEl.innerHTML = '<div class="ai-card"><span class="ai-badge">📈 Prévision IA — Fin d\'année ' + forecastYear + '</span>' +
+          '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:12px">' +
+          '<div style="background:#f8fafc;border-radius:8px;padding:12px"><div style="font-size:.78rem;color:var(--slate);font-weight:600;text-transform:uppercase;letter-spacing:.03em">Projection fin d\'année</div><div style="font-size:1.15rem;font-weight:800;color:' + projCol + ';margin-top:4px">' + fmtCurrency(projYear) + '</div></div>' +
+          '<div style="background:#f8fafc;border-radius:8px;padding:12px"><div style="font-size:.78rem;color:var(--slate);font-weight:600;text-transform:uppercase;letter-spacing:.03em">Budget restant estimé</div><div style="font-size:1.15rem;font-weight:800;color:' + varCol + ';margin-top:4px">' + (projVar >= 0 ? "+" : "") + fmtCurrency(projVar) + '</div></div>' +
+          '<div style="background:#f8fafc;border-radius:8px;padding:12px"><div style="font-size:.78rem;color:var(--slate);font-weight:600;text-transform:uppercase;letter-spacing:.03em">Taux d\'utilisation projeté</div><div style="font-size:1.15rem;font-weight:800;color:' + projCol + ';margin-top:4px">' + projPct + '%</div></div>' +
+          (atRisk.length > 0 ? '<div style="background:#fffbeb;border-radius:8px;padding:12px"><div style="font-size:.78rem;color:var(--slate);font-weight:600;text-transform:uppercase;letter-spacing:.03em">Depts à risque</div><div style="font-size:.88rem;font-weight:700;color:#d97706;margin-top:4px">' + atRisk.slice(0, 3).join(", ") + (atRisk.length > 3 ? "…" : "") + '</div></div>' : '') +
+          '</div>' +
+          '<div style="margin-top:12px;font-size:.82rem;color:var(--slate)">Prévisions mensuelles : ' + forecast.map(f => "<strong>" + f.period + "</strong> → " + fmtCurrency(f.predicted)).join(" | ") + '</div>' +
+          "</div>";
       }
     }
 

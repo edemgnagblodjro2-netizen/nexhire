@@ -2437,6 +2437,11 @@ footer {
 }
 .badge-active   { background: #dcfce7; color: #15803d; border-color: #bbf7d0; }
 .badge-expiring { background: #fef9c3; color: #92400e; border-color: #fde68a; }
+.badge-warn     { background: #fef3c7; color: #92400e; border-color: #fde68a; }
+.badge-danger   { background: #fef2f2; color: #991b1b; border-color: #fecaca; }
+.finance-copilot-label { display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-weight:700;color:var(--indigo);text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px; }
+.ai-card { background:linear-gradient(135deg,#f0f4ff,#fff);border:1.5px solid #c7d2fe;border-radius:12px;padding:14px 18px; }
+.ai-badge { display:inline-flex;align-items:center;gap:6px;background:var(--indigo);color:#fff;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.04em; }
 .badge-expired  { background: #fee2e2; color: #991b1b; border-color: #fecaca; }
 .badge-idle     { background: #f1f5f9; color: #475569; border-color: #cbd5e1; }
 .badge-decom    { background: #fce7f3; color: #9d174d; border-color: #fbcfe8; }

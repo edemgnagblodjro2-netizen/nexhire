@@ -1491,7 +1491,10 @@
     <!-- ── FINANCE & TRANSACTIONS ──────────────────────────────────────── -->
     <section id="tab-finance" class="tab-content hidden" role="tabpanel">
       <div class="section-header">
-        <h2 data-i18n="finance.title">💰 Finance &amp; Transactions</h2>
+        <div>
+          <span class="finance-copilot-label">🤖 CivicAI Finance Copilot</span>
+          <h2 data-i18n="finance.title">💰 Finance &amp; Transactions</h2>
+        </div>
         <div class="controls-inline">
           <select id="finance-dept" onchange="loadFinance()">
             <option value="" data-i18n="finance.all.depts">Tous les départements</option>
@@ -1520,9 +1523,12 @@
       <div id="finance-kpis" class="exec-kpi-grid" style="margin-bottom:16px">
         <div class="exec-kpi-loading"><div class="spinner" style="margin:auto"></div></div>
       </div>
+      <div id="finance-ai-synthesis" style="margin-bottom:16px"></div>
       <div id="finance-charts" class="stats-charts" style="margin-bottom:20px"></div>
       <div id="finance-anomalies"></div>
       <div id="finance-budget-cat" style="margin-bottom:4px"></div>
+      <div id="finance-ai-recs" style="margin-bottom:16px"></div>
+      <div id="finance-forecast" style="margin-bottom:16px"></div>
       <div class="section-header" style="margin-top:8px">
         <h3 style="font-size:.92rem;font-weight:700;color:var(--navy)" data-i18n="finance.txns.header">Transactions</h3>
         <button class="btn btn-primary btn-sm" onclick="openAddTransactionModal()" data-i18n="finance.add">+ Ajouter</button>
