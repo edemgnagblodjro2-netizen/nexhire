@@ -749,19 +749,10 @@ footer {
   padding: 36px;
   box-shadow: var(--shadow);
 }
-.exec-kpi-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-.exec-kpi-card {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 20px;
-}
+/* exec-kpi-grid & exec-kpi-card définis section Dashboard Organisation (voir ci-dessous) */
 .exec-kpi-green-card { background: #f0fdf4; border-color: #bbf7d0; }
 .exec-kpi-label { font-size: .72rem; font-weight: 700; color: var(--slate); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+.exec-kpi-lbl   { font-size: .78rem; color: var(--slate); font-weight: 600; }
 .exec-kpi-value { font-size: 1.6rem; font-weight: 900; color: var(--navy); letter-spacing: -.02em; line-height: 1; }
 .exec-kpi-bar { height: 4px; background: var(--border); border-radius: 2px; margin: 10px 0 6px; overflow: hidden; }
 .exec-kpi-fill { height: 100%; background: var(--blue); border-radius: 2px; }
