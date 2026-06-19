@@ -10318,9 +10318,9 @@ async function loadProcurement() {
         const v = c.vendor || "Inconnu";
         vendorMap[v] = (vendorMap[v] || 0) + (c.annual_value || 0);
       }
-      const entries = Object.entries(vendorMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
+      const entries = Object.entries(vendorMap).sort((a, b) => b[1] - a[1]).slice(0, 6);
       if (entries.length) {
-        const h = Math.min(320, Math.max(140, entries.length * 36));
+        const h = Math.min(320, Math.max(140, entries.length * 38));
         execChartEl.innerHTML = '<div class="chart-panel"><h3>💰 Top fournisseurs — valeur contractuelle annuelle</h3><canvas id="proc-exec-bar" height="' + h + '"></canvas></div>';
         _procExecChart = new Chart($('proc-exec-bar'), {
           type: "bar",
