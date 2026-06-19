@@ -4626,7 +4626,7 @@ async function _loadParcOverview() {
                 formatter: (val, ctx) => {
                   const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
                   const pct = total > 0 ? (val / total * 100) : 0;
-                  return pct >= 4 ? pct.toFixed(1) + "%" : "";
+                  return pct >= 2 ? pct.toFixed(1) + "%" : "";
                 },
               },
             },
