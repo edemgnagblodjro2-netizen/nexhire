@@ -4674,11 +4674,13 @@ async function loadBudget() {
 
     if (!entries.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucune donnée budgétaire.</p>`; }
     else {
-      wrap.innerHTML = `<table class="data-table"><thead><tr><th>Catégorie</th><th>Libellé</th><th>Période</th><th>Alloué</th><th>Réel</th><th>Écart</th><th>Département</th><th></th></tr></thead><tbody>` +
+      wrap.innerHTML = `<table class="data-table"><thead><tr><th>Catégorie</th><th>Libellé</th><th>Période</th><th>Alloué</th><th>Réel</th><th>Écart ($)</th><th>Écart (%)</th><th>Département</th><th></th></tr></thead><tbody>` +
         entries.map(e => {
           const period = e.month ? `${e.year}-${String(e.month).padStart(2,"0")}` : String(e.year);
           const var_ = (e.allocated||0) - (e.actual||0);
-          const varColor = var_ >= 0 ? "color:#15803d" : "color:#dc2626";
+          const varColor = var_ >= 0 ? "color:#15803d;font-weight:600" : "color:#dc2626;font-weight:600";
+          const varPct = (e.allocated||0) > 0 ? ((var_ / e.allocated) * 100).toFixed(1) : "—";
+          const varPctStr = (e.allocated||0) > 0 ? `${var_ >= 0 ? "+" : ""}${varPct}%` : "—";
           const deptName = e.department_name || "—";
           return `<tr>
             <td><span class="badge badge-active">${esc(e.category.toUpperCase())}</span></td>
@@ -4686,6 +4688,7 @@ async function loadBudget() {
             <td>${_fmt(e.allocated)} ${e.currency}</td>
             <td>${_fmt(e.actual)} ${e.currency}</td>
             <td style="${varColor}">${var_ >= 0 ? "+" : ""}${_fmt(var_)}</td>
+            <td style="${varColor}">${varPctStr}</td>
             <td>${esc(deptName)}</td>
             <td><button class="btn-icon" onclick="editBudget('${e.id}')">✎</button> <button class="btn-icon btn-deactivate" onclick="deleteBudget('${e.id}')">✕</button></td>
           </tr>`;
@@ -9589,11 +9592,16 @@ async function loadFinance() {
     if (month)  params.set("month",   month);
     if (deptId) params.set("dept_id", deptId);
 
-    const [summary, txns] = await Promise.all([
+    const budgetParams = new URLSearchParams();
+    if (year)   budgetParams.set("year",    year);
+    if (deptId) budgetParams.set("dept_id", deptId);
+
+    const [summary, txns, budgetSummary] = await Promise.all([
       apiCall(`/api/transactions/summary?${params}`),
       apiCall(`/api/transactions?${params}`),
+      apiCall(`/api/budget/summary?${budgetParams}`).catch(() => null),
     ]);
-    _financeCache = { summary, txns, year, month, deptId };
+    _financeCache = { summary, txns, budgetSummary, year, month, deptId };
 
     // KPIs
     const kpiEl = $("finance-kpis");
@@ -9624,6 +9632,37 @@ async function loadFinance() {
             ${flagged.map(t => `<li><strong>${esc(t.vendor_name || '—')}</strong> — ${esc(t.flag_reason || tr['finance.anomaly.dup'])} (${Number(t.amount).toLocaleString(_lang === "fr" ? "fr-CA" : "en-CA", {style:"currency",currency:"CAD"})})</li>`).join("")}
           </ul>
         </div>` : "";
+    }
+
+    // Tableau budget par catégorie (Écart $ + %)
+    const budgetCatEl = $("finance-budget-cat");
+    if (budgetCatEl) {
+      const by_cat = (budgetSummary?.by_category || []).filter(c => (c.allocated||0) > 0 || (c.actual||0) > 0);
+      if (by_cat.length) {
+        budgetCatEl.innerHTML = `
+          <div class="section-header" style="margin-top:4px;margin-bottom:8px">
+            <h3 style="font-size:.92rem;font-weight:700;color:var(--navy)">📊 Analyse budgétaire par catégorie</h3>
+          </div>
+          <div class="table-wrap" style="margin-bottom:20px"><table class="data-table"><thead><tr>
+            <th>Catégorie</th><th>Alloué</th><th>Réel</th><th>Écart ($)</th><th>Écart (%)</th>
+          </tr></thead><tbody>
+            ${by_cat.map(c => {
+              const var_ = (c.allocated||0) - (c.actual||0);
+              const vc = var_ >= 0 ? "color:#15803d;font-weight:600" : "color:#dc2626;font-weight:600";
+              const pct = (c.allocated||0) > 0 ? ((var_ / c.allocated) * 100).toFixed(1) : null;
+              const pctStr = pct !== null ? `${var_ >= 0 ? "+" : ""}${pct}%` : "—";
+              return `<tr>
+                <td><span class="badge badge-active">${esc(c.category.toUpperCase())}</span></td>
+                <td>${_fmt(c.allocated)}</td>
+                <td>${_fmt(c.actual)}</td>
+                <td style="${vc}">${var_ >= 0 ? "+" : ""}${_fmt(var_)}</td>
+                <td style="${vc}">${pctStr}</td>
+              </tr>`;
+            }).join("")}
+          </tbody></table></div>`;
+      } else {
+        budgetCatEl.innerHTML = "";
+      }
     }
 
     // Table transactions
