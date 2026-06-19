@@ -224,7 +224,7 @@ const T = {
     'land.contact.f.submit':"Demander une démonstration →",
     'land.contact.success.title':"Message envoyé !",'land.contact.success.sub':"Notre équipe vous contacte sous 24 heures.",
     'app.tab.finance':'💰 Finance','app.tab.recherche':'🔍 Recherche interne',
-    'finance.title':'Finance & Transactions','finance.refresh':'↻ Actualiser','finance.add':'+ Ajouter',
+    'finance.title':'Finance & Transactions','finance.refresh':'↻ Actualiser','finance.add':'+ Ajouter','finance.report.btn':'📥 Rapport ▾',
     'finance.all.months':'Tous les mois','finance.all.depts':'Tous les départements','finance.txns.header':'Transactions',
     'finance.kpi.paid':'Total payé','finance.kpi.pending':'En attente','finance.kpi.txns':'Transactions',
     'finance.kpi.anomaly':'Anomalies','finance.kpi.vendors':'Fournisseurs',
@@ -459,7 +459,7 @@ const T = {
     'land.contact.f.submit':"Request a demonstration →",
     'land.contact.success.title':"Message sent!",'land.contact.success.sub':"Our team will contact you within 24 hours.",
     'app.tab.finance':'💰 Finance','app.tab.recherche':'🔍 Internal Search',
-    'finance.title':'Finance & Transactions','finance.refresh':'↻ Refresh','finance.add':'+ Add',
+    'finance.title':'Finance & Transactions','finance.refresh':'↻ Refresh','finance.add':'+ Add','finance.report.btn':'📥 Report ▾',
     'finance.all.months':'All months','finance.all.depts':'All departments','finance.txns.header':'Transactions',
     'finance.kpi.paid':'Total paid','finance.kpi.pending':'Pending','finance.kpi.txns':'Transactions',
     'finance.kpi.anomaly':'Anomalies','finance.kpi.vendors':'Vendors',
@@ -691,7 +691,7 @@ const T = {
     'land.contact.f.submit':"Solicitar una demostración →",
     'land.contact.success.title':"¡Mensaje enviado!",'land.contact.success.sub':"Nuestro equipo te contactará en 24 horas.",
     'app.tab.finance':'💰 Finanzas','app.tab.recherche':'🔍 Búsqueda interna',
-    'finance.title':'Finanzas & Transacciones','finance.refresh':'↻ Actualizar','finance.add':'+ Agregar',
+    'finance.title':'Finanzas & Transacciones','finance.refresh':'↻ Actualizar','finance.add':'+ Agregar','finance.report.btn':'📥 Reporte ▾',
     'finance.all.months':'Todos los meses','finance.all.depts':'Todos los departamentos','finance.txns.header':'Transacciones',
     'finance.kpi.paid':'Total pagado','finance.kpi.pending':'Pendiente','finance.kpi.txns':'Transacciones',
     'finance.kpi.anomaly':'Anomalías','finance.kpi.vendors':'Proveedores',
@@ -2971,6 +2971,7 @@ let _chartDaily      = null;
 let _chartConn       = null;
 let _statsData       = null;   // données analytics complètes
 let _selectedConn    = null;   // connecteur sélectionné dans le camembert
+let _financeCache    = null;   // dernière réponse finance (summary + txns)
 
 async function loadAnalytics() {
   const days = $("stats-days")?.value || 30;
@@ -9500,6 +9501,7 @@ async function loadFinance() {
       apiCall(`/api/transactions/summary?${params}`),
       apiCall(`/api/transactions?${params}`),
     ]);
+    _financeCache = { summary, txns, year, month, deptId };
 
     // KPIs
     const kpiEl = $("finance-kpis");
@@ -9581,6 +9583,74 @@ async function aiCategorizeTransaction(txnId, description, amount, vendorName) {
 
 function openAddTransactionModal() {
   openTxnModal(null, loadFinance);
+}
+
+function toggleFinanceExportMenu(event) {
+  event.stopPropagation();
+  const menu = document.getElementById("finance-export-menu");
+  if (!menu) return;
+  const isOpen = !menu.classList.contains("hidden");
+  menu.classList.toggle("hidden", isOpen);
+  if (!isOpen) {
+    const close = () => { menu.classList.add("hidden"); document.removeEventListener("click", close); };
+    document.addEventListener("click", close);
+  }
+}
+
+async function exportFinanceReport(fmt) {
+  if (!_financeCache) { alert("Chargez d'abord les données Finance."); return; }
+  const menu = document.getElementById("finance-export-menu");
+  if (menu) menu.classList.add("hidden");
+  const btn = document.getElementById("finance-export-btn");
+  const origText = btn?.textContent;
+  if (btn) { btn.disabled = true; btn.textContent = "…"; }
+
+  try {
+    const { summary, txns, year, month, deptId } = _financeCache;
+    const tr = T[_lang] || T.fr;
+    const loc = _lang === "fr" ? "fr-CA" : "en-CA";
+    const fmtAmt = v => Number(v || 0).toLocaleString(loc, { style: "currency", currency: "CAD", maximumFractionDigits: 0 });
+
+    const periodLabel = [year || tr["finance.all.months"], month ? `M${month}` : null, deptId ? `dept:${deptId}` : null].filter(Boolean).join(" / ");
+    const title = `${tr["finance.title"] || "Finance & Transactions"} — ${periodLabel || "Toutes périodes"}`;
+
+    const kpiLines = [
+      `${tr["finance.kpi.paid"] || "Total payé"}: ${fmtAmt(summary?.total_paid)}`,
+      `${tr["finance.kpi.pending"] || "En attente"}: ${fmtAmt(summary?.total_pending)}`,
+      `${tr["finance.kpi.txns"] || "Transactions"}: ${summary?.count_paid || 0}`,
+      `${tr["finance.kpi.anomaly"] || "Anomalies"}: ${summary?.flagged_count || 0}`,
+      `${tr["finance.kpi.vendors"] || "Fournisseurs"}: ${summary?.vendor_count || 0}`,
+    ].join("\n");
+
+    const txnLines = (txns || []).slice(0, 100).map(t =>
+      `${(t.transaction_date || "").slice(0, 10)} | ${t.vendor_name || "—"} | ${Number(t.amount || 0).toLocaleString(loc, { style: "currency", currency: "CAD" })} | ${t.category || "—"} | ${t.status || "—"}`
+    ).join("\n");
+
+    const answer = `**KPIs**\n${kpiLines}\n\n**Transactions**\n${txnLines}`;
+
+    const resp = await fetch("/api/agent/export", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${state.token}` },
+      body: JSON.stringify({ question: title, answer, sources: [], format: fmt, title }),
+    });
+
+    if (!resp.ok) { const e = await resp.json().catch(() => ({})); alert(e.detail || "Erreur export"); return; }
+    const blob = await resp.blob();
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement("a");
+    const cd   = resp.headers.get("content-disposition") || "";
+    const match = cd.match(/filename="(.+?)"/);
+    a.href     = url;
+    a.download = match ? match[1] : `nexhire-finance.${fmt}`;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    apiCall("/api/analytics/event", "POST", { event_type: "export", meta: { format: fmt, section: "finance" } }).catch(() => {});
+  } catch (e) {
+    alert("Erreur export : " + e.message);
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = origText; }
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

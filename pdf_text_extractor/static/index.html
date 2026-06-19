@@ -1492,6 +1492,14 @@
             <option value="11">Novembre</option><option value="12">Décembre</option>
           </select>
           <button class="btn btn-outline btn-sm" onclick="loadFinance()" data-i18n="finance.refresh">↻ Actualiser</button>
+          <div style="position:relative" id="finance-export-wrap">
+            <button class="btn btn-outline btn-sm" onclick="toggleFinanceExportMenu(event)" id="finance-export-btn" data-i18n="finance.report.btn">📥 Rapport ▾</button>
+            <div id="finance-export-menu" class="hidden" style="position:absolute;right:0;top:calc(100% + 4px);background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.12);min-width:150px;z-index:200;overflow:hidden">
+              <button onclick="exportFinanceReport('pdf')"  class="finance-export-item">📄 PDF</button>
+              <button onclick="exportFinanceReport('xlsx')" class="finance-export-item">📊 Excel</button>
+              <button onclick="exportFinanceReport('docx')" class="finance-export-item">📝 Word</button>
+            </div>
+          </div>
         </div>
       </div>
       <div id="finance-kpis" class="exec-kpi-grid" style="margin-bottom:20px">
