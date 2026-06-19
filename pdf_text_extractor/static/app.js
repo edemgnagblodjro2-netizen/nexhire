@@ -2981,6 +2981,7 @@ let _financeBarChart    = null;
 let _financeDonutChart  = null;
 let _financeSelectedCat = null;
 let _financeCatData     = null;
+let _financeExecChart   = null;
 
 async function loadAnalytics() {
   const days = $("stats-days")?.value || 30;
@@ -9683,6 +9684,74 @@ async function loadFinance() {
       }
     }
 
+    // Maturité financière
+    const maturityEl = $("finance-maturity");
+    if (maturityEl) {
+      const mByDept = budgetSummary?.by_department || [];
+      const mTot = budgetSummary?.total || {};
+      const deptTotal = mByDept.length;
+      const deptOK = mByDept.filter(d => (d.actual||0) <= (d.allocated||0)).length;
+      const adherenceScore = deptTotal > 0 ? Math.round(deptOK/deptTotal*100) : 100;
+      const anomalyScore = Math.max(0, 100 - (summary?.flagged_count||0) * 10);
+      const tUtil2 = mTot.utilization_pct || 0;
+      const utilizationScore = Math.max(0, Math.round(100 - Math.abs(tUtil2 - 75) * 1.5));
+      const matScore = Math.round(adherenceScore*0.4 + anomalyScore*0.3 + utilizationScore*0.3);
+      const matLevel = matScore >= 85 ? "Avancé" : matScore >= 70 ? "Intermédiaire" : matScore >= 50 ? "Basique" : "Initial";
+      const matColor = matScore >= 85 ? "#15803d" : matScore >= 70 ? "#d97706" : "#dc2626";
+      maturityEl.innerHTML = '<div class="ai-card" style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">' +
+        '<div style="text-align:center;flex-shrink:0"><div style="width:64px;height:64px;border-radius:50%;border:4px solid ' + matColor + ';display:flex;align-items:center;justify-content:center;font-size:1.35rem;font-weight:900;color:' + matColor + ';margin:0 auto">' + matScore + '</div><div style="font-size:.7rem;font-weight:600;color:var(--slate);margin-top:4px">/100</div></div>' +
+        '<div style="flex:1;min-width:200px"><div style="font-size:.72rem;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">🏢 Maturité financière</div>' +
+        '<div style="font-size:1.05rem;font-weight:800;color:' + matColor + ';margin-bottom:10px">Niveau ' + matLevel + '</div>' +
+        _maturityBar("Respect des budgets", adherenceScore, "#6366f1") +
+        _maturityBar("Gestion des anomalies", anomalyScore, "#34d399") +
+        _maturityBar("Prévisibilité des coûts", utilizationScore, "#fbbf24") +
+        '</div></div>';
+    }
+
+    // Graphique exécutif — Budget vs Réel par département
+    const execChartEl = $("finance-exec-chart");
+    if (execChartEl) {
+      if (_financeExecChart) { _financeExecChart.destroy(); _financeExecChart = null; }
+      const ecDepts = (budgetSummary?.by_department || []).filter(d => (d.allocated||0) > 0 || (d.actual||0) > 0);
+      if (ecDepts.length) {
+        execChartEl.innerHTML = '<div class="chart-panel"><h3>📊 Budget vs Réel par département</h3><canvas id="finance-exec-bar" height="' + Math.min(320, Math.max(140, ecDepts.length * 38)) + '"></canvas></div>';
+        _financeExecChart = new Chart($("finance-exec-bar"), {
+          type: "bar",
+          plugins: [ChartDataLabels],
+          data: {
+            labels: ecDepts.map(d => d.department_name),
+            datasets: [
+              { label: "Budget alloué",    data: ecDepts.map(d => d.allocated||0), backgroundColor: "rgba(99,102,241,.7)",  borderColor: "#6366f1", borderWidth: 1 },
+              { label: "Dépenses réelles", data: ecDepts.map(d => d.actual||0),    backgroundColor: "rgba(248,113,113,.75)", borderColor: "#f87171", borderWidth: 1 },
+            ],
+          },
+          options: {
+            responsive: true,
+            indexAxis: "y",
+            plugins: {
+              legend: { display: true, position:"top" },
+              datalabels: { anchor:"end", align:"end", font:{ size:9, weight:"bold" }, color:"#475569", formatter: v => v > 0 ? _fmt(v) : "" },
+            },
+            scales: { x: { beginAtZero: true, ticks: { callback: v => _fmt(v) } } },
+          },
+        });
+      } else {
+        execChartEl.innerHTML = "";
+      }
+    }
+
+    // Questions rapides IA
+    const quickQEl = $("finance-quick-questions");
+    if (quickQEl) {
+      quickQEl.innerHTML = '<div class="ai-card"><span class="ai-badge">🤖 Questions rapides</span>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">' +
+        '<button class="btn btn-outline btn-sm" onclick="_financeQuickQuestion(\'score\')">Pourquoi ce score ?</button>' +
+        '<button class="btn btn-outline btn-sm" onclick="_financeQuickQuestion(\'risque\')">Quels départements à risque ?</button>' +
+        '<button class="btn btn-outline btn-sm" onclick="_financeQuickQuestion(\'prev2027\')">Prévoir le budget 2027</button>' +
+        '<button class="btn btn-outline btn-sm" onclick="_financeQuickQuestion(\'reduire\')">Comment réduire les coûts ?</button>' +
+        '</div><div id="finance-quick-response" style="display:none"></div></div>';
+    }
+
     // Graphes Finance — Dépenses par catégorie + Répartition
     const chartWrap = $("finance-charts");
     if (chartWrap) {
@@ -9835,25 +9904,35 @@ async function loadFinance() {
       }
     }
 
-    // Recommandations IA
+    // Recommandations IA avec Explainabilité
     const recsEl = $("finance-ai-recs");
     if (recsEl) {
       const byDept = budgetSummary?.by_department || [];
       const recs = [];
       byDept.filter(d => (d.actual||0) > (d.allocated||0)).forEach(d => {
         const over = (d.actual||0) - (d.allocated||0);
-        recs.push({ type:"danger", icon:"🔴", txt:"<strong>" + esc(d.department_name) + "</strong> : dépassement de " + fmtCurrency(over) + " — réduire les dépenses ou réviser l'allocation." });
+        const overPct = Math.round(((d.actual||0)/(d.allocated||1)-1)*100);
+        recs.push({ type:"danger", icon:"🔴",
+          txt:"<strong>" + esc(d.department_name) + "</strong> dépasse le budget de " + overPct + "% (" + fmtCurrency(over) + ")",
+          why:["Le département " + esc(d.department_name) + " a dépensé " + _fmt(d.actual||0) + " pour un budget de " + _fmt(d.allocated||0), "Dépassement de " + overPct + "% par rapport à l'allocation annuelle", "→ Réviser l'allocation budgétaire ou réduire les dépenses non essentielles"] });
       });
       byDept.filter(d => (d.allocated||0) > 0 && (d.actual||0) <= (d.allocated||0) && (d.actual||0)/(d.allocated||0) >= 0.8).forEach(d => {
         const pct = Math.round((d.actual||0)/(d.allocated||0)*100);
-        recs.push({ type:"warn", icon:"🟡", txt:"<strong>" + esc(d.department_name) + "</strong> : taux d'utilisation à " + pct + "% — surveiller les dépenses restantes." });
+        recs.push({ type:"warn", icon:"🟡",
+          txt:"<strong>" + esc(d.department_name) + "</strong> : taux d'utilisation à " + pct + "%",
+          why:["Le département a consommé " + pct + "% de son budget alloué", "Risque de dépassement si la tendance se maintient", "→ Surveiller les dépenses restantes et anticiper les fins de mois"] });
       });
       const fCount = summary?.flagged_count || 0;
-      if (fCount > 0) recs.push({ type:"warn", icon:"⚠️", txt:"<strong>" + fCount + " transaction" + (fCount > 1 ? "s" : "") + " anormale" + (fCount > 1 ? "s" : "") + "</strong> détectée" + (fCount > 1 ? "s" : "") + " — revue manuelle recommandée." });
-      if (!recs.length) recs.push({ type:"ok", icon:"✅", txt:"Aucune alerte budgétaire. La situation financière est sous contrôle." });
+      if (fCount > 0) recs.push({ type:"warn", icon:"⚠️",
+        txt:"<strong>" + fCount + " transaction" + (fCount>1?"s":"") + " anormale" + (fCount>1?"s":"") + "</strong> détectée" + (fCount>1?"s":"") + " par l'IA",
+        why:[fCount + " transaction" + (fCount>1?"s ont":"  a") + " des montants ou schémas inhabituels", "Ces transactions présentent un écart significatif par rapport à la moyenne historique", "→ Effectuer une revue manuelle et valider ou rejeter chaque transaction"] });
+      if (!recs.length) recs.push({ type:"ok", icon:"✅", txt:"Aucune alerte budgétaire. La situation financière est sous contrôle.", why:["Tous les départements respectent leur allocation budgétaire", "Aucune transaction anormale détectée", "→ Maintenir le cap et planifier le budget du prochain exercice"] });
       const bgMap = { danger:"#fff1f2", warn:"#fffbeb", ok:"#f0fdf4" };
       recsEl.innerHTML = '<div class="ai-card"><span class="ai-badge">💡 Recommandations IA</span><ul style="margin:10px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px">' +
-        recs.map(r => '<li style="display:flex;align-items:flex-start;gap:8px;padding:6px 8px;border-radius:6px;background:' + bgMap[r.type] + '"><span style="flex-shrink:0">' + r.icon + '</span><span style="font-size:.88rem;color:var(--navy);line-height:1.5">' + r.txt + '</span></li>').join("") +
+        recs.map(r => '<li style="border-radius:8px;background:' + bgMap[r.type] + ';overflow:hidden"><div style="display:flex;align-items:flex-start;gap:8px;padding:8px 10px"><span style="flex-shrink:0">' + r.icon + '</span><div style="flex:1"><span style="font-size:.88rem;color:var(--navy);line-height:1.5">' + r.txt + '</span>' +
+          '<button onclick="toggleFinanceWhyPanel(this)" style="background:none;border:none;cursor:pointer;font-size:.75rem;color:var(--indigo);font-weight:600;padding:2px 0 0;display:block">📋 Pourquoi ? ▾</button>' +
+          '<div style="display:none;margin-top:6px;padding:8px 10px;background:rgba(255,255,255,.75);border-radius:6px">' + r.why.map(w => '<div style="font-size:.8rem;color:var(--slate);line-height:1.6">' + w + '</div>').join("") + '</div>' +
+          '</div></div></li>').join("") +
         "</ul></div>";
     }
 
@@ -9931,6 +10010,53 @@ async function aiCategorizeTransaction(txnId, description, amount, vendorName) {
       alert("Erreur IA : " + (res.error || "indisponible"));
     }
   } catch(e) { alert("Erreur : " + e.message); }
+}
+
+function switchFinanceTab(tab) {
+  document.querySelectorAll('[data-finance-tab]').forEach(el => {
+    el.style.display = el.dataset.financeTab === tab ? '' : 'none';
+  });
+  document.querySelectorAll('.finance-tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.ftab === tab);
+  });
+  if (tab === 'previsions') setTimeout(() => { if (_financeBarChart) _financeBarChart.resize(); if (_financeDonutChart) _financeDonutChart.resize(); }, 50);
+  if (tab === 'executive') setTimeout(() => { if (_financeExecChart) _financeExecChart.resize(); }, 50);
+}
+
+function _maturityBar(label, pct, color) {
+  return '<div style="font-size:.78rem;color:var(--navy);display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="min-width:170px">' + label + '</span><div style="width:80px;height:6px;background:#e2e8f0;border-radius:3px;flex-shrink:0"><div style="width:' + Math.min(100,pct) + '%;height:100%;background:' + color + ';border-radius:3px"></div></div><span style="font-size:.75rem;font-weight:700;color:' + color + '">' + pct + '%</span></div>';
+}
+
+function toggleFinanceWhyPanel(btn) {
+  const panel = btn.nextElementSibling;
+  const open = panel.style.display !== '' && panel.style.display !== 'none';
+  panel.style.display = open ? 'none' : 'block';
+  btn.innerHTML = open ? '📋 Pourquoi ? ▾' : '📋 Pourquoi ? ▴';
+}
+
+function _financeQuickQuestion(q) {
+  if (!_financeCache) return;
+  const { summary, budgetSummary } = _financeCache;
+  const tot = budgetSummary?.total || {};
+  let ans = "";
+  if (q === 'score') {
+    const utilPct = tot.utilization_pct || 0;
+    const risques = summary?.flagged_count || 0;
+    ans = "Le score financier est calculé à partir du taux d'utilisation budgétaire (" + utilPct + "%), du nombre de risques détectés (" + risques + ") et des dépassements par département. Un score ≥ 80 indique une bonne santé financière.";
+  } else if (q === 'risque') {
+    const over = (budgetSummary?.by_department||[]).filter(d => (d.actual||0) > (d.allocated||0));
+    ans = over.length > 0 ? over.length + " département" + (over.length>1?"s sont":" est") + " en dépassement : " + over.map(d => d.department_name).join(", ") + "." : "Aucun département n'est actuellement en dépassement de budget.";
+  } else if (q === 'prev2027') {
+    const base = tot.allocated || 0;
+    ans = "En supposant une croissance annuelle de 5%, le budget recommandé pour 2027 serait de " + fmtCurrency(base * 1.1025) + " (vs " + fmtCurrency(base) + " actuellement).";
+  } else if (q === 'reduire') {
+    ans = "Stratégies recommandées : 1) Renégocier les contrats fournisseurs (économies 10–15%). 2) Consolider les achats inter-départements. 3) Réviser les budgets en sous-utilisation. 4) Automatiser les processus répétitifs. 5) Analyser les transactions anormales pour identifier les fuites.";
+  }
+  const respEl = $("finance-quick-response");
+  if (respEl && ans) {
+    respEl.style.display = '';
+    respEl.innerHTML = '<div style="margin-top:10px;padding:10px 12px;background:#fff;border-radius:8px;border:1px solid #c7d2fe"><p style="margin:0;font-size:.88rem;line-height:1.6;color:var(--navy)">🤖 ' + ans + '</p></div>';
+  }
 }
 
 function _filterFinanceByCat(catKey, color) {

@@ -1520,21 +1520,55 @@
           </div>
         </div>
       </div>
-      <div id="finance-kpis" class="exec-kpi-grid" style="margin-bottom:16px">
-        <div class="exec-kpi-loading"><div class="spinner" style="margin:auto"></div></div>
+      <nav class="finance-subnav">
+        <button class="finance-tab-btn active" onclick="switchFinanceTab('executive')" data-ftab="executive">🎯 Vue Exécutive</button>
+        <button class="finance-tab-btn" onclick="switchFinanceTab('budgets')" data-ftab="budgets">📊 Budgets</button>
+        <button class="finance-tab-btn" onclick="switchFinanceTab('transactions')" data-ftab="transactions">💳 Transactions</button>
+        <button class="finance-tab-btn" onclick="switchFinanceTab('previsions')" data-ftab="previsions">📈 Prévisions IA</button>
+        <button class="finance-tab-btn" onclick="switchFinanceTab('anomalies')" data-ftab="anomalies">⚠️ Anomalies</button>
+        <button class="finance-tab-btn" onclick="switchFinanceTab('rapports')" data-ftab="rapports">📥 Rapports</button>
+      </nav>
+      <div class="ftab-content" data-finance-tab="executive">
+        <div id="finance-kpis" class="exec-kpi-grid" style="margin-bottom:16px">
+          <div class="exec-kpi-loading"><div class="spinner" style="margin:auto"></div></div>
+        </div>
+        <div id="finance-maturity" style="margin-bottom:16px"></div>
+        <div id="finance-exec-chart" style="margin-bottom:20px"></div>
+        <div id="finance-ai-synthesis" style="margin-bottom:16px"></div>
+        <div id="finance-quick-questions" style="margin-bottom:16px"></div>
+        <div id="finance-ai-recs" style="margin-bottom:16px"></div>
       </div>
-      <div id="finance-ai-synthesis" style="margin-bottom:16px"></div>
-      <div id="finance-charts" class="stats-charts" style="margin-bottom:20px"></div>
-      <div id="finance-anomalies"></div>
-      <div id="finance-budget-cat" style="margin-bottom:4px"></div>
-      <div id="finance-ai-recs" style="margin-bottom:16px"></div>
-      <div id="finance-forecast" style="margin-bottom:16px"></div>
-      <div class="section-header" style="margin-top:8px">
-        <h3 style="font-size:.92rem;font-weight:700;color:var(--navy)" data-i18n="finance.txns.header">Transactions</h3>
-        <button class="btn btn-primary btn-sm" onclick="openAddTransactionModal()" data-i18n="finance.add">+ Ajouter</button>
+      <div class="ftab-content" data-finance-tab="budgets" style="display:none">
+        <div id="finance-budget-cat" style="margin-bottom:4px"></div>
       </div>
-      <div id="finance-table" class="table-wrap">
-        <p class="muted" style="padding:20px">Chargement…</p>
+      <div class="ftab-content" data-finance-tab="transactions" style="display:none">
+        <div class="section-header" style="margin-top:8px">
+          <h3 style="font-size:.92rem;font-weight:700;color:var(--navy)" data-i18n="finance.txns.header">Transactions</h3>
+          <button class="btn btn-primary btn-sm" onclick="openAddTransactionModal()" data-i18n="finance.add">+ Ajouter</button>
+        </div>
+        <div id="finance-table" class="table-wrap">
+          <p class="muted" style="padding:20px">Chargement…</p>
+        </div>
+      </div>
+      <div class="ftab-content" data-finance-tab="previsions" style="display:none">
+        <div id="finance-charts" class="stats-charts" style="margin-bottom:20px"></div>
+        <div id="finance-forecast" style="margin-bottom:16px"></div>
+      </div>
+      <div class="ftab-content" data-finance-tab="anomalies" style="display:none">
+        <div id="finance-anomalies"></div>
+      </div>
+      <div class="ftab-content" data-finance-tab="rapports" style="display:none">
+        <div style="padding:20px 0">
+          <div class="ai-card" style="max-width:500px">
+            <span class="ai-badge">📥 Rapports exportables</span>
+            <p style="margin:10px 0;font-size:.88rem;color:var(--slate)">Téléchargez un rapport complet incluant les KPIs, les budgets par département, les transactions et les prévisions IA.</p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+              <button class="btn btn-primary" onclick="exportFinanceReport('pdf')">📄 Exporter en PDF</button>
+              <button class="btn btn-outline" onclick="exportFinanceReport('xlsx')">📊 Exporter en Excel</button>
+              <button class="btn btn-outline" onclick="exportFinanceReport('docx')">📝 Exporter en Word</button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 

@@ -2442,6 +2442,10 @@ footer {
 .finance-copilot-label { display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-weight:700;color:var(--indigo);text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px; }
 .ai-card { background:linear-gradient(135deg,#f0f4ff,#fff);border:1.5px solid #c7d2fe;border-radius:12px;padding:14px 18px; }
 .ai-badge { display:inline-flex;align-items:center;gap:6px;background:var(--indigo);color:#fff;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.04em; }
+.finance-subnav { display:flex;gap:4px;flex-wrap:wrap;padding:4px 0 14px;border-bottom:1px solid var(--border);margin-bottom:16px; }
+.finance-tab-btn { background:transparent;border:1.5px solid transparent;border-radius:8px;padding:6px 14px;font-size:.82rem;font-weight:600;color:var(--slate);cursor:pointer;transition:all .15s; }
+.finance-tab-btn:hover { background:var(--blue-pale);color:var(--blue); }
+.finance-tab-btn.active { background:var(--indigo);color:#fff;border-color:var(--indigo); }
 .badge-expired  { background: #fee2e2; color: #991b1b; border-color: #fecaca; }
 .badge-idle     { background: #f1f5f9; color: #475569; border-color: #cbd5e1; }
 .badge-decom    { background: #fce7f3; color: #9d174d; border-color: #fbcfe8; }
