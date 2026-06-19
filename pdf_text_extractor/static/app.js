@@ -5458,7 +5458,7 @@ async function loadDepartments() {
     }
     const DEPT_TYPE_ICONS = { finance:"💰", hr:"👥", it:"🖥️", legal:"⚖️", operations:"⚙️", communication:"📢", direction:"🏛️", approvisionnement:"📦", general:"🏢" };
     wrap.innerHTML = depts.map(d => `
-      <div class="dept-card">
+      <div class="dept-card" data-dept-name="${esc(d.name).toLowerCase()}">
         <div class="dept-card-name">
           <span class="dept-type-icon">${DEPT_TYPE_ICONS[d.dept_type] || "🏢"}</span>
           ${esc(d.name)}
@@ -5477,6 +5477,16 @@ async function loadDepartments() {
       ? `<p class="muted" style="color:#dc2626">⚠️ Tables manquantes — exécutez <strong>phase9_enterprise.sql</strong> dans Supabase SQL Editor puis rechargez.</p>`
       : `<p class="muted">${e.message||"Erreur"}</p>`;
   }
+}
+
+function filterTeamDepts(query) {
+  const q = (query || "").trim().toLowerCase();
+  const clr = $("dept-search-team-clear");
+  if (clr) clr.classList.toggle("hidden", !q);
+  document.querySelectorAll("#dept-list-wrap .dept-card").forEach(card => {
+    const name = card.dataset.deptName || card.textContent.toLowerCase();
+    card.style.display = (!q || name.includes(q)) ? "" : "none";
+  });
 }
 
 function openDeptModal(dept = null) {

@@ -1634,6 +1634,11 @@
           <h3 style="font-size:.95rem;font-weight:700;color:var(--navy)" data-i18n="dept.title">Départements</h3>
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
             <button class="btn btn-outline btn-sm" onclick="openDeptModal()">+ Département</button>
+            <div class="dept-search-team-wrap">
+              <span class="dept-search-icon">🔍</span>
+              <input type="search" id="dept-search-team" class="dept-search-input" placeholder="Rechercher…" oninput="filterTeamDepts(this.value)">
+              <button class="dept-search-clear hidden" id="dept-search-team-clear" onclick="filterTeamDepts('');$('dept-search-team').value='';this.classList.add('hidden')" title="Effacer">✕</button>
+            </div>
             <button class="btn btn-outline btn-sm" onclick="openInitDeptsModal()" style="border-color:var(--indigo);color:var(--indigo)">⚡ Initialiser par secteur</button>
             <button class="btn btn-outline btn-sm" onclick="resetAllDepartments()" style="border-color:#dc2626;color:#dc2626">🗑 Réinitialiser</button>
           </div>

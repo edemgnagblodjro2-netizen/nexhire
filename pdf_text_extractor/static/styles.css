@@ -2283,6 +2283,15 @@ footer {
   border-bottom: 1px solid #e2e8f0;
   margin-bottom: 18px;
 }
+.dept-search-team-wrap {
+  display: flex; align-items: center; gap: 5px;
+  background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 8px;
+  padding: 0 8px; height: 32px; transition: border-color .15s, box-shadow .15s;
+}
+.dept-search-team-wrap:focus-within {
+  border-color: var(--indigo); box-shadow: 0 0 0 3px rgba(129,140,248,.15); background: #fff;
+}
+.dept-search-team-wrap .dept-search-input { width: 160px; padding: 0; }
 .dept-search-wrap {
   position: relative; display: flex; align-items: center;
   background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 8px;
