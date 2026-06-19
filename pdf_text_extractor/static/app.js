@@ -2994,17 +2994,27 @@ async function loadAnalytics() {
     if (ctxD) {
       _chartDaily = new Chart(ctxD, {
         type: "bar",
+        plugins: [ChartDataLabels],
         data: {
           labels: dailyLabels,
           datasets: [{ label: "Requêtes", data: dailyData, backgroundColor: "#818CF8", borderRadius: 5, borderSkipped: false }],
         },
         options: {
           responsive: true, maintainAspectRatio: true,
-          plugins: { legend: { display: false } },
+          plugins: {
+            legend: { display: false },
+            datalabels: {
+              anchor: "end", align: "top",
+              formatter: v => v > 0 ? v : "",
+              color: "#475569",
+              font: { size: 10, weight: "600" },
+            },
+          },
           scales: {
             x: { grid: { display: false }, ticks: { font: { size: 10 }, maxRotation: 45, minRotation: 0 } },
             y: { beginAtZero: true, grid: { color: "#e2e8f0" }, ticks: { precision: 0 } },
           },
+          layout: { padding: { top: 18 } },
         },
       });
     }
@@ -3016,8 +3026,10 @@ async function loadAnalytics() {
     if (_chartConn) { _chartConn.destroy(); _chartConn = null; }
     const ctxC = $("chart-connectors")?.getContext("2d");
     if (ctxC && connLabels.length) {
+      const connTotal = connData.reduce((a, b) => a + b, 0) || 1;
       _chartConn = new Chart(ctxC, {
         type: "doughnut",
+        plugins: [ChartDataLabels],
         data: {
           labels: connLabels,
           datasets: [{ data: connData, backgroundColor: palette.slice(0, connLabels.length), borderWidth: 2, borderColor: "#fff" }],
@@ -3025,9 +3037,34 @@ async function loadAnalytics() {
         options: {
           responsive: true, maintainAspectRatio: true,
           plugins: {
-            legend: { position: "right", labels: { font: { size: 11 }, padding: 12 } },
+            legend: {
+              position: "right",
+              labels: {
+                font: { size: 11 }, padding: 14,
+                generateLabels: chart => chart.data.labels.map((lbl, i) => {
+                  const val = chart.data.datasets[0].data[i];
+                  const pct = Math.round(val / connTotal * 100);
+                  return {
+                    text: `${lbl}  ${val} (${pct}%)`,
+                    fillStyle: palette[i] || "#94a3b8",
+                    strokeStyle: "#fff",
+                    lineWidth: 2,
+                    index: i,
+                    hidden: false,
+                  };
+                }),
+              },
+            },
+            datalabels: {
+              formatter: (value) => {
+                const pct = Math.round(value / connTotal * 100);
+                return pct >= 6 ? `${pct}%` : "";
+              },
+              color: "#fff",
+              font: { size: 11, weight: "bold" },
+            },
           },
-          cutout: "55%",
+          cutout: "50%",
         },
       });
     } else if (ctxC) {
