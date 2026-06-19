@@ -111,16 +111,61 @@ Un badge **Données réelles** confirme que les données viennent directement de
 
 ---
 
+## Accès par département
+
+AgentHub affiche uniquement les modules auxquels vous avez accès selon votre département. Un employé du département Finance voit le module Finance ; un employé TI voit le Parc IT — et ainsi de suite. Les administrateurs voient tout.
+
+| Département | Module visible |
+|---|---|
+| Finance | 💰 Finance (budgets, transactions, copilot) |
+| Approvisionnement | 📦 Achats (contrats, fournisseurs, dépenses) |
+| Technologies de l'information | 💻 Parc IT (licences, serveurs, copilot IT) |
+| Direction / Administration | Tous les modules + 🏛️ Organisation |
+
+> Si vous ne voyez pas un onglet, contactez votre administrateur pour qu'il vous assigne au bon département dans **Organisation → Départements**.
+
+---
+
+## Recherche interne dans vos documents
+
+Chaque module dispose d'un sous-onglet **🔍 Recherche** qui vous permet d'interroger vos documents internes en langage naturel.
+
+**Où trouver la recherche :**
+- Finance → sous-onglet Recherche
+- Achats → sous-onglet Recherche
+- Parc IT → sous-onglet Recherche
+
+**Exemples de questions :**
+- *"Quelle est notre politique de remboursement de frais ?"*
+- *"Quelles sont les clauses de résiliation de notre contrat avec le fournisseur X ?"*
+- *"Résume les procédures de sécurité informatique"*
+
+La recherche n'interroge que les documents de votre département (et les documents partagés à toute l'organisation). Vos collègues d'autres départements ne voient pas vos documents.
+
+---
+
+## Téléverser un document
+
+1. Allez dans **📄 Documents**
+2. Choisissez votre fichier PDF
+3. Sélectionnez le **Département propriétaire** (ou laissez "Accessible à toute l'organisation" pour un document partagé)
+4. Cliquez **Extraire le texte**
+
+Le document sera ensuite disponible dans la recherche interne du département sélectionné.
+
+---
+
 ## Tableaux de bord disponibles
 
-| Dashboard | Données affichées |
+| Module | Ce qu'il contient |
 |---|---|
-| **Vue d'ensemble** | Score de santé org, KPIs clés |
-| **Licences M365** | Utilisateurs actifs, licences inutilisées, économies |
-| **Sécurité Entra ID** | MFA, admins, risques |
-| **Assets (Intune)** | Appareils, conformité, OS |
-| **Transactions financières** | Fournisseurs, factures, coûts IT |
-| **Gouvernance IT** | Droits d'accès, politiques, audit |
+| **🤖 Assistant IA** | Agent conversationnel multi-connecteurs |
+| **📊 Optimisation IA** | Recommandations de réduction de coûts |
+| **💰 Finance** | Budgets, transactions, prévisions, Copilot Finance |
+| **📦 Achats** | Contrats fournisseurs, dépenses, Copilot Achats |
+| **💻 Parc IT** | Licences, serveurs, appareils, Copilot IT |
+| **📄 Documents** | Analyse PDF, résumé IA, recherche interne |
+| **🏛️ Organisation** | Départements, membres, Executive Copilot (admin) |
 
 ---
 
@@ -128,7 +173,9 @@ Un badge **Données réelles** confirme que les données viennent directement de
 
 - Connexion HTTPS uniquement
 - Credentials connecteurs chiffrés (Fernet AES-128)
-- Données strictement isolées par organisation
+- Données strictement isolées par organisation **et par département**
+- Un employé ne peut pas accéder aux données d'un département auquel il n'appartient pas
+- Les documents sont tagués par département — la recherche interne ne retourne que ce que vous êtes autorisé à voir
 - Aucun accès NexHire à vos données sans votre autorisation
 - Logs d'audit complets sur chaque action
 

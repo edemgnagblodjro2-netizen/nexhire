@@ -1,6 +1,6 @@
 # Guide Interne — AgentHub Operations (NexHire)
 
-Document opérationnel pour l'équipe NexHire. Mis à jour le 2026-06-12.
+Document opérationnel pour l'équipe NexHire. Mis à jour le 2026-06-19.
 
 ---
 
@@ -27,6 +27,8 @@ Document opérationnel pour l'équipe NexHire. Mis à jour le 2026-06-12.
 - [x] `phase20_connector_expiry.sql` — colonne `token_expires_at`
 - [x] `phase21_missing_indexes.sql` — index de performance
 - [x] `phase22_drop_entities_legacy.sql` — tables legacy supprimées
+- [x] `migrate_currency.sql` — colonne `currency` sur `organizations`
+- [ ] `add_document_dept.sql` — colonne `department_id` sur `documents` **(à exécuter dans Supabase SQL Editor)**
 
 ### Dashboards
 - [x] Posture sécurité Entra ID (MFA, admins, risques)
@@ -34,9 +36,36 @@ Document opérationnel pour l'équipe NexHire. Mis à jour le 2026-06-12.
 - [x] Transactions financières IT (fournisseurs, factures)
 - [x] Gouvernance IT v2 (modules intégrés)
 
+### Copilots IA (AgentHub Intelligence Platform)
+- [x] Finance Copilot — score, maturité, synthèse IA, recommandations (sous-tab "Vue Exécutive")
+- [x] RH Copilot — même structure, données membres
+- [x] Procurement Copilot — tab Achats dédié (Vue Exécutive, Contrats, Fournisseurs, Dépenses)
+- [x] IT Copilot — sous-tab "Copilot IT" dans Parc IT
+- [x] Executive Copilot — sous-tab "Executive Copilot" dans Organisation (admin/owner)
+- [x] Global Intelligence Score = Finance×0.30 + RH×0.20 + Achats×0.25 + IT×0.25
+
+### RBAC Départemental (2026-06-19)
+- [x] Tabs Finance et Achats masqués pour les utilisateurs hors département
+- [x] `switchTab()` bloque la navigation directe (URL hash, popstate)
+- [x] Recherche interne retirée du menu principal → intégrée dans Finance, Achats, Parc IT
+- [x] `/api/search/internal` filtre les documents par `department_id` (même pattern que `routes_budget.py`)
+- [x] `/api/documents` (GET) : filtre dept — `department_id IS NULL OR department_id IN (user's depts)`
+- [x] Upload de document : champ `department_id` optionnel (null = toute l'org)
+- [x] `state.user.dept_types` (retourné par `/api/auth/me`) pilote toute la visibilité nav
+
 ---
 
 ## Ce qui reste avant premier client payant
+
+### Priorité 0 — Migration DB à exécuter immédiatement
+
+```sql
+-- Exécuter dans Supabase SQL Editor (une seule fois)
+-- Fichier : pdf_text_extractor/add_document_dept.sql
+ALTER TABLE public.documents
+  ADD COLUMN IF NOT EXISTS department_id UUID REFERENCES public.departments(id) ON DELETE SET NULL;
+CREATE INDEX IF NOT EXISTS idx_documents_department_id ON public.documents(department_id);
+```
 
 ### Priorité 1 — Validation connecteurs (cette semaine)
 
