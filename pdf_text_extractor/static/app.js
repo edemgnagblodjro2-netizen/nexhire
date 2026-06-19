@@ -4753,7 +4753,7 @@ async function loadTransactions() {
   }
 }
 
-async function openTxnModal(entry = null) {
+async function openTxnModal(entry = null, afterSave = null) {
   $("txm-id").value     = entry?.id || "";
   $("txm-date").value   = entry?.transaction_date?.slice(0,10) || new Date().toISOString().slice(0,10);
   $("txm-amount").value = entry?.amount || "";
@@ -4803,6 +4803,7 @@ async function openTxnModal(entry = null) {
       else    await apiCall("/api/transactions", "POST", payload);
       closeParcModal("txn-modal");
       loadTransactions();
+      if (afterSave) afterSave();
       showToast("Transaction enregistrée.", "success");
     } catch (err) {
       showToast(`Erreur : ${err.message}`, "error");
@@ -9457,7 +9458,7 @@ async function aiCategorizeTransaction(txnId, description, amount, vendorName) {
 }
 
 function openAddTransactionModal() {
-  alert("Fonctionnalité d'ajout de transaction — à connecter au modal existant du Parc IT → Transactions.");
+  openTxnModal(null, loadFinance);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
