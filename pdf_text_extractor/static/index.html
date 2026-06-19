@@ -2959,26 +2959,26 @@
       <div class="modal-card" style="max-width:560px;max-height:90vh;overflow-y:auto">
         <button class="modal-close" onclick="closeContractorModal()">✕</button>
         <h3 id="contractor-modal-title">+ Collaborateur externe</h3>
-        <input type="hidden" id="cm-id" />
-        <input type="hidden" id="cm-default-dept" />
+        <input type="hidden" id="ecm-id" />
+        <input type="hidden" id="ecm-default-dept" />
         <form id="contractor-form" class="settings-form" onsubmit="submitContractorModal(event)" style="display:grid;gap:10px;margin-top:12px">
 
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
             <label class="auth-label" style="grid-column:1/-1">
               <span>Nom complet *</span>
-              <input id="cm-fullname" type="text" placeholder="Jean Tremblay" required maxlength="120" />
+              <input id="ecm-fullname" type="text" placeholder="Jean Tremblay" required maxlength="120" />
             </label>
             <label class="auth-label">
               <span>Courriel</span>
-              <input id="cm-email" type="email" placeholder="jean@entreprise.ca" />
+              <input id="ecm-email" type="email" placeholder="jean@entreprise.ca" />
             </label>
             <label class="auth-label">
               <span>Entreprise</span>
-              <input id="cm-company" type="text" placeholder="Tremblay Conseil inc." />
+              <input id="ecm-company" type="text" placeholder="Tremblay Conseil inc." />
             </label>
             <label class="auth-label">
               <span>Type *</span>
-              <select id="cm-type">
+              <select id="ecm-type">
                 <option value="consultant">Consultant</option>
                 <option value="provider">Prestataire de services</option>
                 <option value="vendor">Fournisseur</option>
@@ -2987,23 +2987,23 @@
             </label>
             <label class="auth-label">
               <span>Titre / Poste</span>
-              <input id="cm-jobtitle" type="text" placeholder="Consultant senior ERP" />
+              <input id="ecm-jobtitle" type="text" placeholder="Consultant senior ERP" />
             </label>
           </div>
 
           <label class="auth-label">
             <span>Mission / Description</span>
-            <textarea id="cm-mission" rows="2" placeholder="Migration SAP, intégration API, audit de sécurité…" style="resize:vertical"></textarea>
+            <textarea id="ecm-mission" rows="2" placeholder="Migration SAP, intégration API, audit de sécurité…" style="resize:vertical"></textarea>
           </label>
 
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
             <label class="auth-label">
               <span>Budget alloué</span>
-              <input id="cm-value" type="number" min="0" step="0.01" value="0" />
+              <input id="ecm-value" type="number" min="0" step="0.01" value="0" />
             </label>
             <label class="auth-label">
               <span>Devise</span>
-              <select id="cm-currency">
+              <select id="ecm-currency">
                 <option value="CAD">CAD $</option>
                 <option value="USD">USD $</option>
                 <option value="EUR">EUR €</option>
@@ -3011,7 +3011,7 @@
             </label>
             <label class="auth-label">
               <span>Durée (ans)</span>
-              <select id="cm-duration" onchange="updateContractEnd()">
+              <select id="ecm-duration" onchange="updateContractEnd()">
                 <option value="">Dates manuelles</option>
                 <option value="1">1 an</option>
                 <option value="2">2 ans</option>
@@ -3030,33 +3030,33 @@
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
             <label class="auth-label">
               <span>Date début *</span>
-              <input id="cm-start" type="date" required onchange="updateContractEnd()" />
+              <input id="ecm-start" type="date" required onchange="updateContractEnd()" />
             </label>
             <label class="auth-label">
               <span>Date fin *</span>
-              <input id="cm-end" type="date" required />
+              <input id="ecm-end" type="date" required />
             </label>
           </div>
 
           <label class="auth-label">
             <span>Portée</span>
-            <select id="cm-scope" onchange="toggleContractorDepts()">
+            <select id="ecm-scope" onchange="toggleContractorDepts()">
               <option value="department">Département(s) spécifique(s)</option>
               <option value="organization">Toute l'organisation</option>
             </select>
           </label>
 
-          <div id="cm-dept-wrap">
+          <div id="ecm-dept-wrap">
             <label class="auth-label">
               <span>Département(s)</span>
-              <div id="cm-dept-checkboxes" class="dept-checkbox-list" style="max-height:140px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;padding:8px;gap:4px;display:flex;flex-direction:column">
+              <div id="ecm-dept-checkboxes" class="dept-checkbox-list" style="max-height:140px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;padding:8px;gap:4px;display:flex;flex-direction:column">
                 <p class="muted" style="font-size:.8rem">Chargement…</p>
               </div>
             </label>
           </div>
 
-          <p id="cm-error" class="form-error hidden"></p>
-          <button type="submit" class="btn btn-primary btn-sm" id="cm-submit-btn">Enregistrer</button>
+          <p id="ecm-error" class="form-error hidden"></p>
+          <button type="submit" class="btn btn-primary btn-sm" id="ecm-submit-btn">Enregistrer</button>
         </form>
       </div>
     </div>

@@ -9036,69 +9036,67 @@ async function openContractorModal(id = null, defaultDeptId = null) {
   const modal = $("contractor-modal");
   if (!modal) return;
 
-  // Charger la liste des départements pour les checkboxes
   try {
     const r = await apiCall("/api/departments");
     _contractorDepts = Array.isArray(r) ? r : (r.departments || []);
   } catch (_) { _contractorDepts = []; }
 
-  const checkboxWrap = $("cm-dept-checkboxes");
+  const checkboxWrap = $("ecm-dept-checkboxes");
   if (checkboxWrap) {
     if (_contractorDepts.length === 0) {
       checkboxWrap.innerHTML = `<p class="muted" style="font-size:.8rem">Aucun département créé.</p>`;
     } else {
       checkboxWrap.innerHTML = _contractorDepts.map(d => `
         <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;cursor:pointer">
-          <input type="checkbox" name="cm-dept" value="${d.id}" ${d.id === defaultDeptId ? "checked" : ""} />
+          <input type="checkbox" name="ecm-dept" value="${d.id}" ${d.id === defaultDeptId ? "checked" : ""} />
           ${esc(d.name)}
         </label>`).join("");
     }
   }
 
-  $("cm-id").value = "";
+  $("ecm-id").value = "";
   $("contractor-modal-title").textContent = "+ Collaborateur externe";
-  $("cm-fullname").value = "";
-  $("cm-email").value = "";
-  $("cm-company").value = "";
-  $("cm-type").value = "consultant";
-  $("cm-jobtitle").value = "";
-  $("cm-mission").value = "";
-  $("cm-value").value = "0";
-  $("cm-currency").value = "CAD";
-  $("cm-duration").value = "";
+  $("ecm-fullname").value = "";
+  $("ecm-email").value = "";
+  $("ecm-company").value = "";
+  $("ecm-type").value = "consultant";
+  $("ecm-jobtitle").value = "";
+  $("ecm-mission").value = "";
+  $("ecm-value").value = "0";
+  $("ecm-currency").value = "CAD";
+  $("ecm-duration").value = "";
   const today = new Date().toISOString().split("T")[0];
-  $("cm-start").value = today;
-  $("cm-end").value = "";
-  $("cm-scope").value = "department";
-  $("cm-default-dept").value = defaultDeptId || "";
+  $("ecm-start").value = today;
+  $("ecm-end").value = "";
+  $("ecm-scope").value = "department";
+  $("ecm-default-dept").value = defaultDeptId || "";
   toggleContractorDepts();
-  if ($("cm-error")) $("cm-error").classList.add("hidden");
-  $("cm-submit-btn").textContent = "Enregistrer";
-  $("cm-submit-btn").disabled = false;
+  if ($("ecm-error")) $("ecm-error").classList.add("hidden");
+  $("ecm-submit-btn").textContent = "Enregistrer";
+  $("ecm-submit-btn").disabled = false;
 
   if (id) {
-    // Mode édition — charger les données existantes
     try {
       const all = await apiCall("/api/external-contractors");
       const c = all.find(x => x.id === id);
       if (c) {
-        $("cm-id").value = c.id;
+        $("ecm-id").value = c.id;
         $("contractor-modal-title").textContent = "Modifier le collaborateur";
-        $("cm-fullname").value = c.full_name || "";
-        $("cm-email").value = c.email || "";
-        $("cm-company").value = c.company_name || "";
-        $("cm-type").value = c.contractor_type || "consultant";
-        $("cm-jobtitle").value = c.job_title || "";
-        $("cm-mission").value = c.mission || "";
-        $("cm-value").value = c.contract_value ?? 0;
-        $("cm-currency").value = c.currency || "CAD";
-        $("cm-start").value = c.contract_start ? c.contract_start.substring(0, 10) : "";
-        $("cm-end").value   = c.contract_end   ? c.contract_end.substring(0, 10)   : "";
-        $("cm-scope").value = c.scope || "department";
+        $("ecm-fullname").value = c.full_name || "";
+        $("ecm-email").value = c.email || "";
+        $("ecm-company").value = c.company_name || "";
+        $("ecm-type").value = c.contractor_type || "consultant";
+        $("ecm-jobtitle").value = c.job_title || "";
+        $("ecm-mission").value = c.mission || "";
+        $("ecm-value").value = c.contract_value ?? 0;
+        $("ecm-currency").value = c.currency || "CAD";
+        $("ecm-start").value = c.contract_start ? c.contract_start.substring(0, 10) : "";
+        $("ecm-end").value   = c.contract_end   ? c.contract_end.substring(0, 10)   : "";
+        $("ecm-scope").value = c.scope || "department";
         toggleContractorDepts();
-        // Cocher les départements liés
         const linkedIds = c.department_ids || [];
-        document.querySelectorAll("input[name='cm-dept']").forEach(cb => {
+        document.querySelectorAll("input[name='ecm-dept']:checked").forEach(cb => { cb.checked = false; });
+        document.querySelectorAll("input[name='ecm-dept']").forEach(cb => {
           cb.checked = linkedIds.includes(cb.value);
         });
       }
@@ -9114,42 +9112,42 @@ function closeContractorModal() {
 }
 
 function toggleContractorDepts() {
-  const scope = $("cm-scope")?.value;
-  const wrap  = $("cm-dept-wrap");
+  const scope = $("ecm-scope")?.value;
+  const wrap  = $("ecm-dept-wrap");
   if (wrap) wrap.style.display = scope === "organization" ? "none" : "";
 }
 
 function updateContractEnd() {
-  const dur   = parseInt($("cm-duration")?.value, 10);
-  const start = $("cm-start")?.value;
+  const dur   = parseInt($("ecm-duration")?.value, 10);
+  const start = $("ecm-start")?.value;
   if (!dur || !start) return;
   const d = new Date(start);
   d.setFullYear(d.getFullYear() + dur);
-  if ($("cm-end")) $("cm-end").value = d.toISOString().split("T")[0];
+  if ($("ecm-end")) $("ecm-end").value = d.toISOString().split("T")[0];
 }
 
 async function submitContractorModal(e) {
   e.preventDefault();
-  const errEl  = $("cm-error");
-  const btn    = $("cm-submit-btn");
-  const id     = $("cm-id").value.trim();
-  const scope  = $("cm-scope").value;
+  const errEl  = $("ecm-error");
+  const btn    = $("ecm-submit-btn");
+  const id     = $("ecm-id").value.trim();
+  const scope  = $("ecm-scope").value;
 
   const deptIds = scope === "department"
-    ? [...document.querySelectorAll("input[name='cm-dept']:checked")].map(cb => cb.value)
+    ? [...document.querySelectorAll("input[name='ecm-dept']:checked")].map(cb => cb.value)
     : [];
 
   const payload = {
-    full_name:       $("cm-fullname").value.trim(),
-    email:           $("cm-email").value.trim() || null,
-    company_name:    $("cm-company").value.trim() || null,
-    contractor_type: $("cm-type").value,
-    job_title:       $("cm-jobtitle").value.trim() || null,
-    mission:         $("cm-mission").value.trim() || null,
-    contract_value:  parseFloat($("cm-value").value) || 0,
-    currency:        $("cm-currency").value,
-    contract_start:  $("cm-start").value,
-    contract_end:    $("cm-end").value,
+    full_name:       $("ecm-fullname").value.trim(),
+    email:           $("ecm-email").value.trim() || null,
+    company_name:    $("ecm-company").value.trim() || null,
+    contractor_type: $("ecm-type").value,
+    job_title:       $("ecm-jobtitle").value.trim() || null,
+    mission:         $("ecm-mission").value.trim() || null,
+    contract_value:  parseFloat($("ecm-value").value) || 0,
+    currency:        $("ecm-currency").value,
+    contract_start:  $("ecm-start").value,
+    contract_end:    $("ecm-end").value,
     scope,
     department_ids:  deptIds,
   };
@@ -9476,9 +9474,9 @@ async function obConnectM365() {
   const btn = $("ob-m365-btn");
   if (btn) { btn.disabled = true; btn.textContent = "Ouverture…"; }
   try {
-    const resp = await apiCall("/api/connectors/microsoft_365/authorize");
-    if (resp?.url) {
-      const win = window.open(resp.url, "oauth", "width=600,height=700");
+    const resp = await apiCall("/api/connectors/microsoft_365/oauth/start", "POST", {});
+    if (resp?.authorization_url) {
+      const win = window.open(resp.authorization_url, "oauth", "width=600,height=700");
       // Vérifier la fermeture de la fenêtre OAuth
       const poll = setInterval(async () => {
         if (win?.closed) {
