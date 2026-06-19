@@ -36,6 +36,7 @@ class DocumentStore:
         content_text: str,
         organization_id: str | None = None,
         user_id: str | None = None,
+        department_id: str | None = None,
     ) -> dict[str, Any]:
         payload = {
             "organization_id": organization_id,
@@ -43,6 +44,7 @@ class DocumentStore:
             "filename": filename,
             "mime_type": "application/pdf",
             "content_text": content_text,
+            "department_id": department_id,
         }
 
         if self.supabase is not None:

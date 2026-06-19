@@ -6,7 +6,8 @@ from fastapi import APIRouter, Depends, Request
 from pydantic import BaseModel, Field
 
 from auth import CurrentUser
-from rbac import require_min_role
+from db import get_db, rows
+from rbac import ROLE_RANK, require_min_role
 
 router = APIRouter(prefix="/api/search", tags=["search"])
 
@@ -16,37 +17,61 @@ class SearchPayload(BaseModel):
     language: str = Field(default="fr", pattern="^(fr|en)$")
 
 
+def _allowed_dept_ids(user: CurrentUser) -> list[str] | None:
+    """None = admin/owner → voit tout. Liste = IDs autorisés (peut être vide)."""
+    if ROLE_RANK.get(user.role, 0) >= 3 or user.is_service_account:
+        return None
+    with get_db() as cur:
+        cur.execute(
+            "SELECT department_id FROM department_members WHERE user_id = %s",
+            (user.id,),
+        )
+        return [r["department_id"] for r in rows(cur)]
+
+
 @router.post("/internal")
 async def search_internal(
     request: Request,
     payload: SearchPayload,
     user: CurrentUser = Depends(require_min_role("user")),
 ):
-    """Recherche en langage naturel sur tous les documents de l'organisation."""
+    """Recherche en langage naturel sur les documents accessibles à l'utilisateur."""
     store = request.app.state.storage
     ai    = request.app.state.assistant
 
-    # ── Récupère les documents de l'organisation ─────────────────────────────
+    allowed = _allowed_dept_ids(user)
+
+    # ── Récupère les documents autorisés ────────────────────────────────────
     if store.supabase:
-        resp = (
+        q = (
             store.supabase.table("documents")
             .select("id, filename, content_text, summary, created_at")
             .eq("organization_id", str(user.organization_id))
             .order("created_at", desc=True)
             .limit(50)
-            .execute()
         )
-        docs = resp.data or []
+        if allowed is not None:
+            if allowed:
+                ids_str = ",".join(allowed)
+                q = q.or_(f"department_id.is.null,department_id.in.({ids_str})")
+            else:
+                q = q.is_("department_id", "null")
+        docs = q.execute().data or []
     else:
         docs = [
             d for d in store.documents.values()
             if str(d.get("organization_id") or "") == str(user.organization_id)
+            and (
+                allowed is None
+                or d.get("department_id") is None
+                or d.get("department_id") in allowed
+            )
         ]
 
     if not docs:
         return {
             "success": False,
-            "answer":  "Aucun document trouvé dans votre organisation. Téléversez des documents dans l'onglet Documents pour activer la recherche interne.",
+            "answer":  "Aucun document trouvé dans votre espace. Téléversez des documents dans l'onglet Documents pour activer la recherche interne.",
             "sources": [],
         }
 
@@ -59,7 +84,6 @@ async def search_internal(
         scored.append((score, doc))
 
     scored.sort(key=lambda x: -x[0])
-    # Toujours inclure au moins 3 docs même sans correspondance exacte
     top = [d for _, d in scored[:5]] or docs[:3]
 
     # ── Contexte pour l'IA ───────────────────────────────────────────────────

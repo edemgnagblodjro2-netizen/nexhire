@@ -1147,11 +1147,22 @@ function showApp() {
   const saBtn = $("superadmin-tab-btn");
   if (saBtn) saBtn.classList.toggle("hidden", !u?.is_superadmin);
 
-  // Parc IT — uniquement pour IT, Direction et admins
+  // Tabs départements — visibles uniquement aux membres du département ou admin
+  const deptTypes = u?.dept_types || [];
+  document.querySelectorAll(".dept-tab").forEach(btn => {
+    const requiredType = btn.dataset.deptType;
+    if (!requiredType) return;
+    let allowed = isAdmin;
+    if (!allowed) {
+      if (requiredType === "parc-it") allowed = deptTypes.some(t => ["it","direction"].includes(t));
+      else allowed = deptTypes.includes(requiredType);
+    }
+    btn.classList.toggle("hidden", !allowed);
+  });
+  // Parc IT (classe différente, tab déjà géré séparément)
   const parcTabBtn = document.querySelector('[data-tab="parc-it"]');
   if (parcTabBtn) {
-    const deptTypes = u?.dept_types || [];
-    const showParc  = isAdmin || deptTypes.some(t => ["it","direction"].includes(t));
+    const showParc = isAdmin || deptTypes.some(t => ["it","direction"].includes(t));
     parcTabBtn.classList.toggle("hidden", !showParc);
   }
 
@@ -1514,10 +1525,12 @@ function switchTab(name) {
     return;
   }
 
-  // Vérifie l'accès à Parc IT
-  if (name === "parc-it") {
+  // Garde d'accès par département
+  {
     const deptTypes = u?.dept_types || [];
-    if (!isAdmin && !deptTypes.some(t => ["it","direction"].includes(t))) return;
+    if (name === "parc-it"     && !isAdmin && !deptTypes.some(t => ["it","direction"].includes(t))) return;
+    if (name === "finance"     && !isAdmin && !deptTypes.includes("finance"))     return;
+    if (name === "procurement" && !isAdmin && !deptTypes.includes("procurement")) return;
   }
   state.tab = name;
   document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === name));
@@ -1571,6 +1584,7 @@ function loadActiveTab() {
     "security":    loadSecurityDashboard,
     "finance":     loadFinance,
     "procurement": loadProcurement,
+    "documents":   _populateUploadDeptSelect,
     "recherche":   loadRecherche,
   };
   const fn = loaders[state.tab];
@@ -4274,6 +4288,7 @@ function _loadParcSection(name) {
   if (name === "apps")         loadApps();
   if (name === "transactions")  loadTransactions();
   if (name === "copilot")       _loadITCopilot();
+  if (name === "recherche")     _renderDeptSearch('it-search-wrap', 'Parc IT');
 }
 
 let _allDepts = [];
@@ -10030,6 +10045,7 @@ function switchFinanceTab(tab) {
   });
   if (tab === 'previsions') setTimeout(() => { if (_financeBarChart) _financeBarChart.resize(); if (_financeDonutChart) _financeDonutChart.resize(); }, 50);
   if (tab === 'executive') setTimeout(() => { if (_financeExecChart) _financeExecChart.resize(); }, 50);
+  if (tab === 'recherche') _renderDeptSearch('fin-search-wrap', 'Finance');
 }
 
 function switchTeamTab(tab) {
@@ -10246,6 +10262,7 @@ function switchProcurementTab(tab) {
     btn.classList.toggle('active', btn.dataset.ftab === tab);
   });
   if (tab === 'executive') setTimeout(() => { if (_procExecChart) _procExecChart.resize(); }, 50);
+  if (tab === 'recherche') _renderDeptSearch('proc-search-wrap', 'Achats');
 }
 
 async function loadProcurement() {
@@ -11202,6 +11219,94 @@ async function exportFinanceReport(fmt) {
 
 // ═══════════════════════════════════════════════════════════════════════════
 // RECHERCHE INTERNE
+// ═══════════════════════════════════════════════════════════════════════════
+// RECHERCHE DOCUMENTAIRE DÉPARTEMENTALE
+// ═══════════════════════════════════════════════════════════════════════════
+
+function _renderDeptSearch(containerId, deptLabel) {
+  const el = $(containerId);
+  if (!el || el.dataset.srchInit) return;
+  el.dataset.srchInit = "1";
+  el.innerHTML = `
+    <div class="ai-card" style="margin-top:16px">
+      <span class="ai-badge" style="background:var(--indigo-light,#eef2ff);color:var(--indigo)">🔍 Recherche documentaire — ${deptLabel}</span>
+      <p style="font-size:.84rem;color:var(--slate);margin:8px 0 12px">
+        Interrogez vos documents en langage naturel. Seuls les documents de votre département et les documents organisationnels sont inclus.
+      </p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+        <input type="text" id="${containerId}-q" style="flex:1;min-width:200px"
+               placeholder="Ex : Quelle est notre politique de remboursement ?"
+               onkeydown="if(event.key==='Enter')_doDeptSearch('${containerId}')" />
+        <select id="${containerId}-lang" style="width:76px">
+          <option value="fr">FR</option><option value="en">EN</option>
+        </select>
+        <button class="btn btn-primary btn-sm" id="${containerId}-btn"
+                onclick="_doDeptSearch('${containerId}')">Rechercher</button>
+      </div>
+      <div id="${containerId}-result" class="hidden">
+        <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:12px 14px;margin-bottom:10px">
+          <div style="display:flex;gap:8px;align-items:flex-start">
+            <span style="font-size:1.2rem;flex-shrink:0">🤖</span>
+            <div id="${containerId}-answer" style="font-size:.87rem;line-height:1.7;white-space:pre-wrap;color:#1e293b"></div>
+          </div>
+        </div>
+        <div style="font-size:.75rem;font-weight:700;color:var(--slate2);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 6px">Sources consultées</div>
+        <div id="${containerId}-sources" style="display:flex;flex-direction:column;gap:6px"></div>
+      </div>
+    </div>`;
+}
+
+async function _doDeptSearch(containerId) {
+  const q = $(`${containerId}-q`)?.value?.trim();
+  if (!q) return;
+  const btn      = $(`${containerId}-btn`);
+  const lang     = $(`${containerId}-lang`)?.value || "fr";
+  const resultEl = $(`${containerId}-result`);
+  const answerEl = $(`${containerId}-answer`);
+  const sourcesEl = $(`${containerId}-sources`);
+  if (btn) { btn.disabled = true; btn.textContent = "Recherche…"; }
+  resultEl?.classList.add("hidden");
+  try {
+    const res = await apiCall("/api/search/internal", "POST", { query: q, language: lang });
+    if (answerEl) answerEl.textContent = res.answer || "";
+    if (sourcesEl) {
+      sourcesEl.innerHTML = (res.sources || []).map(s => `
+        <div style="background:#f8fafc;border:1px solid var(--border);border-radius:6px;padding:8px 12px;display:flex;gap:8px">
+          <span style="font-size:1rem;flex-shrink:0">📄</span>
+          <div>
+            <div style="font-size:.83rem;font-weight:700;color:var(--navy)">${esc(s.filename)}</div>
+            ${s.preview ? `<div style="font-size:.76rem;color:var(--slate);margin-top:2px">${esc(s.preview)}…</div>` : ""}
+          </div>
+        </div>`).join("") || '<p class="muted" style="font-size:.82rem">Aucune source identifiée.</p>';
+    }
+    resultEl?.classList.remove("hidden");
+  } catch(e) {
+    if (answerEl) answerEl.textContent = "Erreur : " + e.message;
+    resultEl?.classList.remove("hidden");
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = "Rechercher"; }
+  }
+}
+
+// ── Population du select département pour l'upload ────────────────────────
+async function _populateUploadDeptSelect() {
+  const sel = $("upload-dept");
+  if (!sel) return;
+  try {
+    const r = await apiCall("/api/departments");
+    const depts = Array.isArray(r) ? r : (r.departments || []);
+    const isAdmin = ["admin","owner"].includes(state.user?.role);
+    const userDeptTypes = state.user?.dept_types || [];
+    // N'afficher que les depts de l'utilisateur (ou tous pour admin)
+    const visible = isAdmin ? depts : depts.filter(d => {
+      const dt = d.dept_type || "";
+      return !dt || userDeptTypes.includes(dt);
+    });
+    sel.innerHTML = '<option value="">— Accessible à toute l\'organisation —</option>' +
+      visible.map(d => `<option value="${d.id}">${esc(d.name)}</option>`).join("");
+  } catch(_) {}
+}
+
 // ═══════════════════════════════════════════════════════════════════════════
 
 async function loadRecherche() {

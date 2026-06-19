@@ -1099,9 +1099,8 @@
         <button class="tab-btn"  data-tab="optim"  role="tab" data-i18n="app.tab.optim">📊 Optimisation IA</button>
         <button class="tab-btn"  data-tab="parc-it" role="tab" data-i18n="app.tab.parc">💻 Parc IT</button>
         <button class="tab-btn"  data-tab="documents" role="tab" data-i18n="app.tab.documents">📄 Documents</button>
-        <button class="tab-btn"  data-tab="finance"   role="tab" data-i18n="app.tab.finance">💰 Finance</button>
-        <button class="tab-btn"  data-tab="procurement" role="tab">📦 Achats</button>
-        <button class="tab-btn"  data-tab="recherche" role="tab" data-i18n="app.tab.recherche">🔍 Recherche interne</button>
+        <button class="tab-btn dept-tab hidden" data-tab="finance"     data-dept-type="finance"     role="tab" data-i18n="app.tab.finance">💰 Finance</button>
+        <button class="tab-btn dept-tab hidden" data-tab="procurement" data-dept-type="procurement" role="tab">📦 Achats</button>
         <button class="tab-btn"  data-tab="stats"  role="tab" data-i18n="app.tab.stats">📈 Statistiques</button>
       </nav>
 
@@ -1432,6 +1431,12 @@
               <span id="file-label" data-i18n="docs.upload.label">Choisir un fichier PDF</span>
               <input id="pdf-file" name="file" type="file" accept=".pdf" required />
             </label>
+            <label class="auth-label" style="margin-top:8px">
+              <span style="font-size:.8rem;font-weight:600;color:var(--slate)">Département propriétaire</span>
+              <select id="upload-dept" name="department_id" style="margin-top:4px">
+                <option value="">— Accessible à toute l'organisation —</option>
+              </select>
+            </label>
             <button type="submit" data-i18n="docs.upload.btn">Extraire le texte</button>
           </form>
           <p id="upload-status" class="status"></p>
@@ -1527,7 +1532,8 @@
         <button class="finance-tab-btn" onclick="switchFinanceTab('transactions')" data-ftab="transactions">💳 Transactions</button>
         <button class="finance-tab-btn" onclick="switchFinanceTab('previsions')" data-ftab="previsions">📈 Prévisions IA</button>
         <button class="finance-tab-btn" onclick="switchFinanceTab('anomalies')" data-ftab="anomalies">⚠️ Anomalies</button>
-        <button class="finance-tab-btn" onclick="switchFinanceTab('rapports')" data-ftab="rapports">📥 Rapports</button>
+        <button class="finance-tab-btn" onclick="switchFinanceTab('rapports')"  data-ftab="rapports">📥 Rapports</button>
+        <button class="finance-tab-btn" onclick="switchFinanceTab('recherche')" data-ftab="recherche">🔍 Recherche</button>
       </nav>
       <div class="ftab-content" data-finance-tab="executive">
         <div id="finance-kpis" class="exec-kpi-grid" style="margin-bottom:16px">
@@ -1571,6 +1577,9 @@
           </div>
         </div>
       </div>
+      <div class="ftab-content" data-finance-tab="recherche" style="display:none">
+        <div id="fin-search-wrap"></div>
+      </div>
     </section>
 
     <!-- ── PROCUREMENT COPILOT ─────────────────────────────────────── -->
@@ -1591,7 +1600,8 @@
         <button class="finance-tab-btn" onclick="switchProcurementTab('contrats')" data-ftab="contrats">📋 Contrats</button>
         <button class="finance-tab-btn" onclick="switchProcurementTab('fournisseurs')" data-ftab="fournisseurs">🤝 Fournisseurs</button>
         <button class="finance-tab-btn" onclick="switchProcurementTab('depenses')" data-ftab="depenses">💰 Dépenses</button>
-        <button class="finance-tab-btn" onclick="switchProcurementTab('rapports')" data-ftab="rapports">📥 Rapports</button>
+        <button class="finance-tab-btn" onclick="switchProcurementTab('rapports')"  data-ftab="rapports">📥 Rapports</button>
+        <button class="finance-tab-btn" onclick="switchProcurementTab('recherche')" data-ftab="recherche">🔍 Recherche</button>
       </nav>
 
       <!-- Vue Exécutive -->
@@ -1639,10 +1649,14 @@
           </div>
         </div>
       </div>
+      <!-- Recherche documentaire -->
+      <div data-proc-tab="recherche" style="display:none">
+        <div id="proc-search-wrap"></div>
+      </div>
     </section>
 
-    <!-- ── RECHERCHE INTERNE ─────────────────────────────────────────── -->
-    <section id="tab-recherche" class="tab-content hidden" role="tabpanel">
+    <!-- ── RECHERCHE INTERNE (section conservée, masquée) ─────────────── -->
+    <section id="tab-recherche" class="tab-content hidden" role="tabpanel" aria-hidden="true" style="display:none!important">
       <div class="section-header">
         <h2 data-i18n="search.title">🔍 Recherche interne</h2>
         <select id="search-lang">
@@ -2243,6 +2257,7 @@
         <button class="parc-tab-btn"        data-parc="apps"          onclick="switchParcTab('apps')"          data-i18n="parc.tab.apps">Applications</button>
         <button class="parc-tab-btn"        data-parc="transactions"  onclick="switchParcTab('transactions')"  >Transactions</button>
         <button class="parc-tab-btn"        data-parc="copilot"       onclick="switchParcTab('copilot')"       >🤖 Copilot IT</button>
+        <button class="parc-tab-btn"        data-parc="recherche"     onclick="switchParcTab('recherche')"     >🔍 Recherche</button>
       </div>
 
       <!-- Barre de recherche / filtre département -->
@@ -2408,6 +2423,11 @@
         <div id="it-ai-synthesis" style="margin-bottom:16px"></div>
         <div id="it-quick-questions" style="margin-bottom:16px"></div>
         <div id="it-ai-recs"></div>
+      </div>
+
+      <!-- Recherche documentaire IT -->
+      <div id="parc-recherche" class="parc-content hidden">
+        <div id="it-search-wrap"></div>
       </div>
     </section>
 

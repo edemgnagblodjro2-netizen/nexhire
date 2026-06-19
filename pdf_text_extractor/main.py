@@ -333,6 +333,7 @@ def create_app(
         file: Annotated[UploadFile, File()],
         organization_id: Annotated[str | None, Form()] = None,
         user_id: Annotated[str | None, Form()] = None,
+        department_id: Annotated[str | None, Form()] = None,
         store: DocumentStore = Depends(get_storage),
     ):
         if not file.filename or not is_allowed_pdf(file.filename):
@@ -368,6 +369,7 @@ def create_app(
             content_text=text,
             organization_id=organization_id,
             user_id=user_id,
+            department_id=department_id or None,
         )
         background.add_task(log_audit, AuditEvent(
             action="document_upload",
@@ -504,21 +506,48 @@ def create_app(
         user: CurrentUser = Depends(require_min_role("user")),
         store: DocumentStore = Depends(get_storage),
     ):
-        """Liste les documents de l'organisation (sans le texte complet)."""
+        """Liste les documents de l'organisation (sans le texte complet), filtrés par département."""
+        from rbac import ROLE_RANK
+        from db import get_db, rows as db_rows
+
+        is_elevated = ROLE_RANK.get(user.role, 0) >= 3 or user.is_service_account
+        allowed_dept_ids: list[str] | None = None
+        if not is_elevated and user.organization_id:
+            try:
+                with get_db() as cur:
+                    cur.execute(
+                        "SELECT department_id FROM department_members WHERE user_id = %s",
+                        (user.id,),
+                    )
+                    allowed_dept_ids = [r["department_id"] for r in db_rows(cur)]
+            except Exception:
+                allowed_dept_ids = []
+
         if store.supabase is not None:
-            resp = (
+            q = (
                 store.supabase.table("documents")
-                .select("id, filename, created_at, summary")
+                .select("id, filename, created_at, summary, department_id")
                 .eq("organization_id", str(user.organization_id))
                 .order("created_at", desc=True)
                 .limit(100)
-                .execute()
             )
-            return {"documents": resp.data or []}
+            if allowed_dept_ids is not None:
+                if allowed_dept_ids:
+                    ids_str = ",".join(allowed_dept_ids)
+                    q = q.or_(f"department_id.is.null,department_id.in.({ids_str})")
+                else:
+                    q = q.is_("department_id", "null")
+            return {"documents": (q.execute().data or [])}
+
         docs = [
             {k: v for k, v in d.items() if k != "content_text"}
             for d in store.documents.values()
             if str(d.get("organization_id") or "") == str(user.organization_id)
+            and (
+                allowed_dept_ids is None
+                or d.get("department_id") is None
+                or d.get("department_id") in allowed_dept_ids
+            )
         ]
         return {"documents": docs}
 
