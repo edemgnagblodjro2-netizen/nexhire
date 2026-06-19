@@ -3020,7 +3020,7 @@ async function loadAnalytics() {
     }
 
     // Connectors pie chart
-    const connLabels = d.top_connectors.map(x => x.name);
+    const connLabels = d.top_connectors.map(x => CONNECTORS[x.name]?.label || x.name);
     const connData   = d.top_connectors.map(x => x.count);
     const palette    = ["#818CF8","#6366f1","#4f46e5","#0ea5e9","#10b981","#f59e0b","#ef4444","#94a3b8"];
     if (_chartConn) { _chartConn.destroy(); _chartConn = null; }
