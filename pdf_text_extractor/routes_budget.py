@@ -226,15 +226,18 @@ def budget_summary(
 
     where = " AND ".join(conditions)
     sql = f"""
-        SELECT b.category, b.year, b.month, b.allocated, b.actual, b.currency, b.department_id
+        SELECT b.category, b.year, b.month, b.allocated, b.actual, b.currency, b.department_id,
+               d.name AS department_name
         FROM budget_entries b
+        LEFT JOIN departments d ON d.id = b.department_id
         WHERE {where}
     """
     with get_db() as cur:
         cur.execute(sql, params)
         entries = rows(cur)
 
-    by_cat: dict[str, dict] = {}
+    by_cat:  dict[str, dict] = {}
+    by_dept: dict[str, dict] = {}
     monthly: dict[int, float] = {}
 
     for e in entries:
@@ -243,6 +246,14 @@ def budget_summary(
             by_cat[cat] = {"category": cat, "allocated": 0.0, "actual": 0.0, "currency": e.get("currency", "CAD")}
         by_cat[cat]["allocated"] += float(e.get("allocated") or 0)
         by_cat[cat]["actual"]    += float(e.get("actual")    or 0)
+
+        dept_key  = str(e.get("department_id") or "__none__")
+        dept_name = e.get("department_name") or "Sans département"
+        if dept_key not in by_dept:
+            by_dept[dept_key] = {"department_id": dept_key if dept_key != "__none__" else None, "department_name": dept_name, "allocated": 0.0, "actual": 0.0}
+        by_dept[dept_key]["allocated"] += float(e.get("allocated") or 0)
+        by_dept[dept_key]["actual"]    += float(e.get("actual")    or 0)
+
         m = e.get("month")
         if m:
             monthly[m] = monthly.get(m, 0.0) + float(e.get("actual") or 0)
@@ -262,7 +273,8 @@ def budget_summary(
 
     return {
         "year": current_year,
-        "by_category": list(by_cat.values()),
+        "by_category":   list(by_cat.values()),
+        "by_department": sorted(by_dept.values(), key=lambda d: -(d["allocated"] + d["actual"])),
         "monthly_actual": [monthly.get(m, 0.0) for m in range(1, 13)],
         "total": {
             "allocated":       total_alloc,

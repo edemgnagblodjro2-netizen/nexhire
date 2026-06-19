@@ -1570,6 +1570,7 @@ function loadActiveTab() {
     "superadmin":  loadSuperAdmin,
     "security":    loadSecurityDashboard,
     "finance":     loadFinance,
+    "procurement": loadProcurement,
     "recherche":   loadRecherche,
   };
   const fn = loaders[state.tab];
@@ -2983,6 +2984,12 @@ let _financeSelectedCat = null;
 let _financeCatData     = null;
 let _financeExecChart   = null;
 let _rhExecChart        = null;
+let _procExecChart      = null;
+let _procCache          = null;
+let _itExecChart        = null;
+let _itCache            = null;
+let _execCopChart       = null;
+let _execCopCache       = null;
 
 async function loadAnalytics() {
   const days = $("stats-days")?.value || 30;
@@ -4266,6 +4273,7 @@ function _loadParcSection(name) {
   if (name === "servers")      loadServers();
   if (name === "apps")         loadApps();
   if (name === "transactions")  loadTransactions();
+  if (name === "copilot")       _loadITCopilot();
 }
 
 let _allDepts = [];
@@ -10227,6 +10235,838 @@ function toggleRHWhyPanel(btn) {
   panel.style.display = open ? 'none' : 'block';
   btn.innerHTML = open ? '📋 Pourquoi ? ▾' : '📋 Pourquoi ? ▴';
 }
+
+// ── PROCUREMENT COPILOT ────────────────────────────────────────────────────
+
+function switchProcurementTab(tab) {
+  const sec = document.getElementById('tab-procurement');
+  if (!sec) return;
+  sec.querySelectorAll('[data-proc-tab]').forEach(el => {
+    el.style.display = el.dataset.procTab === tab ? '' : 'none';
+  });
+  sec.querySelectorAll('.finance-tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.ftab === tab);
+  });
+  if (tab === 'executive') setTimeout(() => { if (_procExecChart) _procExecChart.resize(); }, 50);
+}
+
+async function loadProcurement() {
+  try {
+    const [contractsRaw, contractorsRaw] = await Promise.all([
+      apiCall('/api/contracts').catch(() => []),
+      apiCall('/api/external-contractors').catch(() => []),
+    ]);
+    const contracts   = Array.isArray(contractsRaw) ? contractsRaw : (contractsRaw?.contracts || contractsRaw?.data || []);
+    const contractors = Array.isArray(contractorsRaw) ? contractorsRaw : (contractorsRaw?.contractors || contractorsRaw?.data || []);
+    _procCache = { contracts, contractors };
+
+    const active   = contracts.filter(c => c.status === 'active');
+    const expired  = contracts.filter(c => c.status === 'expired');
+    const critical = contracts.filter(c => c.urgency === 'critical' || (c.days_to_renewal != null && c.days_to_renewal <= 30 && c.status === 'active'));
+    const warning  = contracts.filter(c => c.urgency === 'warning'  || (c.days_to_renewal != null && c.days_to_renewal > 30 && c.days_to_renewal <= 90 && c.status === 'active' && c.urgency !== 'critical'));
+
+    const totalValue   = active.reduce((s, c) => s + (c.annual_value     || 0), 0);
+    const totalSavings = active.reduce((s, c) => s + (c.potential_savings || 0), 0);
+    const uniqueVendors = new Set(contracts.map(c => c.vendor).filter(Boolean)).size;
+
+    let procScore = 100;
+    procScore -= critical.length * 10;
+    procScore -= warning.length  * 5;
+    procScore -= expired.length  * 3;
+    if (!contracts.length) procScore = 50;
+    procScore = Math.max(0, Math.min(100, Math.round(procScore)));
+
+    // KPIs
+    const kpiEl = $('proc-kpis');
+    if (kpiEl) {
+      const scoreColor = procScore >= 80 ? '#15803d' : procScore >= 60 ? '#d97706' : '#dc2626';
+      const critColor  = critical.length > 0 ? '#dc2626' : '#15803d';
+      kpiEl.innerHTML =
+        '<div class="exec-kpi-card"><div class="exec-kpi-icon">📋</div><div class="exec-kpi-body"><div class="exec-kpi-val">' + active.length + '</div><div class="exec-kpi-lbl">Contrats actifs</div></div></div>' +
+        '<div class="exec-kpi-card"><div class="exec-kpi-icon">💰</div><div class="exec-kpi-body"><div class="exec-kpi-val">' + fmtCurrency(totalValue) + '</div><div class="exec-kpi-lbl">Valeur contractuelle</div></div></div>' +
+        '<div class="exec-kpi-card' + (critical.length > 0 ? ' exec-kpi-warn' : '') + '"><div class="exec-kpi-icon">' + (critical.length > 0 ? '⚠️' : '✅') + '</div><div class="exec-kpi-body"><div class="exec-kpi-val" style="color:' + critColor + '">' + critical.length + '</div><div class="exec-kpi-lbl">Renouvellements &lt;30j</div></div></div>' +
+        '<div class="exec-kpi-card' + (totalSavings > 0 ? ' highlight' : '') + '"><div class="exec-kpi-icon">💡</div><div class="exec-kpi-body"><div class="exec-kpi-val"' + (totalSavings > 0 ? ' style="color:#15803d"' : '') + '>' + fmtCurrency(totalSavings) + '</div><div class="exec-kpi-lbl">Économies potentielles</div></div></div>' +
+        '<div class="exec-kpi-card"><div class="exec-kpi-icon">🤝</div><div class="exec-kpi-body"><div class="exec-kpi-val">' + uniqueVendors + '</div><div class="exec-kpi-lbl">Fournisseurs actifs</div></div></div>' +
+        '<div class="exec-kpi-card" style="border-color:' + scoreColor + '"><div style="width:50px;height:50px;border-radius:50%;border:4px solid ' + scoreColor + ';display:flex;align-items:center;justify-content:center;font-size:1.05rem;font-weight:800;color:' + scoreColor + ';flex-shrink:0">' + procScore + '</div><div class="exec-kpi-body"><div class="exec-kpi-val" style="color:' + scoreColor + '">/100</div><div class="exec-kpi-lbl">Score Achats</div></div></div>';
+    }
+
+    // Maturité Achats
+    const matEl = $('proc-maturity');
+    if (matEl) {
+      const coverScore   = contracts.length > 0 ? Math.round(active.length / contracts.length * 100) : 0;
+      const renewalScore = contracts.length > 0 ? Math.round((1 - critical.length / Math.max(contracts.length, 1)) * 100) : 100;
+      const optScore     = totalValue > 0 ? Math.min(100, Math.round((1 - totalSavings / totalValue) * 100)) : 100;
+      const matScore     = Math.round(coverScore * 0.35 + renewalScore * 0.4 + optScore * 0.25);
+      const matLevel     = matScore >= 85 ? "Avancé" : matScore >= 70 ? "Intermédiaire" : matScore >= 50 ? "Basique" : "Initial";
+      const matColor     = matScore >= 85 ? "#15803d" : matScore >= 70 ? "#d97706" : "#dc2626";
+      matEl.innerHTML = '<div class="ai-card" style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">' +
+        '<div style="text-align:center;flex-shrink:0"><div style="width:64px;height:64px;border-radius:50%;border:4px solid ' + matColor + ';display:flex;align-items:center;justify-content:center;font-size:1.35rem;font-weight:900;color:' + matColor + ';margin:0 auto">' + matScore + '</div><div style="font-size:.7rem;font-weight:600;color:var(--slate);margin-top:4px">/100</div></div>' +
+        '<div style="flex:1;min-width:200px"><div style="font-size:.72rem;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">📦 Maturité Achats</div>' +
+        '<div style="font-size:1.05rem;font-weight:800;color:' + matColor + ';margin-bottom:10px">Niveau ' + matLevel + '</div>' +
+        _maturityBar("Couverture contractuelle", coverScore, "#6366f1") +
+        _maturityBar("Maîtrise des renouvellements", renewalScore, "#34d399") +
+        _maturityBar("Optimisation des coûts", optScore, "#fbbf24") +
+        '</div></div>';
+    }
+
+    // Graphique exécutif — top fournisseurs par valeur
+    const execChartEl = $('proc-exec-chart');
+    if (execChartEl) {
+      if (_procExecChart) { _procExecChart.destroy(); _procExecChart = null; }
+      const vendorMap = {};
+      for (const c of active) {
+        const v = c.vendor || "Inconnu";
+        vendorMap[v] = (vendorMap[v] || 0) + (c.annual_value || 0);
+      }
+      const entries = Object.entries(vendorMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
+      if (entries.length) {
+        const h = Math.min(320, Math.max(140, entries.length * 36));
+        execChartEl.innerHTML = '<div class="chart-panel"><h3>💰 Top fournisseurs — valeur contractuelle annuelle</h3><canvas id="proc-exec-bar" height="' + h + '"></canvas></div>';
+        _procExecChart = new Chart($('proc-exec-bar'), {
+          type: "bar",
+          plugins: [ChartDataLabels],
+          data: {
+            labels: entries.map(([v]) => v),
+            datasets: [{ label: "Valeur annuelle", data: entries.map(([, v]) => v), backgroundColor: "rgba(99,102,241,.75)", borderColor: "#6366f1", borderWidth: 1 }],
+          },
+          options: {
+            responsive: true, indexAxis: "y",
+            plugins: {
+              legend: { display: false },
+              datalabels: { anchor: "end", align: "end", font: { size: 9, weight: "bold" }, color: "#475569", formatter: v => _fmt(v) },
+            },
+            scales: { x: { beginAtZero: true, ticks: { callback: v => _fmt(v) } } },
+          },
+        });
+      } else {
+        execChartEl.innerHTML = "";
+      }
+    }
+
+    // Synthèse IA
+    const synthEl = $('proc-ai-synthesis');
+    if (synthEl) {
+      if (!contracts.length) {
+        synthEl.innerHTML = '<div class="ai-card"><span class="ai-badge">🤖 Synthèse IA</span><p class="muted" style="margin:8px 0 0">Aucun contrat enregistré. Ajoutez vos contrats fournisseurs pour activer le Copilot.</p></div>';
+      } else {
+        let txt = "L'organisation gère " + active.length + " contrat" + (active.length !== 1 ? "s actifs" : " actif") + " représentant une valeur annuelle de " + fmtCurrency(totalValue) + " auprès de " + uniqueVendors + " fournisseur" + (uniqueVendors !== 1 ? "s" : "") + ".";
+        if (critical.length > 0) txt += " " + critical.length + " renouvellement" + (critical.length !== 1 ? "s critiques sont" : " critique est") + " prévu" + (critical.length !== 1 ? "s" : "") + " dans les 30 prochains jours.";
+        if (totalSavings > 0) txt += " Des économies potentielles de " + fmtCurrency(totalSavings) + " ont été identifiées grâce aux opportunités de renégociation.";
+        if (expired.length > 0) txt += " " + expired.length + " contrat" + (expired.length !== 1 ? "s ont" : " a") + " expiré sans renouvellement confirmé.";
+        synthEl.innerHTML = '<div class="ai-card"><span class="ai-badge">🤖 Synthèse IA</span><p style="margin:8px 0 0;line-height:1.6;color:var(--navy);font-size:.9rem">' + txt + '</p></div>';
+      }
+    }
+
+    // Questions rapides IA
+    const quickEl = $('proc-quick-questions');
+    if (quickEl) {
+      quickEl.innerHTML = '<div class="ai-card"><span class="ai-badge">🤖 Questions rapides</span>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">' +
+        '<button class="btn btn-outline btn-sm" onclick="_procQuickQuestion(\'score\')">Pourquoi ce score Achats ?</button>' +
+        '<button class="btn btn-outline btn-sm" onclick="_procQuickQuestion(\'urgent\')">Contrats urgents à renouveler ?</button>' +
+        '<button class="btn btn-outline btn-sm" onclick="_procQuickQuestion(\'savings\')">Où faire des économies ?</button>' +
+        '<button class="btn btn-outline btn-sm" onclick="_procQuickQuestion(\'top\')">Top 3 fournisseurs ?</button>' +
+        '</div><div id="proc-quick-response" style="display:none"></div></div>';
+    }
+
+    // Recommandations IA
+    const recsEl = $('proc-ai-recs');
+    if (recsEl) {
+      const recs = [];
+      critical.slice(0, 3).forEach(c => {
+        const days = c.days_to_renewal != null ? c.days_to_renewal : "< 30";
+        recs.push({ type: "danger", icon: "🔴",
+          txt: "<strong>" + esc(c.vendor || "Fournisseur") + "</strong> : renouvellement dans " + days + " jour" + (days !== 1 ? "s" : ""),
+          why: ["Le contrat avec " + esc(c.vendor || "ce fournisseur") + " expire très prochainement", "Sans renouvellement, les services associés seront interrompus", "→ Initier immédiatement la procédure de renouvellement ou renégociation"] });
+      });
+      active.filter(c => (c.negotiation_potential || 0) >= 20).slice(0, 3).forEach(c => {
+        const sav = c.potential_savings || Math.round((c.annual_value || 0) * (c.negotiation_potential || 0) / 100);
+        recs.push({ type: "warn", icon: "💡",
+          txt: "<strong>" + esc(c.vendor || "Fournisseur") + "</strong> : potentiel de renégociation de " + (c.negotiation_potential || 0) + "% (" + fmtCurrency(sav) + ")",
+          why: ["Ce contrat présente un potentiel d'économie identifié de " + (c.negotiation_potential || 0) + "%", "La valeur annuelle actuelle est de " + fmtCurrency(c.annual_value || 0), "→ Planifier une session de renégociation pour optimiser ce contrat"] });
+      });
+      if (expired.length > 0) {
+        recs.push({ type: "warn", icon: "⚠️",
+          txt: "<strong>" + expired.length + " contrat" + (expired.length !== 1 ? "s" : "") + "</strong> expiré" + (expired.length !== 1 ? "s" : "") + " non renouvelé" + (expired.length !== 1 ? "s" : ""),
+          why: ["Ces contrats ont expiré et ne sont plus en vigueur", "Les services associés peuvent être sans couverture contractuelle", "→ Régulariser ou archiver ces contrats selon la situation actuelle"] });
+      }
+      if (!recs.length) {
+        recs.push({ type: "ok", icon: "✅", txt: "Aucune alerte Achats. Portefeuille contractuel sain.",
+          why: ["Tous les contrats actifs sont en règle", "Aucun renouvellement critique à courte échéance", "→ Maintenir la veille contractuelle et anticiper les renouvellements T+90"] });
+      }
+      const bgMap = { danger: "#fff1f2", warn: "#fffbeb", ok: "#f0fdf4" };
+      recsEl.innerHTML = '<div class="ai-card"><span class="ai-badge">💡 Recommandations IA</span><ul style="margin:10px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px">' +
+        recs.map(r =>
+          '<li style="border-radius:8px;background:' + bgMap[r.type] + ';overflow:hidden"><div style="display:flex;align-items:flex-start;gap:8px;padding:8px 10px"><span style="flex-shrink:0">' + r.icon + '</span><div style="flex:1">' +
+          '<span style="font-size:.88rem;color:var(--navy);line-height:1.5">' + r.txt + '</span>' +
+          '<button onclick="toggleProcWhyPanel(this)" style="background:none;border:none;cursor:pointer;font-size:.75rem;color:var(--indigo);font-weight:600;padding:2px 0 0;display:block">📋 Pourquoi ? ▾</button>' +
+          '<div style="display:none;margin-top:6px;padding:8px 10px;background:rgba(255,255,255,.75);border-radius:6px">' +
+          r.why.map(w => '<div style="font-size:.8rem;color:var(--slate);line-height:1.6">' + w + '</div>').join("") +
+          '</div></div></div></li>'
+        ).join("") + '</ul></div>';
+    }
+
+    _renderProcContracts(contracts);
+    _renderProcVendors(contracts, contractors);
+    _renderProcSpend(contracts);
+
+  } catch (e) {
+    console.error("Procurement Copilot:", e);
+  }
+}
+
+function _renderProcContracts(contracts) {
+  const wrap = $('proc-contracts-wrap');
+  if (!wrap) return;
+  const STATUS_LABELS  = { active: "Actif", expired: "Expiré", cancelled: "Annulé", under_negotiation: "En négociation" };
+  const STATUS_CLASSES = { active: "badge-active", expired: "badge-danger", cancelled: "badge", under_negotiation: "badge-warn" };
+  const URG_STYLE      = { critical: "color:#dc2626;font-weight:700", warning: "color:#d97706;font-weight:600", ok: "color:#15803d" };
+  if (!contracts.length) {
+    wrap.innerHTML = '<p class="muted" style="padding:20px 0">Aucun contrat. <button class="btn btn-primary btn-sm" onclick="openContractModal()">+ Ajouter</button></p>';
+    return;
+  }
+  wrap.innerHTML = '<div class="section-header" style="margin-bottom:8px"><h3 style="font-size:.92rem;font-weight:700;color:var(--navy)">📋 Portefeuille contractuel (' + contracts.length + ')</h3><button class="btn btn-primary btn-sm" onclick="openContractModal()">+ Contrat</button></div>' +
+    '<div class="table-wrap"><table class="data-table"><thead><tr><th>Fournisseur</th><th>Catégorie</th><th>Valeur/an</th><th>Renouvellement</th><th>Économie potentielle</th><th>Statut</th></tr></thead><tbody>' +
+    contracts.map(c => {
+      const sav = c.potential_savings != null ? fmtCurrency(c.potential_savings) : (c.negotiation_potential ? fmtCurrency((c.annual_value || 0) * c.negotiation_potential / 100) : "—");
+      const urgStyle = URG_STYLE[c.urgency] || "";
+      return '<tr>' +
+        '<td><strong>' + esc(c.vendor || "—") + '</strong>' + (c.description ? '<div style="font-size:.78rem;color:var(--slate)">' + esc((c.description || "").substring(0, 60)) + '</div>' : '') + '</td>' +
+        '<td><span class="badge bs">' + esc(c.category || "—") + '</span></td>' +
+        '<td style="font-weight:700">' + (c.annual_value ? fmtCurrency(c.annual_value) : "—") + '</td>' +
+        '<td style="' + urgStyle + '">' + (c.renewal_date ? String(c.renewal_date).substring(0, 10) : "—") + (c.days_to_renewal != null ? '<div style="font-size:.78rem">' + c.days_to_renewal + 'j</div>' : '') + '</td>' +
+        '<td style="color:#15803d;font-weight:600">' + sav + '</td>' +
+        '<td><span class="badge ' + (STATUS_CLASSES[c.status] || "badge") + '">' + (STATUS_LABELS[c.status] || c.status || "—") + '</span></td>' +
+        '</tr>';
+    }).join("") + '</tbody></table></div>';
+}
+
+function _renderProcVendors(contracts, contractors) {
+  const wrap = $('proc-vendors-wrap');
+  if (!wrap) return;
+  const vendorMap = {};
+  for (const c of contracts) {
+    const v = c.vendor || "Inconnu";
+    if (!vendorMap[v]) vendorMap[v] = { name: v, contracts: [], totalValue: 0, hasActive: false, hasCritical: false, totalSavings: 0 };
+    vendorMap[v].contracts.push(c);
+    vendorMap[v].totalValue  += c.annual_value || 0;
+    if (c.status === 'active')   vendorMap[v].hasActive   = true;
+    if (c.urgency === 'critical') vendorMap[v].hasCritical = true;
+    vendorMap[v].totalSavings += c.potential_savings || 0;
+  }
+  const vendors = Object.values(vendorMap).sort((a, b) => b.totalValue - a.totalValue);
+  const contNames = new Set(contractors.map(c => c.company_name || c.full_name).filter(Boolean));
+  if (!vendors.length) {
+    wrap.innerHTML = '<p class="muted" style="padding:20px 0">Aucun fournisseur dans le système. Ajoutez des contrats pour voir vos fournisseurs.</p>';
+    return;
+  }
+  wrap.innerHTML = '<div class="section-header" style="margin-bottom:8px"><h3 style="font-size:.92rem;font-weight:700;color:var(--navy)">🤝 Analyse fournisseurs (' + vendors.length + ')</h3></div>' +
+    '<div class="table-wrap"><table class="data-table"><thead><tr><th>Fournisseur</th><th>Contrats</th><th>Valeur totale/an</th><th>Économies potentielles</th><th>Risque</th></tr></thead><tbody>' +
+    vendors.map(v => {
+      const risk      = v.hasCritical ? "🔴 Critique" : v.hasActive ? "🟢 Stable" : "⚪ Inactif";
+      const riskStyle = v.hasCritical ? "color:#dc2626;font-weight:600" : v.hasActive ? "color:#15803d" : "color:var(--slate)";
+      return '<tr>' +
+        '<td><strong>' + esc(v.name) + '</strong>' + (contNames.has(v.name) ? ' <span class="badge bs" style="font-size:.7rem">Prestataire</span>' : '') + '</td>' +
+        '<td>' + v.contracts.length + '</td>' +
+        '<td style="font-weight:700">' + fmtCurrency(v.totalValue) + '</td>' +
+        '<td style="color:#15803d;font-weight:600">' + (v.totalSavings > 0 ? fmtCurrency(v.totalSavings) : "—") + '</td>' +
+        '<td style="' + riskStyle + '">' + risk + '</td>' +
+        '</tr>';
+    }).join("") + '</tbody></table></div>' +
+    (contractors.length > 0 ?
+      '<div style="margin-top:20px"><h4 style="font-size:.88rem;font-weight:700;color:var(--navy);margin-bottom:8px">🤝 Prestataires externes (' + contractors.length + ')</h4>' +
+      '<div style="display:flex;flex-wrap:wrap;gap:8px">' +
+      contractors.map(c => '<div class="ai-card" style="padding:10px 14px;min-width:200px;flex:1"><div style="font-weight:700;font-size:.88rem">' + esc(c.company_name || c.full_name || "—") + '</div><div style="font-size:.78rem;color:var(--slate)">' + esc(c.contractor_type || "Prestataire") + (c.contract_value ? " · " + fmtCurrency(c.contract_value) : "") + '</div></div>').join("") +
+      '</div></div>' : "");
+}
+
+function _renderProcSpend(contracts) {
+  const wrap = $('proc-spend-wrap');
+  if (!wrap) return;
+  const catMap = {};
+  for (const c of contracts.filter(x => x.status === 'active')) {
+    const cat = c.category || "Autre";
+    catMap[cat] = (catMap[cat] || 0) + (c.annual_value || 0);
+  }
+  const cats = Object.entries(catMap).sort((a, b) => b[1] - a[1]);
+  const total = cats.reduce((s, [, v]) => s + v, 0);
+  if (!cats.length) {
+    wrap.innerHTML = '<p class="muted" style="padding:20px 0">Aucune donnée de dépenses disponible.</p>';
+    return;
+  }
+  wrap.innerHTML = '<div class="section-header" style="margin-bottom:8px"><h3 style="font-size:.92rem;font-weight:700;color:var(--navy)">💰 Dépenses contractuelles par catégorie</h3></div>' +
+    '<div class="table-wrap"><table class="data-table"><thead><tr><th>Catégorie</th><th>Valeur annuelle</th><th>Part du portefeuille</th><th>Répartition</th></tr></thead><tbody>' +
+    cats.map(([cat, val]) => {
+      const pct = total > 0 ? Math.round(val / total * 100) : 0;
+      return '<tr>' +
+        '<td><strong>' + esc(cat) + '</strong></td>' +
+        '<td style="font-weight:700">' + fmtCurrency(val) + '</td>' +
+        '<td style="font-weight:600;color:var(--indigo)">' + pct + '%</td>' +
+        '<td style="min-width:120px"><div style="width:100%;height:6px;background:#e2e8f0;border-radius:3px"><div style="width:' + pct + '%;height:100%;background:#6366f1;border-radius:3px"></div></div></td>' +
+        '</tr>';
+    }).join("") +
+    '<tr style="font-weight:700;background:var(--blue-pale)"><td>Total</td><td>' + fmtCurrency(total) + '</td><td>100%</td><td></td></tr>' +
+    '</tbody></table></div>';
+}
+
+function _procQuickQuestion(q) {
+  if (!_procCache) return;
+  const { contracts } = _procCache;
+  const active   = contracts.filter(c => c.status === 'active');
+  const critical = contracts.filter(c => c.urgency === 'critical' || (c.days_to_renewal != null && c.days_to_renewal <= 30 && c.status === 'active'));
+  let ans = "";
+  if (q === 'score') {
+    ans = "Le score Achats est calculé à partir du ratio de contrats actifs, des renouvellements critiques (" + critical.length + ") et des contrats expirés non renouvelés. Chaque renouvellement critique retire 10 points, chaque alerte 5 points. Un score ≥ 80 indique un portefeuille contractuel sain.";
+  } else if (q === 'urgent') {
+    if (critical.length > 0) {
+      ans = critical.length + " contrat" + (critical.length !== 1 ? "s urgents" : " urgent") + " à renouveler : " + critical.map(c => esc(c.vendor) + (c.days_to_renewal != null ? " (" + c.days_to_renewal + "j)" : "")).join(", ") + ".";
+    } else {
+      ans = "Aucun contrat critique à renouveler dans les 30 prochains jours. Continuez à surveiller les alertes T+90.";
+    }
+  } else if (q === 'savings') {
+    const top = active.filter(c => (c.potential_savings || 0) > 0).sort((a, b) => (b.potential_savings || 0) - (a.potential_savings || 0)).slice(0, 3);
+    if (top.length) {
+      ans = "Top opportunités d'économies : " + top.map(c => esc(c.vendor) + " → " + fmtCurrency(c.potential_savings) + " (" + (c.negotiation_potential || 0) + "%)").join(" | ") + ".";
+    } else {
+      ans = "Aucune opportunité d'économie identifiée. Renseignez le potentiel de négociation sur chaque contrat pour activer cette analyse.";
+    }
+  } else if (q === 'top') {
+    const top3 = [...active].sort((a, b) => (b.annual_value || 0) - (a.annual_value || 0)).slice(0, 3);
+    ans = top3.length ? "Top 3 fournisseurs par valeur : " + top3.map((c, i) => (i + 1) + ". " + esc(c.vendor) + " (" + fmtCurrency(c.annual_value || 0) + "/an)").join(" | ") + "." : "Aucun contrat actif enregistré.";
+  }
+  const respEl = $('proc-quick-response');
+  if (respEl && ans) {
+    respEl.style.display = '';
+    respEl.innerHTML = '<div style="margin-top:10px;padding:10px 12px;background:#fff;border-radius:8px;border:1px solid #c7d2fe"><p style="margin:0;font-size:.88rem;line-height:1.6;color:var(--navy)">🤖 ' + ans + '</p></div>';
+  }
+}
+
+function toggleProcWhyPanel(btn) {
+  const panel = btn.nextElementSibling;
+  const open = panel.style.display !== '' && panel.style.display !== 'none';
+  panel.style.display = open ? 'none' : 'block';
+  btn.innerHTML = open ? '📋 Pourquoi ? ▾' : '📋 Pourquoi ? ▴';
+}
+
+async function exportProcurementReport(fmt) {
+  if (!_procCache) { alert("Chargez d'abord les données Achats."); return; }
+  const rows = (_procCache.contracts || []).map(c => ({
+    Fournisseur: c.vendor || "",
+    Catégorie: c.category || "",
+    "Valeur annuelle": c.annual_value || 0,
+    "Date renouvellement": c.renewal_date || "",
+    "Jours avant renouvellement": c.days_to_renewal ?? "",
+    Urgence: c.urgency || "",
+    "Économie potentielle": c.potential_savings || 0,
+    Statut: c.status || "",
+  }));
+  try {
+    const res = await apiCall("/api/export", "POST", { format: fmt, title: "Rapport Approvisionnement", rows });
+    if (res?.url) window.open(res.url, "_blank");
+    else alert("Export non disponible. Contactez l'administrateur.");
+  } catch (e) { alert("Erreur export : " + (e.message || e)); }
+}
+
+// ── END PROCUREMENT COPILOT ────────────────────────────────────────────────
+
+// ── IT COPILOT ─────────────────────────────────────────────────────────────
+
+async function _loadITCopilot() {
+  try {
+    const [lics, srvs, apps, budgetSum] = await Promise.all([
+      apiCall('/api/licenses').catch(() => []),
+      apiCall('/api/servers').catch(() => []),
+      apiCall('/api/apps').catch(() => []),
+      apiCall('/api/budget/summary').catch(() => ({})),
+    ]);
+    _itCache = { lics, srvs, apps, budgetSum };
+
+    const licActive     = lics.filter(l => l.computed_status === 'active' || l.computed_status === 'expiring_medium');
+    const licExpireSoon = lics.filter(l => l.computed_status === 'expiring_soon');
+    const licExpired    = lics.filter(l => l.computed_status === 'expired');
+    const srvActive     = srvs.filter(s => s.status === 'active');
+    const srvDecom      = srvs.filter(s => s.status === 'to_decommission');
+    const appsActive    = apps.filter(a => a.status === 'active');
+    const appsUnused    = apps.filter(a => a.status === 'unused');
+    const utilPct       = budgetSum?.total?.utilization_pct || 0;
+    const monthlyIT     = srvs.reduce((s, x) => s + (x.monthly_cost || 0), 0) +
+                          apps.reduce((s, x) => s + (x.monthly_cost || 0), 0);
+
+    // Score IT
+    let itScore = 100;
+    itScore -= licExpireSoon.length * 8;
+    itScore -= srvDecom.length * 5;
+    itScore -= appsUnused.length * 4;
+    if (utilPct > 100) itScore -= 15;
+    else if (utilPct > 90) itScore -= 5;
+    if (!srvs.length && !lics.length && !apps.length) itScore = 50;
+    itScore = Math.max(0, Math.min(100, Math.round(itScore)));
+
+    // KPIs
+    const kpiEl = $('it-kpis');
+    if (kpiEl) {
+      const scoreColor = itScore >= 80 ? '#15803d' : itScore >= 60 ? '#d97706' : '#dc2626';
+      const licColor   = licExpireSoon.length > 0 ? '#dc2626' : '#15803d';
+      const decomColor = srvDecom.length > 0 ? '#dc2626' : '#15803d';
+      kpiEl.innerHTML =
+        '<div class="exec-kpi-card"><div class="exec-kpi-icon">💻</div><div class="exec-kpi-body"><div class="exec-kpi-val">' + srvActive.length + '</div><div class="exec-kpi-lbl">Équipements actifs</div></div></div>' +
+        '<div class="exec-kpi-card"><div class="exec-kpi-icon">🔑</div><div class="exec-kpi-body"><div class="exec-kpi-val">' + licActive.length + '</div><div class="exec-kpi-lbl">Licences actives</div></div></div>' +
+        '<div class="exec-kpi-card' + (licExpireSoon.length > 0 ? ' exec-kpi-warn' : '') + '"><div class="exec-kpi-icon">' + (licExpireSoon.length > 0 ? '⚠️' : '✅') + '</div><div class="exec-kpi-body"><div class="exec-kpi-val" style="color:' + licColor + '">' + licExpireSoon.length + '</div><div class="exec-kpi-lbl">Licences expirant &lt;30j</div></div></div>' +
+        '<div class="exec-kpi-card' + (srvDecom.length > 0 ? ' exec-kpi-warn' : '') + '"><div class="exec-kpi-icon">' + (srvDecom.length > 0 ? '🔄' : '✅') + '</div><div class="exec-kpi-body"><div class="exec-kpi-val" style="color:' + decomColor + '">' + srvDecom.length + '</div><div class="exec-kpi-lbl">À décommissionner</div></div></div>' +
+        '<div class="exec-kpi-card"><div class="exec-kpi-icon">💸</div><div class="exec-kpi-body"><div class="exec-kpi-val">' + fmtCurrency(monthlyIT) + '</div><div class="exec-kpi-lbl">Coût IT mensuel estimé</div></div></div>' +
+        '<div class="exec-kpi-card" style="border-color:' + scoreColor + '"><div style="width:50px;height:50px;border-radius:50%;border:4px solid ' + scoreColor + ';display:flex;align-items:center;justify-content:center;font-size:1.05rem;font-weight:800;color:' + scoreColor + ';flex-shrink:0">' + itScore + '</div><div class="exec-kpi-body"><div class="exec-kpi-val" style="color:' + scoreColor + '">/100</div><div class="exec-kpi-lbl">Score IT</div></div></div>';
+    }
+
+    // Maturité IT
+    const matEl = $('it-maturity');
+    if (matEl) {
+      const licHealth  = lics.length > 0 ? Math.round((lics.length - licExpired.length - licExpireSoon.length) / lics.length * 100) : 100;
+      const srvHealth  = srvs.length > 0 ? Math.round(srvs.filter(s => s.status === 'active' || s.status === 'idle').length / srvs.length * 100) : 100;
+      const appAdopt   = apps.length > 0 ? Math.round(appsActive.length / apps.length * 100) : 100;
+      const matScore   = Math.round(licHealth * 0.35 + srvHealth * 0.4 + appAdopt * 0.25);
+      const matLevel   = matScore >= 85 ? "Avancé" : matScore >= 70 ? "Intermédiaire" : matScore >= 50 ? "Basique" : "Initial";
+      const matColor   = matScore >= 85 ? "#15803d" : matScore >= 70 ? "#d97706" : "#dc2626";
+      matEl.innerHTML  = '<div class="ai-card" style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">' +
+        '<div style="text-align:center;flex-shrink:0"><div style="width:64px;height:64px;border-radius:50%;border:4px solid ' + matColor + ';display:flex;align-items:center;justify-content:center;font-size:1.35rem;font-weight:900;color:' + matColor + ';margin:0 auto">' + matScore + '</div><div style="font-size:.7rem;font-weight:600;color:var(--slate);margin-top:4px">/100</div></div>' +
+        '<div style="flex:1;min-width:200px"><div style="font-size:.72rem;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">💻 Maturité IT</div>' +
+        '<div style="font-size:1.05rem;font-weight:800;color:' + matColor + ';margin-bottom:10px">Niveau ' + matLevel + '</div>' +
+        _maturityBar("Santé des licences", licHealth, "#6366f1") +
+        _maturityBar("Intégrité du parc", srvHealth, "#34d399") +
+        _maturityBar("Adoption applicative", appAdopt, "#fbbf24") +
+        '</div></div>';
+    }
+
+    // Graphique exécutif — budget IT par catégorie
+    const execChartEl = $('it-exec-chart');
+    if (execChartEl) {
+      if (_itExecChart) { _itExecChart.destroy(); _itExecChart = null; }
+      const cats = (budgetSum?.by_category || []).filter(c => (c.allocated || 0) + (c.actual || 0) > 0);
+      if (cats.length) {
+        const h = Math.min(320, Math.max(140, cats.length * 36));
+        execChartEl.innerHTML = '<div class="chart-panel"><h3>💶 Budget IT — Alloué vs Réel par catégorie</h3><canvas id="it-exec-bar" height="' + h + '"></canvas></div>';
+        _itExecChart = new Chart($('it-exec-bar'), {
+          type: "bar",
+          plugins: [ChartDataLabels],
+          data: {
+            labels: cats.map(c => c.category.toUpperCase()),
+            datasets: [
+              { label: "Alloué",  data: cats.map(c => c.allocated || 0), backgroundColor: "rgba(99,102,241,.55)", borderColor: "#6366f1", borderWidth: 1 },
+              { label: "Réel",    data: cats.map(c => c.actual    || 0), backgroundColor: "rgba(248,113,113,.7)",  borderColor: "#f87171", borderWidth: 1 },
+            ],
+          },
+          options: {
+            responsive: true, indexAxis: "y",
+            plugins: {
+              legend: { display: true, position: "top", labels: { font: { size: 11 } } },
+              datalabels: { anchor: "end", align: "end", font: { size: 9, weight: "bold" }, color: "#475569", formatter: v => v > 0 ? _fmt(v) : "" },
+            },
+            scales: { x: { beginAtZero: true, ticks: { callback: v => _fmt(v) } } },
+          },
+        });
+      } else {
+        execChartEl.innerHTML = "";
+      }
+    }
+
+    // Synthèse IA
+    const synthEl = $('it-ai-synthesis');
+    if (synthEl) {
+      const hasData = srvs.length || lics.length || apps.length;
+      if (!hasData) {
+        synthEl.innerHTML = '<div class="ai-card"><span class="ai-badge">🤖 Synthèse IA</span><p class="muted" style="margin:8px 0 0">Aucun actif IT enregistré. Ajoutez des équipements, licences et applications pour activer le Copilot.</p></div>';
+      } else {
+        let txt = "Le parc IT compte " + srvActive.length + " équipement" + (srvActive.length !== 1 ? "s actifs" : " actif") + " et " + licActive.length + " licence" + (licActive.length !== 1 ? "s actives" : " active") + ".";
+        if (licExpireSoon.length > 0) txt += " " + licExpireSoon.length + " licence" + (licExpireSoon.length !== 1 ? "s expirent" : " expire") + " dans les 30 prochains jours.";
+        if (srvDecom.length > 0) txt += " " + srvDecom.length + " équipement" + (srvDecom.length !== 1 ? "s sont" : " est") + " marqué" + (srvDecom.length !== 1 ? "s" : "") + " à décommissionner.";
+        if (appsUnused.length > 0) txt += " " + appsUnused.length + " application" + (appsUnused.length !== 1 ? "s sont inutilisées" : " est inutilisée") + " — potentiel d'économie mensuel de " + fmtCurrency(appsUnused.reduce((s, a) => s + (a.monthly_cost || 0), 0)) + ".";
+        if (monthlyIT > 0) txt += " Coût IT mensuel total estimé : " + fmtCurrency(monthlyIT) + ".";
+        synthEl.innerHTML = '<div class="ai-card"><span class="ai-badge">🤖 Synthèse IA</span><p style="margin:8px 0 0;line-height:1.6;color:var(--navy);font-size:.9rem">' + txt + '</p></div>';
+      }
+    }
+
+    // Questions rapides
+    const quickEl = $('it-quick-questions');
+    if (quickEl) {
+      quickEl.innerHTML = '<div class="ai-card"><span class="ai-badge">🤖 Questions rapides</span>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">' +
+        '<button class="btn btn-outline btn-sm" onclick="_itQuickQuestion(\'score\')">Pourquoi ce score IT ?</button>' +
+        '<button class="btn btn-outline btn-sm" onclick="_itQuickQuestion(\'licences\')">Licences à renouveler ?</button>' +
+        '<button class="btn btn-outline btn-sm" onclick="_itQuickQuestion(\'decom\')">Équipements à décommissionner ?</button>' +
+        '<button class="btn btn-outline btn-sm" onclick="_itQuickQuestion(\'cout\')">Coût optimisable ?</button>' +
+        '</div><div id="it-quick-response" style="display:none"></div></div>';
+    }
+
+    // Recommandations IA
+    const recsEl = $('it-ai-recs');
+    if (recsEl) {
+      const recs = [];
+      licExpireSoon.slice(0, 3).forEach(l => {
+        recs.push({ type: "danger", icon: "🔴",
+          txt: "<strong>" + esc(l.product_name) + "</strong> (" + esc(l.vendor || "—") + ") expire dans " + l.days_to_expiry + " jour" + (l.days_to_expiry !== 1 ? "s" : ""),
+          why: ["La licence expire très prochainement (" + l.days_to_expiry + "j)", "Sans renouvellement, " + (l.assigned_count || 0) + " utilisateur" + ((l.assigned_count || 0) !== 1 ? "s perdront l'accès" : " perdra l'accès"), "→ Initier le renouvellement ou trouver une alternative"] });
+      });
+      srvDecom.slice(0, 3).forEach(s => {
+        recs.push({ type: "warn", icon: "🔄",
+          txt: "<strong>" + esc(s.hostname) + "</strong> est marqué à décommissionner" + (s.monthly_cost ? " (coût : " + fmtCurrency(s.monthly_cost) + "/mois)" : ""),
+          why: ["Cet équipement est planifié pour décommissionnement", "Il génère encore un coût opérationnel de " + fmtCurrency(s.monthly_cost || 0) + "/mois", "→ Planifier la migration des services associés et désactiver l'équipement"] });
+      });
+      appsUnused.slice(0, 3).forEach(a => {
+        const savings = a.monthly_cost || 0;
+        recs.push({ type: "warn", icon: "💡",
+          txt: "<strong>" + esc(a.name) + "</strong> est inutilisée depuis " + (a.days_unused !== null ? a.days_unused + "j" : "longtemps") + (savings > 0 ? " · " + fmtCurrency(savings) + "/mois récupérables" : ""),
+          why: ["Aucun usage détecté depuis " + (a.days_unused !== null ? a.days_unused + " jours" : "un certain temps"), "Cette application génère un coût inutile de " + fmtCurrency(savings) + "/mois", "→ Désactiver ou réaffecter la licence pour récupérer ce budget"] });
+      });
+      if (utilPct > 100) {
+        recs.push({ type: "danger", icon: "⚠️",
+          txt: "Budget IT dépassé de " + Math.round(utilPct - 100) + "% (" + fmtCurrency(budgetSum?.total?.actual || 0) + " vs " + fmtCurrency(budgetSum?.total?.allocated || 0) + " alloué)",
+          why: ["Les dépenses IT réelles dépassent le budget alloué", "Un dépassement prolongé peut impacter les finances de l'organisation", "→ Réviser le budget ou identifier les postes de coût à réduire"] });
+      }
+      if (!recs.length) {
+        recs.push({ type: "ok", icon: "✅", txt: "Aucune alerte IT. Parc informatique en bonne santé.",
+          why: ["Toutes les licences actives sont à jour", "Aucun équipement critique à décommissionner", "→ Maintenir la veille des renouvellements et planifier les évolutions T+90"] });
+      }
+      const bgMap = { danger: "#fff1f2", warn: "#fffbeb", ok: "#f0fdf4" };
+      recsEl.innerHTML = '<div class="ai-card"><span class="ai-badge">💡 Recommandations IA</span><ul style="margin:10px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px">' +
+        recs.map(r =>
+          '<li style="border-radius:8px;background:' + bgMap[r.type] + ';overflow:hidden"><div style="display:flex;align-items:flex-start;gap:8px;padding:8px 10px"><span style="flex-shrink:0">' + r.icon + '</span><div style="flex:1">' +
+          '<span style="font-size:.88rem;color:var(--navy);line-height:1.5">' + r.txt + '</span>' +
+          '<button onclick="toggleITWhyPanel(this)" style="background:none;border:none;cursor:pointer;font-size:.75rem;color:var(--indigo);font-weight:600;padding:2px 0 0;display:block">📋 Pourquoi ? ▾</button>' +
+          '<div style="display:none;margin-top:6px;padding:8px 10px;background:rgba(255,255,255,.75);border-radius:6px">' +
+          r.why.map(w => '<div style="font-size:.8rem;color:var(--slate);line-height:1.6">' + w + '</div>').join("") +
+          '</div></div></div></li>'
+        ).join("") + '</ul></div>';
+    }
+
+  } catch (e) {
+    console.error("IT Copilot:", e);
+  }
+}
+
+function _itQuickQuestion(q) {
+  if (!_itCache) return;
+  const { lics, srvs, apps, budgetSum } = _itCache;
+  const licExpireSoon = lics.filter(l => l.computed_status === 'expiring_soon');
+  const srvDecom      = srvs.filter(s => s.status === 'to_decommission');
+  const appsUnused    = apps.filter(a => a.status === 'unused');
+  const utilPct       = budgetSum?.total?.utilization_pct || 0;
+  let ans = "";
+  if (q === 'score') {
+    const reasons = [];
+    if (licExpireSoon.length) reasons.push(licExpireSoon.length + " licence" + (licExpireSoon.length !== 1 ? "s" : "") + " expirant <30j (-" + licExpireSoon.length * 8 + "pts)");
+    if (srvDecom.length)      reasons.push(srvDecom.length + " équipement" + (srvDecom.length !== 1 ? "s" : "") + " à décommissionner (-" + srvDecom.length * 5 + "pts)");
+    if (appsUnused.length)    reasons.push(appsUnused.length + " application" + (appsUnused.length !== 1 ? "s" : "") + " inutilisée" + (appsUnused.length !== 1 ? "s" : "") + " (-" + appsUnused.length * 4 + "pts)");
+    if (utilPct > 100)        reasons.push("budget IT dépassé (-15pts)");
+    ans = reasons.length ? "Déductions : " + reasons.join(", ") + ". Chaque alerte réduit le score IT." : "Parc IT en excellente santé. Aucune déduction appliquée sur le score.";
+  } else if (q === 'licences') {
+    if (licExpireSoon.length) {
+      ans = licExpireSoon.length + " licence" + (licExpireSoon.length !== 1 ? "s urgentes" : " urgente") + " : " + licExpireSoon.map(l => esc(l.product_name) + " (" + l.days_to_expiry + "j)").join(", ") + ".";
+    } else {
+      ans = "Aucune licence n'expire dans les 30 prochains jours. Continuez à surveiller les renouvellements T+90.";
+    }
+  } else if (q === 'decom') {
+    if (srvDecom.length) {
+      ans = srvDecom.length + " équipement" + (srvDecom.length !== 1 ? "s marqués" : " marqué") + " à décommissionner : " + srvDecom.map(s => esc(s.hostname) + (s.monthly_cost ? " (" + fmtCurrency(s.monthly_cost) + "/mois)" : "")).join(", ") + ".";
+    } else {
+      ans = "Aucun équipement planifié pour décommissionnement. Parc infrastructure sain.";
+    }
+  } else if (q === 'cout') {
+    const unusedCost = appsUnused.reduce((s, a) => s + (a.monthly_cost || 0), 0);
+    const decomCost  = srvDecom.reduce((s, s2) => s + (s2.monthly_cost || 0), 0);
+    const total      = unusedCost + decomCost;
+    if (total > 0) {
+      ans = "Économies mensuelles potentielles : " + fmtCurrency(total) + " — Applications inutilisées : " + fmtCurrency(unusedCost) + " | Équipements à décommissionner : " + fmtCurrency(decomCost) + ".";
+    } else {
+      ans = "Aucune opportunité d'économie immédiate identifiée. Le parc IT est bien optimisé.";
+    }
+  }
+  const respEl = $('it-quick-response');
+  if (respEl && ans) {
+    respEl.style.display = '';
+    respEl.innerHTML = '<div style="margin-top:10px;padding:10px 12px;background:#fff;border-radius:8px;border:1px solid #c7d2fe"><p style="margin:0;font-size:.88rem;line-height:1.6;color:var(--navy)">🤖 ' + ans + '</p></div>';
+  }
+}
+
+function toggleITWhyPanel(btn) {
+  const panel = btn.nextElementSibling;
+  const open = panel.style.display !== '' && panel.style.display !== 'none';
+  panel.style.display = open ? 'none' : 'block';
+  btn.innerHTML = open ? '📋 Pourquoi ? ▾' : '📋 Pourquoi ? ▴';
+}
+
+// ── END IT COPILOT ─────────────────────────────────────────────────────────
+
+// ── EXECUTIVE COPILOT ──────────────────────────────────────────────────────
+
+function switchOrgTab(tab) {
+  const sec = document.getElementById('tab-org');
+  if (!sec) return;
+  sec.querySelectorAll('.finance-tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.ftab === tab);
+  });
+  const dash = document.getElementById('org-tab-dashboard');
+  const cop  = document.getElementById('org-tab-copilot');
+  if (dash) dash.style.display = tab === 'dashboard' ? '' : 'none';
+  if (cop)  cop.style.display  = tab === 'copilot'   ? '' : 'none';
+  if (tab === 'copilot') _loadExecutiveCopilot();
+}
+
+function orgRefresh() {
+  const active = document.querySelector('#tab-org .finance-tab-btn.active');
+  if (active?.dataset.ftab === 'copilot') _loadExecutiveCopilot();
+  else loadExecutiveDashboard();
+}
+
+async function _loadExecutiveCopilot() {
+  try {
+    const [budgetSum, members, contracts, lics, srvs, apps] = await Promise.all([
+      apiCall('/api/budget/summary').catch(() => ({})),
+      apiCall('/api/members').catch(() => []),
+      apiCall('/api/contracts').catch(() => []),
+      apiCall('/api/licenses').catch(() => []),
+      apiCall('/api/servers').catch(() => []),
+      apiCall('/api/apps').catch(() => []),
+    ]);
+    _execCopCache = { budgetSum, members, contracts, lics, srvs, apps };
+
+    // ── Domain score calculations (same formulas as individual copilots)
+    const utilPct    = budgetSum?.total?.utilization_pct || 0;
+    const overDepts  = (budgetSum?.by_department || []).filter(d => (d.actual || 0) > (d.allocated || 0));
+    let finScore = 100;
+    if (utilPct > 100) finScore -= 25; else if (utilPct > 90) finScore -= 10; else if (utilPct > 80) finScore -= 5;
+    finScore -= overDepts.length * 5;
+    finScore = Math.max(0, Math.min(100, Math.round(finScore)));
+
+    const activeMbrs = members.filter(m => !m.status || m.status === 'active').length;
+    const activePct  = members.length > 0 ? activeMbrs / members.length * 100 : 0;
+    let rhScore = 100;
+    if (activePct < 50) rhScore -= 30; else if (activePct < 70) rhScore -= 15; else if (activePct < 85) rhScore -= 5;
+    if (!members.length) rhScore = 50;
+    rhScore = Math.max(0, Math.min(100, Math.round(rhScore)));
+
+    const critContracts = contracts.filter(c => c.urgency === 'critical' || (c.days_to_renewal != null && c.days_to_renewal <= 30 && c.status === 'active'));
+    const warnContracts = contracts.filter(c => c.urgency === 'warning' || (c.days_to_renewal != null && c.days_to_renewal > 30 && c.days_to_renewal <= 90 && c.status === 'active' && c.urgency !== 'critical'));
+    const expiredConts  = contracts.filter(c => c.status === 'expired');
+    let procScore = 100;
+    procScore -= critContracts.length * 10;
+    procScore -= warnContracts.length * 5;
+    procScore -= expiredConts.length * 3;
+    if (!contracts.length) procScore = 50;
+    procScore = Math.max(0, Math.min(100, Math.round(procScore)));
+
+    const licExpireSoon = lics.filter(l => l.computed_status === 'expiring_soon');
+    const srvDecom      = srvs.filter(s => s.status === 'to_decommission');
+    const appsUnused    = apps.filter(a => a.status === 'unused');
+    let itScore = 100;
+    itScore -= licExpireSoon.length * 8;
+    itScore -= srvDecom.length * 5;
+    itScore -= appsUnused.length * 4;
+    if (utilPct > 100) itScore -= 15; else if (utilPct > 90) itScore -= 5;
+    if (!srvs.length && !lics.length && !apps.length) itScore = 50;
+    itScore = Math.max(0, Math.min(100, Math.round(itScore)));
+
+    const globalScore = Math.round(finScore * 0.3 + rhScore * 0.2 + procScore * 0.25 + itScore * 0.25);
+
+    // ── Derived stats
+    const activeContracts  = contracts.filter(c => c.status === 'active');
+    const totalSavings     = activeContracts.reduce((s, c) => s + (c.potential_savings || 0), 0) +
+                             appsUnused.reduce((s, a) => s + (a.monthly_cost || 0), 0) * 12;
+    const totalAlerts      = critContracts.length + licExpireSoon.length + srvDecom.length + overDepts.length;
+
+    // ── KPIs
+    const kpiEl = $('exec-cop-kpis');
+    if (kpiEl) {
+      const gc   = globalScore >= 80 ? '#15803d' : globalScore >= 60 ? '#d97706' : '#dc2626';
+      const util = budgetSum?.total?.actual || 0;
+      kpiEl.innerHTML =
+        '<div class="exec-kpi-card" style="border-color:' + gc + '"><div style="width:50px;height:50px;border-radius:50%;border:4px solid ' + gc + ';display:flex;align-items:center;justify-content:center;font-size:1.05rem;font-weight:800;color:' + gc + ';flex-shrink:0">' + globalScore + '</div><div class="exec-kpi-body"><div class="exec-kpi-val" style="color:' + gc + '">/100</div><div class="exec-kpi-lbl">Score Intelligence Global</div></div></div>' +
+        '<div class="exec-kpi-card"><div class="exec-kpi-icon">💰</div><div class="exec-kpi-body"><div class="exec-kpi-val">' + fmtCurrency(util) + '</div><div class="exec-kpi-lbl">Budget consommé (' + utilPct.toFixed(0) + '%)</div></div></div>' +
+        '<div class="exec-kpi-card"><div class="exec-kpi-icon">👥</div><div class="exec-kpi-body"><div class="exec-kpi-val">' + activeMbrs + '</div><div class="exec-kpi-lbl">Membres actifs</div></div></div>' +
+        '<div class="exec-kpi-card"><div class="exec-kpi-icon">📦</div><div class="exec-kpi-body"><div class="exec-kpi-val">' + activeContracts.length + '</div><div class="exec-kpi-lbl">Contrats actifs</div></div></div>' +
+        '<div class="exec-kpi-card highlight"><div class="exec-kpi-icon">💡</div><div class="exec-kpi-body"><div class="exec-kpi-val" style="color:#15803d">' + fmtCurrency(totalSavings) + '</div><div class="exec-kpi-lbl">Économies potentielles</div></div></div>' +
+        '<div class="exec-kpi-card' + (totalAlerts > 0 ? ' exec-kpi-warn' : '') + '"><div class="exec-kpi-icon">' + (totalAlerts > 0 ? '⚠️' : '✅') + '</div><div class="exec-kpi-body"><div class="exec-kpi-val" style="color:' + (totalAlerts > 0 ? '#dc2626' : '#15803d') + '">' + totalAlerts + '</div><div class="exec-kpi-lbl">Alertes actives</div></div></div>';
+    }
+
+    // ── Domain scores radar
+    const domainsEl = $('exec-cop-domains');
+    if (domainsEl) {
+      const domains = [
+        { label: "💰 Finance",            score: finScore,  color: "#6366f1", level: finScore  >= 85 ? "Avancé" : finScore  >= 70 ? "Intermédiaire" : finScore  >= 50 ? "Basique" : "Initial" },
+        { label: "👥 Ressources Humaines", score: rhScore,   color: "#34d399", level: rhScore   >= 85 ? "Avancé" : rhScore   >= 70 ? "Intermédiaire" : rhScore   >= 50 ? "Basique" : "Initial" },
+        { label: "📦 Approvisionnement",   score: procScore, color: "#fbbf24", level: procScore >= 85 ? "Avancé" : procScore >= 70 ? "Intermédiaire" : procScore >= 50 ? "Basique" : "Initial" },
+        { label: "💻 Systèmes IT",         score: itScore,   color: "#60a5fa", level: itScore   >= 85 ? "Avancé" : itScore   >= 70 ? "Intermédiaire" : itScore   >= 50 ? "Basique" : "Initial" },
+      ];
+      domainsEl.innerHTML = '<div class="ai-card" style="padding:16px 18px"><span class="ai-badge" style="margin-bottom:12px;display:inline-flex">🎯 Scores par domaine</span>' +
+        '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:10px">' +
+        domains.map(d => {
+          const scoreColor = d.score >= 80 ? '#15803d' : d.score >= 60 ? '#d97706' : '#dc2626';
+          return '<div style="display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.7);border-radius:10px;padding:12px 14px;border:1.5px solid ' + d.color + '40">' +
+            '<div style="width:54px;height:54px;border-radius:50%;border:3.5px solid ' + d.color + ';display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;color:' + d.color + ';flex-shrink:0">' + d.score + '</div>' +
+            '<div><div style="font-size:.82rem;font-weight:700;color:var(--navy)">' + d.label + '</div>' +
+            '<div style="font-size:.72rem;color:var(--slate)">Niveau ' + d.level + '</div>' +
+            _maturityBar("", d.score, d.color).replace('min-width:170px', 'min-width:0').replace('margin-bottom:4px', 'margin:4px 0 0') +
+            '</div></div>';
+        }).join("") +
+        '</div></div>';
+    }
+
+    // ── Chart — domain scores
+    const chartEl = $('exec-cop-chart');
+    if (chartEl) {
+      if (_execCopChart) { _execCopChart.destroy(); _execCopChart = null; }
+      chartEl.innerHTML = '<div class="chart-panel"><h3>📊 Scores Intelligence par domaine</h3><canvas id="exec-cop-bar" height="160"></canvas></div>';
+      _execCopChart = new Chart($('exec-cop-bar'), {
+        type: "bar",
+        plugins: [ChartDataLabels],
+        data: {
+          labels: ["💰 Finance", "👥 RH", "📦 Achats", "💻 IT"],
+          datasets: [{
+            label: "Score /100",
+            data: [finScore, rhScore, procScore, itScore],
+            backgroundColor: ["rgba(99,102,241,.8)", "rgba(52,211,153,.8)", "rgba(251,191,36,.8)", "rgba(96,165,250,.8)"],
+            borderColor:     ["#6366f1", "#34d399", "#fbbf24", "#60a5fa"],
+            borderWidth: 1.5, borderRadius: 6,
+          }],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false },
+            datalabels: { anchor: "end", align: "top", font: { size: 11, weight: "bold" }, color: "#1e293b", formatter: v => v + "/100" },
+          },
+          scales: { y: { beginAtZero: true, max: 100, ticks: { callback: v => v } } },
+        },
+      });
+    }
+
+    // ── Synthèse IA exécutive
+    const synthEl = $('exec-cop-synthesis');
+    if (synthEl) {
+      const weakest  = [{ n: "Finance", s: finScore }, { n: "RH", s: rhScore }, { n: "Achats", s: procScore }, { n: "IT", s: itScore }].sort((a, b) => a.s - b.s)[0];
+      const strongest = [{ n: "Finance", s: finScore }, { n: "RH", s: rhScore }, { n: "Achats", s: procScore }, { n: "IT", s: itScore }].sort((a, b) => b.s - a.s)[0];
+      const gLabel    = globalScore >= 80 ? "excellente" : globalScore >= 65 ? "bonne" : globalScore >= 50 ? "à surveiller" : "critique";
+      let txt = "L'organisation affiche une santé globale " + gLabel + " avec un Score Intelligence de " + globalScore + "/100. ";
+      txt += "Le domaine le plus performant est " + strongest.n + " (" + strongest.s + "/100). ";
+      if (weakest.s < 70) txt += "Le domaine " + weakest.n + " (" + weakest.s + "/100) nécessite une attention prioritaire. ";
+      if (totalAlerts > 0) txt += totalAlerts + " alerte" + (totalAlerts !== 1 ? "s" : "") + " active" + (totalAlerts !== 1 ? "s" : "") + " requièr" + (totalAlerts !== 1 ? "ent" : "t") + " une action dans les 30 prochains jours. ";
+      if (totalSavings > 0) txt += "Des économies potentielles de " + fmtCurrency(totalSavings) + " ont été identifiées par l'IA.";
+      synthEl.innerHTML = '<div class="ai-card"><span class="ai-badge">🤖 Synthèse Exécutive IA</span><p style="margin:8px 0 0;line-height:1.7;color:var(--navy);font-size:.92rem">' + txt + '</p></div>';
+    }
+
+    // ── Questions rapides
+    const quickEl = $('exec-cop-questions');
+    if (quickEl) {
+      quickEl.innerHTML = '<div class="ai-card"><span class="ai-badge">🤖 Questions rapides</span>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">' +
+        '<button class="btn btn-outline btn-sm" onclick="_execCopQuickQuestion(\'global\')">Vue globale de l\'organisation ?</button>' +
+        '<button class="btn btn-outline btn-sm" onclick="_execCopQuickQuestion(\'risques\')">Risques prioritaires ?</button>' +
+        '<button class="btn btn-outline btn-sm" onclick="_execCopQuickQuestion(\'faible\')">Quel domaine améliorer ?</button>' +
+        '<button class="btn btn-outline btn-sm" onclick="_execCopQuickQuestion(\'t90\')">Échéances T+90 ?</button>' +
+        '</div><div id="exec-cop-quick-response" style="display:none"></div></div>';
+    }
+
+    // ── Recommandations IA cross-domaines
+    const recsEl = $('exec-cop-recs');
+    if (recsEl) {
+      const recs = [];
+      critContracts.slice(0, 2).forEach(c => {
+        recs.push({ domain: "📦 Achats", priority: 1, type: "danger", icon: "🔴",
+          txt: "Renouvellement urgent — <strong>" + esc(c.vendor || "Fournisseur") + "</strong> (" + (c.days_to_renewal != null ? c.days_to_renewal + "j" : "critique") + ")",
+          why: ["Contrat critique avec " + esc(c.vendor || "ce fournisseur") + " expire très prochainement", "Sans action, les services associés seront interrompus", "→ Déléguer au responsable Achats pour renouvellement immédiat"] });
+      });
+      licExpireSoon.slice(0, 2).forEach(l => {
+        recs.push({ domain: "💻 IT", priority: 1, type: "danger", icon: "🔴",
+          txt: "Licence IT critique — <strong>" + esc(l.product_name) + "</strong> (expire dans " + l.days_to_expiry + "j)",
+          why: ["La licence " + esc(l.product_name) + " expire dans " + l.days_to_expiry + " jours", (l.assigned_count || 0) + " utilisateurs seront impactés sans renouvellement", "→ Autoriser le budget de renouvellement ou identifier une alternative"] });
+      });
+      if (overDepts.length > 0) {
+        recs.push({ domain: "💰 Finance", priority: 2, type: "warn", icon: "⚠️",
+          txt: overDepts.length + " département" + (overDepts.length !== 1 ? "s dépassent" : " dépasse") + " le budget alloué",
+          why: ["Des dépassements budgétaires ont été détectés dans " + overDepts.length + " département(s)", "Ceci peut indiquer des dépenses imprévues ou un sous-calibrage du budget", "→ Demander une analyse détaillée au CFO et réviser les allocations"] });
+      }
+      if (appsUnused.length > 0) {
+        const annualWaste = appsUnused.reduce((s, a) => s + (a.monthly_cost || 0), 0) * 12;
+        recs.push({ domain: "💻 IT", priority: 2, type: "warn", icon: "💡",
+          txt: appsUnused.length + " application" + (appsUnused.length !== 1 ? "s inutilisées" : " inutilisée") + " — " + fmtCurrency(annualWaste) + "/an récupérables",
+          why: ["Des applications payantes ne sont pas utilisées, générant un gaspillage annuel de " + fmtCurrency(annualWaste), "Cette situation représente une opportunité d'optimisation budgétaire immédiate", "→ Mandater la DSI pour désactiver ces licences et réaffecter le budget"] });
+      }
+      if (!recs.length) {
+        recs.push({ domain: "✅ Tous", priority: 0, type: "ok", icon: "✅",
+          txt: "Organisation en bonne santé. Aucune alerte critique identifiée.",
+          why: ["Tous les indicateurs clés sont au vert", "Les scores par domaine reflètent une gestion saine de l'organisation", "→ Maintenir la veille continue et anticiper les évolutions T+90"] });
+      }
+      const bgMap = { danger: "#fff1f2", warn: "#fffbeb", ok: "#f0fdf4" };
+      recsEl.innerHTML = '<div class="ai-card"><span class="ai-badge">💡 Actions Prioritaires CEO</span><ul style="margin:10px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px">' +
+        recs.map(r =>
+          '<li style="border-radius:8px;background:' + bgMap[r.type] + ';overflow:hidden"><div style="display:flex;align-items:flex-start;gap:8px;padding:8px 10px">' +
+          '<span style="flex-shrink:0">' + r.icon + '</span>' +
+          '<div style="flex:1">' +
+          '<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px"><span style="font-size:.7rem;background:#e0e7ff;color:#3730a3;padding:1px 7px;border-radius:10px;font-weight:700">' + r.domain + '</span></div>' +
+          '<span style="font-size:.88rem;color:var(--navy);line-height:1.5">' + r.txt + '</span>' +
+          '<button onclick="toggleExecWhyPanel(this)" style="background:none;border:none;cursor:pointer;font-size:.75rem;color:var(--indigo);font-weight:600;padding:2px 0 0;display:block">📋 Pourquoi ? ▾</button>' +
+          '<div style="display:none;margin-top:6px;padding:8px 10px;background:rgba(255,255,255,.75);border-radius:6px">' +
+          r.why.map(w => '<div style="font-size:.8rem;color:var(--slate);line-height:1.6">' + w + '</div>').join("") +
+          '</div></div></div></li>'
+        ).join("") + '</ul></div>';
+    }
+
+  } catch (e) {
+    console.error("Executive Copilot:", e);
+  }
+}
+
+function _execCopQuickQuestion(q) {
+  if (!_execCopCache) return;
+  const { budgetSum, members, contracts, lics, srvs, apps } = _execCopCache;
+  const utilPct       = budgetSum?.total?.utilization_pct || 0;
+  const critContracts = contracts.filter(c => c.urgency === 'critical' || (c.days_to_renewal != null && c.days_to_renewal <= 30 && c.status === 'active'));
+  const licExpireSoon = lics.filter(l => l.computed_status === 'expiring_soon');
+  const srvDecom      = srvs.filter(s => s.status === 'to_decommission');
+  const appsUnused    = apps.filter(a => a.status === 'unused');
+  const activeMbrs    = members.filter(m => !m.status || m.status === 'active').length;
+
+  let finScore  = 100; const overD = (budgetSum?.by_department||[]).filter(d=>(d.actual||0)>(d.allocated||0)); if(utilPct>100)finScore-=25;else if(utilPct>90)finScore-=10;else if(utilPct>80)finScore-=5; finScore-=overD.length*5; finScore=Math.max(0,Math.min(100,Math.round(finScore)));
+  let rhScore   = 100; const aPct=(members.length>0?activeMbrs/members.length*100:0); if(aPct<50)rhScore-=30;else if(aPct<70)rhScore-=15;else if(aPct<85)rhScore-=5; if(!members.length)rhScore=50; rhScore=Math.max(0,Math.min(100,Math.round(rhScore)));
+  let procScore = 100; procScore-=critContracts.length*10; procScore-=(contracts.filter(c=>c.urgency==='warning'||(c.days_to_renewal!=null&&c.days_to_renewal>30&&c.days_to_renewal<=90&&c.status==='active'&&c.urgency!=='critical')).length)*5; procScore-=(contracts.filter(c=>c.status==='expired').length)*3; if(!contracts.length)procScore=50; procScore=Math.max(0,Math.min(100,Math.round(procScore)));
+  let itScore   = 100; itScore-=licExpireSoon.length*8; itScore-=srvDecom.length*5; itScore-=appsUnused.length*4; if(utilPct>100)itScore-=15; if(!srvs.length&&!lics.length&&!apps.length)itScore=50; itScore=Math.max(0,Math.min(100,Math.round(itScore)));
+  const globalScore = Math.round(finScore*0.3+rhScore*0.2+procScore*0.25+itScore*0.25);
+
+  let ans = "";
+  if (q === 'global') {
+    ans = "Score Intelligence Global : " + globalScore + "/100. Finance : " + finScore + " | RH : " + rhScore + " | Achats : " + procScore + " | IT : " + itScore + ". " + activeMbrs + " membres actifs, " + contracts.filter(c=>c.status==='active').length + " contrats actifs, budget consommé à " + utilPct.toFixed(0) + "%.";
+  } else if (q === 'risques') {
+    const risks = [];
+    if (critContracts.length) risks.push(critContracts.length + " renouvellement" + (critContracts.length!==1?"s contractuels critiques":"  contractuel critique"));
+    if (licExpireSoon.length) risks.push(licExpireSoon.length + " licence" + (licExpireSoon.length!==1?"s IT":"  IT") + " expirant <30j");
+    if (overD.length)         risks.push(overD.length + " département" + (overD.length!==1?"s":"") + " en dépassement budgétaire");
+    if (srvDecom.length)      risks.push(srvDecom.length + " équipement" + (srvDecom.length!==1?"s":"") + " à décommissionner");
+    ans = risks.length ? "Risques prioritaires : " + risks.join(" | ") + "." : "Aucun risque critique identifié. Organisation en bonne santé.";
+  } else if (q === 'faible') {
+    const domains = [{n:"Finance",s:finScore},{n:"RH",s:rhScore},{n:"Achats",s:procScore},{n:"IT",s:itScore}].sort((a,b)=>a.s-b.s);
+    const w = domains[0];
+    ans = "Le domaine le plus faible est " + w.n + " (" + w.s + "/100). " + (w.s < 60 ? "Une action corrective immédiate est recommandée." : w.s < 75 ? "Des améliorations sont possibles à court terme." : "Le domaine est en bon état mais peut encore progresser.");
+  } else if (q === 't90') {
+    const upcoming = [];
+    const t90conts = contracts.filter(c => c.days_to_renewal != null && c.days_to_renewal <= 90 && c.status === 'active').slice(0, 3);
+    const t90lics  = lics.filter(l => l.computed_status === 'expiring_soon' || l.computed_status === 'expiring_medium').slice(0, 3);
+    if (t90conts.length) upcoming.push("Achats : " + t90conts.map(c => esc(c.vendor) + " (" + c.days_to_renewal + "j)").join(", "));
+    if (t90lics.length)  upcoming.push("IT : " + t90lics.map(l => esc(l.product_name) + " (" + l.days_to_expiry + "j)").join(", "));
+    ans = upcoming.length ? "Échéances dans les 90 jours — " + upcoming.join(" | ") + "." : "Aucune échéance critique dans les 90 prochains jours.";
+  }
+  const respEl = $('exec-cop-quick-response');
+  if (respEl && ans) {
+    respEl.style.display = '';
+    respEl.innerHTML = '<div style="margin-top:10px;padding:10px 12px;background:#fff;border-radius:8px;border:1px solid #c7d2fe"><p style="margin:0;font-size:.88rem;line-height:1.6;color:var(--navy)">🤖 ' + ans + '</p></div>';
+  }
+}
+
+function toggleExecWhyPanel(btn) {
+  const panel = btn.nextElementSibling;
+  const open = panel.style.display !== '' && panel.style.display !== 'none';
+  panel.style.display = open ? 'none' : 'block';
+  btn.innerHTML = open ? '📋 Pourquoi ? ▾' : '📋 Pourquoi ? ▴';
+}
+
+// ── END EXECUTIVE COPILOT ──────────────────────────────────────────────────
 
 function _maturityBar(label, pct, color) {
   return '<div style="font-size:.78rem;color:var(--navy);display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="min-width:170px">' + label + '</span><div style="width:80px;height:6px;background:#e2e8f0;border-radius:3px;flex-shrink:0"><div style="width:' + Math.min(100,pct) + '%;height:100%;background:' + color + ';border-radius:3px"></div></div><span style="font-size:.75rem;font-weight:700;color:' + color + '">' + pct + '%</span></div>';

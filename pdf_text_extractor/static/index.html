@@ -1100,6 +1100,7 @@
         <button class="tab-btn"  data-tab="parc-it" role="tab" data-i18n="app.tab.parc">💻 Parc IT</button>
         <button class="tab-btn"  data-tab="documents" role="tab" data-i18n="app.tab.documents">📄 Documents</button>
         <button class="tab-btn"  data-tab="finance"   role="tab" data-i18n="app.tab.finance">💰 Finance</button>
+        <button class="tab-btn"  data-tab="procurement" role="tab">📦 Achats</button>
         <button class="tab-btn"  data-tab="recherche" role="tab" data-i18n="app.tab.recherche">🔍 Recherche interne</button>
         <button class="tab-btn"  data-tab="stats"  role="tab" data-i18n="app.tab.stats">📈 Statistiques</button>
       </nav>
@@ -1572,6 +1573,74 @@
       </div>
     </section>
 
+    <!-- ── PROCUREMENT COPILOT ─────────────────────────────────────── -->
+    <section id="tab-procurement" class="tab-content hidden" role="tabpanel">
+      <div class="section-header">
+        <div>
+          <span class="finance-copilot-label">🤖 CivicAI Procurement Copilot</span>
+          <h2>📦 Approvisionnement</h2>
+        </div>
+        <div class="controls-inline">
+          <button class="btn btn-outline btn-sm" onclick="loadProcurement()">↻ Actualiser</button>
+          <button class="btn btn-primary btn-sm" onclick="openContractModal()">+ Contrat</button>
+        </div>
+      </div>
+
+      <nav class="finance-subnav">
+        <button class="finance-tab-btn active" onclick="switchProcurementTab('executive')" data-ftab="executive">🎯 Vue Exécutive</button>
+        <button class="finance-tab-btn" onclick="switchProcurementTab('contrats')" data-ftab="contrats">📋 Contrats</button>
+        <button class="finance-tab-btn" onclick="switchProcurementTab('fournisseurs')" data-ftab="fournisseurs">🤝 Fournisseurs</button>
+        <button class="finance-tab-btn" onclick="switchProcurementTab('depenses')" data-ftab="depenses">💰 Dépenses</button>
+        <button class="finance-tab-btn" onclick="switchProcurementTab('rapports')" data-ftab="rapports">📥 Rapports</button>
+      </nav>
+
+      <!-- Vue Exécutive -->
+      <div data-proc-tab="executive">
+        <div id="proc-kpis" class="exec-kpi-grid" style="margin-bottom:16px">
+          <div class="exec-kpi-card" style="opacity:.4"><div class="exec-kpi-icon">📋</div><div class="exec-kpi-body"><div class="exec-kpi-val">—</div><div class="exec-kpi-lbl">Contrats actifs</div></div></div>
+          <div class="exec-kpi-card" style="opacity:.4"><div class="exec-kpi-icon">💰</div><div class="exec-kpi-body"><div class="exec-kpi-val">—</div><div class="exec-kpi-lbl">Valeur contractuelle</div></div></div>
+          <div class="exec-kpi-card" style="opacity:.4"><div class="exec-kpi-icon">⚠️</div><div class="exec-kpi-body"><div class="exec-kpi-val">—</div><div class="exec-kpi-lbl">Renouvellements &lt;30j</div></div></div>
+          <div class="exec-kpi-card" style="opacity:.4"><div class="exec-kpi-icon">💡</div><div class="exec-kpi-body"><div class="exec-kpi-val">—</div><div class="exec-kpi-lbl">Économies potentielles</div></div></div>
+          <div class="exec-kpi-card" style="opacity:.4"><div class="exec-kpi-icon">🤝</div><div class="exec-kpi-body"><div class="exec-kpi-val">—</div><div class="exec-kpi-lbl">Fournisseurs actifs</div></div></div>
+          <div class="exec-kpi-card" style="opacity:.4"><div class="exec-kpi-icon">🎯</div><div class="exec-kpi-body"><div class="exec-kpi-val">—</div><div class="exec-kpi-lbl">Score Achats</div></div></div>
+        </div>
+        <div id="proc-maturity" style="margin-bottom:16px"></div>
+        <div id="proc-exec-chart" style="margin-bottom:20px"></div>
+        <div id="proc-ai-synthesis" style="margin-bottom:16px"></div>
+        <div id="proc-quick-questions" style="margin-bottom:16px"></div>
+        <div id="proc-ai-recs"></div>
+      </div>
+
+      <!-- Contrats -->
+      <div data-proc-tab="contrats" style="display:none">
+        <div id="proc-contracts-wrap"><p class="muted" style="padding:20px 0">Chargement des contrats…</p></div>
+      </div>
+
+      <!-- Fournisseurs -->
+      <div data-proc-tab="fournisseurs" style="display:none">
+        <div id="proc-vendors-wrap"><p class="muted" style="padding:20px 0">Chargement des fournisseurs…</p></div>
+      </div>
+
+      <!-- Dépenses -->
+      <div data-proc-tab="depenses" style="display:none">
+        <div id="proc-spend-wrap"><p class="muted" style="padding:20px 0">Chargement des dépenses…</p></div>
+      </div>
+
+      <!-- Rapports -->
+      <div data-proc-tab="rapports" style="display:none">
+        <div style="padding:20px 0">
+          <div class="ai-card" style="max-width:520px">
+            <span class="ai-badge">📥 Rapports exportables</span>
+            <p style="margin:10px 0 4px;font-size:.88rem;color:var(--slate)">Exportez votre portefeuille contractuel et l'analyse fournisseurs en un clic.</p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+              <button class="btn btn-primary btn-sm" onclick="exportProcurementReport('csv')">📄 Exporter CSV</button>
+              <button class="btn btn-outline btn-sm" onclick="exportProcurementReport('xlsx')">📊 Exporter Excel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ── RECHERCHE INTERNE ─────────────────────────────────────────── -->
     <section id="tab-recherche" class="tab-content hidden" role="tabpanel">
       <div class="section-header">
@@ -1613,9 +1682,21 @@
     <section id="tab-org" class="tab-content hidden admin-only" role="tabpanel">
 
       <div class="section-header">
-        <h2>🏛️ Tableau de bord Organisation</h2>
-        <button class="btn btn-outline btn-sm" onclick="loadExecutiveDashboard()">↻ Actualiser</button>
+        <div>
+          <span class="finance-copilot-label">🤖 CivicAI Executive Copilot</span>
+          <h2>🏛️ Intelligence d'Entreprise</h2>
+        </div>
+        <div class="controls-inline">
+          <button class="btn btn-outline btn-sm" onclick="orgRefresh()">↻ Actualiser</button>
+        </div>
       </div>
+
+      <nav class="finance-subnav">
+        <button class="finance-tab-btn active" onclick="switchOrgTab('dashboard')" data-ftab="dashboard">🏛️ Tableau de bord</button>
+        <button class="finance-tab-btn" onclick="switchOrgTab('copilot')" data-ftab="copilot">🤖 Executive Copilot</button>
+      </nav>
+
+      <div id="org-tab-dashboard">
 
       <!-- Score Santé Organisationnelle -->
       <div id="exec-org-score" style="margin-bottom:20px"></div>
@@ -1640,6 +1721,25 @@
 
       <!-- Modules Gouvernance IT v2 -->
       <div id="exec-governance-modules"></div>
+
+      </div><!-- /org-tab-dashboard -->
+
+      <!-- Executive Copilot -->
+      <div id="org-tab-copilot" style="display:none">
+        <div id="exec-cop-kpis" class="exec-kpi-grid" style="margin-bottom:16px">
+          <div class="exec-kpi-card" style="opacity:.4"><div class="exec-kpi-icon">🎯</div><div class="exec-kpi-body"><div class="exec-kpi-val">—</div><div class="exec-kpi-lbl">Score Intelligence Global</div></div></div>
+          <div class="exec-kpi-card" style="opacity:.4"><div class="exec-kpi-icon">💰</div><div class="exec-kpi-body"><div class="exec-kpi-val">—</div><div class="exec-kpi-lbl">Budget consommé</div></div></div>
+          <div class="exec-kpi-card" style="opacity:.4"><div class="exec-kpi-icon">👥</div><div class="exec-kpi-body"><div class="exec-kpi-val">—</div><div class="exec-kpi-lbl">Membres actifs</div></div></div>
+          <div class="exec-kpi-card" style="opacity:.4"><div class="exec-kpi-icon">📦</div><div class="exec-kpi-body"><div class="exec-kpi-val">—</div><div class="exec-kpi-lbl">Contrats actifs</div></div></div>
+          <div class="exec-kpi-card" style="opacity:.4"><div class="exec-kpi-icon">💡</div><div class="exec-kpi-body"><div class="exec-kpi-val">—</div><div class="exec-kpi-lbl">Économies potentielles</div></div></div>
+          <div class="exec-kpi-card" style="opacity:.4"><div class="exec-kpi-icon">⚠️</div><div class="exec-kpi-body"><div class="exec-kpi-val">—</div><div class="exec-kpi-lbl">Alertes actives</div></div></div>
+        </div>
+        <div id="exec-cop-domains" style="margin-bottom:16px"></div>
+        <div id="exec-cop-chart" style="margin-bottom:20px"></div>
+        <div id="exec-cop-synthesis" style="margin-bottom:16px"></div>
+        <div id="exec-cop-questions" style="margin-bottom:16px"></div>
+        <div id="exec-cop-recs"></div>
+      </div>
 
     </section>
 
@@ -2142,6 +2242,7 @@
         <button class="parc-tab-btn"        data-parc="servers"  onclick="switchParcTab('servers')"  data-i18n="parc.tab.servers">Serveurs</button>
         <button class="parc-tab-btn"        data-parc="apps"          onclick="switchParcTab('apps')"          data-i18n="parc.tab.apps">Applications</button>
         <button class="parc-tab-btn"        data-parc="transactions"  onclick="switchParcTab('transactions')"  >Transactions</button>
+        <button class="parc-tab-btn"        data-parc="copilot"       onclick="switchParcTab('copilot')"       >🤖 Copilot IT</button>
       </div>
 
       <!-- Barre de recherche / filtre département -->
@@ -2287,6 +2388,26 @@
         </div>
         <div id="txn-summary-wrap" style="margin-bottom:16px"></div>
         <div id="txn-table-wrap"><p class="muted">Chargement…</p></div>
+      </div>
+
+      <!-- IT Copilot -->
+      <div id="parc-copilot" class="parc-content hidden">
+        <div style="margin-bottom:10px">
+          <span class="finance-copilot-label">🤖 CivicAI IT Copilot</span>
+        </div>
+        <div id="it-kpis" class="exec-kpi-grid" style="margin-bottom:16px">
+          <div class="exec-kpi-card" style="opacity:.4"><div class="exec-kpi-icon">💻</div><div class="exec-kpi-body"><div class="exec-kpi-val">—</div><div class="exec-kpi-lbl">Équipements actifs</div></div></div>
+          <div class="exec-kpi-card" style="opacity:.4"><div class="exec-kpi-icon">🔑</div><div class="exec-kpi-body"><div class="exec-kpi-val">—</div><div class="exec-kpi-lbl">Licences actives</div></div></div>
+          <div class="exec-kpi-card" style="opacity:.4"><div class="exec-kpi-icon">⚠️</div><div class="exec-kpi-body"><div class="exec-kpi-val">—</div><div class="exec-kpi-lbl">Licences expirant &lt;30j</div></div></div>
+          <div class="exec-kpi-card" style="opacity:.4"><div class="exec-kpi-icon">🔄</div><div class="exec-kpi-body"><div class="exec-kpi-val">—</div><div class="exec-kpi-lbl">À décommissionner</div></div></div>
+          <div class="exec-kpi-card" style="opacity:.4"><div class="exec-kpi-icon">💸</div><div class="exec-kpi-body"><div class="exec-kpi-val">—</div><div class="exec-kpi-lbl">Coût IT mensuel estimé</div></div></div>
+          <div class="exec-kpi-card" style="opacity:.4"><div class="exec-kpi-icon">🎯</div><div class="exec-kpi-body"><div class="exec-kpi-val">—</div><div class="exec-kpi-lbl">Score IT</div></div></div>
+        </div>
+        <div id="it-maturity" style="margin-bottom:16px"></div>
+        <div id="it-exec-chart" style="margin-bottom:20px"></div>
+        <div id="it-ai-synthesis" style="margin-bottom:16px"></div>
+        <div id="it-quick-questions" style="margin-bottom:16px"></div>
+        <div id="it-ai-recs"></div>
       </div>
     </section>
 
