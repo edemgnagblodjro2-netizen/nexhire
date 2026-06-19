@@ -2971,7 +2971,11 @@ let _chartDaily      = null;
 let _chartConn       = null;
 let _statsData       = null;   // données analytics complètes
 let _selectedConn    = null;   // connecteur sélectionné dans le camembert
-let _financeCache    = null;   // dernière réponse finance (summary + txns)
+let _financeCache       = null;   // dernière réponse finance (summary + txns)
+let _financeBarChart    = null;
+let _financeDonutChart  = null;
+let _financeSelectedCat = null;
+let _financeCatData     = null;
 
 async function loadAnalytics() {
   const days = $("stats-days")?.value || 30;
@@ -9620,6 +9624,102 @@ async function loadFinance() {
       `;
     }
 
+    // Graphes Finance — Dépenses par catégorie + Répartition
+    const chartWrap = $("finance-charts");
+    if (chartWrap) {
+      if (_financeBarChart)   { _financeBarChart.destroy();   _financeBarChart   = null; }
+      if (_financeDonutChart) { _financeDonutChart.destroy(); _financeDonutChart = null; }
+      const catAgg = {};
+      for (const t of (txns || [])) {
+        const cat = t.category || "other";
+        if (!catAgg[cat]) catAgg[cat] = { paid: 0, pending: 0 };
+        if (t.status === "paid")    catAgg[cat].paid    += Number(t.amount || 0);
+        if (t.status === "pending") catAgg[cat].pending += Number(t.amount || 0);
+      }
+      const catKeys = Object.keys(catAgg).sort((a, b) => (catAgg[b].paid + catAgg[b].pending) - (catAgg[a].paid + catAgg[a].pending));
+      _financeCatData    = catKeys.map(c => ({ category: c, ...catAgg[c] }));
+      _financeSelectedCat = null;
+      if (catKeys.length) {
+        chartWrap.innerHTML = `
+          <div class="chart-panel">
+            <h3 id="finance-bar-chart-title">💰 Dépenses par catégorie</h3>
+            <canvas id="finance-bar-chart" height="220"></canvas>
+          </div>
+          <div class="chart-panel">
+            <h3>🥧 Répartition des dépenses</h3>
+            <canvas id="finance-donut-chart" height="220" style="cursor:pointer" title="Cliquez sur un segment pour filtrer le graphique"></canvas>
+          </div>`;
+        const tr2 = T[_lang] || T.fr;
+        const CAT = { software:tr2['finance.cat.software'],hardware:tr2['finance.cat.hardware'],cloud:tr2['finance.cat.cloud'],telecom:tr2['finance.cat.telecom'],marketing:tr2['finance.cat.marketing'],hr:tr2['finance.cat.hr'],legal:tr2['finance.cat.legal'],finance:tr2['finance.cat.finance'],facilities:tr2['finance.cat.facilities'],travel:tr2['finance.cat.travel'],consulting:tr2['finance.cat.consulting'],training:tr2['finance.cat.training'],utilities:tr2['finance.cat.utilities'],insurance:tr2['finance.cat.insurance'],other:tr2['finance.cat.other'] };
+        const COLORS = ["#818cf8","#6366f1","#34d399","#fbbf24","#f87171","#38bdf8","#a78bfa","#fb923c","#4ade80","#e879f9"];
+        const barLabels = catKeys.map(c => (CAT[c] || c).toUpperCase());
+        _financeBarChart = new Chart($("finance-bar-chart"), {
+          type: "bar",
+          plugins: [ChartDataLabels],
+          data: {
+            labels: barLabels,
+            datasets: [
+              { label: tr2['finance.status.paid']    || "Payé",       data: catKeys.map(c => catAgg[c].paid),    backgroundColor: "rgba(99,102,241,.8)",  borderColor: "#6366f1", borderWidth: 1 },
+              { label: tr2['finance.status.pending'] || "En attente", data: catKeys.map(c => catAgg[c].pending), backgroundColor: "rgba(251,191,36,.5)", borderColor: "#fbbf24", borderWidth: 1 },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { display: true },
+              datalabels: { anchor:"end", align:"top", font:{ size:9, weight:"bold" }, color:"#475569", formatter: v => v > 0 ? _fmt(v) : "" },
+            },
+            scales: { y: { beginAtZero: true } },
+          },
+        });
+        const donutData = catKeys.map(c => catAgg[c].paid + catAgg[c].pending);
+        _financeDonutChart = new Chart($("finance-donut-chart"), {
+          type: "doughnut",
+          plugins: [ChartDataLabels],
+          data: {
+            labels: barLabels,
+            datasets: [{ data: donutData, backgroundColor: COLORS.slice(0, catKeys.length), borderWidth: 2, borderColor: "rgba(255,255,255,.8)" }],
+          },
+          options: {
+            responsive: true,
+            cutout: "60%",
+            onClick: (evt, els) => {
+              if (!els.length) { if (_financeSelectedCat) { _financeSelectedCat = null; _filterFinanceByCat(null); } return; }
+              const idx = els[0].index;
+              const key = catKeys[idx];
+              if (_financeSelectedCat === key) { _financeSelectedCat = null; _filterFinanceByCat(null); }
+              else                             { _financeSelectedCat = key;  _filterFinanceByCat(key, COLORS[idx % COLORS.length]); }
+            },
+            plugins: {
+              legend: {
+                position: "right",
+                labels: {
+                  font:{ size:11 }, boxWidth:12, padding:10,
+                  generateLabels: chart => {
+                    const ds = chart.data.datasets[0];
+                    const total = ds.data.reduce((a,b) => a+b, 0);
+                    return chart.data.labels.map((lbl, i) => {
+                      const val = ds.data[i];
+                      const pct = total > 0 ? (val/total*100).toFixed(1) : 0;
+                      return { text:`${lbl}  ${_fmt(val)} (${pct}%)`, fillStyle:ds.backgroundColor[i], strokeStyle:"transparent", index:i, hidden:false };
+                    });
+                  },
+                },
+              },
+              tooltip: { callbacks: { label: ctx => { const total=ctx.dataset.data.reduce((a,b)=>a+b,0); const pct=total>0?((ctx.parsed/total)*100).toFixed(1):0; return ` ${_fmt(ctx.parsed)} (${pct}%)`; } } },
+              datalabels: {
+                color: "#fff",
+                font: { size:11, weight:"bold" },
+                formatter: (val, ctx) => { const total=ctx.dataset.data.reduce((a,b)=>a+b,0); const pct=total>0?(val/total*100):0; return pct>=2?pct.toFixed(1)+"%":""; },
+              },
+            },
+          },
+        });
+      } else {
+        chartWrap.innerHTML = "";
+      }
+    }
+
     // Anomalies
     const anomEl = $("finance-anomalies");
     if (anomEl) {
@@ -9710,6 +9810,32 @@ async function aiCategorizeTransaction(txnId, description, amount, vendorName) {
       alert("Erreur IA : " + (res.error || "indisponible"));
     }
   } catch(e) { alert("Erreur : " + e.message); }
+}
+
+function _filterFinanceByCat(catKey, color) {
+  if (!_financeBarChart || !_financeCatData) return;
+  const titleEl = document.getElementById("finance-bar-chart-title");
+  const tr = T[_lang] || T.fr;
+  const CAT = { software:tr['finance.cat.software'],hardware:tr['finance.cat.hardware'],cloud:tr['finance.cat.cloud'],telecom:tr['finance.cat.telecom'],marketing:tr['finance.cat.marketing'],hr:tr['finance.cat.hr'],legal:tr['finance.cat.legal'],finance:tr['finance.cat.finance'],facilities:tr['finance.cat.facilities'],travel:tr['finance.cat.travel'],consulting:tr['finance.cat.consulting'],training:tr['finance.cat.training'],utilities:tr['finance.cat.utilities'],insurance:tr['finance.cat.insurance'],other:tr['finance.cat.other'] };
+  if (!catKey) {
+    _financeBarChart.data.labels = _financeCatData.map(c => (CAT[c.category]||c.category).toUpperCase());
+    _financeBarChart.data.datasets[0].data = _financeCatData.map(c => c.paid);
+    _financeBarChart.data.datasets[1].data = _financeCatData.map(c => c.pending);
+    _financeBarChart.data.datasets[0].backgroundColor = "rgba(99,102,241,.8)";
+    _financeBarChart.data.datasets[1].backgroundColor = "rgba(251,191,36,.5)";
+    if (titleEl) titleEl.textContent = titleEl.dataset.orig || "💰 Dépenses par catégorie";
+  } else {
+    const cat = _financeCatData.find(c => c.category === catKey);
+    if (!cat) return;
+    const lbl = (CAT[catKey] || catKey).toUpperCase();
+    _financeBarChart.data.labels = [lbl];
+    _financeBarChart.data.datasets[0].data = [cat.paid];
+    _financeBarChart.data.datasets[1].data = [cat.pending];
+    _financeBarChart.data.datasets[0].backgroundColor = color || "rgba(99,102,241,.9)";
+    _financeBarChart.data.datasets[1].backgroundColor = "rgba(251,191,36,.7)";
+    if (titleEl) { if (!titleEl.dataset.orig) titleEl.dataset.orig = titleEl.textContent; titleEl.textContent = `💰 ${lbl}`; }
+  }
+  _financeBarChart.update();
 }
 
 function openAddTransactionModal() {
