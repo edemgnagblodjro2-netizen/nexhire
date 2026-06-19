@@ -1585,7 +1585,6 @@ function loadActiveTab() {
     "finance":     loadFinance,
     "procurement": loadProcurement,
     "documents":   _populateUploadDeptSelect,
-    "recherche":   loadRecherche,
   };
   const fn = loaders[state.tab];
   if (fn) Promise.resolve().then(() => fn()).catch(err => console.warn(`[${state.tab}] load error:`, err));
@@ -11371,8 +11370,8 @@ async function doInternalSearch() {
   }
 }
 
-// Soumettre avec Entrée
-$("search-query")?.addEventListener("keydown", e => {
+// Listener Enter pour l'ancienne section recherche (masquée — garde au cas où)
+document.getElementById("search-query")?.addEventListener("keydown", e => {
   if (e.key === "Enter") doInternalSearch();
 });
 
