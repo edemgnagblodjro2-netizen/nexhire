@@ -36,6 +36,7 @@ class CurrentUser:
     role: str
     subscription_status: str | None
     is_service_account: bool = False
+    currency: str = "CAD"
 
 
 # ── Vérification du jeton ──────────────────────────────────────────────────
@@ -156,13 +157,24 @@ def get_current_user(authorization: str | None = Header(default=None)) -> Curren
             detail="Compte désactivé. Contactez votre administrateur.",
         )
 
-    org_status = None
+    org_status   = None
+    org_currency = "CAD"
     if profile.get("organization_id"):
         try:
             with get_db() as cur:
                 cur.execute("SELECT get_org_status(%s) AS status", (profile["organization_id"],))
                 r = db_row(cur)
                 org_status = r["status"] if r else None
+        except Exception:
+            pass
+        try:
+            with get_db() as cur:
+                cur.execute(
+                    "SELECT currency FROM organizations WHERE id = %s LIMIT 1",
+                    (profile["organization_id"],),
+                )
+                cur_row = db_row(cur)
+                org_currency = (cur_row or {}).get("currency") or "CAD"
         except Exception:
             pass
 
@@ -172,4 +184,5 @@ def get_current_user(authorization: str | None = Header(default=None)) -> Curren
         organization_id=profile.get("organization_id"),
         role=profile.get("role") or "user",
         subscription_status=org_status,
+        currency=org_currency,
     )

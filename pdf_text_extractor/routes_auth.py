@@ -39,6 +39,7 @@ class SignupPayload(BaseModel):
     phone: str | None = Field(default=None, max_length=30)
     invite_token: str | None = None
     org_type: str = Field(default="entreprise", pattern="^(entreprise|entrepreneur|hopital|municipalite|universite)$")
+    currency: str = Field(default="CAD", pattern="^[A-Z]{3}$")
 
     @field_validator("password")
     @classmethod
@@ -57,6 +58,7 @@ def signup(request: Request, payload: SignupPayload, background: BackgroundTasks
             "org_name":  payload.organization_name,
             "full_name": payload.full_name,
             "org_type":  payload.org_type,
+            "currency":  payload.currency,
         }
         if payload.phone:
             meta["phone"] = payload.phone
@@ -225,4 +227,5 @@ def me(user: CurrentUser = Depends(get_current_user)):
         "subscription_status": user.subscription_status,
         "is_superadmin": bool(user.email and user.email.lower() in superadmin_emails),
         "dept_types": dept_types,
+        "currency": user.currency,
     }

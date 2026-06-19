@@ -15,18 +15,23 @@ security definer
 set search_path = public
 as $$
 declare
-  new_org_id uuid;
-  org_name text := coalesce(nullif(new.raw_user_meta_data->>'org_name', ''), 'Mon organisation');
-  full_name text := nullif(new.raw_user_meta_data->>'full_name', '');
+  new_org_id   uuid;
+  org_name     text := coalesce(nullif(new.raw_user_meta_data->>'org_name', ''), 'Mon organisation');
+  full_name    text := nullif(new.raw_user_meta_data->>'full_name', '');
   org_type_raw text := new.raw_user_meta_data->>'org_type';
   org_type_val text := case
     when org_type_raw in ('entreprise', 'entrepreneur', 'hopital', 'municipalite', 'universite')
     then org_type_raw
     else 'entreprise'
   end;
+  currency_raw text := new.raw_user_meta_data->>'currency';
+  currency_val text := case
+    when currency_raw ~ '^[A-Z]{3}$' then currency_raw
+    else 'CAD'
+  end;
 begin
-  insert into public.organizations (name, subscription_status, trial_ends_at, org_type)
-    values (org_name, 'trialing', now() + interval '14 days', org_type_val)
+  insert into public.organizations (name, subscription_status, trial_ends_at, org_type, currency)
+    values (org_name, 'trialing', now() + interval '14 days', org_type_val, currency_val)
     returning id into new_org_id;
 
   insert into public.users (id, organization_id, email, full_name, role)

@@ -4,17 +4,20 @@
 
 // ── State ──────────────────────────────────────────────────────────────────
 const state = {
-  token:    null,
-  user:     null,
-  tab:      "agent",
-  docId:    null,
-  deptType: null,
+  token:       null,
+  user:        null,
+  tab:         "agent",
+  docId:       null,
+  deptType:    null,
+  orgCurrency: "CAD",
 };
 
 // ── Helpers globaux ────────────────────────────────────────────────────────
 const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 
-const fmtCAD = v => (v || 0).toLocaleString("fr-CA", { style: "currency", currency: "CAD", maximumFractionDigits: 0 });
+const _currencyLocale = c => ({ CAD:"fr-CA", USD:"en-US", EUR:"fr-FR", GBP:"en-GB", CHF:"fr-CH", MAD:"fr-MA", XOF:"fr-SN", BRL:"pt-BR", AED:"ar-AE", INR:"en-IN" }[c] || "fr-CA");
+const fmtCurrency = (v, cur) => { const c = cur || state.orgCurrency || "CAD"; return (v||0).toLocaleString(_currencyLocale(c), { style:"currency", currency:c, maximumFractionDigits:0 }); };
+const fmtCAD = v => fmtCurrency(v);
 const fmtPct = v => `${(v || 0).toFixed(1)} %`;
 
 function showToast(msg, type = "info") {
@@ -1412,6 +1415,7 @@ async function apiCall(path, method = "GET", body = null) {
 
 async function fetchMe() {
   state.user = await apiCall("/api/auth/me");
+  state.orgCurrency = state.user?.currency || "CAD";
 }
 
 // Login
@@ -1459,6 +1463,7 @@ $("signup-form").addEventListener("submit", async e => {
       email: $("signup-email").value.trim(),
       password: $("signup-password").value,
       org_type: $("signup-org-type")?.value || "entreprise",
+      currency: $("signup-currency")?.value || "CAD",
     };
     const phone = $("signup-phone")?.value.trim();
     if (phone) signupBody.phone = phone;
@@ -3435,8 +3440,10 @@ async function loadSettings() {
       $("sp-org-type").disabled = !isAdmForType;
       if (!isAdmForType) { $("sp-org-type").style.opacity = "0.6"; $("sp-org-type").title = "Seuls les administrateurs peuvent modifier le type d'organisation."; }
     }
-    state.orgType = p.org_type || "entreprise";
-    state.orgSlug = p.organization_slug || "";
+    state.orgType     = p.org_type || "entreprise";
+    state.orgSlug     = p.organization_slug || "";
+    state.orgCurrency = p.currency || "CAD";
+    if ($("sp-currency")) $("sp-currency").value = state.orgCurrency;
 
     // Logo & branding
     const isAdmin = ["admin", "owner"].includes(p.role);
@@ -3879,8 +3886,10 @@ $("settings-profile-form")?.addEventListener("submit", async e => {
     await apiCall("/api/settings/profile", "PATCH", { full_name: $("sp-fullname").value.trim() });
     const orgVal = $("sp-org")?.value.trim();
     if (state.isAdmin && orgVal) {
-      await apiCall("/api/settings/org", "PATCH", { org_name: orgVal });
+      const curVal = $("sp-currency")?.value;
+      await apiCall("/api/settings/org", "PATCH", { org_name: orgVal, ...(curVal ? { currency: curVal } : {}) });
       $("settings-fullname").textContent = $("sp-fullname").value.trim();
+      if (curVal) state.orgCurrency = curVal;
     }
     suc.classList.remove("hidden");
     $("settings-fullname").textContent = $("sp-fullname").value.trim();
@@ -5614,7 +5623,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // Helper formatter
 function _fmt(v) {
   if (v == null) return "0.00";
-  return Number(v).toLocaleString("fr-CA", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return Number(v).toLocaleString(_currencyLocale(state.orgCurrency || "CAD"), { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 function _setText(id, val) {
@@ -6414,7 +6423,7 @@ async function _loadRecommendations() {
     const data = await apiCall("/api/optimization/recommendations");
     const recs  = data.recommendations || [];
     const total = data.total_savings || 0;
-    const fmtC  = v => (v||0).toLocaleString("fr-CA",{style:"currency",currency:"CAD",maximumFractionDigits:0});
+    const fmtC  = v => fmtCurrency(v);
 
     if (!recs.length) {
       wrap.innerHTML = `<p class="muted" style="padding:20px">Aucune recommandation disponible — ajoutez des licences, contrats ou processus.</p>`;
@@ -6462,7 +6471,7 @@ async function _loadPredictions() {
   wrap.innerHTML = `<div style="padding:20px;text-align:center"><div class="spinner" style="margin:auto"></div></div>`;
   try {
     const data  = await apiCall("/api/optimization/predictions");
-    const fmtC  = v => (v||0).toLocaleString("fr-CA",{style:"currency",currency:"CAD",maximumFractionDigits:0});
+    const fmtC  = v => fmtCurrency(v);
     const summ  = data.summary || {};
     const bRisk = data.budget_risks || [];
     const hTrend= data.dept_health_trends || [];
@@ -7312,7 +7321,7 @@ async function installWorkspace(templateId) {
       description: tpl.desc?.fr || "",
       dept_type: tpl.dept_type,
       annual_budget: 0,
-      currency: "CAD",
+      currency: state.orgCurrency || "CAD",
     });
     _installedWorkspaces.add(tpl.dept_type);
     if (created?.id) _installedDeptIds[tpl.dept_type] = created.id;
@@ -9611,7 +9620,7 @@ async function loadFinance() {
     const kpiEl = $("finance-kpis");
     if (kpiEl) {
       const tr = T[_lang] || T.fr;
-      const fmt = v => Number(v || 0).toLocaleString(_lang === "fr" ? "fr-CA" : "en-CA", { style:"currency", currency:"CAD", maximumFractionDigits:0 });
+      const fmt = v => fmtCurrency(v);
       kpiEl.innerHTML = `
         <div class="exec-kpi-card"><div class="exec-kpi-val">${fmt(summary.total_paid)}</div><div class="exec-kpi-lbl">${tr['finance.kpi.paid']}</div></div>
         <div class="exec-kpi-card"><div class="exec-kpi-val">${fmt(summary.total_pending)}</div><div class="exec-kpi-lbl">${tr['finance.kpi.pending']}</div></div>
@@ -9729,7 +9738,7 @@ async function loadFinance() {
         <div style="background:#fff7ed;border:1px solid #fdba74;border-radius:10px;padding:12px 16px;margin-bottom:16px">
           <strong style="color:#c2410c">⚠️ ${flagged.length} ${tr['finance.anomaly.label']}</strong>
           <ul style="margin:8px 0 0;padding-left:18px;font-size:.82rem;color:#7c2d12">
-            ${flagged.map(t => `<li><strong>${esc(t.vendor_name || '—')}</strong> — ${esc(t.flag_reason || tr['finance.anomaly.dup'])} (${Number(t.amount).toLocaleString(_lang === "fr" ? "fr-CA" : "en-CA", {style:"currency",currency:"CAD"})})</li>`).join("")}
+            ${flagged.map(t => `<li><strong>${esc(t.vendor_name || '—')}</strong> — ${esc(t.flag_reason || tr['finance.anomaly.dup'])} (${fmtCurrency(t.amount)})</li>`).join("")}
           </ul>
         </div>` : "";
     }
@@ -9781,7 +9790,7 @@ async function loadFinance() {
             <td>${(t.transaction_date||"").slice(0,10)}</td>
             <td>${esc(t.vendor_name || "—")}</td>
             <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(t.description||"")}">${esc(t.description||"—")}</td>
-            <td style="font-weight:700;color:${t.is_flagged ? '#dc2626':'#1e293b'}">${Number(t.amount).toLocaleString(_lang === "fr" ? "fr-CA" : "en-CA",{style:"currency",currency:"CAD"})}</td>
+            <td style="font-weight:700;color:${t.is_flagged ? '#dc2626':'#1e293b'}">${fmtCurrency(t.amount)}</td>
             <td><span class="badge bs">${CAT[t.category] || t.category || "—"}</span></td>
             <td>${SBADGE[t.status] || t.status}</td>
             <td><button class="btn btn-outline btn-sm" onclick="aiCategorizeTransaction('${t.id}','${esc(t.description||"")}',${t.amount},'${esc(t.vendor_name||"")}')" title="Catégoriser avec l'IA">🤖</button></td>
@@ -9866,7 +9875,7 @@ async function exportFinanceReport(fmt) {
     const { summary, txns, year, month, deptId } = _financeCache;
     const tr = T[_lang] || T.fr;
     const loc = _lang === "fr" ? "fr-CA" : "en-CA";
-    const fmtAmt = v => Number(v || 0).toLocaleString(loc, { style: "currency", currency: "CAD", maximumFractionDigits: 0 });
+    const fmtAmt = v => fmtCurrency(v);
 
     const periodLabel = [year || tr["finance.all.months"], month ? `M${month}` : null, deptId ? `dept:${deptId}` : null].filter(Boolean).join(" / ");
     const title = `${tr["finance.title"] || "Finance & Transactions"} — ${periodLabel || "Toutes périodes"}`;
@@ -9880,7 +9889,7 @@ async function exportFinanceReport(fmt) {
     ].join("\n");
 
     const txnLines = (txns || []).slice(0, 100).map(t =>
-      `${(t.transaction_date || "").slice(0, 10)} | ${t.vendor_name || "—"} | ${Number(t.amount || 0).toLocaleString(loc, { style: "currency", currency: "CAD" })} | ${t.category || "—"} | ${t.status || "—"}`
+      `${(t.transaction_date || "").slice(0, 10)} | ${t.vendor_name || "—"} | ${fmtCurrency(t.amount)} | ${t.category || "—"} | ${t.status || "—"}`
     ).join("\n");
 
     const answer = `**KPIs**\n${kpiLines}\n\n**Transactions**\n${txnLines}`;
