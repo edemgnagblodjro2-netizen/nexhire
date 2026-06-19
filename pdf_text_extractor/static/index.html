@@ -2952,12 +2952,12 @@
       <!-- Charts row -->
       <div class="stats-charts">
         <div class="chart-panel">
-          <h3 data-i18n="stats.chart.daily">Activité quotidienne</h3>
-          <canvas id="chart-daily" height="200"></canvas>
+          <h3 id="chart-daily-title" data-i18n="stats.chart.daily" style="transition:color .2s">Activité quotidienne</h3>
+          <canvas id="chart-daily" height="200" style="cursor:default"></canvas>
         </div>
         <div class="chart-panel">
           <h3 data-i18n="stats.chart.connectors">Connecteurs utilisés</h3>
-          <canvas id="chart-connectors" height="200"></canvas>
+          <canvas id="chart-connectors" height="200" style="cursor:pointer" title="Cliquez sur un segment pour filtrer l'activité quotidienne"></canvas>
         </div>
       </div>
 

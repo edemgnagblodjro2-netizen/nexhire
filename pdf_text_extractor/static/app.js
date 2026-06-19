@@ -2967,8 +2967,10 @@ function appendMsg(role, text) {
 // STATISTIQUES TAB
 // ═══════════════════════════════════════════════════════════════════════════
 
-let _chartDaily = null;
-let _chartConn  = null;
+let _chartDaily      = null;
+let _chartConn       = null;
+let _statsData       = null;   // données analytics complètes
+let _selectedConn    = null;   // connecteur sélectionné dans le camembert
 
 async function loadAnalytics() {
   const days = $("stats-days")?.value || 30;
@@ -2976,6 +2978,8 @@ async function loadAnalytics() {
   ["kpi-queries","kpi-score","kpi-rated","kpi-util"].forEach(id => { const el=$(id); if(el) el.textContent = "…"; });
   try {
     const d = await apiCall(`/api/analytics/dashboard?days=${days}`);
+    _statsData    = d;
+    _selectedConn = null;
 
     // KPI cards
     $("kpi-queries").textContent = d.total_queries.toLocaleString("fr-CA");
@@ -3027,6 +3031,7 @@ async function loadAnalytics() {
     const ctxC = $("chart-connectors")?.getContext("2d");
     if (ctxC && connLabels.length) {
       const connTotal = connData.reduce((a, b) => a + b, 0) || 1;
+      const connKeys  = d.top_connectors.map(x => x.name); // IDs internes pour le filtre
       _chartConn = new Chart(ctxC, {
         type: "doughnut",
         plugins: [ChartDataLabels],
@@ -3036,6 +3041,26 @@ async function loadAnalytics() {
         },
         options: {
           responsive: true, maintainAspectRatio: true,
+          onClick: (evt, elements) => {
+            if (!elements.length) return;
+            const idx     = elements[0].index;
+            const key     = connKeys[idx];
+            const label   = connLabels[idx];
+            if (_selectedConn === key) {
+              // Désélectionner → revenir à toutes les données
+              _selectedConn = null;
+              _filterDailyByConnector(null, null);
+              _chartConn.data.datasets[0].backgroundColor = palette.slice(0, connLabels.length);
+            } else {
+              _selectedConn = key;
+              _filterDailyByConnector(key, label);
+              // Atténuer les autres segments
+              _chartConn.data.datasets[0].backgroundColor = connLabels.map((_, i) =>
+                i === idx ? palette[i] : palette[i] + "40"
+              );
+            }
+            _chartConn.update();
+          },
           plugins: {
             legend: {
               position: "right",
@@ -3053,6 +3078,25 @@ async function loadAnalytics() {
                     hidden: false,
                   };
                 }),
+              },
+              onClick: (evt, item, legend) => {
+                // Clic sur légende = même comportement que clic sur segment
+                const chart = legend.chart;
+                const idx   = item.index;
+                const key   = connKeys[idx];
+                const label = connLabels[idx];
+                if (_selectedConn === key) {
+                  _selectedConn = null;
+                  _filterDailyByConnector(null, null);
+                  chart.data.datasets[0].backgroundColor = palette.slice(0, connLabels.length);
+                } else {
+                  _selectedConn = key;
+                  _filterDailyByConnector(key, label);
+                  chart.data.datasets[0].backgroundColor = connLabels.map((_, i) =>
+                    i === idx ? palette[i] : palette[i] + "40"
+                  );
+                }
+                chart.update();
               },
             },
             datalabels: {
@@ -3093,6 +3137,33 @@ async function loadAnalytics() {
     $("kpi-queries").textContent = "—";
     console.error("Analytics error:", ex.message);
   }
+}
+
+function _filterDailyByConnector(connKey, connLabel) {
+  if (!_chartDaily) return;
+  const titleEl = document.getElementById("chart-daily-title");
+  if (!connKey || !_statsData) {
+    // Réinitialiser au total
+    const labels = _statsData.queries_per_day.map(x => x.date.slice(5));
+    const data   = _statsData.queries_per_day.map(x => x.count);
+    _chartDaily.data.labels = labels;
+    _chartDaily.data.datasets[0].data = data;
+    _chartDaily.data.datasets[0].backgroundColor = "#818CF8";
+    _chartDaily.data.datasets[0].label = "Requêtes";
+    if (titleEl) titleEl.textContent = T[_lang]?.["stats.chart.daily"] || "Activité quotidienne";
+  } else {
+    // Données du connecteur sélectionné
+    const connDays = (_statsData.connector_daily || {})[connKey] || [];
+    // Aligner sur les mêmes dates que le graphe global
+    const allDates = _statsData.queries_per_day.map(x => x.date);
+    const dayMap   = Object.fromEntries(connDays.map(x => [x.date, x.count]));
+    _chartDaily.data.labels = allDates.map(d => d.slice(5));
+    _chartDaily.data.datasets[0].data = allDates.map(d => dayMap[d] || 0);
+    _chartDaily.data.datasets[0].backgroundColor = "#0ea5e9";
+    _chartDaily.data.datasets[0].label = connLabel || connKey;
+    if (titleEl) titleEl.textContent = connLabel || connKey;
+  }
+  _chartDaily.update();
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

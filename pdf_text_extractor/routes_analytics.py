@@ -121,6 +121,25 @@ def analytics_dashboard(
             connector_counts[str(src)] = connector_counts.get(str(src), 0) + 1
     top_connectors = sorted(connector_counts.items(), key=lambda x: -x[1])[:8]
 
+    # 3b. Activité quotidienne par connecteur
+    connector_daily: dict[str, dict[str, int]] = {}
+    for r in audit_rows:
+        meta = r.get("metadata") or {}
+        if isinstance(meta, str):
+            try:
+                meta = json.loads(meta)
+            except Exception:
+                meta = {}
+        srcs = meta.get("sources") or []
+        day = str(r.get("created_at"))[:10] if r.get("created_at") else ""
+        if not day:
+            continue
+        for src in (srcs if isinstance(srcs, list) else []):
+            s = str(src)
+            if s not in connector_daily:
+                connector_daily[s] = {}
+            connector_daily[s][day] = connector_daily[s].get(day, 0) + 1
+
     # 4. Satisfaction moyenne
     scores = [r["satisfaction_score"] for r in audit_rows if r.get("satisfaction_score")]
     avg_score = round(sum(scores) / len(scores), 2) if scores else None
@@ -170,6 +189,7 @@ def analytics_dashboard(
         "total_queries":    total_queries,
         "queries_per_day":  queries_per_day,
         "top_connectors":   [{"name": k, "count": v} for k, v in top_connectors],
+        "connector_daily":  {k: [{"date": d, "count": c} for d, c in sorted(v.items())] for k, v in connector_daily.items()},
         "avg_satisfaction": avg_score,
         "satisfaction_dist": score_dist,
         "rated_count":      rated_count,
