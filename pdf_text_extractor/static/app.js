@@ -223,6 +223,47 @@ const T = {
     'land.contact.f.ph.email':"marie@organisation.ca",'land.contact.f.ph.msg':"Décrivez brièvement votre besoin…",
     'land.contact.f.submit':"Demander une démonstration →",
     'land.contact.success.title':"Message envoyé !",'land.contact.success.sub':"Notre équipe vous contacte sous 24 heures.",
+    'app.tab.finance':'💰 Finance','app.tab.recherche':'🔍 Recherche interne',
+    'finance.title':'Finance & Transactions','finance.refresh':'↻ Actualiser','finance.add':'+ Ajouter',
+    'finance.all.months':'Tous les mois','finance.txns.header':'Transactions',
+    'finance.kpi.paid':'Total payé','finance.kpi.pending':'En attente','finance.kpi.txns':'Transactions',
+    'finance.kpi.anomaly':'Anomalies','finance.kpi.vendors':'Fournisseurs',
+    'finance.table.date':'Date','finance.table.vendor':'Fournisseur','finance.table.desc':'Description',
+    'finance.table.amount':'Montant','finance.table.category':'Catégorie','finance.table.status':'Statut',
+    'finance.no.txns':'Aucune transaction. Cliquez sur «+ Ajouter» pour en créer une.',
+    'finance.anomaly.label':'anomalie(s) détectée(s)','finance.anomaly.dup':'Doublon potentiel',
+    'finance.cat.software':'Logiciels','finance.cat.hardware':'Matériel','finance.cat.cloud':'Cloud',
+    'finance.cat.telecom':'Télécom','finance.cat.marketing':'Marketing','finance.cat.hr':'RH',
+    'finance.cat.legal':'Juridique','finance.cat.finance':'Finance','finance.cat.facilities':'Locaux',
+    'finance.cat.travel':'Voyage','finance.cat.consulting':'Conseil','finance.cat.training':'Formation',
+    'finance.cat.utilities':'Services','finance.cat.insurance':'Assurance','finance.cat.other':'Autre',
+    'finance.status.paid':'Payé','finance.status.pending':'En attente','finance.status.cancelled':'Annulé',
+    'ai.cat.suggest':'IA suggère :','ai.cat.confidence':'confiance','ai.cat.apply':'Appliquer cette catégorie ?','ai.cat.reason':'Raison',
+    'search.title':'Recherche interne',
+    'search.desc':"Interrogez vos documents internes en langage naturel. L'IA lit vos fichiers et génère une réponse avec les sources.",
+    'search.placeholder':'Ex : Quelle est notre politique de remboursement des frais ?',
+    'search.btn':'Rechercher','search.sources.title':'Sources consultées',
+    'search.empty.hint':'Aucun document trouvé. Téléversez des fichiers dans Documents pour activer la recherche.',
+    'search.dept.finance':'💰 Finance','search.dept.hr':'👥 RH','search.dept.legal':'⚖️ Juridique',
+    'search.dept.it':'🖥️ TI','search.dept.exec':'🏢 Direction',
+    'search.sug.fin.1':'Quelles factures sont en attente de paiement ?',
+    'search.sug.fin.2':'Résumé des dépenses du dernier trimestre',
+    'search.sug.fin.3':'Quels sont nos principaux fournisseurs ?',
+    'search.sug.hr.1':'Politique de vacances et congés',
+    'search.sug.hr.2':'Processus et critères de recrutement',
+    'search.sug.hr.3':'Formations obligatoires pour les employés',
+    'search.sug.leg.1':'Clauses de résiliation des contrats fournisseurs',
+    'search.sug.leg.2':'Obligations contractuelles en cours',
+    'search.sug.leg.3':'Délais de préavis dans nos contrats',
+    'search.sug.it.1':'Procédures de sécurité informatique',
+    'search.sug.it.2':'Liste des licences logicielles actives',
+    'search.sug.it.3':'Plan de reprise après sinistre',
+    'search.sug.dir.1':"Objectifs stratégiques de l'organisation",
+    'search.sug.dir.2':"Décisions du dernier conseil d'administration",
+    'search.sug.dir.3':'Indicateurs clés de performance',
+    'docs.extract.title':'🧠 Extraction IA — Champs structurés',
+    'docs.extract.desc':'Détecte automatiquement le type de document et en extrait les champs clés.',
+    'docs.extract.btn':'Extraire les champs','docs.extract.auto':'🔍 Détection automatique',
   },
   en: {
     'nav.features':'Features','nav.pricing':'Pricing','nav.connectors':'Connectors',
@@ -417,6 +458,47 @@ const T = {
     'land.contact.f.ph.email':"john@organization.ca",'land.contact.f.ph.msg':"Briefly describe your need…",
     'land.contact.f.submit':"Request a demonstration →",
     'land.contact.success.title':"Message sent!",'land.contact.success.sub':"Our team will contact you within 24 hours.",
+    'app.tab.finance':'💰 Finance','app.tab.recherche':'🔍 Internal Search',
+    'finance.title':'Finance & Transactions','finance.refresh':'↻ Refresh','finance.add':'+ Add',
+    'finance.all.months':'All months','finance.txns.header':'Transactions',
+    'finance.kpi.paid':'Total paid','finance.kpi.pending':'Pending','finance.kpi.txns':'Transactions',
+    'finance.kpi.anomaly':'Anomalies','finance.kpi.vendors':'Vendors',
+    'finance.table.date':'Date','finance.table.vendor':'Vendor','finance.table.desc':'Description',
+    'finance.table.amount':'Amount','finance.table.category':'Category','finance.table.status':'Status',
+    'finance.no.txns':'No transactions. Click «+ Add» to create one.',
+    'finance.anomaly.label':'anomaly(ies) detected','finance.anomaly.dup':'Potential duplicate',
+    'finance.cat.software':'Software','finance.cat.hardware':'Hardware','finance.cat.cloud':'Cloud',
+    'finance.cat.telecom':'Telecom','finance.cat.marketing':'Marketing','finance.cat.hr':'HR',
+    'finance.cat.legal':'Legal','finance.cat.finance':'Finance','finance.cat.facilities':'Facilities',
+    'finance.cat.travel':'Travel','finance.cat.consulting':'Consulting','finance.cat.training':'Training',
+    'finance.cat.utilities':'Utilities','finance.cat.insurance':'Insurance','finance.cat.other':'Other',
+    'finance.status.paid':'Paid','finance.status.pending':'Pending','finance.status.cancelled':'Cancelled',
+    'ai.cat.suggest':'AI suggests:','ai.cat.confidence':'confidence','ai.cat.apply':'Apply this category?','ai.cat.reason':'Reason',
+    'search.title':'Internal Search',
+    'search.desc':'Query your internal documents in natural language. The AI reads your files and generates an answer with sources.',
+    'search.placeholder':'E.g.: What is our expense reimbursement policy?',
+    'search.btn':'Search','search.sources.title':'Consulted sources',
+    'search.empty.hint':'No documents found. Upload files in the Documents tab to enable search.',
+    'search.dept.finance':'💰 Finance','search.dept.hr':'👥 HR','search.dept.legal':'⚖️ Legal',
+    'search.dept.it':'🖥️ IT','search.dept.exec':'🏢 Management',
+    'search.sug.fin.1':'Which invoices are pending payment?',
+    'search.sug.fin.2':"Summary of last quarter's expenses",
+    'search.sug.fin.3':'Who are our main vendors?',
+    'search.sug.hr.1':'Vacation and leave policy',
+    'search.sug.hr.2':'Recruitment process and criteria',
+    'search.sug.hr.3':'Mandatory employee training',
+    'search.sug.leg.1':'Vendor contract termination clauses',
+    'search.sug.leg.2':'Ongoing contractual obligations',
+    'search.sug.leg.3':'Notice periods in our contracts',
+    'search.sug.it.1':'IT security procedures',
+    'search.sug.it.2':'List of active software licenses',
+    'search.sug.it.3':'Disaster recovery plan',
+    'search.sug.dir.1':"Organization's strategic objectives",
+    'search.sug.dir.2':'Last board of directors decisions',
+    'search.sug.dir.3':'Key performance indicators',
+    'docs.extract.title':'🧠 AI Extraction — Structured Fields',
+    'docs.extract.desc':'Automatically detects the document type and extracts the key fields.',
+    'docs.extract.btn':'Extract Fields','docs.extract.auto':'🔍 Auto-detect',
   },
   es: {
     'nav.features':'Funcionalidades','nav.pricing':'Precios','nav.connectors':'Conectores',
@@ -608,6 +690,47 @@ const T = {
     'land.contact.f.ph.email':"maria@organizacion.ca",'land.contact.f.ph.msg':"Describe brevemente tu necesidad…",
     'land.contact.f.submit':"Solicitar una demostración →",
     'land.contact.success.title':"¡Mensaje enviado!",'land.contact.success.sub':"Nuestro equipo te contactará en 24 horas.",
+    'app.tab.finance':'💰 Finanzas','app.tab.recherche':'🔍 Búsqueda interna',
+    'finance.title':'Finanzas & Transacciones','finance.refresh':'↻ Actualizar','finance.add':'+ Agregar',
+    'finance.all.months':'Todos los meses','finance.txns.header':'Transacciones',
+    'finance.kpi.paid':'Total pagado','finance.kpi.pending':'Pendiente','finance.kpi.txns':'Transacciones',
+    'finance.kpi.anomaly':'Anomalías','finance.kpi.vendors':'Proveedores',
+    'finance.table.date':'Fecha','finance.table.vendor':'Proveedor','finance.table.desc':'Descripción',
+    'finance.table.amount':'Importe','finance.table.category':'Categoría','finance.table.status':'Estado',
+    'finance.no.txns':'Sin transacciones. Haz clic en «+ Agregar» para crear una.',
+    'finance.anomaly.label':'anomalía(s) detectada(s)','finance.anomaly.dup':'Posible duplicado',
+    'finance.cat.software':'Software','finance.cat.hardware':'Hardware','finance.cat.cloud':'Cloud',
+    'finance.cat.telecom':'Telecom','finance.cat.marketing':'Marketing','finance.cat.hr':'RRHH',
+    'finance.cat.legal':'Legal','finance.cat.finance':'Finanzas','finance.cat.facilities':'Instalaciones',
+    'finance.cat.travel':'Viajes','finance.cat.consulting':'Consultoría','finance.cat.training':'Formación',
+    'finance.cat.utilities':'Servicios','finance.cat.insurance':'Seguros','finance.cat.other':'Otro',
+    'finance.status.paid':'Pagado','finance.status.pending':'Pendiente','finance.status.cancelled':'Cancelado',
+    'ai.cat.suggest':'IA sugiere:','ai.cat.confidence':'confianza','ai.cat.apply':'¿Aplicar esta categoría?','ai.cat.reason':'Razón',
+    'search.title':'Búsqueda interna',
+    'search.desc':'Consulta tus documentos internos en lenguaje natural. La IA lee tus archivos y genera una respuesta con fuentes.',
+    'search.placeholder':'Ej.: ¿Cuál es nuestra política de reembolso de gastos?',
+    'search.btn':'Buscar','search.sources.title':'Fuentes consultadas',
+    'search.empty.hint':'Sin documentos. Sube archivos en la pestaña Documentos para activar la búsqueda.',
+    'search.dept.finance':'💰 Finanzas','search.dept.hr':'👥 RRHH','search.dept.legal':'⚖️ Legal',
+    'search.dept.it':'🖥️ TI','search.dept.exec':'🏢 Dirección',
+    'search.sug.fin.1':'¿Qué facturas están pendientes de pago?',
+    'search.sug.fin.2':'Resumen de gastos del último trimestre',
+    'search.sug.fin.3':'¿Cuáles son nuestros principales proveedores?',
+    'search.sug.hr.1':'Política de vacaciones y permisos',
+    'search.sug.hr.2':'Proceso y criterios de selección',
+    'search.sug.hr.3':'Formación obligatoria para empleados',
+    'search.sug.leg.1':'Cláusulas de rescisión de contratos con proveedores',
+    'search.sug.leg.2':'Obligaciones contractuales vigentes',
+    'search.sug.leg.3':'Plazos de preaviso en nuestros contratos',
+    'search.sug.it.1':'Procedimientos de seguridad informática',
+    'search.sug.it.2':'Lista de licencias de software activas',
+    'search.sug.it.3':'Plan de recuperación ante desastres',
+    'search.sug.dir.1':'Objetivos estratégicos de la organización',
+    'search.sug.dir.2':'Decisiones del último consejo de administración',
+    'search.sug.dir.3':'Indicadores clave de rendimiento',
+    'docs.extract.title':'🧠 Extracción IA — Campos estructurados',
+    'docs.extract.desc':'Detecta automáticamente el tipo de documento y extrae los campos clave.',
+    'docs.extract.btn':'Extraer campos','docs.extract.auto':'🔍 Detección automática',
   },
 };
 
@@ -645,6 +768,29 @@ function setLang(l) {
     const p = chip.dataset[l === "fr" ? "promptFr" : "promptEn"];
     if (p) chip.dataset.prompt = p;
   });
+  renderSearchSuggestions();
+}
+
+function renderSearchSuggestions() {
+  const el = document.getElementById("search-suggestions");
+  if (!el) return;
+  const t = T[_lang] || T.fr;
+  const DEPTS = [
+    { key:"finance", color:"#0369a1", bg:"#e0f2fe", sugs:["fin.1","fin.2","fin.3"] },
+    { key:"hr",      color:"#7c3aed", bg:"#ede9fe", sugs:["hr.1","hr.2","hr.3"]  },
+    { key:"legal",   color:"#b45309", bg:"#fef3c7", sugs:["leg.1","leg.2","leg.3"] },
+    { key:"it",      color:"#0f766e", bg:"#ccfbf1", sugs:["it.1","it.2","it.3"]  },
+    { key:"exec",    color:"#be185d", bg:"#fce7f3", sugs:["dir.1","dir.2","dir.3"] },
+  ];
+  el.innerHTML = DEPTS.map(d => `
+    <div style="display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap">
+      <span style="font-size:.72rem;font-weight:700;color:${d.color};background:${d.bg};border-radius:20px;padding:3px 10px;white-space:nowrap;margin-top:2px">
+        ${t[`search.dept.${d.key}`] || d.key}
+      </span>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        ${d.sugs.map(s => `<button class="btn btn-outline btn-sm" onclick="setSearchQuery(this)">${t[`search.sug.${s}`] || s}</button>`).join("")}
+      </div>
+    </div>`).join("");
 }
 
 function toggleLang() {
@@ -9235,28 +9381,30 @@ async function loadFinance() {
     // KPIs
     const kpiEl = $("finance-kpis");
     if (kpiEl) {
-      const fmt = v => Number(v || 0).toLocaleString("fr-CA", { style:"currency", currency:"CAD", maximumFractionDigits:0 });
+      const tr = T[_lang] || T.fr;
+      const fmt = v => Number(v || 0).toLocaleString(_lang === "fr" ? "fr-CA" : "en-CA", { style:"currency", currency:"CAD", maximumFractionDigits:0 });
       kpiEl.innerHTML = `
-        <div class="exec-kpi-card"><div class="exec-kpi-val">${fmt(summary.total_paid)}</div><div class="exec-kpi-lbl">Total payé</div></div>
-        <div class="exec-kpi-card"><div class="exec-kpi-val">${fmt(summary.total_pending)}</div><div class="exec-kpi-lbl">En attente</div></div>
-        <div class="exec-kpi-card"><div class="exec-kpi-val">${summary.count_paid || 0}</div><div class="exec-kpi-lbl">Transactions</div></div>
+        <div class="exec-kpi-card"><div class="exec-kpi-val">${fmt(summary.total_paid)}</div><div class="exec-kpi-lbl">${tr['finance.kpi.paid']}</div></div>
+        <div class="exec-kpi-card"><div class="exec-kpi-val">${fmt(summary.total_pending)}</div><div class="exec-kpi-lbl">${tr['finance.kpi.pending']}</div></div>
+        <div class="exec-kpi-card"><div class="exec-kpi-val">${summary.count_paid || 0}</div><div class="exec-kpi-lbl">${tr['finance.kpi.txns']}</div></div>
         <div class="exec-kpi-card" style="${(summary.flagged_count || 0) > 0 ? 'border-color:#fca5a5;background:#fff1f2' : ''}">
           <div class="exec-kpi-val" style="${(summary.flagged_count || 0) > 0 ? 'color:#dc2626' : ''}">${summary.flagged_count || 0}</div>
-          <div class="exec-kpi-lbl">Anomalies</div>
+          <div class="exec-kpi-lbl">${tr['finance.kpi.anomaly']}</div>
         </div>
-        <div class="exec-kpi-card"><div class="exec-kpi-val">${summary.vendor_count || 0}</div><div class="exec-kpi-lbl">Fournisseurs</div></div>
+        <div class="exec-kpi-card"><div class="exec-kpi-val">${summary.vendor_count || 0}</div><div class="exec-kpi-lbl">${tr['finance.kpi.vendors']}</div></div>
       `;
     }
 
     // Anomalies
     const anomEl = $("finance-anomalies");
     if (anomEl) {
+      const tr = T[_lang] || T.fr;
       const flagged = (txns || []).filter(t => t.is_flagged);
       anomEl.innerHTML = flagged.length ? `
         <div style="background:#fff7ed;border:1px solid #fdba74;border-radius:10px;padding:12px 16px;margin-bottom:16px">
-          <strong style="color:#c2410c">⚠️ ${flagged.length} anomalie(s) détectée(s)</strong>
+          <strong style="color:#c2410c">⚠️ ${flagged.length} ${tr['finance.anomaly.label']}</strong>
           <ul style="margin:8px 0 0;padding-left:18px;font-size:.82rem;color:#7c2d12">
-            ${flagged.map(t => `<li><strong>${esc(t.vendor_name || '—')}</strong> — ${esc(t.flag_reason || 'Doublon potentiel')} (${Number(t.amount).toLocaleString("fr-CA", {style:"currency",currency:"CAD"})})</li>`).join("")}
+            ${flagged.map(t => `<li><strong>${esc(t.vendor_name || '—')}</strong> — ${esc(t.flag_reason || tr['finance.anomaly.dup'])} (${Number(t.amount).toLocaleString(_lang === "fr" ? "fr-CA" : "en-CA", {style:"currency",currency:"CAD"})})</li>`).join("")}
           </ul>
         </div>` : "";
     }
@@ -9264,21 +9412,22 @@ async function loadFinance() {
     // Table transactions
     const tbl = $("finance-table");
     if (tbl) {
+      const tr = T[_lang] || T.fr;
       if (!txns || !txns.length) {
-        tbl.innerHTML = "<p class='muted' style='padding:20px'>Aucune transaction. Cliquez sur «+ Ajouter» pour en créer une.</p>";
+        tbl.innerHTML = `<p class='muted' style='padding:20px'>${tr['finance.no.txns']}</p>`;
       } else {
-        const CATEGORY_FR = { software:"Logiciels", hardware:"Matériel", cloud:"Cloud", telecom:"Télécom", marketing:"Marketing", hr:"RH", legal:"Juridique", finance:"Finance", facilities:"Locaux", travel:"Voyage", consulting:"Conseil", training:"Formation", utilities:"Services", insurance:"Assurance", other:"Autre" };
-        const STATUS_BADGE = { paid:"<span class='badge bl'>Payé</span>", pending:"<span class='badge' style='background:#fef3c7;color:#92400e;border:1px solid #fde68a'>En attente</span>", cancelled:"<span class='badge bs'>Annulé</span>" };
+        const CAT = { software:tr['finance.cat.software'], hardware:tr['finance.cat.hardware'], cloud:tr['finance.cat.cloud'], telecom:tr['finance.cat.telecom'], marketing:tr['finance.cat.marketing'], hr:tr['finance.cat.hr'], legal:tr['finance.cat.legal'], finance:tr['finance.cat.finance'], facilities:tr['finance.cat.facilities'], travel:tr['finance.cat.travel'], consulting:tr['finance.cat.consulting'], training:tr['finance.cat.training'], utilities:tr['finance.cat.utilities'], insurance:tr['finance.cat.insurance'], other:tr['finance.cat.other'] };
+        const SBADGE = { paid:`<span class='badge bl'>${tr['finance.status.paid']}</span>`, pending:`<span class='badge' style='background:#fef3c7;color:#92400e;border:1px solid #fde68a'>${tr['finance.status.pending']}</span>`, cancelled:`<span class='badge bs'>${tr['finance.status.cancelled']}</span>` };
         tbl.innerHTML = `<table class="data-table"><thead><tr>
-          <th>Date</th><th>Fournisseur</th><th>Description</th><th>Montant</th><th>Catégorie</th><th>Statut</th><th>IA</th>
+          <th>${tr['finance.table.date']}</th><th>${tr['finance.table.vendor']}</th><th>${tr['finance.table.desc']}</th><th>${tr['finance.table.amount']}</th><th>${tr['finance.table.category']}</th><th>${tr['finance.table.status']}</th><th>IA</th>
         </tr></thead><tbody>
           ${txns.map(t => `<tr ${t.is_flagged ? 'style="background:#fff7ed"' : ''}>
             <td>${(t.transaction_date||"").slice(0,10)}</td>
             <td>${esc(t.vendor_name || "—")}</td>
             <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(t.description||"")}">${esc(t.description||"—")}</td>
-            <td style="font-weight:700;color:${t.is_flagged ? '#dc2626':'#1e293b'}">${Number(t.amount).toLocaleString("fr-CA",{style:"currency",currency:"CAD"})}</td>
-            <td><span class="badge bs">${CATEGORY_FR[t.category] || t.category || "—"}</span></td>
-            <td>${STATUS_BADGE[t.status] || t.status}</td>
+            <td style="font-weight:700;color:${t.is_flagged ? '#dc2626':'#1e293b'}">${Number(t.amount).toLocaleString(_lang === "fr" ? "fr-CA" : "en-CA",{style:"currency",currency:"CAD"})}</td>
+            <td><span class="badge bs">${CAT[t.category] || t.category || "—"}</span></td>
+            <td>${SBADGE[t.status] || t.status}</td>
             <td><button class="btn btn-outline btn-sm" onclick="aiCategorizeTransaction('${t.id}','${esc(t.description||"")}',${t.amount},'${esc(t.vendor_name||"")}')" title="Catégoriser avec l'IA">🤖</button></td>
           </tr>`).join("")}
         </tbody></table>`;
@@ -9294,9 +9443,10 @@ async function aiCategorizeTransaction(txnId, description, amount, vendorName) {
   try {
     const res = await apiCall("/api/transactions/categorize-ai", "POST", { description, amount, vendor_name: vendorName });
     if (res.success) {
-      const CATEGORY_FR = { software:"Logiciels", hardware:"Matériel", cloud:"Cloud", telecom:"Télécom", marketing:"Marketing", hr:"RH", legal:"Juridique", finance:"Finance", facilities:"Locaux", travel:"Voyage", consulting:"Conseil", training:"Formation", utilities:"Services", insurance:"Assurance", other:"Autre" };
+      const tr = T[_lang] || T.fr;
+      const CAT = { software:tr['finance.cat.software'], hardware:tr['finance.cat.hardware'], cloud:tr['finance.cat.cloud'], telecom:tr['finance.cat.telecom'], marketing:tr['finance.cat.marketing'], hr:tr['finance.cat.hr'], legal:tr['finance.cat.legal'], finance:tr['finance.cat.finance'], facilities:tr['finance.cat.facilities'], travel:tr['finance.cat.travel'], consulting:tr['finance.cat.consulting'], training:tr['finance.cat.training'], utilities:tr['finance.cat.utilities'], insurance:tr['finance.cat.insurance'], other:tr['finance.cat.other'] };
       const conf = Math.round((res.confidence || 0) * 100);
-      if (confirm(`IA suggère : ${CATEGORY_FR[res.category] || res.category} (confiance ${conf}%)\nRaison : ${res.reason || "—"}\n\nAppliquer cette catégorie ?`)) {
+      if (confirm(`${tr['ai.cat.suggest']} ${CAT[res.category] || res.category} (${tr['ai.cat.confidence']} ${conf}%)\n${tr['ai.cat.reason']} : ${res.reason || "—"}\n\n${tr['ai.cat.apply']}`)) {
         await apiCall(`/api/transactions/${txnId}`, "PATCH", { category: res.category });
         loadFinance();
       }
@@ -9315,7 +9465,7 @@ function openAddTransactionModal() {
 // ═══════════════════════════════════════════════════════════════════════════
 
 async function loadRecherche() {
-  // Charge la liste des documents pour informer l'utilisateur
+  renderSearchSuggestions();
   try {
     const { documents } = await apiCall("/api/documents");
     const emptyEl = $("search-empty");
