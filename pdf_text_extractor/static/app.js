@@ -225,7 +225,7 @@ const T = {
     'land.contact.success.title':"Message envoyé !",'land.contact.success.sub':"Notre équipe vous contacte sous 24 heures.",
     'app.tab.finance':'💰 Finance','app.tab.recherche':'🔍 Recherche interne',
     'finance.title':'Finance & Transactions','finance.refresh':'↻ Actualiser','finance.add':'+ Ajouter',
-    'finance.all.months':'Tous les mois','finance.txns.header':'Transactions',
+    'finance.all.months':'Tous les mois','finance.all.depts':'Tous les départements','finance.txns.header':'Transactions',
     'finance.kpi.paid':'Total payé','finance.kpi.pending':'En attente','finance.kpi.txns':'Transactions',
     'finance.kpi.anomaly':'Anomalies','finance.kpi.vendors':'Fournisseurs',
     'finance.table.date':'Date','finance.table.vendor':'Fournisseur','finance.table.desc':'Description',
@@ -460,7 +460,7 @@ const T = {
     'land.contact.success.title':"Message sent!",'land.contact.success.sub':"Our team will contact you within 24 hours.",
     'app.tab.finance':'💰 Finance','app.tab.recherche':'🔍 Internal Search',
     'finance.title':'Finance & Transactions','finance.refresh':'↻ Refresh','finance.add':'+ Add',
-    'finance.all.months':'All months','finance.txns.header':'Transactions',
+    'finance.all.months':'All months','finance.all.depts':'All departments','finance.txns.header':'Transactions',
     'finance.kpi.paid':'Total paid','finance.kpi.pending':'Pending','finance.kpi.txns':'Transactions',
     'finance.kpi.anomaly':'Anomalies','finance.kpi.vendors':'Vendors',
     'finance.table.date':'Date','finance.table.vendor':'Vendor','finance.table.desc':'Description',
@@ -692,7 +692,7 @@ const T = {
     'land.contact.success.title':"¡Mensaje enviado!",'land.contact.success.sub':"Nuestro equipo te contactará en 24 horas.",
     'app.tab.finance':'💰 Finanzas','app.tab.recherche':'🔍 Búsqueda interna',
     'finance.title':'Finanzas & Transacciones','finance.refresh':'↻ Actualizar','finance.add':'+ Agregar',
-    'finance.all.months':'Todos los meses','finance.txns.header':'Transacciones',
+    'finance.all.months':'Todos los meses','finance.all.depts':'Todos los departamentos','finance.txns.header':'Transacciones',
     'finance.kpi.paid':'Total pagado','finance.kpi.pending':'Pendiente','finance.kpi.txns':'Transacciones',
     'finance.kpi.anomaly':'Anomalías','finance.kpi.vendors':'Proveedores',
     'finance.table.date':'Fecha','finance.table.vendor':'Proveedor','finance.table.desc':'Descripción',
@@ -9366,13 +9366,27 @@ async function loadFinance() {
       ySel.appendChild(o);
     }
   }
-  const year  = $("finance-year")?.value  || "";
-  const month = $("finance-month")?.value || "";
+
+  // Charge les départements dans le filtre (une seule fois)
+  const dSel = $("finance-dept");
+  if (dSel && dSel.options.length <= 1) {
+    try {
+      const depts = await apiCall("/api/departments");
+      const tr = T[_lang] || T.fr;
+      dSel.innerHTML = `<option value="">${tr['finance.all.depts'] || 'Tous les départements'}</option>` +
+        (depts || []).map(d => `<option value="${d.id}">${esc(d.name)}</option>`).join("");
+    } catch(_) {}
+  }
+
+  const year   = $("finance-year")?.value  || "";
+  const month  = $("finance-month")?.value || "";
+  const deptId = $("finance-dept")?.value  || "";
 
   try {
     const params = new URLSearchParams();
-    if (year)  params.set("year",  year);
-    if (month) params.set("month", month);
+    if (year)   params.set("year",    year);
+    if (month)  params.set("month",   month);
+    if (deptId) params.set("dept_id", deptId);
 
     const [summary, txns] = await Promise.all([
       apiCall(`/api/transactions/summary?${params}`),

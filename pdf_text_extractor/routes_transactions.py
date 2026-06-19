@@ -105,12 +105,14 @@ def list_transactions(
 
 @router.get("/summary")
 def transactions_summary(
-    year: int | None = Query(None),
+    year:    int | None = Query(None),
+    dept_id: str | None = Query(None),
     user: CurrentUser = Depends(require_min_role("manager")),
 ):
     """KPIs financiers : total réel, top fournisseurs, burn rate mensuel, anomalies."""
     org = user.organization_id
-    y_filter = f"AND EXTRACT(YEAR FROM transaction_date) = {year}" if year else ""
+    y_filter   = f"AND EXTRACT(YEAR FROM transaction_date) = {year}" if year else ""
+    d_filter   = f"AND department_id = '{dept_id}'"                  if dept_id else ""
 
     with get_db() as cur:
         # Totaux globaux
@@ -123,7 +125,7 @@ def transactions_summary(
               COUNT(*) FILTER (WHERE is_flagged = true)                   AS flagged_count,
               COUNT(DISTINCT vendor_id)                                   AS vendor_count
             FROM public.financial_transactions
-            WHERE organization_id = %s {y_filter}
+            WHERE organization_id = %s {y_filter} {d_filter}
             """,
             (org,),
         )

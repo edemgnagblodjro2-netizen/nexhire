@@ -1478,6 +1478,9 @@
       <div class="section-header">
         <h2 data-i18n="finance.title">💰 Finance &amp; Transactions</h2>
         <div class="controls-inline">
+          <select id="finance-dept" onchange="loadFinance()">
+            <option value="" data-i18n="finance.all.depts">Tous les départements</option>
+          </select>
           <select id="finance-year" onchange="loadFinance()"></select>
           <select id="finance-month" onchange="loadFinance()">
             <option value="" data-i18n="finance.all.months">Tous les mois</option>
