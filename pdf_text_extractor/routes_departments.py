@@ -462,7 +462,9 @@ def dept_dashboard(
                     cross = _cross_org_level(user.id, org_id)
                     access_level = cross if cross is not None else 6
             kpi_keys = _visible_kpis(cfg["kpis"], access_level)
-            kpis = _build_kpis(org_id, dept_id, kpi_keys)
+            # Direction voit toutes les données org (pas filtré par son dept_id)
+            kpi_scope = None if resolved_type == "direction" else dept_id
+            kpis = _build_kpis(org_id, kpi_scope, kpi_keys)
             return {
                 "dept_id":        dept_id,
                 "dept_type":      resolved_type,
