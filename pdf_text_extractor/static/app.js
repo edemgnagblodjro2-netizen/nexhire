@@ -1,4 +1,4 @@
-/* ═══════════════════════════════════════════════════════════════════════════
+﻿/* ═══════════════════════════════════════════════════════════════════════════
    NexHire Enterprise Assistant — SPA
    ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -3271,7 +3271,7 @@ async function loadAudit() {
     const logs = resp.logs || [];
     if (!logs.length) { wrap.innerHTML = "<p class='muted' style='padding:20px'>Aucun événement enregistré.</p>"; return; }
     const table = document.createElement("table");
-    table.className = "data-table";
+    table.className = "";
     table.innerHTML = `
       <thead><tr><th>Date</th><th>Action</th><th>Utilisateur</th><th>Connecteur</th><th>Statut</th><th>IP</th><th></th></tr></thead>
       <tbody>${logs.map((l,i) => `<tr style="cursor:pointer" onclick="openAuditDetail(${i})" title="Voir les détails">
@@ -4783,7 +4783,7 @@ async function loadBudget() {
 
     if (!entries.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucune donnée budgétaire.</p>`; }
     else {
-      wrap.innerHTML = `<table class="data-table"><thead><tr><th>Catégorie</th><th>Libellé</th><th>Période</th><th>Alloué</th><th>Réel</th><th>Écart ($)</th><th>Écart (%)</th><th>Département</th><th></th></tr></thead><tbody>` +
+      wrap.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Catégorie</th><th>Libellé</th><th>Période</th><th>Alloué</th><th>Réel</th><th>Écart ($)</th><th>Écart (%)</th><th>Département</th><th></th></tr></thead><tbody>` +
         entries.map(e => {
           const period = e.month ? `${e.year}-${String(e.month).padStart(2,"0")}` : String(e.year);
           const var_ = (e.allocated||0) - (e.actual||0);
@@ -4801,7 +4801,7 @@ async function loadBudget() {
             <td>${esc(deptName)}</td>
             <td><button class="btn-icon" onclick="editBudget('${e.id}')">✎</button> <button class="btn-icon btn-deactivate" onclick="deleteBudget('${e.id}')">✕</button></td>
           </tr>`;
-        }).join("") + `</tbody></table>`;
+        }).join("") + `</tbody></table></div>`;
     }
 
     // Summary bar
@@ -4883,8 +4883,8 @@ async function loadLicenses() {
     const allRows = [...licRows, ...contractLicRows];
     if (!allRows.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucune licence enregistrée.</p>`; return; }
 
-    wrap.innerHTML = `<table class="data-table"><thead><tr><th>Produit</th><th>Fournisseur</th><th>Type</th><th>Qté / Assign.</th><th>Coût/unité</th><th>Expiration</th><th>Renouvellement</th><th>Statut</th><th>Dép.</th><th></th></tr></thead><tbody>` +
-      allRows.join("") + `</tbody></table>` +
+    wrap.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Produit</th><th>Fournisseur</th><th>Type</th><th>Qté / Assign.</th><th>Coût/unité</th><th>Expiration</th><th>Renouvellement</th><th>Statut</th><th>Dép.</th><th></th></tr></thead><tbody>` +
+      allRows.join("") + `</tbody></table></div>` +
       (licContracts.length ? `<p style="margin-top:8px;font-size:.78rem;color:var(--slate)">🔵 ${licContracts.length} licence${licContracts.length>1?"s":""} synchronisée${licContracts.length>1?"s":""} depuis les contrats actifs</p>` : "");
   } catch (e) { wrap.innerHTML = `<p class="muted" style="padding:20px">${e.message||"Erreur"}</p>`; }
 }
@@ -4902,7 +4902,7 @@ async function loadServers() {
       cable_network:"🌐 Câble réseau", cable_hdmi:"📺 HDMI", cable_vga:"📺 VGA", cable_displayport:"📺 DisplayPort",
       usb_key:"💾 Clé USB", usb_adapter:"🔌 Adapt. USB", charger:"🔋 Chargeur", ups:"⚡ UPS", other:"📦 Autre" };
     if (!srvs.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucun équipement enregistré.</p>`; return; }
-    wrap.innerHTML = `<table class="data-table"><thead><tr><th>Type</th><th>Nom / Hôte</th><th>IP / N° série</th><th>Env.</th><th>OS / Spec</th><th>Emplacement</th><th>Statut</th><th>Coût/mois</th><th>Dép.</th><th></th></tr></thead><tbody>` +
+    wrap.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Type</th><th>Nom / Hôte</th><th>IP / N° série</th><th>Env.</th><th>OS / Spec</th><th>Emplacement</th><th>Statut</th><th>Coût/mois</th><th>Dép.</th><th></th></tr></thead><tbody>` +
       srvs.map(s => {
         const stMap = { active:"badge-active", idle:"badge-idle", to_decommission:"badge-decom", decommissioned:"badge-expired" };
         const stLbl = { active:"Actif", idle:"Inactif", to_decommission:"À décom.", decommissioned:"Décom." };
@@ -4921,7 +4921,7 @@ async function loadServers() {
           <td>${esc(deptName)}</td>
           <td><button class="btn-icon" onclick="editServer('${s.id}')">✎</button> <button class="btn-icon btn-deactivate" onclick="deleteServer('${s.id}')">✕</button></td>
         </tr>`;
-      }).join("") + `</tbody></table>`;
+      }).join("") + `</tbody></table></div>`;
   } catch (e) { wrap.innerHTML = `<p class="muted" style="padding:20px">${e.message||"Erreur"}</p>`; }
 }
 
@@ -4981,8 +4981,8 @@ async function loadApps() {
     const allRows = [...appRows, ...contractRows];
     if (!allRows.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucune application enregistrée.</p>`; return; }
 
-    wrap.innerHTML = `<table class="data-table"><thead><tr><th>Nom</th><th>Fournisseur</th><th>Catégorie</th><th>Utilisateurs</th><th>Dernier usage / Renouvellement</th><th>Coût/mois</th><th>Statut</th><th>Dép.</th><th></th></tr></thead><tbody>` +
-      allRows.join("") + `</tbody></table>` +
+    wrap.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Nom</th><th>Fournisseur</th><th>Catégorie</th><th>Utilisateurs</th><th>Dernier usage / Renouvellement</th><th>Coût/mois</th><th>Statut</th><th>Dép.</th><th></th></tr></thead><tbody>` +
+      allRows.join("") + `</tbody></table></div>` +
       (itContracts.length ? `<p style="margin-top:8px;font-size:.78rem;color:var(--slate)">🔵 ${itContracts.length} application${itContracts.length>1?"s":""} synchronisée${itContracts.length>1?"s":""} depuis les contrats actifs</p>` : "");
   } catch (e) { wrap.innerHTML = `<p class="muted" style="padding:20px">${e.message||"Erreur"}</p>`; }
 }
@@ -5102,7 +5102,7 @@ async function loadTransactions() {
     const statusBadge = { paid:"badge-active", pending:"badge-unused", cancelled:"badge-expired" };
     const statusLabel = { paid:"Payé", pending:"En attente", cancelled:"Annulé" };
 
-    if (wrap) wrap.innerHTML = `<table class="data-table"><thead><tr>
+    if (wrap) wrap.innerHTML = `<div class="table-wrap"><table><thead><tr>
       <th>Date</th><th>Fournisseur</th><th>Description</th><th>Catégorie</th>
       <th>Montant</th><th>Statut</th><th>Dép.</th><th></th>
     </tr></thead><tbody>` +
@@ -5115,7 +5115,7 @@ async function loadTransactions() {
         <td><span class="badge ${statusBadge[t.status]||"badge-active"}">${statusLabel[t.status]||t.status}</span></td>
         <td>${esc(t.department_name || "—")}</td>
         <td><button class="btn-icon" onclick="editTxn('${t.id}')">✎</button> <button class="btn-icon btn-deactivate" onclick="deleteTxn('${t.id}')">✕</button></td>
-      </tr>`).join("") + `</tbody></table>`;
+      </tr>`).join("") + `</tbody></table></div>`;
 
   } catch (e) {
     if (wrap) wrap.innerHTML = `<p class="muted" style="padding:20px">${e.message || "Erreur"}</p>`;
@@ -6310,8 +6310,8 @@ async function _loadM365Intelligence() {
           </div>
         </div>
         ${m365Users.length ? `
-        <div style="overflow-x:auto;margin-bottom:16px">
-          <table class="data-table" style="font-size:.82rem">
+        <div class="table-wrap" style="margin-bottom:16px">
+          <table style="font-size:.82rem">
             <thead><tr>
               <th>Utilisateur</th>
               <th>MFA</th>
@@ -6558,7 +6558,7 @@ async function _loadUnusedLicenses() {
   try {
     const lics = await apiCall("/api/optimization/unused-licenses");
     if (!lics.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucune licence sous-utilisée détectée. Excellent !</p>`; return; }
-    wrap.innerHTML = `<table class="data-table"><thead><tr><th>Produit</th><th>Fournisseur</th><th>Qté totale</th><th>Assignées</th><th>Utilisation</th><th>Coût/unité</th><th>Économies/an</th><th>Confiance</th><th>Département</th></tr></thead><tbody>` +
+    wrap.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Produit</th><th>Fournisseur</th><th>Qté totale</th><th>Assignées</th><th>Utilisation</th><th>Coût/unité</th><th>Économies/an</th><th>Confiance</th><th>Département</th></tr></thead><tbody>` +
       lics.map(l => {
         const pct = l.usage_pct;
         const color = pct < 30 ? "#dc2626" : pct < 60 ? "#d97706" : "#2563eb";
@@ -6573,7 +6573,7 @@ async function _loadUnusedLicenses() {
           <td><span class="badge ${l.confidence>=90?"badge-active":l.confidence>=75?"badge-expiring":"badge-idle"}">${l.confidence}%</span></td>
           <td>${esc(l.department||"—")}</td>
         </tr>`;
-      }).join("") + `</tbody></table>`;
+      }).join("") + `</tbody></table></div>`;
   } catch (e) { wrap.innerHTML = `<p class="muted">${e.message}</p>`; }
 }
 
@@ -6599,20 +6599,20 @@ async function _loadBudgetByDept() {
 
     let html = `
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px">
-        <div style="background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:12px;padding:16px;text-align:center">
-          <div style="font-size:1.4rem;font-weight:800;color:#16a34a">${_fmt(totAlloc)} $</div>
-          <div style="font-size:.78rem;color:#475569;font-weight:600;margin-top:4px">Budget total alloué</div>
+        <div style="background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:16px;padding:18px;text-align:center">
+          <div style="font-size:1.5rem;font-weight:800;color:#16a34a;letter-spacing:-.02em">${_fmt(totAlloc)} $</div>
+          <div style="font-size:.71rem;color:#64748b;font-weight:700;margin-top:6px;text-transform:uppercase;letter-spacing:.06em">Budget total alloué</div>
         </div>
-        <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:12px;padding:16px;text-align:center">
-          <div style="font-size:1.4rem;font-weight:800;color:#1e293b">${_fmt(totActual)} $</div>
-          <div style="font-size:.78rem;color:#475569;font-weight:600;margin-top:4px">Dépenses réelles</div>
+        <div style="background:#ffffff;border:1.5px solid #e8edf2;border-radius:16px;padding:18px;text-align:center;box-shadow:0 2px 8px rgba(15,23,42,.05)">
+          <div style="font-size:1.5rem;font-weight:800;color:#0f172a;letter-spacing:-.02em">${_fmt(totActual)} $</div>
+          <div style="font-size:.71rem;color:#64748b;font-weight:700;margin-top:6px;text-transform:uppercase;letter-spacing:.06em">Dépenses réelles</div>
         </div>
-        <div style="background:${totPct >= 100 ? "#fef2f2" : "#fffbeb"};border:1.5px solid ${totPct >= 100 ? "#fecaca" : "#fde68a"};border-radius:12px;padding:16px;text-align:center">
-          <div style="font-size:1.4rem;font-weight:800;color:${totCol}">${totPct}%</div>
-          <div style="font-size:.78rem;color:#475569;font-weight:600;margin-top:4px">Consommation globale</div>
+        <div style="background:${totPct >= 100 ? "#fef2f2" : "#fffbeb"};border:1.5px solid ${totPct >= 100 ? "#fecaca" : "#fde68a"};border-radius:16px;padding:18px;text-align:center">
+          <div style="font-size:1.5rem;font-weight:800;color:${totCol};letter-spacing:-.02em">${totPct}%</div>
+          <div style="font-size:.71rem;color:#64748b;font-weight:700;margin-top:6px;text-transform:uppercase;letter-spacing:.06em">Consommation globale</div>
         </div>
       </div>
-      <table class="data-table"><thead><tr>
+      <div class="table-wrap"><table><thead><tr>
         <th>Département</th><th>Alloué</th><th>Dépensé</th><th>Reste / Dépassement</th><th>Utilisation</th><th>Statut</th>
       </tr></thead><tbody>`;
 
@@ -6642,7 +6642,7 @@ async function _loadBudgetByDept() {
         <td><span class="badge ${badge}">${lbl}</span></td>
       </tr>`;
     }
-    html += `</tbody></table>`;
+    html += `</tbody></table></div>`;
     wrap.innerHTML = html;
   } catch (e) {
     wrap.innerHTML = `<p class="muted" style="padding:20px">${esc(e.message)}</p>`;
@@ -6848,7 +6848,7 @@ async function loadContracts() {
     let contracts = await apiCall(url);
     if (cat) contracts = contracts.filter(c => c.category === cat);
     if (!contracts.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucun contrat enregistré.</p>`; return; }
-    wrap.innerHTML = `<table class="data-table"><thead><tr><th>Fournisseur</th><th>Catégorie</th><th>Valeur annuelle</th><th>Renouvellement</th><th>Potentiel négo.</th><th>Économies</th><th>Statut</th><th>Dép.</th><th></th></tr></thead><tbody>` +
+    wrap.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Fournisseur</th><th>Catégorie</th><th>Valeur annuelle</th><th>Renouvellement</th><th>Potentiel négo.</th><th>Économies</th><th>Statut</th><th>Dép.</th><th></th></tr></thead><tbody>` +
       contracts.map(c => {
         const urgCls = c.urgency === "critical" ? "badge-expired" : c.urgency === "warning" ? "badge-expiring" : "badge-active";
         const daysLbl = c.days_to_renewal != null ? (c.days_to_renewal <= 0 ? "Expiré" : `${c.days_to_renewal}j`) : c.renewal_date || "—";
@@ -6867,7 +6867,7 @@ async function loadContracts() {
             ${isAdmin ? `<button class="btn-icon btn-deactivate" title="Mettre à la corbeille" onclick="trashContract('${c.id}')">🗑️</button>` : ""}
           </td>
         </tr>`;
-      }).join("") + `</tbody></table>`;
+      }).join("") + `</tbody></table></div>`;
   } catch (e) { wrap.innerHTML = `<p class="muted">${e.message}</p>`; }
 }
 
@@ -6883,7 +6883,7 @@ async function loadContractTrash() {
     const backBtn = `<button class="btn btn-outline btn-sm" style="margin-bottom:12px" onclick="loadContracts()">← Retour aux contrats</button>`;
     if (!contracts.length) { wrap.innerHTML = backBtn + `<p class="muted" style="padding:20px">La corbeille est vide.</p>`; return; }
     wrap.innerHTML = backBtn +
-      `<table class="data-table"><thead><tr><th>Fournisseur</th><th>Catégorie</th><th>Valeur annuelle</th><th>Supprimé le</th><th></th></tr></thead><tbody>` +
+      `<div class="table-wrap"><table><thead><tr><th>Fournisseur</th><th>Catégorie</th><th>Valeur annuelle</th><th>Supprimé le</th><th></th></tr></thead><tbody>` +
       contracts.map(c => {
         const deletedDate = c.deleted_at ? new Date(c.deleted_at).toLocaleDateString("fr-CA") : "—";
         return `<tr style="opacity:.7">
@@ -6896,7 +6896,7 @@ async function loadContractTrash() {
             <button class="btn-icon btn-deactivate" title="Supprimer définitivement" onclick="hardDeleteContract('${c.id}')">✕</button>
           </td>
         </tr>`;
-      }).join("") + `</tbody></table>`;
+      }).join("") + `</tbody></table></div>`;
   } catch(e) { wrap.innerHTML = `<p class="muted">${e.message}</p>`; }
 }
 
@@ -6967,7 +6967,7 @@ async function loadProcesses() {
     if (!procs.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucun processus enregistré.</p>`; return; }
     const totalSavings = procs.reduce((s, p) => s + (p.annual_savings_potential||0), 0);
     wrap.innerHTML = `<div style="padding:12px 0 16px;font-size:.85rem;color:var(--navy-light)">Total économies potentielles : <strong style="color:#15803d">${_fmt(totalSavings)} $/an</strong> · ${procs.reduce((s,p) => s + (p.automatable_hours_monthly||0), 0).toFixed(0)}h automatisables/mois</div>` +
-      `<table class="data-table"><thead><tr><th>Processus</th><th>Équipe</th><th>Heures/mois</th><th>Automation pot.</th><th>H. automatisables</th><th>Coût horaire</th><th>Économies/an</th><th>Statut</th><th>Dép.</th><th></th></tr></thead><tbody>` +
+      `<div class="table-wrap"><table><thead><tr><th>Processus</th><th>Équipe</th><th>Heures/mois</th><th>Automation pot.</th><th>H. automatisables</th><th>Coût horaire</th><th>Économies/an</th><th>Statut</th><th>Dép.</th><th></th></tr></thead><tbody>` +
       procs.map(p => {
         const stMap = { manual:"badge-expired", semi_automated:"badge-expiring", automated:"badge-active" };
         const stLbl = { manual:"Manuel", semi_automated:"Semi-auto", automated:"Automatisé" };
@@ -6983,7 +6983,7 @@ async function loadProcesses() {
           <td>${esc((p.department)||"—")}</td>
           <td><button class="btn-icon" onclick="editProcess('${p.id}')">✎</button> <button class="btn-icon btn-deactivate" onclick="deleteProcess('${p.id}')">✕</button></td>
         </tr>`;
-      }).join("") + `</tbody></table>`;
+      }).join("") + `</tbody></table></div>`;
   } catch (e) { wrap.innerHTML = `<p class="muted">${e.message}</p>`; }
 }
 
@@ -10167,7 +10167,7 @@ async function loadFinance() {
           <div class="section-header" style="margin-top:4px;margin-bottom:8px">
             <h3 style="font-size:.92rem;font-weight:700;color:var(--navy)">📊 Analyse budgétaire par département</h3>
           </div>
-          <div class="table-wrap" style="margin-bottom:20px"><table class="data-table"><thead><tr>
+          <div class="table-wrap" style="margin-bottom:20px"><table><thead><tr>
             <th>Département</th><th>Alloué</th><th>Réel</th><th>Écart ($)</th><th>Écart (%)</th><th>Statut</th><th>Niveau de risque</th><th>Prévision IA</th>
           </tr></thead><tbody>
             ${by_dept.map(d => {
@@ -10268,7 +10268,7 @@ async function loadFinance() {
       } else {
         const CAT = { software:tr['finance.cat.software'], hardware:tr['finance.cat.hardware'], cloud:tr['finance.cat.cloud'], telecom:tr['finance.cat.telecom'], marketing:tr['finance.cat.marketing'], hr:tr['finance.cat.hr'], legal:tr['finance.cat.legal'], finance:tr['finance.cat.finance'], facilities:tr['finance.cat.facilities'], travel:tr['finance.cat.travel'], consulting:tr['finance.cat.consulting'], training:tr['finance.cat.training'], utilities:tr['finance.cat.utilities'], insurance:tr['finance.cat.insurance'], other:tr['finance.cat.other'] };
         const SBADGE = { paid:`<span class='badge bl'>${tr['finance.status.paid']}</span>`, pending:`<span class='badge' style='background:#fef3c7;color:#92400e;border:1px solid #fde68a'>${tr['finance.status.pending']}</span>`, cancelled:`<span class='badge bs'>${tr['finance.status.cancelled']}</span>` };
-        tbl.innerHTML = `<table class="data-table"><thead><tr>
+        tbl.innerHTML = `<table><thead><tr>
           <th>${tr['finance.table.date']}</th><th>${tr['finance.table.vendor']}</th><th>${tr['finance.table.desc']}</th><th>${tr['finance.table.amount']}</th><th>${tr['finance.table.category']}</th><th>${tr['finance.table.status']}</th><th>IA</th>
         </tr></thead><tbody>
           ${txns.map(t => `<tr ${t.is_flagged ? 'style="background:#fff7ed"' : ''}>
@@ -10717,7 +10717,7 @@ function _renderProcContracts(contracts) {
     return;
   }
   wrap.innerHTML = '<div class="section-header" style="margin-bottom:8px"><h3 style="font-size:.92rem;font-weight:700;color:var(--navy)">📋 Portefeuille contractuel (' + contracts.length + ')</h3><button class="btn btn-primary btn-sm" onclick="openContractModal()">+ Contrat</button></div>' +
-    '<div class="table-wrap"><table class="data-table"><thead><tr><th>Fournisseur</th><th>Catégorie</th><th>Valeur/an</th><th>Renouvellement</th><th>Économie potentielle</th><th>Statut</th></tr></thead><tbody>' +
+    '<div class="table-wrap"><table><thead><tr><th>Fournisseur</th><th>Catégorie</th><th>Valeur/an</th><th>Renouvellement</th><th>Économie potentielle</th><th>Statut</th></tr></thead><tbody>' +
     contracts.map(c => {
       const sav = c.potential_savings != null ? fmtCurrency(c.potential_savings) : (c.negotiation_potential ? fmtCurrency((c.annual_value || 0) * c.negotiation_potential / 100) : "—");
       const urgStyle = URG_STYLE[c.urgency] || "";
@@ -10752,7 +10752,7 @@ function _renderProcVendors(contracts, contractors) {
     return;
   }
   wrap.innerHTML = '<div class="section-header" style="margin-bottom:8px"><h3 style="font-size:.92rem;font-weight:700;color:var(--navy)">🤝 Analyse fournisseurs (' + vendors.length + ')</h3></div>' +
-    '<div class="table-wrap"><table class="data-table"><thead><tr><th>Fournisseur</th><th>Contrats</th><th>Valeur totale/an</th><th>Économies potentielles</th><th>Risque</th></tr></thead><tbody>' +
+    '<div class="table-wrap"><table><thead><tr><th>Fournisseur</th><th>Contrats</th><th>Valeur totale/an</th><th>Économies potentielles</th><th>Risque</th></tr></thead><tbody>' +
     vendors.map(v => {
       const risk      = v.hasCritical ? "🔴 Critique" : v.hasActive ? "🟢 Stable" : "⚪ Inactif";
       const riskStyle = v.hasCritical ? "color:#dc2626;font-weight:600" : v.hasActive ? "color:#15803d" : "color:var(--slate)";
@@ -10786,7 +10786,7 @@ function _renderProcSpend(contracts) {
     return;
   }
   wrap.innerHTML = '<div class="section-header" style="margin-bottom:8px"><h3 style="font-size:.92rem;font-weight:700;color:var(--navy)">💰 Dépenses contractuelles par catégorie</h3></div>' +
-    '<div class="table-wrap"><table class="data-table"><thead><tr><th>Catégorie</th><th>Valeur annuelle</th><th>Part du portefeuille</th><th>Répartition</th></tr></thead><tbody>' +
+    '<div class="table-wrap"><table><thead><tr><th>Catégorie</th><th>Valeur annuelle</th><th>Part du portefeuille</th><th>Répartition</th></tr></thead><tbody>' +
     cats.map(([cat, val]) => {
       const pct = total > 0 ? Math.round(val / total * 100) : 0;
       return '<tr>' +
