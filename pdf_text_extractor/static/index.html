@@ -1546,7 +1546,33 @@
         <div id="finance-ai-recs" style="margin-bottom:16px"></div>
       </div>
       <div class="ftab-content" data-finance-tab="budgets" style="display:none">
-        <div id="finance-budget-cat" style="margin-bottom:4px"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+          <div class="controls-inline">
+            <select id="budget-year-filter" onchange="loadBudget()">
+              <option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option>
+            </select>
+            <select id="budget-dept-filter" onchange="loadBudget()">
+              <option value="">Tous les départements</option>
+            </select>
+            <select id="budget-cat-filter" onchange="loadBudget()">
+              <option value="">Toutes catégories</option>
+              <option value="salaires">Salaires</option>
+              <option value="logiciels">Logiciels & licences</option>
+              <option value="materiel">Matériel</option>
+              <option value="entretien">Entretien & installations</option>
+              <option value="evenements">Événements & formation</option>
+              <option value="assurances">Assurances</option>
+              <option value="telecom">Téléphonie & Internet</option>
+              <option value="marketing">Marketing & communications</option>
+              <option value="fournitures">Fournitures de bureau</option>
+              <option value="services">Services professionnels</option>
+              <option value="custom">Autre</option>
+            </select>
+          </div>
+          <button class="btn btn-primary btn-sm admin-only" onclick="openBudgetModal()">+ Entrée budgétaire</button>
+        </div>
+        <div id="budget-table-wrap"><p class="muted" style="padding:20px">Chargement…</p></div>
+        <div id="budget-summary-wrap" style="margin-top:24px"></div>
       </div>
       <div class="ftab-content" data-finance-tab="transactions" style="display:none">
         <div class="section-header" style="margin-top:8px">
@@ -2301,22 +2327,12 @@
 
       <!-- Budget -->
       <div id="parc-budget" class="parc-content hidden">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap">
-          <div class="controls-inline">
-            <select id="budget-year-filter" onchange="loadBudget()">
-              <option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option>
-            </select>
-            <select id="budget-cat-filter" onchange="loadBudget()">
-              <option value="" data-i18n="parc.all">Toutes catégories</option>
-              <option value="aws">AWS</option><option value="azure">Azure</option>
-              <option value="m365">Microsoft 365</option><option value="exchange">Exchange Online</option>
-              <option value="google_workspace">Google Workspace</option><option value="custom">Autre</option>
-            </select>
-          </div>
-          <button class="btn btn-primary btn-sm" onclick="openBudgetModal()" data-i18n="parc.budget.add">+ Entrée</button>
+        <div style="padding:32px;text-align:center;color:var(--slate)">
+          <div style="font-size:2rem;margin-bottom:12px">💰</div>
+          <p style="font-weight:600;color:var(--navy);margin-bottom:6px">Gestion des budgets</p>
+          <p style="font-size:.88rem;margin-bottom:16px">Les budgets organisationnels sont gérés dans le module Finance.</p>
+          <button class="btn btn-primary btn-sm" onclick="switchTab('finance');setTimeout(()=>switchFinanceTab('budgets'),100)">Aller à Finance → Budgets</button>
         </div>
-        <div id="budget-table-wrap"><p class="muted" data-i18n="loading">Chargement…</p></div>
-        <div id="budget-summary-wrap" style="margin-top:24px"></div>
       </div>
 
       <!-- Licences -->
@@ -2504,9 +2520,17 @@
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
             <label class="auth-label"><span>Catégorie</span>
               <select id="bm-cat">
-                <option value="aws">AWS</option><option value="azure">Azure</option>
-                <option value="m365">Microsoft 365</option><option value="exchange">Exchange Online</option>
-                <option value="google_workspace">Google Workspace</option><option value="custom">Autre</option>
+                <option value="salaires">Salaires</option>
+                <option value="logiciels">Logiciels & licences</option>
+                <option value="materiel">Matériel</option>
+                <option value="entretien">Entretien & installations</option>
+                <option value="evenements">Événements & formation</option>
+                <option value="assurances">Assurances</option>
+                <option value="telecom">Téléphonie & Internet</option>
+                <option value="marketing">Marketing & communications</option>
+                <option value="fournitures">Fournitures de bureau</option>
+                <option value="services">Services professionnels</option>
+                <option value="custom">Autre</option>
               </select>
             </label>
             <label class="auth-label"><span data-i18n="parc.budget.label">Libellé</span><input id="bm-label" type="text" placeholder="ex: Prod cluster" /></label>

@@ -4697,10 +4697,23 @@ function _filterParcBudgetByCategory(catKey, catLabel) {
   _parcBudgetChart.update();
 }
 
+async function _populateFinanceBudgetDeptFilter() {
+  const sel = $("budget-dept-filter");
+  if (!sel || sel.options.length > 1) return;
+  try {
+    const depts = await apiCall("/api/departments");
+    depts.forEach(d => {
+      const opt = document.createElement("option");
+      opt.value = d.id; opt.textContent = d.name;
+      sel.appendChild(opt);
+    });
+  } catch(_) {}
+}
+
 async function loadBudget() {
   const wrap = $("budget-table-wrap");
   const summaryWrap = $("budget-summary-wrap");
-  const deptId = $("parc-dept-select")?.value || "";
+  const deptId = $("budget-dept-filter")?.value || $("parc-dept-select")?.value || "";
   const year   = $("budget-year-filter")?.value  || new Date().getFullYear();
   const cat    = $("budget-cat-filter")?.value   || "";
   try {
@@ -10092,6 +10105,10 @@ function switchFinanceTab(tab) {
   if (tab === 'previsions') setTimeout(() => { if (_financeBarChart) _financeBarChart.resize(); if (_financeDonutChart) _financeDonutChart.resize(); }, 50);
   if (tab === 'executive') setTimeout(() => { if (_financeExecChart) _financeExecChart.resize(); }, 50);
   if (tab === 'recherche') _renderDeptSearch('fin-search-wrap', 'Finance');
+  if (tab === 'budgets') {
+    _populateFinanceBudgetDeptFilter();
+    loadBudget();
+  }
 }
 
 function switchTeamTab(tab) {
