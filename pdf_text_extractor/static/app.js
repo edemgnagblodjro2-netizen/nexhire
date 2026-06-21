@@ -5883,7 +5883,7 @@ function _loadOptimSection(name) {
   if (name === "dashboard")       _loadOptimDashboard();
   if (name === "m365")            _loadM365Intelligence();
   if (name === "identities")      _loadIdentitiesRisks();
-  if (name === "licenses")        _loadUnusedLicenses();
+  if (name === "licenses")        _activeDeptType() === "direction" ? _loadBudgetByDept() : _loadUnusedLicenses();
   if (name === "duplicates")      _loadDuplicateTools();
   if (name === "contracts")     { _populateContractCatSelects(_activeDeptType()); loadContracts(); }
   if (name === "processes")       loadProcesses();
@@ -6516,6 +6516,78 @@ async function _loadUnusedLicenses() {
         </tr>`;
       }).join("") + `</tbody></table>`;
   } catch (e) { wrap.innerHTML = `<p class="muted">${e.message}</p>`; }
+}
+
+async function _loadBudgetByDept() {
+  const wrap = $("optim-lic-table");
+  if (!wrap) return;
+  wrap.innerHTML = `<div style="padding:20px;text-align:center"><div class="spinner" style="margin:auto"></div></div>`;
+  try {
+    const year = new Date().getFullYear();
+    const data = await apiCall(`/api/budget/summary?year=${year}`);
+    const depts = data.by_department || [];
+
+    if (!depts.length) {
+      wrap.innerHTML = `<p class="muted" style="padding:20px">Aucune entrée budgétaire enregistrée. Allez dans <strong>Finance → Budgets</strong> pour commencer le suivi.</p>`;
+      return;
+    }
+
+    const tot = data.total || {};
+    const totAlloc  = tot.allocated || 0;
+    const totActual = tot.actual    || 0;
+    const totPct    = totAlloc > 0 ? Math.round(totActual / totAlloc * 100) : 0;
+    const totCol    = totPct >= 100 ? "#dc2626" : totPct >= 80 ? "#d97706" : "#16a34a";
+
+    let html = `
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px">
+        <div style="background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:12px;padding:16px;text-align:center">
+          <div style="font-size:1.4rem;font-weight:800;color:#16a34a">${_fmt(totAlloc)} $</div>
+          <div style="font-size:.78rem;color:#475569;font-weight:600;margin-top:4px">Budget total alloué</div>
+        </div>
+        <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:12px;padding:16px;text-align:center">
+          <div style="font-size:1.4rem;font-weight:800;color:#1e293b">${_fmt(totActual)} $</div>
+          <div style="font-size:.78rem;color:#475569;font-weight:600;margin-top:4px">Dépenses réelles</div>
+        </div>
+        <div style="background:${totPct >= 100 ? "#fef2f2" : "#fffbeb"};border:1.5px solid ${totPct >= 100 ? "#fecaca" : "#fde68a"};border-radius:12px;padding:16px;text-align:center">
+          <div style="font-size:1.4rem;font-weight:800;color:${totCol}">${totPct}%</div>
+          <div style="font-size:.78rem;color:#475569;font-weight:600;margin-top:4px">Consommation globale</div>
+        </div>
+      </div>
+      <table class="data-table"><thead><tr>
+        <th>Département</th><th>Alloué</th><th>Dépensé</th><th>Reste / Dépassement</th><th>Utilisation</th><th>Statut</th>
+      </tr></thead><tbody>`;
+
+    for (const d of depts) {
+      const alloc  = d.allocated || 0;
+      const actual = d.actual    || 0;
+      const reste  = alloc - actual;
+      const pct    = alloc > 0 ? Math.round(actual / alloc * 100) : 0;
+      const col    = pct >= 100 ? "#dc2626" : pct >= 80 ? "#d97706" : "#16a34a";
+      const badge  = pct >= 100 ? "badge-expired" : pct >= 80 ? "badge-expiring" : "badge-active";
+      const lbl    = pct >= 100 ? "Dépassé" : pct >= 80 ? "Attention" : "Sain";
+      html += `<tr>
+        <td><strong>${esc(d.department_name || "—")}</strong></td>
+        <td>${_fmt(alloc)} $</td>
+        <td style="font-weight:600;color:${col}">${_fmt(actual)} $</td>
+        <td style="color:${reste < 0 ? "#dc2626" : "#16a34a"};font-weight:600">
+          ${reste < 0 ? "▲ " + _fmt(Math.abs(reste)) + " $" : _fmt(reste) + " $ restant"}
+        </td>
+        <td>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;min-width:60px">
+              <div style="width:${Math.min(pct,100)}%;height:6px;background:${col};border-radius:3px"></div>
+            </div>
+            <span style="font-size:.8rem;font-weight:700;color:${col};min-width:34px">${pct}%</span>
+          </div>
+        </td>
+        <td><span class="badge ${badge}">${lbl}</span></td>
+      </tr>`;
+    }
+    html += `</tbody></table>`;
+    wrap.innerHTML = html;
+  } catch (e) {
+    wrap.innerHTML = `<p class="muted" style="padding:20px">${esc(e.message)}</p>`;
+  }
 }
 
 async function _loadRecommendations() {
