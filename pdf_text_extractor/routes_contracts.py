@@ -93,6 +93,7 @@ def list_contracts(
         conditions.append("c.renewal_date >= %s")
         params.append(today_iso)
 
+    conditions.append("c.deleted_at IS NULL")
     where_clause = " AND ".join(conditions)
     sql = f"""
         SELECT c.*, d.name AS department_name
@@ -184,14 +185,65 @@ def update_contract(
     return _enrich(result)
 
 
+@router.get("/trash")
+def list_trash(user: CurrentUser = Depends(require_min_role("admin"))):
+    with get_db() as cur:
+        cur.execute(
+            """
+            SELECT c.*, d.name AS department_name
+            FROM contracts c
+            LEFT JOIN departments d ON d.id = c.department_id
+            WHERE c.organization_id = %s AND c.deleted_at IS NOT NULL
+            ORDER BY c.deleted_at DESC
+            """,
+            (user.organization_id,),
+        )
+        result = rows(cur)
+    return [_enrich(c) for c in result]
+
+
+@router.post("/{contract_id}/restore", status_code=200)
+def restore_contract(contract_id: str, user: CurrentUser = Depends(require_min_role("admin"))):
+    _or_404_any("contracts", contract_id, user.organization_id)
+    with get_db() as cur:
+        cur.execute(
+            "UPDATE contracts SET deleted_at = NULL WHERE id = %s RETURNING *",
+            (contract_id,),
+        )
+        result = row(cur)
+    return _enrich(result)
+
+
 @router.delete("/{contract_id}", status_code=204)
 def delete_contract(contract_id: str, user: CurrentUser = Depends(require_min_role("admin"))):
     _or_404("contracts", contract_id, user.organization_id)
+    with get_db() as cur:
+        cur.execute(
+            "UPDATE contracts SET deleted_at = NOW() WHERE id = %s",
+            (contract_id,),
+        )
+
+
+@router.delete("/{contract_id}/permanent", status_code=204)
+def hard_delete_contract(contract_id: str, user: CurrentUser = Depends(require_min_role("admin"))):
+    _or_404_any("contracts", contract_id, user.organization_id)
     with get_db() as cur:
         cur.execute("DELETE FROM contracts WHERE id = %s", (contract_id,))
 
 
 def _or_404(table: str, row_id: str, org_id: str) -> dict:
+    with get_db() as cur:
+        cur.execute(
+            f"SELECT id FROM {table} WHERE id = %s AND organization_id = %s AND deleted_at IS NULL LIMIT 1",
+            (row_id, org_id),
+        )
+        result = row(cur)
+    if not result:
+        raise HTTPException(status_code=404, detail="Enregistrement introuvable.")
+    return result
+
+
+def _or_404_any(table: str, row_id: str, org_id: str) -> dict:
     with get_db() as cur:
         cur.execute(
             f"SELECT id FROM {table} WHERE id = %s AND organization_id = %s LIMIT 1",

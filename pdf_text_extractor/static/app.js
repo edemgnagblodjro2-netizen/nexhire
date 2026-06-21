@@ -6631,6 +6631,7 @@ async function loadContracts() {
   const wrap = $("contracts-table-wrap");
   const renewing = $("contract-renew-filter")?.value || "";
   const cat      = $("contract-cat-filter")?.value   || "";
+  const isAdmin  = ["admin","owner"].includes(state.user?.role);
   try {
     const url = `/api/contracts?${renewing ? `renewing=${renewing}&` : ""}${cat ? `status=active&` : ""}`;
     let contracts = await apiCall(url);
@@ -6649,17 +6650,62 @@ async function loadContracts() {
           <td>${c.negotiation_potential||0}%</td>
           <td style="color:#15803d;font-weight:700">${_fmt(c.potential_savings)} $</td>
           <td><span class="badge ${c.status==="active"?"badge-active":"badge-idle"}">${stLbl[c.status]||c.status}</span></td>
-          <td>${esc((c.department)||"—")}</td>
-          <td><button class="btn-icon" onclick="editContract('${c.id}')">✎</button> <button class="btn-icon btn-deactivate" onclick="deleteContract('${c.id}')">✕</button></td>
+          <td>${esc(c.department_name||"—")}</td>
+          <td>
+            <button class="btn-icon" onclick="editContract('${c.id}')">✎</button>
+            ${isAdmin ? `<button class="btn-icon btn-deactivate" title="Mettre à la corbeille" onclick="trashContract('${c.id}')">🗑️</button>` : ""}
+          </td>
         </tr>`;
       }).join("") + `</tbody></table>`;
   } catch (e) { wrap.innerHTML = `<p class="muted">${e.message}</p>`; }
+}
+
+async function trashContract(id) {
+  if (!confirm("Mettre ce contrat à la corbeille ?")) return;
+  try { await apiCall(`/api/contracts/${id}`, "DELETE"); loadContracts(); } catch(e) { alert(e.message); }
+}
+
+async function loadContractTrash() {
+  const wrap = $("contracts-table-wrap");
+  try {
+    const contracts = await apiCall("/api/contracts/trash");
+    const backBtn = `<button class="btn btn-outline btn-sm" style="margin-bottom:12px" onclick="loadContracts()">← Retour aux contrats</button>`;
+    if (!contracts.length) { wrap.innerHTML = backBtn + `<p class="muted" style="padding:20px">La corbeille est vide.</p>`; return; }
+    wrap.innerHTML = backBtn +
+      `<table class="data-table"><thead><tr><th>Fournisseur</th><th>Catégorie</th><th>Valeur annuelle</th><th>Supprimé le</th><th></th></tr></thead><tbody>` +
+      contracts.map(c => {
+        const deletedDate = c.deleted_at ? new Date(c.deleted_at).toLocaleDateString("fr-CA") : "—";
+        return `<tr style="opacity:.7">
+          <td><strong>${esc(c.vendor)}</strong>${c.description ? `<br><span class="sa-meta">${esc(c.description)}</span>` : ""}</td>
+          <td>${esc(c.category||"—")}</td>
+          <td>${_fmt(c.annual_value)} ${c.currency}</td>
+          <td>${deletedDate}</td>
+          <td>
+            <button class="btn btn-outline btn-sm" onclick="restoreContract('${c.id}')">↩ Restaurer</button>
+            <button class="btn-icon btn-deactivate" title="Supprimer définitivement" onclick="hardDeleteContract('${c.id}')">✕</button>
+          </td>
+        </tr>`;
+      }).join("") + `</tbody></table>`;
+  } catch(e) { wrap.innerHTML = `<p class="muted">${e.message}</p>`; }
+}
+
+async function restoreContract(id) {
+  try { await apiCall(`/api/contracts/${id}/restore`, "POST"); loadContractTrash(); } catch(e) { alert(e.message); }
+}
+
+async function hardDeleteContract(id) {
+  if (!confirm("Supprimer définitivement ? Cette action est irréversible.")) return;
+  try { await apiCall(`/api/contracts/${id}/permanent`, "DELETE"); loadContractTrash(); } catch(e) { alert(e.message); }
 }
 
 function openContractModal(c = null) {
   const deptId   = c?.department_id || $("cm-dept")?.value || _activeDeptId || "";
   const deptType = (deptId && window._deptTypeMap?.[deptId]) || _activeDeptType();
   _populateContractCatSelects(deptType);
+  _populateOptimDeptSelects().then(() => {
+    const sel = $("cm-dept");
+    if (sel && (c?.department_id || _activeDeptId)) sel.value = c?.department_id || _activeDeptId || "";
+  });
   $("cm-id").value = c?.id || "";
   $("cm-vendor").value   = c?.vendor        || "";
   $("cm-cat").value      = c?.category      || "other";

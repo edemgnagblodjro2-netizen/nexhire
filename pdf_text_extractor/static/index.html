@@ -2816,7 +2816,10 @@
               <option value="">Toutes catégories</option>
             </select>
           </div>
-          <button class="btn btn-primary btn-sm" onclick="openContractModal()" data-i18n="optim.contract.add">+ Contrat</button>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-outline btn-sm admin-only" title="Corbeille" onclick="loadContractTrash()">🗑️ Corbeille</button>
+            <button class="btn btn-primary btn-sm" onclick="openContractModal()" data-i18n="optim.contract.add">+ Contrat</button>
+          </div>
         </div>
         <div id="contracts-table-wrap"><p class="muted" data-i18n="loading">Chargement…</p></div>
       </div>

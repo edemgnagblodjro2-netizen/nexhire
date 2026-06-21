@@ -28,7 +28,8 @@ Document opérationnel pour l'équipe NexHire. Mis à jour le 2026-06-19.
 - [x] `phase21_missing_indexes.sql` — index de performance
 - [x] `phase22_drop_entities_legacy.sql` — tables legacy supprimées
 - [x] `migrate_currency.sql` — colonne `currency` sur `organizations`
-- [ ] `add_document_dept.sql` — colonne `department_id` sur `documents` **(à exécuter dans Supabase SQL Editor)**
+- [x] `add_document_dept.sql` — colonne `department_id` sur `documents` (exécuté 2026-06-20)
+- [ ] `add_contract_soft_delete.sql` — colonne `deleted_at` sur `contracts` **(à exécuter dans Supabase SQL Editor)**
 
 ### Dashboards
 - [x] Posture sécurité Entra ID (MFA, admins, risques)
@@ -56,16 +57,6 @@ Document opérationnel pour l'équipe NexHire. Mis à jour le 2026-06-19.
 ---
 
 ## Ce qui reste avant premier client payant
-
-### Priorité 0 — Migration DB à exécuter immédiatement
-
-```sql
--- Exécuter dans Supabase SQL Editor (une seule fois)
--- Fichier : pdf_text_extractor/add_document_dept.sql
-ALTER TABLE public.documents
-  ADD COLUMN IF NOT EXISTS department_id UUID REFERENCES public.departments(id) ON DELETE SET NULL;
-CREATE INDEX IF NOT EXISTS idx_documents_department_id ON public.documents(department_id);
-```
 
 ### Priorité 1 — Validation connecteurs (cette semaine)
 
