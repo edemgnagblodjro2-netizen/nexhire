@@ -4767,33 +4767,66 @@ async function loadBudget() {
   } catch (e) { wrap.innerHTML = `<p class="muted" style="padding:20px">${e.message||"Erreur"}</p>`; }
 }
 
+const _LICENSE_CONTRACT_CATS = new Set(["licences","software","logiciels"]);
+
 async function loadLicenses() {
   const wrap = $("licenses-table-wrap");
   const deptId = $("parc-dept-select")?.value || "";
   const expDays = $("lic-filter")?.value || "";
   try {
     const url = `/api/licenses?${deptId ? `dept_id=${deptId}&` : ""}${expDays ? `expiring_days=${expDays}` : ""}`;
-    const lics = await apiCall(url);
-    if (!lics.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucune licence enregistrée.</p>`; return; }
+    const [lics, allContracts] = await Promise.all([
+      apiCall(url),
+      apiCall("/api/contracts").catch(() => []),
+    ]);
+
+    // Contrats de licence — synchronisation automatique
+    const licContracts = allContracts.filter(c =>
+      c.status === "active" && _LICENSE_CONTRACT_CATS.has(c.category)
+    );
+
+    const licRows = lics.map(l => {
+      const st = l.computed_status;
+      const badgeCls = st === "expired" ? "badge-expired" : st === "expiring_soon" ? "badge-expiring" : "badge-active";
+      const stLabel  = st === "expired" ? "Expirée" : st === "expiring_soon" ? `Expire dans ${l.days_to_expiry}j` : st === "expiring_medium" ? `${l.days_to_expiry}j` : "Active";
+      return `<tr class="${st==="expired"?"row-inactive":""}">
+        <td><strong>${esc(l.product_name)}</strong></td>
+        <td>${esc(l.vendor||"—")}</td>
+        <td>${l.license_type||"—"}</td>
+        <td>${l.assigned_count}/${l.quantity}</td>
+        <td>${_fmt(l.cost_per_unit)}</td>
+        <td>${l.expiration_date||"—"}</td>
+        <td>${l.renewal_date||"—"}</td>
+        <td><span class="badge ${badgeCls}">${stLabel}</span></td>
+        <td>${esc(l.department_name||"—")}</td>
+        <td><button class="btn-icon" onclick="editLicense('${l.id}')">✎</button> <button class="btn-icon btn-deactivate" onclick="deleteLicense('${l.id}')">✕</button></td>
+      </tr>`;
+    });
+
+    const contractLicRows = licContracts.map(c => {
+      const urgCls = c.urgency === "critical" ? "badge-expired" : c.urgency === "warning" ? "badge-expiring" : "badge-active";
+      const renewLbl = c.days_to_renewal != null ? `${c.days_to_renewal}j` : "—";
+      const costUnit = c.annual_value ? _fmt(c.annual_value / 12) + "/mois" : "—";
+      return `<tr style="background:#f0f9ff">
+        <td><strong>${esc(c.vendor)}</strong><br><span class="sa-meta" style="color:var(--indigo);font-size:.72rem">📋 Contrat</span></td>
+        <td>${esc(c.vendor||"—")}</td>
+        <td>Abonnement</td>
+        <td>—</td>
+        <td>${costUnit}</td>
+        <td>${c.end_date||"—"}</td>
+        <td><span class="badge ${urgCls}">${renewLbl}</span></td>
+        <td><span class="badge badge-active">Active</span></td>
+        <td>${esc(c.department_name||"—")}</td>
+        <td><button class="btn-icon" onclick="editContract('${c.id}')">✎</button></td>
+      </tr>`;
+    });
+
+    const allRows = [...licRows, ...contractLicRows];
+    if (!allRows.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucune licence enregistrée.</p>`; return; }
+
     wrap.innerHTML = `<table class="data-table"><thead><tr><th>Produit</th><th>Fournisseur</th><th>Type</th><th>Qté / Assign.</th><th>Coût/unité</th><th>Expiration</th><th>Renouvellement</th><th>Statut</th><th>Dép.</th><th></th></tr></thead><tbody>` +
-      lics.map(l => {
-        const st = l.computed_status;
-        const badgeCls = st === "expired" ? "badge-expired" : st === "expiring_soon" ? "badge-expiring" : "badge-active";
-        const stLabel  = st === "expired" ? "Expirée" : st === "expiring_soon" ? `Expire dans ${l.days_to_expiry}j` : st === "expiring_medium" ? `${l.days_to_expiry}j` : "Active";
-        const deptName = l.department_name || "—";
-        return `<tr class="${st==="expired"?"row-inactive":""}">
-          <td><strong>${esc(l.product_name)}</strong></td>
-          <td>${esc(l.vendor||"—")}</td>
-          <td>${l.license_type||"—"}</td>
-          <td>${l.assigned_count}/${l.quantity}</td>
-          <td>${_fmt(l.cost_per_unit)}</td>
-          <td>${l.expiration_date||"—"}</td>
-          <td>${l.renewal_date||"—"}</td>
-          <td><span class="badge ${badgeCls}">${stLabel}</span></td>
-          <td>${esc(deptName)}</td>
-          <td><button class="btn-icon" onclick="editLicense('${l.id}')">✎</button> <button class="btn-icon btn-deactivate" onclick="deleteLicense('${l.id}')">✕</button></td>
-        </tr>`;
-      }).join("") + `</tbody></table>`;
+      allRows.join("") + `</tbody></table>` +
+      (licContracts.length ? `<p style="margin-top:8px;font-size:.78rem;color:var(--slate)">🔵 ${licContracts.length} licence${licContracts.length>1?"s":""} synchronisée${licContracts.length>1?"s":""} depuis les contrats actifs</p>` : "");
   } catch (e) { wrap.innerHTML = `<p class="muted" style="padding:20px">${e.message||"Erreur"}</p>`; }
 }
 
