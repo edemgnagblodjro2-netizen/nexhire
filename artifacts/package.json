@@ -1,0 +1,31 @@
+{
+  "name": "workspace",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "preinstall": "node -e \"if(!(process.env.npm_config_user_agent||'').startsWith('pnpm')){console.error('Use pnpm instead');process.exit(1)}\"",
+    "eas-build-pre-install": "npm install -g pnpm@10.26.1 && pnpm install --no-frozen-lockfile",
+    "build": "pnpm run typecheck && pnpm -r --if-present run build",
+    "typecheck:libs": "tsc --build",
+    "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck"
+  },
+  "private": true,
+  "packageManager": "pnpm@10.26.1",
+  "devDependencies": {
+    "eas-cli": "^18.9.1",
+    "expo": "~54.0.27",
+    "prettier": "^3.8.1",
+    "typescript": "~5.9.2"
+  },
+  "dependencies": {
+    "@replit/revenuecat-sdk": "^4.2.0",
+    "pdfkit": "^0.18.0",
+    "stripe": "20.0.0",
+    "stripe-replit-sync": "1.0.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@xmldom/xmldom": "^0.8.10"
+    }
+  }
+}
