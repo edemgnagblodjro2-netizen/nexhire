@@ -1870,11 +1870,18 @@ footer {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 8px;
+  margin-bottom: 20px;
   flex-wrap: wrap;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f1f5f9;
 }
-.section-header h2 { font-size: 1.35rem; font-weight: 700; }
-.section-desc { font-size: .9rem; margin-bottom: 24px; }
+.section-header h2 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -.02em;
+}
+.section-desc { font-size: .88rem; color: #64748b; margin-bottom: 24px; }
 
 /* ── Agent tab ───────────────────────────────────────────────────────────── */
 .controls-inline { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -2429,14 +2436,15 @@ footer {
 /* Status badges */
 .badge {
   display: inline-flex; align-items: center; gap: 4px;
-  padding: 3px 10px; border-radius: 99px;
-  font-size: .72rem; font-weight: 700; letter-spacing: .02em;
+  padding: 3px 11px; border-radius: 99px;
+  font-size: .71rem; font-weight: 700; letter-spacing: .03em;
   border: 1px solid transparent;
+  white-space: nowrap;
 }
 .badge-active   { background: #dcfce7; color: #15803d; border-color: #bbf7d0; }
-.badge-expiring { background: #fef9c3; color: #92400e; border-color: #fde68a; }
-.badge-warn     { background: #fef3c7; color: #92400e; border-color: #fde68a; }
-.badge-danger   { background: #fef2f2; color: #991b1b; border-color: #fecaca; }
+.badge-expiring { background: #fef3c7; color: #b45309; border-color: #fde68a; }
+.badge-warn     { background: #fef3c7; color: #b45309; border-color: #fde68a; }
+.badge-danger   { background: #fee2e2; color: #b91c1c; border-color: #fecaca; }
 .finance-copilot-label { display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-weight:700;color:var(--indigo);text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px; }
 .ai-card { background:linear-gradient(135deg,#f0f4ff,#fff);border:1.5px solid #c7d2fe;border-radius:12px;padding:14px 18px; }
 .ai-badge { display:inline-flex;align-items:center;gap:6px;background:var(--indigo);color:#fff;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.04em; }
@@ -3061,16 +3069,44 @@ footer {
 .chat-form input { flex: 1; }
 .chat-form button { width: auto; min-height: 44px; flex-shrink: 0; }
 
-/* ── Audit tab ───────────────────────────────────────────────────────────── */
-.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); box-shadow: var(--shadow-sm); }
-table { width: 100%; border-collapse: collapse; font-size: .875rem; }
-thead { background: linear-gradient(90deg, #f0f4ff 0%, #e8edff 100%); }
-th { padding: 12px 16px; text-align: left; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--blue-dark); white-space: nowrap; border-bottom: 2px solid var(--blue-light); }
-td { padding: 11px 16px; border-top: 1px solid var(--border-soft); color: var(--navy-mid); }
-tbody tr:nth-child(even) { background: #fafbff; }
-tbody tr:hover { background: var(--blue-pale); transition: background .12s; }
-.badge-ok   { color: var(--success); font-weight: 700; }
-.badge-fail { color: var(--error);   font-weight: 700; }
+/* ── Tables ──────────────────────────────────────────────────────────────── */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid #e8edf2;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 2px 12px rgba(15,23,42,.05);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .865rem;
+}
+thead {
+  background: #f8fafc;
+}
+th {
+  padding: 11px 18px;
+  text-align: left;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  white-space: nowrap;
+  border-bottom: 1px solid #e8edf2;
+}
+td {
+  padding: 13px 18px;
+  border-top: 1px solid #f1f5f9;
+  color: #1e293b;
+  vertical-align: middle;
+}
+tbody tr { transition: background .1s; }
+tbody tr:hover { background: #f8faff; }
+tbody tr:last-child td { border-bottom: none; }
+.badge-ok   { color: #16a34a; font-weight: 700; }
+.badge-fail { color: #dc2626; font-weight: 700; }
 
 /* Auth tablette */
 @media (max-width: 860px) {
