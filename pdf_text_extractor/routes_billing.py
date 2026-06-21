@@ -200,15 +200,41 @@ async def stripe_webhook(request: Request, background: BackgroundTasks):
     except json.JSONDecodeError:
         raise HTTPException(status_code=400, detail="Payload invalide.")
 
+    event_id   = event.get("id", "")
     event_type = event.get("type", "")
     obj        = event.get("data", {}).get("object", {})
 
+    # Idempotence — rejeter les événements déjà traités
+    if event_id and not _mark_event_processed(event_id):
+        return {"received": True, "skipped": "duplicate"}
+
     if event_type in ("customer.subscription.created", "customer.subscription.updated"):
-        background.add_task(_handle_subscription_upsert, obj)
+        background.add_task(_handle_subscription_upsert, obj, event_id)
     elif event_type == "customer.subscription.deleted":
         background.add_task(_handle_subscription_cancelled, obj)
 
     return {"received": True}
+
+
+def _mark_event_processed(event_id: str) -> bool:
+    """Tente d'enregistrer l'event_id. Retourne True si nouveau, False si déjà traité."""
+    try:
+        with get_db() as cur:
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS stripe_processed_events (
+                    event_id   TEXT PRIMARY KEY,
+                    processed_at TIMESTAMPTZ DEFAULT NOW()
+                )
+            """)
+            cur.execute(
+                "INSERT INTO stripe_processed_events (event_id) VALUES (%s) ON CONFLICT DO NOTHING",
+                (event_id,),
+            )
+            return cur.rowcount > 0
+    except Exception as exc:
+        import sys
+        print(f"[billing] _mark_event_processed error: {exc}", file=sys.stderr)
+        return True  # En cas d'erreur DB, on laisse passer pour ne pas bloquer
 
 
 def _verify_stripe_signature(payload: bytes, sig_header: str, secret: str) -> None:
@@ -225,29 +251,40 @@ def _verify_stripe_signature(payload: bytes, sig_header: str, secret: str) -> No
         raise ValueError("Signature Stripe invalide.")
 
 
-def _handle_subscription_upsert(sub: dict) -> None:
+def _handle_subscription_upsert(sub: dict, event_id: str = "") -> None:
     """Met à jour l'abonnement dans la BD selon le webhook Stripe."""
+    import sys
     from datetime import datetime, timezone
 
-    customer_id = sub.get("customer", "")
+    customer_id   = sub.get("customer", "")
     stripe_status = sub.get("status", "")
-    period_end  = sub.get("current_period_end")
-    items       = sub.get("items", {}).get("data", [])
-    price_id    = items[0]["price"]["id"] if items else ""
+    period_end    = sub.get("current_period_end")
+    items         = sub.get("items", {}).get("data", [])
+    price_id      = items[0]["price"]["id"] if items else ""
 
-    # Détermine le plan
-    plan = "starter"
-    if price_id == STRIPE_PRICE_PROFESSIONAL:
+    # Détermine le plan — log explicite si price_id inconnu
+    live_starter      = os.environ.get("STRIPE_PRICE_STARTER", "")      or STRIPE_PRICE_STARTER
+    live_professional = os.environ.get("STRIPE_PRICE_PROFESSIONAL", "") or STRIPE_PRICE_PROFESSIONAL
+
+    if price_id == live_professional:
         plan = "professional"
+    elif price_id == live_starter or not price_id:
+        plan = "starter"
+    else:
+        print(
+            f"[billing] WARN price_id inconnu '{price_id}' (event={event_id}) — défaut starter",
+            file=sys.stderr,
+        )
+        plan = "starter"
 
     # Mappe le statut Stripe → statut NexHire
     status_map = {
-        "active":            "active",
-        "trialing":          "trialing",
-        "past_due":          "past_due",
-        "canceled":          "cancelled",
-        "unpaid":            "past_due",
-        "incomplete":        "trialing",
+        "active":             "active",
+        "trialing":           "trialing",
+        "past_due":           "past_due",
+        "canceled":           "cancelled",
+        "unpaid":             "past_due",
+        "incomplete":         "trialing",
         "incomplete_expired": "cancelled",
     }
     nexhire_status = status_map.get(stripe_status, "trialing")
@@ -264,8 +301,9 @@ def _handle_subscription_upsert(sub: dict) -> None:
                    WHERE stripe_customer_id = %s""",
                 (nexhire_status, plan, end_dt, customer_id),
             )
-    except Exception:
-        pass
+    except Exception as exc:
+        print(f"[billing] ERREUR mise à jour abonnement (event={event_id}): {exc}", file=sys.stderr)
+        return
 
     try:
         from routes_webhooks import send_webhook_notification
@@ -289,12 +327,13 @@ def _handle_subscription_upsert(sub: dict) -> None:
                     plan=plan,
                     amount=amounts.get(plan, ""),
                 )
-    except Exception:
-        pass
+    except Exception as exc:
+        print(f"[billing] WARN notification post-abonnement (event={event_id}): {exc}", file=sys.stderr)
 
 
 def _handle_subscription_cancelled(sub: dict) -> None:
     """Marque l'abonnement comme annulé."""
+    import sys
     customer_id = sub.get("customer", "")
     try:
         with get_db() as cur:
@@ -302,10 +341,9 @@ def _handle_subscription_cancelled(sub: dict) -> None:
                 "UPDATE organizations SET subscription_status = 'cancelled' WHERE stripe_customer_id = %s",
                 (customer_id,),
             )
-        # Envoie un email de confirmation d'annulation si possible
         with get_db() as cur:
             cur.execute(
-                "SELECT name, owner_email FROM organizations WHERE stripe_customer_id = %s LIMIT 1",
+                "SELECT id, name, owner_email FROM organizations WHERE stripe_customer_id = %s LIMIT 1",
                 (customer_id,),
             )
             org = row(cur) or {}
@@ -315,14 +353,8 @@ def _handle_subscription_cancelled(sub: dict) -> None:
                 to_email=org["owner_email"],
                 org_name=org.get("name", ""),
             )
-        from routes_webhooks import send_webhook_notification
-        with get_db() as cur:
-            cur.execute(
-                "SELECT id FROM organizations WHERE stripe_customer_id = %s LIMIT 1",
-                (customer_id,),
-            )
-            org_row = row(cur)
-        if org_row:
-            send_webhook_notification(org_row["id"], "subscription", {"status": "cancelled", "plan": ""})
-    except Exception:
-        pass
+        if org.get("id"):
+            from routes_webhooks import send_webhook_notification
+            send_webhook_notification(org["id"], "subscription", {"status": "cancelled", "plan": ""})
+    except Exception as exc:
+        print(f"[billing] ERREUR annulation abonnement customer={customer_id}: {exc}", file=sys.stderr)
