@@ -6605,16 +6605,16 @@ async function _loadDuplicateTools() {
 // Catégories de contrats par type de département
 const DEPT_CONTRACT_CATS = {
   finance:       [["comptabilite","Comptabilité"],["assurances","Assurances"],["facilities","Entretien & installations"],["services_financiers","Services financiers"],["other","Autre"]],
-  hr:            [["recrutement","Recrutement"],["formation","Formation"],["evenements","Événements"],["design","Design & impression"],["bienetre","Bien-être employés"],["other","Autre"]],
+  hr:            [["recrutement","Recrutement"],["formation","Formation & développement"],["evenements","Événements & formation"],["design","Design & impression"],["bienetre","Bien-être employés"],["other","Autre"]],
   marketing:     [["site_web","Site Web"],["publicite","Publicité"],["design","Design graphique"],["reseaux_sociaux","Réseaux sociaux"],["evenements","Événements"],["other","Autre"]],
-  it:            [["software","Logiciels"],["licences","Licences"],["telecom","Téléphonie"],["internet","Internet"],["securite","Sécurité informatique"],["maintenance","Maintenance & support"],["other","Autre"]],
+  it:            [["software","Logiciels & licences"],["telecom","Téléphonie & Internet"],["securite","Sécurité informatique"],["maintenance","Maintenance & support"],["cloud","Cloud & hébergement"],["hardware","Matériel informatique"],["other","Autre"]],
   procurement:   [["fournisseurs","Fournisseurs"],["facilities","Entretien"],["maintenance","Maintenance"],["evenements","Événements"],["impression","Impression"],["securite","Sécurité"],["other","Autre"]],
   approvisionnement: [["fournisseurs","Fournisseurs"],["facilities","Entretien"],["maintenance","Maintenance"],["evenements","Événements"],["impression","Impression"],["securite","Sécurité"],["other","Autre"]],
   legal:         [["conseil_juridique","Conseil juridique"],["conformite","Conformité & réglementation"],["propriete_intellectuelle","Propriété intellectuelle"],["assurances","Assurances"],["other","Autre"]],
   operations:    [["fournisseurs","Fournisseurs"],["logistique","Logistique & transport"],["maintenance","Maintenance"],["facilities","Entretien & installations"],["other","Autre"]],
   direction:     [["conseil_strategique","Conseil stratégique"],["audit","Audit"],["assurances","Assurances"],["relations_publiques","Relations publiques"],["other","Autre"]],
 };
-const DEFAULT_CONTRACT_CATS = [["facilities","Entretien"],["assurances","Assurances"],["evenements","Événements"],["impression","Impression"],["maintenance","Maintenance"],["fournitures","Fournitures de bureau"],["services","Services professionnels"],["other","Autre"]];
+const DEFAULT_CONTRACT_CATS = [["facilities","Entretien & installations"],["assurances","Assurances"],["evenements","Événements & formation"],["impression","Impression & papeterie"],["maintenance","Maintenance"],["fournitures","Fournitures de bureau"],["telecom","Téléphonie & Internet"],["software","Logiciels & licences"],["services","Services professionnels"],["other","Autre"]];
 
 function _populateContractCatSelects(deptType) {
   const cats = DEPT_CONTRACT_CATS[deptType] || DEFAULT_CONTRACT_CATS;
