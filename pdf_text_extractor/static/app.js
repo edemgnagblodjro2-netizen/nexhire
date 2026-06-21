@@ -3532,7 +3532,6 @@ async function loadSettings() {
     const orgLogoSection = $("org-logo-section");
     if (orgLogoSection && isAdmin) orgLogoSection.classList.remove("hidden");
     if (p.logo_url) {
-      if ($("sp-logo-url")) $("sp-logo-url").value = p.logo_url;
       _showLogoPreview(p.logo_url);
       _applyOrgLogo(p.logo_url);
     }
@@ -3914,10 +3913,16 @@ function loginWithSSO() {
 
 function _showLogoPreview(url) {
   const preview = $("sp-logo-preview");
-  const wrap    = $("sp-logo-preview-wrap");
-  if (!preview || !wrap) return;
-  if (url) { preview.src = url; wrap.classList.remove("hidden"); }
-  else      { wrap.classList.add("hidden"); }
+  const hint    = $("logo-upload-hint");
+  if (!preview) return;
+  if (url) {
+    preview.src = url;
+    preview.classList.remove("hidden");
+    if (hint) hint.textContent = "Changer de logo";
+  } else {
+    preview.classList.add("hidden");
+    if (hint) hint.textContent = "Cliquer pour téléverser un logo";
+  }
 }
 
 function _applyOrgLogo(url) {
@@ -3934,7 +3939,6 @@ function _applyOrgLogo(url) {
   }
 }
 
-$("sp-logo-url")?.addEventListener("input", e => _showLogoPreview(e.target.value.trim()));
 $("sp-brand-color")?.addEventListener("input", e => {
   if ($("sp-brand-color-val")) $("sp-brand-color-val").textContent = e.target.value;
 });
@@ -3944,16 +3948,46 @@ async function saveOrgBranding() {
   const suc = $("sp-org-success");
   if (btn) { btn.disabled = true; btn.textContent = "Enregistrement…"; }
   try {
-    const logo_url    = $("sp-logo-url")?.value.trim() || null;
     const brand_color = $("sp-brand-color")?.value || null;
-    await apiCall("/api/settings/org", "PATCH", { logo_url, brand_color });
-    _applyOrgLogo(logo_url || "");
+    await apiCall("/api/settings/org", "PATCH", { brand_color });
     suc?.classList.remove("hidden");
     setTimeout(() => suc?.classList.add("hidden"), 3000);
   } catch (ex) {
     alert(ex.message || "Erreur lors de la sauvegarde du branding.");
   } finally {
     if (btn) { btn.disabled = false; btn.textContent = "Enregistrer le branding"; }
+  }
+}
+
+async function uploadOrgLogo(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const statusEl = $("logo-upload-status");
+  const zone     = $("logo-upload-zone");
+  if (statusEl) { statusEl.textContent = "Téléversement en cours…"; statusEl.style.color = "#64748b"; statusEl.classList.remove("hidden"); }
+  if (zone) zone.style.opacity = ".6";
+  try {
+    const fd = new FormData();
+    fd.append("file", file);
+    const res = await fetch("/api/settings/org/logo", {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${state.token}` },
+      body: fd,
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.detail || `Erreur ${res.status}`);
+    }
+    const data = await res.json();
+    _showLogoPreview(data.logo_url);
+    _applyOrgLogo(data.logo_url || "");
+    if (statusEl) { statusEl.textContent = "Logo enregistré avec succès."; statusEl.style.color = "#22c55e"; }
+    setTimeout(() => statusEl?.classList.add("hidden"), 3000);
+  } catch (ex) {
+    if (statusEl) { statusEl.textContent = ex.message || "Erreur lors du téléversement."; statusEl.style.color = "#ef4444"; }
+  } finally {
+    if (zone) zone.style.opacity = "";
+    input.value = "";
   }
 }
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from html import escape
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, status
 from pydantic import BaseModel, EmailStr, Field
 
 from auth import CurrentUser
@@ -154,6 +154,45 @@ def update_org(
     with get_db() as cur:
         cur.execute(f"UPDATE organizations SET {', '.join(fields)} WHERE id = %s", values)
     return {"ok": True}
+
+
+# ── Logo upload (admin/owner only) ────────────────────────────────────────────
+
+@router.post("/org/logo")
+async def upload_org_logo(
+    file: UploadFile,
+    user: CurrentUser = Depends(require_min_role("admin")),
+):
+    """Téléverse le logo dans Supabase Storage et sauvegarde l'URL publique en base."""
+    import uuid as _uuid
+    from supabase_client import service_client
+
+    ALLOWED = {"image/png": "png", "image/jpeg": "jpg", "image/svg+xml": "svg"}
+    mime = (file.content_type or "").split(";")[0].strip()
+    if mime not in ALLOWED:
+        raise HTTPException(status_code=400, detail="Format non supporté. Utilisez PNG, JPG ou SVG.")
+
+    data = await file.read()
+    if len(data) > 2 * 1024 * 1024:
+        raise HTTPException(status_code=413, detail="Le fichier dépasse la limite de 2 Mo.")
+
+    ext  = ALLOWED[mime]
+    path = f"{user.organization_id}/{_uuid.uuid4()}.{ext}"
+
+    try:
+        sb = service_client()
+        sb.storage.from_("org-logos").upload(path, data, {"content-type": mime, "upsert": "true"})
+        public_url = sb.storage.from_("org-logos").get_public_url(path)
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail="Erreur lors du téléversement du logo.") from exc
+
+    with get_db() as cur:
+        cur.execute(
+            "UPDATE organizations SET logo_url = %s WHERE id = %s",
+            (public_url, user.organization_id),
+        )
+
+    return {"logo_url": public_url}
 
 
 # ── Rapport mensuel (admin/owner only) ───────────────────────────────────────
