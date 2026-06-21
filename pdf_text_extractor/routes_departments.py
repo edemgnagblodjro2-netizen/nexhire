@@ -817,6 +817,10 @@ def _build_kpis(org_id: str, dept_id: str | None, kpi_keys: list[str]) -> list[d
                     opps.append(float(p.get("manual_hours_per_month") or 0) *
                                 float(p.get("automation_potential") or 0) / 100 *
                                 float(p.get("hourly_cost") or 50) * 12)
+                for c in _contracts():
+                    pot = float(c.get("annual_value") or 0) * float(c.get("negotiation_potential") or 0) / 100
+                    if pot > 0:
+                        opps.append(pot)
                 top = max(opps, default=0)
                 result.append({"key": key, "label": "Meilleure opportunité", "value": f"{top:,.0f} $",
                     "sub": "économie unitaire max / an", "icon": "🏆", "color": "#16a34a"})
@@ -824,6 +828,11 @@ def _build_kpis(org_id: str, dept_id: str | None, kpi_keys: list[str]) -> list[d
             elif key == "monthly_spend":
                 apps = _apps()
                 spend = sum(float(a.get("monthly_cost") or 0) for a in apps if a.get("status") != "decommissioned")
+                _IT_CATS = {"software","logiciels","licences","telecom","internet","securite","cloud","hardware","maintenance"}
+                for c in _contracts():
+                    cat = (c.get("category") or "").lower()
+                    if c.get("status") == "active" and cat in _IT_CATS:
+                        spend += float(c.get("annual_value") or 0) / 12
                 result.append({"key": key, "label": "Dépenses IT/mois", "value": f"{spend:,.0f} $",
                     "sub": "coût applicatif mensuel", "icon": "📉", "color": "#2563eb"})
 
