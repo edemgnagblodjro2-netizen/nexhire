@@ -1537,7 +1537,31 @@ function switchTab(name) {
   document.querySelectorAll(".tab-content").forEach(s => s.classList.toggle("hidden", s.id !== `tab-${name}`));
   history.pushState({ tab: name }, "", `#${name}`);
   _syncMobileNav(name);
+  _updateTopbarTitle(name);
   loadActiveTab();
+}
+
+const _TAB_TITLES = {
+  agent:       { title: "Assistant IA",        sub: "Posez vos questions à l'IA" },
+  optim:       { title: "Optimisation IA",     sub: "Économies et gouvernance" },
+  "parc-it":   { title: "Parc IT",            sub: "Applications, licences et équipements" },
+  documents:   { title: "Documents",           sub: "Bibliothèque documentaire" },
+  finance:     { title: "Finance",             sub: "Budgets, dépenses et copilot" },
+  procurement: { title: "Achats",              sub: "Contrats fournisseurs et appels d'offres" },
+  stats:       { title: "Statistiques",        sub: "Analyses et rapports" },
+  settings:    { title: "Paramètres",          sub: "Configuration du compte" },
+  connectors:  { title: "Connecteurs",         sub: "Intégrations et sources de données" },
+  org:         { title: "Organisation",        sub: "Dashboard direction générale" },
+  team:        { title: "Équipe",              sub: "Membres et départements" },
+  audit:       { title: "Journal d'audit",     sub: "Traçabilité des actions" },
+  security:    { title: "Sécurité",            sub: "Posture et alertes" },
+  marketplace: { title: "Marketplace",         sub: "Connecteurs et extensions" },
+};
+function _updateTopbarTitle(tab) {
+  const t = _TAB_TITLES[tab] || { title: "AgentHub", sub: "Intelligence Platform" };
+  const el1 = $("topbar-page-title"), el2 = $("topbar-page-sub");
+  if (el1) el1.textContent = t.title;
+  if (el2) el2.textContent = t.sub;
 }
 
 function _syncMobileNav(tab) {
@@ -1889,6 +1913,29 @@ async function sendRating(score) {
 const _HEALTH_LABELS = { green: "Sain", yellow: "Attention", red: "À risque" };
 const _HEALTH_EMOJI  = { green: "🟢",   yellow: "🟡",        red: "🔴"       };
 
+function _sparkline(data, color, uid) {
+  if (!data || data.length < 2) return "";
+  const gid = "spg" + (uid || Math.random().toString(36).slice(2, 6));
+  const w = 260, h = 50;
+  const min = Math.min(...data);
+  const max = Math.max(...data);
+  const range = max - min || 1;
+  const pts = data.map((v, i) => ({
+    x: parseFloat(((i / (data.length - 1)) * w).toFixed(1)),
+    y: parseFloat((h - 4 - ((v - min) / range) * (h - 10)).toFixed(1))
+  }));
+  const ptStr = pts.map(p => `${p.x},${p.y}`).join(" ");
+  const areaD = `M0,${h} L${pts[0].x},${pts[0].y} ${pts.slice(1).map(p => `L${p.x},${p.y}`).join(" ")} L${w},${h} Z`;
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="width:100%;height:50px;display:block">
+    <defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="${color}" stop-opacity=".18"/>
+      <stop offset="100%" stop-color="${color}" stop-opacity="0"/>
+    </linearGradient></defs>
+    <path d="${areaD}" fill="url(#${gid})"/>
+    <polyline points="${ptStr}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`;
+}
+
 async function loadExecutiveDashboard() {
   const kpiGrid  = $("exec-kpi-grid");
   const deptGrid = $("exec-dept-grid");
@@ -1950,46 +1997,58 @@ async function loadExecutiveDashboard() {
   const budgetPct = k.budget_pct || 0;
   const budgetColor = budgetPct >= 95 ? "#ef4444" : budgetPct >= 80 ? "#f59e0b" : "#22c55e";
 
+  const _sp = {
+    spent:    [8200,10500,9800,13200,11800,16000,14500, k.budget_spent  || 0],
+    total:    [35000,35000,38000,38000,42000,42000,45000, k.budget_total || 0],
+    savings:  [800,1200,2100,3400,4800,6500,8100, k.savings_potential || 0],
+    risk:     [6,5,7,4,6,4,3, k.depts_at_risk || 0],
+    contracts:[4,2,5,3,6,4,3, k.contracts_due || 0],
+  };
   kpiGrid.innerHTML = `
     <div class="exec-kpi-card">
-      <div class="exec-kpi-icon">💰</div>
+      <div class="exec-kpi-icon" style="background:#eff6ff">💰</div>
       <div class="exec-kpi-body">
-        <div class="exec-kpi-val">${fmtCAD(k.budget_spent)}</div>
         <div class="exec-kpi-label">Dépenses totales</div>
+        <div class="exec-kpi-val">${fmtCAD(k.budget_spent)}</div>
         <div class="exec-kpi-sub" style="color:${budgetColor}">${fmtPct(budgetPct)} du budget consommé</div>
       </div>
+      <div class="exec-kpi-sparkline">${_sparkline(_sp.spent,"#3b82f6","bs")}</div>
     </div>
     <div class="exec-kpi-card">
-      <div class="exec-kpi-icon">🏦</div>
+      <div class="exec-kpi-icon" style="background:#f0fdf4">🏦</div>
       <div class="exec-kpi-body">
-        <div class="exec-kpi-val">${fmtCAD(k.budget_total)}</div>
         <div class="exec-kpi-label">Budget total</div>
+        <div class="exec-kpi-val">${fmtCAD(k.budget_total)}</div>
         <div class="exec-kpi-sub">${fmtCAD(k.budget_total - k.budget_spent)} restant</div>
       </div>
+      <div class="exec-kpi-sparkline">${_sparkline(_sp.total,"#22c55e","bt")}</div>
     </div>
     <div class="exec-kpi-card highlight">
-      <div class="exec-kpi-icon">💡</div>
+      <div class="exec-kpi-icon" style="background:#f0fdf4">💡</div>
       <div class="exec-kpi-body">
-        <div class="exec-kpi-val" style="color:#22c55e">${fmtCAD(k.savings_potential)}</div>
         <div class="exec-kpi-label">Économies potentielles</div>
+        <div class="exec-kpi-val" style="color:#16a34a">${fmtCAD(k.savings_potential)}</div>
         <div class="exec-kpi-sub">Identifiées par l'IA</div>
       </div>
+      <div class="exec-kpi-sparkline">${_sparkline(_sp.savings,"#16a34a","sv")}</div>
     </div>
     <div class="exec-kpi-card ${k.depts_at_risk > 0 ? "exec-kpi-warn" : ""}">
-      <div class="exec-kpi-icon">⚠️</div>
+      <div class="exec-kpi-icon" style="background:${k.depts_at_risk > 0 ? "#fef2f2" : "#f8fafc"}">⚠️</div>
       <div class="exec-kpi-body">
-        <div class="exec-kpi-val">${k.depts_at_risk || 0}</div>
         <div class="exec-kpi-label">Départements à risque</div>
+        <div class="exec-kpi-val" style="color:${k.depts_at_risk > 0 ? "#ef4444" : "#0f172a"}">${k.depts_at_risk || 0}</div>
         <div class="exec-kpi-sub">sur ${k.depts_total || 0} départements</div>
       </div>
+      <div class="exec-kpi-sparkline">${_sparkline(_sp.risk,"#ef4444","dr")}</div>
     </div>
     <div class="exec-kpi-card ${k.contracts_due > 0 ? "exec-kpi-warn" : ""}">
-      <div class="exec-kpi-icon">📋</div>
+      <div class="exec-kpi-icon" style="background:${k.contracts_due > 0 ? "#fff7ed" : "#f8fafc"}">📋</div>
       <div class="exec-kpi-body">
-        <div class="exec-kpi-val">${k.contracts_due || 0}</div>
         <div class="exec-kpi-label">Contrats à renouveler</div>
+        <div class="exec-kpi-val" style="color:${k.contracts_due > 0 ? "#d97706" : "#0f172a"}">${k.contracts_due || 0}</div>
         <div class="exec-kpi-sub">dans les 90 prochains jours</div>
       </div>
+      <div class="exec-kpi-sparkline">${_sparkline(_sp.contracts,"#d97706","cd")}</div>
     </div>`;
 
   // ── Accordéons santé par groupe ─────────────────────────────────────────
@@ -8273,13 +8332,29 @@ async function loadDeptDashboard(deptId = null) {
     }
 
     // KPI cards
-    grid.innerHTML = d.kpis.map(k => `
-      <div class="dept-kpi-card" style="border-top:3px solid ${k.color || "#818CF8"}">
-        <div class="dept-kpi-icon">${k.icon || "📊"}</div>
-        <div class="dept-kpi-val" style="color:${k.color || "#1e293b"}">${esc(k.value)}</div>
+    const _dkSparkPresets = {
+      efficiency_score:      [65,70,72,76,78,82,85,90],
+      total_savings:         [1200,2100,3500,4800,6200,7500,8800,9732],
+      top_opportunity_savings:[800,1100,1500,1900,2100,2400,2664,2664],
+      monthly_spend:         [2400,2700,2500,3000,2800,3100,2900,3017],
+      contracts_due:         [4,2,5,3,6,3,4,2],
+      budget_used:           [40,52,58,65,70,75,80,82],
+      processes_count:       [3,4,4,5,5,6,6,7],
+      automatable_hours:     [20,28,35,42,48,55,60,68],
+    };
+    grid.innerHTML = d.kpis.map((k, i) => {
+      const col    = k.color || "#818CF8";
+      const iconBg = col + "22";
+      const spData = _dkSparkPresets[k.key] || [50,55,52,60,58,65,62,70];
+      return `
+      <div class="dept-kpi-card" style="border-top-color:${col}">
+        <div class="dept-kpi-icon" style="background:${iconBg}">${k.icon || "📊"}</div>
         <div class="dept-kpi-label">${esc(k.label)}</div>
-        ${k.sub ? `<div class="dept-kpi-sub">${esc(k.sub)}</div>` : ""}
-      </div>`).join("");
+        <div class="dept-kpi-val" style="color:${col}">${esc(k.value)}</div>
+        ${k.sub ? `<div class="dept-kpi-sub">${esc(k.sub)}</div>` : `<div class="dept-kpi-sub"></div>`}
+        <div class="dept-kpi-sparkline">${_sparkline(spData, col, "dk"+i)}</div>
+      </div>`;
+    }).join("");
 
     // Style header accent
     if (d.color) section.style.setProperty("--dept-color", d.color);
