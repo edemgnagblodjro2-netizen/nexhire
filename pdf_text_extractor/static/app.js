@@ -6604,17 +6604,17 @@ async function _loadDuplicateTools() {
 // ── Contrats ──────────────────────────────────────────────────────────────────
 // Catégories de contrats par type de département
 const DEPT_CONTRACT_CATS = {
-  finance:       [["audit","Audit"],["conseil_financier","Conseil financier"],["assurances","Assurances"],["banque","Banque & crédit"],["comptabilite","Comptabilité"],["facilities","Entretien & installations"],["services","Services professionnels"],["other","Autre"]],
-  hr:            [["recrutement","Recrutement"],["formation","Formation & développement"],["avantages_sociaux","Avantages sociaux"],["conseil_rh","Conseil RH"],["evenements","Événements & communications"],["design","Design & impression"],["services","Services professionnels"],["other","Autre"]],
-  legal:         [["conseil_juridique","Conseil juridique"],["conformite","Conformité & réglementation"],["propriete_intellectuelle","Propriété intellectuelle"],["assurances","Assurances"],["services","Services professionnels"],["other","Autre"]],
-  marketing:     [["agences","Agences"],["medias","Médias & production"],["publicite","Publicité"],["relations_publiques","Relations publiques"],["evenements","Événements"],["design","Design & impression"],["services","Services professionnels"],["other","Autre"]],
-  it:            [["telecom","Télécommunications"],["software","Logiciels & SaaS"],["hardware","Matériel informatique"],["cloud","Cloud & hébergement"],["securite","Sécurité informatique"],["services","Services IT"],["maintenance","Maintenance & support"],["other","Autre"]],
-  operations:    [["fournisseurs","Fournisseurs"],["logistique","Logistique & transport"],["maintenance","Maintenance"],["facilities","Entretien & installations"],["services","Services professionnels"],["other","Autre"]],
-  direction:     [["conseil_strategique","Conseil stratégique"],["audit","Audit"],["assurances","Assurances"],["relations_publiques","Relations publiques"],["services","Services professionnels"],["other","Autre"]],
-  procurement:   [["fournisseurs","Fournisseurs & sous-traitants"],["facilities","Entretien & installations"],["logistique","Logistique & transport"],["maintenance","Maintenance & réparation"],["evenements","Événements & locations"],["impression","Impression & papeterie"],["securite","Sécurité & surveillance"],["services","Services professionnels"],["other","Autre"]],
-  approvisionnement: [["fournisseurs","Fournisseurs & sous-traitants"],["facilities","Entretien & installations"],["logistique","Logistique & transport"],["maintenance","Maintenance & réparation"],["evenements","Événements & locations"],["impression","Impression & papeterie"],["services","Services professionnels"],["other","Autre"]],
+  finance:       [["comptabilite","Comptabilité"],["assurances","Assurances"],["facilities","Entretien & installations"],["services_financiers","Services financiers"],["other","Autre"]],
+  hr:            [["recrutement","Recrutement"],["formation","Formation"],["evenements","Événements"],["design","Design & impression"],["bienetre","Bien-être employés"],["other","Autre"]],
+  marketing:     [["site_web","Site Web"],["publicite","Publicité"],["design","Design graphique"],["reseaux_sociaux","Réseaux sociaux"],["evenements","Événements"],["other","Autre"]],
+  it:            [["software","Logiciels"],["licences","Licences"],["telecom","Téléphonie"],["internet","Internet"],["securite","Sécurité informatique"],["maintenance","Maintenance & support"],["other","Autre"]],
+  procurement:   [["fournisseurs","Fournisseurs"],["facilities","Entretien"],["maintenance","Maintenance"],["evenements","Événements"],["impression","Impression"],["securite","Sécurité"],["other","Autre"]],
+  approvisionnement: [["fournisseurs","Fournisseurs"],["facilities","Entretien"],["maintenance","Maintenance"],["evenements","Événements"],["impression","Impression"],["securite","Sécurité"],["other","Autre"]],
+  legal:         [["conseil_juridique","Conseil juridique"],["conformite","Conformité & réglementation"],["propriete_intellectuelle","Propriété intellectuelle"],["assurances","Assurances"],["other","Autre"]],
+  operations:    [["fournisseurs","Fournisseurs"],["logistique","Logistique & transport"],["maintenance","Maintenance"],["facilities","Entretien & installations"],["other","Autre"]],
+  direction:     [["conseil_strategique","Conseil stratégique"],["audit","Audit"],["assurances","Assurances"],["relations_publiques","Relations publiques"],["other","Autre"]],
 };
-const DEFAULT_CONTRACT_CATS = [["services","Services professionnels"],["telecom","Télécommunications"],["software","Logiciels & SaaS"],["hardware","Matériel"],["facilities","Entretien & installations"],["assurances","Assurances"],["evenements","Événements"],["impression","Impression & papeterie"],["maintenance","Maintenance"],["other","Autre"]];
+const DEFAULT_CONTRACT_CATS = [["facilities","Entretien"],["assurances","Assurances"],["evenements","Événements"],["impression","Impression"],["maintenance","Maintenance"],["fournitures","Fournitures de bureau"],["services","Services professionnels"],["other","Autre"]];
 
 function _populateContractCatSelects(deptType) {
   const cats = DEPT_CONTRACT_CATS[deptType] || DEFAULT_CONTRACT_CATS;
