@@ -386,14 +386,14 @@ button[type="submit"] { @extend .btn; @extend .btn-primary; width: 100%; }
 }
 .feat-card {
   padding: 0;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
-  background: var(--surface);
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow .2s, transform .2s;
+  border-radius: 20px;
+  border: 1px solid #e8edf2;
+  background: #ffffff;
+  box-shadow: 0 2px 16px rgba(15,23,42,.06);
+  transition: box-shadow .15s, transform .15s;
   overflow: hidden;
 }
-.feat-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+.feat-card:hover { box-shadow: 0 8px 28px rgba(15,23,42,.12); transform: translateY(-3px); }
 .feat-img {
   width: 100%;
   height: 180px;
@@ -407,8 +407,8 @@ button[type="submit"] { @extend .btn; @extend .btn-primary; width: 100%; }
   display: block;
 }
 .feat-card:hover .feat-img img { transform: scale(1.05); }
-.feat-card h3 { font-size: 1.02rem; margin: 20px 22px 6px; color: var(--navy); font-weight: 700; }
-.feat-card p  { font-size: .87rem; line-height: 1.65; margin: 0 22px 22px; color: var(--muted); }
+.feat-card h3 { font-size: 1rem; margin: 20px 22px 6px; color: #0f172a; font-weight: 800; letter-spacing: -.01em; }
+.feat-card p  { font-size: .87rem; line-height: 1.65; margin: 0 22px 22px; color: #64748b; }
 
 /* ── Lang button ─────────────────────────────────────────────────────────── */
 .lang-btn {
@@ -487,19 +487,21 @@ button[type="submit"] { @extend .btn; @extend .btn-primary; width: 100%; }
 }
 .price-card {
   padding: 36px;
-  border-radius: var(--radius-xl);
-  border: 2px solid var(--border);
-  background: var(--surface);
-  box-shadow: var(--shadow);
+  border-radius: 24px;
+  border: 1.5px solid #e8edf2;
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(15,23,42,.07);
   position: relative;
   display: flex;
   flex-direction: column;
   gap: 24px;
+  transition: box-shadow .15s, transform .15s;
 }
+.price-card:hover { box-shadow: 0 10px 36px rgba(15,23,42,.12); transform: translateY(-2px); }
 .price-card.featured {
-  border-color: var(--blue);
-  background: linear-gradient(145deg, #fff, #eef4ff);
-  box-shadow: var(--shadow-lg), 0 0 0 4px rgba(37,99,235,.08);
+  border-color: #818cf8;
+  background: #ffffff;
+  box-shadow: 0 8px 32px rgba(99,102,241,.18), 0 0 0 4px rgba(99,102,241,.06);
 }
 .price-badge {
   position: absolute;
@@ -1327,16 +1329,16 @@ footer {
 }
 .auth-submit {
   width: 100%; min-height: 50px;
-  background: #4F46E5;
-  color: #fff; border: none; border-radius: 8px;
-  font-size: .97rem; font-weight: 700;
+  background: #6366f1;
+  color: #fff; border: none; border-radius: 12px;
+  font-size: .95rem; font-weight: 700;
   cursor: pointer; letter-spacing: .01em;
-  box-shadow: 0 4px 14px rgba(79,70,229,.35);
+  box-shadow: 0 4px 18px rgba(99,102,241,.38);
   transition: background .15s, box-shadow .15s, transform .1s;
 }
 .auth-submit:hover:not(:disabled) {
-  background: #4338CA;
-  box-shadow: 0 6px 20px rgba(79,70,229,.45);
+  background: #4f46e5;
+  box-shadow: 0 6px 24px rgba(99,102,241,.48);
   transform: translateY(-1px);
 }
 .auth-submit:active:not(:disabled) { transform: translateY(0); }
