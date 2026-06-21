@@ -7,6 +7,7 @@ from agent_service import AgentResponse, run_agent
 from audit import AuditEvent, client_ip, log_audit, log_audit_sync
 from auth import CurrentUser
 from db import get_db, rows, row
+from rate_limiter import limiter
 from rbac import require_active_subscription, require_min_role
 from usage import check_and_consume_query
 
@@ -146,6 +147,7 @@ def _get_user_dept_type(user_id: str) -> str | None:
 
 
 @router.post("/query", response_model=AgentQueryResponse)
+@limiter.limit("10/minute")
 def agent_query(
     payload: AgentQuery,
     request: Request,
