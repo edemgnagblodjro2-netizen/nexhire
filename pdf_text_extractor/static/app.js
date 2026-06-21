@@ -4833,32 +4833,65 @@ async function loadServers() {
   } catch (e) { wrap.innerHTML = `<p class="muted" style="padding:20px">${e.message||"Erreur"}</p>`; }
 }
 
+const _IT_CONTRACT_CATS = new Set(["software","logiciels","licences","telecom","internet","securite","cloud","hardware","maintenance"]);
+
 async function loadApps() {
   const wrap = $("apps-table-wrap");
   const deptId = $("parc-dept-select")?.value || "";
   const status = $("app-status-filter")?.value || "";
   try {
     const url = `/api/apps?${deptId ? `dept_id=${deptId}&` : ""}${status ? `status=${status}` : ""}`;
-    const apps = await apiCall(url);
-    if (!apps.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucune application enregistrée.</p>`; return; }
-    wrap.innerHTML = `<table class="data-table"><thead><tr><th>Nom</th><th>Fournisseur</th><th>Catégorie</th><th>Utilisateurs</th><th>Dernier usage</th><th>Coût/mois</th><th>Statut</th><th>Dép.</th><th></th></tr></thead><tbody>` +
-      apps.map(a => {
-        const stMap = { active:"badge-active", unused:"badge-unused", decommissioned:"badge-expired" };
-        const stLbl = { active:"Active", unused:"Inutilisée", decommissioned:"Décom." };
-        const unusedInfo = a.days_unused !== null ? `${a.days_unused}j sans usage` : "—";
-        const deptName = a.department_name || "—";
-        return `<tr class="${a.status!=="active"?"row-inactive":""}">
-          <td><strong>${esc(a.name)}</strong>${a.url ? ` <a href="${esc(a.url)}" target="_blank" style="font-size:.75rem;color:var(--indigo)">↗</a>` : ""}</td>
-          <td>${esc(a.vendor||"—")}</td>
-          <td>${esc(a.category||"—")}</td>
-          <td>${a.user_count}</td>
-          <td>${unusedInfo}</td>
-          <td>${_fmt(a.monthly_cost)}</td>
-          <td><span class="badge ${stMap[a.status]||"badge-active"}">${stLbl[a.status]||a.status}</span></td>
-          <td>${esc(deptName)}</td>
-          <td><button class="btn-icon" onclick="editApp('${a.id}')">✎</button> <button class="btn-icon btn-deactivate" onclick="deleteApp('${a.id}')">✕</button></td>
-        </tr>`;
-      }).join("") + `</tbody></table>`;
+    const [apps, allContracts] = await Promise.all([
+      apiCall(url),
+      apiCall("/api/contracts").catch(() => []),
+    ]);
+
+    // Contrats TI — source de vérité automatique
+    const itContracts = allContracts.filter(c =>
+      c.status === "active" && _IT_CONTRACT_CATS.has(c.category)
+    );
+
+    const stMap = { active:"badge-active", unused:"badge-unused", decommissioned:"badge-expired" };
+    const stLbl = { active:"Active", unused:"Inutilisée", decommissioned:"Décom." };
+
+    const appRows = apps.map(a => {
+      const unusedInfo = a.days_unused !== null ? `${a.days_unused}j sans usage` : "—";
+      return `<tr class="${a.status!=="active"?"row-inactive":""}">
+        <td><strong>${esc(a.name)}</strong>${a.url ? ` <a href="${esc(a.url)}" target="_blank" style="font-size:.75rem;color:var(--indigo)">↗</a>` : ""}</td>
+        <td>${esc(a.vendor||"—")}</td>
+        <td>${esc(a.category||"—")}</td>
+        <td>${a.user_count}</td>
+        <td>${unusedInfo}</td>
+        <td>${_fmt(a.monthly_cost)}</td>
+        <td><span class="badge ${stMap[a.status]||"badge-active"}">${stLbl[a.status]||a.status}</span></td>
+        <td>${esc(a.department_name||"—")}</td>
+        <td><button class="btn-icon" onclick="editApp('${a.id}')">✎</button> <button class="btn-icon btn-deactivate" onclick="deleteApp('${a.id}')">✕</button></td>
+      </tr>`;
+    });
+
+    const contractRows = itContracts.map(c => {
+      const monthly = c.annual_value ? _fmt(c.annual_value / 12) : "—";
+      const urgCls = c.urgency === "critical" ? "badge-expired" : c.urgency === "warning" ? "badge-expiring" : "badge-active";
+      const renewLbl = c.days_to_renewal != null ? `${c.days_to_renewal}j` : "—";
+      return `<tr style="background:#f0f9ff">
+        <td><strong>${esc(c.vendor)}</strong><br><span class="sa-meta" style="color:var(--indigo);font-size:.72rem">📋 Contrat</span></td>
+        <td>${esc(c.vendor||"—")}</td>
+        <td>${esc(c.category||"—")}</td>
+        <td>—</td>
+        <td><span class="badge ${urgCls}" style="font-size:.75rem">Renouvellement ${renewLbl}</span></td>
+        <td>${monthly}</td>
+        <td><span class="badge badge-active">Actif</span></td>
+        <td>${esc(c.department_name||"—")}</td>
+        <td><button class="btn-icon" onclick="editContract('${c.id}')">✎</button></td>
+      </tr>`;
+    });
+
+    const allRows = [...appRows, ...contractRows];
+    if (!allRows.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucune application enregistrée.</p>`; return; }
+
+    wrap.innerHTML = `<table class="data-table"><thead><tr><th>Nom</th><th>Fournisseur</th><th>Catégorie</th><th>Utilisateurs</th><th>Dernier usage / Renouvellement</th><th>Coût/mois</th><th>Statut</th><th>Dép.</th><th></th></tr></thead><tbody>` +
+      allRows.join("") + `</tbody></table>` +
+      (itContracts.length ? `<p style="margin-top:8px;font-size:.78rem;color:var(--slate)">🔵 ${itContracts.length} application${itContracts.length>1?"s":""} synchronisée${itContracts.length>1?"s":""} depuis les contrats actifs</p>` : "");
   } catch (e) { wrap.innerHTML = `<p class="muted" style="padding:20px">${e.message||"Erreur"}</p>`; }
 }
 
