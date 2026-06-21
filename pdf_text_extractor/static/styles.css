@@ -2278,17 +2278,17 @@ footer {
 
 /* ── Parc IT ─────────────────────────────────────────────────────────────── */
 .parc-tabs {
-  display: flex; gap: 4px; border-bottom: 2px solid #e2e8f0;
+  display: flex; gap: 2px; border-bottom: 1px solid #e8edf2;
   margin-bottom: 20px; overflow-x: auto;
 }
 .parc-tab-btn {
-  padding: 8px 18px; border: none; background: none; border-radius: 6px 6px 0 0;
-  font-size: .85rem; font-weight: 600; color: var(--navy-light);
+  padding: 9px 16px; border: none; background: none; border-radius: 8px 8px 0 0;
+  font-size: .82rem; font-weight: 600; color: #64748b;
   cursor: pointer; white-space: nowrap; transition: all .15s;
-  border-bottom: 2px solid transparent; margin-bottom: -2px;
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
 }
-.parc-tab-btn.active { color: var(--indigo); border-bottom-color: var(--indigo); background: rgba(129,140,248,.08); }
-.parc-tab-btn:hover:not(.active) { background: rgba(129,140,248,.05); }
+.parc-tab-btn.active { color: #6366f1; border-bottom-color: #6366f1; background: rgba(99,102,241,.06); }
+.parc-tab-btn:hover:not(.active) { color: #334155; background: #f8fafc; }
 .parc-content { /* shown/hidden by JS */ }
 
 /* ── Parc IT — barre de recherche département ─────────────────────────────── */
@@ -3195,10 +3195,10 @@ tbody tr:last-child td { border-bottom: none; }
 
 .exec-section-title {
   display: flex; align-items: center; justify-content: space-between;
-  font-size: .85rem; font-weight: 700; color: var(--navy);
-  text-transform: uppercase; letter-spacing: .05em;
-  padding-bottom: 10px;
-  border-bottom: 2px solid var(--border);
+  font-size: .72rem; font-weight: 700; color: #94a3b8;
+  text-transform: uppercase; letter-spacing: .08em;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f1f5f9;
 }
 .exec-legend { display: flex; align-items: center; gap: 12px; font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--slate); }
 .badge-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 4px; }
@@ -3211,10 +3211,11 @@ tbody tr:last-child td { border-bottom: none; }
 
 /* ── Accordéons Santé des départements ───────────────────────────────────── */
 .dept-acc-wrap {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border: 1px solid #e8edf2;
+  border-radius: 16px;
   overflow: hidden;
   margin-top: 12px;
+  box-shadow: 0 2px 12px rgba(15,23,42,.04);
 }
 .dept-acc-hd {
   width: 100%;
@@ -3222,28 +3223,27 @@ tbody tr:last-child td { border-bottom: none; }
   align-items: center;
   gap: 12px;
   padding: 14px 18px;
-  background: var(--surface);
+  background: #ffffff;
   border: none;
   cursor: pointer;
   text-align: left;
-  font-size: .92rem;
+  font-size: .9rem;
   font-weight: 700;
-  color: var(--navy);
+  color: #0f172a;
   border-left: 4px solid var(--acc-color, #818cf8);
   transition: background .15s;
 }
 .dept-acc-hd:hover { background: #f8fafc; }
 .dept-acc-title { flex: 1; }
 .dept-acc-count {
-  font-size: .72rem; font-weight: 700;
+  font-size: .71rem; font-weight: 700;
   padding: 3px 10px; border-radius: 999px;
 }
-.dept-acc-chevron { font-size: .8rem; color: var(--slate); margin-left: 4px; }
+.dept-acc-chevron { font-size: .8rem; color: #94a3b8; margin-left: 4px; }
 .dept-acc-body {
   padding: 16px;
-  background: #fafbff;
-  border-top: 1px solid var(--border);
-  transition: all .2s ease;
+  background: #f8fafc;
+  border-top: 1px solid #f1f5f9;
 }
 .dept-acc-closed { display: none; }
 .exec-dept-grid-inner {
@@ -3252,9 +3252,9 @@ tbody tr:last-child td { border-bottom: none; }
   gap: 14px;
 }
 .exec-dept-card {
-  background: var(--surface);
-  border: 2px solid var(--border);
-  border-radius: var(--radius-lg);
+  background: #ffffff;
+  border: 1.5px solid #e8edf2;
+  border-radius: 14px;
   padding: 18px;
   display: flex;
   flex-direction: column;
@@ -3262,7 +3262,7 @@ tbody tr:last-child td { border-bottom: none; }
   cursor: pointer;
   transition: box-shadow .15s, transform .1s;
 }
-.exec-dept-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+.exec-dept-card:hover { box-shadow: 0 6px 20px rgba(15,23,42,.09); transform: translateY(-2px); }
 .exec-dept-green  { border-left: 4px solid #22c55e; }
 .exec-dept-yellow { border-left: 4px solid #f59e0b; }
 .exec-dept-red    { border-left: 4px solid #ef4444; }
