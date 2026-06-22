@@ -65,16 +65,18 @@ def export_report(
         org_name = r.get("name") or "Organisation"
         logo_url = r.get("logo_url") or None
 
-    logo_bytes = _fetch_logo(logo_url)
+    logo_bytes  = _fetch_logo(logo_url)
+    budget_dept = _fetch_budget_by_dept(user.organization_id or "", payload.date_from, payload.date_to)
+    budget_cat  = _fetch_budget_by_category(user.organization_id or "", payload.date_from, payload.date_to)
 
     if payload.format == "pdf":
-        return _export_pdf(title, date_str, payload, org_name, logo_bytes)
+        return _export_pdf(title, date_str, payload, org_name, logo_bytes, budget_dept, budget_cat)
     elif payload.format == "xlsx":
-        return _export_excel(title, date_str, payload, org_name)
+        return _export_excel(title, date_str, payload, org_name, budget_dept, budget_cat)
     elif payload.format == "docx":
-        return _export_word(title, date_str, payload, org_name, logo_bytes)
+        return _export_word(title, date_str, payload, org_name, logo_bytes, budget_dept, budget_cat)
     elif payload.format == "pptx":
-        return _export_pptx(title, date_str, payload, org_name, logo_bytes)
+        return _export_pptx(title, date_str, payload, org_name, logo_bytes, budget_dept, budget_cat)
 
 
 # ── Shared helpers ─────────────────────────────────────────────────────────
@@ -96,6 +98,76 @@ def _default_conclusion(payload: ExportRequest, date_str: str) -> str:
         "Les informations sont confidentielles et réservées aux personnes autorisées.\n"
         "Pour toute question, contactez votre administrateur NexHire."
     )
+
+
+def _fetch_budget_by_dept(org_id: str, date_from: str | None, date_to: str | None) -> list[dict]:
+    """Top 10 départements par budget alloué (allocated / actual / balance)."""
+    conds = ["b.organization_id = %s"]
+    params: list = [org_id]
+    _apply_date_filter(conds, params, date_from, date_to)
+    where = " AND ".join(conds)
+    sql = f"""
+        SELECT
+            COALESCE(d.name, 'Sans département') AS name,
+            SUM(b.allocated)  AS allocated,
+            SUM(b.actual)     AS actual,
+            MAX(b.currency)   AS currency
+        FROM budget_entries b
+        LEFT JOIN departments d ON b.department_id = d.id
+        WHERE {where}
+        GROUP BY d.name
+        ORDER BY allocated DESC
+        LIMIT 10
+    """
+    try:
+        with get_db() as cur:
+            cur.execute(sql, params)
+            return rows(cur)
+    except Exception:
+        return []
+
+
+def _fetch_budget_by_category(org_id: str, date_from: str | None, date_to: str | None) -> list[dict]:
+    """Top 10 catégories par dépenses réelles (actual)."""
+    conds = ["b.organization_id = %s"]
+    params: list = [org_id]
+    _apply_date_filter(conds, params, date_from, date_to)
+    where = " AND ".join(conds)
+    sql = f"""
+        SELECT
+            b.category        AS name,
+            SUM(b.allocated)  AS allocated,
+            SUM(b.actual)     AS actual,
+            MAX(b.currency)   AS currency
+        FROM budget_entries b
+        WHERE {where}
+        GROUP BY b.category
+        ORDER BY actual DESC
+        LIMIT 10
+    """
+    try:
+        with get_db() as cur:
+            cur.execute(sql, params)
+            return rows(cur)
+    except Exception:
+        return []
+
+
+def _apply_date_filter(conds: list, params: list, date_from: str | None, date_to: str | None) -> None:
+    if date_from:
+        try:
+            y, m = int(date_from[:4]), int(date_from[5:7])
+            conds.append("(b.year > %s OR (b.year = %s AND (b.month IS NULL OR b.month >= %s)))")
+            params.extend([y, y, m])
+        except (ValueError, IndexError):
+            pass
+    if date_to:
+        try:
+            y, m = int(date_to[:4]), int(date_to[5:7])
+            conds.append("(b.year < %s OR (b.year = %s AND (b.month IS NULL OR b.month <= %s)))")
+            params.extend([y, y, m])
+        except (ValueError, IndexError):
+            pass
 
 
 def _fetch_logo(url: str | None) -> bytes | None:
@@ -180,6 +252,8 @@ def _export_pdf(
     payload: ExportRequest,
     org_name: str,
     logo_bytes: bytes | None,
+    budget_dept: list[dict],
+    budget_cat: list[dict],
 ) -> StreamingResponse:
     from reportlab.lib.pagesizes import A4
     from reportlab.lib.styles import ParagraphStyle
@@ -308,6 +382,93 @@ def _export_pdf(
             except Exception:
                 pass
 
+    # ── Budget par département — Top 10
+    if budget_dept:
+        from reportlab.platypus import Table, TableStyle
+        currency = budget_dept[0].get("currency") or "CAD"
+        total_alloc  = sum(r.get("allocated") or 0 for r in budget_dept)
+        total_actual = sum(r.get("actual")    or 0 for r in budget_dept)
+
+        story.append(Spacer(1, 0.5 * cm))
+        story.append(HRFlowable(color=C_LIGHT, thickness=1, spaceAfter=6))
+        story.append(Paragraph("BUDGET PAR DÉPARTEMENT — TOP 10", s_label))
+        story.append(Paragraph(
+            f"Total alloué : <b>{total_alloc:,.0f} {currency}</b>  ·  "
+            f"Total réel : <b>{total_actual:,.0f} {currency}</b>  ·  "
+            f"Écart : <b>{total_alloc - total_actual:,.0f} {currency}</b>",
+            ParagraphStyle("bsum", fontName="Helvetica", fontSize=10, textColor=C_NAVY, spaceAfter=8, leading=15),
+        ))
+
+        tdata = [["Département", "Alloué", "Réel / Dépenses", "Écart", "% Consommé"]]
+        bar_labels, bar_pct = [], []
+        for r in budget_dept:
+            alloc  = r.get("allocated") or 0
+            actual = r.get("actual")    or 0
+            bal    = alloc - actual
+            pct    = actual / alloc * 100 if alloc > 0 else 0
+            dept_name = (r.get("name") or "—")[:28]
+            tdata.append([dept_name, f"{alloc:,.0f}", f"{actual:,.0f}", f"{bal:,.0f}", f"{pct:.1f}%"])
+            bar_labels.append(dept_name); bar_pct.append(round(pct, 1))
+
+        tbl = Table(tdata, colWidths=[5.8*cm, 3*cm, 3.2*cm, 3*cm, 2.5*cm])
+        tbl.setStyle(TableStyle([
+            ("BACKGROUND",    (0, 0), (-1, 0),  C_NAVY),
+            ("TEXTCOLOR",     (0, 0), (-1, 0),  HexColor("#ffffff")),
+            ("FONTNAME",      (0, 0), (-1, 0),  "Helvetica-Bold"),
+            ("FONTSIZE",      (0, 0), (-1, -1), 8.5),
+            ("ROWBACKGROUNDS",(0, 1), (-1, -1), [HexColor("#f0f4ff"), HexColor("#ffffff")]),
+            ("GRID",          (0, 0), (-1, -1), 0.4, C_LIGHT),
+            ("ALIGN",         (1, 0), (-1, -1), "RIGHT"),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+            ("TOPPADDING",    (0, 0), (-1, -1), 4),
+        ]))
+        story.append(tbl)
+        story.append(Spacer(1, 0.3 * cm))
+
+        try:
+            spec_dept = ChartSpec(type="bar", title="% Budget consommé par département", labels=bar_labels, values=bar_pct)
+            story.append(RLImage(io.BytesIO(_chart_image(spec_dept, w=6.5, h=3.2)), width=13*cm, height=6.4*cm))
+        except Exception:
+            pass
+
+    # ── Budget par catégorie — Top 10
+    if budget_cat:
+        currency = budget_cat[0].get("currency") or "CAD"
+        story.append(Spacer(1, 0.4 * cm))
+        story.append(Paragraph("DÉPENSES PAR CATÉGORIE — TOP 10", s_label))
+
+        tdata2 = [["Catégorie", "Alloué", "Réel / Dépenses", "% du total réel"]]
+        total_actual_cat = sum(r.get("actual") or 0 for r in budget_cat) or 1
+        cat_labels, cat_vals = [], []
+        for r in budget_cat:
+            alloc  = r.get("allocated") or 0
+            actual = r.get("actual")    or 0
+            pct    = actual / total_actual_cat * 100
+            cat_name = (r.get("name") or "—")[:28]
+            tdata2.append([cat_name, f"{alloc:,.0f}", f"{actual:,.0f}", f"{pct:.1f}%"])
+            cat_labels.append(cat_name); cat_vals.append(round(actual, 0))
+
+        tbl2 = Table(tdata2, colWidths=[5.8*cm, 3*cm, 3.2*cm, 3*cm])
+        tbl2.setStyle(TableStyle([
+            ("BACKGROUND",    (0, 0), (-1, 0),  C_NAVY),
+            ("TEXTCOLOR",     (0, 0), (-1, 0),  HexColor("#ffffff")),
+            ("FONTNAME",      (0, 0), (-1, 0),  "Helvetica-Bold"),
+            ("FONTSIZE",      (0, 0), (-1, -1), 8.5),
+            ("ROWBACKGROUNDS",(0, 1), (-1, -1), [HexColor("#f0f4ff"), HexColor("#ffffff")]),
+            ("GRID",          (0, 0), (-1, -1), 0.4, C_LIGHT),
+            ("ALIGN",         (1, 0), (-1, -1), "RIGHT"),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+            ("TOPPADDING",    (0, 0), (-1, -1), 4),
+        ]))
+        story.append(tbl2)
+        story.append(Spacer(1, 0.3 * cm))
+
+        try:
+            spec_cat = ChartSpec(type="pie", title="Répartition des dépenses par catégorie", labels=cat_labels, values=cat_vals)
+            story.append(RLImage(io.BytesIO(_chart_image(spec_cat, w=5.5, h=3.5)), width=11*cm, height=7*cm))
+        except Exception:
+            pass
+
     # ── Conclusion
     story.append(Spacer(1, 0.4 * cm))
     story.append(HRFlowable(color=C_BRAND, thickness=1.5, spaceAfter=6))
@@ -329,6 +490,8 @@ def _export_excel(
     date_str: str,
     payload: ExportRequest,
     org_name: str,
+    budget_dept: list[dict],
+    budget_cat: list[dict],
 ) -> StreamingResponse:
     from openpyxl import Workbook
     from openpyxl.styles import Font, PatternFill, Alignment
@@ -422,6 +585,105 @@ def _export_excel(
     ws[f"A{row}"].value = f"{org_name} · NexHire EIP · Confidentiel · {date_str}"
     ws[f"A{row}"].font  = Font(size=8, italic=True, color=GRAY_XL)
 
+    # ── Feuille Budget Département
+    if budget_dept:
+        currency = budget_dept[0].get("currency") or "CAD"
+        bws = wb.create_sheet(title="Budget Département")
+        bws.column_dimensions["A"].width = 30
+        for col in "BCDE": bws.column_dimensions[col].width = 18
+
+        def _bhdr(cell, text, bg=NAVY_XL, fg="FFFFFF"):
+            cell.value = text
+            cell.font  = Font(bold=True, size=10, color=fg)
+            cell.fill  = PatternFill(fill_type="solid", fgColor=bg)
+            cell.alignment = Alignment(horizontal="center", vertical="center")
+
+        bws.merge_cells("A1:E1")
+        bws["A1"].value = f"Budget par département — Top 10   ·   {org_name}"
+        bws["A1"].font  = Font(bold=True, size=13, color="FFFFFF")
+        bws["A1"].fill  = PatternFill(fill_type="solid", fgColor=NAVY_XL)
+        bws["A1"].alignment = Alignment(horizontal="left", vertical="center")
+        bws.row_dimensions[1].height = 28
+
+        for col, label in zip("ABCDE", ["Département", f"Alloué ({currency})", f"Réel ({currency})", f"Écart ({currency})", "% Consommé"]):
+            _bhdr(bws[f"{col}2"], label, BRAND_XL)
+        bws.row_dimensions[2].height = 22
+
+        fills = [PatternFill(fill_type="solid", fgColor="F0F4FF"), PatternFill(fill_type="solid", fgColor="FFFFFF")]
+        for i, r in enumerate(budget_dept, start=3):
+            alloc  = r.get("allocated") or 0
+            actual = r.get("actual")    or 0
+            bal    = alloc - actual
+            pct    = actual / alloc * 100 if alloc > 0 else 0
+            for col, val in zip("ABCDE", [r.get("name") or "—", alloc, actual, bal, f"{pct:.1f}%"]):
+                bws[f"{col}{i}"].value = val
+                bws[f"{col}{i}"].fill  = fills[i % 2]
+                bws[f"{col}{i}"].font  = Font(size=10, color=NAVY_XL)
+                bws[f"{col}{i}"].alignment = Alignment(horizontal="right" if col != "A" else "left", vertical="center")
+            bws.row_dimensions[i].height = 20
+
+        # Total row
+        tr = len(budget_dept) + 3
+        total_alloc  = sum(r.get("allocated") or 0 for r in budget_dept)
+        total_actual = sum(r.get("actual")    or 0 for r in budget_dept)
+        for col, val in zip("ABCDE", ["TOTAL", total_alloc, total_actual, total_alloc - total_actual, ""]):
+            bws[f"{col}{tr}"].value = val
+            bws[f"{col}{tr}"].font  = Font(bold=True, size=10, color="FFFFFF")
+            bws[f"{col}{tr}"].fill  = PatternFill(fill_type="solid", fgColor=NAVY_XL)
+            bws[f"{col}{tr}"].alignment = Alignment(horizontal="right" if col != "A" else "left")
+
+        # Chart % consommé
+        chart_b = BarChart()
+        chart_b.title = "% Budget consommé par département"
+        chart_b.type  = "col"
+        n = len(budget_dept)
+        data_pct = Reference(bws, min_col=5, min_row=2, max_row=n + 2)
+        cats_b   = Reference(bws, min_col=1, min_row=3, max_row=n + 2)
+        chart_b.add_data(data_pct, titles_from_data=True)
+        chart_b.set_categories(cats_b)
+        chart_b.shape = 4
+        bws.add_chart(chart_b, f"A{tr + 2}")
+
+    # ── Feuille Budget Catégorie
+    if budget_cat:
+        currency = budget_cat[0].get("currency") or "CAD"
+        cws = wb.create_sheet(title="Budget Catégorie")
+        cws.column_dimensions["A"].width = 28
+        for col in "BCD": cws.column_dimensions[col].width = 18
+
+        cws.merge_cells("A1:D1")
+        cws["A1"].value = f"Dépenses par catégorie — Top 10   ·   {org_name}"
+        cws["A1"].font  = Font(bold=True, size=13, color="FFFFFF")
+        cws["A1"].fill  = PatternFill(fill_type="solid", fgColor=NAVY_XL)
+        cws["A1"].alignment = Alignment(horizontal="left", vertical="center")
+        cws.row_dimensions[1].height = 28
+
+        for col, label in zip("ABCD", ["Catégorie", f"Alloué ({currency})", f"Réel ({currency})", "% du total réel"]):
+            _bhdr(cws[f"{col}2"], label, BRAND_XL)
+        cws.row_dimensions[2].height = 22
+
+        total_actual_cat = sum(r.get("actual") or 0 for r in budget_cat) or 1
+        fills2 = [PatternFill(fill_type="solid", fgColor="F0F4FF"), PatternFill(fill_type="solid", fgColor="FFFFFF")]
+        for i, r in enumerate(budget_cat, start=3):
+            alloc  = r.get("allocated") or 0
+            actual = r.get("actual")    or 0
+            pct    = actual / total_actual_cat * 100
+            for col, val in zip("ABCD", [r.get("name") or "—", alloc, actual, f"{pct:.1f}%"]):
+                cws[f"{col}{i}"].value = val
+                cws[f"{col}{i}"].fill  = fills2[i % 2]
+                cws[f"{col}{i}"].font  = Font(size=10, color=NAVY_XL)
+                cws[f"{col}{i}"].alignment = Alignment(horizontal="right" if col != "A" else "left", vertical="center")
+            cws.row_dimensions[i].height = 20
+
+        chart_c = PieChart()
+        chart_c.title = "Répartition des dépenses par catégorie"
+        nc = len(budget_cat)
+        dc = Reference(cws, min_col=3, min_row=2, max_row=nc + 2)
+        cc = Reference(cws, min_col=1, min_row=3, max_row=nc + 2)
+        chart_c.add_data(dc, titles_from_data=True)
+        chart_c.set_categories(cc)
+        cws.add_chart(chart_c, f"A{nc + 4}")
+
     buf = io.BytesIO(); wb.save(buf); buf.seek(0)
     return StreamingResponse(buf,
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -436,6 +698,8 @@ def _export_word(
     payload: ExportRequest,
     org_name: str,
     logo_bytes: bytes | None,
+    budget_dept: list[dict],
+    budget_cat: list[dict],
 ) -> StreamingResponse:
     from docx import Document
     from docx.shared import Pt, RGBColor, Inches, Cm
@@ -494,6 +758,54 @@ def _export_word(
                 pass
         doc.add_paragraph()
 
+    # ── Budget par département
+    if budget_dept:
+        currency = budget_dept[0].get("currency") or "CAD"
+        total_alloc  = sum(r.get("allocated") or 0 for r in budget_dept)
+        total_actual = sum(r.get("actual")    or 0 for r in budget_dept)
+        _wlabel(doc, "BUDGET PAR DÉPARTEMENT — TOP 10", BRAND_W)
+        doc.add_paragraph(
+            f"Total alloué : {total_alloc:,.0f} {currency}   ·   "
+            f"Total réel : {total_actual:,.0f} {currency}   ·   "
+            f"Écart : {total_alloc - total_actual:,.0f} {currency}"
+        )
+        from docx.oxml.ns import qn as _qn
+        tbl_d = doc.add_table(rows=1, cols=5)
+        tbl_d.style = "Table Grid"
+        hdr_cells = tbl_d.rows[0].cells
+        for i, h in enumerate(["Département", f"Alloué ({currency})", f"Réel ({currency})", "Écart", "% Consommé"]):
+            hdr_cells[i].text = h
+            hdr_cells[i].paragraphs[0].runs[0].font.bold = True
+            hdr_cells[i].paragraphs[0].runs[0].font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
+        for r in budget_dept:
+            alloc  = r.get("allocated") or 0
+            actual = r.get("actual")    or 0
+            pct    = actual / alloc * 100 if alloc > 0 else 0
+            row_cells = tbl_d.add_row().cells
+            for i, v in enumerate([r.get("name") or "—", f"{alloc:,.0f}", f"{actual:,.0f}", f"{alloc-actual:,.0f}", f"{pct:.1f}%"]):
+                row_cells[i].text = v
+        doc.add_paragraph()
+
+    # ── Budget par catégorie
+    if budget_cat:
+        currency = budget_cat[0].get("currency") or "CAD"
+        _wlabel(doc, "DÉPENSES PAR CATÉGORIE — TOP 10", BRAND_W)
+        total_actual_cat = sum(r.get("actual") or 0 for r in budget_cat) or 1
+        tbl_c = doc.add_table(rows=1, cols=4)
+        tbl_c.style = "Table Grid"
+        hdr2 = tbl_c.rows[0].cells
+        for i, h in enumerate(["Catégorie", f"Alloué ({currency})", f"Réel ({currency})", "% du total"]):
+            hdr2[i].text = h
+            hdr2[i].paragraphs[0].runs[0].font.bold = True
+            hdr2[i].paragraphs[0].runs[0].font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
+        for r in budget_cat:
+            actual = r.get("actual") or 0
+            pct    = actual / total_actual_cat * 100
+            rc = tbl_c.add_row().cells
+            for i, v in enumerate([r.get("name") or "—", f"{r.get('allocated') or 0:,.0f}", f"{actual:,.0f}", f"{pct:.1f}%"]):
+                rc[i].text = v
+        doc.add_paragraph()
+
     conclusion = payload.conclusion or _default_conclusion(payload, date_str)
     _wlabel(doc, "CONCLUSION", BRAND_W)
     for line in conclusion.split("\n"):
@@ -529,6 +841,8 @@ def _export_pptx(
     payload: ExportRequest,
     org_name: str,
     logo_bytes: bytes | None,
+    budget_dept: list[dict],
+    budget_cat: list[dict],
 ) -> StreamingResponse:
     from pptx import Presentation
     from pptx.util import Inches, Pt
@@ -645,6 +959,42 @@ def _export_pptx(
             ch = chart.chart
             ch.has_legend = spec.type == "pie"
             if ch.has_legend: ch.legend.position = 2
+        except Exception:
+            pass
+
+    # ── Slide : Budget par département
+    if budget_dept:
+        try:
+            currency = budget_dept[0].get("currency") or "CAD"
+            sd = prs.slides.add_slide(blank)
+            bgd = sd.background.fill; bgd.solid(); bgd.fore_color.rgb = LIGHT_P
+            add_header_bar(sd)
+            btd = tb(sd, 0.3, 0.95, 12.7, 0.65); p_td = btd.text_frame.paragraphs[0]
+            run(p_td, "Budget par département — Top 10", 18, bold=True, color=NAVY_P)
+
+            cd_b = PptxChartData()
+            cd_b.categories = [r.get("name") or "—" for r in budget_dept]
+            pct_vals = [(r.get("actual") or 0) / (r.get("allocated") or 1) * 100 for r in budget_dept]
+            cd_b.add_series("% Consommé", [round(v, 1) for v in pct_vals])
+            ch_b = sd.shapes.add_chart(XL_CHART_TYPE.COLUMN_CLUSTERED, Inches(0.5), Inches(1.7), Inches(12.3), Inches(5.5), cd_b)
+            ch_b.chart.has_legend = False
+        except Exception:
+            pass
+
+    # ── Slide : Dépenses par catégorie
+    if budget_cat:
+        try:
+            sc2 = prs.slides.add_slide(blank)
+            bgc2 = sc2.background.fill; bgc2.solid(); bgc2.fore_color.rgb = LIGHT_P
+            add_header_bar(sc2)
+            btc2 = tb(sc2, 0.3, 0.95, 12.7, 0.65); p_tc2 = btc2.text_frame.paragraphs[0]
+            run(p_tc2, "Dépenses par catégorie — Top 10", 18, bold=True, color=NAVY_P)
+
+            cd_c = PptxChartData()
+            cd_c.categories = [r.get("name") or "—" for r in budget_cat]
+            cd_c.add_series("Dépenses réelles", [float(r.get("actual") or 0) for r in budget_cat])
+            ch_c = sc2.shapes.add_chart(XL_CHART_TYPE.PIE, Inches(1.5), Inches(1.5), Inches(10), Inches(5.5), cd_c)
+            ch_c.chart.has_legend = True
         except Exception:
             pass
 
