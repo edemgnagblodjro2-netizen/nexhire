@@ -10234,7 +10234,7 @@ function submitHelpTab(e) {
   const subj  = $("htab-subject")?.value  || "Demande de support NexHire EIP";
   const desc  = $("htab-description")?.value || "";
   const body  = [`Catégorie : ${LABELS[cat] || cat}`, `Email : ${email}`, `Organisation : ${state.user?.organization_name || "—"}`, "", desc].join("\n");
-  window.open(`mailto:support@nexhire.ca?subject=${encodeURIComponent(`[NexHire EIP] ${subj}`)}&body=${encodeURIComponent(body)}`, "_blank");
+  window.location.href = `mailto:support@nexhire.ca?subject=${encodeURIComponent(`[NexHire EIP] ${subj}`)}&body=${encodeURIComponent(body)}`;
   $("help-tab-form")?.classList.add("hidden");
   $("htab-success")?.classList.remove("hidden");
 }

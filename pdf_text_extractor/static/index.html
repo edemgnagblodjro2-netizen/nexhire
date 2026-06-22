@@ -3475,63 +3475,6 @@
       </div>
     </section>
 
-      <div style="max-width:640px">
-        <p style="color:#64748b;font-size:.9rem;margin:0 0 24px;line-height:1.6">
-          Besoin d'aide ? Notre équipe vous répond généralement sous <strong>24 heures</strong> ouvrables.
-          Pour les urgences techniques, précisez-le dans votre message.
-        </p>
-
-        <!-- Form -->
-        <form id="help-tab-form" class="help-form" onsubmit="submitHelpTab(event)" style="display:flex;flex-direction:column;gap:16px">
-          <div class="help-field">
-            <label for="htab-category">De quoi avez-vous besoin ?</label>
-            <div class="help-select-wrap">
-              <select id="htab-category" required>
-                <option value="">Sélectionner une catégorie…</option>
-                <option value="bug">🐛  Problème technique ou bug</option>
-                <option value="billing">💳  Facturation et abonnement</option>
-                <option value="access">🔑  Accès, permissions ou authentification</option>
-                <option value="integration">🔌  Intégrations et connecteurs</option>
-                <option value="migration">📦  Migration et import de données</option>
-                <option value="feature">💡  Demande de fonctionnalité</option>
-                <option value="training">🎓  Formation et prise en main</option>
-                <option value="security">🔐  Sécurité et conformité</option>
-                <option value="other">💬  Autre</option>
-              </select>
-            </div>
-          </div>
-          <div class="help-field">
-            <label for="htab-email">Votre adresse e-mail</label>
-            <input type="email" id="htab-email" placeholder="vous@exemple.com" required />
-          </div>
-          <div class="help-field">
-            <label for="htab-subject">Objet</label>
-            <input type="text" id="htab-subject" placeholder="Résumez votre demande en une ligne" required />
-          </div>
-          <div class="help-field">
-            <label for="htab-description">Description <span style="color:#94a3b8;font-weight:400">(facultatif)</span></label>
-            <textarea id="htab-description" rows="5" placeholder="Décrivez le problème ou votre demande en détail…"></textarea>
-          </div>
-          <div class="help-actions" style="padding-top:4px">
-            <button type="submit" class="help-submit-btn">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-              Envoyer la demande
-            </button>
-          </div>
-        </form>
-
-        <!-- Success -->
-        <div id="htab-success" class="help-success hidden" style="margin-top:24px">
-          <div class="help-success-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <h3>Demande envoyée</h3>
-          <p>Votre message a été transmis à notre équipe. Nous vous répondrons à l'adresse indiquée dans les meilleurs délais.</p>
-          <button class="help-submit-btn" style="margin-top:8px" onclick="resetHelpTab()">Nouvelle demande</button>
-        </div>
-      </div>
-    </section>
-
     <!-- ═══════════════ SUPER ADMIN ═══════════════ -->
     <section id="tab-superadmin" class="tab-content hidden" role="tabpanel">
       <div class="section-header">
