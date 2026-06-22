@@ -5063,7 +5063,7 @@ async function loadServers() {
         const typeLabel = _deviceLabel[s.device_type || "server"] || s.device_type || "Serveur";
         const ageInfo = _equipmentAgeInfo(s.acquisition_date);
         const ageCell = ageInfo
-          ? `<span style="font-size:11px;font-weight:600;color:${ageInfo.color}">${ageInfo.emoji} ${ageInfo.label}</span>`
+          ? `<span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:${ageInfo.color}"><span style="width:7px;height:7px;border-radius:50%;background:${ageInfo.color};flex-shrink:0"></span>${ageInfo.label}</span>`
           : `<span style="font-size:.78rem;color:var(--slate)">—</span>`;
         return `<tr class="${s.status==="decommissioned"?"row-inactive":""}">
           <td style="white-space:nowrap;font-size:.82rem">${typeLabel}</td>
@@ -5546,7 +5546,7 @@ function _updateAgeIndicator() {
   const mo  = info.months % 12;
   const age = yrs > 0 ? `${yrs} an${yrs > 1 ? "s" : ""}${mo > 0 ? ` ${mo} mois` : ""}` : `${mo} mois`;
   ind.style.cssText = `display:block;padding:6px 10px;border-radius:8px;font-size:12px;font-weight:600;background:${info.bg};color:${info.color};border:1px solid ${info.color}30`;
-  ind.textContent = `${info.emoji} ${info.label} — ${age}`;
+  ind.innerHTML = `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${info.color};margin-right:6px;vertical-align:middle"></span>${info.label} — ${age}`;
 }
 
 function openServerModal(srv = null) {
@@ -11382,7 +11382,16 @@ async function _loadITCopilot() {
         '<div class="exec-kpi-card"><div class="exec-kpi-icon">🔑</div><div class="exec-kpi-body"><div class="exec-kpi-val">' + licActive.length + '</div><div class="exec-kpi-lbl">Licences actives</div></div></div>' +
         '<div class="exec-kpi-card' + (licExpireSoon.length > 0 ? ' exec-kpi-warn' : '') + '"><div class="exec-kpi-icon">' + (licExpireSoon.length > 0 ? '⚠️' : '✅') + '</div><div class="exec-kpi-body"><div class="exec-kpi-val" style="color:' + licColor + '">' + licExpireSoon.length + '</div><div class="exec-kpi-lbl">Licences expirant &lt;30j</div></div></div>' +
         '<div class="exec-kpi-card' + (srvDecom.length > 0 ? ' exec-kpi-warn' : '') + '"><div class="exec-kpi-icon">' + (srvDecom.length > 0 ? '🔄' : '✅') + '</div><div class="exec-kpi-body"><div class="exec-kpi-val" style="color:' + decomColor + '">' + srvDecom.length + '</div><div class="exec-kpi-lbl">À décommissionner</div></div></div>' +
-        '<div class="exec-kpi-card' + (srvRed.length > 0 ? ' exec-kpi-warn' : '') + '"><div class="exec-kpi-icon">' + (srvRed.length > 0 ? '🔴' : '🟢') + '</div><div class="exec-kpi-body"><div class="exec-kpi-val" style="font-size:.82rem;line-height:1.4">' + (srvGreen.length ? '🟢 ' + srvGreen.length + ' récents  ' : '') + (srvYellow.length ? '🟡 ' + srvYellow.length + ' à surveiller  ' : '') + (srvRed.length ? '🔴 ' + srvRed.length + ' à remplacer' : (!srvGreen.length && !srvYellow.length ? '—' : '')) + '</div><div class="exec-kpi-lbl">Santé du parc</div></div></div>' +
+        (function(){
+          const dot = (c) => `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${c};flex-shrink:0"></span>`;
+          const rows = [];
+          if (srvGreen.length)  rows.push(`<span style="display:inline-flex;align-items:center;gap:5px;color:#15803d;font-weight:600">${dot('#15803d')} ${srvGreen.length} récents</span>`);
+          if (srvYellow.length) rows.push(`<span style="display:inline-flex;align-items:center;gap:5px;color:#92400e;font-weight:600">${dot('#d97706')} ${srvYellow.length} à surveiller</span>`);
+          if (srvRed.length)    rows.push(`<span style="display:inline-flex;align-items:center;gap:5px;color:#991b1b;font-weight:600">${dot('#dc2626')} ${srvRed.length} à remplacer</span>`);
+          const healthIcon = srvRed.length > 0 ? '⚠️' : srvYellow.length > 0 ? '📋' : '✅';
+          const healthVal  = rows.length ? rows.join('') : '<span style="color:var(--slate)">—</span>';
+          return '<div class="exec-kpi-card' + (srvRed.length > 0 ? ' exec-kpi-warn' : '') + '"><div class="exec-kpi-icon">' + healthIcon + '</div><div class="exec-kpi-body"><div style="display:flex;flex-direction:column;gap:3px;margin-bottom:2px">' + healthVal + '</div><div class="exec-kpi-lbl">Santé du parc</div></div></div>';
+        })() +
         '<div class="exec-kpi-card" style="border-color:' + scoreColor + '"><div style="width:50px;height:50px;border-radius:50%;border:4px solid ' + scoreColor + ';display:flex;align-items:center;justify-content:center;font-size:1.05rem;font-weight:800;color:' + scoreColor + ';flex-shrink:0">' + itScore + '</div><div class="exec-kpi-body"><div class="exec-kpi-val" style="color:' + scoreColor + '">/100</div><div class="exec-kpi-lbl">Score IT</div></div></div>';
     }
 
@@ -11447,9 +11456,9 @@ async function _loadITCopilot() {
         let txt = "Le parc IT compte " + srvActive.length + " équipement" + (srvActive.length !== 1 ? "s actifs" : " actif") + " et " + licActive.length + " licence" + (licActive.length !== 1 ? "s actives" : " active") + ".";
         if (srvGreen.length || srvYellow.length || srvRed.length) {
           txt += " Santé du parc : ";
-          if (srvGreen.length)  txt += srvGreen.length  + " équipement" + (srvGreen.length  !== 1 ? "s récents" : " récent") + " 🟢";
-          if (srvYellow.length) txt += (srvGreen.length ? ", " : " ") + srvYellow.length + " à surveiller 🟡";
-          if (srvRed.length)    txt += (srvGreen.length || srvYellow.length ? ", " : " ") + srvRed.length + " à remplacer 🔴";
+          if (srvGreen.length)  txt += srvGreen.length  + " équipement" + (srvGreen.length  !== 1 ? "s récents" : " récent");
+          if (srvYellow.length) txt += (srvGreen.length ? ", " : " ") + srvYellow.length + " à surveiller";
+          if (srvRed.length)    txt += (srvGreen.length || srvYellow.length ? ", " : " ") + srvRed.length + " à remplacer";
           txt += ".";
         } else if (srvNoDate.length > 0 && srvs.length > 0) {
           txt += " " + srvNoDate.length + " équipement" + (srvNoDate.length !== 1 ? "s n'ont" : " n'a") + " pas de date d'achat — cycle de vie non suivi.";
@@ -11468,7 +11477,7 @@ async function _loadITCopilot() {
         '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">' +
         '<button class="btn btn-outline btn-sm" onclick="_itQuickQuestion(\'score\')">Pourquoi ce score IT ?</button>' +
         '<button class="btn btn-outline btn-sm" onclick="_itQuickQuestion(\'licences\')">Licences à renouveler ?</button>' +
-        '<button class="btn btn-outline btn-sm" onclick="_itQuickQuestion(\'lifecycle\')">🟢🟡🔴 Cycle de vie du parc ?</button>' +
+        '<button class="btn btn-outline btn-sm" onclick="_itQuickQuestion(\'lifecycle\')">Cycle de vie du parc ?</button>' +
         '<button class="btn btn-outline btn-sm" onclick="_itQuickQuestion(\'cout\')">Applications inutilisées ?</button>' +
         '</div><div id="it-quick-response" style="display:none"></div></div>';
     }
@@ -11559,12 +11568,12 @@ function _itQuickQuestion(q) {
     }
   } else if (q === 'lifecycle') {
     if (srvRed.length) {
-      ans = srvRed.length + " équipement" + (srvRed.length !== 1 ? "s" : "") + " à remplacer 🔴 : " + srvRed.map(s => { const i = _equipmentAgeInfo(s.acquisition_date); return esc(s.hostname) + " (" + Math.floor((i?.months||0)/12) + "ans)"; }).join(", ") + ".";
-      if (srvYellow.length) ans += " · " + srvYellow.length + " à surveiller 🟡.";
+      ans = srvRed.length + " équipement" + (srvRed.length !== 1 ? "s" : "") + " à remplacer : " + srvRed.map(s => { const i = _equipmentAgeInfo(s.acquisition_date); return esc(s.hostname) + " (" + Math.floor((i?.months||0)/12) + "ans)"; }).join(", ") + ".";
+      if (srvYellow.length) ans += " · " + srvYellow.length + " à surveiller.";
     } else if (srvYellow.length) {
-      ans = srvYellow.length + " équipement" + (srvYellow.length !== 1 ? "s" : "") + " à surveiller 🟡 : " + srvYellow.map(s => esc(s.hostname)).join(", ") + ". Aucun remplacement urgent.";
+      ans = srvYellow.length + " équipement" + (srvYellow.length !== 1 ? "s" : "") + " à surveiller : " + srvYellow.map(s => esc(s.hostname)).join(", ") + ". Aucun remplacement urgent.";
     } else if (srvGreen.length) {
-      ans = "Parc récent — " + srvGreen.length + " équipement" + (srvGreen.length !== 1 ? "s" : "") + " actif" + (srvGreen.length !== 1 ? "s" : "") + " 🟢. Aucun remplacement prévu.";
+      ans = "Parc récent — " + srvGreen.length + " équipement" + (srvGreen.length !== 1 ? "s" : "") + " actif" + (srvGreen.length !== 1 ? "s" : "") + ". Aucun remplacement prévu.";
     } else {
       ans = "Aucune date d'achat enregistrée. Ajoutez la date d'acquisition pour activer le suivi du cycle de vie.";
     }
