@@ -1723,8 +1723,8 @@ $("agent-form").addEventListener("submit", async e => {
   try {
     const data = await apiCall("/api/agent/query", "POST", {
       question:       q,
-      assistant_mode: $("agent-mode").value,
-      language:       $("agent-lang").value,
+      assistant_mode: $("agent-mode")?.value || "enterprise",
+      language:       $("agent-lang")?.value || "fr",
       dept_type:      _activeWorkspaceDeptType || state.deptType || undefined,
     });
     renderAgentResult(data);

@@ -1,4 +1,4 @@
-from __future__ import annotations
+erfrom __future__ import annotations
 
 import json
 import os
@@ -278,27 +278,32 @@ def _unused_licenses(org_id: str) -> list[dict]:
     for l in lics:
         qty      = float(l.get("quantity") or 1)
         assigned = float(l.get("assigned_count") or 0)
+        buffer   = float(l.get("buffer_target") or 0)
         cost     = float(l.get("cost_per_unit") or 0)
         if qty == 0 or cost == 0:
             continue
-        usage_pct = assigned / qty * 100
-        if usage_pct >= 80:
+        # Surplus = licences au-delà du stock tampon déclaré — seul vrai gaspillage
+        surplus = qty - assigned - buffer
+        if surplus <= 0:
             continue
-        unused_units = qty - assigned
+        usage_pct    = assigned / qty * 100
         multiplier   = 12 if l.get("billing_cycle") == "monthly" else 1
-        savings      = unused_units * cost * multiplier
+        savings      = surplus * cost * multiplier
+        confidence   = 95 if surplus / qty > 0.4 else 80 if surplus / qty > 0.2 else 65
         result.append({
             "license_id":              l["id"],
             "product_name":            l["product_name"],
             "vendor":                  l.get("vendor"),
             "quantity":                int(qty),
             "assigned_count":          int(assigned),
+            "buffer_target":           int(buffer),
+            "surplus":                 int(surplus),
             "usage_pct":               round(usage_pct, 1),
             "cost_per_unit":           cost,
             "billing_cycle":           l.get("billing_cycle"),
             "annual_savings_potential": round(savings, 2),
             "department":              l.get("department_name"),
-            "confidence":              95 if usage_pct < 30 else 80 if usage_pct < 60 else 65,
+            "confidence":              confidence,
         })
     return sorted(result, key=lambda x: -x["annual_savings_potential"])
 
@@ -474,13 +479,16 @@ def _efficiency_score(org_id: str) -> dict:
 def _top_opps(lics, dups, contracts, procs) -> list[dict]:
     opps = []
     for l in lics[:3]:
-        opps.append({"type": "license",  "title": f"Licences sous-utilisées : {l['product_name']}",       "savings": l["annual_savings_potential"],         "confidence": l["confidence"]})
+        dept    = f" — {l['department']}" if l.get("department") else ""
+        surplus = l.get("surplus", "?")
+        opps.append({"type": "license",  "title": f"Surplus licences : {l['product_name']} ({surplus} unités{dept})", "savings": l["annual_savings_potential"], "confidence": l["confidence"]})
     for d in dups[:2]:
-        opps.append({"type": "duplicate","title": f"Outils en doublon ({d['tool_count']}) : {d['category']}", "savings": d["annual_savings_potential"],     "confidence": d["confidence"]})
+        opps.append({"type": "duplicate","title": f"Outils en doublon ({d['tool_count']}) : {d['category']}", "savings": d["annual_savings_potential"], "confidence": d["confidence"]})
     for c in contracts[:2]:
-        opps.append({"type": "contract", "title": f"Contrat à renégocier : {c['vendor']} ({c['days_to_renewal']}j)", "savings": c.get("potential_savings", 0), "confidence": c.get("confidence", 80)})
+        dept = f" — {c['department']}" if c.get("department") else ""
+        opps.append({"type": "contract", "title": f"Contrat à renégocier : {c['vendor']} ({c['days_to_renewal']}j{dept})", "savings": c.get("potential_savings", 0), "confidence": c.get("confidence", 80)})
     for p in procs[:2]:
-        opps.append({"type": "process",  "title": f"Automatisation : {p['name']}",                         "savings": p["annual_savings_potential"],         "confidence": p["confidence"]})
+        opps.append({"type": "process",  "title": f"Automatisation : {p['name']}",  "savings": p["annual_savings_potential"], "confidence": p["confidence"]})
     return sorted(opps, key=lambda x: -x["savings"])[:10]
 
 
