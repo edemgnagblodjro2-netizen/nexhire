@@ -10,9 +10,10 @@ DECLARE
   v_dept_fi UUID;
 BEGIN
 
-  -- ── Récupère l'organisation ──────────────────────────────────────────────
-  SELECT id INTO v_org_id FROM public.organizations LIMIT 1;
-  IF v_org_id IS NULL THEN RAISE EXCEPTION 'Aucune organisation trouvée.'; END IF;
+  -- ── Récupère l'organisation Chambre de Commerce de Trois-Rivières ───────
+  SELECT id INTO v_org_id FROM public.organizations
+    WHERE name ILIKE '%Trois-Rivi%' LIMIT 1;
+  IF v_org_id IS NULL THEN RAISE EXCEPTION 'Organisation "Chambre de Commerce de Trois-Rivières" introuvable.'; END IF;
 
   -- ── Récupère ou crée les départements ───────────────────────────────────
   SELECT id INTO v_dept_ti FROM public.departments
