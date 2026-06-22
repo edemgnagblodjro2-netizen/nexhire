@@ -4695,6 +4695,28 @@ tbody tr:last-child td { border-bottom: none; }
   .app-sidebar { width: 254px !important; min-width: 254px !important; }
 }
 
+/* Workspace chips — scroll quand > 8 départements */
+.sidebar-workspace .workspace-chips {
+  max-height: 220px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.12) transparent;
+}
+.sidebar-workspace .workspace-chips::-webkit-scrollbar { width: 4px; }
+.sidebar-workspace .workspace-chips::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.14);
+  border-radius: 4px;
+}
+/* Chip "et N autres" */
+.ws-chip.ws-chip-more {
+  font-style: italic;
+  opacity: .75;
+  cursor: pointer;
+  justify-content: center;
+  font-size: .75rem;
+}
+.ws-chip.ws-chip-more:hover { opacity: 1; }
+
 /* ═══════════════════════════════════════════════════════════════
    HELP & SUPPORT MODAL
    ═══════════════════════════════════════════════════════════════ */

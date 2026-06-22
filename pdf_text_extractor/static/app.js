@@ -1552,16 +1552,16 @@ const _TAB_TITLES = {
   agent:       { title: "Assistant IA",        sub: "Posez vos questions à l'IA" },
   optim:       { title: "Optimisation IA",     sub: "Économies et gouvernance" },
   "parc-it":   { title: "Parc IT",            sub: "Applications, licences et équipements" },
-  documents:   { title: "Documents",           sub: "Bibliothèque documentaire" },
-  finance:     { title: "Finance",             sub: "Budgets, dépenses et copilot" },
+  documents:   { title: "Rapports",            sub: "Bibliothèque documentaire et exports" },
+  finance:     { title: "Dépenses",            sub: "Budgets, dépenses et copilot" },
   procurement: { title: "Achats",              sub: "Contrats fournisseurs et appels d'offres" },
-  stats:       { title: "Statistiques",        sub: "Analyses et rapports" },
+  stats:       { title: "Vue d'ensemble",      sub: "Tableau de bord organisationnel" },
   settings:    { title: "Paramètres",          sub: "Configuration du compte" },
-  connectors:  { title: "Connecteurs",         sub: "Intégrations et sources de données" },
+  connectors:  { title: "Intégrations",        sub: "Connecteurs et sources de données" },
   org:         { title: "Organisation",        sub: "Dashboard direction générale" },
   team:        { title: "Équipe",              sub: "Membres et départements" },
-  audit:       { title: "Journal d'audit",     sub: "Traçabilité des actions" },
-  security:    { title: "Sécurité",            sub: "Posture et alertes" },
+  audit:       { title: "Audit",               sub: "Traçabilité des actions" },
+  security:    { title: "Conformité",          sub: "Posture de sécurité et alertes" },
   marketplace: { title: "Marketplace",         sub: "Connecteurs et extensions" },
 };
 function _updateTopbarTitle(tab) {
@@ -8370,14 +8370,17 @@ async function _updateWorkspaceBar() {
         if (seen.has(k)) return false;
         seen.add(k); return true;
       });
-      chips.innerHTML = unique.map(d => {
+      const MAX_VISIBLE = 8;
+      const visible  = unique.slice(0, MAX_VISIBLE);
+      const overflow = unique.length - MAX_VISIBLE;
+      chips.innerHTML = visible.map(d => {
         const resolved = _resolveDeptType(d.dept_type || "", d.name);
         const cfg = _typeConfig[resolved] || _typeConfig[d.dept_type] || _typeConfig.general;
         return `<span class="ws-chip" style="--chip-color:${cfg.color}" title="${esc(d.name)}"
                       data-dept-id="${esc(d.id)}"
                       data-dept-type="${esc(d.dept_type)}"
                       data-dept-name="${esc(d.name)}">${cfg.icon} ${esc(d.name)}</span>`;
-      }).join("");
+      }).join("") + (overflow > 0 ? `<span class="ws-chip ws-chip-more" title="Voir tous les départements" onclick="switchTab('org')" style="--chip-color:#64748b">+${overflow} autres</span>` : "");
     }
 
     bar.classList.remove("hidden");
