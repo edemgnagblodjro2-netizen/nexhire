@@ -6,10 +6,21 @@ from __future__ import annotations
 # Pour passer en V2 (vrais connecteurs OAuth) : remplacer uniquement les
 # fonctions _mock_* par de vrais appels API — la boucle et les outils restent.
 
+import datetime
+import decimal
 import json
 import os
 from dataclasses import dataclass, field
 from typing import Any
+
+
+def _json_default(obj: Any) -> Any:
+    """Encoder JSON pour les types PostgreSQL non-sérialisables par défaut."""
+    if isinstance(obj, decimal.Decimal):
+        return float(obj)
+    if isinstance(obj, (datetime.date, datetime.datetime)):
+        return obj.isoformat()
+    raise TypeError(f"Object of type {type(obj).__name__} is not JSON serializable")
 
 
 # ── Définitions des outils (function calling OpenAI) ─────────────────────────
@@ -1455,7 +1466,7 @@ def run_agent(
             messages.append({
                 "role": "tool",
                 "tool_call_id": tool_call.id,
-                "content": json.dumps(result, ensure_ascii=False),
+                "content": json.dumps(result, ensure_ascii=False, default=_json_default),
             })
 
             # Identifier la source (connecteur ou nexhire interne)
