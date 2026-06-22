@@ -37,6 +37,11 @@ class ContactRequest(BaseModel):
     email:   EmailStr
     message: str = Field("", max_length=2000)
 
+class SupportTicket(BaseModel):
+    category:    str = Field("other", max_length=50)
+    subject:     str = Field(..., min_length=1, max_length=300)
+    description: str = Field("", max_length=5000)
+
 
 # ── Contact public (no auth) ───────────────────────────────────────────────
 
@@ -56,6 +61,70 @@ def contact_form(payload: ContactRequest):
         f"EIP — Nouveau contact : {escape(payload.name)} ({escape(payload.company)})",
         html,
     )
+    return {"status": "ok"}
+
+
+# ── Support ticket (authenticated) ────────────────────────────────────────
+
+_CAT_LABELS = {
+    "bug":       "Problème technique ou bug",
+    "billing":   "Facturation et abonnement",
+    "access":    "Accès, permissions ou authentification",
+    "integration": "Intégrations et connecteurs",
+    "migration": "Migration et import de données",
+    "feature":   "Demande de fonctionnalité",
+    "training":  "Formation et prise en main",
+    "security":  "Sécurité et conformité",
+    "other":     "Autre",
+}
+
+@router.post("/support")
+def submit_support_ticket(
+    payload: SupportTicket,
+    user: CurrentUser = Depends(require_min_role("user")),
+):
+    """Envoie un ticket de support à support@nexhire.ca via Resend."""
+    cat_label = _CAT_LABELS.get(payload.category, payload.category)
+    org_name  = user.organization_name or "—"
+    sender    = user.email or "—"
+
+    html = f"""<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"/></head>
+<body style="font-family:system-ui,sans-serif;background:#f8fafc;margin:0;padding:32px 16px">
+  <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.08)">
+    <div style="background:#0f172a;padding:22px 32px;display:flex;align-items:center;justify-content:space-between">
+      <span style="font-size:1.2rem;font-weight:800;color:#fff">Nex<span style="color:#818CF8">hire</span>
+        <span style="font-size:.65rem;background:rgba(129,140,248,.2);color:#818CF8;padding:2px 7px;border-radius:99px;margin-left:6px">EIP</span>
+      </span>
+      <span style="color:#94a3b8;font-size:.82rem">Ticket support</span>
+    </div>
+    <div style="padding:28px 32px">
+      <h2 style="margin:0 0 20px;color:#0f172a;font-size:1.05rem">{escape(payload.subject)}</h2>
+      <table style="border-collapse:collapse;font-size:.88rem;width:100%;margin-bottom:20px">
+        <tr><td style="padding:6px 16px 6px 0;color:#64748b;font-weight:600;white-space:nowrap">Catégorie</td>
+            <td style="padding:6px 0"><span style="background:#eef2ff;color:#4338ca;padding:2px 10px;border-radius:99px;font-size:.82rem;font-weight:600">{escape(cat_label)}</span></td></tr>
+        <tr><td style="padding:6px 16px 6px 0;color:#64748b;font-weight:600">Expéditeur</td>
+            <td style="padding:6px 0"><a href="mailto:{escape(sender)}" style="color:#6366f1">{escape(sender)}</a></td></tr>
+        <tr><td style="padding:6px 16px 6px 0;color:#64748b;font-weight:600">Organisation</td>
+            <td style="padding:6px 0">{escape(org_name)}</td></tr>
+        <tr><td style="padding:6px 16px 6px 0;color:#64748b;font-weight:600">Rôle</td>
+            <td style="padding:6px 0">{escape(user.role or "user")}</td></tr>
+      </table>
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px 20px">
+        <p style="margin:0;color:#1e293b;font-size:.9rem;white-space:pre-wrap;line-height:1.6">{escape(payload.description or "(aucune description)")}</p>
+      </div>
+      <p style="margin:20px 0 0;color:#94a3b8;font-size:.78rem">Répondre directement à cet email pour contacter l'utilisateur.</p>
+    </div>
+  </div>
+</body></html>"""
+
+    ok = email_service._send(
+        "support@nexhire.ca",
+        f"[Support NexHire EIP] {escape(payload.subject)} — {escape(org_name)}",
+        html,
+    )
+    if not ok:
+        raise HTTPException(status_code=503, detail="Impossible d'envoyer le message. Réessayez ou écrivez directement à support@nexhire.ca.")
     return {"status": "ok"}
 
 

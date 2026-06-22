@@ -10215,28 +10215,32 @@ function _toggleHelpItem(si, ii) {
   if (icon) icon.textContent = open ? "▾" : "▴";
 }
 function resetHelpTab() {
-  $("htab-category") && ($("htab-category").value = "");
-  $("htab-subject")  && ($("htab-subject").value  = "");
-  $("htab-description") && ($("htab-description").value = "");
+  if ($("htab-category"))    $("htab-category").value    = "";
+  if ($("htab-subject"))     $("htab-subject").value     = "";
+  if ($("htab-description")) $("htab-description").value = "";
   $("htab-success")?.classList.add("hidden");
   $("help-tab-form")?.classList.remove("hidden");
+  const btn = $("help-tab-form")?.querySelector("button[type=submit]");
+  if (btn) { btn.disabled = false; btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Envoyer la demande'; }
 }
-function submitHelpTab(e) {
+async function submitHelpTab(e) {
   e.preventDefault();
-  const LABELS = {
-    bug: "Problème technique ou bug", billing: "Facturation et abonnement",
-    access: "Accès, permissions ou authentification", integration: "Intégrations et connecteurs",
-    migration: "Migration et import de données", feature: "Demande de fonctionnalité",
-    training: "Formation et prise en main", security: "Sécurité et conformité", other: "Autre",
-  };
-  const cat   = $("htab-category")?.value || "other";
-  const email = $("htab-email")?.value    || "";
-  const subj  = $("htab-subject")?.value  || "Demande de support NexHire EIP";
-  const desc  = $("htab-description")?.value || "";
-  const body  = [`Catégorie : ${LABELS[cat] || cat}`, `Email : ${email}`, `Organisation : ${state.user?.organization_name || "—"}`, "", desc].join("\n");
-  window.location.href = `mailto:support@nexhire.ca?subject=${encodeURIComponent(`[NexHire EIP] ${subj}`)}&body=${encodeURIComponent(body)}`;
-  $("help-tab-form")?.classList.add("hidden");
-  $("htab-success")?.classList.remove("hidden");
+  const cat  = $("htab-category")?.value || "other";
+  const subj = $("htab-subject")?.value?.trim();
+  const desc = $("htab-description")?.value?.trim() || "";
+  if (!cat || !subj) return;
+
+  const btn = e.target.querySelector("button[type=submit]");
+  if (btn) { btn.disabled = true; btn.textContent = "Envoi…"; }
+
+  try {
+    await apiCall("/api/settings/support", "POST", { category: cat, subject: subj, description: desc });
+    $("help-tab-form")?.classList.add("hidden");
+    $("htab-success")?.classList.remove("hidden");
+  } catch (err) {
+    if (btn) { btn.disabled = false; btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Envoyer la demande'; }
+    showToast(err.message || "Erreur d'envoi — réessayez ou écrivez à support@nexhire.ca", "error");
+  }
 }
 function openHelp() { switchTab("help"); }
 function closeHelp() { $("help-modal")?.classList.add("hidden"); document.body.style.overflow = ""; }
