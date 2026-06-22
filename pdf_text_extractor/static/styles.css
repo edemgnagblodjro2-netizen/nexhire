@@ -1976,14 +1976,42 @@ footer {
 /* ── Export bar ──────────────────────────────────────────────────────────── */
 .export-bar {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 8px;
-  padding: 10px 20px;
+  padding: 12px 20px;
   border-top: 1px solid var(--border-soft);
   background: var(--blue-pale);
+}
+.export-period-row,
+.export-format-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   flex-wrap: wrap;
 }
 .export-label { font-size: .82rem; color: var(--slate); font-weight: 600; white-space: nowrap; }
+.export-chips { display: flex; gap: 5px; flex-wrap: wrap; }
+.export-chip {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--slate);
+  border-radius: 20px;
+  padding: 3px 11px;
+  font-size: .78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.export-chip:hover { border-color: var(--blue); color: var(--blue-dark); }
+.export-chip.active { background: var(--blue); border-color: var(--blue); color: #fff; font-weight: 600; }
+.export-date-input {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: .8rem;
+  color: var(--navy);
+  background: #fff;
+}
 .export-btn {
   border: 1px solid var(--blue);
   background: #fff;
@@ -2177,6 +2205,7 @@ footer {
   /* Export bar */
   .export-bar { padding: 10px 12px; gap: 6px; }
   .export-btn { font-size: .75rem; padding: 5px 8px; }
+  .export-chip { font-size: .72rem; padding: 3px 8px; }
 
   /* Idle banner */
   #idle-warn-banner { white-space: normal; text-align: center; flex-direction: column; padding: 14px 16px; width: calc(100% - 32px); }

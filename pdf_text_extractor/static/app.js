@@ -1843,6 +1843,67 @@ function _extractChartData(toolsResult) {
   return charts;
 }
 
+// ── Export period selector ────────────────────────────────────────────────
+
+const _exportState = { preset: "month" };
+
+function setExportPeriod(btn) {
+  document.querySelectorAll(".export-chip").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  _exportState.preset = btn.dataset.period;
+  const customEl = $("export-custom-dates");
+  if (customEl) {
+    if (_exportState.preset === "custom") {
+      customEl.classList.remove("hidden");
+      customEl.style.display = "flex";
+    } else {
+      customEl.classList.add("hidden");
+    }
+  }
+}
+
+function _isoDate(d) { return d.toISOString().split("T")[0]; }
+
+function _fmtDateFr(iso) {
+  if (!iso) return "";
+  const [y, m, d] = iso.split("-");
+  const months = ["jan.","fév.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc."];
+  return `${parseInt(d)} ${months[parseInt(m) - 1]} ${y}`;
+}
+
+function _getExportDateRange() {
+  const today   = new Date();
+  const todayStr = _isoDate(today);
+
+  if (_exportState.preset === "custom") {
+    const from = $("export-date-from")?.value || null;
+    const to   = $("export-date-to")?.value   || todayStr;
+    const label = from ? `${_fmtDateFr(from)} — ${_fmtDateFr(to)}` : null;
+    return { date_from: from, date_to: to, period_label: label };
+  }
+
+  if (_exportState.preset === "all") {
+    return { date_from: null, date_to: null, period_label: "Toutes les données" };
+  }
+
+  let from, label;
+  if (_exportState.preset === "year") {
+    from  = new Date(today.getFullYear(), 0, 1);
+    label = `Année ${today.getFullYear()}`;
+  } else if (_exportState.preset === "month") {
+    from  = new Date(today.getFullYear(), today.getMonth(), 1);
+    const mNames = ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
+    label = `${mNames[today.getMonth()]} ${today.getFullYear()}`;
+  } else {
+    const n = _exportState.preset === "q3" ? 3 : 6;
+    from  = new Date(today);
+    from.setMonth(from.getMonth() - n);
+    label = `${n} derniers mois (${_fmtDateFr(_isoDate(from))} — ${_fmtDateFr(todayStr)})`;
+  }
+
+  return { date_from: _isoDate(from), date_to: todayStr, period_label: label };
+}
+
 // Export report in requested format
 async function exportReport(fmt) {
   const data = window._lastAgentResult;
@@ -1852,15 +1913,19 @@ async function exportReport(fmt) {
   if (btn) { btn.disabled = true; btn.textContent = "…"; }
   try {
     const charts = _extractChartData(data.tools_called);
+    const { date_from, date_to, period_label } = _getExportDateRange();
     const resp = await fetch("/api/agent/export", {
       method: "POST",
       headers: { "Content-Type": "application/json", "Authorization": `Bearer ${state.token}` },
       body: JSON.stringify({
-        question: window._lastAgentQuestion || "",
-        answer:   data.answer || "",
-        sources:  data.sources || [],
-        format:   fmt,
-        charts:   charts,
+        question:     window._lastAgentQuestion || "",
+        answer:       data.answer || "",
+        sources:      data.sources || [],
+        format:       fmt,
+        charts:       charts,
+        date_from,
+        date_to,
+        period_label,
       }),
     });
     if (!resp.ok) { const e = await resp.json().catch(() => ({})); alert(e.detail || "Erreur export"); return; }
@@ -1874,8 +1939,7 @@ async function exportReport(fmt) {
     document.body.appendChild(a); a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    // Log export event
-    apiCall("/api/analytics/event", "POST", { event_type: "export", meta: { format: fmt } }).catch(()=>{});
+    apiCall("/api/analytics/event", "POST", { event_type: "export", meta: { format: fmt, period: period_label } }).catch(()=>{});
   } finally {
     if (btn) { btn.disabled = false; btn.textContent = origText; }
   }

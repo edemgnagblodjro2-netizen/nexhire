@@ -1380,13 +1380,31 @@
           </div>
           <span class="rating-thanks hidden" id="rating-thanks" data-i18n="rating.thanks">Merci pour votre avis !</span>
         </div>
-        <!-- Export buttons -->
+        <!-- Export bar avec sélecteur de période -->
         <div class="export-bar">
-          <span class="export-label" data-i18n="export.label">Télécharger ce rapport :</span>
-          <button class="export-btn" onclick="exportReport('pdf')">📄 PDF</button>
-          <button class="export-btn" onclick="exportReport('xlsx')">📊 Excel</button>
-          <button class="export-btn" onclick="exportReport('docx')">📝 Word</button>
-          <button class="export-btn" onclick="exportReport('pptx')">📑 PowerPoint</button>
+          <div class="export-period-row">
+            <span class="export-label">Période :</span>
+            <div class="export-chips">
+              <button class="export-chip active" data-period="month" onclick="setExportPeriod(this)">Ce mois</button>
+              <button class="export-chip" data-period="q3" onclick="setExportPeriod(this)">3 mois</button>
+              <button class="export-chip" data-period="q6" onclick="setExportPeriod(this)">6 mois</button>
+              <button class="export-chip" data-period="year" onclick="setExportPeriod(this)">Cette année</button>
+              <button class="export-chip" data-period="all" onclick="setExportPeriod(this)">Tout</button>
+              <button class="export-chip" data-period="custom" onclick="setExportPeriod(this)">Personnalisé</button>
+            </div>
+            <div id="export-custom-dates" class="hidden" style="display:flex;gap:6px;align-items:center">
+              <input type="date" id="export-date-from" class="export-date-input" />
+              <span style="color:var(--slate);font-size:.8rem">—</span>
+              <input type="date" id="export-date-to" class="export-date-input" />
+            </div>
+          </div>
+          <div class="export-format-row">
+            <span class="export-label" data-i18n="export.label">Télécharger :</span>
+            <button class="export-btn" onclick="exportReport('pdf')">📄 PDF</button>
+            <button class="export-btn" onclick="exportReport('xlsx')">📊 Excel</button>
+            <button class="export-btn" onclick="exportReport('docx')">📝 Word</button>
+            <button class="export-btn" onclick="exportReport('pptx')">📑 PowerPoint</button>
+          </div>
         </div>
         <pre id="agent-tools-json" class="hidden"></pre>
       </div>

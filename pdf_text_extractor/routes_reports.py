@@ -33,13 +33,16 @@ class ChartSpec(BaseModel):
 
 
 class ExportRequest(BaseModel):
-    question:   str = Field(..., min_length=1, max_length=2000)
-    answer:     str = Field(..., min_length=1, max_length=20000)
-    sources:    list[str] = []
-    format:     Literal["pdf", "xlsx", "docx", "pptx"] = "pdf"
-    title:      str | None = None
-    conclusion: str | None = None
-    charts:     list[ChartSpec] = []
+    question:     str = Field(..., min_length=1, max_length=2000)
+    answer:       str = Field(..., min_length=1, max_length=20000)
+    sources:      list[str] = []
+    format:       Literal["pdf", "xlsx", "docx", "pptx"] = "pdf"
+    title:        str | None = None
+    conclusion:   str | None = None
+    charts:       list[ChartSpec] = []
+    date_from:    str | None = None   # YYYY-MM-DD
+    date_to:      str | None = None   # YYYY-MM-DD
+    period_label: str | None = None   # ex: "Juin 2026" ou "3 derniers mois"
 
 
 @router.post("/export")
@@ -251,7 +254,10 @@ def _export_pdf(
         canvas.line(0, FOOTER_H, w_page, FOOTER_H)
         canvas.setFont("Helvetica", 7)
         canvas.setFillColor(C_GRAY)
-        canvas.drawString(0.7 * cm, 0.38 * cm, f"{org_name} · NexHire EIP · Confidentiel — usage interne uniquement")
+        footer_left = f"{org_name} · NexHire EIP · Confidentiel — usage interne uniquement"
+        if payload.period_label:
+            footer_left = f"{org_name} · {payload.period_label} · Confidentiel"
+        canvas.drawString(0.7 * cm, 0.38 * cm, footer_left)
         canvas.drawRightString(w_page - 0.7 * cm, 0.38 * cm, f"Page {doc.page}")
 
         canvas.restoreState()
@@ -275,7 +281,8 @@ def _export_pdf(
 
     # ── Title block
     story.append(Paragraph(title, s_title))
-    story.append(Paragraph(f"Généré le {date_str}", s_date))
+    period_line = f"Période : {payload.period_label}   ·   Généré le {date_str}" if payload.period_label else f"Généré le {date_str}"
+    story.append(Paragraph(period_line, s_date))
     if payload.sources:
         story.append(Paragraph("SOURCES CONSULTÉES", s_label))
         story.append(Paragraph(" &nbsp;·&nbsp; ".join(s.upper() for s in payload.sources), s_src))
@@ -361,7 +368,8 @@ def _export_excel(
     ws.row_dimensions[2].height = 26
 
     ws.merge_cells("A3:B3")
-    ws["A3"].value = f"Généré le {date_str}"
+    period_cell = f"Période : {payload.period_label}   ·   Généré le {date_str}" if payload.period_label else f"Généré le {date_str}"
+    ws["A3"].value = period_cell
     ws["A3"].font  = Font(size=9, italic=True, color=GRAY_XL)
     ws.row_dimensions[3].height = 18
 
@@ -457,7 +465,8 @@ def _export_word(
     p2 = doc.add_paragraph()
     rt = p2.add_run(title); rt.font.size = Pt(18); rt.font.bold = True; rt.font.color.rgb = NAVY_W
     pd = doc.add_paragraph()
-    rd = pd.add_run(f"Généré le {date_str}"); rd.font.size = Pt(10); rd.font.color.rgb = GRAY_W
+    period_word = f"Période : {payload.period_label}   ·   Généré le {date_str}" if payload.period_label else f"Généré le {date_str}"
+    rd = pd.add_run(period_word); rd.font.size = Pt(10); rd.font.color.rgb = GRAY_W
 
     if payload.sources:
         _wlabel(doc, "SOURCES CONSULTÉES", BRAND_W)
@@ -589,7 +598,8 @@ def _export_pptx(
     bx2 = tb(s1, 1, 3.0, 11, 1.5); p2 = bx2.text_frame.paragraphs[0]; p2.alignment = PP_ALIGN.CENTER
     run(p2, title, 24, bold=True, color=WHITE_P)
     bx3 = tb(s1, 1, 4.8, 11, 0.5); p3 = bx3.text_frame.paragraphs[0]; p3.alignment = PP_ALIGN.CENTER
-    run(p3, date_str, 13, color=GRAY_P)
+    cover_date = f"{payload.period_label}  ·  {date_str}" if payload.period_label else date_str
+    run(p3, cover_date, 13, color=GRAY_P)
     if payload.sources:
         bx4 = tb(s1, 1, 5.5, 11, 0.5); p4 = bx4.text_frame.paragraphs[0]; p4.alignment = PP_ALIGN.CENTER
         run(p4, " · ".join(s.upper() for s in payload.sources), 12, color=BRAND_P)
