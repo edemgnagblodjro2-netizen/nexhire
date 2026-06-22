@@ -3169,11 +3169,12 @@ let _chartConn       = null;
 let _statsData       = null;   // données analytics complètes
 let _selectedConn    = null;   // connecteur sélectionné dans le camembert
 let _financeCache       = null;   // dernière réponse finance (summary + txns)
-let _financeBarChart    = null;
-let _financeDonutChart  = null;
-let _financeSelectedCat = null;
-let _financeCatData     = null;
-let _financeExecChart   = null;
+let _financeBarChart      = null;
+let _financeDonutChart    = null;
+let _financeForecastChart = null;
+let _financeSelectedCat   = null;
+let _financeCatData       = null;
+let _financeExecChart     = null;
 let _rhExecChart        = null;
 let _procExecChart      = null;
 let _procCache          = null;
@@ -10726,8 +10727,9 @@ async function loadFinance() {
     // Graphes Finance — Dépenses par catégorie + Répartition
     const chartWrap = $("finance-charts");
     if (chartWrap) {
-      if (_financeBarChart)   { _financeBarChart.destroy();   _financeBarChart   = null; }
-      if (_financeDonutChart) { _financeDonutChart.destroy(); _financeDonutChart = null; }
+      if (_financeBarChart)      { _financeBarChart.destroy();      _financeBarChart      = null; }
+      if (_financeDonutChart)    { _financeDonutChart.destroy();    _financeDonutChart    = null; }
+      if (_financeForecastChart) { _financeForecastChart.destroy(); _financeForecastChart = null; }
       const catAgg = {};
       for (const t of (txns || [])) {
         const cat = t.category || "other";
@@ -10741,12 +10743,12 @@ async function loadFinance() {
       if (catKeys.length) {
         chartWrap.innerHTML = `
           <div class="chart-panel">
-            <h3 id="finance-bar-chart-title">💰 Dépenses par catégorie</h3>
-            <canvas id="finance-bar-chart" height="220"></canvas>
+            <h3 id="finance-bar-chart-title" style="font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:10px">🔥 DÉPENSES PAR CATÉGORIE</h3>
+            <canvas id="finance-bar-chart" height="200"></canvas>
           </div>
           <div class="chart-panel">
-            <h3>🥧 Répartition des dépenses</h3>
-            <canvas id="finance-donut-chart" height="220" style="cursor:pointer" title="Cliquez sur un segment pour filtrer le graphique"></canvas>
+            <h3 style="font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:10px">🧩 RÉPARTITION DES DÉPENSES</h3>
+            <canvas id="finance-donut-chart" height="200" style="cursor:pointer" title="Cliquez sur un segment pour filtrer"></canvas>
           </div>`;
         const tr2 = T[_lang] || T.fr;
         const CAT = { software:tr2['finance.cat.software'],hardware:tr2['finance.cat.hardware'],cloud:tr2['finance.cat.cloud'],telecom:tr2['finance.cat.telecom'],marketing:tr2['finance.cat.marketing'],hr:tr2['finance.cat.hr'],legal:tr2['finance.cat.legal'],finance:tr2['finance.cat.finance'],facilities:tr2['finance.cat.facilities'],travel:tr2['finance.cat.travel'],consulting:tr2['finance.cat.consulting'],training:tr2['finance.cat.training'],utilities:tr2['finance.cat.utilities'],insurance:tr2['finance.cat.insurance'],other:tr2['finance.cat.other'] };
@@ -10758,17 +10760,21 @@ async function loadFinance() {
           data: {
             labels: barLabels,
             datasets: [
-              { label: tr2['finance.status.paid']    || "Payé",       data: catKeys.map(c => catAgg[c].paid),    backgroundColor: "rgba(99,102,241,.8)",  borderColor: "#6366f1", borderWidth: 1 },
-              { label: tr2['finance.status.pending'] || "En attente", data: catKeys.map(c => catAgg[c].pending), backgroundColor: "rgba(251,191,36,.5)", borderColor: "#fbbf24", borderWidth: 1 },
+              { label: tr2['finance.status.paid'] || "Payé",       data: catKeys.map(c => catAgg[c].paid),    backgroundColor: "#818cf8", borderRadius: 6, borderSkipped: false },
+              { label: tr2['finance.status.pending'] || "En attente", data: catKeys.map(c => catAgg[c].pending), backgroundColor: "rgba(251,191,36,.55)", borderRadius: 6, borderSkipped: false },
             ],
           },
           options: {
-            responsive: true,
+            responsive: true, maintainAspectRatio: true,
             plugins: {
-              legend: { display: true },
-              datalabels: { anchor:"end", align:"top", font:{ size:9, weight:"bold" }, color:"#475569", formatter: v => v > 0 ? _fmt(v) : "" },
+              legend: { display: true, labels: { font: { size: 11 }, boxWidth: 12, padding: 12 } },
+              datalabels: { anchor:"end", align:"top", font:{ size:9, weight:"600" }, color:"#475569", formatter: v => v > 0 ? _fmt(v) : "" },
             },
-            scales: { y: { beginAtZero: true } },
+            scales: {
+              x: { grid: { display: false }, ticks: { font: { size: 10 }, maxRotation: 30 } },
+              y: { beginAtZero: true, grid: { color: "#e2e8f0" }, ticks: { font: { size: 10 }, callback: v => _fmt(v) } },
+            },
+            layout: { padding: { top: 16 } },
           },
         });
         const donutData = catKeys.map(c => catAgg[c].paid + catAgg[c].pending);
@@ -10777,11 +10783,11 @@ async function loadFinance() {
           plugins: [ChartDataLabels],
           data: {
             labels: barLabels,
-            datasets: [{ data: donutData, backgroundColor: COLORS.slice(0, catKeys.length), borderWidth: 2, borderColor: "rgba(255,255,255,.8)" }],
+            datasets: [{ data: donutData, backgroundColor: COLORS.slice(0, catKeys.length), borderWidth: 3, borderColor: "var(--card-bg)" }],
           },
           options: {
-            responsive: true,
-            cutout: "60%",
+            responsive: true, maintainAspectRatio: true,
+            cutout: "62%",
             onClick: (evt, els) => {
               if (!els.length) { if (_financeSelectedCat) { _financeSelectedCat = null; _filterFinanceByCat(null); } return; }
               const idx = els[0].index;
@@ -10793,7 +10799,7 @@ async function loadFinance() {
               legend: {
                 position: "right",
                 labels: {
-                  font:{ size:11 }, boxWidth:12, padding:10,
+                  font: { size: 11 }, boxWidth: 12, padding: 10,
                   generateLabels: chart => {
                     const ds = chart.data.datasets[0];
                     const total = ds.data.reduce((a,b) => a+b, 0);
@@ -10808,14 +10814,14 @@ async function loadFinance() {
               tooltip: { callbacks: { label: ctx => { const total=ctx.dataset.data.reduce((a,b)=>a+b,0); const pct=total>0?((ctx.parsed/total)*100).toFixed(1):0; return ` ${_fmt(ctx.parsed)} (${pct}%)`; } } },
               datalabels: {
                 color: "#fff",
-                font: { size:11, weight:"bold" },
-                formatter: (val, ctx) => { const total=ctx.dataset.data.reduce((a,b)=>a+b,0); const pct=total>0?(val/total*100):0; return pct>=2?pct.toFixed(1)+"%":""; },
+                font: { size: 11, weight: "bold" },
+                formatter: (val, ctx) => { const total=ctx.dataset.data.reduce((a,b)=>a+b,0); const pct=total>0?(val/total*100):0; return pct>=3?pct.toFixed(1)+"%":""; },
               },
             },
           },
         });
       } else {
-        chartWrap.innerHTML = "";
+        chartWrap.innerHTML = `<div style="padding:32px;text-align:center;color:var(--text-muted);font-size:.88rem">Aucune transaction enregistrée pour cette période</div>`;
       }
     }
 
@@ -10910,29 +10916,130 @@ async function loadFinance() {
     // Prévision IA
     const forecastEl = $("finance-forecast");
     if (forecastEl) {
-      const forecast = budgetSummary?.forecast || [];
-      const tAlloc4 = budgetSummary?.total?.allocated || 0;
-      const tActual4 = budgetSummary?.total?.actual || 0;
-      if (!forecast.length || !tAlloc4) {
-        forecastEl.innerHTML = "";
+      if (_financeForecastChart) { _financeForecastChart.destroy(); _financeForecastChart = null; }
+      const forecast  = budgetSummary?.forecast || [];
+      const monthly   = budgetSummary?.monthly_actual || [];
+      const tAlloc4   = budgetSummary?.total?.allocated || 0;
+      const tActual4  = budgetSummary?.total?.actual || 0;
+      const forecastYear = budgetSummary?.year || new Date().getFullYear();
+      const hasForecast  = forecast.some(f => (f.predicted || 0) > 0);
+      const hasActual    = monthly.some(v => v > 0) || tActual4 > 0;
+
+      if (!hasActual && !hasForecast) {
+        forecastEl.innerHTML = `
+          <div class="ai-card" style="text-align:center;padding:32px 20px">
+            <div style="font-size:2rem;margin-bottom:10px">📈</div>
+            <div style="font-weight:700;font-size:.95rem;margin-bottom:6px">Prévision IA — Fin d'année ${forecastYear}</div>
+            <div style="color:var(--text-muted);font-size:.83rem">Ajoutez des transactions ou des budgets mensuels<br>pour activer les prévisions automatiques.</div>
+          </div>`;
       } else {
-        const fSum = forecast.reduce((s, f) => s + (f.predicted||0), 0);
+        const fSum    = forecast.reduce((s, f) => s + (f.predicted||0), 0);
         const projYear = tActual4 + fSum;
-        const projVar = tAlloc4 - projYear;
-        const projPct = Math.round(projYear / tAlloc4 * 100);
-        const varCol = projVar >= 0 ? "#15803d" : "#dc2626";
-        const projCol = projPct > 100 ? "#dc2626" : projPct > 90 ? "#d97706" : "#15803d";
-        const atRisk = (budgetSummary?.by_department || []).filter(d => (d.allocated||0) > 0 && (d.actual||0)/(d.allocated||0) >= 0.75).map(d => esc(d.department_name));
-        const forecastYear = budgetSummary?.year || new Date().getFullYear();
-        forecastEl.innerHTML = '<div class="ai-card"><span class="ai-badge">📈 Prévision IA — Fin d\'année ' + forecastYear + '</span>' +
-          '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:12px">' +
-          '<div style="background:#f8fafc;border-radius:8px;padding:12px"><div style="font-size:.78rem;color:var(--slate);font-weight:600;text-transform:uppercase;letter-spacing:.03em">Projection fin d\'année</div><div style="font-size:1.15rem;font-weight:800;color:' + projCol + ';margin-top:4px">' + fmtCurrency(projYear) + '</div></div>' +
-          '<div style="background:#f8fafc;border-radius:8px;padding:12px"><div style="font-size:.78rem;color:var(--slate);font-weight:600;text-transform:uppercase;letter-spacing:.03em">Budget restant estimé</div><div style="font-size:1.15rem;font-weight:800;color:' + varCol + ';margin-top:4px">' + (projVar >= 0 ? "+" : "") + fmtCurrency(projVar) + '</div></div>' +
-          '<div style="background:#f8fafc;border-radius:8px;padding:12px"><div style="font-size:.78rem;color:var(--slate);font-weight:600;text-transform:uppercase;letter-spacing:.03em">Taux d\'utilisation projeté</div><div style="font-size:1.15rem;font-weight:800;color:' + projCol + ';margin-top:4px">' + projPct + '%</div></div>' +
-          (atRisk.length > 0 ? '<div style="background:#fffbeb;border-radius:8px;padding:12px"><div style="font-size:.78rem;color:var(--slate);font-weight:600;text-transform:uppercase;letter-spacing:.03em">Depts à risque</div><div style="font-size:.88rem;font-weight:700;color:#d97706;margin-top:4px">' + atRisk.slice(0, 3).join(", ") + (atRisk.length > 3 ? "…" : "") + '</div></div>' : '') +
-          '</div>' +
-          '<div style="margin-top:12px;font-size:.82rem;color:var(--slate)">Prévisions mensuelles : ' + forecast.map(f => "<strong>" + f.period + "</strong> → " + fmtCurrency(f.predicted)).join(" | ") + '</div>' +
-          "</div>";
+        const projVar  = tAlloc4 > 0 ? tAlloc4 - projYear : null;
+        const projPct  = tAlloc4 > 0 ? Math.round(projYear / tAlloc4 * 100) : null;
+        const varCol   = projVar === null ? "#64748b" : projVar >= 0 ? "#15803d" : "#dc2626";
+        const projCol  = projPct === null ? "#6366f1" : projPct > 100 ? "#dc2626" : projPct > 90 ? "#d97706" : "#15803d";
+        const atRisk   = (budgetSummary?.by_department || []).filter(d => (d.allocated||0) > 0 && (d.actual||0)/(d.allocated||0) >= 0.75).map(d => esc(d.department_name));
+
+        // KPI cards
+        const kpiCards = `
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px">
+            <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:12px 14px">
+              <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted)">Projection fin ${forecastYear}</div>
+              <div style="font-size:1.2rem;font-weight:800;color:${projCol};margin-top:4px">${fmtCurrency(projYear)}</div>
+            </div>
+            ${tAlloc4 > 0 ? `
+            <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:12px 14px">
+              <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted)">Budget restant estimé</div>
+              <div style="font-size:1.2rem;font-weight:800;color:${varCol};margin-top:4px">${projVar >= 0 ? "+" : ""}${fmtCurrency(projVar)}</div>
+            </div>
+            <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:12px 14px">
+              <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted)">Utilisation projetée</div>
+              <div style="font-size:1.2rem;font-weight:800;color:${projCol};margin-top:4px">${projPct}%</div>
+            </div>` : ""}
+            ${atRisk.length > 0 ? `
+            <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px 14px">
+              <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#92400e">⚠ Depts à risque</div>
+              <div style="font-size:.82rem;font-weight:700;color:#d97706;margin-top:4px">${atRisk.slice(0,3).join(", ")}${atRisk.length>3?"…":""}</div>
+            </div>` : ""}
+          </div>`;
+
+        // Build chart data: actual months (Jan → now) + forecast months
+        const MONTH_LABELS = ["Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc"];
+        const nowMonth = new Date().getMonth(); // 0-based
+        const actualLabels  = MONTH_LABELS.slice(0, nowMonth + 1);
+        const actualValues  = monthly.slice(0, nowMonth + 1);
+        const forecastLabels = forecast.map(f => {
+          const [, m] = f.period.split("-");
+          return MONTH_LABELS[parseInt(m, 10) - 1] || f.period;
+        });
+        const forecastValues = forecast.map(f => f.predicted || 0);
+
+        forecastEl.innerHTML = `
+          <div class="ai-card">
+            <span class="ai-badge">📈 Prévision IA — Fin d'année ${forecastYear}</span>
+            ${kpiCards}
+            <div class="stats-charts" style="margin-top:8px">
+              <div class="chart-panel" style="width:100%">
+                <div style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:8px">📊 DÉPENSES MENSUELLES &amp; PRÉVISIONS</div>
+                <canvas id="finance-forecast-chart" height="140"></canvas>
+              </div>
+            </div>
+          </div>`;
+
+        if (actualValues.some(v => v > 0) || forecastValues.some(v => v > 0)) {
+          const chartLabels = [...actualLabels, ...forecastLabels];
+          const actualData  = [...actualValues, ...forecastLabels.map(() => null)];
+          const forecastData= [...actualLabels.map(() => null), ...forecastValues];
+          // Link last actual to first forecast for visual continuity
+          if (actualValues.length > 0 && forecastValues.length > 0) {
+            forecastData[actualLabels.length - 1] = actualValues[actualValues.length - 1];
+          }
+          _financeForecastChart = new Chart($("finance-forecast-chart"), {
+            type: "line",
+            data: {
+              labels: chartLabels,
+              datasets: [
+                {
+                  label: "Réel",
+                  data: actualData,
+                  borderColor: "#6366f1",
+                  backgroundColor: "rgba(99,102,241,.12)",
+                  fill: true,
+                  tension: 0.35,
+                  pointRadius: 4,
+                  pointBackgroundColor: "#6366f1",
+                  spanGaps: false,
+                },
+                {
+                  label: "Prévision IA",
+                  data: forecastData,
+                  borderColor: "#f59e0b",
+                  backgroundColor: "rgba(245,158,11,.08)",
+                  borderDash: [5, 4],
+                  fill: true,
+                  tension: 0.35,
+                  pointRadius: 4,
+                  pointBackgroundColor: "#f59e0b",
+                  spanGaps: false,
+                },
+              ],
+            },
+            options: {
+              responsive: true, maintainAspectRatio: true,
+              plugins: {
+                legend: { display: true, labels: { font: { size: 11 }, boxWidth: 12, padding: 12 } },
+                datalabels: { display: false },
+                tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${fmtCurrency(ctx.parsed.y || 0)}` } },
+              },
+              scales: {
+                x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+                y: { beginAtZero: true, grid: { color: "#e2e8f0" }, ticks: { font: { size: 10 }, callback: v => _fmt(v) } },
+              },
+              layout: { padding: { top: 8 } },
+            },
+          });
+        }
       }
     }
 
@@ -10992,7 +11099,7 @@ function switchFinanceTab(tab) {
   sec.querySelectorAll('.finance-tab-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.ftab === tab);
   });
-  if (tab === 'previsions') setTimeout(() => { if (_financeBarChart) _financeBarChart.resize(); if (_financeDonutChart) _financeDonutChart.resize(); }, 50);
+  if (tab === 'previsions') setTimeout(() => { if (_financeBarChart) _financeBarChart.resize(); if (_financeDonutChart) _financeDonutChart.resize(); if (_financeForecastChart) _financeForecastChart.resize(); }, 50);
   if (tab === 'executive') setTimeout(() => { if (_financeExecChart) _financeExecChart.resize(); }, 50);
   if (tab === 'recherche') _renderDeptSearch('fin-search-wrap', 'Finance');
   if (tab === 'budgets') {

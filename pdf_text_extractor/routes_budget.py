@@ -258,6 +258,33 @@ def budget_summary(
         if m:
             monthly[m] = monthly.get(m, 0.0) + float(e.get("actual") or 0)
 
+    # Si aucune donnée mensuelle dans budget_entries, utiliser les transactions réelles groupées par mois
+    if not any(v > 0 for v in monthly.values()):
+        txn_conditions = ["organization_id = %s", "status = 'paid'",
+                          "EXTRACT(YEAR FROM transaction_date) = %s"]
+        txn_params: list = [user.organization_id, current_year]
+        if allowed is not None:
+            # transactions liées aux départements autorisés (via department_id s'il existe)
+            pass
+        if dept_id:
+            txn_conditions.append("department_id = %s")
+            txn_params.append(dept_id)
+        txn_where = " AND ".join(txn_conditions)
+        try:
+            with get_db() as cur:
+                cur.execute(
+                    f"""SELECT EXTRACT(MONTH FROM transaction_date)::int AS m,
+                               SUM(amount) AS total
+                          FROM transactions
+                         WHERE {txn_where}
+                         GROUP BY m""",
+                    txn_params,
+                )
+                for r in rows(cur):
+                    monthly[r["m"]] = float(r["total"] or 0)
+        except Exception:
+            pass
+
     now_month = datetime.now().month
     series = [monthly.get(m, 0.0) for m in range(1, now_month + 1)]
     forecast_vals = _linear_forecast(series, 3)
