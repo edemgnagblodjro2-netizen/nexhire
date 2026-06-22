@@ -1460,13 +1460,18 @@ def run_agent(
             arguments = json.loads(tool_call.function.arguments)
             result, is_simulated = _call_tool(fn_name, arguments, org_id=org_id)
 
-            tools_called.append({"tool": fn_name, "arguments": arguments, "result": result})
+            # Sérialiser pour garantir que Decimal/date sont convertis avant
+            # d'être inclus dans tools_called (réponse HTTP) ou les messages OpenAI
+            safe_content = json.dumps(result, ensure_ascii=False, default=_json_default)
+            safe_result  = json.loads(safe_content)
+
+            tools_called.append({"tool": fn_name, "arguments": arguments, "result": safe_result})
 
             # Ajouter le résultat de l'outil dans les messages
             messages.append({
                 "role": "tool",
                 "tool_call_id": tool_call.id,
-                "content": json.dumps(result, ensure_ascii=False, default=_json_default),
+                "content": safe_content,
             })
 
             # Identifier la source (connecteur ou nexhire interne)
