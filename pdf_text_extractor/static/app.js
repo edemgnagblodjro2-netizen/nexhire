@@ -9889,6 +9889,11 @@ async function deleteContractor(id) {
 // TABLEAU DE BORD SÉCURITÉ
 // ═══════════════════════════════════════════════════════════════════════════
 
+function _set(id, html) {
+  const el = $(id);
+  if (el) el.innerHTML = html;
+}
+
 let _secData = null;
 
 async function loadSecurityDashboard() {
@@ -9896,7 +9901,13 @@ async function loadSecurityDashboard() {
     _secData = await apiCall("/api/security/dashboard");
     _renderSecurityDashboard(_secData);
   } catch (e) {
-    $("sec-alerts-list").innerHTML = `<p class="muted">Erreur chargement : ${e.message}</p>`;
+    const errEl = $("sec-alerts-list");
+    if (errEl) errEl.innerHTML = `
+      <div style="padding:32px;text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:12px">🔐</div>
+        <div style="font-weight:600;margin-bottom:6px">Tableau de bord sécurité</div>
+        <div style="color:var(--text-muted);font-size:.82rem">${e.message}</div>
+      </div>`;
   }
 }
 
@@ -9909,12 +9920,13 @@ function _renderSecurityDashboard(d) {
   if (ring) {
     ring.setAttribute("stroke-dasharray", `${score} 100`);
     ring.setAttribute("stroke",
-      score >= 80 ? "#4ade80" : score >= 50 ? "#fbbf24" : "#f87171");
+      score >= 80 ? "#4ade80" : score >= 50 ? "#fbbf24" : "#818cf8");
   }
   _set("sec-score-num", score + "%");
   _set("sec-score-label",
     score >= 80 ? "Bonne posture de sécurité" :
-    score >= 50 ? "Améliorations requises" : "Risques critiques à corriger");
+    score >= 50 ? "Améliorations requises" :
+    score  >  0 ? "Risques critiques à corriger" : "En attente de données");
 
   // Checklist badges
   const cl = d.checklist || {};
@@ -9937,20 +9949,34 @@ function _renderSecurityDashboard(d) {
 
   // KPIs
   const mfa = d.mfa || {};
-  _set("sec-mfa-kpi", `${mfa.mfa_actif ?? "—"}/${mfa.utilisateurs_total ?? "—"}`);
-  _set("sec-mfa-sub", `${mfa.pourcentage ?? 0}% des utilisateurs`);
+  const mfaActif = mfa.mfa_actif ?? 0;
+  const mfaTotal = mfa.utilisateurs_total ?? 0;
+  const mfaPct   = mfa.pourcentage ?? 0;
+  _set("sec-mfa-kpi", mfaTotal === 0
+    ? '<span style="font-size:1rem;color:var(--text-muted)">—</span>'
+    : `${mfaActif}/${mfaTotal}`);
+  _set("sec-mfa-sub", mfaTotal === 0
+    ? "Aucun utilisateur synchronisé"
+    : `${mfaPct}% des utilisateurs protégés`);
 
   const alerts = d.alertes || {};
   const critiques = alerts.critiques_hautes || 0;
-  _set("sec-alerts-kpi", alerts.non_acquittees_total ?? "0");
-  _set("sec-alerts-sub", `dont ${critiques} critiques/hautes`);
+  const nonAck = alerts.non_acquittees_total ?? 0;
+  _set("sec-alerts-kpi", nonAck === 0
+    ? '<span style="color:#4ade80">✓</span>'
+    : nonAck);
+  _set("sec-alerts-sub", nonAck === 0
+    ? "Aucune alerte active"
+    : `dont ${critiques} critique${critiques > 1 ? "s" : ""}/haute${critiques > 1 ? "s" : ""}`);
   if ($("sec-alerts-kpi")) {
     $("sec-alerts-kpi").style.color = critiques > 0 ? "#f87171" : "#4ade80";
   }
 
   const comp = d.conformite || {};
   const pending = comp.suppressions_en_attente || 0;
-  _set("sec-compliance-kpi", pending === 0 ? "✓" : pending);
+  _set("sec-compliance-kpi", pending === 0
+    ? '<span style="color:#4ade80">✓</span>'
+    : `<span style="color:#fbbf24">${pending}</span>`);
   _set("sec-compliance-sub", pending === 0
     ? "Aucune demande en attente"
     : `${pending} demande(s) suppression en attente`);
@@ -9968,7 +9994,12 @@ function _renderSecurityDashboard(d) {
   const alertEl = $("sec-alerts-list");
   if (alertEl) {
     if (!recentes.length) {
-      alertEl.innerHTML = '<p class="muted" style="font-size:.82rem">Aucune alerte non traitée ✓</p>';
+      alertEl.innerHTML = `
+        <div style="padding:20px;text-align:center;background:rgba(74,222,128,.05);border-radius:8px;border:1px solid rgba(74,222,128,.2)">
+          <div style="font-size:1.4rem;margin-bottom:6px">🛡️</div>
+          <div style="font-weight:600;color:#4ade80;font-size:.9rem">Aucune alerte active</div>
+          <div style="color:var(--text-muted);font-size:.78rem;margin-top:4px">Votre environnement ne présente aucune menace détectée</div>
+        </div>`;
     } else {
       const sevColor = { critical: "#f87171", high: "#fb923c", medium: "#fbbf24", low: "#60a5fa" };
       alertEl.innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:.8rem">
@@ -10005,7 +10036,7 @@ function _renderSecurityDashboard(d) {
   if (loginEl) {
     const activity = d.activite_login || [];
     if (!activity.length) {
-      loginEl.innerHTML = '<p class="muted">Aucune donnée</p>';
+      loginEl.innerHTML = '<p class="muted" style="text-align:center;padding:12px 0;font-size:.8rem">Aucune activité enregistrée</p>';
     } else {
       const maxVal = Math.max(...activity.map(r => (r.succes || 0) + (r.echecs || 0)), 1);
       loginEl.innerHTML = activity.slice(0, 7).map(r => {
@@ -10028,7 +10059,7 @@ function _renderSecurityDashboard(d) {
   if (ipsEl) {
     const ips = d.ips_recentes || [];
     if (!ips.length) {
-      ipsEl.innerHTML = '<p class="muted">Aucune donnée</p>';
+      ipsEl.innerHTML = '<p class="muted" style="text-align:center;padding:12px 0;font-size:.8rem">Aucune IP enregistrée</p>';
     } else {
       ipsEl.innerHTML = ips.map(ip =>
         `<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:.8rem">

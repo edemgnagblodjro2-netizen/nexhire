@@ -1482,7 +1482,8 @@ def run_agent(
     )
 
     # Niveau 4 — Validation réponse (masquage patterns sensibles)
-    safe_answer = _validate_response(final.choices[0].message.content.strip())
+    raw_answer = final.choices[0].message.content or ""
+    safe_answer = _validate_response(raw_answer.strip())
 
     return AgentResponse(
         answer=safe_answer,
