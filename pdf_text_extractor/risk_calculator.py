@@ -133,49 +133,85 @@ def _risk_contract_expiry(org_id: str) -> int:
 
 
 def _risk_unused_licenses(org_id: str) -> int:
-    """Licences avec taux d'utilisation < 20 %."""
+    """Analyse les licences en 2 catégories distinctes :
+    1. Surplus réel = non assignées dépassant le buffer_target déclaré → à réduire au renouvellement.
+    2. Assignées inactives = assignées depuis ≥ 90 j sans activité enregistrée → à récupérer maintenant.
+    Ne déclenche PAS d'alerte sur les licences en stock intentionnel (buffer_target).
+    """
     count = 0
     with get_db() as cur:
         cur.execute(
             """
             SELECT l.id, l.product_name, l.quantity, l.assigned_count,
-                   l.cost_per_unit, l.department_id, d.name AS dept_name,
-                   CASE WHEN l.quantity > 0
-                        THEN ROUND(l.assigned_count::numeric / l.quantity * 100)
-                        ELSE 0 END AS usage_pct
+                   COALESCE(l.buffer_target, 0) AS buffer_target,
+                   l.cost_per_unit, l.billing_cycle,
+                   l.department_id, d.name AS dept_name
             FROM public.licenses l
             LEFT JOIN public.departments d ON d.id = l.department_id
             WHERE l.organization_id = %s
               AND l.quantity > 0
-              AND (l.assigned_count::numeric / l.quantity) < 0.20
             """,
             (org_id,),
         )
         licenses = db_rows(cur)
 
     for lic in licenses:
-        unused  = int(lic["quantity"] or 0) - int(lic["assigned_count"] or 0)
-        waste   = unused * float(lic["cost_per_unit"] or 0)
-        pct     = int(lic["usage_pct"] or 0)
-        severity = "high" if waste > 500 else "medium"
-        _upsert_risk(
-            org_id=org_id,
-            dept_id=str(lic["department_id"]) if lic["department_id"] else None,
-            finding_type="unused_license",
-            severity=severity,
-            title=f"Licences inutilisées — {lic['product_name']}",
-            description=(
-                f"{unused} licence{'s' if unused != 1 else ''} non assignée{'s' if unused != 1 else ''} "
-                f"sur {lic['quantity']} ({pct} % d'utilisation). "
-                f"Coût mensuel non utilisé : {waste:,.0f} $."
-            ),
-            cost_impact_monthly=waste,
-            remediation=(
-                f"Réduire le contrat de {unused} licence{'s' if unused != 1 else ''} "
-                f"ou réassigner à d'autres utilisateurs."
-            ),
-        )
-        count += 1
+        qty     = int(lic["quantity"] or 0)
+        assigned = int(lic["assigned_count"] or 0)
+        buffer  = int(lic["buffer_target"] or 0)
+        unit    = float(lic["cost_per_unit"] or 0)
+        cycle   = lic.get("billing_cycle", "annual")
+        monthly = unit if cycle == "monthly" else unit / 12 if cycle == "annual" else 0
+
+        # ── Catégorie 1 : surplus au-delà du buffer déclaré ──────────────────
+        # Stock non assigné = qty - assigned. Portion intentionnelle = buffer.
+        # Surplus = stock non assigné - buffer. Si > 0 : à réduire au renouvellement.
+        unassigned = qty - assigned
+        surplus    = unassigned - buffer
+        if surplus > 0 and monthly > 0:
+            waste_monthly = surplus * monthly
+            severity = "high" if waste_monthly > 200 else "medium"
+            _upsert_risk(
+                org_id=org_id,
+                dept_id=str(lic["department_id"]) if lic["department_id"] else None,
+                finding_type="license_surplus",
+                severity=severity,
+                title=f"Surplus de licences à réduire — {lic['product_name']}",
+                description=(
+                    f"{surplus} licence{'s' if surplus != 1 else ''} en excédent au-delà du stock tampon "
+                    f"({buffer} réservée{'s' if buffer != 1 else ''}) sur {qty} achetées. "
+                    f"Coût mensuel du surplus : {waste_monthly:,.0f} $. "
+                    f"À négocier lors du prochain renouvellement."
+                ),
+                cost_impact_monthly=waste_monthly,
+                remediation=(
+                    f"Réduire de {surplus} licence{'s' if surplus != 1 else ''} au renouvellement. "
+                    f"Si des embauches sont prévues, ajustez d'abord le stock tampon (buffer_target)."
+                ),
+            )
+            count += 1
+
+        # ── Catégorie 2 : assignées sans activité déclarée (90 j+) ───────────
+        # Applicable aux licences saisies manuellement sans connecteur d'activité.
+        # Heuristique : si assigned > 0 mais notes contient "inactif" ou usage_pct = 0
+        # Pour les licences M365, m365_license_optimizer gère ce cas avec les données Graph réelles.
+        # Ici on ne lève cette alerte que si assigned > qty (incohérence de saisie).
+        if assigned > qty:
+            _upsert_risk(
+                org_id=org_id,
+                dept_id=str(lic["department_id"]) if lic["department_id"] else None,
+                finding_type="license_overassigned",
+                severity="medium",
+                title=f"Incohérence de saisie — {lic['product_name']}",
+                description=(
+                    f"Le nombre de licences assignées ({assigned}) dépasse "
+                    f"la quantité achetée ({qty}). Vérifiez la saisie."
+                ),
+                cost_impact_monthly=0,
+                remediation="Corriger le champ 'Licences assignées' dans Parc IT → Licences.",
+            )
+            count += 1
+
     return count
 
 

@@ -20,6 +20,7 @@ class LicensePayload(BaseModel):
     license_type: str = "subscription"
     quantity: int = Field(1, ge=1)
     assigned_count: int = Field(0, ge=0)
+    buffer_target: int = Field(0, ge=0)
     cost_per_unit: float = 0
     billing_cycle: str = "annual"
     purchase_date: str | None = None
@@ -141,10 +142,10 @@ def create_license(
             """
             INSERT INTO licenses (
                 organization_id, department_id, application_id, product_name,
-                vendor, license_type, quantity, assigned_count, cost_per_unit,
-                billing_cycle, purchase_date, expiration_date, renewal_date,
-                auto_renew, notes
-            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                vendor, license_type, quantity, assigned_count, buffer_target,
+                cost_per_unit, billing_cycle, purchase_date, expiration_date,
+                renewal_date, auto_renew, notes
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             RETURNING *
             """,
             (
@@ -156,6 +157,7 @@ def create_license(
                 payload.license_type,
                 payload.quantity,
                 payload.assigned_count,
+                payload.buffer_target,
                 payload.cost_per_unit,
                 payload.billing_cycle,
                 payload.purchase_date,
@@ -182,8 +184,9 @@ def update_license(
             UPDATE licenses SET
                 department_id = %s, application_id = %s, product_name = %s,
                 vendor = %s, license_type = %s, quantity = %s, assigned_count = %s,
-                cost_per_unit = %s, billing_cycle = %s, purchase_date = %s,
-                expiration_date = %s, renewal_date = %s, auto_renew = %s, notes = %s
+                buffer_target = %s, cost_per_unit = %s, billing_cycle = %s,
+                purchase_date = %s, expiration_date = %s, renewal_date = %s,
+                auto_renew = %s, notes = %s
             WHERE id = %s
             RETURNING *
             """,
@@ -195,6 +198,7 @@ def update_license(
                 payload.license_type,
                 payload.quantity,
                 payload.assigned_count,
+                payload.buffer_target,
                 payload.cost_per_unit,
                 payload.billing_cycle,
                 payload.purchase_date,
