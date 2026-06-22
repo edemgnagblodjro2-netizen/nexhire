@@ -6140,7 +6140,6 @@ async function _loadIntelligenceBanner() {
   try {
     const savings = await apiCall("/api/intelligence/savings").catch(() => null);
 
-    // Supprime le banner précédent pour éviter le doublon si la fonction est rappelée
     document.getElementById("intelligence-savings-banner")?.remove();
 
     if (!savings || savings.total_monthly <= 0) return;
@@ -6148,38 +6147,60 @@ async function _loadIntelligenceBanner() {
     const wrap = $("optim-top-opps");
     if (!wrap) return;
 
-    const severityColor = { orphan_account:"#dc2626", ghost_license:"#d97706",
-      unused_license:"#7c3aed", budget_overspend:"#ea580c",
-      contract_expiry:"#0891b2", duplicate_tool:"#7c3aed" };
     const typeLabel = {
+      unused_license:  "🟣 Licences inutilisées",
+      duplicate_tool:  "🟡 Outils en doublon",
+      contract_expiry: "🔵 Contrats expirants",
+      budget_overspend:"🟠 Dépassements budget",
       orphan_account:  "🔴 Comptes orphelins",
       ghost_license:   "🟠 Comptes fantômes",
-      unused_license:  "🟣 Licences inutilisées",
-      budget_overspend:"🟠 Dépassements budget",
-      contract_expiry: "🔵 Contrats expirants",
-      duplicate_tool:  "🟡 Outils en doublon",
     };
+
+    const savingsTypes = savings.by_type?.filter(t => t.category === "savings") || [];
+    const alertTypes   = savings.by_type?.filter(t => t.category === "alert")   || [];
+
+    const savingsMonthly = savings.savings_monthly || 0;
+    const alertsMonthly  = savings.alerts_monthly  || 0;
+
+    const savingsChips = savingsTypes.map(t => `
+      <div style="background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.25);border-radius:8px;padding:8px 14px;min-width:140px">
+        <div style="font-size:.78rem;color:#86efac">${typeLabel[t.finding_type] || t.finding_type}</div>
+        <div style="font-size:1rem;font-weight:700;color:#4ade80">${t.count} cas — ${_fmt(t.monthly)} $/mo</div>
+      </div>`).join("");
+
+    const alertChips = alertTypes.map(t => `
+      <div style="background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.25);border-radius:8px;padding:8px 14px;min-width:140px">
+        <div style="font-size:.78rem;color:#fdba74">${typeLabel[t.finding_type] || t.finding_type}</div>
+        <div style="font-size:1rem;font-weight:700;color:#fb923c">${t.count} cas — ${_fmt(t.monthly)} $/mo</div>
+      </div>`).join("");
 
     const banner = document.createElement("div");
     banner.id = "intelligence-savings-banner";
     banner.style.cssText = "margin-bottom:16px;padding:16px 20px;background:linear-gradient(135deg,#0f172a,#1e3a5f);border-radius:14px;color:#fff";
     banner.innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px">
         <div>
           <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;margin-bottom:4px">Intelligence AgentHub</div>
-          <div style="font-size:1.5rem;font-weight:900;color:#4ade80">${_fmt(savings.total_monthly)} $/mois</div>
-          <div style="font-size:.82rem;color:#cbd5e1">d'économies potentielles identifiées — soit <strong style="color:#fbbf24">${_fmt(savings.total_annual)} $/an</strong></div>
+          ${savingsMonthly > 0 ? `
+            <div style="font-size:1.5rem;font-weight:900;color:#4ade80">${_fmt(savingsMonthly)} $/mois</div>
+            <div style="font-size:.82rem;color:#cbd5e1">d'économies potentielles — soit <strong style="color:#fbbf24">${_fmt(savings.savings_annual)} $/an</strong></div>
+          ` : `<div style="font-size:.95rem;color:#94a3b8;margin-top:4px">Aucune économie directe identifiée</div>`}
         </div>
+        ${alertsMonthly > 0 ? `
+          <div style="background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.3);border-radius:10px;padding:10px 16px;min-width:160px">
+            <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#fdba74;margin-bottom:3px">⚠️ Alertes financières</div>
+            <div style="font-size:1.25rem;font-weight:800;color:#fb923c">${_fmt(alertsMonthly)} $/mois</div>
+            <div style="font-size:.78rem;color:#fcd34d">${_fmt(savings.alerts_annual)} $/an à surveiller</div>
+          </div>
+        ` : ""}
         <button class="btn btn-sm" onclick="switchOptimTab('m365')"
-          style="background:#4ade80;color:#0f172a;font-weight:700;border:none">Voir les détails →</button>
+          style="background:#4ade80;color:#0f172a;font-weight:700;border:none;align-self:center">Voir les détails →</button>
       </div>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px">
-        ${(savings.by_type || []).map(t => `
-          <div style="background:rgba(255,255,255,.08);border-radius:8px;padding:8px 14px;min-width:140px">
-            <div style="font-size:.78rem;color:#94a3b8">${typeLabel[t.finding_type] || t.finding_type}</div>
-            <div style="font-size:1rem;font-weight:700;color:#fff">${t.count} cas — ${_fmt(t.monthly)} $/mo</div>
-          </div>`).join("")}
-      </div>`;
+      ${(savingsChips || alertChips) ? `
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px">
+          ${savingsChips}${alertChips}
+        </div>
+      ` : ""}`;
     wrap.insertAdjacentElement("beforebegin", banner);
   } catch (_) {}
 }

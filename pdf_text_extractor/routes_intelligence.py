@@ -589,17 +589,28 @@ def savings_summary(user: CurrentUser = Depends(require_min_role("manager"))):
         )
         by_type = db_rows(cur)
 
-    total_monthly = sum(float(r["monthly"] or 0) for r in by_type)
+    SAVINGS_TYPES = {"unused_license", "duplicate_tool"}
+    ALERT_TYPES   = {"contract_expiry", "budget_overspend"}
+
+    savings_monthly = sum(float(r["monthly"] or 0) for r in by_type if r["finding_type"] in SAVINGS_TYPES)
+    alerts_monthly  = sum(float(r["monthly"] or 0) for r in by_type if r["finding_type"] in ALERT_TYPES)
+    total_monthly   = sum(float(r["monthly"] or 0) for r in by_type)
 
     return {
-        "total_monthly": round(total_monthly, 2),
-        "total_annual":  round(total_monthly * 12, 2),
-        "by_type":       [
+        "total_monthly":   round(total_monthly, 2),
+        "total_annual":    round(total_monthly * 12, 2),
+        "savings_monthly": round(savings_monthly, 2),
+        "savings_annual":  round(savings_monthly * 12, 2),
+        "alerts_monthly":  round(alerts_monthly, 2),
+        "alerts_annual":   round(alerts_monthly * 12, 2),
+        "by_type": [
             {
                 "finding_type": r["finding_type"],
                 "count":        int(r["count"]),
                 "monthly":      round(float(r["monthly"] or 0), 2),
                 "annual":       round(float(r["annual"] or 0), 2),
+                "category":     "savings" if r["finding_type"] in SAVINGS_TYPES else
+                                "alert"   if r["finding_type"] in ALERT_TYPES   else "other",
             }
             for r in by_type
         ],
