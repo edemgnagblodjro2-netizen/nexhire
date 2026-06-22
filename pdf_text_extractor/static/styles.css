@@ -4481,3 +4481,216 @@ tbody tr:last-child td { border-bottom: none; }
 
 /* Keep sidebar quota visible regardless of viewport (overrides topnav media-query hide) */
 .sidebar-bottom .quota-pill { display: flex !important; }
+
+/* ═══════════════════════════════════════════════════════════════
+   NX SIDEBAR DESIGN — remplace les règles visuelles précédentes
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Largeur & base */
+.app-sidebar {
+  width: 254px !important;
+  min-width: 254px !important;
+  background: #0B1220 !important;
+}
+
+/* ── Brand ── */
+.nx-side-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 18px 16px 16px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  margin-bottom: 4px;
+  color: #fff;
+  text-decoration: none !important;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.nx-side-logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  flex: 0 0 34px;
+  background: linear-gradient(140deg, #2756E6, #6D4BF6);
+  display: grid;
+  place-items: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  color: #fff;
+  font-size: 17px;
+  box-shadow: 0 6px 16px -6px rgba(39,86,230,.65);
+  flex-shrink: 0;
+}
+.nx-side-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  overflow: hidden;
+}
+.nx-side-brand-text b {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: #fff;
+  letter-spacing: -.01em;
+  white-space: nowrap;
+}
+.nx-side-brand-text small {
+  font-size: 9.5px;
+  letter-spacing: .15em;
+  color: #8DA0C0;
+  text-transform: uppercase;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* ── Nav scroll ── */
+.nx-nav-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 10px;
+  scrollbar-width: none;
+}
+.nx-nav-scroll::-webkit-scrollbar { display: none; }
+
+/* ── Section labels ── */
+.nx-grp {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: #5E7095;
+  padding: 14px 14px 5px;
+  flex-shrink: 0;
+}
+
+/* ── Nav sections ── */
+.nx-nav-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 0 10px 2px;
+}
+
+/* ── Tab buttons — override ── */
+.app-sidebar .tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 38px;
+  padding: 0 10px;
+  border-radius: 9px;
+  font-size: .845rem;
+  font-weight: 500;
+  color: #B9C6DD;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background .12s, color .12s;
+  white-space: nowrap;
+  text-align: left;
+  box-shadow: none;
+  position: relative;
+  flex-shrink: 0;
+}
+.app-sidebar .tab-btn::after  { display: none; }
+.app-sidebar .tab-btn::before { display: none; }
+.app-sidebar .tab-btn:hover   { background: #16223A; color: #fff; }
+.app-sidebar .tab-btn:hover svg { opacity: 1; }
+.app-sidebar .tab-btn svg     { flex: 0 0 16px; opacity: .65; transition: opacity .12s; }
+
+.app-sidebar .tab-btn.active  { background: rgba(25,38,65,.55); color: #fff; font-weight: 600; }
+.app-sidebar .tab-btn.active svg { opacity: 1; }
+.app-sidebar .tab-btn.active::before {
+  display: block;
+  content: '';
+  position: absolute;
+  left: -10px; top: 8px; bottom: 8px;
+  width: 3px;
+  background: linear-gradient(180deg, #2756E6, #6D4BF6);
+  border-radius: 0 3px 3px 0;
+}
+
+/* Badge dans sidebar */
+.nx-side-badge {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 600;
+  background: #22304D;
+  color: #C7D4EA;
+  padding: 1px 7px;
+  border-radius: 20px;
+  font-family: 'IBM Plex Mono', monospace;
+  flex-shrink: 0;
+}
+.nx-side-badge.hot { background: #E11D48; color: #fff; }
+
+/* ── Footer org block ── */
+.nx-side-foot {
+  padding: 10px 12px 14px;
+  border-top: 1px solid rgba(255,255,255,.06);
+  margin-top: auto;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.nx-side-foot .quota-pill {
+  background: rgba(255,255,255,.05) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  border-radius: 8px !important;
+  padding: 6px 10px !important;
+  width: 100%;
+  min-width: 0;
+  gap: 7px;
+  margin-bottom: 0;
+}
+.nx-side-foot #quota-text { color: rgba(255,255,255,.55); font-size: .75rem; }
+.nx-side-foot .quota-pill { display: flex !important; }
+
+.nx-org-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #11192C;
+  border: 1px solid #1E2C49;
+  border-radius: 11px;
+  padding: 9px 11px;
+}
+.nx-org-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #22304D;
+  display: grid;
+  place-items: center;
+  flex: 0 0 30px;
+  color: #9FB2D4;
+}
+.nx-org-info { overflow: hidden; line-height: 1.25; }
+.nx-org-info b {
+  font-size: 12px;
+  color: #fff;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+}
+.nx-org-info small {
+  font-size: 10px;
+  color: #8DA0C0;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* Quota colors in new footer */
+.nx-side-foot .quota-pill.quota-pill-warn     { border-color: rgba(251,191,36,.3) !important; background: rgba(251,191,36,.08) !important; }
+.nx-side-foot .quota-pill.quota-pill-critical { border-color: rgba(239,68,68,.3) !important; background: rgba(239,68,68,.08) !important; }
+.nx-side-foot .quota-pill.quota-pill-warn     #quota-text { color: #fbbf24; }
+.nx-side-foot .quota-pill.quota-pill-critical #quota-text { color: #f87171; }
+
+/* Mobile: keep same width */
+@media (max-width: 768px) {
+  .app-sidebar { width: 254px !important; min-width: 254px !important; }
+}

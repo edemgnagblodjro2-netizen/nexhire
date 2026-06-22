@@ -1129,6 +1129,7 @@ function showApp() {
   $("user-avatar").textContent     = initials;
   if ($("user-avatar-menu"))   $("user-avatar-menu").textContent   = initials;
   if ($("user-menu-email-text")) $("user-menu-email-text").textContent = u?.email || "";
+  if ($("nx-org-name")) $("nx-org-name").textContent = u?.organization_name || "Mon organisation";
   _updateLangLabel();
 
   // Org logo + brand color — appliqués dès le démarrage (persist au refresh)
@@ -9974,6 +9975,9 @@ function closeSidebar() {
   $("app-sidebar")?.classList.remove("open");
   $("sidebar-backdrop")?.classList.remove("visible");
   document.body.style.overflow = "";
+}
+function openHelp() {
+  window.open("mailto:support@nexhire.ai?subject=Support NexHire EIP", "_blank");
 }
 // Close sidebar when a tab is selected on mobile
 document.addEventListener("click", e => {
