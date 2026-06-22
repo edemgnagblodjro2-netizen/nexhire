@@ -13,19 +13,22 @@ router = APIRouter(prefix="/api/contracts", tags=["contracts"])
 
 
 class ContractPayload(BaseModel):
-    department_id:          str | None = None
-    vendor:                 str = Field(..., min_length=1)
-    description:            str | None = None
-    category:               str = "other"
-    annual_value:           float = 0
-    currency:               str = "CAD"
-    start_date:             str | None = None
-    end_date:               str | None = None
-    renewal_date:           str | None = None
-    auto_renew:             bool = False
-    negotiation_potential:  float = Field(0, ge=0, le=100)
-    status:                 str = "active"
-    notes:                  str | None = None
+    department_id:             str | None = None
+    vendor:                    str = Field(..., min_length=1)
+    description:               str | None = None
+    category:                  str = "other"
+    annual_value:              float = 0
+    currency:                  str = "CAD"
+    start_date:                str | None = None
+    end_date:                  str | None = None
+    renewal_date:              str | None = None
+    auto_renew:                bool = False
+    cancellation_notice_days:  int = Field(60, ge=0, le=365)
+    min_commitment_qty:        int | None = Field(None, ge=0)
+    actual_seats_used:         int | None = Field(None, ge=0)
+    negotiation_potential:     float = Field(0, ge=0, le=100)
+    status:                    str = "active"
+    notes:                     str | None = None
 
 
 def _allowed_dept_ids(user: CurrentUser) -> list[str] | None:
@@ -121,8 +124,9 @@ def create_contract(payload: ContractPayload, user: CurrentUser = Depends(requir
             INSERT INTO contracts (
                 organization_id, department_id, vendor, description, category,
                 annual_value, currency, start_date, end_date, renewal_date,
-                auto_renew, negotiation_potential, status, notes
-            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                auto_renew, cancellation_notice_days, min_commitment_qty,
+                actual_seats_used, negotiation_potential, status, notes
+            ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
             RETURNING *
             """,
             (
@@ -137,6 +141,9 @@ def create_contract(payload: ContractPayload, user: CurrentUser = Depends(requir
                 payload.end_date,
                 payload.renewal_date,
                 payload.auto_renew,
+                payload.cancellation_notice_days,
+                payload.min_commitment_qty,
+                payload.actual_seats_used,
                 payload.negotiation_potential,
                 payload.status,
                 payload.notes,
@@ -159,8 +166,9 @@ def update_contract(
             UPDATE contracts SET
                 department_id = %s, vendor = %s, description = %s, category = %s,
                 annual_value = %s, currency = %s, start_date = %s, end_date = %s,
-                renewal_date = %s, auto_renew = %s, negotiation_potential = %s,
-                status = %s, notes = %s
+                renewal_date = %s, auto_renew = %s, cancellation_notice_days = %s,
+                min_commitment_qty = %s, actual_seats_used = %s,
+                negotiation_potential = %s, status = %s, notes = %s
             WHERE id = %s
             RETURNING *
             """,
@@ -175,6 +183,9 @@ def update_contract(
                 payload.end_date,
                 payload.renewal_date,
                 payload.auto_renew,
+                payload.cancellation_notice_days,
+                payload.min_commitment_qty,
+                payload.actual_seats_used,
                 payload.negotiation_potential,
                 payload.status,
                 payload.notes,

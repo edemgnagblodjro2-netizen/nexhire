@@ -11,10 +11,13 @@ from db import get_db, rows as db_rows
 def calculate_all_risks(org_id: str) -> dict:
     """Lance tous les calculateurs et retourne le nombre de risques détectés."""
     return {
-        "budget_overspend": _risk_budget_overspend(org_id),
-        "contract_expiry":  _risk_contract_expiry(org_id),
-        "unused_licenses":  _risk_unused_licenses(org_id),
-        "duplicate_tools":  _risk_duplicate_tools(org_id),
+        "budget_overspend":  _risk_budget_overspend(org_id),
+        "contract_expiry":   _risk_contract_expiry(org_id),
+        "unused_licenses":   _risk_unused_licenses(org_id),
+        "duplicate_tools":   _risk_duplicate_tools(org_id),
+        "auto_renew_risk":   _risk_auto_renew(org_id),
+        "commitment_gap":    _risk_commitment_gap(org_id),
+        "shadow_it":         _risk_shadow_it(org_id),
     }
 
 
@@ -252,6 +255,192 @@ def _risk_duplicate_tools(org_id: str) -> int:
             ),
             cost_impact_monthly=monthly * 0.40,
             remediation="Standardiser sur un outil unique par catégorie et migrer les contrats.",
+        )
+        count += 1
+    return count
+
+
+def _risk_auto_renew(org_id: str) -> int:
+    """Contrats avec auto_renew=true dont la fenêtre de résiliation est imminente.
+
+    La fenêtre = cancellation_notice_days avant le renewal_date.
+    Si aujourd'hui > renewal_date - cancellation_notice_days → alerte critique :
+    l'organisation risque d'être reconduite automatiquement sans avoir pu résilier.
+    """
+    count = 0
+    with get_db() as cur:
+        cur.execute(
+            """
+            SELECT c.id, c.vendor, c.annual_value, c.renewal_date,
+                   c.cancellation_notice_days,
+                   c.department_id, d.name AS dept_name,
+                   (c.renewal_date - CURRENT_DATE) AS days_to_renewal,
+                   (c.renewal_date - c.cancellation_notice_days) AS deadline_date
+            FROM public.contracts c
+            LEFT JOIN public.departments d ON d.id = c.department_id
+            WHERE c.organization_id = %s
+              AND c.auto_renew = true
+              AND c.renewal_date IS NOT NULL
+              AND c.renewal_date > CURRENT_DATE
+              AND CURRENT_DATE >= (c.renewal_date - c.cancellation_notice_days)
+              AND c.status = 'active'
+            ORDER BY c.renewal_date
+            """,
+            (org_id,),
+        )
+        contracts = db_rows(cur)
+
+    for c in contracts:
+        delta    = c["days_to_renewal"]
+        days     = delta.days if hasattr(delta, "days") else int(delta or 0)
+        notice   = int(c["cancellation_notice_days"] or 60)
+        val      = float(c["annual_value"] or 0)
+        deadline = str(c["deadline_date"])[:10] if c["deadline_date"] else "inconnue"
+        _upsert_risk(
+            org_id=org_id,
+            dept_id=str(c["department_id"]) if c["department_id"] else None,
+            finding_type="auto_renew_risk",
+            severity="critical",
+            title=f"Fenêtre de résiliation dépassée — {c['vendor']}",
+            description=(
+                f"Le contrat avec {c['vendor']} se renouvelle automatiquement dans {days} jour{'s' if days != 1 else ''} "
+                f"({str(c['renewal_date'])[:10]}). La fenêtre de résiliation ({notice} jours) est déjà dépassée depuis le {deadline}. "
+                f"Sans action immédiate, ce contrat ({val:,.0f} $/an) sera reconduit pour une nouvelle période."
+            ),
+            cost_impact_monthly=val / 12,
+            remediation=(
+                f"Contacter {c['vendor']} immédiatement pour négocier ou résilier. "
+                f"Même si la fenêtre est dépassée, certains fournisseurs acceptent une résiliation tardive. "
+                f"Sinon, préparez la renégociation dès maintenant pour le prochain cycle."
+            ),
+        )
+        count += 1
+    return count
+
+
+def _risk_commitment_gap(org_id: str) -> int:
+    """Contrats avec un engagement minimum non atteint.
+
+    min_commitment_qty = sièges/unités plancher contractuel.
+    actual_seats_used  = usage réel déclaré par l'admin.
+    Si actual < min_commitment → l'organisation paie des unités fantômes.
+    """
+    count = 0
+    with get_db() as cur:
+        cur.execute(
+            """
+            SELECT c.id, c.vendor, c.annual_value, c.renewal_date,
+                   c.min_commitment_qty, c.actual_seats_used,
+                   c.department_id, d.name AS dept_name
+            FROM public.contracts c
+            LEFT JOIN public.departments d ON d.id = c.department_id
+            WHERE c.organization_id = %s
+              AND c.min_commitment_qty IS NOT NULL
+              AND c.actual_seats_used IS NOT NULL
+              AND c.actual_seats_used < c.min_commitment_qty
+              AND c.status = 'active'
+            """,
+            (org_id,),
+        )
+        contracts = db_rows(cur)
+
+    for c in contracts:
+        min_qty  = int(c["min_commitment_qty"])
+        actual   = int(c["actual_seats_used"])
+        gap      = min_qty - actual
+        val      = float(c["annual_value"] or 0)
+        unit_cost = val / min_qty / 12 if min_qty > 0 else 0
+        waste_monthly = gap * unit_cost
+        severity = "high" if waste_monthly > 300 else "medium"
+        _upsert_risk(
+            org_id=org_id,
+            dept_id=str(c["department_id"]) if c["department_id"] else None,
+            finding_type="commitment_gap",
+            severity=severity,
+            title=f"Engagement minimum non atteint — {c['vendor']}",
+            description=(
+                f"Contrat {c['vendor']} : engagement contractuel de {min_qty} sièges, "
+                f"utilisation réelle de {actual} ({gap} sièges fantômes payés). "
+                f"Coût mensuel des unités non utilisées : {waste_monthly:,.0f} $."
+            ),
+            cost_impact_monthly=waste_monthly,
+            remediation=(
+                f"Lors du renouvellement, négocier un volume minimum aligné sur l'usage réel ({actual} sièges). "
+                f"D'ici là, identifier si des équipes pourraient absorber les {gap} sièges excédentaires."
+            ),
+        )
+        count += 1
+    return count
+
+
+def _risk_shadow_it(org_id: str) -> int:
+    """Détecte les fournisseurs récurrents dans les transactions financières
+    qui n'ont aucun contrat ni licence déclaré dans NexHire.
+
+    Critère : vendor référencé dans ≥ 2 transactions financières (paid) au cours
+    des 12 derniers mois, dont le nom ne correspond à aucun vendor lié à un contrat actif.
+    Exclut les catégories non-logicielles (maintenance, hardware).
+    """
+    count = 0
+    with get_db() as cur:
+        cur.execute(
+            """
+            SELECT
+              v.id AS vendor_id,
+              v.name AS vendor_name,
+              v.category,
+              COUNT(ft.id)           AS txn_count,
+              SUM(ft.amount)         AS total_amount,
+              MAX(ft.transaction_date) AS last_txn
+            FROM public.vendors v
+            JOIN public.financial_transactions ft
+              ON ft.vendor_id = v.id
+             AND ft.organization_id = %s
+             AND ft.status = 'paid'
+             AND ft.transaction_date >= CURRENT_DATE - INTERVAL '12 months'
+            WHERE v.organization_id = %s
+              AND v.category IN ('software','cloud','telecom')
+              AND v.contract_id IS NULL
+              AND NOT EXISTS (
+                  SELECT 1 FROM public.contracts c
+                  WHERE c.organization_id = %s
+                    AND c.status = 'active'
+                    AND LOWER(c.vendor) = LOWER(v.name)
+              )
+              AND NOT EXISTS (
+                  SELECT 1 FROM public.licenses l
+                  WHERE l.organization_id = %s
+                    AND LOWER(l.vendor) = LOWER(v.name)
+              )
+            GROUP BY v.id, v.name, v.category
+            HAVING COUNT(ft.id) >= 2
+            ORDER BY total_amount DESC
+            """,
+            (org_id, org_id, org_id, org_id),
+        )
+        shadow_vendors = db_rows(cur)
+
+    for sv in shadow_vendors:
+        total  = float(sv["total_amount"] or 0)
+        monthly_est = total / 12
+        severity = "high" if total > 1000 else "medium"
+        _upsert_risk(
+            org_id=org_id,
+            dept_id=None,
+            finding_type="shadow_it",
+            severity=severity,
+            title=f"Shadow IT détecté — {sv['vendor_name']}",
+            description=(
+                f"{sv['vendor_name']} (catégorie : {sv['category']}) apparaît dans "
+                f"{sv['txn_count']} transaction{'s' if sv['txn_count'] != 1 else ''} financière{'s' if sv['txn_count'] != 1 else ''} "
+                f"({total:,.0f} $ sur 12 mois) mais n'a aucun contrat ni licence déclaré dans NexHire. "
+                f"Outil potentiellement acheté hors processus d'approvisionnement officiel."
+            ),
+            cost_impact_monthly=monthly_est,
+            remediation=(
+                f"Identifier le département qui utilise {sv['vendor_name']} et créer le contrat ou la licence correspondante. "
+                f"Vérifier si cet outil a été évalué par la sécurité et s'il existe un accord de traitement des données (DPA)."
+            ),
         )
         count += 1
     return count
