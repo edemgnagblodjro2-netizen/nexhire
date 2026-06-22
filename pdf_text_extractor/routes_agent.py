@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request, status
+from fastapi import APIRouter, Body, Depends, HTTPException, Request, status
 from pydantic import BaseModel, Field
 
 from agent_service import AgentResponse, run_agent
@@ -149,9 +149,8 @@ def _get_user_dept_type(user_id: str) -> str | None:
 @router.post("/query", response_model=AgentQueryResponse)
 @limiter.limit("10/minute")
 def agent_query(
-    payload: AgentQuery,
     request: Request,
-    background: BackgroundTasks,
+    payload: AgentQuery = Body(...),
     user: CurrentUser = Depends(require_min_role("user")),
     _active: CurrentUser = Depends(require_active_subscription),
 ):
@@ -179,7 +178,7 @@ def agent_query(
     except RuntimeError as exc:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Service IA temporairement indisponible.") from exc
     except Exception as exc:
-        background.add_task(log_audit, AuditEvent(
+        log_audit_sync(AuditEvent(
             action="agent_query",
             query=payload.question,
             organization_id=user.organization_id,
