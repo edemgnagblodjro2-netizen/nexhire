@@ -1131,6 +1131,12 @@ function showApp() {
   if ($("user-menu-email-text")) $("user-menu-email-text").textContent = u?.email || "";
   _updateLangLabel();
 
+  // Org logo + brand color — appliqués dès le démarrage (persist au refresh)
+  if (u?.logo_url) _applyOrgLogo(u.logo_url);
+  if (u?.brand_color) {
+    document.documentElement.style.setProperty("--brand", u.brand_color);
+  }
+
   // Admin-only elements
   const isAdmin = ["admin", "owner"].includes(u?.role);
   document.querySelectorAll(".admin-only").forEach(el => el.classList.toggle("hidden", !isAdmin));
