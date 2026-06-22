@@ -364,7 +364,8 @@ def _contracts_at_risk(org_id: str) -> list[dict]:
     for c in data:
         ren  = date.fromisoformat(c["renewal_date"]) if isinstance(c["renewal_date"], str) else c["renewal_date"]
         days = (ren - today).days
-        pot  = float(c.get("annual_value") or 0) * float(c.get("negotiation_potential") or 0) / 100
+        neg  = float(c.get("negotiation_potential") or 0) or 10.0  # 10 % estimé si non renseigné
+        pot  = float(c.get("annual_value") or 0) * neg / 100
         result.append({
             **{k: v for k, v in c.items() if k != "department_name"},
             "department":       c.get("department_name"),
