@@ -3175,6 +3175,7 @@ let _financeForecastChart = null;
 let _financeSelectedCat   = null;
 let _financeCatData       = null;
 let _financeExecChart     = null;
+let _forecastBaseData     = null; // { actualLabels, actualValues, forecastValues, forecastLabels, tAlloc4, forecastYear }
 let _rhExecChart        = null;
 let _procExecChart      = null;
 let _procCache          = null;
@@ -10828,15 +10829,62 @@ async function loadFinance() {
     // Anomalies
     const anomEl = $("finance-anomalies");
     if (anomEl) {
-      const tr = T[_lang] || T.fr;
       const flagged = (txns || []).filter(t => t.is_flagged);
-      anomEl.innerHTML = flagged.length ? `
-        <div style="background:#fff7ed;border:1px solid #fdba74;border-radius:10px;padding:12px 16px;margin-bottom:16px">
-          <strong style="color:#c2410c">⚠️ ${flagged.length} ${tr['finance.anomaly.label']}</strong>
-          <ul style="margin:8px 0 0;padding-left:18px;font-size:.82rem;color:#7c2d12">
-            ${flagged.map(t => `<li><strong>${esc(t.vendor_name || '—')}</strong> — ${esc(t.flag_reason || tr['finance.anomaly.dup'])} (${fmtCurrency(t.amount)})</li>`).join("")}
-          </ul>
-        </div>` : "";
+      const scanBtn = `<button class="btn btn-outline btn-sm" onclick="runAnomalyScan()" id="anomaly-scan-btn" style="margin-left:auto">🔍 Analyser toutes les transactions</button>`;
+      if (!flagged.length) {
+        anomEl.innerHTML = `
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div style="font-size:.82rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">⚠ Anomalies détectées</div>
+            ${scanBtn}
+          </div>
+          <div style="padding:32px;text-align:center;background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.2);border-radius:10px">
+            <div style="font-size:1.4rem;margin-bottom:8px">✅</div>
+            <div style="font-weight:600;color:#15803d;font-size:.9rem">Aucune anomalie détectée</div>
+            <div style="color:var(--text-muted);font-size:.78rem;margin-top:4px">Cliquez sur "Analyser" pour scanner l'ensemble des transactions</div>
+          </div>`;
+      } else {
+        const sevColor = r => r?.includes("Doublon") ? "#f59e0b" : r?.includes("élevé") ? "#f87171" : "#94a3b8";
+        const sevIcon  = r => r?.includes("Doublon") ? "🔁" : r?.includes("élevé") ? "📈" : "⚠";
+        anomEl.innerHTML = `
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+            <div>
+              <span style="font-size:.82rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">⚠ Anomalies détectées</span>
+              <span style="margin-left:8px;padding:2px 10px;border-radius:12px;font-size:.75rem;font-weight:700;background:#fff7ed;color:#c2410c;border:1px solid #fdba74">${flagged.length} transaction${flagged.length > 1 ? "s" : ""}</span>
+            </div>
+            ${scanBtn}
+          </div>
+          <div style="overflow:auto">
+          <table style="width:100%;border-collapse:collapse;font-size:.82rem">
+            <thead>
+              <tr style="border-bottom:2px solid var(--border)">
+                <th style="text-align:left;padding:8px 10px;color:var(--text-muted);font-weight:600;white-space:nowrap">Type</th>
+                <th style="text-align:left;padding:8px 10px;color:var(--text-muted);font-weight:600">Fournisseur</th>
+                <th style="text-align:left;padding:8px 10px;color:var(--text-muted);font-weight:600">Description</th>
+                <th style="text-align:right;padding:8px 10px;color:var(--text-muted);font-weight:600">Montant</th>
+                <th style="text-align:left;padding:8px 10px;color:var(--text-muted);font-weight:600">Date</th>
+                <th style="text-align:left;padding:8px 10px;color:var(--text-muted);font-weight:600">Raison</th>
+                <th style="padding:8px 10px"></th>
+              </tr>
+            </thead>
+            <tbody>
+              ${flagged.map(t => {
+                const col = sevColor(t.flag_reason);
+                return `<tr style="border-bottom:1px solid var(--border)">
+                  <td style="padding:8px 10px"><span style="font-size:1rem">${sevIcon(t.flag_reason)}</span></td>
+                  <td style="padding:8px 10px;font-weight:600">${esc(t.vendor_name || "—")}</td>
+                  <td style="padding:8px 10px;color:var(--text-muted);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(t.description||"")}">${esc(t.description || "—")}</td>
+                  <td style="padding:8px 10px;text-align:right;font-weight:700;color:${col}">${fmtCurrency(t.amount)}</td>
+                  <td style="padding:8px 10px;color:var(--text-muted);white-space:nowrap">${(t.transaction_date||"").slice(0,10)}</td>
+                  <td style="padding:8px 10px;color:${col};font-size:.78rem;max-width:180px">${esc(t.flag_reason || "—")}</td>
+                  <td style="padding:8px 10px">
+                    <button class="btn btn-outline btn-sm" onclick="clearAnomaly('${t.id}')" title="Ignorer cette anomalie">✓ Ignorer</button>
+                  </td>
+                </tr>`;
+              }).join("")}
+            </tbody>
+          </table>
+          </div>`;
+      }
     }
 
     // Tableau budget par département
@@ -10967,78 +11015,42 @@ async function loadFinance() {
         // Build chart data: actual months (Jan → now) + forecast months
         const MONTH_LABELS = ["Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc"];
         const nowMonth = new Date().getMonth(); // 0-based
-        const actualLabels  = MONTH_LABELS.slice(0, nowMonth + 1);
-        const actualValues  = monthly.slice(0, nowMonth + 1);
+        const actualLabels   = MONTH_LABELS.slice(0, nowMonth + 1);
+        const actualValues   = monthly.slice(0, nowMonth + 1);
         const forecastLabels = forecast.map(f => {
           const [, m] = f.period.split("-");
           return MONTH_LABELS[parseInt(m, 10) - 1] || f.period;
         });
         const forecastValues = forecast.map(f => f.predicted || 0);
 
+        // Stocke les données de base pour les scénarios interactifs
+        _forecastBaseData = { actualLabels, actualValues, forecastValues, forecastLabels, tAlloc4, forecastYear };
+
         forecastEl.innerHTML = `
           <div class="ai-card">
-            <span class="ai-badge">📈 Prévision IA — Fin d'année ${forecastYear}</span>
-            ${kpiCards}
-            <div class="stats-charts" style="margin-top:8px">
-              <div class="chart-panel" style="width:100%">
-                <div style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:8px">📊 DÉPENSES MENSUELLES &amp; PRÉVISIONS</div>
-                <canvas id="finance-forecast-chart" height="140"></canvas>
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px">
+              <span class="ai-badge" style="margin:0">📈 Prévision IA — Fin d'année ${forecastYear}</span>
+              <div style="display:flex;gap:6px" id="fc-scenario-btns">
+                <button onclick="_applyForecastScenario('pessimiste')" data-sc="pessimiste"
+                  style="padding:4px 12px;border-radius:20px;border:1px solid #f87171;background:transparent;color:#f87171;font-size:.78rem;font-weight:600;cursor:pointer">↘ Pessimiste</button>
+                <button onclick="_applyForecastScenario('realiste')" data-sc="realiste"
+                  style="padding:4px 12px;border-radius:20px;border:1px solid #6366f1;background:#6366f1;color:#fff;font-size:.78rem;font-weight:600;cursor:pointer">◎ Réaliste</button>
+                <button onclick="_applyForecastScenario('optimiste')" data-sc="optimiste"
+                  style="padding:4px 12px;border-radius:20px;border:1px solid #4ade80;background:transparent;color:#4ade80;font-size:.78rem;font-weight:600;cursor:pointer">↗ Optimiste</button>
               </div>
             </div>
+            <div id="fc-kpi-wrap">
+            ${kpiCards}
+            </div>
+            <div style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:8px">📊 DÉPENSES MENSUELLES &amp; PRÉVISIONS</div>
+            <div style="position:relative">
+              <canvas id="finance-forecast-chart" height="150"></canvas>
+            </div>
+            <div id="fc-point-detail" style="display:none;margin-top:12px;padding:10px 14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;font-size:.83rem"></div>
           </div>`;
 
         if (actualValues.some(v => v > 0) || forecastValues.some(v => v > 0)) {
-          const chartLabels = [...actualLabels, ...forecastLabels];
-          const actualData  = [...actualValues, ...forecastLabels.map(() => null)];
-          const forecastData= [...actualLabels.map(() => null), ...forecastValues];
-          // Link last actual to first forecast for visual continuity
-          if (actualValues.length > 0 && forecastValues.length > 0) {
-            forecastData[actualLabels.length - 1] = actualValues[actualValues.length - 1];
-          }
-          _financeForecastChart = new Chart($("finance-forecast-chart"), {
-            type: "line",
-            data: {
-              labels: chartLabels,
-              datasets: [
-                {
-                  label: "Réel",
-                  data: actualData,
-                  borderColor: "#6366f1",
-                  backgroundColor: "rgba(99,102,241,.12)",
-                  fill: true,
-                  tension: 0.35,
-                  pointRadius: 4,
-                  pointBackgroundColor: "#6366f1",
-                  spanGaps: false,
-                },
-                {
-                  label: "Prévision IA",
-                  data: forecastData,
-                  borderColor: "#f59e0b",
-                  backgroundColor: "rgba(245,158,11,.08)",
-                  borderDash: [5, 4],
-                  fill: true,
-                  tension: 0.35,
-                  pointRadius: 4,
-                  pointBackgroundColor: "#f59e0b",
-                  spanGaps: false,
-                },
-              ],
-            },
-            options: {
-              responsive: true, maintainAspectRatio: true,
-              plugins: {
-                legend: { display: true, labels: { font: { size: 11 }, boxWidth: 12, padding: 12 } },
-                datalabels: { display: false },
-                tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${fmtCurrency(ctx.parsed.y || 0)}` } },
-              },
-              scales: {
-                x: { grid: { display: false }, ticks: { font: { size: 10 } } },
-                y: { beginAtZero: true, grid: { color: "#e2e8f0" }, ticks: { font: { size: 10 }, callback: v => _fmt(v) } },
-              },
-              layout: { padding: { top: 8 } },
-            },
-          });
+          _buildForecastChart(forecastValues, "realiste");
         }
       }
     }
@@ -11071,6 +11083,207 @@ async function loadFinance() {
     const tbl = $("finance-table");
     if (tbl) tbl.innerHTML = `<p class="muted" style="padding:20px;color:#dc2626">Erreur : ${e.message}</p>`;
   }
+}
+
+// ── Forecast interactif ──────────────────────────────────────────────────────
+
+function _buildForecastChart(forecastValues, scenario) {
+  if (!_forecastBaseData) return;
+  const { actualLabels, actualValues, forecastLabels, tAlloc4 } = _forecastBaseData;
+
+  // Applique le facteur scénario sur les valeurs prévues
+  const factor = scenario === "optimiste" ? 0.82 : scenario === "pessimiste" ? 1.22 : 1.0;
+  const adjForecast = forecastValues.map(v => Math.round(v * factor));
+
+  const chartLabels  = [...actualLabels, ...forecastLabels];
+  const actualData   = [...actualValues, ...forecastLabels.map(() => null)];
+  const forecastData = [...actualLabels.map(() => null), ...adjForecast];
+  if (actualValues.length > 0 && adjForecast.length > 0) {
+    forecastData[actualLabels.length - 1] = actualValues[actualValues.length - 1];
+  }
+
+  // Ligne budget mensuel moyen (plafond visuel)
+  const budgetMonthly = tAlloc4 > 0 ? tAlloc4 / 12 : null;
+  const budgetLine    = budgetMonthly ? chartLabels.map(() => Math.round(budgetMonthly)) : null;
+
+  if (_financeForecastChart) { _financeForecastChart.destroy(); _financeForecastChart = null; }
+  const canvas = $("finance-forecast-chart");
+  if (!canvas) return;
+
+  const scenarioColor = scenario === "optimiste" ? "#4ade80" : scenario === "pessimiste" ? "#f87171" : "#f59e0b";
+
+  _financeForecastChart = new Chart(canvas, {
+    type: "line",
+    data: {
+      labels: chartLabels,
+      datasets: [
+        {
+          label: "Réel",
+          data: actualData,
+          borderColor: "#6366f1",
+          backgroundColor: "rgba(99,102,241,.1)",
+          fill: true,
+          tension: 0.35,
+          pointRadius: 5,
+          pointHoverRadius: 8,
+          pointBackgroundColor: "#6366f1",
+          pointHoverBackgroundColor: "#fff",
+          pointHoverBorderColor: "#6366f1",
+          pointHoverBorderWidth: 2,
+          spanGaps: false,
+        },
+        {
+          label: scenario === "realiste" ? "Prévision IA" : `Prévision (${scenario})`,
+          data: forecastData,
+          borderColor: scenarioColor,
+          backgroundColor: `${scenarioColor}14`,
+          borderDash: [6, 4],
+          fill: true,
+          tension: 0.35,
+          pointRadius: 5,
+          pointHoverRadius: 8,
+          pointBackgroundColor: scenarioColor,
+          pointHoverBackgroundColor: "#fff",
+          pointHoverBorderColor: scenarioColor,
+          pointHoverBorderWidth: 2,
+          spanGaps: false,
+        },
+        ...(budgetLine ? [{
+          label: "Budget mensuel moyen",
+          data: budgetLine,
+          borderColor: "rgba(100,116,139,.45)",
+          borderDash: [3, 3],
+          borderWidth: 1.5,
+          pointRadius: 0,
+          fill: false,
+          tension: 0,
+        }] : []),
+      ],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: true,
+      interaction: { mode: "index", intersect: false },
+      plugins: {
+        legend: {
+          display: true,
+          labels: { font: { size: 11 }, boxWidth: 12, padding: 12 },
+        },
+        datalabels: { display: false },
+        tooltip: {
+          backgroundColor: "rgba(15,23,42,.92)",
+          titleColor: "#e2e8f0",
+          bodyColor: "#cbd5e1",
+          padding: 10,
+          cornerRadius: 8,
+          callbacks: {
+            title: items => items[0]?.label || "",
+            label: ctx => {
+              if (ctx.parsed.y === null) return null;
+              const pct = _forecastBaseData.tAlloc4 > 0
+                ? ` (${Math.round(ctx.parsed.y / (_forecastBaseData.tAlloc4 / 12) * 100)}% budget/mois)`
+                : "";
+              return ` ${ctx.dataset.label}: ${fmtCurrency(ctx.parsed.y)}${pct}`;
+            },
+          },
+        },
+      },
+      onClick: (evt, elements) => {
+        if (!elements.length) return;
+        const el   = elements[0];
+        const ds   = _financeForecastChart.data.datasets[el.datasetIndex];
+        const lbl  = _financeForecastChart.data.labels[el.index];
+        const val  = ds.data[el.index];
+        if (val === null || val === undefined) return;
+        const detail = $("fc-point-detail");
+        if (!detail) return;
+        const isForecasted = ds.label.includes("Prévision");
+        const monthlyBudget = _forecastBaseData.tAlloc4 > 0 ? _forecastBaseData.tAlloc4 / 12 : 0;
+        const vsbudget = monthlyBudget > 0 ? val / monthlyBudget * 100 : null;
+        const vsCol = vsbudget === null ? "#64748b" : vsbudget > 100 ? "#dc2626" : vsbudget > 85 ? "#d97706" : "#15803d";
+        detail.style.display = "";
+        detail.innerHTML = `
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+            <div>
+              <span style="font-weight:700;color:var(--text-primary)">${lbl}</span>
+              <span style="margin-left:8px;padding:2px 8px;border-radius:12px;font-size:.72rem;font-weight:600;background:${isForecasted?"#fff7ed":"#eff6ff"};color:${isForecasted?"#d97706":"#4f46e5"}">${isForecasted?"Prévision":"Réel"}</span>
+            </div>
+            <div style="font-size:1.1rem;font-weight:800;color:var(--text-primary)">${fmtCurrency(val)}</div>
+          </div>
+          ${vsbudget !== null ? `
+          <div style="margin-top:8px">
+            <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden">
+              <div style="width:${Math.min(vsbudget,100)}%;height:100%;background:${vsCol};border-radius:3px;transition:width .4s ease"></div>
+            </div>
+            <div style="font-size:.75rem;color:${vsCol};margin-top:3px;font-weight:600">${Math.round(vsbudget)}% du budget mensuel moyen</div>
+          </div>` : ""}`;
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+        y: { beginAtZero: true, grid: { color: "#e2e8f0" }, ticks: { font: { size: 10 }, callback: v => _fmt(v) } },
+      },
+      layout: { padding: { top: 10 } },
+    },
+  });
+}
+
+function _applyForecastScenario(scenario) {
+  if (!_forecastBaseData) return;
+  // Mettre à jour les boutons visuellement
+  document.querySelectorAll("#fc-scenario-btns button").forEach(btn => {
+    const sc = btn.dataset.sc;
+    const isActive = sc === scenario;
+    const colors = { pessimiste: "#f87171", realiste: "#6366f1", optimiste: "#4ade80" };
+    const c = colors[sc] || "#6366f1";
+    btn.style.background = isActive ? c : "transparent";
+    btn.style.color      = isActive ? "#fff" : c;
+  });
+  // Recalculer les KPIs du scénario
+  const factor  = scenario === "optimiste" ? 0.82 : scenario === "pessimiste" ? 1.22 : 1.0;
+  const { forecastValues, tAlloc4, tActual4: _t } = _forecastBaseData;
+  const tActual4 = _forecastBaseData.actualValues.reduce((s,v) => s + (v||0), 0);
+  const fSum    = forecastValues.reduce((s,v) => s + v, 0) * factor;
+  const projYear = tActual4 + fSum;
+  const projVar  = tAlloc4 > 0 ? tAlloc4 - projYear : null;
+  const projPct  = tAlloc4 > 0 ? Math.round(projYear / tAlloc4 * 100) : null;
+  const varCol   = projVar === null ? "#64748b" : projVar >= 0 ? "#15803d" : "#dc2626";
+  const projCol  = projPct === null ? "#6366f1" : projPct > 100 ? "#dc2626" : projPct > 90 ? "#d97706" : "#15803d";
+  const kpiWrap  = $("fc-kpi-wrap");
+  if (kpiWrap) {
+    const firstKpi = kpiWrap.querySelector("div[style]");
+    if (firstKpi) {
+      const valEl = firstKpi.querySelector("div:last-child");
+      if (valEl) { valEl.style.color = projCol; valEl.textContent = fmtCurrency(projYear); }
+    }
+    if (tAlloc4 > 0) {
+      const cards = kpiWrap.querySelectorAll("div[style*='border-radius:10px']");
+      if (cards[1]) { const v = cards[1].querySelector("div:last-child"); if (v) { v.style.color = varCol; v.textContent = (projVar >= 0 ? "+" : "") + fmtCurrency(projVar); } }
+      if (cards[2]) { const v = cards[2].querySelector("div:last-child"); if (v) { v.style.color = projCol; v.textContent = projPct + "%"; } }
+    }
+  }
+  _buildForecastChart(forecastValues, scenario);
+}
+
+async function runAnomalyScan() {
+  const btn = $("anomaly-scan-btn");
+  if (btn) { btn.disabled = true; btn.textContent = "⏳ Analyse en cours…"; }
+  try {
+    const res = await apiCall("/api/transactions/scan-anomalies", "POST");
+    if (res.success) {
+      await loadFinance();
+      // Se positionne sur l'onglet anomalies après rechargement
+      switchFinanceTab("anomalies");
+    }
+  } catch(e) {
+    alert("Erreur : " + e.message);
+    if (btn) { btn.disabled = false; btn.textContent = "🔍 Analyser toutes les transactions"; }
+  }
+}
+
+async function clearAnomaly(txnId) {
+  try {
+    await apiCall(`/api/transactions/${txnId}`, "PATCH", { is_flagged: false, flag_reason: null });
+    loadFinance();
+  } catch(e) { alert("Erreur : " + e.message); }
 }
 
 async function aiCategorizeTransaction(txnId, description, amount, vendorName) {

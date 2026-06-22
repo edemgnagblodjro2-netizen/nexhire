@@ -316,6 +316,29 @@ def update_transaction(
     return {"ok": True}
 
 
+@router.patch("/{txn_id}")
+def patch_transaction(
+    txn_id: str,
+    payload: dict = Body(...),
+    user: CurrentUser = Depends(require_min_role("manager")),
+):
+    """Mise à jour partielle : catégorie, is_flagged, flag_reason."""
+    org = user.organization_id
+    allowed = {"category", "is_flagged", "flag_reason"}
+    fields = {k: v for k, v in payload.items() if k in allowed}
+    if not fields:
+        raise HTTPException(400, "Aucun champ modifiable fourni.")
+    set_clause = ", ".join(f"{k} = %s" for k in fields)
+    with get_db() as cur:
+        cur.execute(
+            f"UPDATE financial_transactions SET {set_clause}, updated_at=now() WHERE id=%s AND organization_id=%s RETURNING id",
+            (*fields.values(), txn_id, org),
+        )
+        if not cur.fetchone():
+            raise HTTPException(404, "Transaction introuvable.")
+    return {"ok": True}
+
+
 @router.delete("/{txn_id}")
 def delete_transaction(
     txn_id: str,
@@ -569,6 +592,77 @@ async def categorize_transaction_ai(
         return {"success": True, **result}
     except Exception as exc:
         return {"success": False, "category": "other", "confidence": 0.0, "error": type(exc).__name__}
+
+
+@router.post("/scan-anomalies")
+def scan_all_anomalies(
+    user: CurrentUser = Depends(require_min_role("manager")),
+):
+    """Re-analyse toutes les transactions et détecte : doublons, montants inhabituels, fournisseurs uniques."""
+    org = user.organization_id
+    flagged = 0
+    cleared = 0
+    try:
+        with get_db() as cur:
+            # Réinitialise tous les flags existants pour repartir propre
+            cur.execute(
+                "UPDATE financial_transactions SET is_flagged=false, flag_reason=NULL WHERE organization_id=%s",
+                (org,),
+            )
+            cleared = cur.rowcount
+
+            # 1. Doublons : même vendor_id + même montant + même mois
+            cur.execute(
+                """
+                UPDATE financial_transactions t
+                SET is_flagged = true,
+                    flag_reason = 'Doublon potentiel : même fournisseur, même montant ce mois-ci'
+                WHERE t.organization_id = %s AND t.status != 'cancelled'
+                  AND EXISTS (
+                      SELECT 1 FROM financial_transactions t2
+                      WHERE t2.organization_id = t.organization_id
+                        AND t2.id != t.id
+                        AND t2.vendor_id = t.vendor_id
+                        AND t2.amount = t.amount
+                        AND DATE_TRUNC('month', t2.transaction_date) = DATE_TRUNC('month', t.transaction_date)
+                        AND t2.status != 'cancelled'
+                  )
+                """,
+                (org,),
+            )
+            flagged += cur.rowcount
+
+            # 2. Montant inhabituellement élevé : > moyenne + 3 × écart-type par catégorie
+            cur.execute(
+                """
+                WITH stats AS (
+                    SELECT category,
+                           AVG(amount)    AS avg_amt,
+                           STDDEV(amount) AS sd_amt
+                    FROM financial_transactions
+                    WHERE organization_id = %s AND status = 'paid'
+                    GROUP BY category
+                    HAVING COUNT(*) >= 3
+                )
+                UPDATE financial_transactions t
+                SET is_flagged = true,
+                    flag_reason = 'Montant inhabituellement élevé pour cette catégorie'
+                FROM stats s
+                WHERE t.organization_id = %s
+                  AND t.category = s.category
+                  AND t.status != 'cancelled'
+                  AND t.is_flagged = false
+                  AND t.amount > s.avg_amt + 3 * COALESCE(s.sd_amt, 0)
+                  AND s.sd_amt > 0
+                """,
+                (org, org),
+            )
+            flagged += cur.rowcount
+
+    except Exception as exc:
+        raise HTTPException(500, f"Erreur analyse : {exc}") from exc
+
+    return {"flagged": flagged, "scanned": cleared, "success": True}
 
 
 def _detect_anomalies(org_id: str, txn_id: str) -> None:
