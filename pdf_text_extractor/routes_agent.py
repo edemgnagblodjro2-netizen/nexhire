@@ -178,6 +178,30 @@ def agent_query(
     except RuntimeError as exc:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Service IA temporairement indisponible.") from exc
     except Exception as exc:
+        # Identifier la cause réelle pour donner un message utile
+        exc_type = type(exc).__name__
+        exc_module = type(exc).__module__ or ""
+        is_openai = "openai" in exc_module
+
+        if is_openai and "Authentication" in exc_type:
+            user_msg = "Clé API OpenAI invalide ou manquante — contactez l'administrateur."
+            http_code = 503
+        elif is_openai and "RateLimit" in exc_type:
+            user_msg = "Limite de requêtes OpenAI atteinte — réessayez dans quelques secondes."
+            http_code = 429
+        elif is_openai and ("Connection" in exc_type or "Timeout" in exc_type):
+            user_msg = "Service IA temporairement inaccessible — réessayez dans quelques instants."
+            http_code = 503
+        elif is_openai and "BadRequest" in exc_type:
+            user_msg = f"Requête refusée par l'IA : {str(exc)[:200]}"
+            http_code = 400
+        elif is_openai:
+            user_msg = f"Erreur OpenAI ({exc_type}) : {str(exc)[:200]}"
+            http_code = 503
+        else:
+            user_msg = f"Erreur interne ({exc_type}) : {str(exc)[:300]}"
+            http_code = 500
+
         log_audit_sync(AuditEvent(
             action="agent_query",
             query=payload.question,
@@ -185,11 +209,11 @@ def agent_query(
             user_id=user.id,
             ip_address=client_ip(request),
             success=False,
-            http_status=500,
-            error_detail=str(exc),
+            http_status=http_code,
+            error_detail=f"{exc_type}: {str(exc)[:500]}",
             metadata={"assistant_mode": payload.assistant_mode, "language": payload.language},
         ))
-        raise HTTPException(status_code=500, detail="Erreur serveur interne.") from exc
+        raise HTTPException(status_code=http_code, detail=user_msg) from exc
 
     audit_id = log_audit_sync(AuditEvent(
         action="agent_query",
