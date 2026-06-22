@@ -5584,6 +5584,158 @@ async function deleteServer(id) {
   try { await apiCall(`/api/servers/${id}`, "DELETE"); loadServers(); } catch(e) { alert(e.message); }
 }
 
+// ── Import CSV / Excel ───────────────────────────────────────────────────────
+let _importData = null; // { headers, mapping, preview, total_rows, fields }
+
+function openImportModal() {
+  _importData = null;
+  $("import-step-1").style.display = "";
+  $("import-step-2").style.display = "none";
+  $("import-step-3").style.display = "none";
+  $("import-step1-error").classList.add("hidden");
+  $("import-file-input").value = "";
+  $("import-modal").classList.remove("hidden");
+}
+
+function closeImportModal() {
+  $("import-modal").classList.add("hidden");
+}
+
+function _handleImportDrop(e) {
+  const file = e.dataTransfer?.files?.[0];
+  if (file) _processImportFile(file);
+}
+
+function _handleImportFile(input) {
+  const file = input.files?.[0];
+  if (file) _processImportFile(file);
+}
+
+async function _processImportFile(file) {
+  const errEl = $("import-step1-error");
+  errEl.classList.add("hidden");
+  const dropZone = $("import-drop-zone");
+  dropZone.innerHTML = `<p style="color:var(--slate);margin:0">⏳ Analyse en cours…</p>`;
+
+  const formData = new FormData();
+  formData.append("file", file);
+  try {
+    const res = await fetch("/api/servers/import/preview", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${localStorage.getItem("nexhire_token")}` },
+      body: formData,
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.detail || `Erreur ${res.status}`);
+    }
+    _importData = await res.json();
+    _renderImportStep2();
+  } catch (e) {
+    dropZone.innerHTML = `
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" style="margin-bottom:10px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      <p style="margin:0;font-weight:600;color:var(--navy)">Glissez votre fichier ici</p>
+      <p style="margin:6px 0 0;font-size:.82rem;color:var(--slate)">ou cliquez pour sélectionner — CSV, Excel (.xlsx)</p>`;
+    errEl.textContent = e.message;
+    errEl.classList.remove("hidden");
+  }
+}
+
+function _renderImportStep2() {
+  if (!_importData) return;
+  $("import-step-1").style.display = "none";
+  $("import-step-2").style.display = "";
+  $("import-count-label").textContent = `(${_importData.total_rows} ligne${_importData.total_rows > 1 ? "s" : ""})`;
+
+  const { headers, mapping, preview, fields } = _importData;
+  const fieldOpts = `<option value="">— Ignorer —</option>` +
+    fields.map(f => `<option value="${f}">${f}</option>`).join("");
+
+  // Tableau mapping
+  let mappingHtml = `<div style="margin-bottom:14px">
+    <h4 style="font-size:.88rem;font-weight:700;color:var(--navy);margin-bottom:10px">Mapping des colonnes</h4>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">`;
+  for (const h of headers) {
+    const selected = mapping[h] || "";
+    mappingHtml += `<label class="auth-label" style="margin:0">
+      <span style="font-size:.75rem;color:var(--slate)">${esc(h)}</span>
+      <select onchange="_importUpdateMapping('${esc(h)}', this.value)" style="font-size:.8rem">
+        ${fieldOpts.replace(`value="${selected}"`, `value="${selected}" selected`)}
+      </select>
+    </label>`;
+  }
+  mappingHtml += `</div></div>`;
+
+  // Aperçu des 5 premières lignes
+  const previewCols = headers.slice(0, 6);
+  let previewHtml = `<div>
+    <h4 style="font-size:.88rem;font-weight:700;color:var(--navy);margin-bottom:8px">Aperçu (${Math.min(preview.length, 5)} lignes)</h4>
+    <div class="table-wrap" style="max-height:200px;overflow-y:auto"><table>
+    <thead><tr>${previewCols.map(h => `<th style="font-size:.75rem">${esc(h)}</th>`).join("")}${headers.length > 6 ? `<th style="font-size:.75rem">…</th>` : ""}</tr></thead>
+    <tbody>`;
+  for (const row of preview.slice(0, 5)) {
+    previewHtml += `<tr>${previewCols.map(h => `<td style="font-size:.78rem;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(String(row[h] || "—"))}</td>`).join("")}${headers.length > 6 ? `<td style="color:var(--slate);font-size:.78rem">…</td>` : ""}</tr>`;
+  }
+  previewHtml += `</tbody></table></div></div>`;
+
+  $("import-mapping-wrap").innerHTML = mappingHtml + previewHtml;
+}
+
+function _importUpdateMapping(col, field) {
+  if (!_importData) return;
+  _importData.mapping[col] = field || null;
+}
+
+function _importBack() {
+  $("import-step-2").style.display = "none";
+  $("import-step-1").style.display = "";
+  $("import-drop-zone").innerHTML = `
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" style="margin-bottom:10px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+    <p style="margin:0;font-weight:600;color:var(--navy)">Glissez votre fichier ici</p>
+    <p style="margin:6px 0 0;font-size:.82rem;color:var(--slate)">ou cliquez pour sélectionner — CSV, Excel (.xlsx)</p>`;
+  $("import-file-input").value = "";
+}
+
+async function _importConfirm() {
+  if (!_importData) return;
+  const errEl = $("import-step2-error");
+  errEl.classList.add("hidden");
+  const btn = document.querySelector("#import-step-2 .btn-primary");
+  if (btn) { btn.disabled = true; btn.textContent = "Import en cours…"; }
+
+  try {
+    const res = await apiCall("/api/servers/import/confirm", "POST", {
+      rows:    _importData.all_rows || _importData.preview,
+      mapping: _importData.mapping,
+    });
+    // Pour importer toutes les lignes, on re-soumet avec toutes les données
+    // (la preview ne contient que 10 — on refait un upload complet)
+    _renderImportStep3(res);
+  } catch (e) {
+    errEl.textContent = e.message;
+    errEl.classList.remove("hidden");
+    if (btn) { btn.disabled = false; btn.textContent = `Importer (${_importData.total_rows} lignes)`; }
+  }
+}
+
+function _renderImportStep3(result) {
+  $("import-step-2").style.display = "none";
+  $("import-step-3").style.display = "";
+  const { inserted, skipped, errors } = result;
+  let html = `<div style="text-align:center;padding:20px 0">
+    <div style="font-size:2.5rem;margin-bottom:10px">${inserted > 0 ? "✅" : "⚠️"}</div>
+    <div style="font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:8px">${inserted} équipement${inserted > 1 ? "s" : ""} importé${inserted > 1 ? "s" : ""}</div>
+    ${skipped > 0 ? `<div style="font-size:.85rem;color:var(--slate)">${skipped} ligne${skipped > 1 ? "s" : ""} ignorée${skipped > 1 ? "s" : ""} (hostname manquant ou doublon)</div>` : ""}
+  </div>`;
+  if (errors.length) {
+    html += `<div style="margin-top:12px;padding:10px;background:#fef2f2;border-radius:8px;border:1px solid #fecaca">
+      <p style="font-size:.8rem;font-weight:600;color:#991b1b;margin:0 0 6px">Erreurs :</p>
+      ${errors.map(e => `<p style="font-size:.78rem;color:#7f1d1d;margin:2px 0">${esc(e)}</p>`).join("")}
+    </div>`;
+  }
+  $("import-result-wrap").innerHTML = html;
+}
+
 function openAppModal(app = null) {
   $("am-id").value = app?.id || "";
 

@@ -130,6 +130,7 @@ from routes_security_dashboard     import router as security_dashboard_router
 from routes_intelligence           import router as intelligence_router
 from routes_onboarding             import router as onboarding_router
 from routes_search                 import router as search_router
+from routes_import                 import router as import_router
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -222,6 +223,7 @@ def create_app(
     app.include_router(intelligence_router)
     app.include_router(onboarding_router)
     app.include_router(search_router)
+    app.include_router(import_router)
     app.state.storage = storage or DocumentStore.from_env()
     app.state.assistant = assistant or AssistantService.from_env()
 

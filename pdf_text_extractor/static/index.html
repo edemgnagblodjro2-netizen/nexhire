@@ -2483,9 +2483,58 @@
               <option value="to_decommission" data-i18n="parc.srv.decom">À décommissionner</option>
             </select>
           </div>
-          <button class="btn btn-primary btn-sm admin-only hidden" onclick="openServerModal()" data-i18n="parc.srv.add">+ Serveur</button>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-outline btn-sm admin-only hidden" onclick="openImportModal()" style="display:inline-flex;align-items:center;gap:5px">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Importer CSV / Excel
+            </button>
+            <button class="btn btn-primary btn-sm admin-only hidden" onclick="openServerModal()" data-i18n="parc.srv.add">+ Équipement</button>
+          </div>
         </div>
         <div id="servers-table-wrap"><p class="muted" data-i18n="loading">Chargement…</p></div>
+      </div>
+
+      <!-- Modal Import CSV/Excel -->
+      <div id="import-modal" class="modal-backdrop hidden">
+        <div class="modal-card" style="max-width:720px;max-height:90vh;overflow-y:auto">
+          <button class="modal-close" onclick="closeImportModal()">✕</button>
+          <h3>Importer un inventaire IT</h3>
+          <p style="font-size:.85rem;color:var(--slate);margin-bottom:16px">L'IA analyse votre fichier et mappe automatiquement les colonnes.</p>
+
+          <!-- Étape 1 : upload -->
+          <div id="import-step-1">
+            <div id="import-drop-zone" style="border:2px dashed #cbd5e1;border-radius:12px;padding:40px;text-align:center;cursor:pointer;transition:border-color .2s"
+                 onclick="$('import-file-input').click()"
+                 ondragover="event.preventDefault();this.style.borderColor='#6366f1'"
+                 ondragleave="this.style.borderColor='#cbd5e1'"
+                 ondrop="event.preventDefault();this.style.borderColor='#cbd5e1';_handleImportDrop(event)">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" style="margin-bottom:10px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <p style="margin:0;font-weight:600;color:var(--navy)">Glissez votre fichier ici</p>
+              <p style="margin:6px 0 0;font-size:.82rem;color:var(--slate)">ou cliquez pour sélectionner — CSV, Excel (.xlsx)</p>
+            </div>
+            <input type="file" id="import-file-input" accept=".csv,.xlsx,.xls" style="display:none" onchange="_handleImportFile(this)" />
+            <p id="import-step1-error" class="form-error hidden" style="margin-top:8px"></p>
+            <p style="margin-top:12px;font-size:.78rem;color:var(--slate)">💡 Les colonnes n'ont pas besoin d'être nommées de la même façon — l'IA s'adapte à votre format. Max 500 lignes, 5 Mo.</p>
+          </div>
+
+          <!-- Étape 2 : mapping + prévisualisation -->
+          <div id="import-step-2" style="display:none">
+            <div id="import-mapping-wrap"></div>
+            <div style="display:flex;gap:10px;margin-top:16px;justify-content:flex-end">
+              <button class="btn btn-outline btn-sm" onclick="_importBack()">← Retour</button>
+              <button class="btn btn-primary btn-sm" onclick="_importConfirm()">Importer <span id="import-count-label"></span></button>
+            </div>
+            <p id="import-step2-error" class="form-error hidden" style="margin-top:8px"></p>
+          </div>
+
+          <!-- Étape 3 : résultat -->
+          <div id="import-step-3" style="display:none">
+            <div id="import-result-wrap"></div>
+            <div style="display:flex;justify-content:flex-end;margin-top:16px">
+              <button class="btn btn-primary btn-sm" onclick="closeImportModal();loadServers()">Voir le parc IT</button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Applications -->
