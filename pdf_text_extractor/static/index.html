@@ -3067,7 +3067,39 @@
             <label class="auth-label"><span>Potentiel négo. (%)</span><input id="cm-negot" type="number" step="0.1" min="0" max="100" value="0" /></label>
             <label class="auth-label"><span>Statut</span><select id="cm-status"><option value="active">Actif</option><option value="under_negotiation">En négociation</option><option value="expired">Expiré</option><option value="cancelled">Annulé</option></select></label>
           </div>
-          <label class="auth-label" style="flex-direction:row;align-items:center;gap:8px;padding-top:4px"><input id="cm-autorenew" type="checkbox" /> <span>Renouvellement automatique</span></label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center">
+            <label class="auth-label" style="flex-direction:row;align-items:center;gap:8px;padding-top:4px">
+              <input id="cm-autorenew" type="checkbox" onchange="toggleCancelDays()" />
+              <span>Renouvellement automatique</span>
+            </label>
+            <label class="auth-label" id="cm-cancel-days-wrap">
+              <span style="display:flex;align-items:center;gap:5px">
+                Délai résiliation (jours)
+                <span title="Nombre de jours avant la date de renouvellement pour envoyer l'avis de résiliation. NexHire vous alerte si cette fenêtre est dépassée." style="cursor:help;color:#94a3b8;font-size:.8rem">ⓘ</span>
+              </span>
+              <input id="cm-cancel-days" type="number" min="0" max="365" value="60" />
+            </label>
+          </div>
+          <!-- ── Engagement minimum (coûts cachés) ── -->
+          <div style="border-top:1px solid #e2e8f0;padding-top:12px;margin-top:2px">
+            <p style="font-size:.78rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin:0 0 10px">Engagement minimum <span style="font-weight:400;text-transform:none;letter-spacing:0">(optionnel — détecte les sièges payés inutilement)</span></p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <label class="auth-label">
+                <span style="display:flex;align-items:center;gap:5px">
+                  Sièges contractuels min.
+                  <span title="Plancher de volume négocié avec le fournisseur. Ex : 200 sièges minimum même si vous en utilisez moins." style="cursor:help;color:#94a3b8;font-size:.8rem">ⓘ</span>
+                </span>
+                <input id="cm-min-commit" type="number" min="0" placeholder="Ex : 200" />
+              </label>
+              <label class="auth-label">
+                <span style="display:flex;align-items:center;gap:5px">
+                  Sièges réellement utilisés
+                  <span title="Nombre réel d'utilisateurs actifs sur cet outil. NexHire calcule l'écart avec l'engagement minimum." style="cursor:help;color:#94a3b8;font-size:.8rem">ⓘ</span>
+                </span>
+                <input id="cm-actual-seats" type="number" min="0" placeholder="Ex : 142" />
+              </label>
+            </div>
+          </div>
           <label class="auth-label"><span>Notes</span><input id="cm-notes" type="text" /></label>
           <div style="display:flex;justify-content:center;margin-top:4px">
             <button type="submit" class="btn btn-primary" style="padding:8px 40px">Enregistrer</button>

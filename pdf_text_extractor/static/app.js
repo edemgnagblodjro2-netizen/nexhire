@@ -7102,11 +7102,20 @@ function openContractModal(c = null) {
   $("cm-renewal").value  = c?.renewal_date  || "";
   $("cm-negot").value    = c?.negotiation_potential || 0;
   $("cm-status").value   = c?.status        || "active";
-  $("cm-autorenew").checked = c?.auto_renew || false;
-  $("cm-notes").value    = c?.notes         || "";
-  $("cm-dept").value     = c?.department_id || "";
+  $("cm-autorenew").checked    = c?.auto_renew || false;
+  $("cm-cancel-days").value    = c?.cancellation_notice_days ?? 60;
+  $("cm-min-commit").value     = c?.min_commitment_qty  != null ? c.min_commitment_qty  : "";
+  $("cm-actual-seats").value   = c?.actual_seats_used   != null ? c.actual_seats_used   : "";
+  $("cm-notes").value          = c?.notes         || "";
+  $("cm-dept").value           = c?.department_id || "";
   $("cm-error").classList.add("hidden");
+  toggleCancelDays();
   $("contract-modal").classList.remove("hidden");
+}
+function toggleCancelDays() {
+  const wrap = $("cm-cancel-days-wrap");
+  if (!wrap) return;
+  wrap.style.visibility = $("cm-autorenew")?.checked ? "visible" : "hidden";
 }
 async function editContract(id) {
   try { const all = await apiCall("/api/contracts"); const c = all.find(x => x.id === id); if (c) openContractModal(c); } catch(_) { openContractModal({id}); }
@@ -7120,11 +7129,19 @@ document.addEventListener("DOMContentLoaded", () => {
   $("contract-modal-form")?.addEventListener("submit", async e => {
     e.preventDefault();
     const id = $("cm-id").value;
-    const body = { vendor:$("cm-vendor").value, category:$("cm-cat").value, description:$("cm-desc").value||null,
-      annual_value:+$("cm-value").value, currency:$("cm-currency").value,
-      start_date:$("cm-start").value||null, end_date:$("cm-end").value||null, renewal_date:$("cm-renewal").value||null,
-      negotiation_potential:+$("cm-negot").value, status:$("cm-status").value,
-      auto_renew:$("cm-autorenew").checked, department_id:$("cm-dept").value||null, notes:$("cm-notes").value||null };
+    const minCommit   = $("cm-min-commit").value   !== "" ? +$("cm-min-commit").value   : null;
+    const actualSeats = $("cm-actual-seats").value  !== "" ? +$("cm-actual-seats").value  : null;
+    const body = {
+      vendor: $("cm-vendor").value, category: $("cm-cat").value, description: $("cm-desc").value||null,
+      annual_value: +$("cm-value").value, currency: $("cm-currency").value,
+      start_date: $("cm-start").value||null, end_date: $("cm-end").value||null, renewal_date: $("cm-renewal").value||null,
+      negotiation_potential: +$("cm-negot").value, status: $("cm-status").value,
+      auto_renew: $("cm-autorenew").checked,
+      cancellation_notice_days: +($("cm-cancel-days").value || 60),
+      min_commitment_qty:  minCommit,
+      actual_seats_used:   actualSeats,
+      department_id: $("cm-dept").value||null, notes: $("cm-notes").value||null,
+    };
     try {
       if (id) await apiCall(`/api/contracts/${id}`, "PATCH", body);
       else    await apiCall("/api/contracts", "POST", body);
@@ -10094,6 +10111,8 @@ const _HELP_DOCS = [
       { q: "Licences : surplus vs gaspillage — la distinction importante", a: "NexHire ne confond PAS 'non assignée' et 'inutile'. Une licence non assignée peut être du stock tampon légitime. NexHire génère une alerte uniquement quand le stock dépasse le buffer que vous avez déclaré. La règle : surplus = (quantité − assignées) − buffer_déclaré. Si surplus > 0, c'est là qu'il y a une opportunité d'économie au renouvellement — pas avant." },
       { q: "Potentiel de négociation des contrats", a: "Lors de la création d'un contrat (Parc IT → Contrats), renseignez le champ Potentiel de négociation (%). Ce pourcentage appliqué sur la valeur annuelle donne les économies estimées. Si non renseigné, NexHire applique 10 % par défaut. Conseil : un fournisseur avec lequel vous n'avez pas renégocié depuis 3 ans a souvent un potentiel de 15–25 %." },
       { q: "Top opportunités — pourquoi mon département n'apparaît pas", a: "Les opportunités sont classées par impact financier ($/an). Un département n'apparaît pas si : son surplus de licences est nul ou couvert par son buffer déclaré, ses outils actifs sont < 3 par catégorie, ou ses contrats ne sont pas proches de l'échéance. Pour déclencher des recommandations : vérifiez que le buffer est correctement déclaré et que les coûts unitaires sont renseignés dans Parc IT → Licences." },
+      { q: "Shadow IT — achats non déclarés détectés automatiquement", a: "NexHire croise vos transactions financières avec les contrats et licences enregistrés. Si un fournisseur connu (Slack, Zoom, Dropbox, Adobe, etc.) apparaît dans vos transactions mais n'a aucun contrat ni licence associé dans NexHire, il est signalé comme Shadow IT. Cela révèle des abonnements payés par carte bancaire ou par un département sans passer par les achats centralisés. Pour résoudre : soit créez le contrat/licence correspondant dans Parc IT, soit vérifiez si c'est un achat autorisé qui doit être déclaré. Chaque dollar de Shadow IT est un risque de sécurité (données hors périmètre) et une dépense non gouvernée." },
+      { q: "Les 3 coûts cachés que NexHire surveille en permanence", a: "1. Fenêtre de résiliation auto-renouvellement : alerte critique quand il ne reste plus assez de jours pour résilier un contrat avant sa reconduction automatique. 2. Engagement minimum non atteint : écart entre le plancher contractuel de sièges et l'usage réel — des sièges payés pour rien. 3. Shadow IT : fournisseurs payés via les transactions financières mais sans contrat ni licence enregistré — dépenses non gouvernées et risque de conformité. Ces trois alertes sont visibles dans Optimisation → Conformité → Risques, catégorie Coûts cachés." },
     ],
   },
   {
@@ -10141,6 +10160,8 @@ const _HELP_DOCS = [
       { q: "Ajouter une application IT", a: "Parc IT → Applications → + Nouvelle application. Renseignez : nom de l'application, catégorie (Collaboration, CRM, ERP, Sécurité, etc.), statut (Actif, Inactif, En évaluation), coût mensuel, département propriétaire. NexHire détecte automatiquement les doublons si ≥ 3 applications actives existent dans la même catégorie." },
       { q: "Ajouter un contrat fournisseur", a: "Parc IT → Contrats → + Nouveau contrat. Renseignez : fournisseur, valeur annuelle, date de renouvellement, département, catégorie et potentiel de négociation (%). NexHire génère automatiquement une alerte et une recommandation d'optimisation lorsque la date de renouvellement est à moins de 30 jours." },
       { q: "Potentiel de négociation d'un contrat", a: "Le champ Potentiel de négociation (%) représente l'estimation des économies réalisables lors du renouvellement. Exemple : un contrat de 12 000 $/an avec 15 % de potentiel = 1 800 $/an d'économies estimées. Si ce champ est laissé à 0, NexHire applique 10 % par défaut pour calculer les recommandations." },
+      { q: "Renouvellement automatique — fenêtre de résiliation", a: "Cochez 'Renouvellement automatique' si le contrat se reconduit automatiquement. Renseignez ensuite le 'Délai de résiliation (jours)' — c'est le nombre de jours avant le renouvellement pendant lequel vous pouvez encore envoyer un avis de résiliation (souvent 60 ou 90 jours selon le fournisseur). NexHire génère une alerte critique dès que cette fenêtre est dépassée, vous avertissant que le contrat va se renouveler automatiquement si vous n'agissez pas immédiatement." },
+      { q: "Engagement minimum — sièges contractuels plancher", a: "Certains contrats imposent un nombre minimum de sièges/unités à payer même si votre usage réel est inférieur (ex : accord Microsoft EA, Salesforce Enterprise). Dans le formulaire contrat : renseignez 'Sièges contractuels min.' (le plancher négocié) et 'Sièges réellement utilisés' (votre usage actuel). NexHire calcule l'écart et vous montre le coût mensuel des sièges payés inutilement. Exemple : 200 sièges contractuels, 142 utilisés → 58 sièges fantômes × coût unitaire = montant identifié à renégocier." },
       { q: "Gérer les licences logicielles", a: "Parc IT → Licences → + Nouvelle licence. Renseignez : nom du produit, quantité totale achetée, licences assignées, stock tampon (buffer), coût par unité et département. NexHire distingue trois catégories : licences actives assignées, stock tampon intentionnel, et surplus réel à optimiser." },
       { q: "Les 3 catégories de licences — comment NexHire les distingue", a: "1. Assignées et actives : utilisées par des membres identifiés — aucune alerte. 2. Stock tampon (buffer) : licences non assignées que vous réservez intentionnellement pour de nouvelles embauches ou des projets planifiés — déclarez ce nombre dans le champ 'Stock tampon'. NexHire ne les comptabilise PAS comme du gaspillage. 3. Surplus réel : licences non assignées au-delà du buffer déclaré — NexHire recommande de les réduire au prochain renouvellement. Exemple : 50 licences achetées, 12 assignées, 8 en buffer → surplus de 30 à négocier, pas 38." },
       { q: "Déclarer un stock tampon (buffer)", a: "Lors de l'ajout ou la modification d'une licence : champ 'Stock tampon'. Exemple : département IT avec 5 embauches prévues ce trimestre → buffer = 5. NexHire calcule alors le surplus = licences non assignées − buffer. Si surplus = 0, aucune alerte. Conseil : réévaluez votre buffer à chaque changement de plan d'embauche." },
