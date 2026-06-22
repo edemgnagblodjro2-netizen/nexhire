@@ -1187,7 +1187,7 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             <span data-i18n="app.tab.team">Équipe</span>
           </button>
-          <button class="tab-btn" onclick="openHelp()" type="button">
+          <button class="tab-btn" data-tab="help" role="tab">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
             <span data-i18n="app.tab.help">Aide &amp; support</span>
           </button>
@@ -3365,6 +3365,82 @@
         </div>
       </div>
       <div id="marketplace-grid" class="marketplace-grid"></div>
+    </section>
+
+    <!-- ═══════════════ AIDE & SUPPORT ═══════════════ -->
+    <section id="tab-help" class="tab-content hidden" role="tabpanel">
+      <div class="section-header" style="margin-bottom:24px">
+        <div>
+          <h2 style="margin:0 0 4px">Contacter le support</h2>
+          <p class="muted" style="margin:0;font-size:.88rem">NexHire EIP · Réponse sous 24 h ouvrables</p>
+        </div>
+        <div class="help-quick-links" style="margin:0">
+          <a href="https://docs.nexhire.ca" target="_blank" rel="noopener" class="help-ql">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Documentation
+          </a>
+          <a href="#" onclick="switchTab('settings');return false" class="help-ql">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Paramètres
+          </a>
+        </div>
+      </div>
+
+      <div style="max-width:640px">
+        <p style="color:#64748b;font-size:.9rem;margin:0 0 24px;line-height:1.6">
+          Besoin d'aide ? Notre équipe vous répond généralement sous <strong>24 heures</strong> ouvrables.
+          Pour les urgences techniques, précisez-le dans votre message.
+        </p>
+
+        <!-- Form -->
+        <form id="help-tab-form" class="help-form" onsubmit="submitHelpTab(event)" style="display:flex;flex-direction:column;gap:16px">
+          <div class="help-field">
+            <label for="htab-category">De quoi avez-vous besoin ?</label>
+            <div class="help-select-wrap">
+              <select id="htab-category" required>
+                <option value="">Sélectionner une catégorie…</option>
+                <option value="bug">🐛  Problème technique ou bug</option>
+                <option value="billing">💳  Facturation et abonnement</option>
+                <option value="access">🔑  Accès, permissions ou authentification</option>
+                <option value="integration">🔌  Intégrations et connecteurs</option>
+                <option value="migration">📦  Migration et import de données</option>
+                <option value="feature">💡  Demande de fonctionnalité</option>
+                <option value="training">🎓  Formation et prise en main</option>
+                <option value="security">🔐  Sécurité et conformité</option>
+                <option value="other">💬  Autre</option>
+              </select>
+            </div>
+          </div>
+          <div class="help-field">
+            <label for="htab-email">Votre adresse e-mail</label>
+            <input type="email" id="htab-email" placeholder="vous@exemple.com" required />
+          </div>
+          <div class="help-field">
+            <label for="htab-subject">Objet</label>
+            <input type="text" id="htab-subject" placeholder="Résumez votre demande en une ligne" required />
+          </div>
+          <div class="help-field">
+            <label for="htab-description">Description <span style="color:#94a3b8;font-weight:400">(facultatif)</span></label>
+            <textarea id="htab-description" rows="5" placeholder="Décrivez le problème ou votre demande en détail…"></textarea>
+          </div>
+          <div class="help-actions" style="padding-top:4px">
+            <button type="submit" class="help-submit-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              Envoyer la demande
+            </button>
+          </div>
+        </form>
+
+        <!-- Success -->
+        <div id="htab-success" class="help-success hidden" style="margin-top:24px">
+          <div class="help-success-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3>Demande envoyée</h3>
+          <p>Votre message a été transmis à notre équipe. Nous vous répondrons à l'adresse indiquée dans les meilleurs délais.</p>
+          <button class="help-submit-btn" style="margin-top:8px" onclick="resetHelpTab()">Nouvelle demande</button>
+        </div>
+      </div>
     </section>
 
     <!-- ═══════════════ SUPER ADMIN ═══════════════ -->

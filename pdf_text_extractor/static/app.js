@@ -1660,6 +1660,7 @@ function loadActiveTab() {
     "finance":     loadFinance,
     "procurement": loadProcurement,
     "documents":   _populateUploadDeptSelect,
+    "help":        loadHelp,
   };
   const fn = loaders[state.tab];
   if (fn) Promise.resolve().then(() => fn()).catch(err => console.warn(`[${state.tab}] load error:`, err));
@@ -6236,6 +6237,7 @@ async function _loadIntelligenceBanner() {
       </div>
       ${(alertsMonthly > 0 || savingsChips || alertChips) ? `
         <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px">
+          ${savingsChips}${alertChips}
           ${alertsMonthly > 0 ? `
             <div style="background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.3);border-radius:10px;padding:8px 14px;min-width:160px">
               <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#fdba74;margin-bottom:3px">⚠️ Alertes financières</div>
@@ -6243,7 +6245,6 @@ async function _loadIntelligenceBanner() {
               <div style="font-size:.75rem;color:#fcd34d">${_fmt(savings.alerts_annual)} $/an à surveiller</div>
             </div>
           ` : ""}
-          ${savingsChips}${alertChips}
         </div>
       ` : ""}`;
     wrap.insertAdjacentElement("beforebegin", banner);
@@ -10023,25 +10024,36 @@ function closeSidebar() {
   $("sidebar-backdrop")?.classList.remove("visible");
   document.body.style.overflow = "";
 }
-function openHelp() {
-  const modal = $("help-modal");
-  if (!modal) return;
-  // Pre-fill email
-  const emailEl = $("help-email");
+function loadHelp() {
+  const emailEl = $("htab-email");
   if (emailEl && state.user?.email) emailEl.value = state.user.email;
-  // Reset form & views
-  $("help-form-body")?.classList.remove("hidden");
-  $("help-success-body")?.classList.add("hidden");
-  $("help-category") && ($("help-category").value = "");
-  $("help-subject") && ($("help-subject").value = "");
-  $("help-description") && ($("help-description").value = "");
-  modal.classList.remove("hidden");
-  document.body.style.overflow = "hidden";
 }
-function closeHelp() {
-  $("help-modal")?.classList.add("hidden");
-  document.body.style.overflow = "";
+function resetHelpTab() {
+  $("htab-category") && ($("htab-category").value = "");
+  $("htab-subject")  && ($("htab-subject").value  = "");
+  $("htab-description") && ($("htab-description").value = "");
+  $("htab-success")?.classList.add("hidden");
+  $("help-tab-form")?.classList.remove("hidden");
 }
+function submitHelpTab(e) {
+  e.preventDefault();
+  const LABELS = {
+    bug: "Problème technique ou bug", billing: "Facturation et abonnement",
+    access: "Accès, permissions ou authentification", integration: "Intégrations et connecteurs",
+    migration: "Migration et import de données", feature: "Demande de fonctionnalité",
+    training: "Formation et prise en main", security: "Sécurité et conformité", other: "Autre",
+  };
+  const cat   = $("htab-category")?.value || "other";
+  const email = $("htab-email")?.value    || "";
+  const subj  = $("htab-subject")?.value  || "Demande de support NexHire EIP";
+  const desc  = $("htab-description")?.value || "";
+  const body  = [`Catégorie : ${LABELS[cat] || cat}`, `Email : ${email}`, `Organisation : ${state.user?.organization_name || "—"}`, "", desc].join("\n");
+  window.open(`mailto:support@nexhire.ca?subject=${encodeURIComponent(`[NexHire EIP] ${subj}`)}&body=${encodeURIComponent(body)}`, "_blank");
+  $("help-tab-form")?.classList.add("hidden");
+  $("htab-success")?.classList.remove("hidden");
+}
+function openHelp() { switchTab("help"); }
+function closeHelp() { $("help-modal")?.classList.add("hidden"); document.body.style.overflow = ""; }
 function submitHelp(e) {
   e.preventDefault();
   const LABELS = {
@@ -10051,11 +10063,11 @@ function submitHelp(e) {
     training: "Formation et prise en main", security: "Sécurité et conformité", other: "Autre",
   };
   const cat  = $("help-category")?.value || "other";
-  const email = $("help-email")?.value || "";
-  const subj = $("help-subject")?.value || "Demande de support NexHire EIP";
+  const email = $("help-email")?.value   || "";
+  const subj = $("help-subject")?.value  || "Demande de support NexHire EIP";
   const desc = $("help-description")?.value || "";
   const body = [`Catégorie : ${LABELS[cat] || cat}`, `Email : ${email}`, `Organisation : ${state.user?.organization_name || "—"}`, "", desc].join("\n");
-  window.open(`mailto:support@nexhire.ai?subject=${encodeURIComponent(`[NexHire EIP] ${subj}`)}&body=${encodeURIComponent(body)}`, "_blank");
+  window.open(`mailto:support@nexhire.ca?subject=${encodeURIComponent(`[NexHire EIP] ${subj}`)}&body=${encodeURIComponent(body)}`, "_blank");
   $("help-form-body")?.classList.add("hidden");
   $("help-success-body")?.classList.remove("hidden");
 }
