@@ -82,7 +82,9 @@ const T = {
     'auth.password.new':'Mot de passe (min. 8 caractères)','auth.signup.btn':'Créer mon compte gratuitement',
     'auth.signup.switch':'Déjà un compte ?','auth.signup.switch.link':'Se connecter',
     'app.trial':'Votre essai gratuit se termine bientôt.','app.trial.cta':'Choisir un plan — Starter 99 $ · Pro 299 $',
-    'app.tab.agent':'Assistant IA','app.tab.connectors':'Connecteurs','app.tab.documents':'Documents','app.tab.audit':'Audit','app.tab.settings':'Paramètres',
+    'app.tab.agent':'Assistant IA','app.tab.connectors':'Intégrations','app.tab.documents':'Rapports','app.tab.audit':'Audit','app.tab.settings':'Paramètres',
+    'app.tab.security':'Conformité','app.tab.procurement':'Achats','app.tab.org':'Organisation','app.tab.help':'Aide & support','app.tab.superadmin':'Super Admin',
+    'nav.grp.pilotage':'Pilotage','nav.grp.finance':'Finance','nav.grp.gouvernance':'Gouvernance','nav.grp.donnees':'Données','nav.grp.systeme':'Système',
     'app.logout':'Déconnexion','app.notif.title':'Notifications',
     'agent.title':'Posez votre question','agent.mode.ent':'Enterprise','agent.mode.mun':'Municipal / Organisme','agent.mode.rec':'Recrutement',
     'agent.chip1':'Incidents + projets + budget','agent.chip2':'Emails non lus','agent.chip3':'Contrats à renouveler','agent.chip4':'Effectifs RH','agent.chip5':'Budget du mois',
@@ -102,7 +104,7 @@ const T = {
     'stats.title':"Statistiques d'utilisation",
     'stats.queries':'Requêtes','stats.score':'Satisfaction moyenne','stats.rated':'Réponses notées','stats.util':'Utilisateurs actifs',
     'stats.chart.daily':'Activité quotidienne','stats.chart.connectors':'Connecteurs utilisés','stats.chart.sat':'Répartition de la satisfaction',
-    'app.tab.stats':'Statistiques',
+    'app.tab.stats':"Vue d'ensemble",
     'app.tab.team':'Équipe','app.tab.settings':'Paramètres',
     'team.title':"Gestion de l'équipe",'team.invite.btn':'+ Inviter un membre',
     'team.desc':"Les membres invités rejoignent votre organisation et partagent le quota mensuel de requêtes.",
@@ -144,7 +146,7 @@ const T = {
     'sa.title':'Comptes de service','sa.add':'+ Créer','sa.name':'Nom','sa.role':'Rôle',
     'sa.desc':'Tokens longue durée non liés à un compte utilisateur.',
     'dept.title':'Départements','dept.add':'+ Département','dept.name':'Nom','dept.budget':'Budget annuel ($)',
-    'app.tab.optim':'Optimisation IA',
+    'app.tab.optim':'Analytique',
     'optim.title':'Optimisation IA','optim.analyze':'Analyser avec l\'IA',
     'optim.tab.dashboard':'Tableau de bord','optim.tab.licenses':'Licences inutilisées',
     'optim.tab.duplicates':'Outils en doublon','optim.tab.contracts':'Contrats',
@@ -226,7 +228,7 @@ const T = {
     'land.contact.f.ph.email':"marie@organisation.ca",'land.contact.f.ph.msg':"Décrivez brièvement votre besoin…",
     'land.contact.f.submit':"Demander une démonstration →",
     'land.contact.success.title':"Message envoyé !",'land.contact.success.sub':"Notre équipe vous contacte sous 24 heures.",
-    'app.tab.finance':'💰 Finance','app.tab.recherche':'🔍 Recherche interne',
+    'app.tab.finance':'Dépenses','app.tab.recherche':'🔍 Recherche interne',
     'finance.title':'Finance & Transactions','finance.refresh':'↻ Actualiser','finance.add':'+ Ajouter','finance.report.btn':'📥 Rapport ▾',
     'finance.all.months':'Tous les mois','finance.all.depts':'Tous les départements','finance.txns.header':'Transactions',
     'finance.kpi.paid':'Total payé','finance.kpi.pending':'En attente','finance.kpi.txns':'Transactions',
@@ -316,7 +318,9 @@ const T = {
     'auth.password.new':'Password (min. 8 characters)','auth.signup.btn':'Create my free account',
     'auth.signup.switch':'Already have an account?','auth.signup.switch.link':'Sign in',
     'app.trial':'Your free trial ends soon.','app.trial.cta':'Choose a plan — Starter $99 · Pro $299',
-    'app.tab.agent':'AI Assistant','app.tab.connectors':'Connectors','app.tab.documents':'Documents','app.tab.audit':'Audit','app.tab.settings':'Settings',
+    'app.tab.agent':'AI Assistant','app.tab.connectors':'Integrations','app.tab.documents':'Reports','app.tab.audit':'Audit','app.tab.settings':'Settings',
+    'app.tab.security':'Compliance','app.tab.procurement':'Procurement','app.tab.org':'Organization','app.tab.help':'Help & support','app.tab.superadmin':'Super Admin',
+    'nav.grp.pilotage':'Piloting','nav.grp.finance':'Finance','nav.grp.gouvernance':'Governance','nav.grp.donnees':'Data','nav.grp.systeme':'System',
     'app.logout':'Sign out','app.notif.title':'Notifications',
     'agent.title':'Ask a question','agent.mode.ent':'Enterprise','agent.mode.mun':'Municipal / Organization','agent.mode.rec':'Recruiting',
     'agent.chip1':'Incidents + projects + budget','agent.chip2':'Unread emails','agent.chip3':'Contracts to renew','agent.chip4':'HR headcount','agent.chip5':'Monthly budget',
@@ -336,7 +340,7 @@ const T = {
     'stats.title':'Usage Statistics',
     'stats.queries':'Queries','stats.score':'Avg satisfaction','stats.rated':'Rated responses','stats.util':'Active users',
     'stats.chart.daily':'Daily activity','stats.chart.connectors':'Connectors used','stats.chart.sat':'Satisfaction distribution',
-    'app.tab.stats':'Statistics',
+    'app.tab.stats':'Overview',
     'app.tab.team':'Team','app.tab.settings':'Settings',
     'team.title':'Team management','team.invite.btn':'+ Invite member',
     'team.desc':'Invited members join your organization and share the monthly query quota.',
@@ -379,7 +383,7 @@ const T = {
     'sa.title':'Service Accounts','sa.add':'+ Create','sa.name':'Name','sa.role':'Role',
     'sa.desc':'Long-lived tokens not tied to a user account.',
     'dept.title':'Departments','dept.add':'+ Department','dept.name':'Name','dept.budget':'Annual budget ($)',
-    'app.tab.optim':'AI Optimization',
+    'app.tab.optim':'Analytics',
     'optim.title':'AI Optimization','optim.analyze':'Analyze with AI',
     'optim.tab.dashboard':'Dashboard','optim.tab.licenses':'Unused Licenses',
     'optim.tab.duplicates':'Duplicate Tools','optim.tab.contracts':'Contracts',
@@ -461,7 +465,7 @@ const T = {
     'land.contact.f.ph.email':"john@organization.ca",'land.contact.f.ph.msg':"Briefly describe your need…",
     'land.contact.f.submit':"Request a demonstration →",
     'land.contact.success.title':"Message sent!",'land.contact.success.sub':"Our team will contact you within 24 hours.",
-    'app.tab.finance':'💰 Finance','app.tab.recherche':'🔍 Internal Search',
+    'app.tab.finance':'Expenses','app.tab.recherche':'🔍 Internal Search',
     'finance.title':'Finance & Transactions','finance.refresh':'↻ Refresh','finance.add':'+ Add','finance.report.btn':'📥 Report ▾',
     'finance.all.months':'All months','finance.all.depts':'All departments','finance.txns.header':'Transactions',
     'finance.kpi.paid':'Total paid','finance.kpi.pending':'Pending','finance.kpi.txns':'Transactions',
@@ -551,8 +555,10 @@ const T = {
     'auth.password.new':'Contraseña (mín. 8 caracteres)','auth.signup.btn':'Crear mi cuenta gratuita',
     'auth.signup.switch':'¿Ya tienes cuenta?','auth.signup.switch.link':'Iniciar sesión',
     'app.trial':'Tu prueba gratuita termina pronto.','app.trial.cta':'Elegir un plan — Starter 99 $ · Pro 299 $',
-    'app.tab.agent':'Asistente IA','app.tab.connectors':'Conectores','app.tab.documents':'Documentos','app.tab.audit':'Auditoría','app.tab.settings':'Configuración',
-    'app.tab.stats':'Estadísticas','app.tab.team':'Equipo','app.tab.parc':'Activos TI','app.tab.optim':'Optimización IA','app.tab.marketplace':'Marketplace',
+    'app.tab.agent':'Asistente IA','app.tab.connectors':'Integraciones','app.tab.documents':'Informes','app.tab.audit':'Auditoría','app.tab.settings':'Configuración',
+    'app.tab.stats':'Resumen','app.tab.team':'Equipo','app.tab.parc':'Activos TI','app.tab.optim':'Analítica','app.tab.marketplace':'Marketplace',
+    'app.tab.security':'Cumplimiento','app.tab.procurement':'Adquisiciones','app.tab.org':'Organización','app.tab.help':'Ayuda y soporte','app.tab.superadmin':'Super Admin',
+    'nav.grp.pilotage':'Pilotaje','nav.grp.finance':'Finanzas','nav.grp.gouvernance':'Gobernanza','nav.grp.donnees':'Datos','nav.grp.systeme':'Sistema',
     'app.logout':'Cerrar sesión','app.notif.title':'Notificaciones',
     'agent.title':'Haz tu pregunta','agent.mode.ent':'Empresa','agent.mode.mun':'Municipal / Organismo','agent.mode.rec':'Reclutamiento',
     'agent.chip1':'Incidentes + proyectos + presupuesto','agent.chip2':'Correos no leídos','agent.chip3':'Contratos a renovar','agent.chip4':'Plantilla RRHH','agent.chip5':'Presupuesto del mes',
@@ -693,7 +699,7 @@ const T = {
     'land.contact.f.ph.email':"maria@organizacion.ca",'land.contact.f.ph.msg':"Describe brevemente tu necesidad…",
     'land.contact.f.submit':"Solicitar una demostración →",
     'land.contact.success.title':"¡Mensaje enviado!",'land.contact.success.sub':"Nuestro equipo te contactará en 24 horas.",
-    'app.tab.finance':'💰 Finanzas','app.tab.recherche':'🔍 Búsqueda interna',
+    'app.tab.finance':'Gastos','app.tab.recherche':'🔍 Búsqueda interna',
     'finance.title':'Finanzas & Transacciones','finance.refresh':'↻ Actualizar','finance.add':'+ Agregar','finance.report.btn':'📥 Reporte ▾',
     'finance.all.months':'Todos los meses','finance.all.depts':'Todos los departamentos','finance.txns.header':'Transacciones',
     'finance.kpi.paid':'Total pagado','finance.kpi.pending':'Pendiente','finance.kpi.txns':'Transacciones',
@@ -772,6 +778,7 @@ function setLang(l) {
     if (p) chip.dataset.prompt = p;
   });
   renderSearchSuggestions();
+  if (state?.tab) _updateTopbarTitle(state.tab);
 }
 
 function renderSearchSuggestions() {
@@ -1548,24 +1555,61 @@ function switchTab(name) {
   loadActiveTab();
 }
 
-const _TAB_TITLES = {
-  agent:       { title: "Assistant IA",        sub: "Posez vos questions à l'IA" },
-  optim:       { title: "Optimisation IA",     sub: "Économies et gouvernance" },
-  "parc-it":   { title: "Parc IT",            sub: "Applications, licences et équipements" },
-  documents:   { title: "Rapports",            sub: "Bibliothèque documentaire et exports" },
-  finance:     { title: "Dépenses",            sub: "Budgets, dépenses et copilot" },
-  procurement: { title: "Achats",              sub: "Contrats fournisseurs et appels d'offres" },
-  stats:       { title: "Vue d'ensemble",      sub: "Tableau de bord organisationnel" },
-  settings:    { title: "Paramètres",          sub: "Configuration du compte" },
-  connectors:  { title: "Intégrations",        sub: "Connecteurs et sources de données" },
-  org:         { title: "Organisation",        sub: "Dashboard direction générale" },
-  team:        { title: "Équipe",              sub: "Membres et départements" },
-  audit:       { title: "Audit",               sub: "Traçabilité des actions" },
-  security:    { title: "Conformité",          sub: "Posture de sécurité et alertes" },
-  marketplace: { title: "Marketplace",         sub: "Connecteurs et extensions" },
-};
+function _getTabTitle(tab) {
+  const d = {
+    fr: {
+      agent:       { title: "Assistant IA",        sub: "Posez vos questions à l'IA" },
+      optim:       { title: "Analytique",           sub: "Économies et gouvernance" },
+      "parc-it":   { title: "Parc IT",             sub: "Applications, licences et équipements" },
+      documents:   { title: "Rapports",             sub: "Bibliothèque documentaire et exports" },
+      finance:     { title: "Dépenses",             sub: "Budgets, dépenses et copilot" },
+      procurement: { title: "Achats",               sub: "Contrats fournisseurs et appels d'offres" },
+      stats:       { title: "Vue d'ensemble",       sub: "Tableau de bord organisationnel" },
+      settings:    { title: "Paramètres",           sub: "Configuration du compte" },
+      connectors:  { title: "Intégrations",         sub: "Connecteurs et sources de données" },
+      org:         { title: "Organisation",         sub: "Dashboard direction générale" },
+      team:        { title: "Équipe",               sub: "Membres et départements" },
+      audit:       { title: "Audit",                sub: "Traçabilité des actions" },
+      security:    { title: "Conformité",           sub: "Posture de sécurité et alertes" },
+      marketplace: { title: "Marketplace",          sub: "Connecteurs et extensions" },
+    },
+    en: {
+      agent:       { title: "AI Assistant",         sub: "Ask your questions to the AI" },
+      optim:       { title: "Analytics",            sub: "Savings and governance" },
+      "parc-it":   { title: "IT Assets",            sub: "Applications, licenses and equipment" },
+      documents:   { title: "Reports",              sub: "Document library and exports" },
+      finance:     { title: "Expenses",             sub: "Budgets, expenses and copilot" },
+      procurement: { title: "Procurement",          sub: "Vendor contracts and tenders" },
+      stats:       { title: "Overview",             sub: "Organizational dashboard" },
+      settings:    { title: "Settings",             sub: "Account configuration" },
+      connectors:  { title: "Integrations",         sub: "Connectors and data sources" },
+      org:         { title: "Organization",         sub: "Executive general dashboard" },
+      team:        { title: "Team",                 sub: "Members and departments" },
+      audit:       { title: "Audit",                sub: "Action traceability" },
+      security:    { title: "Compliance",           sub: "Security posture and alerts" },
+      marketplace: { title: "Marketplace",          sub: "Connectors and extensions" },
+    },
+    es: {
+      agent:       { title: "Asistente IA",         sub: "Haz tus preguntas a la IA" },
+      optim:       { title: "Analítica",            sub: "Ahorros y gobernanza" },
+      "parc-it":   { title: "Activos TI",           sub: "Aplicaciones, licencias y equipos" },
+      documents:   { title: "Informes",             sub: "Biblioteca de documentos y exportaciones" },
+      finance:     { title: "Gastos",               sub: "Presupuestos, gastos y copilot" },
+      procurement: { title: "Adquisiciones",        sub: "Contratos de proveedores y licitaciones" },
+      stats:       { title: "Resumen",              sub: "Panel organizacional" },
+      settings:    { title: "Configuración",        sub: "Configuración de cuenta" },
+      connectors:  { title: "Integraciones",        sub: "Conectores y fuentes de datos" },
+      org:         { title: "Organización",         sub: "Panel de dirección general" },
+      team:        { title: "Equipo",               sub: "Miembros y departamentos" },
+      audit:       { title: "Auditoría",            sub: "Trazabilidad de acciones" },
+      security:    { title: "Cumplimiento",         sub: "Postura de seguridad y alertas" },
+      marketplace: { title: "Marketplace",          sub: "Conectores y extensiones" },
+    }
+  };
+  return (d[_lang] || d.fr)[tab] || { title: "AgentHub", sub: "Intelligence Platform" };
+}
 function _updateTopbarTitle(tab) {
-  const t = _TAB_TITLES[tab] || { title: "AgentHub", sub: "Intelligence Platform" };
+  const t = _getTabTitle(tab);
   const el1 = $("topbar-page-title"), el2 = $("topbar-page-sub");
   if (el1) el1.textContent = t.title;
   if (el2) el2.textContent = t.sub;
@@ -6187,18 +6231,18 @@ async function _loadIntelligenceBanner() {
             <div style="font-size:.82rem;color:#cbd5e1">d'économies potentielles — soit <strong style="color:#fbbf24">${_fmt(savings.savings_annual)} $/an</strong></div>
           ` : `<div style="font-size:.95rem;color:#94a3b8;margin-top:4px">Aucune économie directe identifiée</div>`}
         </div>
-        ${alertsMonthly > 0 ? `
-          <div style="background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.3);border-radius:10px;padding:10px 16px;min-width:160px">
-            <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#fdba74;margin-bottom:3px">⚠️ Alertes financières</div>
-            <div style="font-size:1.25rem;font-weight:800;color:#fb923c">${_fmt(alertsMonthly)} $/mois</div>
-            <div style="font-size:.78rem;color:#fcd34d">${_fmt(savings.alerts_annual)} $/an à surveiller</div>
-          </div>
-        ` : ""}
         <button class="btn btn-sm" onclick="switchOptimTab('m365')"
           style="background:#4ade80;color:#0f172a;font-weight:700;border:none;align-self:center">Voir les détails →</button>
       </div>
-      ${(savingsChips || alertChips) ? `
-        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px">
+      ${(alertsMonthly > 0 || savingsChips || alertChips) ? `
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px">
+          ${alertsMonthly > 0 ? `
+            <div style="background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.3);border-radius:10px;padding:8px 14px;min-width:160px">
+              <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#fdba74;margin-bottom:3px">⚠️ Alertes financières</div>
+              <div style="font-size:1.1rem;font-weight:800;color:#fb923c">${_fmt(alertsMonthly)} $/mois</div>
+              <div style="font-size:.75rem;color:#fcd34d">${_fmt(savings.alerts_annual)} $/an à surveiller</div>
+            </div>
+          ` : ""}
           ${savingsChips}${alertChips}
         </div>
       ` : ""}`;
