@@ -1431,7 +1431,10 @@ async function apiCall(path, method = "GET", body = null) {
   }
   const data = await res.json().catch(() => ({ detail: `HTTP ${res.status}` }));
   if (!res.ok) {
-    const err = new Error(data.detail || `Erreur ${res.status}`);
+    const detail = Array.isArray(data.detail)
+      ? data.detail.map(e => e.msg || JSON.stringify(e)).join(" · ")
+      : (data.detail || `Erreur ${res.status}`);
+    const err = new Error(detail);
     err.status = res.status;
     throw err;
   }
@@ -10024,9 +10027,114 @@ function closeSidebar() {
   $("sidebar-backdrop")?.classList.remove("visible");
   document.body.style.overflow = "";
 }
+const _HELP_DOCS = [
+  {
+    title: "🏢 Profil de l'organisation",
+    items: [
+      { q: "Créer et configurer votre profil entreprise", a: "Après l'inscription, allez dans Paramètres → Informations de l'organisation. Renseignez le nom, le secteur d'activité (entreprise, hôpital, municipalité, université), la devise (CAD par défaut) et le logo. Ces informations personnalisent toute l'expérience NexHire EIP." },
+      { q: "Changer le type d'organisation", a: "Paramètres → Type d'organisation. Attention : changer de type réinitialise les recommandations sectorielles et les workspaces. Une confirmation est demandée avant de valider." },
+      { q: "Uploader un logo", a: "Paramètres → Logo de l'organisation. Formats acceptés : PNG, JPG, SVG (max 2 Mo). Le logo apparaît dans la sidebar, les rapports PDF/Word/Excel/PPTX et les en-têtes de documents." },
+    ],
+  },
+  {
+    title: "🏗️ Départements et services",
+    items: [
+      { q: "Ajouter un département", a: "Paramètres → Gestion des départements → + Département. Renseignez le nom, le type (Finance, RH, IT, Direction, etc.), le budget annuel et la devise. Chaque département obtient son propre espace de travail (workspace) avec des indicateurs ciblés." },
+      { q: "Types de départements disponibles", a: "Finance, Ressources Humaines, Technologies de l'information, Juridique, Opérations, Communication, Direction, Approvisionnement, Marketing, Général. Le type détermine quels connecteurs et quels rapports sont prioritairement affichés pour les membres." },
+      { q: "Lier un département à un connecteur", a: "Dans Intégrations, chaque connecteur peut être associé à un ou plusieurs départements. Les membres voient uniquement les données de leur département via l'agent IA et les tableaux de bord." },
+      { q: "Gérer le budget d'un département", a: "Onglet Dépenses (visible si votre département est de type Finance ou Approvisionnement) → Budgets. Définissez l'allocation annuelle par département. NexHire calcule automatiquement le taux d'utilisation et génère des alertes si le seuil est dépassé." },
+    ],
+  },
+  {
+    title: "👥 Inviter et gérer les membres",
+    items: [
+      { q: "Inviter un membre", a: "Onglet Équipe → + Inviter un membre. Choisissez un rôle : Utilisateur (accès lecture à son département), Manager (peut voir tous les départements), Admin (gestion complète). Un lien d'invitation valide 7 jours est généré — copiez-le et envoyez-le directement." },
+      { q: "Rôles et permissions", a: "Utilisateur : accès à son département uniquement, peut poser des questions à l'IA. Manager : voir tous les départements, exporter des rapports. Admin : tout + gestion des connecteurs, équipes, audit, conformité et paramètres org." },
+      { q: "Révoquer un accès", a: "Équipe → cliquez sur le membre → Supprimer. L'accès est révoqué immédiatement. Les logs d'audit conservent l'historique des actions de ce membre." },
+    ],
+  },
+  {
+    title: "🤖 Assistant IA — Posez vos questions",
+    items: [
+      { q: "Comment fonctionne l'assistant IA", a: "L'assistant interroge en temps réel vos connecteurs actifs (M365, Jira, SAP, etc.) et vos données internes (budgets, contrats, licences) pour répondre en langage naturel. Il utilise GPT-4o-mini. Sélectionnez le mode Enterprise, Municipal ou Recrutement selon votre contexte." },
+      { q: "Quota de requêtes", a: "Chaque organisation dispose d'un quota mensuel de requêtes IA (visible en bas de la sidebar et dans Paramètres). Le quota se renouvelle automatiquement chaque mois. En cas de dépassement, les requêtes sont bloquées jusqu'au renouvellement." },
+      { q: "Utiliser les chips de requêtes rapides", a: "Les boutons pré-remplis (Incidents + projets + budget, Emails non lus, etc.) se mettent à jour selon votre workspace actif. Cliquez dessus pour pré-remplir la question, puis modifiez-la si besoin avant d'envoyer." },
+    ],
+  },
+  {
+    title: "🔌 Intégrations et connecteurs",
+    items: [
+      { q: "Connecter Microsoft 365", a: "Intégrations → Microsoft 365 → Connecter via OAuth. NexHire accède à vos emails, calendriers, Teams et fichiers SharePoint avec vos permissions d'accès. Un tenant Entra ID est requis. Le token est chiffré (Fernet) avant stockage." },
+      { q: "Connecter Jira, ServiceNow, Salesforce…", a: "Chaque connecteur suit le même processus OAuth : Intégrations → sélectionnez l'outil → Connecter. Les tokens sont révocables à tout moment. Sans connecteur actif, l'agent répond uniquement à partir des données internes NexHire." },
+      { q: "Données simulées vs réelles", a: "Si un connecteur est déconnecté ou en erreur, l'agent utilise des données de démonstration signalées par une bannière orange ⚠️. Les données réelles nécessitent un connecteur en statut Actif (fond vert)." },
+    ],
+  },
+  {
+    title: "📊 Rapports et exports",
+    items: [
+      { q: "Exporter un rapport", a: "Onglet Rapports → sélectionnez la période → cliquez sur le bouton d'export (PDF, Word, Excel, PowerPoint). Le logo de votre organisation et les couleurs de marque sont automatiquement intégrés. Les rapports incluent les KPIs, transactions, contrats et budgets de la période sélectionnée." },
+      { q: "Rapport département vs rapport global", a: "En tant qu'admin, vous pouvez exporter un rapport pour toute l'organisation ou filtrer par département. Les membres voient uniquement les données de leur département dans les exports." },
+      { q: "Rapport PDF Executive", a: "Vue d'ensemble → 📥 Rapport PDF. Ce rapport exécutif inclut les scores d'efficacité, les économies identifiées, les risques actifs et les indicateurs de santé organisationnelle par domaine (Finance, RH, IT, Achats)." },
+    ],
+  },
+  {
+    title: "💡 Optimisation IA et économies",
+    items: [
+      { q: "Comment les économies sont calculées", a: "NexHire analyse vos licences (taux d'utilisation < 80%), vos outils en doublon (même catégorie, ≥ 3 actifs), vos contrats proches de l'échéance et vos processus manuels automatisables. Les économies sont exprimées en $/an." },
+      { q: "Potentiel de négociation des contrats", a: "Lors de la création d'un contrat (Parc IT → Contrats), renseignez le champ Potentiel de négociation (%). Ce pourcentage appliqué sur la valeur annuelle donne les économies estimées. Si non renseigné, NexHire applique 10 % par défaut." },
+      { q: "Top opportunités — pourquoi mon département n'apparaît pas", a: "Les opportunités sont classées par impact financier ($/an) toutes catégories confondues. Si votre département IT n'apparaît pas, c'est que ses licences ont un taux d'utilisation ≥ 80 %, qu'il n'a pas d'outils en doublon détectés, ou que ses contrats ne sont pas proches de l'échéance. Ajoutez des licences ou des contrats dans Parc IT pour déclencher des recommandations." },
+    ],
+  },
+  {
+    title: "🔐 Sécurité et conformité",
+    items: [
+      { q: "Audit log — traçabilité des actions", a: "Chaque action (connexion, requête IA, modification de contrat, export, invitation) est enregistrée dans le journal d'audit avec l'IP, l'utilisateur, la date et le résultat. Ce log est immuable (append-only) et accessible aux admins dans l'onglet Audit." },
+      { q: "Authentification et sécurité", a: "Authentification par JWT ES256 (tokens d'accès 30 min, refresh 30 jours). Les tokens OAuth des connecteurs sont chiffrés avec Fernet avant stockage. Le SSO (Entra ID / SAML) est en cours de déploiement." },
+      { q: "LPRPDE et données canadiennes", a: "NexHire est conçu pour les organisations canadiennes. Les données sont stockées sur des serveurs conformes LPRPDE. Aucune donnée métier n'est utilisée pour entraîner les modèles IA." },
+    ],
+  },
+];
+
 function loadHelp() {
   const emailEl = $("htab-email");
   if (emailEl && state.user?.email) emailEl.value = state.user.email;
+  _renderHelpDocs();
+}
+function _renderHelpDocs() {
+  const wrap = $("help-doc-accordion");
+  if (!wrap || wrap.dataset.rendered) return;
+  wrap.dataset.rendered = "1";
+  wrap.innerHTML = _HELP_DOCS.map((section, si) => `
+    <div style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden">
+      <button onclick="_toggleHelpSection(${si})" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#f8fafc;border:none;cursor:pointer;font-size:.88rem;font-weight:700;color:#1e293b;text-align:left">
+        <span>${section.title}</span>
+        <span id="help-sec-icon-${si}" style="font-size:.8rem;color:#64748b;transition:transform .2s">▾</span>
+      </button>
+      <div id="help-sec-${si}" style="display:none;border-top:1px solid #e2e8f0">
+        ${section.items.map((item, ii) => `
+          <div style="border-bottom:1px solid #f1f5f9">
+            <button onclick="_toggleHelpItem(${si},${ii})" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:10px 16px 10px 28px;background:#fff;border:none;cursor:pointer;font-size:.84rem;font-weight:600;color:#334155;text-align:left">
+              <span>${item.q}</span>
+              <span id="help-item-icon-${si}-${ii}" style="font-size:.75rem;color:#94a3b8;flex-shrink:0;margin-left:8px">▾</span>
+            </button>
+            <div id="help-item-${si}-${ii}" style="display:none;padding:0 16px 12px 28px;font-size:.83rem;color:#475569;line-height:1.65;background:#fafafa">${item.a}</div>
+          </div>`).join("")}
+      </div>
+    </div>`).join("");
+}
+function _toggleHelpSection(si) {
+  const body = $(`help-sec-${si}`);
+  const icon = $(`help-sec-icon-${si}`);
+  const open = body.style.display !== "none";
+  body.style.display = open ? "none" : "block";
+  if (icon) icon.textContent = open ? "▾" : "▴";
+}
+function _toggleHelpItem(si, ii) {
+  const body = $(`help-item-${si}-${ii}`);
+  const icon = $(`help-item-icon-${si}-${ii}`);
+  const open = body.style.display !== "none";
+  body.style.display = open ? "none" : "block";
+  if (icon) icon.textContent = open ? "▾" : "▴";
 }
 function resetHelpTab() {
   $("htab-category") && ($("htab-category").value = "");

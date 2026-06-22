@@ -31,7 +31,7 @@ def get_quota(user: CurrentUser = Depends(require_min_role("user"))):
 class AgentQuery(BaseModel):
     question: str = Field(..., min_length=1, max_length=2000)
     assistant_mode: str = Field("enterprise", pattern="^(enterprise|municipal|recruiting)$")
-    language: str = Field("fr", pattern="^(fr|en)$")
+    language: str = Field("fr", pattern="^(fr|en|es)$")
     dept_type: str | None = None   # workspace actif côté frontend — prioritaire sur le dept DB
 
 

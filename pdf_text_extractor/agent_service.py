@@ -1339,7 +1339,7 @@ def run_agent(
     if org_id:
         tools = tools + INTERNAL_TOOL_DEFINITIONS
 
-    lang_name = "français" if language == "fr" else "English"
+    lang_name = "français" if language == "fr" else "español" if language == "es" else "English"
 
     _mode_identity = {
         "enterprise": (
