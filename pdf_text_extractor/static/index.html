@@ -2759,9 +2759,18 @@
             <label class="auth-label"><span>Emplacement</span><input id="sm-location" type="text" placeholder="Datacenter Montréal" /></label>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <label class="auth-label"><span>Coût mensuel ($)</span><input id="sm-cost" type="number" step="0.01" value="0" /></label>
+            <label class="auth-label"><span>N° d'étiquette / Code inventaire</span><input id="sm-asset-tag" type="text" placeholder="TAG-0042" /></label>
+            <label class="auth-label"><span>Valeur d'acquisition ($)</span><input id="sm-purchase-price" type="number" min="0" step="1" placeholder="Ex : 1 800" /></label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Date d'achat</span><input id="sm-acquisition-date" type="date" onchange="_updateAgeIndicator()" /></label>
+            <label class="auth-label"><span>Fin de garantie</span><input id="sm-warranty-end" type="date" /></label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label class="auth-label"><span>Remplacement prévu</span><input id="sm-replacement-date" type="date" /></label>
             <label class="auth-label"><span>Département</span><select id="sm-dept"><option value="">— Aucun —</option></select></label>
           </div>
+          <div id="sm-age-indicator" style="display:none;padding:6px 10px;border-radius:8px;font-size:12px;font-weight:600"></div>
           <label class="auth-label"><span>Notes</span><input id="sm-notes" type="text" /></label>
           <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
           <p id="sm-error" class="form-error hidden"></p>

@@ -26,6 +26,11 @@ class ServerPayload(BaseModel):
     status: str = "active"
     last_ping_at: str | None = None
     monthly_cost: float = 0
+    purchase_price: float | None = Field(None, ge=0)
+    asset_tag: str | None = None
+    acquisition_date: str | None = None
+    warranty_end_date: str | None = None
+    replacement_date: str | None = None
     notes: str | None = None
 
 
@@ -117,8 +122,10 @@ def create_server(
             INSERT INTO servers (
                 organization_id, department_id, device_type, hostname, ip_address,
                 environment, os, cpu_cores, ram_gb, storage_gb,
-                location, status, last_ping_at, monthly_cost, notes
-            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                location, status, last_ping_at, monthly_cost,
+                purchase_price, asset_tag,
+                acquisition_date, warranty_end_date, replacement_date, notes
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             RETURNING *
             """,
             (
@@ -136,6 +143,11 @@ def create_server(
                 payload.status,
                 payload.last_ping_at,
                 payload.monthly_cost,
+                payload.purchase_price,
+                payload.asset_tag,
+                payload.acquisition_date,
+                payload.warranty_end_date,
+                payload.replacement_date,
                 payload.notes,
             ),
         )
@@ -157,7 +169,9 @@ def update_server(
                 department_id = %s, device_type = %s, hostname = %s, ip_address = %s,
                 environment = %s, os = %s, cpu_cores = %s, ram_gb = %s,
                 storage_gb = %s, location = %s, status = %s,
-                last_ping_at = %s, monthly_cost = %s, notes = %s
+                last_ping_at = %s, monthly_cost = %s,
+                purchase_price = %s, asset_tag = %s,
+                acquisition_date = %s, warranty_end_date = %s, replacement_date = %s, notes = %s
             WHERE id = %s
             RETURNING *
             """,
@@ -175,6 +189,11 @@ def update_server(
                 payload.status,
                 payload.last_ping_at,
                 payload.monthly_cost,
+                payload.purchase_price,
+                payload.asset_tag,
+                payload.acquisition_date,
+                payload.warranty_end_date,
+                payload.replacement_date,
                 payload.notes,
                 server_id,
             ),

@@ -5055,22 +5055,25 @@ async function loadServers() {
       cable_network:"🌐 Câble réseau", cable_hdmi:"📺 HDMI", cable_vga:"📺 VGA", cable_displayport:"📺 DisplayPort",
       usb_key:"💾 Clé USB", usb_adapter:"🔌 Adapt. USB", charger:"🔋 Chargeur", ups:"⚡ UPS", other:"📦 Autre" };
     if (!srvs.length) { wrap.innerHTML = `<p class="muted" style="padding:20px">Aucun équipement enregistré.</p>`; return; }
-    wrap.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Type</th><th>Nom / Hôte</th><th>IP / N° série</th><th>Env.</th><th>OS / Spec</th><th>Emplacement</th><th>Statut</th><th>Coût/mois</th><th>Dép.</th><th></th></tr></thead><tbody>` +
+    wrap.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Type</th><th>Nom / Hôte</th><th>Étiquette</th><th>IP / N° série</th><th>Env.</th><th>Emplacement</th><th>Statut</th><th>Âge / Cycle</th><th>Dép.</th><th></th></tr></thead><tbody>` +
       srvs.map(s => {
         const stMap = { active:"badge-active", idle:"badge-idle", to_decommission:"badge-decom", decommissioned:"badge-expired" };
         const stLbl = { active:"Actif", idle:"Inactif", to_decommission:"À décom.", decommissioned:"Décom." };
-        const spec = [s.cpu_cores ? `${s.cpu_cores}c` : null, s.ram_gb ? `${s.ram_gb}Go` : null, s.storage_gb ? `${s.storage_gb}Go` : null].filter(Boolean).join(" / ") || (s.os || "—");
         const deptName = s.department_name || "—";
         const typeLabel = _deviceLabel[s.device_type || "server"] || s.device_type || "Serveur";
+        const ageInfo = _equipmentAgeInfo(s.acquisition_date);
+        const ageCell = ageInfo
+          ? `<span style="font-size:11px;font-weight:600;color:${ageInfo.color}">${ageInfo.emoji} ${ageInfo.label}</span>`
+          : `<span style="font-size:.78rem;color:var(--slate)">—</span>`;
         return `<tr class="${s.status==="decommissioned"?"row-inactive":""}">
           <td style="white-space:nowrap;font-size:.82rem">${typeLabel}</td>
           <td><strong>${esc(s.hostname)}</strong></td>
+          <td style="font-size:.78rem;color:var(--slate)">${esc(s.asset_tag||"—")}</td>
           <td style="font-size:.78rem;color:var(--slate)">${esc(s.ip_address||"—")}</td>
           <td style="font-size:.78rem">${esc(s.environment||"—")}</td>
-          <td style="font-size:.78rem">${spec}</td>
           <td>${esc(s.location||"—")}</td>
           <td><span class="badge ${stMap[s.status]||"badge-idle"}">${stLbl[s.status]||s.status}</span></td>
-          <td>${_fmt(s.monthly_cost)}</td>
+          <td>${ageCell}</td>
           <td>${esc(deptName)}</td>
           <td><button class="btn-icon" onclick="editServer('${s.id}')">✎</button> <button class="btn-icon btn-deactivate" onclick="deleteServer('${s.id}')">✕</button></td>
         </tr>`;
@@ -5450,7 +5453,12 @@ document.addEventListener("DOMContentLoaded", () => {
       environment:$("sm-env").value, status:$("sm-status").value, os:$("sm-os").value||null,
       cpu_cores:$("sm-cpu").value ? +$("sm-cpu").value : null, ram_gb:$("sm-ram").value ? +$("sm-ram").value : null,
       storage_gb:$("sm-storage").value ? +$("sm-storage").value : null,
-      location:$("sm-location").value||null, monthly_cost:+($("sm-cost").value||0),
+      location:$("sm-location").value||null,
+      asset_tag:$("sm-asset-tag").value||null,
+      purchase_price:$("sm-purchase-price").value ? +$("sm-purchase-price").value : null,
+      acquisition_date:$("sm-acquisition-date").value||null,
+      warranty_end_date:$("sm-warranty-end").value||null,
+      replacement_date:$("sm-replacement-date").value||null,
       department_id:$("sm-dept").value||null, notes:$("sm-notes").value||null };
     try {
       if (id) await apiCall(`/api/servers/${id}`, "PATCH", body);
@@ -5517,6 +5525,30 @@ async function deleteLicense(id) {
   try { await apiCall(`/api/licenses/${id}`, "DELETE"); loadLicenses(); } catch(e) { alert(e.message); }
 }
 
+// ── Cycle de vie équipements — indicateur d'âge ─────────────────────────────
+function _equipmentAgeInfo(acquisitionDate) {
+  if (!acquisitionDate) return null;
+  const acquired = new Date(acquisitionDate);
+  if (isNaN(acquired)) return null;
+  const months = Math.floor((Date.now() - acquired) / (1000 * 60 * 60 * 24 * 30.44));
+  if (months < 0) return null;
+  if (months <= 24) return { emoji: "🟢", label: "Actif récent",           color: "#15803d", bg: "#f0fdf4", months };
+  if (months <= 48) return { emoji: "🟡", label: "À surveiller",           color: "#92400e", bg: "#fffbeb", months };
+  return               { emoji: "🔴", label: "Remplacement recommandé", color: "#991b1b", bg: "#fef2f2", months };
+}
+
+function _updateAgeIndicator() {
+  const ind = $("sm-age-indicator");
+  if (!ind) return;
+  const info = _equipmentAgeInfo($("sm-acquisition-date")?.value);
+  if (!info) { ind.style.display = "none"; return; }
+  const yrs = Math.floor(info.months / 12);
+  const mo  = info.months % 12;
+  const age = yrs > 0 ? `${yrs} an${yrs > 1 ? "s" : ""}${mo > 0 ? ` ${mo} mois` : ""}` : `${mo} mois`;
+  ind.style.cssText = `display:block;padding:6px 10px;border-radius:8px;font-size:12px;font-weight:600;background:${info.bg};color:${info.color};border:1px solid ${info.color}30`;
+  ind.textContent = `${info.emoji} ${info.label} — ${age}`;
+}
+
 function openServerModal(srv = null) {
   $("sm-id").value = srv?.id || "";
   $("sm-device-type").value = srv?.device_type || "server";
@@ -5527,11 +5559,16 @@ function openServerModal(srv = null) {
   $("sm-os").value       = srv?.os        || "";
   $("sm-cpu").value      = srv?.cpu_cores || "";
   $("sm-ram").value      = srv?.ram_gb    || "";
-  $("sm-storage").value  = srv?.storage_gb || "";
-  $("sm-location").value = srv?.location  || "";
-  $("sm-cost").value     = srv?.monthly_cost || 0;
-  $("sm-dept").value     = srv?.department_id || "";
-  $("sm-notes").value    = srv?.notes     || "";
+  $("sm-storage").value          = srv?.storage_gb        || "";
+  $("sm-location").value         = srv?.location           || "";
+  $("sm-asset-tag").value        = srv?.asset_tag          || "";
+  $("sm-purchase-price").value   = srv?.purchase_price     || "";
+  $("sm-acquisition-date").value = srv?.acquisition_date   ? srv.acquisition_date.split("T")[0] : "";
+  $("sm-warranty-end").value     = srv?.warranty_end_date  ? srv.warranty_end_date.split("T")[0] : "";
+  $("sm-replacement-date").value = srv?.replacement_date   ? srv.replacement_date.split("T")[0] : "";
+  $("sm-dept").value             = srv?.department_id      || "";
+  $("sm-notes").value            = srv?.notes              || "";
+  _updateAgeIndicator();
   $("sm-error").classList.add("hidden");
   $("server-modal").classList.remove("hidden");
 }
@@ -11315,13 +11352,19 @@ async function _loadITCopilot() {
     const appsActive    = apps.filter(a => a.status === 'active');
     const appsUnused    = apps.filter(a => a.status === 'unused');
     const utilPct       = budgetSum?.total?.utilization_pct || 0;
-    const monthlyIT     = srvs.reduce((s, x) => s + (x.monthly_cost || 0), 0) +
-                          apps.reduce((s, x) => s + (x.monthly_cost || 0), 0);
+    const monthlyIT     = apps.reduce((s, x) => s + (x.monthly_cost || 0), 0);
+
+    // Santé du cycle de vie — basée sur acquisition_date
+    const srvGreen  = srvs.filter(s => _equipmentAgeInfo(s.acquisition_date)?.emoji === "🟢");
+    const srvYellow = srvs.filter(s => _equipmentAgeInfo(s.acquisition_date)?.emoji === "🟡");
+    const srvRed    = srvs.filter(s => _equipmentAgeInfo(s.acquisition_date)?.emoji === "🔴");
+    const srvNoDate = srvs.filter(s => !s.acquisition_date);
 
     // Score IT
     let itScore = 100;
     itScore -= licExpireSoon.length * 8;
     itScore -= srvDecom.length * 5;
+    itScore -= srvRed.length * 4;
     itScore -= appsUnused.length * 4;
     if (utilPct > 100) itScore -= 15;
     else if (utilPct > 90) itScore -= 5;
@@ -11339,7 +11382,7 @@ async function _loadITCopilot() {
         '<div class="exec-kpi-card"><div class="exec-kpi-icon">🔑</div><div class="exec-kpi-body"><div class="exec-kpi-val">' + licActive.length + '</div><div class="exec-kpi-lbl">Licences actives</div></div></div>' +
         '<div class="exec-kpi-card' + (licExpireSoon.length > 0 ? ' exec-kpi-warn' : '') + '"><div class="exec-kpi-icon">' + (licExpireSoon.length > 0 ? '⚠️' : '✅') + '</div><div class="exec-kpi-body"><div class="exec-kpi-val" style="color:' + licColor + '">' + licExpireSoon.length + '</div><div class="exec-kpi-lbl">Licences expirant &lt;30j</div></div></div>' +
         '<div class="exec-kpi-card' + (srvDecom.length > 0 ? ' exec-kpi-warn' : '') + '"><div class="exec-kpi-icon">' + (srvDecom.length > 0 ? '🔄' : '✅') + '</div><div class="exec-kpi-body"><div class="exec-kpi-val" style="color:' + decomColor + '">' + srvDecom.length + '</div><div class="exec-kpi-lbl">À décommissionner</div></div></div>' +
-        '<div class="exec-kpi-card"><div class="exec-kpi-icon">💸</div><div class="exec-kpi-body"><div class="exec-kpi-val">' + fmtCurrency(monthlyIT) + '</div><div class="exec-kpi-lbl">Coût IT mensuel estimé</div></div></div>' +
+        '<div class="exec-kpi-card' + (srvRed.length > 0 ? ' exec-kpi-warn' : '') + '"><div class="exec-kpi-icon">' + (srvRed.length > 0 ? '🔴' : '🟢') + '</div><div class="exec-kpi-body"><div class="exec-kpi-val" style="font-size:.82rem;line-height:1.4">' + (srvGreen.length ? '🟢 ' + srvGreen.length + ' récents  ' : '') + (srvYellow.length ? '🟡 ' + srvYellow.length + ' à surveiller  ' : '') + (srvRed.length ? '🔴 ' + srvRed.length + ' à remplacer' : (!srvGreen.length && !srvYellow.length ? '—' : '')) + '</div><div class="exec-kpi-lbl">Santé du parc</div></div></div>' +
         '<div class="exec-kpi-card" style="border-color:' + scoreColor + '"><div style="width:50px;height:50px;border-radius:50%;border:4px solid ' + scoreColor + ';display:flex;align-items:center;justify-content:center;font-size:1.05rem;font-weight:800;color:' + scoreColor + ';flex-shrink:0">' + itScore + '</div><div class="exec-kpi-body"><div class="exec-kpi-val" style="color:' + scoreColor + '">/100</div><div class="exec-kpi-lbl">Score IT</div></div></div>';
     }
 
@@ -11402,10 +11445,18 @@ async function _loadITCopilot() {
         synthEl.innerHTML = '<div class="ai-card"><span class="ai-badge">🤖 Synthèse IA</span><p class="muted" style="margin:8px 0 0">Aucun actif IT enregistré. Ajoutez des équipements, licences et applications pour activer le Copilot.</p></div>';
       } else {
         let txt = "Le parc IT compte " + srvActive.length + " équipement" + (srvActive.length !== 1 ? "s actifs" : " actif") + " et " + licActive.length + " licence" + (licActive.length !== 1 ? "s actives" : " active") + ".";
+        if (srvGreen.length || srvYellow.length || srvRed.length) {
+          txt += " Santé du parc : ";
+          if (srvGreen.length)  txt += srvGreen.length  + " équipement" + (srvGreen.length  !== 1 ? "s récents" : " récent") + " 🟢";
+          if (srvYellow.length) txt += (srvGreen.length ? ", " : " ") + srvYellow.length + " à surveiller 🟡";
+          if (srvRed.length)    txt += (srvGreen.length || srvYellow.length ? ", " : " ") + srvRed.length + " à remplacer 🔴";
+          txt += ".";
+        } else if (srvNoDate.length > 0 && srvs.length > 0) {
+          txt += " " + srvNoDate.length + " équipement" + (srvNoDate.length !== 1 ? "s n'ont" : " n'a") + " pas de date d'achat — cycle de vie non suivi.";
+        }
         if (licExpireSoon.length > 0) txt += " " + licExpireSoon.length + " licence" + (licExpireSoon.length !== 1 ? "s expirent" : " expire") + " dans les 30 prochains jours.";
         if (srvDecom.length > 0) txt += " " + srvDecom.length + " équipement" + (srvDecom.length !== 1 ? "s sont" : " est") + " marqué" + (srvDecom.length !== 1 ? "s" : "") + " à décommissionner.";
-        if (appsUnused.length > 0) txt += " " + appsUnused.length + " application" + (appsUnused.length !== 1 ? "s sont inutilisées" : " est inutilisée") + " — potentiel d'économie mensuel de " + fmtCurrency(appsUnused.reduce((s, a) => s + (a.monthly_cost || 0), 0)) + ".";
-        if (monthlyIT > 0) txt += " Coût IT mensuel total estimé : " + fmtCurrency(monthlyIT) + ".";
+        if (appsUnused.length > 0) txt += " " + appsUnused.length + " application" + (appsUnused.length !== 1 ? "s sont inutilisées" : " est inutilisée") + " — potentiel d'économie : " + fmtCurrency(appsUnused.reduce((s, a) => s + (a.monthly_cost || 0), 0) * 12) + "/an.";
         synthEl.innerHTML = '<div class="ai-card"><span class="ai-badge">🤖 Synthèse IA</span><p style="margin:8px 0 0;line-height:1.6;color:var(--navy);font-size:.9rem">' + txt + '</p></div>';
       }
     }
@@ -11417,8 +11468,8 @@ async function _loadITCopilot() {
         '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">' +
         '<button class="btn btn-outline btn-sm" onclick="_itQuickQuestion(\'score\')">Pourquoi ce score IT ?</button>' +
         '<button class="btn btn-outline btn-sm" onclick="_itQuickQuestion(\'licences\')">Licences à renouveler ?</button>' +
-        '<button class="btn btn-outline btn-sm" onclick="_itQuickQuestion(\'decom\')">Équipements à décommissionner ?</button>' +
-        '<button class="btn btn-outline btn-sm" onclick="_itQuickQuestion(\'cout\')">Coût optimisable ?</button>' +
+        '<button class="btn btn-outline btn-sm" onclick="_itQuickQuestion(\'lifecycle\')">🟢🟡🔴 Cycle de vie du parc ?</button>' +
+        '<button class="btn btn-outline btn-sm" onclick="_itQuickQuestion(\'cout\')">Applications inutilisées ?</button>' +
         '</div><div id="it-quick-response" style="display:none"></div></div>';
     }
 
@@ -11431,10 +11482,17 @@ async function _loadITCopilot() {
           txt: "<strong>" + esc(l.product_name) + "</strong> (" + esc(l.vendor || "—") + ") expire dans " + l.days_to_expiry + " jour" + (l.days_to_expiry !== 1 ? "s" : ""),
           why: ["La licence expire très prochainement (" + l.days_to_expiry + "j)", "Sans renouvellement, " + (l.assigned_count || 0) + " utilisateur" + ((l.assigned_count || 0) !== 1 ? "s perdront l'accès" : " perdra l'accès"), "→ Initier le renouvellement ou trouver une alternative"] });
       });
+      srvRed.slice(0, 3).forEach(s => {
+        const ageI = _equipmentAgeInfo(s.acquisition_date);
+        const yrs = ageI ? Math.floor(ageI.months / 12) : "?";
+        recs.push({ type: "danger", icon: "🔴",
+          txt: "<strong>" + esc(s.hostname) + "</strong> — remplacement recommandé (" + yrs + " an" + (yrs !== 1 ? "s" : "") + ")",
+          why: ["Cet équipement a " + yrs + " an" + (yrs !== 1 ? "s" : "") + " — au-delà du cycle de vie standard", "Un équipement vieillissant augmente le risque de panne et de perte de productivité", "→ Planifier le remplacement dans le prochain budget IT"] });
+      });
       srvDecom.slice(0, 3).forEach(s => {
         recs.push({ type: "warn", icon: "🔄",
-          txt: "<strong>" + esc(s.hostname) + "</strong> est marqué à décommissionner" + (s.monthly_cost ? " (coût : " + fmtCurrency(s.monthly_cost) + "/mois)" : ""),
-          why: ["Cet équipement est planifié pour décommissionnement", "Il génère encore un coût opérationnel de " + fmtCurrency(s.monthly_cost || 0) + "/mois", "→ Planifier la migration des services associés et désactiver l'équipement"] });
+          txt: "<strong>" + esc(s.hostname) + "</strong> est marqué à décommissionner",
+          why: ["Cet équipement est planifié pour décommissionnement", "→ Planifier la migration des services associés et désactiver l'équipement"] });
       });
       appsUnused.slice(0, 3).forEach(a => {
         const savings = a.monthly_cost || 0;
@@ -11475,11 +11533,15 @@ function _itQuickQuestion(q) {
   const srvDecom      = srvs.filter(s => s.status === 'to_decommission');
   const appsUnused    = apps.filter(a => a.status === 'unused');
   const utilPct       = budgetSum?.total?.utilization_pct || 0;
+  const srvGreen  = srvs.filter(s => _equipmentAgeInfo(s.acquisition_date)?.emoji === "🟢");
+  const srvYellow = srvs.filter(s => _equipmentAgeInfo(s.acquisition_date)?.emoji === "🟡");
+  const srvRed    = srvs.filter(s => _equipmentAgeInfo(s.acquisition_date)?.emoji === "🔴");
   let ans = "";
   if (q === 'score') {
     const reasons = [];
     if (licExpireSoon.length) reasons.push(licExpireSoon.length + " licence" + (licExpireSoon.length !== 1 ? "s" : "") + " expirant <30j (-" + licExpireSoon.length * 8 + "pts)");
     if (srvDecom.length)      reasons.push(srvDecom.length + " équipement" + (srvDecom.length !== 1 ? "s" : "") + " à décommissionner (-" + srvDecom.length * 5 + "pts)");
+    if (srvRed.length)        reasons.push(srvRed.length + " équipement" + (srvRed.length !== 1 ? "s" : "") + " en fin de vie (-" + srvRed.length * 4 + "pts)");
     if (appsUnused.length)    reasons.push(appsUnused.length + " application" + (appsUnused.length !== 1 ? "s" : "") + " inutilisée" + (appsUnused.length !== 1 ? "s" : "") + " (-" + appsUnused.length * 4 + "pts)");
     if (utilPct > 100)        reasons.push("budget IT dépassé (-15pts)");
     ans = reasons.length ? "Déductions : " + reasons.join(", ") + ". Chaque alerte réduit le score IT." : "Parc IT en excellente santé. Aucune déduction appliquée sur le score.";
@@ -11491,18 +11553,27 @@ function _itQuickQuestion(q) {
     }
   } else if (q === 'decom') {
     if (srvDecom.length) {
-      ans = srvDecom.length + " équipement" + (srvDecom.length !== 1 ? "s marqués" : " marqué") + " à décommissionner : " + srvDecom.map(s => esc(s.hostname) + (s.monthly_cost ? " (" + fmtCurrency(s.monthly_cost) + "/mois)" : "")).join(", ") + ".";
+      ans = srvDecom.length + " équipement" + (srvDecom.length !== 1 ? "s marqués" : " marqué") + " à décommissionner : " + srvDecom.map(s => esc(s.hostname)).join(", ") + ".";
     } else {
       ans = "Aucun équipement planifié pour décommissionnement. Parc infrastructure sain.";
     }
+  } else if (q === 'lifecycle') {
+    if (srvRed.length) {
+      ans = srvRed.length + " équipement" + (srvRed.length !== 1 ? "s" : "") + " à remplacer 🔴 : " + srvRed.map(s => { const i = _equipmentAgeInfo(s.acquisition_date); return esc(s.hostname) + " (" + Math.floor((i?.months||0)/12) + "ans)"; }).join(", ") + ".";
+      if (srvYellow.length) ans += " · " + srvYellow.length + " à surveiller 🟡.";
+    } else if (srvYellow.length) {
+      ans = srvYellow.length + " équipement" + (srvYellow.length !== 1 ? "s" : "") + " à surveiller 🟡 : " + srvYellow.map(s => esc(s.hostname)).join(", ") + ". Aucun remplacement urgent.";
+    } else if (srvGreen.length) {
+      ans = "Parc récent — " + srvGreen.length + " équipement" + (srvGreen.length !== 1 ? "s" : "") + " actif" + (srvGreen.length !== 1 ? "s" : "") + " 🟢. Aucun remplacement prévu.";
+    } else {
+      ans = "Aucune date d'achat enregistrée. Ajoutez la date d'acquisition pour activer le suivi du cycle de vie.";
+    }
   } else if (q === 'cout') {
     const unusedCost = appsUnused.reduce((s, a) => s + (a.monthly_cost || 0), 0);
-    const decomCost  = srvDecom.reduce((s, s2) => s + (s2.monthly_cost || 0), 0);
-    const total      = unusedCost + decomCost;
-    if (total > 0) {
-      ans = "Économies mensuelles potentielles : " + fmtCurrency(total) + " — Applications inutilisées : " + fmtCurrency(unusedCost) + " | Équipements à décommissionner : " + fmtCurrency(decomCost) + ".";
+    if (unusedCost > 0) {
+      ans = "Économies potentielles : " + fmtCurrency(unusedCost * 12) + "/an — " + appsUnused.length + " application" + (appsUnused.length !== 1 ? "s" : "") + " inutilisée" + (appsUnused.length !== 1 ? "s" : "") + " (" + fmtCurrency(unusedCost) + "/mois).";
     } else {
-      ans = "Aucune opportunité d'économie immédiate identifiée. Le parc IT est bien optimisé.";
+      ans = "Aucune application inutilisée détectée. Le parc applicatif est optimisé.";
     }
   }
   const respEl = $('it-quick-response');
