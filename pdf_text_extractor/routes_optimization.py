@@ -590,6 +590,28 @@ async def _ai_cost_analysis(org_id: str, question: str, language: str, org_type:
             )
             budget = rows(cur)
 
+        # Garde : pas assez de données pour une analyse utile
+        total_monthly = sum(float(a.get("monthly_cost") or 0) for a in apps)
+        has_data = apps or lics or any(float(b.get("allocated") or 0) + float(b.get("actual") or 0) > 0 for b in budget)
+        if not has_data:
+            msg_fr = ("Aucune donnée suffisante pour générer une analyse. "
+                      "Ajoutez vos applications, licences ou budget IT pour obtenir des recommandations concrètes.")
+            msg_en = ("Not enough data to generate an analysis. "
+                      "Add your applications, licenses, or IT budget to get actionable recommendations.")
+            summary = msg_fr if language == "fr" else msg_en
+            return {
+                "success":  True,
+                "question": question,
+                "analysis": {
+                    "summary":                 summary,
+                    "total_potential_savings": 0,
+                    "confidence":              0,
+                    "steps":                   [],
+                    "insights":                [],
+                    "no_data":                 True,
+                },
+            }
+
         context = _build_context(apps, lics, budget, org_type, dept_type=dept_type)
         lang_str = "French" if language == "fr" else "English"
         sector_labels = {"entreprise": "private enterprise", "hopital": "hospital/healthcare", "municipalite": "municipality", "universite": "university"}

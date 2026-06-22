@@ -8823,12 +8823,34 @@ async function runAIAnalysis() {
     const a    = data.analysis || {};
     const computedTotal = (a.steps||[]).reduce((sum, s) => sum + (s.savings||0), 0);
 
+    // Pas assez de données — état vide propre
+    if (a.no_data) {
+      if (resultWrap) resultWrap.innerHTML = `
+        <div style="text-align:center;padding:48px 24px">
+          <div style="font-size:2.5rem;margin-bottom:14px">📋</div>
+          <div style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:8px">Aucune donnée à analyser</div>
+          <p style="font-size:.88rem;color:var(--slate);max-width:420px;margin:0 auto;line-height:1.6">${esc(a.summary || "")}</p>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px">
+            <button class="btn btn-outline btn-sm" onclick="switchParcTab('licenses')">+ Ajouter des licences</button>
+            <button class="btn btn-outline btn-sm" onclick="switchParcTab('apps')">+ Ajouter des applications</button>
+            <button class="btn btn-outline btn-sm" onclick="switchTab('parc-it');switchParcTab('budget')">+ Saisir le budget IT</button>
+          </div>
+        </div>`;
+      return;
+    }
+
+    const impactBadge = (impact) => {
+      if (impact === "high")   return `<span style="padding:2px 8px;border-radius:20px;font-size:.7rem;font-weight:700;background:#dcfce7;color:#15803d">Impact élevé</span>`;
+      if (impact === "medium") return `<span style="padding:2px 8px;border-radius:20px;font-size:.7rem;font-weight:700;background:#fef9c3;color:#92400e">Impact moyen</span>`;
+      return `<span style="padding:2px 8px;border-radius:20px;font-size:.7rem;font-weight:700;background:#f1f5f9;color:#475569">Impact faible</span>`;
+    };
+
     if (resultWrap) resultWrap.innerHTML = `
       <div class="ai-plan-card">
         ${!data.success ? `<p class="badge badge-expiring" style="margin-bottom:12px">Analyse basée sur les règles (IA indisponible)</p>` : ""}
         <div class="ai-plan-summary">${esc(a.summary || "")}</div>
-        <div class="ai-plan-total">${_fmt(computedTotal)} $</div>
-        <div class="ai-plan-confidence">Confiance : ${a.confidence||0}%</div>
+        ${computedTotal > 0 ? `<div class="ai-plan-total">${_fmt(computedTotal)} $/an</div>` : ""}
+        ${a.confidence > 0 ? `<div class="ai-plan-confidence">Confiance : ${a.confidence}%</div>` : ""}
         <div class="ai-steps">
           ${(a.steps||[]).map(s => `
             <div class="ai-step">
@@ -8836,9 +8858,9 @@ async function runAIAnalysis() {
               <div class="ai-step-body">
                 <div class="ai-step-action">${esc(s.action||"")}</div>
                 <div class="ai-step-meta">
-                  <span class="badge ${s.impact==="high"?"impact-high":s.impact==="medium"?"impact-medium":"impact-low"} badge">${s.impact||"—"}</span>
+                  ${impactBadge(s.impact)}
                   &nbsp;${esc(s.timeline||"")}
-                  &nbsp;·&nbsp;<span class="ai-step-savings">${_fmt(s.savings||0)} $ économisés</span>
+                  ${s.savings > 0 ? `&nbsp;·&nbsp;<span class="ai-step-savings">${_fmt(s.savings)} $ économisés</span>` : ""}
                 </div>
               </div>
             </div>`).join("")}
