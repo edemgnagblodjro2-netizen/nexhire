@@ -138,7 +138,7 @@ def _risk_unused_licenses(org_id: str) -> int:
     with get_db() as cur:
         cur.execute(
             """
-            SELECT l.id, l.software_name, l.quantity, l.assigned_count,
+            SELECT l.id, l.product_name, l.quantity, l.assigned_count,
                    l.cost_per_unit, l.department_id, d.name AS dept_name,
                    CASE WHEN l.quantity > 0
                         THEN ROUND(l.assigned_count::numeric / l.quantity * 100)
@@ -163,7 +163,7 @@ def _risk_unused_licenses(org_id: str) -> int:
             dept_id=str(lic["department_id"]) if lic["department_id"] else None,
             finding_type="unused_license",
             severity=severity,
-            title=f"Licences inutilisées — {lic['software_name']}",
+            title=f"Licences inutilisées — {lic['product_name']}",
             description=(
                 f"{unused} licence{'s' if unused != 1 else ''} non assignée{'s' if unused != 1 else ''} "
                 f"sur {lic['quantity']} ({pct} % d'utilisation). "
