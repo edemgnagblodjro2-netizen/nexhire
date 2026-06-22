@@ -3455,6 +3455,97 @@
 
 </div>
 
+<!-- ── AIDE & SUPPORT MODAL ──────────────────────────────────────────────── -->
+<div id="help-modal" class="modal-backdrop hidden" onclick="if(event.target===this)closeHelp()">
+  <div class="help-modal-card">
+    <button class="modal-close" onclick="closeHelp()" aria-label="Fermer">✕</button>
+
+    <!-- Header -->
+    <div class="help-header">
+      <div class="help-header-logo">
+        <div class="nx-side-logo" style="width:40px;height:40px;font-size:19px;flex:0 0 40px">N</div>
+        <div>
+          <div class="help-header-title">Contacter le support</div>
+          <div class="help-header-sub">NexHire EIP · Réponse sous 24 h</div>
+        </div>
+      </div>
+      <p class="help-intro">
+        Besoin d'aide ? Notre équipe vous répond généralement sous <strong>24 heures</strong> ouvrables.
+        Pour les urgences techniques, précisez-le dans votre message.
+      </p>
+      <div class="help-quick-links">
+        <a href="https://docs.nexhire.ai" target="_blank" rel="noopener" class="help-ql">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Documentation
+        </a>
+        <a href="https://status.nexhire.ai" target="_blank" rel="noopener" class="help-ql">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Statut des services
+        </a>
+        <a href="#" onclick="switchTab('settings');closeHelp();return false" class="help-ql">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Paramètres du compte
+        </a>
+      </div>
+    </div>
+
+    <!-- Form (default view) -->
+    <form id="help-form-body" class="help-form" onsubmit="submitHelp(event)">
+      <div class="help-field">
+        <label for="help-category">De quoi avez-vous besoin ?</label>
+        <div class="help-select-wrap">
+          <select id="help-category" required>
+            <option value="">Sélectionner une catégorie…</option>
+            <option value="bug">🐛  Problème technique ou bug</option>
+            <option value="billing">💳  Facturation et abonnement</option>
+            <option value="access">🔑  Accès, permissions ou authentification</option>
+            <option value="integration">🔌  Intégrations et connecteurs</option>
+            <option value="migration">📦  Migration et import de données</option>
+            <option value="feature">💡  Demande de fonctionnalité</option>
+            <option value="training">🎓  Formation et prise en main</option>
+            <option value="security">🔐  Sécurité et conformité</option>
+            <option value="other">💬  Autre</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="help-field">
+        <label for="help-email">Votre adresse e-mail</label>
+        <input type="email" id="help-email" placeholder="vous@exemple.com" required />
+      </div>
+
+      <div class="help-field">
+        <label for="help-subject">Objet</label>
+        <input type="text" id="help-subject" placeholder="Résumez votre demande en une ligne" required />
+      </div>
+
+      <div class="help-field">
+        <label for="help-description">Description <span style="color:#94a3b8;font-weight:400">(facultatif)</span></label>
+        <textarea id="help-description" rows="4" placeholder="Décrivez le problème ou votre demande en détail…"></textarea>
+      </div>
+
+      <div class="help-actions">
+        <button type="button" class="btn btn-outline" onclick="closeHelp()">Annuler</button>
+        <button type="submit" class="help-submit-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Envoyer la demande
+        </button>
+      </div>
+    </form>
+
+    <!-- Success view (hidden by default) -->
+    <div id="help-success-body" class="help-success hidden">
+      <div class="help-success-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3>Demande envoyée</h3>
+      <p>Votre message a été transmis à notre équipe. Nous vous répondrons à l'adresse indiquée dans les meilleurs délais.</p>
+      <button class="help-submit-btn" style="margin-top:8px" onclick="closeHelp()">Fermer</button>
+    </div>
+
+  </div>
+</div>
+
 <!-- ── ORG TYPE CHANGE WARNING MODAL ────────────────────────────────────── -->
 <div id="org-type-warn-modal" class="modal-backdrop hidden" onclick="if(event.target===this)cancelOrgTypeChange()">
   <div class="modal-card" style="max-width:460px">

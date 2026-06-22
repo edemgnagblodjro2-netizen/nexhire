@@ -9977,7 +9977,40 @@ function closeSidebar() {
   document.body.style.overflow = "";
 }
 function openHelp() {
-  window.open("mailto:support@nexhire.ai?subject=Support NexHire EIP", "_blank");
+  const modal = $("help-modal");
+  if (!modal) return;
+  // Pre-fill email
+  const emailEl = $("help-email");
+  if (emailEl && state.user?.email) emailEl.value = state.user.email;
+  // Reset form & views
+  $("help-form-body")?.classList.remove("hidden");
+  $("help-success-body")?.classList.add("hidden");
+  $("help-category") && ($("help-category").value = "");
+  $("help-subject") && ($("help-subject").value = "");
+  $("help-description") && ($("help-description").value = "");
+  modal.classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+}
+function closeHelp() {
+  $("help-modal")?.classList.add("hidden");
+  document.body.style.overflow = "";
+}
+function submitHelp(e) {
+  e.preventDefault();
+  const LABELS = {
+    bug: "Problème technique ou bug", billing: "Facturation et abonnement",
+    access: "Accès, permissions ou authentification", integration: "Intégrations et connecteurs",
+    migration: "Migration et import de données", feature: "Demande de fonctionnalité",
+    training: "Formation et prise en main", security: "Sécurité et conformité", other: "Autre",
+  };
+  const cat  = $("help-category")?.value || "other";
+  const email = $("help-email")?.value || "";
+  const subj = $("help-subject")?.value || "Demande de support NexHire EIP";
+  const desc = $("help-description")?.value || "";
+  const body = [`Catégorie : ${LABELS[cat] || cat}`, `Email : ${email}`, `Organisation : ${state.user?.organization_name || "—"}`, "", desc].join("\n");
+  window.open(`mailto:support@nexhire.ai?subject=${encodeURIComponent(`[NexHire EIP] ${subj}`)}&body=${encodeURIComponent(body)}`, "_blank");
+  $("help-form-body")?.classList.add("hidden");
+  $("help-success-body")?.classList.remove("hidden");
 }
 // Close sidebar when a tab is selected on mobile
 document.addEventListener("click", e => {
