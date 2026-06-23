@@ -14,6 +14,39 @@ from usage import check_and_consume_query
 router = APIRouter(prefix="/api/agent", tags=["agent"])
 
 
+@router.get("/health")
+def agent_health(user: CurrentUser = Depends(require_min_role("admin"))):
+    """Vérifie la connectivité OpenAI et la validité de la clé API."""
+    import os
+    api_key = os.getenv("OPENAI_API_KEY", "")
+    model   = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+
+    key_present = bool(api_key)
+    key_prefix  = api_key[:8] + "..." if len(api_key) > 8 else "(trop courte)"
+
+    try:
+        from openai import OpenAI
+        client = OpenAI(api_key=api_key)
+        test = client.chat.completions.create(
+            model=model,
+            messages=[{"role": "user", "content": "ping"}],
+            max_tokens=5,
+        )
+        ok = bool(test.choices)
+        error = None
+    except Exception as exc:
+        ok = False
+        error = f"{type(exc).__name__}: {str(exc)[:300]}"
+
+    return {
+        "openai_key_present": key_present,
+        "openai_key_prefix":  key_prefix,
+        "openai_model":       model,
+        "openai_reachable":   ok,
+        "error":              error,
+    }
+
+
 @router.get("/quota")
 def get_quota(user: CurrentUser = Depends(require_min_role("user"))):
     """Retourne l'utilisation des requêtes du mois en cours pour l'organisation."""

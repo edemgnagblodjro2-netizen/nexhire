@@ -10,6 +10,7 @@ import datetime
 import decimal
 import json
 import os
+import uuid as _uuid_mod
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -20,7 +21,10 @@ def _json_default(obj: Any) -> Any:
         return float(obj)
     if isinstance(obj, (datetime.date, datetime.datetime)):
         return obj.isoformat()
-    raise TypeError(f"Object of type {type(obj).__name__} is not JSON serializable")
+    if isinstance(obj, _uuid_mod.UUID):
+        return str(obj)
+    # Fallback robuste : tout autre type inconnu → chaîne
+    return str(obj)
 
 
 # ── Définitions des outils (function calling OpenAI) ─────────────────────────
