@@ -1,7 +1,12 @@
 from __future__ import annotations
 
+import logging
+import traceback
+
 from fastapi import APIRouter, Body, Depends, HTTPException, Request, status
 from pydantic import BaseModel, Field
+
+logger = logging.getLogger(__name__)
 
 from agent_service import AgentResponse, run_agent
 from audit import AuditEvent, client_ip, log_audit, log_audit_sync
@@ -192,84 +197,96 @@ def agent_query(
     L'agent consulte automatiquement les connecteurs actifs autorisés pour le département
     de l'utilisateur, synthétise les résultats et retourne une réponse structurée.
     """
-    check_and_consume_query(user.organization_id, user.subscription_status)
-
-    connectors = _connected_connectors_for_user(user)
-    error_connectors = _error_connectors_for_user(user)
-    # Workspace actif (envoyé par le frontend) prend la priorité sur le département DB de l'utilisateur
-    dept_type = payload.dept_type or _get_user_dept_type(user.id)
-
     try:
-        result: AgentResponse = run_agent(
-            payload.question,
-            assistant_mode=payload.assistant_mode,
-            language=payload.language,
-            connected_connectors=connectors if connectors else None,
-            org_id=user.organization_id,
-            dept_type=dept_type,
-        )
-    except RuntimeError as exc:
-        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Service IA temporairement indisponible.") from exc
-    except Exception as exc:
-        # Identifier la cause réelle pour donner un message utile
-        exc_type = type(exc).__name__
-        exc_module = type(exc).__module__ or ""
-        is_openai = "openai" in exc_module
+        check_and_consume_query(user.organization_id, user.subscription_status)
 
-        if is_openai and "Authentication" in exc_type:
-            user_msg = "Clé API OpenAI invalide ou manquante — contactez l'administrateur."
-            http_code = 503
-        elif is_openai and "RateLimit" in exc_type:
-            user_msg = "Limite de requêtes OpenAI atteinte — réessayez dans quelques secondes."
-            http_code = 429
-        elif is_openai and ("Connection" in exc_type or "Timeout" in exc_type):
-            user_msg = "Service IA temporairement inaccessible — réessayez dans quelques instants."
-            http_code = 503
-        elif is_openai and "BadRequest" in exc_type:
-            user_msg = f"Requête refusée par l'IA : {str(exc)[:200]}"
-            http_code = 400
-        elif is_openai:
-            user_msg = f"Erreur OpenAI ({exc_type}) : {str(exc)[:200]}"
-            http_code = 503
-        else:
-            user_msg = f"Erreur interne ({exc_type}) : {str(exc)[:300]}"
-            http_code = 500
+        connectors = _connected_connectors_for_user(user)
+        error_connectors = _error_connectors_for_user(user)
+        dept_type = payload.dept_type or _get_user_dept_type(user.id)
 
-        log_audit_sync(AuditEvent(
+        try:
+            result: AgentResponse = run_agent(
+                payload.question,
+                assistant_mode=payload.assistant_mode,
+                language=payload.language,
+                connected_connectors=connectors if connectors else None,
+                org_id=user.organization_id,
+                dept_type=dept_type,
+            )
+        except RuntimeError as exc:
+            raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Service IA temporairement indisponible.") from exc
+        except Exception as exc:
+            exc_type = type(exc).__name__
+            exc_module = type(exc).__module__ or ""
+            is_openai = "openai" in exc_module
+
+            logger.error("[agent_query] run_agent FAILED — %s: %s", exc_type, str(exc)[:500])
+
+            if is_openai and "Authentication" in exc_type:
+                user_msg = "Clé API OpenAI invalide ou manquante — contactez l'administrateur."
+                http_code = 503
+            elif is_openai and "RateLimit" in exc_type:
+                user_msg = "Limite de requêtes OpenAI atteinte — réessayez dans quelques secondes."
+                http_code = 429
+            elif is_openai and ("Connection" in exc_type or "Timeout" in exc_type):
+                user_msg = "Service IA temporairement inaccessible — réessayez dans quelques instants."
+                http_code = 503
+            elif is_openai and "BadRequest" in exc_type:
+                user_msg = f"Requête refusée par l'IA : {str(exc)[:200]}"
+                http_code = 400
+            elif is_openai:
+                user_msg = f"Erreur OpenAI ({exc_type}) : {str(exc)[:200]}"
+                http_code = 503
+            else:
+                user_msg = f"Erreur interne ({exc_type}) : {str(exc)[:300]}"
+                http_code = 500
+
+            log_audit_sync(AuditEvent(
+                action="agent_query",
+                query=payload.question,
+                organization_id=user.organization_id,
+                user_id=user.id,
+                ip_address=client_ip(request),
+                success=False,
+                http_status=http_code,
+                error_detail=f"{exc_type}: {str(exc)[:500]}",
+                metadata={"assistant_mode": payload.assistant_mode, "language": payload.language},
+            ))
+            raise HTTPException(status_code=http_code, detail=user_msg) from exc
+
+        audit_id = log_audit_sync(AuditEvent(
             action="agent_query",
             query=payload.question,
             organization_id=user.organization_id,
             user_id=user.id,
             ip_address=client_ip(request),
-            success=False,
-            http_status=http_code,
-            error_detail=f"{exc_type}: {str(exc)[:500]}",
-            metadata={"assistant_mode": payload.assistant_mode, "language": payload.language},
+            success=True,
+            http_status=200,
+            metadata={
+                "assistant_mode": payload.assistant_mode,
+                "language": payload.language,
+                "sources": result.sources,
+                "tools_count": len(result.tools_called),
+            },
         ))
-        raise HTTPException(status_code=http_code, detail=user_msg) from exc
 
-    audit_id = log_audit_sync(AuditEvent(
-        action="agent_query",
-        query=payload.question,
-        organization_id=user.organization_id,
-        user_id=user.id,
-        ip_address=client_ip(request),
-        success=True,
-        http_status=200,
-        metadata={
-            "assistant_mode": payload.assistant_mode,
-            "language": payload.language,
-            "sources": result.sources,
-            "tools_count": len(result.tools_called),
-        },
-    ))
+        return AgentQueryResponse(
+            answer=result.answer,
+            sources=result.sources,
+            tools_called=result.tools_called,
+            audit_id=audit_id,
+            connector_warnings=error_connectors,
+            has_simulated_data=result.has_simulated_data,
+            simulated_tools=result.simulated_tools,
+        )
 
-    return AgentQueryResponse(
-        answer=result.answer,
-        sources=result.sources,
-        tools_called=result.tools_called,
-        audit_id=audit_id,
-        connector_warnings=error_connectors,
-        has_simulated_data=result.has_simulated_data,
-        simulated_tools=result.simulated_tools,
-    )
+    except HTTPException:
+        raise  # Laisser FastAPI gérer les HTTPException normalement
+    except Exception as exc:
+        # Capture tout ce qui échappe (construction AgentQueryResponse, etc.)
+        tb = traceback.format_exc()
+        logger.error("[agent_query] UNHANDLED EXCEPTION — %s: %s\n%s", type(exc).__name__, str(exc)[:500], tb)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Erreur critique ({type(exc).__name__}) : {str(exc)[:300]}",
+        ) from exc
