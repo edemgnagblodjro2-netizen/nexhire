@@ -4,6 +4,7 @@ import logging
 import traceback
 
 from fastapi import APIRouter, Body, Depends, HTTPException, Request, status
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
@@ -184,7 +185,7 @@ def _get_user_dept_type(user_id: str) -> str | None:
         return None
 
 
-@router.post("/query", response_model=AgentQueryResponse)
+@router.post("/query")
 @limiter.limit("10/minute")
 def agent_query(
     request: Request,
@@ -270,15 +271,21 @@ def agent_query(
             },
         ))
 
-        return AgentQueryResponse(
-            answer=result.answer,
-            sources=result.sources,
-            tools_called=result.tools_called,
-            audit_id=audit_id,
-            connector_warnings=error_connectors,
-            has_simulated_data=result.has_simulated_data,
-            simulated_tools=result.simulated_tools,
-        )
+        import json as _json
+        from agent_service import _json_default
+        raw = {
+            "answer":            result.answer,
+            "sources":           result.sources,
+            "tools_called":      result.tools_called,
+            "audit_id":          audit_id,
+            "connector_warnings": error_connectors,
+            "has_simulated_data": result.has_simulated_data,
+            "simulated_tools":   result.simulated_tools,
+        }
+        # Sérialiser via notre encoder robuste puis retourner JSONResponse
+        # pour contourner la validation Pydantic du response_model
+        safe_body = _json.loads(_json.dumps(raw, ensure_ascii=False, default=_json_default))
+        return JSONResponse(content=safe_body)
 
     except HTTPException:
         raise  # Laisser FastAPI gérer les HTTPException normalement
