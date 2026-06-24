@@ -9098,15 +9098,33 @@ async function loadDeptDashboard(deptId = null) {
       : "/api/departments/dashboard";
     const d = await apiCall(url);
     if (!d || !d.kpis || d.kpis.length === 0) {
-      // Pas de département assigné → invite à en créer un
-      const icon  = $("dept-dash-icon");  if (icon)  icon.textContent = "📋";
-      const label = $("dept-dash-label"); if (label) label.textContent = "Tableau de bord";
+      // Mode démo — données fictives pour illustrer la valeur de la plateforme
+      const icon  = $("dept-dash-icon");  if (icon)  icon.textContent = "🧪";
+      const label = $("dept-dash-label"); if (label) label.textContent = "Mode démonstration";
       const name  = $("dept-dash-name");  if (name)  name.textContent = "";
       const cta   = $("dept-dash-cta");
-      if (cta) { cta.textContent = "Créer des départements"; cta.onclick = () => { switchTab("team"); }; }
-      grid.innerHTML = `<div style="grid-column:1/-1;padding:12px 0;color:var(--slate);font-size:.85rem">
-        Aucun département configuré. Allez dans <strong>Équipe → Départements</strong> pour en créer ou initialiser par secteur.
-      </div>`;
+      if (cta) { cta.textContent = "Configurer mon organisation"; cta.onclick = () => { switchTab("team"); }; }
+      const demoKpis = [
+        { label: "Score de santé org.", value: "82 / 100", icon: "❤️", trend: "+5 ce mois", trend_dir: "up", color: "#22c55e" },
+        { label: "Économies identifiées", value: "47 200 $", icon: "💡", trend: "Licences sous-utilisées", trend_dir: "up", color: "#6366f1" },
+        { label: "Contrats à renouveler", value: "3", icon: "📄", trend: "Dans les 30 prochains jours", trend_dir: "warn", color: "#f59e0b" },
+        { label: "Utilisateurs actifs / total", value: "34 / 40", icon: "👥", trend: "85 % d'adoption", trend_dir: "up", color: "#0ea5e9" },
+        { label: "Budget consommé", value: "68 %", icon: "💰", trend: "32 % disponible", trend_dir: "neutral", color: "#64748b" },
+        { label: "Requêtes IA ce mois", value: "214", icon: "🤖", trend: "+22 % vs mois dernier", trend_dir: "up", color: "#8b5cf6" },
+      ];
+      grid.innerHTML = `
+        <div style="grid-column:1/-1;background:#fef3c7;border:2px dashed #f59e0b;border-radius:10px;padding:12px 16px;margin-bottom:4px;display:flex;align-items:center;gap:10px;font-size:.84rem;color:#78350f">
+          🧪 <span><strong>Données de démonstration</strong> — Ces chiffres sont fictifs. <a href="#" onclick="switchTab('connectors');return false" style="color:#92400e;font-weight:700">Connectez M365 / vos outils →</a> pour voir vos données réelles en temps réel.</span>
+        </div>
+        ${demoKpis.map(k => `
+          <div class="kpi-card" style="border-top:3px solid ${k.color}">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <span style="font-size:1.3rem">${k.icon}</span>
+              <span style="font-size:.8rem;color:#64748b;font-weight:600">${k.label}</span>
+            </div>
+            <div style="font-size:1.6rem;font-weight:800;color:${k.color};margin-bottom:6px">${k.value}</div>
+            <div style="font-size:.76rem;color:${k.trend_dir === 'warn' ? '#f59e0b' : k.trend_dir === 'up' ? '#22c55e' : '#94a3b8'}">${k.trend}</div>
+          </div>`).join("")}`;
       section.classList.remove("hidden");
       return;
     }
