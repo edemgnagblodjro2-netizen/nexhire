@@ -1611,6 +1611,14 @@ $("login-form").addEventListener("submit", async e => {
     if (!data.ok) throw new Error(json.detail || "Connexion échouée.");
     saveToken(json.access_token, json.refresh_token);
     await fetchMe();
+    const _pendingInvite = localStorage.getItem("nexhire_pending_invite");
+    if (_pendingInvite) {
+      try {
+        await apiCall("/api/members/apply-invite", "POST", { token: _pendingInvite });
+        localStorage.removeItem("nexhire_pending_invite");
+        await fetchMe();
+      } catch (_) { localStorage.removeItem("nexhire_pending_invite"); }
+    }
     showApp();
   } catch (ex) {
     err.textContent = ex.message; err.classList.remove("hidden");
@@ -1652,7 +1660,10 @@ $("signup-form").addEventListener("submit", async e => {
     }
     signupBody.phone = phone;
     const invToken = $("signup-invite-token")?.value;
-    if (invToken) signupBody.invite_token = invToken;
+    if (invToken) {
+      signupBody.invite_token = invToken;
+      localStorage.setItem("nexhire_pending_invite", invToken);
+    }
     await apiCall("/api/auth/signup", "POST", signupBody);
     suc.textContent = "Compte créé ! Vérifiez votre courriel pour activer votre compte, puis connectez-vous.";
     suc.classList.remove("hidden");
@@ -3771,7 +3782,8 @@ async function _loadMembers() {
     const rows = members.map(m => {
       const initials = (m.full_name || m.email || "?").slice(0,2).toUpperCase();
       const active = m.is_active !== false;
-      const canEdit = isOwner && m.role !== "owner" && m.id !== state.user?.id;
+      const canEdit   = isOwner && m.role !== "owner" && m.id !== state.user?.id;
+      const canDelete = isOwner && m.id !== state.user?.id;
       return `<tr class="${active ? "" : "row-inactive"}">
         <td>
           <div style="display:flex;align-items:center;gap:10px">
@@ -3793,6 +3805,10 @@ async function _loadMembers() {
             <button class="btn-icon ${active?"btn-deactivate":"btn-activate"}" onclick="toggleMember('${m.id}')" title="${active?"Désactiver":"Activer"}">
               ${active ? "⊘" : "✓"}
             </button>
+          ` : ""}
+          ${canDelete ? `
+            <button class="btn-icon" onclick="deleteMember('${m.id}','${esc(m.full_name||m.email)}')"
+              title="Supprimer ce membre" style="color:#dc2626;border-color:#fecaca">🗑</button>
           ` : ""}
         </td>
       </tr>`;
@@ -3836,6 +3852,14 @@ async function changeMemberRole(memberId, role) {
 async function toggleMember(memberId) {
   try {
     await apiCall(`/api/members/${memberId}/active`, "PATCH");
+    await _loadMembers();
+  } catch (ex) { alert(`Erreur : ${ex.message}`); }
+}
+
+async function deleteMember(memberId, name) {
+  if (!confirm(`Supprimer définitivement « ${name} » de l'organisation ?\n\nCette action est irréversible.`)) return;
+  try {
+    await apiCall(`/api/members/${memberId}`, "DELETE");
     await _loadMembers();
   } catch (ex) { alert(`Erreur : ${ex.message}`); }
 }

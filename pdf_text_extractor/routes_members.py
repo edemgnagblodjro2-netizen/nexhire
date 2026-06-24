@@ -255,8 +255,8 @@ def remove_member(
     """Retire un membre de l'organisation (ne supprime pas le compte auth)."""
     _require_admin(user)
     target = _same_org(user, member_id)
-    if target["role"] == "owner":
-        raise HTTPException(status_code=400, detail="Impossible de retirer le owner.")
+    if target["role"] == "owner" and user.role != "owner":
+        raise HTTPException(status_code=403, detail="Seul un owner peut retirer un autre owner.")
     if member_id == user.id:
         raise HTTPException(status_code=400, detail="Vous ne pouvez pas vous retirer vous-même.")
     # Dissocie l'user de l'org sans supprimer le compte auth
@@ -266,6 +266,60 @@ def remove_member(
             (member_id,),
         )
     return {"ok": True}
+
+
+# ── Apply invite — appelé après le premier login d'un utilisateur invité ──
+
+class ApplyInvitePayload(BaseModel):
+    token: str
+
+@router.post("/apply-invite")
+def apply_invite(
+    payload: ApplyInvitePayload,
+    user: CurrentUser = Depends(require_min_role("user")),
+):
+    """Applique l'invitation : met à jour org_id + rôle de l'utilisateur connecté."""
+    from datetime import datetime, timezone
+    now_iso = datetime.now(timezone.utc).isoformat()
+
+    with get_db() as cur:
+        cur.execute(
+            """SELECT email, role, org_id, expires_at
+               FROM pending_invitations
+               WHERE token = %s
+                 AND used_at IS NULL
+                 AND expires_at >= %s
+               LIMIT 1""",
+            (payload.token, now_iso),
+        )
+        inv = row(cur)
+
+    if not inv:
+        raise HTTPException(status_code=404, detail="Invitation invalide ou expirée.")
+
+    # Vérifie que l'email de l'invitation correspond à l'utilisateur connecté
+    if inv["email"].lower() != (user.email or "").lower():
+        raise HTTPException(status_code=403, detail="Cette invitation ne vous est pas destinée.")
+
+    target_role = inv["role"] if inv["role"] in ("user", "manager", "admin") else "user"
+
+    with get_db() as cur:
+        # Met à jour l'utilisateur : org + rôle
+        cur.execute(
+            """UPDATE users
+               SET organization_id = %s,
+                   role = %s,
+                   is_active = TRUE
+               WHERE id = %s""",
+            (inv["org_id"], target_role, user.id),
+        )
+        # Marque l'invitation comme utilisée
+        cur.execute(
+            "UPDATE pending_invitations SET used_at = NOW() WHERE token = %s",
+            (payload.token,),
+        )
+
+    return {"ok": True, "role": target_role, "org_id": str(inv["org_id"])}
 
 
 # ── Validate invite token (public) ────────────────────────────────────────
