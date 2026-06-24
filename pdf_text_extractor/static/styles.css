@@ -1405,6 +1405,17 @@ footer {
   border-radius: 12px;
   filter: drop-shadow(0 8px 24px rgba(0,0,0,.4));
 }
+.req-star {
+  color: #ef4444;
+  font-weight: 700;
+  margin-left: 3px;
+  font-size: .85em;
+}
+.req-legend {
+  font-size: .76rem;
+  color: var(--slate-light);
+  margin: 0 0 10px;
+}
 .form-error {
   padding: 10px 14px;
   border-radius: var(--radius-sm);
