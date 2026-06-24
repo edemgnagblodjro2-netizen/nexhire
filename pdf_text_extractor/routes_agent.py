@@ -295,3 +295,127 @@ def agent_query(
             status_code=500,
             detail=f"Erreur critique ({type(exc).__name__}) : {str(exc)[:300]}",
         ) from exc
+
+
+# ── Vision endpoint ────────────────────────────────────────────────────────────
+
+class VisionQuery(BaseModel):
+    image_b64: str = Field(..., description="Image encodée en base64 (PNG/JPEG/WEBP)")
+    mime_type: str = Field("image/png", pattern="^image/(png|jpeg|webp|gif)$")
+    question:  str = Field("Analyse cette capture d'écran.", min_length=1, max_length=1000)
+    language:  str = Field("fr", pattern="^(fr|en|es)$")
+
+
+@router.post("/vision")
+@limiter.limit("5/minute")
+def agent_vision(
+    request: Request,
+    payload: VisionQuery = Body(...),
+    user: CurrentUser = Depends(require_min_role("user")),
+    _active: CurrentUser = Depends(require_active_subscription),
+):
+    """Analyse une capture d'écran avec gpt-4o vision + contexte organisationnel."""
+    import base64, os
+    from openai import OpenAI
+
+    check_and_consume_query(user.organization_id, user.subscription_status)
+
+    # Contexte org pour enrichir la réponse
+    org_context = _build_org_context(user)
+
+    system_prompt = (
+        "Tu es un assistant IA d'entreprise expert en analyse visuelle. "
+        "Tu analyses des captures d'écran d'applications professionnelles "
+        "(Microsoft 365, Jira, SAP, Salesforce, tableaux de bord, logs, etc.). "
+        "Réponds en français de manière concise et actionnable. "
+        "Si tu détectes des anomalies, erreurs ou opportunités d'optimisation, "
+        "mets-les en avant. Croise ce que tu vois avec le contexte organisationnel fourni."
+    )
+
+    messages = [
+        {"role": "system", "content": system_prompt},
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": f"Question : {payload.question}\n\nContexte AgentHub :\n{org_context}",
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:{payload.mime_type};base64,{payload.image_b64}",
+                        "detail": "high",
+                    },
+                },
+            ],
+        },
+    ]
+
+    try:
+        client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+        resp = client.chat.completions.create(
+            model="gpt-4o",
+            messages=messages,
+            max_tokens=1200,
+            temperature=0.2,
+        )
+        answer = resp.choices[0].message.content or ""
+    except Exception as exc:
+        logger.error("[agent_vision] OpenAI error: %s", exc)
+        raise HTTPException(503, "Service vision temporairement indisponible.") from exc
+
+    log_audit_sync(AuditEvent(
+        action="agent_vision",
+        query=payload.question,
+        organization_id=user.organization_id,
+        user_id=user.id,
+        ip_address=client_ip(request),
+        success=True,
+        http_status=200,
+        metadata={"language": payload.language},
+    ))
+
+    return {"answer": answer}
+
+
+def _build_org_context(user: CurrentUser) -> str:
+    """Résumé textuel de l'organisation pour enrichir les réponses vision."""
+    lines: list[str] = []
+    try:
+        with get_db() as cur:
+            # Connecteurs actifs
+            cur.execute(
+                "SELECT connector_type FROM connectors WHERE organization_id = %s AND status = 'connected'",
+                (user.organization_id,),
+            )
+            connectors = [r["connector_type"] for r in rows(cur)]
+            if connectors:
+                lines.append(f"Connecteurs actifs : {', '.join(connectors)}")
+
+            # Licences M365
+            cur.execute(
+                """SELECT COALESCE(SUM(quantity_total),0) AS total,
+                          COALESCE(SUM(quantity_assigned),0) AS assigned
+                   FROM license_pools WHERE organization_id = %s""",
+                (user.organization_id,),
+            )
+            lic = row(cur)
+            if lic and lic.get("total"):
+                unused = int(lic["total"]) - int(lic["assigned"])
+                lines.append(f"Licences M365 : {lic['assigned']}/{lic['total']} utilisées ({unused} inactives)")
+
+            # Budget du mois
+            cur.execute(
+                """SELECT COALESCE(SUM(allocated),0) AS alloc, COALESCE(SUM(actual),0) AS actual
+                   FROM budget_entries
+                   WHERE organization_id = %s AND year = EXTRACT(YEAR FROM NOW())::int""",
+                (user.organization_id,),
+            )
+            budget = row(cur)
+            if budget and budget.get("alloc"):
+                pct = round(float(budget["actual"]) / float(budget["alloc"]) * 100, 1)
+                lines.append(f"Budget annuel : {pct}% consommé ({budget['actual']:.0f}/{budget['alloc']:.0f})")
+    except Exception:
+        pass
+    return "\n".join(lines) if lines else "Aucun contexte disponible."

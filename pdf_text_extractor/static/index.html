@@ -35,7 +35,7 @@
   <meta name="twitter:description" content="Connect your systems. Detect savings. Reduce risk. Optimize every department." />
   <meta name="twitter:image"       content="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&h=630&q=80" />
 
-  <link rel="stylesheet" href="/static/styles.css?v=20260624" />
+  <link rel="stylesheet" href="/static/styles.css?v=20260624b" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -1496,10 +1496,22 @@
           data-i18n="agent.chip5">Budget du mois</button>
       </div>
       <form class="agent-form" id="agent-form">
+        <!-- Zone preview image (cachée par défaut) -->
+        <div id="agent-vision-preview" class="agent-vision-preview hidden">
+          <img id="agent-vision-img" src="" alt="Capture d'écran" />
+          <button type="button" class="agent-vision-remove" onclick="agentVisionClear()" title="Retirer l'image">✕</button>
+        </div>
         <textarea id="agent-question" rows="3"
           data-i18n-placeholder="agent.placeholder"
           placeholder="Ex : Montre-moi les incidents critiques et les emails non lus liés à la panne de ce matin." required></textarea>
-        <button type="submit" id="agent-btn" data-i18n="agent.send">Envoyer à l'agent</button>
+        <div class="agent-form-bar">
+          <label class="agent-vision-btn" title="Analyser une capture d'écran (ou coller avec Ctrl+V)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            Capture d'écran
+            <input id="agent-vision-input" type="file" accept="image/png,image/jpeg,image/webp" hidden onchange="agentVisionLoad(this.files[0])" />
+          </label>
+          <button type="submit" id="agent-btn" data-i18n="agent.send">Envoyer à l'agent</button>
+        </div>
       </form>
       <div id="agent-loading" class="loading-bar hidden" data-i18n="agent.loading">L'agent analyse vos systèmes connectés…</div>
       <p   id="agent-error"   class="error-text hidden"></p>

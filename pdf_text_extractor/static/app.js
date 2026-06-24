@@ -1929,16 +1929,90 @@ document.querySelectorAll(".prompt-chip").forEach(chip => {
   });
 });
 
+// ── Vision state ──────────────────────────────────────────────────────────────
+let _visionB64    = null;
+let _visionMime   = "image/png";
+
+function agentVisionLoad(file) {
+  if (!file) return;
+  _visionMime = file.type || "image/png";
+  const reader = new FileReader();
+  reader.onload = e => {
+    const dataUrl = e.target.result;
+    _visionB64 = dataUrl.split(",")[1];
+    $("agent-vision-img").src = dataUrl;
+    $("agent-vision-preview").classList.remove("hidden");
+    document.querySelector(".agent-vision-btn")?.classList.add("has-image");
+    $("agent-question").placeholder = "Posez votre question sur cette capture…";
+  };
+  reader.readAsDataURL(file);
+  $("agent-vision-input").value = "";
+}
+
+function agentVisionClear() {
+  _visionB64 = null;
+  $("agent-vision-img").src = "";
+  $("agent-vision-preview").classList.add("hidden");
+  document.querySelector(".agent-vision-btn")?.classList.remove("has-image");
+  $("agent-question").placeholder = "Ex : Montre-moi les incidents critiques et les emails non lus liés à la panne de ce matin.";
+}
+
+// Support Ctrl+V pour coller une capture d'écran
+document.addEventListener("paste", e => {
+  if (document.activeElement?.id !== "agent-question") return;
+  const item = Array.from(e.clipboardData?.items || []).find(i => i.type.startsWith("image/"));
+  if (item) {
+    e.preventDefault();
+    agentVisionLoad(item.getAsFile());
+  }
+});
+
 $("agent-form").addEventListener("submit", async e => {
   e.preventDefault();
   const q = $("agent-question").value.trim();
-  if (!q) return;
+  if (!q && !_visionB64) return;
   $("agent-btn").disabled = true;
   $("agent-result").classList.add("hidden");
   $("agent-error").classList.add("hidden");
   $("agent-loading").classList.remove("hidden");
   try {
-    const data = await apiCall("/api/agent/query", "POST", {
+    let data;
+    if (_visionB64) {
+      // Mode vision — timeout 60s via fetch direct
+      const headers = { "Content-Type": "application/json" };
+      if (state.token) headers["Authorization"] = `Bearer ${state.token}`;
+      const ctrl = new AbortController();
+      const tid  = setTimeout(() => ctrl.abort(), 60000);
+      let res;
+      try {
+        res = await fetch("/api/agent/vision", {
+          method: "POST",
+          headers,
+          body: JSON.stringify({
+            image_b64: _visionB64,
+            mime_type: _visionMime,
+            question:  q || "Analyse cette capture d'écran.",
+            language:  $("agent-lang")?.value || "fr",
+          }),
+          signal: ctrl.signal,
+        });
+      } finally { clearTimeout(tid); }
+      const raw = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(raw.detail || `Erreur ${res.status}`);
+      // Affichage réponse vision (format simplifié)
+      $("agent-answer").innerHTML = `
+        <div class="agent-vision-badge">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Analyse vision IA
+        </div>
+        <div style="white-space:pre-wrap;line-height:1.7">${esc(raw.answer || "")}</div>`;
+      $("agent-sources").innerHTML = "";
+      $("agent-result").classList.remove("hidden");
+      agentVisionClear();
+      return;
+    }
+    // Mode normal
+    data = await apiCall("/api/agent/query", "POST", {
       question:       q,
       assistant_mode: $("agent-mode")?.value || "enterprise",
       language:       $("agent-lang")?.value || "fr",
@@ -1946,7 +2020,8 @@ $("agent-form").addEventListener("submit", async e => {
     });
     renderAgentResult(data);
   } catch (ex) {
-    $("agent-error").textContent = ex.message;
+    const msg = ex.name === "AbortError" ? "Délai dépassé (60s) — réessayez." : ex.message;
+    $("agent-error").textContent = msg;
     $("agent-error").classList.remove("hidden");
   } finally {
     $("agent-btn").disabled = false;
