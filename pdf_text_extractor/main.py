@@ -305,6 +305,22 @@ def create_app(
     def legal_security():
         return FileResponse(STATIC_DIR / "legal" / "security.html", media_type="text/html")
 
+    @app.get("/docs/politique-confidentialite.html")
+    def docs_privacy_fr():
+        return FileResponse(STATIC_DIR / "docs" / "politique-confidentialite.html", media_type="text/html")
+
+    @app.get("/docs/conditions-utilisation.html")
+    def docs_tos_fr():
+        return FileResponse(STATIC_DIR / "docs" / "conditions-utilisation.html", media_type="text/html")
+
+    @app.get("/docs/politique-cookies.html")
+    def docs_cookies_fr():
+        return FileResponse(STATIC_DIR / "docs" / "politique-cookies.html", media_type="text/html")
+
+    @app.get("/docs/nexhire-eip-dossier-client.html")
+    def docs_dossier_client():
+        return FileResponse(STATIC_DIR / "docs" / "nexhire-eip-dossier-client.html", media_type="text/html")
+
     @app.get("/api/health")
     def health():
         return {"status": "ok"}
@@ -676,6 +692,8 @@ try:
         schedule_deletion_for_expired_orgs,
         process_account_deletions,
         index_knowledge_m365_all_orgs,
+        check_contract_expiry_all_orgs,
+        check_mfa_admin_loss_all_orgs,
     )
 
     _scheduler = BackgroundScheduler(timezone="UTC")
@@ -739,6 +757,20 @@ try:
         index_knowledge_m365_all_orgs,
         CronTrigger(hour=2, minute=0),
         id="knowledge_m365_index",
+        replace_existing=True,
+        misfire_grace_time=3600,
+    )
+    _scheduler.add_job(
+        check_contract_expiry_all_orgs,
+        CronTrigger(hour=9, minute=30),
+        id="contract_expiry_check",
+        replace_existing=True,
+        misfire_grace_time=3600,
+    )
+    _scheduler.add_job(
+        check_mfa_admin_loss_all_orgs,
+        CronTrigger(day_of_week="mon", hour=8, minute=0),
+        id="mfa_admin_loss_check",
         replace_existing=True,
         misfire_grace_time=3600,
     )

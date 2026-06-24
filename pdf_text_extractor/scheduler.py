@@ -52,10 +52,11 @@ def sync_entra_all_orgs() -> None:
 
 
 def check_license_expiry_all_orgs() -> None:
-    """Envoie des notifications webhook pour les licences expirant dans 30 jours."""
+    """Envoie emails + webhooks pour les licences expirant dans 30 jours, groupés par org."""
     try:
         from db import get_db, rows
         from routes_webhooks import send_webhook_notification
+        from email_service import send_license_expiry_alert
     except Exception as exc:
         logger.error("scheduler import error (license expiry): %s", exc)
         return
@@ -63,27 +64,230 @@ def check_license_expiry_all_orgs() -> None:
     try:
         with get_db() as cur:
             cur.execute(
-                """SELECT organization_id, software_name,
-                          (expires_at::date - CURRENT_DATE) AS days_left
-                   FROM licenses
-                   WHERE expires_at BETWEEN now() AND now() + interval '30 days'
-                   ORDER BY expires_at"""
+                """SELECT l.organization_id, l.software_name, l.seats, l.expires_at,
+                          (l.expires_at::date - CURRENT_DATE) AS days_left,
+                          o.name AS org_name, o.owner_email
+                   FROM licenses l
+                   JOIN organizations o ON o.id = l.organization_id
+                   WHERE l.expires_at BETWEEN now() AND now() + interval '30 days'
+                     AND o.owner_email IS NOT NULL AND o.owner_email <> ''
+                   ORDER BY l.organization_id, l.expires_at"""
             )
             licenses = rows(cur)
     except Exception as exc:
         logger.error("scheduler DB error (license expiry): %s", exc)
         return
 
+    # Grouper par org
+    orgs: dict = {}
     for lic in licenses:
-        try:
-            send_webhook_notification(lic["organization_id"], "license_expiry", {
-                "software_name": lic.get("software_name", ""),
-                "days_left": int(lic.get("days_left") or 0),
-            })
-        except Exception as exc:
-            logger.error("license expiry notification org %s : %s", lic.get("organization_id"), exc)
+        oid = lic["organization_id"]
+        if oid not in orgs:
+            orgs[oid] = {"org_name": lic["org_name"], "owner_email": lic["owner_email"], "licenses": []}
+        orgs[oid]["licenses"].append({
+            "software_name": lic.get("software_name", ""),
+            "seats":         lic.get("seats"),
+            "expires_at":    str(lic.get("expires_at") or ""),
+            "days_left":     int(lic.get("days_left") or 0),
+        })
 
-    logger.info("Vérification licences — %d licences expirant bientôt", len(licenses))
+    for oid, data in orgs.items():
+        try:
+            send_license_expiry_alert(
+                to_email=data["owner_email"],
+                org_name=data["org_name"],
+                licenses=data["licenses"],
+            )
+        except Exception as exc:
+            logger.error("license expiry email org %s : %s", oid, exc)
+        try:
+            for lic in data["licenses"]:
+                send_webhook_notification(oid, "license_expiry", {
+                    "software_name": lic["software_name"],
+                    "days_left":     lic["days_left"],
+                })
+        except Exception as exc:
+            logger.error("license expiry webhook org %s : %s", oid, exc)
+
+    logger.info("Vérification licences — %d licences expirant bientôt (%d orgs)", len(licenses), len(orgs))
+
+
+def check_contract_expiry_all_orgs() -> None:
+    """Alerte les owners pour les contrats expirant dans 7 ou 30 jours."""
+    try:
+        from db import get_db, rows
+        from email_service import _send
+        import os
+        APP_URL = os.environ.get("APP_URL", "https://agenthub.nexhire.ca")
+    except Exception as exc:
+        logger.error("scheduler import error (contract expiry): %s", exc)
+        return
+
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """SELECT c.organization_id, c.title, c.vendor_name, c.end_date,
+                          (c.end_date::date - CURRENT_DATE) AS days_left,
+                          o.name AS org_name, o.owner_email
+                   FROM contracts c
+                   JOIN organizations o ON o.id = c.organization_id
+                   WHERE c.end_date BETWEEN CURRENT_DATE AND CURRENT_DATE + interval '30 days'
+                     AND c.status = 'active'
+                     AND o.owner_email IS NOT NULL AND o.owner_email <> ''
+                   ORDER BY c.organization_id, c.end_date"""
+            )
+            contracts = rows(cur)
+    except Exception as exc:
+        logger.error("scheduler DB error (contract expiry): %s", exc)
+        return
+
+    # Grouper par org — n'alerter que si days_left IN (7, 1) ou premier jour (30)
+    orgs: dict = {}
+    for c in contracts:
+        days = int(c.get("days_left") or 0)
+        if days not in (30, 7, 1):
+            continue
+        oid = c["organization_id"]
+        if oid not in orgs:
+            orgs[oid] = {"org_name": c["org_name"], "owner_email": c["owner_email"], "contracts": []}
+        orgs[oid]["contracts"].append({
+            "title":       c.get("title", "Contrat"),
+            "vendor_name": c.get("vendor_name", ""),
+            "end_date":    str(c.get("end_date", ""))[:10],
+            "days_left":   days,
+        })
+
+    sent = 0
+    for oid, data in orgs.items():
+        try:
+            rows_html = "".join(
+                f"""<tr>
+                  <td style="padding:8px;border-top:1px solid #e2e8f0">{c['title']}</td>
+                  <td style="padding:8px;border-top:1px solid #e2e8f0">{c['vendor_name']}</td>
+                  <td style="padding:8px;border-top:1px solid #e2e8f0;color:#dc2626;font-weight:600">{c['end_date']}</td>
+                  <td style="padding:8px;border-top:1px solid #e2e8f0;color:#dc2626">{c['days_left']}j</td>
+                </tr>"""
+                for c in data["contracts"]
+            )
+            count = len(data["contracts"])
+            subject = f"⚠️ {count} contrat(s) expirent bientôt — {data['org_name']}"
+            html = f"""<!doctype html><html lang="fr"><head><meta charset="utf-8"/></head>
+<body style="font-family:system-ui,sans-serif;background:#f8fafc;margin:0;padding:40px 20px">
+  <div style="max-width:620px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08)">
+    <div style="background:#1e293b;padding:24px 32px">
+      <span style="font-size:1.2rem;font-weight:800;color:#fff">Nex<span style="color:#818CF8">hire</span></span>
+      <span style="color:#94a3b8;font-size:.85rem;margin-left:12px">Alerte contrats</span>
+    </div>
+    <div style="padding:28px 32px">
+      <h2 style="margin:0 0 8px;color:#dc2626">⚠️ Contrats expirant bientôt</h2>
+      <p style="color:#475569;margin:0 0 20px">Les contrats suivants de <strong>{data['org_name']}</strong> arrivent à échéance :</p>
+      <table style="width:100%;border-collapse:collapse;font-size:.88rem">
+        <tr style="background:#f8fafc">
+          <th style="padding:8px;text-align:left">Contrat</th>
+          <th style="padding:8px;text-align:left">Fournisseur</th>
+          <th style="padding:8px;text-align:left">Expiration</th>
+          <th style="padding:8px;text-align:left">Délai</th>
+        </tr>
+        {rows_html}
+      </table>
+      <div style="text-align:center;margin:24px 0">
+        <a href="{APP_URL}#contracts" style="display:inline-block;background:#6366f1;color:#fff;padding:11px 28px;border-radius:8px;font-weight:700;text-decoration:none">
+          Voir les contrats →
+        </a>
+      </div>
+    </div>
+    <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
+      <p style="margin:0;color:#94a3b8;font-size:.78rem">© 2026 CivicAI Inc. · Vous recevez cet email car vous êtes admin de {data['org_name']}.</p>
+    </div>
+  </div>
+</body></html>"""
+            if _send(data["owner_email"], subject, html):
+                sent += 1
+        except Exception as exc:
+            logger.error("contract expiry email org %s : %s", oid, exc)
+
+    logger.info("Vérification contrats — %d alertes envoyées", sent)
+
+
+def check_mfa_admin_loss_all_orgs() -> None:
+    """Alerte les owners des orgs où un admin n'a plus le MFA activé."""
+    try:
+        from db import get_db, rows
+        from email_service import _send
+        import os
+        APP_URL = os.environ.get("APP_URL", "https://agenthub.nexhire.ca")
+    except Exception as exc:
+        logger.error("scheduler import error (mfa admin loss): %s", exc)
+        return
+
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """SELECT u.full_name, u.email AS user_email,
+                          o.id AS org_id, o.name AS org_name, o.owner_email
+                   FROM users u
+                   JOIN organizations o ON o.id = u.organization_id
+                   WHERE u.role IN ('admin', 'owner')
+                     AND (u.mfa_enabled IS NULL OR u.mfa_enabled = FALSE)
+                     AND o.owner_email IS NOT NULL AND o.owner_email <> ''
+                   ORDER BY o.id"""
+            )
+            at_risk = rows(cur)
+    except Exception as exc:
+        logger.error("scheduler DB error (mfa admin loss): %s", exc)
+        return
+
+    # Grouper par org
+    orgs: dict = {}
+    for u in at_risk:
+        oid = u["org_id"]
+        if oid not in orgs:
+            orgs[oid] = {"org_name": u["org_name"], "owner_email": u["owner_email"], "admins": []}
+        orgs[oid]["admins"].append({
+            "name":  u.get("full_name") or u.get("user_email", ""),
+            "email": u.get("user_email", ""),
+        })
+
+    sent = 0
+    for oid, data in orgs.items():
+        try:
+            rows_html = "".join(
+                f'<li style="margin-bottom:4px"><strong>{a["name"]}</strong> ({a["email"]})</li>'
+                for a in data["admins"]
+            )
+            count   = len(data["admins"])
+            subject = f"🔐 {count} admin(s) sans MFA — {data['org_name']}"
+            html = f"""<!doctype html><html lang="fr"><head><meta charset="utf-8"/></head>
+<body style="font-family:system-ui,sans-serif;background:#f8fafc;margin:0;padding:40px 20px">
+  <div style="max-width:580px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08)">
+    <div style="background:#1e293b;padding:24px 32px">
+      <span style="font-size:1.2rem;font-weight:800;color:#fff">Nex<span style="color:#818CF8">hire</span></span>
+      <span style="color:#94a3b8;font-size:.85rem;margin-left:12px">Alerte sécurité MFA</span>
+    </div>
+    <div style="padding:28px 32px">
+      <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:16px 20px;margin-bottom:20px">
+        <p style="margin:0;font-weight:700;color:#dc2626">🔐 {count} administrateur(s) sans MFA actif</p>
+        <p style="margin:6px 0 0;color:#7f1d1d;font-size:.88rem">Ces comptes présentent un risque de sécurité élevé pour <strong>{data['org_name']}</strong>.</p>
+      </div>
+      <ul style="margin:0 0 20px;padding-left:20px;color:#475569;font-size:.9rem">{rows_html}</ul>
+      <p style="color:#475569;font-size:.88rem">Demandez à ces utilisateurs d'activer le MFA depuis <strong>Paramètres → Sécurité → Authentification à deux facteurs</strong>.</p>
+      <div style="text-align:center;margin:20px 0">
+        <a href="{APP_URL}#security" style="display:inline-block;background:#6366f1;color:#fff;padding:11px 28px;border-radius:8px;font-weight:700;text-decoration:none">
+          Voir le tableau sécurité →
+        </a>
+      </div>
+    </div>
+    <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
+      <p style="margin:0;color:#94a3b8;font-size:.78rem">© 2026 CivicAI Inc. · NexHire EIP</p>
+    </div>
+  </div>
+</body></html>"""
+            if _send(data["owner_email"], subject, html):
+                sent += 1
+        except Exception as exc:
+            logger.error("mfa admin loss email org %s : %s", oid, exc)
+
+    logger.info("MFA admin loss check — %d orgs concernées, %d alertes envoyées", len(orgs), sent)
 
 
 def check_trial_expiry_all_orgs() -> None:
