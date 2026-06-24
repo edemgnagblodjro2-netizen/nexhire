@@ -1405,6 +1405,12 @@ footer {
   border-radius: 12px;
   filter: drop-shadow(0 8px 24px rgba(0,0,0,.4));
 }
+.auth-forgot {
+  font-size: .82rem;
+  color: var(--indigo);
+  text-decoration: none;
+}
+.auth-forgot:hover { text-decoration: underline; }
 .req-star {
   color: #ef4444;
   font-weight: 700;

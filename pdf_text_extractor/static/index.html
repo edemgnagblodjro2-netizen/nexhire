@@ -961,6 +961,9 @@
           <span data-i18n="auth.password">Mot de passe</span>
           <input id="login-password" type="password" placeholder="••••••••" required autocomplete="current-password" />
         </label>
+        <div style="text-align:right;margin:-4px 0 12px">
+          <a href="#" onclick="showAuth('reset');return false" class="auth-forgot">Mot de passe oublié ?</a>
+        </div>
         <button type="submit" class="auth-submit" id="login-btn" data-i18n="auth.login.btn">Se connecter</button>
         <p id="login-error" class="form-error hidden"></p>
       </form>
@@ -976,6 +979,41 @@
         <p id="sso-login-error" class="form-error hidden" style="margin-top:6px"></p>
       </div>
       <p class="auth-switch"><span data-i18n="auth.login.switch">Pas encore de compte ?</span> <a href="#" onclick="showAuth('signup');return false" data-i18n="auth.login.switch.link">Essai gratuit 14 jours</a></p>
+    </div>
+
+    <!-- Reset password request -->
+    <div id="auth-reset" class="hidden">
+      <div class="auth-title">Mot de passe oublié</div>
+      <p class="auth-sub">Entrez votre adresse courriel — nous vous enverrons un lien de réinitialisation.</p>
+      <form class="auth-form" id="reset-form">
+        <label class="auth-label">
+          <span>Adresse courriel</span><span class="req-star">*</span>
+          <input id="reset-email" type="email" placeholder="vous@organisation.ca" required autocomplete="email" />
+        </label>
+        <button type="submit" class="auth-submit" id="reset-btn">Envoyer le lien de réinitialisation</button>
+        <p id="reset-error"   class="form-error hidden"></p>
+        <p id="reset-success" class="form-success hidden"></p>
+      </form>
+      <p class="auth-switch"><a href="#" onclick="showAuth('login');return false">← Retour à la connexion</a></p>
+    </div>
+
+    <!-- New password (recovery flow Supabase) -->
+    <div id="auth-new-password" class="hidden">
+      <div class="auth-title">Nouveau mot de passe</div>
+      <p class="auth-sub">Choisissez un nouveau mot de passe sécurisé pour votre compte.</p>
+      <form class="auth-form" id="new-password-form">
+        <label class="auth-label">
+          <span>Nouveau mot de passe</span><span class="req-star">*</span>
+          <input id="new-password-input" type="password" placeholder="••••••••" required minlength="12" autocomplete="new-password" />
+        </label>
+        <label class="auth-label">
+          <span>Confirmer le mot de passe</span><span class="req-star">*</span>
+          <input id="new-password-confirm" type="password" placeholder="••••••••" required minlength="12" autocomplete="new-password" />
+        </label>
+        <button type="submit" class="auth-submit" id="new-password-btn">Mettre à jour le mot de passe</button>
+        <p id="new-password-error"   class="form-error hidden"></p>
+        <p id="new-password-success" class="form-success hidden"></p>
+      </form>
     </div>
 
     <!-- Signup -->

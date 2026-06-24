@@ -1069,12 +1069,16 @@ function showLanding() {
   $("view-app").classList.add("hidden");
 }
 
+let _recoveryToken = null;
+
 function showAuth(mode = "login") {
   $("view-landing").classList.add("hidden");
   $("view-auth").classList.remove("hidden");
   $("view-app").classList.add("hidden");
-  $("auth-login").classList.toggle("hidden",  mode !== "login");
-  $("auth-signup").classList.toggle("hidden", mode !== "signup");
+  $("auth-login").classList.toggle("hidden",        mode !== "login");
+  $("auth-signup").classList.toggle("hidden",       mode !== "signup");
+  $("auth-reset").classList.toggle("hidden",        mode !== "reset");
+  $("auth-new-password").classList.toggle("hidden", mode !== "new-password");
   const h = $("auth-left-headline"), s = $("auth-left-sub");
   if (mode === "login") {
     $("login-error").classList.add("hidden");
@@ -1088,6 +1092,20 @@ function showAuth(mode = "login") {
     $("signup-org").focus();
     if (h) h.innerHTML = "Commencez votre essai<br>gratuit — 14 jours";
     if (s) s.textContent = "Aucune carte de crédit requise. Accès complet dès la création de votre compte.";
+  }
+  if (mode === "reset") {
+    $("reset-error").classList.add("hidden");
+    $("reset-success").classList.add("hidden");
+    if ($("reset-email")) $("reset-email").focus();
+    if (h) h.innerHTML = "Réinitialisation<br>du mot de passe";
+    if (s) s.textContent = "Recevez un lien sécurisé par email pour reprendre l'accès à votre compte.";
+  }
+  if (mode === "new-password") {
+    $("new-password-error").classList.add("hidden");
+    $("new-password-success").classList.add("hidden");
+    if ($("new-password-input")) $("new-password-input").focus();
+    if (h) h.innerHTML = "Choisissez un nouveau<br>mot de passe";
+    if (s) s.textContent = "Votre lien de récupération est valide. Créez un mot de passe sécurisé.";
   }
 }
 
@@ -1643,6 +1661,61 @@ $("signup-form").addEventListener("submit", async e => {
     err.textContent = ex.message; err.classList.remove("hidden");
   } finally {
     btn.disabled = false; btn.textContent = "Créer mon compte gratuitement";
+  }
+});
+
+// Forgot password
+$("reset-form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const btn = $("reset-btn"), err = $("reset-error"), suc = $("reset-success");
+  btn.disabled = true; btn.textContent = "Envoi…";
+  err.classList.add("hidden"); suc.classList.add("hidden");
+  try {
+    const res = await fetch("/api/auth/forgot-password", {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({email: $("reset-email").value.trim()}),
+    });
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.detail || "Erreur.");
+    suc.textContent = json.message;
+    suc.classList.remove("hidden");
+    $("reset-email").value = "";
+  } catch (ex) {
+    err.textContent = ex.message; err.classList.remove("hidden");
+  } finally {
+    btn.disabled = false; btn.textContent = "Envoyer le lien de réinitialisation";
+  }
+});
+
+// New password (recovery)
+$("new-password-form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const btn = $("new-password-btn"), err = $("new-password-error"), suc = $("new-password-success");
+  btn.disabled = true; btn.textContent = "Mise à jour…";
+  err.classList.add("hidden"); suc.classList.add("hidden");
+  const np = $("new-password-input").value;
+  const nc = $("new-password-confirm").value;
+  if (np !== nc) {
+    err.textContent = "Les mots de passe ne correspondent pas.";
+    err.classList.remove("hidden");
+    btn.disabled = false; btn.textContent = "Mettre à jour le mot de passe";
+    return;
+  }
+  try {
+    const res = await fetch("/api/auth/update-password", {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({access_token: _recoveryToken, new_password: np}),
+    });
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.detail || "Erreur.");
+    suc.textContent = "Mot de passe mis à jour ! Redirection…";
+    suc.classList.remove("hidden");
+    _recoveryToken = null;
+    setTimeout(() => showAuth("login"), 2000);
+  } catch (ex) {
+    err.textContent = ex.message; err.classList.remove("hidden");
+  } finally {
+    btn.disabled = false; btn.textContent = "Mettre à jour le mot de passe";
   }
 });
 
@@ -4397,7 +4470,17 @@ $("settings-pwd-form")?.addEventListener("submit", async e => {
 
 async function init() {
   const handledInvite = await _handleInviteToken();
-  if (handledInvite) return;  // signup form shown — ne pas continuer vers landing
+  if (handledInvite) return;
+
+  // Détection du callback de récupération de mot de passe Supabase (#access_token=...&type=recovery)
+  if (window.location.hash) {
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    if (hashParams.get("type") === "recovery") {
+      const rt = hashParams.get("access_token");
+      window.history.replaceState({}, "", "/");
+      if (rt) { _recoveryToken = rt; showAuth("new-password"); return; }
+    }
+  }
 
   // Token passé en URL depuis MyNexRA ou un lien partagé
   const _up = new URLSearchParams(window.location.search);

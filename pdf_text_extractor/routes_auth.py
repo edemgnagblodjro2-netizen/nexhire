@@ -106,6 +106,51 @@ def _notify_member_join(invite_token: str, email: str) -> None:
         pass
 
 
+class ForgotPasswordPayload(BaseModel):
+    email: EmailStr
+
+
+@router.post("/forgot-password")
+def forgot_password(payload: ForgotPasswordPayload):
+    """Déclenche l'email de réinitialisation Supabase. Réponse identique quelle que soit l'adresse."""
+    try:
+        app_url = os.environ.get("APP_URL", "https://agenthub.nexhire.ca")
+        anon_client().auth.reset_password_for_email(payload.email, {"redirect_to": app_url})
+    except Exception:
+        pass
+    return {"status": "ok", "message": "Si cet email est enregistré, un lien de réinitialisation vous a été envoyé."}
+
+
+class UpdatePasswordPayload(BaseModel):
+    access_token: str
+    new_password: str = Field(min_length=12)
+
+    @field_validator("new_password")
+    @classmethod
+    def password_strength(cls, v: str) -> str:
+        return _check_password_strength(v)
+
+
+@router.post("/update-password")
+def update_password(payload: UpdatePasswordPayload):
+    """Applique le nouveau mot de passe avec le token de récupération Supabase."""
+    try:
+        sb = anon_client()
+        user_resp = sb.auth.get_user(payload.access_token)
+        if not user_resp or not user_resp.user:
+            raise ValueError("token invalide")
+        from supabase_client import service_client
+        service_client().auth.admin.update_user_by_id(
+            str(user_resp.user.id),
+            {"password": payload.new_password},
+        )
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail="Lien de réinitialisation invalide ou expiré.") from exc
+    return {"status": "ok"}
+
+
 class LoginPayload(BaseModel):
     email: EmailStr
     password: str = Field(min_length=1)
