@@ -3460,106 +3460,156 @@
 
     <!-- ═══════════════ AIDE & SUPPORT ═══════════════ -->
     <section id="tab-help" class="tab-content hidden" role="tabpanel">
-      <div class="section-header" style="margin-bottom:24px">
+
+      <!-- ── HERO ──────────────────────────────────────────────────────────── -->
+      <div class="help-hero">
+        <div class="help-hero-badge">Centre d'aide</div>
+        <h1 class="help-hero-title">Comment pouvons-nous vous aider ?</h1>
+        <p class="help-hero-sub">Documentation, guides et support technique pour NexHire EIP</p>
+      </div>
+
+      <!-- ── CARTES DE TOPICS ───────────────────────────────────────────────── -->
+      <div class="help-topics-grid">
+        <button class="help-topic-card" onclick="switchTab('connectors')">
+          <div class="help-topic-icon" style="background:#ede9fe;color:#7c3aed">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><path d="M5.58 16.5h12.85"/></svg>
+          </div>
+          <div class="help-topic-body">
+            <div class="help-topic-title">Connecteurs</div>
+            <div class="help-topic-desc">M365, Jira, SAP, Salesforce…</div>
+          </div>
+          <svg class="help-topic-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <button class="help-topic-card" onclick="switchTab('org')">
+          <div class="help-topic-icon" style="background:#fef3c7;color:#d97706">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="help-topic-body">
+            <div class="help-topic-title">Organisation &amp; équipe</div>
+            <div class="help-topic-desc">Membres, rôles, départements</div>
+          </div>
+          <svg class="help-topic-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <button class="help-topic-card" onclick="switchTab('security')">
+          <div class="help-topic-icon" style="background:#fce7f3;color:#db2777">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="help-topic-body">
+            <div class="help-topic-title">Sécurité &amp; conformité</div>
+            <div class="help-topic-desc">RLS, MFA, audit, RGPD</div>
+          </div>
+          <svg class="help-topic-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <button class="help-topic-card" onclick="switchTab('billing')">
+          <div class="help-topic-icon" style="background:#dcfce7;color:#16a34a">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <div class="help-topic-body">
+            <div class="help-topic-title">Facturation</div>
+            <div class="help-topic-desc">Plans, abonnement, quotas</div>
+          </div>
+          <svg class="help-topic-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
+      <!-- ── CONTENU PRINCIPAL : FAQ + FORMULAIRE ───────────────────────────── -->
+      <div class="help-main-grid">
+
+        <!-- COLONNE GAUCHE — FAQ -->
         <div>
-          <h2 style="margin:0 0 4px">Aide &amp; Support</h2>
-          <p class="muted" style="margin:0;font-size:.88rem">NexHire EIP · Documentation et contact support</p>
+          <h2 class="help-section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Questions fréquentes
+          </h2>
+          <div id="help-doc-accordion" class="help-faq-list"></div>
         </div>
-      </div>
 
-      <!-- ── DOCUMENTATION ACCORDION ─────────────────────────────────────── -->
-      <div style="margin-bottom:32px">
-        <h3 style="font-size:.95rem;font-weight:700;color:#1e293b;margin:0 0 12px;display:flex;align-items:center;gap:8px">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          Guide de l'application
-        </h3>
-        <div id="help-doc-accordion" style="display:flex;flex-direction:column;gap:6px;max-width:780px"></div>
-      </div>
+        <!-- COLONNE DROITE — FORMULAIRE + LIENS -->
+        <div class="help-right-col">
+          <div class="help-contact-card">
+            <h2 class="help-section-title" style="margin-bottom:4px">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              Contacter le support
+            </h2>
+            <p class="help-contact-sub">Réponse sous <strong>24 h</strong> ouvrables · Équipe bilingue FR / EN</p>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:780px">
-        <!-- ── FORMULAIRE ──────────────────────────────────────────────────── -->
-        <div>
-          <h3 style="font-size:.95rem;font-weight:700;color:#1e293b;margin:0 0 16px;display:flex;align-items:center;gap:8px">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-            Contacter le support
-          </h3>
-          <p style="color:#64748b;font-size:.85rem;margin:0 0 16px;line-height:1.6">Réponse sous <strong>24 h</strong> ouvrables.</p>
-
-          <form id="help-tab-form" class="help-form" onsubmit="submitHelpTab(event)" style="display:flex;flex-direction:column;gap:14px">
-            <div class="help-field">
-              <label for="htab-category">Catégorie</label>
-              <div class="help-select-wrap">
-                <select id="htab-category" required>
-                  <option value="">Sélectionner…</option>
-                  <option value="bug">🐛  Problème technique ou bug</option>
-                  <option value="billing">💳  Facturation et abonnement</option>
-                  <option value="access">🔑  Accès, permissions ou authentification</option>
-                  <option value="integration">🔌  Intégrations et connecteurs</option>
-                  <option value="migration">📦  Migration et import de données</option>
-                  <option value="feature">💡  Demande de fonctionnalité</option>
-                  <option value="training">🎓  Formation et prise en main</option>
-                  <option value="security">🔐  Sécurité et conformité</option>
-                  <option value="other">💬  Autre</option>
-                </select>
+            <form id="help-tab-form" class="help-form" onsubmit="submitHelpTab(event)">
+              <div class="help-field">
+                <label for="htab-category">Catégorie</label>
+                <div class="help-select-wrap">
+                  <select id="htab-category" required>
+                    <option value="">Sélectionner…</option>
+                    <option value="bug">Problème technique ou bug</option>
+                    <option value="billing">Facturation et abonnement</option>
+                    <option value="access">Accès, permissions ou authentification</option>
+                    <option value="integration">Intégrations et connecteurs</option>
+                    <option value="migration">Migration et import de données</option>
+                    <option value="feature">Demande de fonctionnalité</option>
+                    <option value="training">Formation et prise en main</option>
+                    <option value="security">Sécurité et conformité</option>
+                    <option value="other">Autre</option>
+                  </select>
+                </div>
               </div>
-            </div>
-            <div class="help-field">
-              <label for="htab-email">Votre e-mail <span style="color:#94a3b8;font-weight:400">(depuis votre compte)</span></label>
-              <input type="email" id="htab-email" placeholder="vous@exemple.com" readonly style="background:#f8fafc;color:#64748b;cursor:default" />
-            </div>
-            <div class="help-field">
-              <label for="htab-subject">Objet</label>
-              <input type="text" id="htab-subject" placeholder="Résumez en une ligne" required />
-            </div>
-            <div class="help-field">
-              <label for="htab-description">Description <span style="color:#94a3b8;font-weight:400">(facultatif)</span></label>
-              <textarea id="htab-description" rows="4" placeholder="Décrivez le problème ou votre demande…"></textarea>
-            </div>
-            <div>
-              <button type="submit" class="help-submit-btn">
+              <div class="help-field">
+                <label for="htab-email">Votre e-mail</label>
+                <input type="email" id="htab-email" placeholder="vous@exemple.com" readonly style="background:#f8fafc;color:#64748b;cursor:default" />
+              </div>
+              <div class="help-field">
+                <label for="htab-subject">Objet</label>
+                <input type="text" id="htab-subject" placeholder="Résumez en une ligne" required />
+              </div>
+              <div class="help-field">
+                <label for="htab-description">Description <span style="color:#94a3b8;font-weight:400">(facultatif)</span></label>
+                <textarea id="htab-description" rows="4" placeholder="Décrivez le problème ou votre demande…"></textarea>
+              </div>
+              <button type="submit" class="help-submit-btn" style="width:100%;justify-content:center">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                 Envoyer la demande
               </button>
-            </div>
-          </form>
+            </form>
 
-          <div id="htab-success" class="help-success hidden" style="margin-top:16px">
-            <div class="help-success-icon">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <div id="htab-success" class="help-success hidden">
+              <div class="help-success-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <h3>Demande envoyée</h3>
+              <p>Notre équipe vous répond à l'adresse indiquée.</p>
+              <button class="help-submit-btn" style="margin-top:8px" onclick="resetHelpTab()">Nouvelle demande</button>
             </div>
-            <h3>Demande envoyée</h3>
-            <p>Notre équipe vous répond à l'adresse indiquée.</p>
-            <button class="help-submit-btn" style="margin-top:8px" onclick="resetHelpTab()">Nouvelle demande</button>
           </div>
-        </div>
 
-        <!-- ── LIENS RAPIDES ───────────────────────────────────────────────── -->
-        <div>
-          <h3 style="font-size:.95rem;font-weight:700;color:#1e293b;margin:0 0 16px;display:flex;align-items:center;gap:8px">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            Ressources utiles
-          </h3>
-          <div style="display:flex;flex-direction:column;gap:10px">
-            <a href="#" onclick="switchTab('settings');return false" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;text-decoration:none;color:#1e293b;font-size:.85rem;font-weight:500">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <!-- LIENS RAPIDES -->
+          <div class="help-links-card">
+            <div class="help-links-title">Accès rapide</div>
+            <a href="#" onclick="switchTab('settings');return false" class="help-shortcut-link">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
               Paramètres du compte
             </a>
-            <a href="#" onclick="switchTab('connectors');return false" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;text-decoration:none;color:#1e293b;font-size:.85rem;font-weight:500">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><path d="M5.58 16.5h12.85"/></svg>
-              Connecteurs et intégrations
+            <a href="#" onclick="switchTab('connectors');return false" class="help-shortcut-link">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><path d="M5.58 16.5h12.85"/></svg>
+              Connecteurs &amp; intégrations
             </a>
-            <a href="#" onclick="switchTab('team');return false" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;text-decoration:none;color:#1e293b;font-size:.85rem;font-weight:500">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <a href="#" onclick="switchTab('team');return false" class="help-shortcut-link">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
               Gestion de l'équipe
             </a>
-            <a href="#" onclick="switchTab('audit');return false" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;text-decoration:none;color:#1e293b;font-size:.85rem;font-weight:500">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>
+            <a href="#" onclick="switchTab('audit');return false" class="help-shortcut-link">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>
               Journal d'audit
             </a>
           </div>
-          <div style="margin-top:16px;padding:12px 14px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;font-size:.82rem;color:#1e40af">
-            <strong>Support :</strong> support@nexhire.ca<br>
-            <strong>Heures :</strong> Lun–Ven, 9h–17h EST
+
+          <!-- INFO CONTACT -->
+          <div class="help-contact-info">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+              <div style="width:8px;height:8px;border-radius:50%;background:#22c55e;flex-shrink:0"></div>
+              <span style="font-weight:600;color:#15803d;font-size:.82rem">Support disponible</span>
+            </div>
+            <div style="color:#374151;font-size:.83rem;line-height:1.7">
+              <strong>support@nexhire.ca</strong><br>
+              Lun – Ven &nbsp;·&nbsp; 9 h – 17 h EST
+            </div>
           </div>
         </div>
       </div>

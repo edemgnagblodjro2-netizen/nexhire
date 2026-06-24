@@ -10451,19 +10451,19 @@ function _renderHelpDocs() {
   if (!wrap || wrap.dataset.rendered) return;
   wrap.dataset.rendered = "1";
   wrap.innerHTML = _HELP_DOCS.map((section, si) => `
-    <div style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden">
-      <button onclick="_toggleHelpSection(${si})" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#f8fafc;border:none;cursor:pointer;font-size:.88rem;font-weight:700;color:#1e293b;text-align:left">
+    <div class="faq-section">
+      <button onclick="_toggleHelpSection(${si})" class="faq-section-btn">
         <span>${section.title}</span>
-        <span id="help-sec-icon-${si}" style="font-size:.8rem;color:#64748b;transition:transform .2s">▾</span>
+        <svg id="help-sec-icon-${si}" class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
-      <div id="help-sec-${si}" style="display:none;border-top:1px solid #e2e8f0">
+      <div id="help-sec-${si}" class="faq-section-body" style="display:none">
         ${section.items.map((item, ii) => `
-          <div style="border-bottom:1px solid #f1f5f9">
-            <button onclick="_toggleHelpItem(${si},${ii})" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:10px 16px 10px 28px;background:#fff;border:none;cursor:pointer;font-size:.84rem;font-weight:600;color:#334155;text-align:left">
+          <div class="faq-item">
+            <button onclick="_toggleHelpItem(${si},${ii})" class="faq-item-btn">
               <span>${item.q}</span>
-              <span id="help-item-icon-${si}-${ii}" style="font-size:.75rem;color:#94a3b8;flex-shrink:0;margin-left:8px">▾</span>
+              <svg id="help-item-icon-${si}-${ii}" class="faq-chevron" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div id="help-item-${si}-${ii}" style="display:none;padding:0 16px 12px 28px;font-size:.83rem;color:#475569;line-height:1.65;background:#fafafa">${item.a}</div>
+            <div id="help-item-${si}-${ii}" class="faq-item-body" style="display:none">${item.a}</div>
           </div>`).join("")}
       </div>
     </div>`).join("");
@@ -10473,14 +10473,14 @@ function _toggleHelpSection(si) {
   const icon = $(`help-sec-icon-${si}`);
   const open = body.style.display !== "none";
   body.style.display = open ? "none" : "block";
-  if (icon) icon.textContent = open ? "▾" : "▴";
+  if (icon) icon.classList.toggle("open", !open);
 }
 function _toggleHelpItem(si, ii) {
   const body = $(`help-item-${si}-${ii}`);
   const icon = $(`help-item-icon-${si}-${ii}`);
   const open = body.style.display !== "none";
   body.style.display = open ? "none" : "block";
-  if (icon) icon.textContent = open ? "▾" : "▴";
+  if (icon) icon.classList.toggle("open", !open);
 }
 function resetHelpTab() {
   if ($("htab-category"))    $("htab-category").value    = "";
