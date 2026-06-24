@@ -83,7 +83,7 @@ const T = {
     'auth.signup.switch':'Déjà un compte ?','auth.signup.switch.link':'Se connecter',
     'app.trial':'Votre essai gratuit se termine bientôt.','app.trial.cta':'Choisir un plan — Starter 99 $ · Pro 299 $',
     'app.tab.agent':'Assistant IA','app.tab.connectors':'Intégrations','app.tab.documents':'Rapports','app.tab.audit':'Audit','app.tab.settings':'Paramètres',
-    'app.tab.security':'Conformité','app.tab.procurement':'Achats','app.tab.org':'Organisation','app.tab.help':'Aide & support','app.tab.superadmin':'Super Admin',
+    'app.tab.security':'Conformité','app.tab.procurement':'Achats','app.tab.org':'Organisation','app.tab.billing':'Facturation','app.tab.help':'Aide & support','app.tab.superadmin':'Super Admin',
     'nav.grp.pilotage':'Pilotage','nav.grp.finance':'Finance','nav.grp.gouvernance':'Gouvernance','nav.grp.donnees':'Données','nav.grp.systeme':'Système',
     'app.logout':'Déconnexion','app.notif.title':'Notifications',
     'agent.title':'Posez votre question','agent.mode.ent':'Enterprise','agent.mode.mun':'Municipal / Organisme','agent.mode.rec':'Recrutement',
@@ -319,7 +319,7 @@ const T = {
     'auth.signup.switch':'Already have an account?','auth.signup.switch.link':'Sign in',
     'app.trial':'Your free trial ends soon.','app.trial.cta':'Choose a plan — Starter $99 · Pro $299',
     'app.tab.agent':'AI Assistant','app.tab.connectors':'Integrations','app.tab.documents':'Reports','app.tab.audit':'Audit','app.tab.settings':'Settings',
-    'app.tab.security':'Compliance','app.tab.procurement':'Procurement','app.tab.org':'Organization','app.tab.help':'Help & support','app.tab.superadmin':'Super Admin',
+    'app.tab.security':'Compliance','app.tab.procurement':'Procurement','app.tab.org':'Organization','app.tab.billing':'Billing','app.tab.help':'Help & support','app.tab.superadmin':'Super Admin',
     'nav.grp.pilotage':'Piloting','nav.grp.finance':'Finance','nav.grp.gouvernance':'Governance','nav.grp.donnees':'Data','nav.grp.systeme':'System',
     'app.logout':'Sign out','app.notif.title':'Notifications',
     'agent.title':'Ask a question','agent.mode.ent':'Enterprise','agent.mode.mun':'Municipal / Organization','agent.mode.rec':'Recruiting',
@@ -557,7 +557,7 @@ const T = {
     'app.trial':'Tu prueba gratuita termina pronto.','app.trial.cta':'Elegir un plan — Starter 99 $ · Pro 299 $',
     'app.tab.agent':'Asistente IA','app.tab.connectors':'Integraciones','app.tab.documents':'Informes','app.tab.audit':'Auditoría','app.tab.settings':'Configuración',
     'app.tab.stats':'Resumen','app.tab.team':'Equipo','app.tab.parc':'Activos TI','app.tab.optim':'Analítica','app.tab.marketplace':'Marketplace',
-    'app.tab.security':'Cumplimiento','app.tab.procurement':'Adquisiciones','app.tab.org':'Organización','app.tab.help':'Ayuda y soporte','app.tab.superadmin':'Super Admin',
+    'app.tab.security':'Cumplimiento','app.tab.procurement':'Adquisiciones','app.tab.org':'Organización','app.tab.billing':'Facturación','app.tab.help':'Ayuda y soporte','app.tab.superadmin':'Super Admin',
     'nav.grp.pilotage':'Pilotaje','nav.grp.finance':'Finanzas','nav.grp.gouvernance':'Gobernanza','nav.grp.donnees':'Datos','nav.grp.systeme':'Sistema',
     'app.logout':'Cerrar sesión','app.notif.title':'Notificaciones',
     'agent.title':'Haz tu pregunta','agent.mode.ent':'Empresa','agent.mode.mun':'Municipal / Organismo','agent.mode.rec':'Reclutamiento',
@@ -1575,6 +1575,7 @@ function _getTabTitle(tab) {
       audit:       { title: "Audit",                sub: "Traçabilité des actions" },
       security:    { title: "Conformité",           sub: "Posture de sécurité et alertes" },
       marketplace: { title: "Marketplace",          sub: "Connecteurs et extensions" },
+      billing:     { title: "Facturation",           sub: "Plans, abonnement et quotas" },
     },
     en: {
       agent:       { title: "AI Assistant",         sub: "Ask your questions to the AI" },
@@ -1591,6 +1592,7 @@ function _getTabTitle(tab) {
       audit:       { title: "Audit",                sub: "Action traceability" },
       security:    { title: "Compliance",           sub: "Security posture and alerts" },
       marketplace: { title: "Marketplace",          sub: "Connectors and extensions" },
+      billing:     { title: "Billing",              sub: "Plans, subscription and quotas" },
     },
     es: {
       agent:       { title: "Asistente IA",         sub: "Haz tus preguntas a la IA" },
@@ -1607,6 +1609,7 @@ function _getTabTitle(tab) {
       audit:       { title: "Auditoría",            sub: "Trazabilidad de acciones" },
       security:    { title: "Cumplimiento",         sub: "Postura de seguridad y alertas" },
       marketplace: { title: "Marketplace",          sub: "Conectores y extensiones" },
+      billing:     { title: "Facturación",           sub: "Planes, suscripción y cuotas" },
     }
   };
   return (d[_lang] || d.fr)[tab] || { title: "AgentHub", sub: "Intelligence Platform" };
@@ -1664,6 +1667,7 @@ function loadActiveTab() {
     "procurement": loadProcurement,
     "documents":   _populateUploadDeptSelect,
     "help":        loadHelp,
+    "billing":     loadBillingTab,
   };
   const fn = loaders[state.tab];
   if (fn) Promise.resolve().then(() => fn()).catch(err => console.warn(`[${state.tab}] load error:`, err));
@@ -3620,6 +3624,82 @@ async function _handleInviteToken() {
 // ═══════════════════════════════════════════════════════════════════════════
 // SETTINGS TAB
 // ═══════════════════════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════════════════════
+// FACTURATION
+// ═══════════════════════════════════════════════════════════════════════════
+
+async function loadBillingTab() {
+  try {
+    const [b, quota] = await Promise.all([
+      apiCall("/api/billing/status"),
+      apiCall("/api/agent/quota").catch(() => null),
+    ]);
+
+    // ── Statut actuel ──────────────────────────────────────────────────────
+    const statusWrap = $("billing-tab-status-wrap");
+    if (statusWrap) {
+      const labels = {
+        active:   { text: "Abonnement actif",             cls: "active"  },
+        trialing: { text: "Période d'essai gratuit",       cls: "trial"   },
+        canceled: { text: "Abonnement annulé",             cls: "error"   },
+        cancelled:{ text: "Abonnement annulé",             cls: "error"   },
+        past_due: { text: "Paiement en retard",            cls: "warning" },
+      };
+      const info = labels[b.status] || { text: b.status || "Inconnu", cls: "warning" };
+      statusWrap.className = `billing-status-banner ${info.cls}`;
+      statusWrap.innerHTML = `<strong>${info.text}</strong>${b.plan && b.plan !== "trial" ? ` — Plan <strong>${b.plan}</strong>` : ""}`;
+      statusWrap.classList.remove("hidden");
+    }
+
+    // ── Trial countdown ────────────────────────────────────────────────────
+    const trialBar = $("billing-tab-trial");
+    if (trialBar && b.status === "trialing") {
+      const endStr = b.trial_ends_at || b.ends_at;
+      let msg = "Vous êtes en période d'essai gratuit.";
+      if (endStr) {
+        const days = Math.ceil((new Date(endStr) - new Date()) / 86400000);
+        msg = days > 0
+          ? `Votre essai se termine dans <strong>${days} jour${days > 1 ? "s" : ""}</strong>. Passez au Premium pour continuer sans interruption.`
+          : "Votre période d'essai est <strong>terminée</strong>. Souscrivez un plan pour continuer.";
+      }
+      trialBar.innerHTML = msg;
+      trialBar.classList.remove("hidden");
+    }
+
+    // ── Boutons plans — marquer le plan actif ──────────────────────────────
+    if (b.status === "active" && b.plan) {
+      const activeCard = $(`billing-plan-${b.plan}`);
+      if (activeCard) {
+        activeCard.style.borderColor = "#22c55e";
+        const btn = activeCard.querySelector(".billing-plan-btn");
+        if (btn) { btn.textContent = "Plan actuel ✓"; btn.disabled = true; btn.style.opacity = ".7"; }
+      }
+    }
+
+    // ── Bouton portail Stripe ──────────────────────────────────────────────
+    const portalWrap = $("billing-portal-wrap");
+    if (portalWrap && b.has_stripe) portalWrap.classList.remove("hidden");
+
+    // ── Quotas ────────────────────────────────────────────────────────────
+    const quotaBody = $("billing-quota-body");
+    if (quotaBody && quota) {
+      const used  = quota.used  || 0;
+      const limit = quota.limit || 1000;
+      const pct   = Math.min(100, Math.round(used / limit * 100));
+      const barCls = pct >= 90 ? "crit" : pct >= 75 ? "warn" : "";
+      quotaBody.innerHTML = `
+        <div class="billing-quota-row">
+          <span>Requêtes agent</span>
+          <div class="billing-quota-bar-wrap"><div class="billing-quota-bar ${barCls}" style="width:${pct}%"></div></div>
+          <span style="font-weight:700;min-width:70px;text-align:right">${used} / ${limit}</span>
+        </div>
+        <div style="font-size:.78rem;color:#64748b">Période : ${quota.period || "mois en cours"}</div>`;
+    }
+  } catch (e) {
+    // Dégradation silencieuse — plans toujours visibles
+  }
+}
 
 async function loadSettings() {
   try {

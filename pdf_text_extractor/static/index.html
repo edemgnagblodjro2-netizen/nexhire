@@ -1187,6 +1187,10 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             <span data-i18n="app.tab.team">Équipe</span>
           </button>
+          <button class="tab-btn manager-only hidden" data-tab="billing" role="tab">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            <span data-i18n="app.tab.billing">Facturation</span>
+          </button>
           <button class="tab-btn" data-tab="help" role="tab">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
             <span data-i18n="app.tab.help">Aide &amp; support</span>
@@ -3458,6 +3462,114 @@
       <div id="marketplace-grid" class="marketplace-grid"></div>
     </section>
 
+    <!-- ═══════════════ FACTURATION ═══════════════ -->
+    <section id="tab-billing" class="tab-content hidden" role="tabpanel">
+      <div class="section-header" style="margin-bottom:28px">
+        <div>
+          <h2 style="margin:0 0 4px">Facturation &amp; abonnement</h2>
+          <p class="muted" style="margin:0;font-size:.88rem">Gérez votre plan NexHire EIP</p>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="loadBillingTab()">↺ Actualiser</button>
+      </div>
+
+      <!-- Statut actuel -->
+      <div id="billing-tab-status-wrap" class="billing-status-banner hidden"></div>
+
+      <!-- Trial banner -->
+      <div id="billing-tab-trial" class="billing-trial-bar hidden"></div>
+
+      <!-- Plans -->
+      <div style="margin-bottom:32px">
+        <div style="text-align:center;margin-bottom:8px">
+          <div class="billing-plans-eyebrow">Tarifs simples · Commencez gratuitement · Payez quand vous êtes prêt</div>
+          <div class="billing-trial-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+            14 jours d'essai complet inclus · Accès à tous les connecteurs · Aucune carte requise
+          </div>
+        </div>
+
+        <div class="billing-plans-grid">
+
+          <!-- STARTER -->
+          <div class="billing-plan-card" id="billing-plan-starter">
+            <div class="billing-plan-target">PME · Cabinets · 10–50 employés</div>
+            <div class="billing-plan-name">Starter</div>
+            <div class="billing-plan-price">$99<span>/mois</span></div>
+            <ul class="billing-plan-features">
+              <li>Microsoft 365 + Dashboard DG</li>
+              <li>Optimisation licences M365</li>
+              <li>Posture sécurité Entra ID</li>
+              <li>Journal d'audit complet</li>
+              <li>5 départements · 5 utilisateurs</li>
+              <li>Bilingue FR / EN</li>
+              <li>Jira · QuickBooks · Intune</li>
+            </ul>
+            <button id="billing-btn-starter" class="billing-plan-btn owner-only" onclick="subscribeStripe('starter')">
+              Commencer l'essai gratuit
+              <span class="billing-plan-btn-sub">14 jours gratuits · Sans engagement</span>
+            </button>
+          </div>
+
+          <!-- PROFESSIONAL -->
+          <div class="billing-plan-card billing-plan-featured" id="billing-plan-professional">
+            <div class="billing-plan-badge">Plan principal</div>
+            <div class="billing-plan-target">PME · Municipalités · 50–500 employés</div>
+            <div class="billing-plan-name">Professional</div>
+            <div class="billing-plan-price">$299<span>/mois</span></div>
+            <ul class="billing-plan-features">
+              <li>Tout Starter inclus</li>
+              <li>Intune — appareils + conformité</li>
+              <li>Jira · QuickBooks</li>
+              <li>Slack · Google Workspace</li>
+              <li>Départements illimités · 25 utilisateurs</li>
+              <li>Support téléphonique dédié</li>
+            </ul>
+            <button id="billing-btn-professional" class="billing-plan-btn billing-plan-btn-primary owner-only" onclick="subscribeStripe('professional')">
+              Commencer l'essai gratuit
+              <span class="billing-plan-btn-sub">14 jours gratuits · Sans engagement</span>
+            </button>
+          </div>
+
+          <!-- ENTERPRISE -->
+          <div class="billing-plan-card" id="billing-plan-enterprise">
+            <div class="billing-plan-target">Hôpitaux · Universités · Grandes entreprises</div>
+            <div class="billing-plan-name">Enterprise</div>
+            <div class="billing-plan-price">$999<span>/mois et +</span></div>
+            <div class="billing-plan-enterprise-note">Sur devis · Contrat annuel</div>
+            <ul class="billing-plan-features">
+              <li>Tout Professional inclus</li>
+              <li>SAP · Workday · ADP · NetSuite</li>
+              <li>ServiceNow · CrowdStrike</li>
+              <li>SSO / SAML</li>
+              <li>Utilisateurs illimités</li>
+              <li>Onboarding + accompagnement dédié</li>
+            </ul>
+            <a href="mailto:contact@nexhire.ca?subject=NexHire%20Enterprise%20—%20Demande%20de%20devis" class="billing-plan-btn billing-plan-btn-outline">
+              Nous contacter →
+              <span class="billing-plan-btn-sub">Déploiement accompagné · SLA garanti</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Quotas -->
+      <div class="billing-quota-card manager-only">
+        <h3 class="billing-section-title">Utilisation ce mois</h3>
+        <div id="billing-quota-body" class="billing-quota-body">
+          <div class="muted" style="font-size:.85rem">Chargement…</div>
+        </div>
+      </div>
+
+      <!-- Bouton portail Stripe -->
+      <div id="billing-portal-wrap" class="hidden owner-only" style="margin-top:20px">
+        <button class="btn btn-outline" onclick="openBillingPortal()" id="billing-portal-btn2">
+          Gérer l'abonnement via Stripe →
+        </button>
+        <p class="muted" style="font-size:.82rem;margin:6px 0 0">Modifiez votre plan, téléchargez les factures, mettez à jour le moyen de paiement.</p>
+      </div>
+    </section>
+
     <!-- ═══════════════ AIDE & SUPPORT ═══════════════ -->
     <section id="tab-help" class="tab-content hidden" role="tabpanel">
 
@@ -3480,7 +3592,7 @@
           </div>
           <svg class="help-topic-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
-        <button class="help-topic-card" onclick="switchTab('org')">
+        <button class="help-topic-card" onclick="switchTab('team')">
           <div class="help-topic-icon" style="background:#fef3c7;color:#d97706">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
