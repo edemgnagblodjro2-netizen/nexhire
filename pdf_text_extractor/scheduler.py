@@ -344,6 +344,119 @@ def _send_briefing_for_org(org: dict) -> None:
     )
 
 
+def schedule_deletion_for_expired_orgs() -> None:
+    """Planifie la suppression (J+30) pour les orgs verrouillées sans abonnement actif."""
+    try:
+        from db import get_db, rows
+    except Exception as exc:
+        logger.error("scheduler import error (schedule deletion): %s", exc)
+        return
+
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """UPDATE organizations
+                   SET deletion_scheduled_at = NOW() + INTERVAL '30 days'
+                   WHERE subscription_status IN ('trial_expired', 'canceled')
+                     AND deletion_scheduled_at IS NULL
+                     AND stripe_customer_id IS NULL
+                   RETURNING id, name, owner_email"""
+            )
+            newly_scheduled = cur.fetchall() or []
+    except Exception as exc:
+        logger.error("scheduler DB error (schedule deletion): %s", exc)
+        return
+
+    logger.info(
+        "Planification suppression — %d nouveaux comptes mis en file (J+30)",
+        len(newly_scheduled),
+    )
+
+
+def process_account_deletions() -> None:
+    """Envoie les emails d'avertissement hebdomadaires et supprime les comptes arrivés à échéance."""
+    try:
+        from db import get_db, rows
+        from email_service import send_account_deletion_warning
+    except Exception as exc:
+        logger.error("scheduler import error (process deletions): %s", exc)
+        return
+
+    # ── 1. Emails d'avertissement (J-23, J-16, J-9, J-2) ──────────────────────
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """SELECT name, owner_email,
+                          (deletion_scheduled_at::date - CURRENT_DATE) AS days_remaining
+                   FROM organizations
+                   WHERE deletion_scheduled_at IS NOT NULL
+                     AND subscription_status NOT IN ('active', 'trialing')
+                     AND owner_email IS NOT NULL
+                     AND (deletion_scheduled_at::date - CURRENT_DATE) IN (23, 16, 9, 2)"""
+            )
+            orgs_warn = rows(cur)
+    except Exception as exc:
+        logger.error("scheduler DB error (deletion warnings): %s", exc)
+        orgs_warn = []
+
+    warned = 0
+    for org in orgs_warn:
+        try:
+            ok = send_account_deletion_warning(
+                to_email=org["owner_email"],
+                org_name=org["name"],
+                days_until_deletion=int(org["days_remaining"]),
+            )
+            if ok:
+                warned += 1
+        except Exception as exc:
+            logger.error("deletion warning email org=%s : %s", org.get("name"), exc)
+
+    logger.info("Avertissements suppression — %d emails envoyés", warned)
+
+    # ── 2. Suppression définitive des comptes arrivés à échéance ───────────────
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """SELECT id, name
+                   FROM organizations
+                   WHERE deletion_scheduled_at IS NOT NULL
+                     AND deletion_scheduled_at <= NOW()
+                     AND subscription_status NOT IN ('active', 'trialing')"""
+            )
+            orgs_delete = rows(cur)
+    except Exception as exc:
+        logger.error("scheduler DB error (fetch deletions): %s", exc)
+        orgs_delete = []
+
+    deleted = errors = 0
+    for org in orgs_delete:
+        try:
+            _hard_delete_org(str(org["id"]))
+            deleted += 1
+            logger.info("Compte supprimé — org_id=%s (%s)", org["id"], org["name"])
+        except Exception as exc:
+            errors += 1
+            logger.error("Échec suppression org=%s : %s", org.get("id"), exc)
+
+    logger.info(
+        "Suppressions — %d comptes supprimés, %d erreurs",
+        deleted, errors,
+    )
+
+
+def _hard_delete_org(org_id: str) -> None:
+    """Supprime toutes les données d'une organisation de façon irréversible."""
+    from db import get_db
+    with get_db() as cur:
+        # Suppression des données sensibles en premier
+        cur.execute("DELETE FROM connectors   WHERE organization_id = %s", (org_id,))
+        cur.execute("DELETE FROM documents    WHERE organization_id = %s", (org_id,))
+        cur.execute("DELETE FROM audit_logs   WHERE organization_id = %s", (org_id,))
+        # Suppression de l'organisation — les FK CASCADE gèrent le reste
+        cur.execute("DELETE FROM organizations WHERE id = %s", (org_id,))
+
+
 def _send_for_org(org: dict) -> None:
     from db import get_db, row
     from email_service import send_monthly_report_rich

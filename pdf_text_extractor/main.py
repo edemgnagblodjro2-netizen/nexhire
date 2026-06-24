@@ -671,6 +671,8 @@ try:
         check_connector_health_all_orgs,
         send_weekly_briefing_all_orgs,
         sync_entra_all_orgs,
+        schedule_deletion_for_expired_orgs,
+        process_account_deletions,
     )
 
     _scheduler = BackgroundScheduler(timezone="UTC")
@@ -713,6 +715,20 @@ try:
         sync_entra_all_orgs,
         CronTrigger(hour=3, minute=0),
         id="entra_daily_sync",
+        replace_existing=True,
+        misfire_grace_time=3600,
+    )
+    _scheduler.add_job(
+        schedule_deletion_for_expired_orgs,
+        CronTrigger(hour=6, minute=0),
+        id="schedule_account_deletions",
+        replace_existing=True,
+        misfire_grace_time=3600,
+    )
+    _scheduler.add_job(
+        process_account_deletions,
+        CronTrigger(hour=6, minute=30),
+        id="process_account_deletions",
         replace_existing=True,
         misfire_grace_time=3600,
     )

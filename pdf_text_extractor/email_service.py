@@ -655,6 +655,95 @@ def send_executive_briefing(
     return _send(to_email, subject, html)
 
 
+def send_account_deletion_warning(
+    to_email: str,
+    org_name: str,
+    days_until_deletion: int,
+) -> bool:
+    """Email d'avertissement de suppression de compte — 4 envois (23, 16, 9, 2 jours restants)."""
+    if days_until_deletion <= 2:
+        urgency_color = "#b91c1c"
+        urgency_bg    = "#fef2f2"
+        urgency_border = "#fecaca"
+        prefix = "FINAL —"
+    elif days_until_deletion <= 9:
+        urgency_color = "#c2410c"
+        urgency_bg    = "#fff7ed"
+        urgency_border = "#fed7aa"
+        prefix = "URGENT —"
+    else:
+        urgency_color = "#b45309"
+        urgency_bg    = "#fffbeb"
+        urgency_border = "#fde68a"
+        prefix = "Avertissement —"
+
+    subject = f"{prefix} Votre compte NexHire sera supprimé dans {days_until_deletion} jours"
+
+    html = f"""<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/></head>
+<body style="font-family:system-ui,sans-serif;background:#f8fafc;margin:0;padding:32px 16px">
+  <div style="max-width:540px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.08)">
+
+    <div style="background:#0f172a;padding:24px 32px;display:flex;align-items:center;justify-content:space-between">
+      <span style="font-size:1.2rem;font-weight:800;color:#fff">Nex<span style="color:#818CF8">hire</span>
+        <span style="font-size:.65rem;background:rgba(129,140,248,.2);color:#818CF8;padding:2px 7px;border-radius:99px;margin-left:6px;vertical-align:middle">EIP</span>
+      </span>
+      <span style="color:#94a3b8;font-size:.8rem">Suppression de compte</span>
+    </div>
+
+    <div style="padding:28px 32px">
+
+      <div style="background:{urgency_bg};border:1.5px solid {urgency_border};border-radius:12px;padding:18px 22px;margin-bottom:24px;text-align:center">
+        <div style="font-size:2.8rem;font-weight:900;color:{urgency_color};line-height:1">{days_until_deletion}</div>
+        <div style="font-size:.82rem;font-weight:700;color:{urgency_color};margin-top:4px">JOURS AVANT SUPPRESSION DÉFINITIVE</div>
+      </div>
+
+      <h2 style="margin:0 0 10px;color:#0f172a;font-size:1.05rem;font-weight:800">
+        Votre compte <em>{org_name}</em> va être supprimé
+      </h2>
+      <p style="color:#475569;margin:0 0 16px;font-size:.9rem;line-height:1.6">
+        Votre abonnement NexHire n'a pas été renouvelé. Conformément à notre politique,
+        toutes les données de <strong>{org_name}</strong> seront <strong>définitivement supprimées</strong>
+        dans <strong>{days_until_deletion} jours</strong>.
+      </p>
+
+      <div style="background:#f8fafc;border-radius:10px;padding:16px 20px;margin-bottom:22px">
+        <p style="margin:0 0 8px;font-weight:700;color:#1e293b;font-size:.88rem">Ce qui sera supprimé :</p>
+        <ul style="margin:0;padding-left:18px;color:#64748b;font-size:.85rem;line-height:1.9">
+          <li>Tous les documents et résumés IA</li>
+          <li>Données d'organisation et profils utilisateurs</li>
+          <li>Connecteurs et configurations</li>
+          <li>Rapports, audits et historique d'activité</li>
+        </ul>
+      </div>
+
+      <div style="text-align:center;margin:24px 0 18px">
+        <a href="{APP_URL}#billing"
+           style="display:inline-block;background:linear-gradient(135deg,#818CF8,#6366f1);color:#fff;
+                  padding:14px 36px;border-radius:10px;font-weight:700;text-decoration:none;
+                  font-size:.95rem;box-shadow:0 4px 14px rgba(99,102,241,.3)">
+          Réactiver mon abonnement →
+        </a>
+      </div>
+
+      <p style="color:#94a3b8;font-size:.78rem;text-align:center;margin:0">
+        Si vous avez déjà réactivé votre abonnement, ignorez cet email.
+        Des questions ? Contactez-nous à <a href="mailto:support@nexhire.ca" style="color:#6366f1">support@nexhire.ca</a>
+      </p>
+    </div>
+
+    <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
+      <p style="margin:0;color:#94a3b8;font-size:.76rem">
+        © 2026 CivicAI Inc. · <a href="{APP_URL}" style="color:#6366f1">agenthub.nexhire.ca</a> 🍁
+      </p>
+    </div>
+  </div>
+</body>
+</html>"""
+    return _send(to_email, subject, html)
+
+
 def send_subscription_confirmation(
     to_email: str,
     org_name: str,
