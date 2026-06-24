@@ -1561,6 +1561,22 @@ footer {
   background: #ef4444;
   border: 2px solid #fff;
 }
+.notif-badge {
+  position: absolute;
+  top: 3px; right: 3px;
+  min-width: 17px; height: 17px;
+  padding: 0 4px;
+  border-radius: 9px;
+  background: #ef4444;
+  color: #fff;
+  font-size: .65rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+  line-height: 1;
+}
 .notif-dropdown {
   position: absolute;
   top: calc(100% + 8px);
@@ -1574,13 +1590,43 @@ footer {
   overflow: hidden;
 }
 .notif-header {
-  padding: 12px 16px;
+  padding: 10px 14px;
   font-size: .82rem;
   font-weight: 700;
   color: var(--slate);
   border-bottom: 1px solid var(--border);
   text-transform: uppercase;
   letter-spacing: .05em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.notif-clear-btn {
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--blue);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.notif-clear-btn:hover { text-decoration: underline; }
+.notif-empty {
+  padding: 20px 16px;
+  text-align: center;
+  font-size: .83rem;
+  color: var(--slate);
+}
+.notif-item-clickable { cursor: pointer; transition: background .1s; }
+.notif-item-clickable:hover { background: var(--blue-pale); }
+.notif-item-icon-wrap {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
 }
 .notif-item {
   padding: 12px 16px;
@@ -1591,6 +1637,8 @@ footer {
 }
 .notif-item:last-child { border-bottom: none; }
 .notif-item-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+/* app-lang-switcher — compact dans le topbar */
+#app-lang-switcher { background: transparent; border-color: var(--border); }
 .notif-item-body { color: var(--navy-mid); line-height: 1.45; }
 .notif-item-body strong { font-weight: 700; display: block; margin-bottom: 2px; }
 .notif-item-body span  { font-size: .78rem; color: var(--slate); }

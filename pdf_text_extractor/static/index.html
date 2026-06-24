@@ -1257,15 +1257,27 @@
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <span class="cmd-palette-hint">Ctrl+K</span>
           </button>
+          <!-- Language switcher -->
+          <div class="lang-switcher" id="app-lang-switcher">
+            <button class="lang-sw-btn" data-lang="fr" onclick="setLang('fr')">FR</button>
+            <button class="lang-sw-btn" data-lang="en" onclick="setLang('en')">EN</button>
+            <button class="lang-sw-btn" data-lang="es" onclick="setLang('es')">ES</button>
+          </div>
+
           <!-- Notification bell -->
           <div class="notif-wrap">
-            <button class="notif-btn" id="notif-btn" title="Notifications">
-              🔔
-              <span class="notif-dot" id="notif-dot"></span>
+            <button class="notif-btn" id="notif-btn" title="Notifications" aria-haspopup="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              <span class="notif-badge hidden" id="notif-badge"></span>
             </button>
             <div class="notif-dropdown hidden" id="notif-dropdown">
-              <div class="notif-header" data-i18n="app.notif.title">Notifications</div>
-              <div id="notif-list"></div>
+              <div class="notif-header">
+                <span data-i18n="app.notif.title">Notifications</span>
+                <button class="notif-clear-btn" onclick="clearNotifications()" id="notif-clear-btn">Tout effacer</button>
+              </div>
+              <div id="notif-list">
+                <div class="notif-empty">Aucune notification</div>
+              </div>
             </div>
           </div>
           <!-- User dropdown -->

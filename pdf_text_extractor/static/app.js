@@ -1357,22 +1357,101 @@ document.addEventListener("click", e => {
 // NOTIFICATIONS
 // ═══════════════════════════════════════════════════════════════════════════
 
-function buildNotifications() {
-  const notifs = [];
-  if (state.user?.subscription_status === "trialing") {
-    notifs.push({ icon: "🕐", title: "Essai gratuit actif", body: "Choisissez votre plan pour continuer — Starter 99 $/mois · Professional 299 $/mois." });
+// Notifications en mémoire — persistantes pendant la session
+const _notifStore = [];
+
+async function buildNotifications() {
+  _notifStore.length = 0;
+
+  // 1. Statut abonnement
+  const sub = state.user?.subscription_status;
+  if (sub === "trialing") {
+    _notifStore.push({ type: "warn", icon: "clock", title: "Essai gratuit actif", body: "Passez au Premium pour continuer sans interruption.", action: () => switchTab("billing") });
+  } else if (sub === "past_due") {
+    _notifStore.push({ type: "error", icon: "alert", title: "Paiement en retard", body: "Mettez à jour votre moyen de paiement pour éviter l'interruption.", action: () => switchTab("billing") });
+  } else if (sub === "canceled" || sub === "cancelled") {
+    _notifStore.push({ type: "error", icon: "alert", title: "Abonnement annulé", body: "Souscrivez un plan pour réactiver l'accès complet.", action: () => switchTab("billing") });
   }
-  notifs.push({ icon: "✅", title: "Système opérationnel", body: "Tous les services NexHire fonctionnent normalement." });
 
-  const list = $("notif-list");
-  list.innerHTML = notifs.map(n => `
-    <div class="notif-item">
-      <div class="notif-item-icon">${n.icon}</div>
+  // 2. Quota usage
+  try {
+    const q = await apiCall("/api/agent/quota");
+    const pct = Math.round((q.used || 0) / (q.limit || 1000) * 100);
+    if (pct >= 95) {
+      _notifStore.push({ type: "error", icon: "alert", title: "Quota presque épuisé", body: `${q.used}/${q.limit} requêtes utilisées ce mois (${pct}%).`, action: () => switchTab("billing") });
+    } else if (pct >= 80) {
+      _notifStore.push({ type: "warn", icon: "warn", title: "Quota à 80 %", body: `${q.used}/${q.limit} requêtes utilisées ce mois.`, action: () => switchTab("billing") });
+    }
+  } catch (_) {}
+
+  // 3. Connecteurs en erreur (admin uniquement)
+  if (["admin", "owner"].includes(state.user?.role)) {
+    try {
+      const connectors = await apiCall("/api/connectors");
+      const errors = (connectors || []).filter(c => c.status === "error");
+      if (errors.length > 0) {
+        const names = errors.map(c => c.connector_type).join(", ");
+        _notifStore.push({ type: "warn", icon: "plug", title: `${errors.length} connecteur${errors.length > 1 ? "s" : ""} en erreur`, body: names, action: () => switchTab("connectors") });
+      }
+    } catch (_) {}
+  }
+
+  // 4. Toujours : statut système
+  _notifStore.push({ type: "ok", icon: "check", title: "Système opérationnel", body: "Tous les services NexHire fonctionnent normalement." });
+
+  _renderNotifications();
+}
+
+function _notifSvg(icon) {
+  const icons = {
+    clock: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+    alert: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+    warn:  `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
+    plug:  `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/></svg>`,
+    check: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+  };
+  return icons[icon] || icons.check;
+}
+
+function _renderNotifications() {
+  const list  = $("notif-list");
+  const badge = $("notif-badge");
+  if (!list) return;
+
+  // Nombre de notifs non-ok (les vraies alertes)
+  const alertCount = _notifStore.filter(n => n.type !== "ok").length;
+
+  list.innerHTML = _notifStore.map((n, i) => {
+    const colorMap = { ok: "#22c55e", warn: "#f59e0b", error: "#ef4444" };
+    const bgMap    = { ok: "#f0fdf4", warn: "#fffbeb", error: "#fef2f2" };
+    return `
+    <div class="notif-item${n.action ? " notif-item-clickable" : ""}" ${n.action ? `onclick="_notifClick(${i})"` : ""}>
+      <div class="notif-item-icon-wrap" style="background:${bgMap[n.type] || "#f8fafc"};color:${colorMap[n.type] || "#64748b"}">${_notifSvg(n.icon)}</div>
       <div class="notif-item-body"><strong>${n.title}</strong><span>${n.body}</span></div>
-    </div>
-  `).join("");
+    </div>`;
+  }).join("") || `<div class="notif-empty">Aucune notification</div>`;
 
-  $("notif-dot").classList.toggle("hidden", notifs.length === 0);
+  if (badge) {
+    if (alertCount > 0) {
+      badge.textContent = alertCount > 9 ? "9+" : alertCount;
+      badge.classList.remove("hidden");
+    } else {
+      badge.classList.add("hidden");
+    }
+  }
+}
+
+function _notifClick(i) {
+  const n = _notifStore[i];
+  if (n?.action) { n.action(); $("notif-dropdown")?.classList.add("hidden"); }
+}
+
+function clearNotifications() {
+  // Conserve uniquement "Système opérationnel"
+  const ok = _notifStore.filter(n => n.type === "ok");
+  _notifStore.length = 0;
+  _notifStore.push(...ok);
+  _renderNotifications();
 }
 
 $("notif-btn")?.addEventListener("click", e => {
@@ -1380,8 +1459,8 @@ $("notif-btn")?.addEventListener("click", e => {
   $("notif-dropdown").classList.toggle("hidden");
 });
 
-document.addEventListener("click", () => {
-  $("notif-dropdown")?.classList.add("hidden");
+document.addEventListener("click", e => {
+  if (!e.target.closest(".notif-wrap")) $("notif-dropdown")?.classList.add("hidden");
 });
 
 // ═══════════════════════════════════════════════════════════════════════════
