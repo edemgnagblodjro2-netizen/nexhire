@@ -13116,12 +13116,9 @@ async function knowledgeSearch(evt) {
   spinner.classList.remove("hidden");
 
   try {
-    const res = await apiFetch(`/api/knowledge/search?q=${encodeURIComponent(q)}&k=5`);
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.detail || "Erreur serveur");
+    const data = await apiCall(`/api/knowledge/search?q=${encodeURIComponent(q)}&k=5`);
 
     answerText.textContent = data.answer || "Aucune réponse générée.";
-
     sourcesList.innerHTML = (data.sources || []).map(s => {
       const label = s.title || "Document";
       const badge = _knSourceBadge(s.source_type);
@@ -13131,7 +13128,6 @@ async function knowledgeSearch(evt) {
       const sim   = s.similarity != null ? ` · ${Math.round(s.similarity * 100)}%` : "";
       return `<span class="kn-source-chip">${badge}${link}${sim}</span>`;
     }).join("");
-
     answerWrap.classList.remove("hidden");
   } catch(e) {
     errorEl.textContent = `Erreur : ${e.message}`;
@@ -13142,13 +13138,7 @@ async function knowledgeSearch(evt) {
 }
 
 function _knSourceBadge(sourceType) {
-  const icons = {
-    sharepoint: "📁 ",
-    onedrive:   "☁️ ",
-    teams:      "💬 ",
-    pdf_upload: "📄 ",
-    manual:     "✏️ ",
-  };
+  const icons = { sharepoint:"📁 ", onedrive:"☁️ ", teams:"💬 ", pdf_upload:"📄 ", manual:"✏️ " };
   return icons[sourceType] || "📎 ";
 }
 
@@ -13163,14 +13153,11 @@ async function knowledgeUpload(file) {
   formData.append("file", file);
 
   try {
-    const tok = localStorage.getItem("sb_access_token");
-    const res = await fetch("/api/knowledge/upload", {
-      method: "POST",
-      headers: tok ? { "Authorization": `Bearer ${tok}` } : {},
-      body: formData,
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.detail || "Erreur serveur");
+    const headers = {};
+    if (state.token) headers["Authorization"] = `Bearer ${state.token}`;
+    const res  = await fetch("/api/knowledge/upload", { method: "POST", headers, body: formData });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.detail || `Erreur ${res.status}`);
 
     statusEl.className = "kn-upload-status ok";
     statusEl.textContent = `✓ "${data.title}" indexé — ${data.chunks} chunk${data.chunks > 1 ? "s" : ""}`;
@@ -13179,7 +13166,6 @@ async function knowledgeUpload(file) {
     statusEl.className = "kn-upload-status err";
     statusEl.textContent = `Erreur : ${e.message}`;
   }
-
   document.getElementById("kn-file-input").value = "";
 }
 
@@ -13200,10 +13186,7 @@ async function knowledgeLoadDocs() {
   list.classList.add("hidden");
 
   try {
-    const res  = await apiFetch("/api/knowledge/documents");
-    const docs = await res.json();
-    if (!res.ok) throw new Error(docs.detail || "Erreur");
-
+    const docs = await apiCall("/api/knowledge/documents");
     if (!docs.length) {
       empty.classList.remove("hidden");
     } else {
@@ -13219,17 +13202,9 @@ async function knowledgeLoadDocs() {
 }
 
 function _knDocRow(doc) {
-  const typeLabel = {
-    sharepoint: "SharePoint",
-    onedrive:   "OneDrive",
-    teams:      "Teams",
-    pdf_upload: "Upload",
-    manual:     "Manuel",
-  }[doc.source_type] || doc.source_type;
-
+  const typeLabel = { sharepoint:"SharePoint", onedrive:"OneDrive", teams:"Teams", pdf_upload:"Upload", manual:"Manuel" }[doc.source_type] || doc.source_type;
   const synced = doc.synced_at ? new Date(doc.synced_at).toLocaleDateString("fr-CA") : "—";
   const chunks = doc.chunk_count || 0;
-
   return `
     <div class="kn-doc-row">
       <div class="kn-doc-icon">
@@ -13251,11 +13226,10 @@ function _knDocRow(doc) {
 async function knowledgeDeleteDoc(title, sourceType) {
   if (!confirm(`Supprimer "${title}" de la base de connaissances ?`)) return;
   try {
-    const res = await apiFetch(
+    await apiCall(
       `/api/knowledge/documents?title=${encodeURIComponent(title)}&source_type=${encodeURIComponent(sourceType)}`,
-      { method: "DELETE" }
+      "DELETE"
     );
-    if (!res.ok) throw new Error((await res.json()).detail || "Erreur");
     knowledgeLoadDocs();
   } catch(e) {
     alert(`Erreur : ${e.message}`);
