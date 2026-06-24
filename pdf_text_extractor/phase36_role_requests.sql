@@ -6,14 +6,14 @@ CREATE TABLE IF NOT EXISTS role_change_requests (
     org_id         UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
     requested_by   UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     target_user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    current_role   TEXT NOT NULL,
-    requested_role TEXT NOT NULL,
+    from_role      TEXT NOT NULL,
+    to_role        TEXT NOT NULL,
     status         TEXT NOT NULL DEFAULT 'pending',
     created_at     TIMESTAMPTZ DEFAULT NOW(),
     resolved_at    TIMESTAMPTZ,
     resolved_by    UUID REFERENCES users(id) ON DELETE SET NULL,
     CONSTRAINT rcr_status_check CHECK (status IN ('pending', 'approved', 'rejected')),
-    CONSTRAINT rcr_role_check   CHECK (requested_role IN ('user', 'manager', 'admin'))
+    CONSTRAINT rcr_role_check   CHECK (to_role IN ('user', 'manager', 'admin'))
 );
 
 CREATE INDEX IF NOT EXISTS idx_rcr_org_status ON role_change_requests(org_id, status);

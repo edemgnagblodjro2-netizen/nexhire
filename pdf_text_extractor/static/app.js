@@ -3867,9 +3867,9 @@ async function _loadRoleRequests() {
         <div style="font-size:.9rem">
           <span style="font-weight:600">${esc(r.target_name || r.target_email)}</span>
           <span style="color:#64748b;margin:0 6px">·</span>
-          <span class="role-badge" style="background:#e0e7ff;color:#4338ca">${ROLE_LABELS_FR[r.current_role]||r.current_role}</span>
+          <span class="role-badge" style="background:#e0e7ff;color:#4338ca">${ROLE_LABELS_FR[r.from_role]||r.from_role}</span>
           <span style="color:#64748b;margin:0 6px">→</span>
-          <span class="role-badge" style="background:#fef3c7;color:#b45309">${ROLE_LABELS_FR[r.requested_role]||r.requested_role}</span>
+          <span class="role-badge" style="background:#fef3c7;color:#b45309">${ROLE_LABELS_FR[r.to_role]||r.to_role}</span>
           <span style="font-size:.78rem;color:#64748b;margin-left:8px">par ${esc(r.requested_by_name||"")}</span>
         </div>
         <div style="display:flex;gap:8px">

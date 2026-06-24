@@ -235,7 +235,7 @@ def change_role(
             )
             cur.execute(
                 """INSERT INTO role_change_requests
-                       (org_id, requested_by, target_user_id, current_role, requested_role)
+                       (org_id, requested_by, target_user_id, from_role, to_role)
                    VALUES (%s, %s, %s, %s, %s)""",
                 (user.organization_id, user.id, member_id, target["role"], payload.role),
             )
@@ -257,7 +257,7 @@ def list_role_requests(user: CurrentUser = Depends(require_min_role("user"))):
         raise HTTPException(status_code=403, detail="Réservé au owner.")
     with get_db() as cur:
         cur.execute(
-            """SELECT r.id, r.target_user_id, r.current_role, r.requested_role,
+            """SELECT r.id, r.target_user_id, r.from_role, r.to_role,
                       r.status, r.created_at,
                       t.full_name AS target_name, t.email AS target_email,
                       b.full_name AS requested_by_name
@@ -289,13 +289,13 @@ def approve_role_request(
     with get_db() as cur:
         cur.execute(
             "UPDATE users SET role = %s WHERE id = %s",
-            (req["requested_role"], req["target_user_id"]),
+            (req["to_role"], req["target_user_id"]),
         )
         cur.execute(
             "UPDATE role_change_requests SET status = 'approved', resolved_at = NOW(), resolved_by = %s WHERE id = %s",
             (user.id, request_id),
         )
-    return {"ok": True, "role": req["requested_role"]}
+    return {"ok": True, "role": req["to_role"]}
 
 
 @router.post("/role-requests/{request_id}/reject")
