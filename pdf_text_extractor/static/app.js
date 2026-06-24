@@ -4475,6 +4475,20 @@ async function init() {
   // Détection récupération mot de passe — format hash: #access_token=...&type=recovery
   if (window.location.hash) {
     const hp = new URLSearchParams(window.location.hash.substring(1));
+    // Erreur Supabase (lien expiré, invalide, etc.)
+    if (hp.get("error")) {
+      window.history.replaceState({}, "", "/");
+      showAuth("reset");
+      const errEl = $("reset-error");
+      if (errEl) {
+        const code = hp.get("error_code") || "";
+        errEl.textContent = code === "otp_expired"
+          ? "Ce lien de réinitialisation a expiré. Veuillez en demander un nouveau."
+          : "Lien invalide ou expiré. Veuillez en demander un nouveau.";
+        errEl.classList.remove("hidden");
+      }
+      return;
+    }
     if (hp.get("type") === "recovery" && hp.get("access_token")) {
       _recoveryToken = hp.get("access_token");
       window.history.replaceState({}, "", "/");
