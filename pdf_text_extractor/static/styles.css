@@ -5460,16 +5460,20 @@ tbody tr:last-child td { border-bottom: none; }
 .kn-search-input {
   flex: 1;
   padding: 12px 16px;
-  border: 1.5px solid var(--border);
+  border: 2px solid #c7d2fe;
   border-radius: var(--radius-sm);
   font-size: .95rem;
   font-family: inherit;
-  background: var(--surface);
+  background: #ffffff;
   color: var(--navy);
-  transition: border-color .15s;
+  transition: border-color .15s, box-shadow .15s;
   outline: none;
+  box-shadow: 0 1px 4px rgba(99,102,241,.08);
 }
-.kn-search-input:focus { border-color: var(--indigo); }
+.kn-search-input:focus {
+  border-color: var(--indigo);
+  box-shadow: 0 0 0 3px rgba(99,102,241,.15);
+}
 .kn-search-btn { display: flex; align-items: center; gap: 7px; white-space: nowrap; }
 
 /* Réponse IA */

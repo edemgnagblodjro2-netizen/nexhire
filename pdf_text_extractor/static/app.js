@@ -13110,13 +13110,27 @@ async function knowledgeSearch(evt) {
   const errorEl     = document.getElementById("kn-search-error");
   const answerText  = document.getElementById("kn-answer-text");
   const sourcesList = document.getElementById("kn-sources-list");
+  const searchBtn   = document.querySelector(".kn-search-btn");
 
   answerWrap.classList.add("hidden");
   errorEl.classList.add("hidden");
   spinner.classList.remove("hidden");
+  if (searchBtn) { searchBtn.disabled = true; searchBtn.textContent = "Recherche…"; }
 
   try {
-    const data = await apiCall(`/api/knowledge/search?q=${encodeURIComponent(q)}&k=5`);
+    // Timeout 60s — embed + vector search + synthèse IA peut prendre 20-30s
+    const ctrl = new AbortController();
+    const tid  = setTimeout(() => ctrl.abort(), 60000);
+    const headers = { "Content-Type": "application/json" };
+    if (state.token) headers["Authorization"] = `Bearer ${state.token}`;
+    let res;
+    try {
+      res = await fetch(`/api/knowledge/search?q=${encodeURIComponent(q)}&k=5`, { headers, signal: ctrl.signal });
+    } finally {
+      clearTimeout(tid);
+    }
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.detail || `Erreur ${res.status}`);
 
     answerText.textContent = data.answer || "Aucune réponse générée.";
     sourcesList.innerHTML = (data.sources || []).map(s => {
@@ -13130,10 +13144,15 @@ async function knowledgeSearch(evt) {
     }).join("");
     answerWrap.classList.remove("hidden");
   } catch(e) {
-    errorEl.textContent = `Erreur : ${e.message}`;
+    const msg = e.name === "AbortError" ? "Délai dépassé (60s) — réessayez." : e.message;
+    errorEl.textContent = `Erreur : ${msg}`;
     errorEl.classList.remove("hidden");
   } finally {
     spinner.classList.add("hidden");
+    if (searchBtn) {
+      searchBtn.disabled = false;
+      searchBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Rechercher`;
+    }
   }
 }
 
