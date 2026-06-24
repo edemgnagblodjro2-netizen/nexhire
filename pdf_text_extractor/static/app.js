@@ -13234,14 +13234,18 @@ function _knDocRow(doc) {
       </div>
       <span class="kn-doc-badge">${esc(typeLabel)}</span>
       <button class="kn-doc-delete admin-only"
-              onclick="knowledgeDeleteDoc(${JSON.stringify(doc.title)}, ${JSON.stringify(doc.source_type)})"
+              data-title="${esc(doc.title)}"
+              data-source="${esc(doc.source_type)}"
+              onclick="knowledgeDeleteDoc(this)"
               title="Supprimer ce document">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
       </button>
     </div>`;
 }
 
-async function knowledgeDeleteDoc(title, sourceType) {
+async function knowledgeDeleteDoc(btn) {
+  const title      = btn.dataset.title;
+  const sourceType = btn.dataset.source;
   if (!confirm(`Supprimer "${title}" de la base de connaissances ?`)) return;
   try {
     await apiCall(
