@@ -6207,7 +6207,8 @@ async function loadOrgChart() {
           <div class="org-dept-hd">
             ${icon} ${esc(dept.name)} <span class="org-dept-count muted">— aucun membre</span>
             ${canManage ? `<button class="btn btn-primary btn-sm org-add-member-btn"
-              onclick="openAddMemberModal('${dept.id}','${esc(dept.name)}','${dept.dept_type||"general"}')"
+              data-dept-id="${dept.id}" data-dept-name="${esc(dept.name)}" data-dept-type="${dept.dept_type||"general"}"
+              onclick="openAddMemberModal(this.dataset.deptId,this.dataset.deptName,this.dataset.deptType)"
               style="margin-left:auto;font-size:.75rem;padding:3px 10px">+ Membre</button>` : ""}
           </div>
         </div>`;
@@ -6232,10 +6233,13 @@ async function loadOrgChart() {
                 ${HIERARCHY_TITLES.map((t,i) => `<option value="${t}" ${t===m.title?"selected":""}>${t}</option>`).join("")}
               </select>
               <button class="btn btn-outline btn-sm" title="Transférer vers un autre département"
-                onclick="openTransferModal('${dept.id}','${esc(dept.name)}','${m.id}','${esc(m.full_name||m.email)}')"
+                data-dept-id="${dept.id}" data-dept-name="${esc(dept.name)}"
+                data-member-id="${m.id}" data-member-name="${esc(m.full_name||m.email)}"
+                onclick="openTransferModal(this.dataset.deptId,this.dataset.deptName,this.dataset.memberId,this.dataset.memberName)"
                 style="font-size:.72rem;padding:2px 8px">⇄</button>
               <button class="btn btn-sm" title="Retirer du département"
-                onclick="removeMemberFromDept('${dept.id}','${m.id}','${esc(m.full_name||m.email)}')"
+                data-dept-id="${dept.id}" data-member-id="${m.id}" data-member-name="${esc(m.full_name||m.email)}"
+                onclick="removeMemberFromDept(this.dataset.deptId,this.dataset.memberId,this.dataset.memberName)"
                 style="font-size:.72rem;padding:2px 8px;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5">✕</button>
             ` : ""}
           </div>`;
@@ -6248,7 +6252,8 @@ async function loadOrgChart() {
             <span class="org-dept-count">${members.length} membre${members.length>1?"s":""}</span>
             <span class="org-chevron">▾</span>
             ${canManage ? `<button class="btn btn-primary btn-sm org-add-member-btn"
-              onclick="event.stopPropagation();openAddMemberModal('${dept.id}','${esc(dept.name)}','${dept.dept_type||"general"}')"
+              data-dept-id="${dept.id}" data-dept-name="${esc(dept.name)}" data-dept-type="${dept.dept_type||"general"}"
+              onclick="event.stopPropagation();openAddMemberModal(this.dataset.deptId,this.dataset.deptName,this.dataset.deptType)"
               style="margin-left:auto;font-size:.75rem;padding:3px 10px">+ Membre</button>` : ""}
           </div>
           <div class="org-members-list">${rows}</div>
@@ -6414,7 +6419,14 @@ async function loadDepartments() {
         <div class="dept-card-meta">${d.member_count||0} membre(s) · Budget : ${_fmt(d.annual_budget)} ${d.currency}</div>
         ${d.description ? `<div class="dept-card-meta">${esc(d.description)}</div>` : ""}
         <div class="dept-actions">
-          <button class="btn-icon" onclick="editDept('${d.id}','${esc(d.name)}','${esc(d.description||"")}',${d.annual_budget},'${d.currency}','${d.dept_type||"general"}')">✎</button>
+          <button class="btn-icon"
+                  data-id="${d.id}"
+                  data-name="${esc(d.name)}"
+                  data-desc="${esc(d.description||"")}"
+                  data-budget="${d.annual_budget}"
+                  data-currency="${d.currency}"
+                  data-type="${d.dept_type||"general"}"
+                  onclick="editDept(this)">✎</button>
           <button class="btn-icon btn-deactivate" onclick="deleteDept('${d.id}')">✕</button>
         </div>
       </div>`).join("");
@@ -6447,8 +6459,15 @@ function openDeptModal(dept = null) {
   $("dm-error").classList.add("hidden");
   $("dept-modal").classList.remove("hidden");
 }
-function editDept(id, name, desc, budget, currency, deptType) {
-  openDeptModal({ id, name, description:desc, annual_budget:budget, currency, dept_type:deptType || "general" });
+function editDept(btn) {
+  openDeptModal({
+    id:            btn.dataset.id,
+    name:          btn.dataset.name,
+    description:   btn.dataset.desc,
+    annual_budget: +(btn.dataset.budget || 0),
+    currency:      btn.dataset.currency,
+    dept_type:     btn.dataset.type || "general",
+  });
 }
 async function deleteDept(id) {
   if (!confirm("Supprimer ce département ? Les données associées seront dissociées.")) return;
