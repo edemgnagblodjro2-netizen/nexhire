@@ -445,6 +445,43 @@ def process_account_deletions() -> None:
     )
 
 
+def index_knowledge_m365_all_orgs() -> None:
+    """Indexe (ou ré-indexe) les docs OneDrive de tous les connecteurs M365 actifs."""
+    try:
+        from db import get_db, rows
+        from knowledge_indexer import index_m365_documents
+    except Exception as exc:
+        logger.error("scheduler import error (knowledge index): %s", exc)
+        return
+
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """SELECT id, organization_id
+                   FROM connectors
+                   WHERE connector_type = 'microsoft_365' AND status = 'active'"""
+            )
+            connectors = rows(cur)
+    except Exception as exc:
+        logger.error("scheduler DB error (knowledge index): %s", exc)
+        return
+
+    total_indexed = total_errors = 0
+    for conn in connectors:
+        try:
+            result = index_m365_documents(str(conn["organization_id"]), str(conn["id"]))
+            total_indexed += result.get("indexed", 0)
+            total_errors  += result.get("errors", 0)
+        except Exception as exc:
+            logger.error("knowledge index connector=%s : %s", conn.get("id"), exc)
+            total_errors += 1
+
+    logger.info(
+        "Knowledge M365 index — %d documents indexés, %d erreurs",
+        total_indexed, total_errors,
+    )
+
+
 def _hard_delete_org(org_id: str) -> None:
     """Supprime toutes les données d'une organisation de façon irréversible."""
     from db import get_db

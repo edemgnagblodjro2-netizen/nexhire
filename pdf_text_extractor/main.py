@@ -133,6 +133,7 @@ from routes_intelligence           import router as intelligence_router
 from routes_onboarding             import router as onboarding_router
 from routes_search                 import router as search_router
 from routes_import                 import router as import_router
+from routes_knowledge              import router as knowledge_router
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -226,6 +227,7 @@ def create_app(
     app.include_router(onboarding_router)
     app.include_router(search_router)
     app.include_router(import_router)
+    app.include_router(knowledge_router)
     app.state.storage = storage or DocumentStore.from_env()
     app.state.assistant = assistant or AssistantService.from_env()
 
@@ -673,6 +675,7 @@ try:
         sync_entra_all_orgs,
         schedule_deletion_for_expired_orgs,
         process_account_deletions,
+        index_knowledge_m365_all_orgs,
     )
 
     _scheduler = BackgroundScheduler(timezone="UTC")
@@ -729,6 +732,13 @@ try:
         process_account_deletions,
         CronTrigger(hour=6, minute=30),
         id="process_account_deletions",
+        replace_existing=True,
+        misfire_grace_time=3600,
+    )
+    _scheduler.add_job(
+        index_knowledge_m365_all_orgs,
+        CronTrigger(hour=2, minute=0),
+        id="knowledge_m365_index",
         replace_existing=True,
         misfire_grace_time=3600,
     )

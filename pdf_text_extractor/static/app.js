@@ -1787,6 +1787,7 @@ function _getTabTitle(tab) {
       security:    { title: "Conformité",           sub: "Posture de sécurité et alertes" },
       marketplace: { title: "Marketplace",          sub: "Connecteurs et extensions" },
       billing:     { title: "Facturation",           sub: "Plans, abonnement et quotas" },
+      knowledge:   { title: "Centre de connaissances", sub: "Recherche IA dans vos documents" },
     },
     en: {
       agent:       { title: "AI Assistant",         sub: "Ask your questions to the AI" },
@@ -1879,6 +1880,7 @@ function loadActiveTab() {
     "documents":   _populateUploadDeptSelect,
     "help":        loadHelp,
     "billing":     loadBillingTab,
+    "knowledge":   knowledgeLoadDocs,
   };
   const fn = loaders[state.tab];
   if (fn) Promise.resolve().then(() => fn()).catch(err => console.warn(`[${state.tab}] load error:`, err));
@@ -13091,5 +13093,171 @@ async function extractDocumentFields() {
     if (resEl) { resEl.innerHTML = `<p class="muted" style="color:#dc2626">Erreur : ${esc(e.message)}</p>`; resEl.classList.remove("hidden"); }
   } finally {
     if (btn) { btn.disabled = false; btn.textContent = "Extraire les champs"; }
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   CENTRE DE CONNAISSANCES
+   ══════════════════════════════════════════════════════════════════════════ */
+
+async function knowledgeSearch(evt) {
+  evt.preventDefault();
+  const q = document.getElementById("kn-query")?.value?.trim();
+  if (!q) return;
+
+  const answerWrap  = document.getElementById("kn-answer-wrap");
+  const spinner     = document.getElementById("kn-search-spinner");
+  const errorEl     = document.getElementById("kn-search-error");
+  const answerText  = document.getElementById("kn-answer-text");
+  const sourcesList = document.getElementById("kn-sources-list");
+
+  answerWrap.classList.add("hidden");
+  errorEl.classList.add("hidden");
+  spinner.classList.remove("hidden");
+
+  try {
+    const res = await apiFetch(`/api/knowledge/search?q=${encodeURIComponent(q)}&k=5`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || "Erreur serveur");
+
+    answerText.textContent = data.answer || "Aucune réponse générée.";
+
+    sourcesList.innerHTML = (data.sources || []).map(s => {
+      const label = s.title || "Document";
+      const badge = _knSourceBadge(s.source_type);
+      const link  = s.source_url
+        ? `<a href="${esc(s.source_url)}" target="_blank" rel="noopener">${esc(label)}</a>`
+        : esc(label);
+      const sim   = s.similarity != null ? ` · ${Math.round(s.similarity * 100)}%` : "";
+      return `<span class="kn-source-chip">${badge}${link}${sim}</span>`;
+    }).join("");
+
+    answerWrap.classList.remove("hidden");
+  } catch(e) {
+    errorEl.textContent = `Erreur : ${e.message}`;
+    errorEl.classList.remove("hidden");
+  } finally {
+    spinner.classList.add("hidden");
+  }
+}
+
+function _knSourceBadge(sourceType) {
+  const icons = {
+    sharepoint: "📁 ",
+    onedrive:   "☁️ ",
+    teams:      "💬 ",
+    pdf_upload: "📄 ",
+    manual:     "✏️ ",
+  };
+  return icons[sourceType] || "📎 ";
+}
+
+async function knowledgeUpload(file) {
+  if (!file) return;
+  const statusEl = document.getElementById("kn-upload-status");
+  statusEl.className = "kn-upload-status";
+  statusEl.textContent = `Indexation de "${esc(file.name)}"…`;
+  statusEl.classList.remove("hidden");
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    const tok = localStorage.getItem("sb_access_token");
+    const res = await fetch("/api/knowledge/upload", {
+      method: "POST",
+      headers: tok ? { "Authorization": `Bearer ${tok}` } : {},
+      body: formData,
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || "Erreur serveur");
+
+    statusEl.className = "kn-upload-status ok";
+    statusEl.textContent = `✓ "${data.title}" indexé — ${data.chunks} chunk${data.chunks > 1 ? "s" : ""}`;
+    knowledgeLoadDocs();
+  } catch(e) {
+    statusEl.className = "kn-upload-status err";
+    statusEl.textContent = `Erreur : ${e.message}`;
+  }
+
+  document.getElementById("kn-file-input").value = "";
+}
+
+function knowledgeDrop(evt) {
+  evt.preventDefault();
+  document.getElementById("kn-drop-zone").classList.remove("kn-drag-over");
+  const file = evt.dataTransfer?.files?.[0];
+  if (file) knowledgeUpload(file);
+}
+
+async function knowledgeLoadDocs() {
+  const loading = document.getElementById("kn-docs-loading");
+  const empty   = document.getElementById("kn-docs-empty");
+  const list    = document.getElementById("kn-docs-list");
+
+  loading.classList.remove("hidden");
+  empty.classList.add("hidden");
+  list.classList.add("hidden");
+
+  try {
+    const res  = await apiFetch("/api/knowledge/documents");
+    const docs = await res.json();
+    if (!res.ok) throw new Error(docs.detail || "Erreur");
+
+    if (!docs.length) {
+      empty.classList.remove("hidden");
+    } else {
+      list.innerHTML = docs.map(d => _knDocRow(d)).join("");
+      list.classList.remove("hidden");
+    }
+  } catch(e) {
+    list.innerHTML = `<p style="color:var(--error);font-size:.85rem">Erreur : ${esc(e.message)}</p>`;
+    list.classList.remove("hidden");
+  } finally {
+    loading.classList.add("hidden");
+  }
+}
+
+function _knDocRow(doc) {
+  const typeLabel = {
+    sharepoint: "SharePoint",
+    onedrive:   "OneDrive",
+    teams:      "Teams",
+    pdf_upload: "Upload",
+    manual:     "Manuel",
+  }[doc.source_type] || doc.source_type;
+
+  const synced = doc.synced_at ? new Date(doc.synced_at).toLocaleDateString("fr-CA") : "—";
+  const chunks = doc.chunk_count || 0;
+
+  return `
+    <div class="kn-doc-row">
+      <div class="kn-doc-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      </div>
+      <div class="kn-doc-info">
+        <div class="kn-doc-title" title="${esc(doc.title)}">${esc(doc.title)}</div>
+        <div class="kn-doc-meta">${synced} · ${chunks} chunk${chunks > 1 ? "s" : ""}</div>
+      </div>
+      <span class="kn-doc-badge">${esc(typeLabel)}</span>
+      <button class="kn-doc-delete admin-only"
+              onclick="knowledgeDeleteDoc(${JSON.stringify(doc.title)}, ${JSON.stringify(doc.source_type)})"
+              title="Supprimer ce document">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+      </button>
+    </div>`;
+}
+
+async function knowledgeDeleteDoc(title, sourceType) {
+  if (!confirm(`Supprimer "${title}" de la base de connaissances ?`)) return;
+  try {
+    const res = await apiFetch(
+      `/api/knowledge/documents?title=${encodeURIComponent(title)}&source_type=${encodeURIComponent(sourceType)}`,
+      { method: "DELETE" }
+    );
+    if (!res.ok) throw new Error((await res.json()).detail || "Erreur");
+    knowledgeLoadDocs();
+  } catch(e) {
+    alert(`Erreur : ${e.message}`);
   }
 }
