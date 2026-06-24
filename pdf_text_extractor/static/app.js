@@ -13100,8 +13100,7 @@ async function extractDocumentFields() {
    CENTRE DE CONNAISSANCES
    ══════════════════════════════════════════════════════════════════════════ */
 
-async function knowledgeSearch(evt) {
-  evt.preventDefault();
+async function knowledgeSearch() {
   const q = document.getElementById("kn-query")?.value?.trim();
   if (!q) return;
 
