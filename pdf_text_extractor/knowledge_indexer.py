@@ -150,95 +150,152 @@ def synthesize_answer(query: str, chunks: list[dict]) -> str:
     return resp.choices[0].message.content or ""
 
 
-def index_m365_documents(org_id: str, connector_id: str) -> dict:
-    """Indexe les documents SharePoint/OneDrive d'un connecteur M365."""
-    from db import get_db, row as _row
-    from connector_credentials import decrypt_credentials
+_SUPPORTED_EXTS = {".pdf", ".txt", ".md", ".docx"}
+_MAX_FILE_BYTES  = 10 * 1024 * 1024  # 10 Mo
+
+
+def _extract_text(filename: str, raw: bytes) -> str:
+    """Extrait le texte brut d'un fichier selon son extension."""
+    ext = os.path.splitext(filename)[1].lower()
+    if ext == ".pdf":
+        import io
+        from pypdf import PdfReader
+        try:
+            reader = PdfReader(io.BytesIO(raw))
+            return "\n".join(p.extract_text() or "" for p in reader.pages)
+        except Exception:
+            return ""
+    if ext == ".docx":
+        import io
+        try:
+            from docx import Document
+            doc = Document(io.BytesIO(raw))
+            return "\n".join(p.text for p in doc.paragraphs)
+        except Exception:
+            return raw.decode("utf-8", errors="replace")
+    return raw.decode("utf-8", errors="replace")
+
+
+def _index_drive_items(
+    headers: dict,
+    drive_id: str,
+    items: list[dict],
+    org_id: str,
+    source_type: str,
+    stats: dict,
+    title_prefix: str = "",
+) -> None:
     import httpx
-
-    with get_db() as cur:
-        cur.execute(
-            "SELECT credentials_enc FROM connectors WHERE id = %s AND organization_id = %s LIMIT 1",
-            (connector_id, org_id),
-        )
-        conn = _row(cur)
-    if not conn:
-        return {"error": "connector not found"}
-
-    try:
-        creds = decrypt_credentials(conn["credentials_enc"])
-        access_token = creds.get("access_token") or creds.get("token")
-    except Exception as exc:
-        logger.error("Knowledge M365 decrypt error: %s", exc)
-        return {"error": "credentials decrypt failed"}
-
-    headers = {"Authorization": f"Bearer {access_token}", "Accept": "application/json"}
-
-    indexed = skipped = errors = 0
-
-    # Liste les fichiers récents de OneDrive (100 max)
-    try:
-        resp = httpx.get(
-            "https://graph.microsoft.com/v1.0/me/drive/root/children"
-            "?$select=name,id,webUrl,file&$top=100",
-            headers=headers,
-            timeout=30,
-        )
-        items = resp.json().get("value", []) if resp.is_success else []
-    except Exception as exc:
-        logger.error("Knowledge M365 list error: %s", exc)
-        items = []
-
+    GRAPH = "https://graph.microsoft.com/v1.0"
     for item in items:
         if not item.get("file"):
             continue
         name: str = item.get("name", "")
-        item_id: str = item.get("id", "")
-        web_url: str = item.get("webUrl", "")
-
-        if not name.lower().endswith((".pdf", ".txt", ".docx", ".md")):
+        ext = os.path.splitext(name)[1].lower()
+        if ext not in _SUPPORTED_EXTS:
+            stats["skipped"] += 1
+            continue
+        if item.get("size", 0) > _MAX_FILE_BYTES:
+            stats["skipped"] += 1
             continue
 
+        item_id: str = item.get("id", "")
+        web_url: str = item.get("webUrl", "")
+        title = f"{title_prefix} — {name}" if title_prefix else name
+
         try:
-            dl_resp = httpx.get(
-                f"https://graph.microsoft.com/v1.0/me/drive/items/{item_id}/content",
-                headers=headers,
-                timeout=30,
-                follow_redirects=True,
+            dl = httpx.get(
+                f"{GRAPH}/drives/{drive_id}/items/{item_id}/content",
+                headers=headers, timeout=60, follow_redirects=True,
             )
-            if not dl_resp.is_success:
-                errors += 1
+            if not dl.is_success:
+                stats["errors"] += 1
                 continue
-
-            content = ""
-            if name.lower().endswith(".pdf"):
-                import io
-                from pypdf import PdfReader
-                reader = PdfReader(io.BytesIO(dl_resp.content))
-                content = "\n".join(p.extract_text() or "" for p in reader.pages)
-            else:
-                content = dl_resp.text
-
+            content = _extract_text(name, dl.content)
             if not content.strip():
-                skipped += 1
+                stats["skipped"] += 1
                 continue
-
             n = index_document(
-                org_id=org_id,
-                title=name,
-                source_type="onedrive",
-                content=content,
-                source_url=web_url,
-                connector_id=connector_id,
-                metadata={"item_id": item_id},
+                org_id=org_id, title=title, source_type=source_type,
+                content=content, source_url=web_url,
+                metadata={"item_id": item_id, "drive_id": drive_id},
             )
-            if n > 0:
-                indexed += 1
-            else:
-                skipped += 1
-
+            stats["indexed" if n > 0 else "skipped"] += 1
         except Exception as exc:
-            logger.error("Knowledge index file '%s': %s", name, exc)
-            errors += 1
+            logger.error("Knowledge index '%s': %s", name, exc)
+            stats["errors"] += 1
 
-    return {"indexed": indexed, "skipped": skipped, "errors": errors}
+
+def index_m365_documents(org_id: str) -> dict:
+    """Indexe OneDrive personnel + toutes les bibliothèques SharePoint de l'organisation."""
+    try:
+        from m365_collector import _auth_headers, _get, _get_all, GRAPH
+    except Exception as exc:
+        logger.error("Knowledge M365 import error: %s", exc)
+        return {"error": "m365_collector non disponible"}
+
+    try:
+        headers = _auth_headers(org_id)
+    except RuntimeError as exc:
+        return {"error": str(exc)}
+
+    stats: dict = {"indexed": 0, "skipped": 0, "errors": 0}
+
+    # ── 1. OneDrive personnel ────────────────────────────────────────────────
+    try:
+        drive_info = _get(headers, f"{GRAPH}/me/drive", {"$select": "id"})
+        od_drive_id = drive_info["id"]
+        items = _get_all(
+            headers,
+            f"{GRAPH}/drives/{od_drive_id}/root/children",
+            {"$select": "name,id,webUrl,file,size", "$top": "200"},
+        )
+        _index_drive_items(headers, od_drive_id, items, org_id, "onedrive", stats)
+        logger.info("Knowledge OneDrive — %d items traités", len(items))
+    except Exception as exc:
+        logger.error("Knowledge OneDrive error: %s", exc)
+        stats["errors"] += 1
+
+    # ── 2. SharePoint — sites et bibliothèques de documents ─────────────────
+    try:
+        sites = _get_all(
+            headers,
+            f"{GRAPH}/sites",
+            {"search": "*", "$select": "id,displayName,webUrl", "$top": "50"},
+        )
+        logger.info("Knowledge SharePoint — %d sites trouvés", len(sites))
+    except Exception as exc:
+        logger.error("Knowledge SharePoint sites list error: %s", exc)
+        sites = []
+
+    for site in sites:
+        site_id  = site.get("id", "")
+        site_name = site.get("displayName", "SharePoint")
+        try:
+            drives = _get_all(
+                headers,
+                f"{GRAPH}/sites/{site_id}/drives",
+                {"$select": "id,name,driveType"},
+            )
+            for drive in drives:
+                if drive.get("driveType") not in ("documentLibrary", "business"):
+                    continue
+                drive_id = drive["id"]
+                items = _get_all(
+                    headers,
+                    f"{GRAPH}/drives/{drive_id}/root/children",
+                    {"$select": "name,id,webUrl,file,size", "$top": "200"},
+                )
+                _index_drive_items(
+                    headers, drive_id, items, org_id, "sharepoint", stats,
+                    title_prefix=site_name,
+                )
+        except Exception as exc:
+            logger.error("Knowledge SharePoint site=%s error: %s", site_id, exc)
+            stats["errors"] += 1
+
+    logger.info(
+        "Knowledge M365 sync org=%s — indexed=%d skipped=%d errors=%d",
+        org_id, stats["indexed"], stats["skipped"], stats["errors"],
+    )
+    return stats

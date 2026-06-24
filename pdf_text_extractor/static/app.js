@@ -13253,3 +13253,44 @@ async function knowledgeDeleteDoc(title, sourceType) {
     alert(`Erreur : ${e.message}`);
   }
 }
+
+async function knowledgeSyncM365() {
+  const btn      = document.getElementById("kn-m365-btn");
+  const statusEl = document.getElementById("kn-m365-status");
+
+  if (btn) { btn.disabled = true; btn.textContent = "Indexation…"; }
+  statusEl.className = "kn-upload-status";
+  statusEl.textContent = "Connexion à Microsoft 365 et indexation des fichiers…";
+  statusEl.classList.remove("hidden");
+
+  try {
+    const headers = { "Content-Type": "application/json" };
+    if (state.token) headers["Authorization"] = `Bearer ${state.token}`;
+    const ctrl = new AbortController();
+    const tid  = setTimeout(() => ctrl.abort(), 300000); // 5 min max
+    let res;
+    try {
+      res = await fetch("/api/knowledge/sync-m365", { method: "POST", headers, signal: ctrl.signal });
+    } finally {
+      clearTimeout(tid);
+    }
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.detail || `Erreur ${res.status}`);
+
+    const indexed = data.indexed ?? 0;
+    const skipped = data.skipped ?? 0;
+    const errors  = data.errors  ?? 0;
+    statusEl.className = "kn-upload-status ok";
+    statusEl.textContent = `✓ Synchronisation terminée — ${indexed} fichier${indexed > 1 ? "s" : ""} indexé${indexed > 1 ? "s" : ""}, ${skipped} ignoré${skipped > 1 ? "s" : ""}${errors > 0 ? `, ${errors} erreur${errors > 1 ? "s" : ""}` : ""}`;
+    knowledgeLoadDocs();
+  } catch(e) {
+    const msg = e.name === "AbortError" ? "Délai dépassé." : e.message;
+    statusEl.className = "kn-upload-status err";
+    statusEl.textContent = `Erreur : ${msg}`;
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg> Indexer maintenant`;
+    }
+  }
+}

@@ -112,16 +112,15 @@ def delete_document(
     return {"status": "ok"}
 
 
-@router.post("/index-m365")
-def trigger_m365_index(
-    connector_id: str = Query(...),
-    user: CurrentUser = Depends(require_min_role("admin")),
-):
-    """Déclenche manuellement l'indexation des docs OneDrive/SharePoint d'un connecteur."""
+@router.post("/sync-m365")
+def sync_m365(user: CurrentUser = Depends(require_min_role("admin"))):
+    """Indexe OneDrive + SharePoint du connecteur M365 actif de l'organisation."""
     try:
         from knowledge_indexer import index_m365_documents
-        result = index_m365_documents(str(user.organization_id), connector_id)
+        result = index_m365_documents(str(user.organization_id))
     except Exception as exc:
-        logger.error("M365 knowledge index trigger error: %s", exc)
-        raise HTTPException(500, "Erreur lors de l'indexation M365.")
+        logger.error("M365 knowledge sync error: %s", exc)
+        raise HTTPException(500, "Erreur lors de la synchronisation M365.")
+    if "error" in result:
+        raise HTTPException(400, result["error"])
     return result

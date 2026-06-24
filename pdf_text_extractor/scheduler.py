@@ -467,13 +467,18 @@ def index_knowledge_m365_all_orgs() -> None:
         return
 
     total_indexed = total_errors = 0
+    orgs_done: set = set()
     for conn in connectors:
+        org_id = str(conn["organization_id"])
+        if org_id in orgs_done:
+            continue
+        orgs_done.add(org_id)
         try:
-            result = index_m365_documents(str(conn["organization_id"]), str(conn["id"]))
+            result = index_m365_documents(org_id)
             total_indexed += result.get("indexed", 0)
             total_errors  += result.get("errors", 0)
         except Exception as exc:
-            logger.error("knowledge index connector=%s : %s", conn.get("id"), exc)
+            logger.error("knowledge index org=%s : %s", org_id, exc)
             total_errors += 1
 
     logger.info(
