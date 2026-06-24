@@ -135,7 +135,9 @@ async def import_preview(
     try:
         all_rows = _parse_file(content, file.filename)
     except Exception as e:
-        raise HTTPException(400, f"Impossible de lire le fichier : {e}")
+        import logging as _log
+        _log.getLogger(__name__).error("Import parse error file=%s: %s", file.filename, e)
+        raise HTTPException(400, "Impossible de lire le fichier — format non supporté ou fichier corrompu.")
 
     if not all_rows:
         raise HTTPException(400, "Fichier vide ou sans données lisibles.")
@@ -271,7 +273,9 @@ def import_confirm(
                 )
                 inserted += 1
             except Exception as e:
-                errors.append(f"Ligne {i + 2} ({hostname}) : {str(e)[:120]}")
+                import logging as _log
+                _log.getLogger(__name__).warning("Import row error line=%d hostname=%s: %s", i + 2, hostname, e)
+                errors.append(f"Ligne {i + 2} ({hostname}) : erreur lors de l'insertion — vérifiez les données.")
                 skipped += 1
 
     return {"inserted": inserted, "skipped": skipped, "errors": errors[:10]}

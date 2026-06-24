@@ -3,9 +3,11 @@ from __future__ import annotations
 
 import base64
 import hashlib
+import hmac
 import json
 import os
 import secrets
+import time
 import urllib.parse
 
 import httpx
@@ -21,6 +23,42 @@ from rbac import require_min_role
 router = APIRouter(prefix="/api/sso", tags=["sso"])
 
 APP_URL = os.environ.get("APP_URL", "https://agenthub.nexhire.ca")
+
+# Clé de signature HMAC pour le state OAuth — évite le CSRF sur le callback SSO
+_SSO_STATE_KEY = (
+    os.environ.get("SSO_STATE_SECRET")
+    or os.environ.get("FERNET_KEYS", "").split(",")[0].strip()
+    or "nexhire-sso-fallback-change-me"
+).encode()
+
+
+def _create_sso_state(org_id: str) -> str:
+    """Génère un state OAuth signé HMAC, infalsifiable sans la clé serveur."""
+    nonce = secrets.token_urlsafe(16)
+    ts = str(int(time.time()))
+    payload = f"{nonce}.{org_id}.{ts}"
+    sig = hmac.new(_SSO_STATE_KEY, payload.encode(), hashlib.sha256).hexdigest()[:40]
+    return base64.urlsafe_b64encode(f"{payload}.{sig}".encode()).decode().rstrip("=")
+
+
+def _verify_sso_state(state: str) -> str:
+    """Valide le state OAuth et retourne org_id. Lève 400 si invalide/expiré/falsifié."""
+    try:
+        padding = (4 - len(state) % 4) % 4
+        decoded = base64.urlsafe_b64decode(state + "=" * padding).decode()
+        parts = decoded.split(".")
+        if len(parts) != 4:
+            raise ValueError("format")
+        nonce, org_id, ts_str, sig = parts
+        expected_payload = f"{nonce}.{org_id}.{ts_str}"
+        expected_sig = hmac.new(_SSO_STATE_KEY, expected_payload.encode(), hashlib.sha256).hexdigest()[:40]
+        if not hmac.compare_digest(sig, expected_sig):
+            raise ValueError("signature")
+        if abs(time.time() - int(ts_str)) > 600:
+            raise ValueError("expired")
+        return org_id
+    except Exception:
+        raise HTTPException(status_code=400, detail="State SSO invalide ou expiré — relancez la connexion.")
 
 # ── Providers OIDC connus ─────────────────────────────────────────────────────
 
@@ -197,10 +235,7 @@ def sso_authorize(request: Request, org_slug: str):
     if provider_key not in PROVIDERS:
         raise HTTPException(status_code=422, detail=f"Provider inconnu : {provider_key}")
 
-    # Génère un state nonce sécurisé (contient org_id encodé en base64)
-    nonce    = secrets.token_urlsafe(24)
-    state    = base64.urlsafe_b64encode(f"{nonce}:{org['id']}".encode()).decode()
-
+    state    = _create_sso_state(str(org["id"]))
     auth_url = _build_auth_url(provider_key, cfg, state)
     return RedirectResponse(url=auth_url, status_code=302)
 
@@ -215,12 +250,7 @@ async def sso_callback(request: Request, code: str = "", state: str = "", error:
     if not code or not state:
         raise HTTPException(status_code=400, detail="Paramètres manquants dans le callback SSO.")
 
-    # Décode le state pour récupérer org_id
-    try:
-        decoded  = base64.urlsafe_b64decode(state + "==").decode()
-        _, org_id = decoded.split(":", 1)
-    except Exception:
-        raise HTTPException(status_code=400, detail="State SSO invalide.")
+    org_id = _verify_sso_state(state)
 
     cfg = _get_sso_config(org_id)
     if not cfg:

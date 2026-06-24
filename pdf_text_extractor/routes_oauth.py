@@ -160,17 +160,28 @@ def _parse_state(state: str) -> dict:
 
 # ── Upsert helper ─────────────────────────────────────────────────────────────
 
+# Colonnes autorisées dans la table connectors — whitelist anti-injection SQL
+_CONNECTOR_ALLOWED_COLS: frozenset[str] = frozenset({
+    "status", "encrypted_credentials", "connected_at", "last_error",
+    "updated_at", "token_expires_at", "instance_url", "domain", "base_url",
+    "app_id", "client_id", "refresh_token", "access_token_encrypted",
+    "scopes", "expires_at", "user_info",
+})
+
+
 def _upsert_connector(org_id: str, connector_type: str, credentials: dict, extra: dict | None = None):
     encrypted = encrypt(json.dumps(credentials))
     now = datetime.now(UTC).isoformat()
+    # Merge extra après filtrage whitelist — empêche l'injection de noms de colonnes
+    safe_extra = {k: v for k, v in (extra or {}).items() if k in _CONNECTOR_ALLOWED_COLS}
     payload_fields = {
         "status":                "connected",
         "encrypted_credentials": encrypted,
         "connected_at":          now,
         "last_error":            None,
         "updated_at":            now,
-        "token_expires_at":      None,  # réinitialisé à chaque reconnexion OAuth
-        **(extra or {}),
+        "token_expires_at":      None,
+        **safe_extra,
     }
 
     with get_db() as cur:
@@ -185,7 +196,6 @@ def _upsert_connector(org_id: str, connector_type: str, credentials: dict, extra
         existing = row(cur)
 
     if existing:
-        # Build SET clause dynamically
         set_parts = ", ".join(f"{k} = %s" for k in payload_fields)
         values = list(payload_fields.values()) + [existing["id"]]
         with get_db() as cur:

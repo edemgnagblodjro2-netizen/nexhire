@@ -85,8 +85,18 @@ def submit_support_ticket(
 ):
     """Envoie un ticket de support à support@nexhire.ca via Resend."""
     cat_label = _CAT_LABELS.get(payload.category, payload.category)
-    org_name  = user.organization_name or "—"
     sender    = user.email or "—"
+    org_name  = "—"
+    if user.organization_id:
+        try:
+            from db import get_db as _gdb, row as _row
+            with _gdb() as _cur:
+                _cur.execute("SELECT name FROM organizations WHERE id = %s LIMIT 1", (str(user.organization_id),))
+                _org = _row(_cur)
+            if _org:
+                org_name = _org.get("name") or "—"
+        except Exception:
+            pass
 
     html = f"""<!doctype html>
 <html lang="fr"><head><meta charset="utf-8"/></head>

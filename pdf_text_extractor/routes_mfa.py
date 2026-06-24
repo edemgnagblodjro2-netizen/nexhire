@@ -164,6 +164,7 @@ def verify_enroll(
 
 
 @router.post("/challenge")
+@limiter.limit("5/minute")
 def mfa_challenge(
     request: Request,
     payload: ChallengePayload,

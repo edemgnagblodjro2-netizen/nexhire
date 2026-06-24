@@ -188,12 +188,13 @@ async def stripe_webhook(request: Request, background: BackgroundTasks):
     payload     = await request.body()
     sig_header  = request.headers.get("stripe-signature", "")
 
-    # Vérification signature Stripe
-    if STRIPE_WEBHOOK_SECRET:
-        try:
-            _verify_stripe_signature(payload, sig_header, STRIPE_WEBHOOK_SECRET)
-        except ValueError as exc:
-            raise HTTPException(status_code=400, detail=str(exc)) from exc
+    # Vérification signature Stripe — refus strict si secret absent
+    if not STRIPE_WEBHOOK_SECRET:
+        raise HTTPException(status_code=500, detail="Webhook non configuré — contactez l'administrateur.")
+    try:
+        _verify_stripe_signature(payload, sig_header, STRIPE_WEBHOOK_SECRET)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
 
     try:
         event = json.loads(payload)

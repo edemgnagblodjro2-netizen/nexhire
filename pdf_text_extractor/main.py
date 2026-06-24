@@ -308,8 +308,8 @@ def create_app(
         return {"status": "ok"}
 
     @app.get("/api/readiness")
-    def readiness():
-        """Vérifie les variables d'env et la connexion DB."""
+    def readiness(user: CurrentUser = Depends(require_min_role("admin"))):
+        """Vérifie les variables d'env et la connexion DB. Réservé aux admins."""
         checks: dict = {}
         for var in ["SUPABASE_URL", "SUPABASE_ANON_KEY", "SUPABASE_SERVICE_ROLE_KEY",
                     "FERNET_KEYS", "OPENAI_API_KEY"]:
@@ -321,7 +321,7 @@ def create_app(
                 db_row(cur)
             checks["db"] = "ok"
         except Exception as exc:
-            checks["db"] = f"error: {type(exc).__name__}: {exc}"
+            checks["db"] = f"error: {type(exc).__name__}"
         env_ok = all(v == "set" for k, v in checks.items() if k != "db")
         db_ok  = checks.get("db", "").startswith("ok")
         return {"ready": env_ok and db_ok, "checks": checks}

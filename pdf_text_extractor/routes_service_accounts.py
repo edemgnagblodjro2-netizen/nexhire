@@ -96,11 +96,11 @@ def update_service_account(
         raise HTTPException(status_code=400, detail="Aucun champ à mettre à jour.")
 
     set_clause = ", ".join(f"{k} = %s" for k in updates)
-    values = list(updates.values()) + [sa_id]
+    values = list(updates.values()) + [sa_id, str(user.organization_id)]
 
     with get_db() as cur:
         cur.execute(
-            f"UPDATE service_accounts SET {set_clause} WHERE id = %s RETURNING *",
+            f"UPDATE service_accounts SET {set_clause} WHERE id = %s AND organization_id = %s RETURNING *",
             values,
         )
         return row(cur)
