@@ -4472,14 +4472,38 @@ async function init() {
   const handledInvite = await _handleInviteToken();
   if (handledInvite) return;
 
-  // Détection du callback de récupération de mot de passe Supabase (#access_token=...&type=recovery)
+  // Détection récupération mot de passe — format hash: #access_token=...&type=recovery
   if (window.location.hash) {
-    const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    if (hashParams.get("type") === "recovery") {
-      const rt = hashParams.get("access_token");
+    const hp = new URLSearchParams(window.location.hash.substring(1));
+    if (hp.get("type") === "recovery" && hp.get("access_token")) {
+      _recoveryToken = hp.get("access_token");
       window.history.replaceState({}, "", "/");
-      if (rt) { _recoveryToken = rt; showAuth("new-password"); return; }
+      showAuth("new-password"); return;
     }
+  }
+  // Format query string: ?access_token=...&type=recovery (certaines configs Supabase)
+  const _qp = new URLSearchParams(window.location.search);
+  if (_qp.get("type") === "recovery" && _qp.get("access_token")) {
+    _recoveryToken = _qp.get("access_token");
+    window.history.replaceState({}, "", "/");
+    showAuth("new-password"); return;
+  }
+  // Format PKCE: ?code=...&type=recovery → échange côté serveur
+  if (_qp.get("type") === "recovery" && _qp.get("code")) {
+    const _code = _qp.get("code");
+    window.history.replaceState({}, "", "/");
+    try {
+      const _res = await fetch("/api/auth/exchange-recovery-code", {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({code: _code}),
+      });
+      const _json = await _res.json();
+      if (_res.ok && _json.access_token) {
+        _recoveryToken = _json.access_token;
+        showAuth("new-password"); return;
+      }
+    } catch {}
+    showAuth("login"); return;
   }
 
   // Token passé en URL depuis MyNexRA ou un lien partagé

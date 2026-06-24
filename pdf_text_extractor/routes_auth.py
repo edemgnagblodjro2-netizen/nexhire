@@ -131,6 +131,22 @@ class UpdatePasswordPayload(BaseModel):
         return _check_password_strength(v)
 
 
+class ExchangeCodePayload(BaseModel):
+    code: str
+
+
+@router.post("/exchange-recovery-code")
+def exchange_recovery_code(payload: ExchangeCodePayload):
+    """Échange un code PKCE Supabase contre un access_token (flow PKCE recovery)."""
+    try:
+        resp = anon_client().auth.exchange_code_for_session({"auth_code": payload.code})
+        if not resp or not resp.session:
+            raise ValueError("session nulle")
+        return {"access_token": resp.session.access_token}
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail="Code de récupération invalide ou expiré.") from exc
+
+
 @router.post("/update-password")
 def update_password(payload: UpdatePasswordPayload):
     """Applique le nouveau mot de passe avec le token de récupération Supabase."""
