@@ -3782,20 +3782,22 @@ async function _loadMembers() {
     const rows = members.map(m => {
       const initials = (m.full_name || m.email || "?").slice(0,2).toUpperCase();
       const active = m.is_active !== false;
-      const canEdit   = isOwner && m.role !== "owner" && m.id !== state.user?.id;
+      const conflicted = !!m.conflicted;
+      const canEdit   = isOwner && m.role !== "owner" && m.id !== state.user?.id && !conflicted;
       const canDelete = isOwner && m.id !== state.user?.id;
-      return `<tr class="${active ? "" : "row-inactive"}">
+      return `<tr class="${active && !conflicted ? "" : "row-inactive"}">
         <td>
           <div style="display:flex;align-items:center;gap:10px">
-            <div class="member-av" style="background:${ROLE_COLORS[m.role]||"#818CF8"}">${initials}</div>
+            <div class="member-av" style="background:${conflicted?"#f59e0b":ROLE_COLORS[m.role]||"#818CF8"}">${initials}</div>
             <div>
-              <div style="font-weight:600;font-size:.9rem">${m.full_name || "—"}</div>
+              <div style="font-weight:600;font-size:.9rem">${m.full_name || "—"}${conflicted ? ' <span title="Organisation incorrecte — invité non rattaché" style="color:#b45309;font-size:.8rem">⚠️</span>' : ""}</div>
               <div style="font-size:.78rem;color:var(--slate)">${m.email}</div>
+              ${conflicted ? `<div style="font-size:.72rem;color:#b45309;margin-top:2px">Org. incorrecte — à supprimer et réinviter</div>` : ""}
             </div>
           </div>
         </td>
         <td><span class="role-badge" style="background:${ROLE_COLORS[m.role]}22;color:${ROLE_COLORS[m.role]}">${ROLE_LABELS_FR[m.role]||m.role}</span></td>
-        <td><span class="member-status ${active?"status-active":"status-inactive"}">${active?"Actif":"Inactif"}</span></td>
+        <td><span class="member-status ${conflicted?"":""}${active&&!conflicted?"status-active":"status-inactive"}">${conflicted?"Conflit":active?"Actif":"Inactif"}</span></td>
         <td style="font-size:.78rem;color:var(--slate)">${m.created_at ? new Date(m.created_at).toLocaleDateString("fr-CA") : "—"}</td>
         <td class="member-actions">
           ${canEdit ? `

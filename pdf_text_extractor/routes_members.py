@@ -99,17 +99,31 @@ def org_chart(user: CurrentUser = Depends(require_min_role("user"))):
 
 @router.get("")
 def list_members(user: CurrentUser = Depends(require_min_role("user"))):
-    """Retourne tous les membres de l'organisation (actifs et inactifs)."""
+    """Retourne tous les membres de l'organisation + invités mal rattachés (org incorrecte)."""
     with get_db() as cur:
         cur.execute(
-            """SELECT id, email, full_name, role, is_active, created_at
+            """SELECT id, email, full_name, role, is_active, created_at, FALSE AS conflicted
                FROM users
                WHERE organization_id = %s
                ORDER BY created_at""",
             (user.organization_id,),
         )
         members = rows(cur)
-    # Compter les requêtes du mois par user via audit_logs
+        # Invités par cette org mais toujours dans une org différente (trigger Supabase)
+        cur.execute(
+            """SELECT u.id, u.email, u.full_name, u.role, u.is_active, u.created_at, TRUE AS conflicted
+               FROM users u
+               JOIN pending_invitations pi ON pi.email = u.email AND pi.org_id = %s
+               WHERE (u.organization_id IS NULL OR u.organization_id != %s)""",
+            (user.organization_id, user.organization_id),
+        )
+        conflicted = rows(cur)
+
+    seen = {m["id"] for m in members}
+    for c in conflicted:
+        if c["id"] not in seen:
+            members.append(c)
+
     return {"members": members, "total": len(members)}
 
 
@@ -344,14 +358,36 @@ def remove_member(
     member_id: str,
     user: CurrentUser = Depends(require_min_role("user")),
 ):
-    """Retire un membre de l'organisation (ne supprime pas le compte auth)."""
+    """Retire un membre de l'organisation (ne supprime pas le compte auth).
+    Accepte aussi les invités mal rattachés (mauvaise org suite au trigger Supabase).
+    """
     _require_admin(user)
-    target = _same_org(user, member_id)
-    if target["role"] == "owner" and user.role != "owner":
-        raise HTTPException(status_code=403, detail="Seul un owner peut retirer un autre owner.")
     if member_id == user.id:
         raise HTTPException(status_code=400, detail="Vous ne pouvez pas vous retirer vous-même.")
-    # Dissocie l'user de l'org sans supprimer le compte auth
+
+    # Cherche le target dans la même org
+    with get_db() as cur:
+        cur.execute("SELECT * FROM users WHERE id = %s LIMIT 1", (member_id,))
+        target = row(cur)
+    if not target:
+        raise HTTPException(status_code=404, detail="Membre introuvable.")
+
+    in_same_org = str(target.get("organization_id") or "") == str(user.organization_id)
+
+    if not in_same_org:
+        # Autorisé seulement si cet user a été invité par cette org
+        with get_db() as cur:
+            cur.execute(
+                "SELECT id FROM pending_invitations WHERE org_id = %s AND email = %s LIMIT 1",
+                (user.organization_id, target["email"]),
+            )
+            if not row(cur):
+                raise HTTPException(status_code=404, detail="Membre introuvable dans votre organisation.")
+
+    if target["role"] == "owner" and user.role != "owner":
+        raise HTTPException(status_code=403, detail="Seul un owner peut retirer un autre owner.")
+
+    # Dissocie l'user de son org sans supprimer le compte auth
     with get_db() as cur:
         cur.execute(
             "UPDATE users SET organization_id = NULL, role = 'user', is_active = FALSE WHERE id = %s",
