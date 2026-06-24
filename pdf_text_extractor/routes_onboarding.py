@@ -46,5 +46,5 @@ def onboarding_status(user: CurrentUser = Depends(require_min_role("manager"))):
         "has_team_member":  has_team_member,
         "org_type":         org_row["org_type"] if org_row else "entreprise",
         "org_name":         org_row["name"] if org_row else "",
-        "should_show":      not has_departments and not has_connector,
+        "should_show":      not has_departments and not has_connector and user.role == "owner",
     }
