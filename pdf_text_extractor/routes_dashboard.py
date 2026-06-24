@@ -265,8 +265,8 @@ def executive_dashboard(user: CurrentUser = Depends(require_min_role("admin"))):
             cur.execute(
                 """
                 SELECT
-                  COALESCE(SUM(total_licenses), 0) AS total,
-                  COALESCE(SUM(assigned_licenses), 0) AS assigned
+                  COALESCE(SUM(quantity_total), 0) AS total,
+                  COALESCE(SUM(quantity_assigned), 0) AS assigned
                 FROM public.license_pools
                 WHERE organization_id = %s
                 """,

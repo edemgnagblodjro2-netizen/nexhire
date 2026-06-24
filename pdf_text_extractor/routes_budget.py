@@ -275,7 +275,7 @@ def budget_summary(
                 cur.execute(
                     f"""SELECT EXTRACT(MONTH FROM transaction_date)::int AS m,
                                SUM(amount) AS total
-                          FROM transactions
+                          FROM financial_transactions
                          WHERE {txn_where}
                          GROUP BY m""",
                     txn_params,
