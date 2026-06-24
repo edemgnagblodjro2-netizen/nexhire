@@ -31,6 +31,9 @@ class InvitePayload(BaseModel):
 class RoleUpdate(BaseModel):
     role: str = Field(..., pattern="^(user|manager|admin)$")
 
+class RoleRequestAction(BaseModel):
+    pass
+
 
 # ── Helpers ────────────────────────────────────────────────────────────────
 
@@ -210,16 +213,105 @@ def change_role(
     payload: RoleUpdate,
     user: CurrentUser = Depends(require_min_role("user")),
 ):
+    """Owner : changement direct. Admin : élévation manager/admin → demande d'approbation."""
     _require_admin(user)
     target = _same_org(user, member_id)
     if target["role"] == "owner":
         raise HTTPException(status_code=400, detail="Impossible de modifier le rôle du owner.")
+
+    # Owner peut tout changer directement
+    if user.role == "owner":
+        with get_db() as cur:
+            cur.execute("UPDATE users SET role = %s WHERE id = %s", (payload.role, member_id))
+        return {"ok": True, "role": payload.role, "approval_required": False}
+
+    # Admin : élévation vers manager/admin → file d'approbation
+    if payload.role in ("manager", "admin"):
+        # Annule toute demande pending existante pour ce membre
+        with get_db() as cur:
+            cur.execute(
+                "DELETE FROM role_change_requests WHERE target_user_id = %s AND status = 'pending'",
+                (member_id,),
+            )
+            cur.execute(
+                """INSERT INTO role_change_requests
+                       (org_id, requested_by, target_user_id, current_role, requested_role)
+                   VALUES (%s, %s, %s, %s, %s)""",
+                (user.organization_id, user.id, member_id, target["role"], payload.role),
+            )
+        return {"ok": True, "approval_required": True,
+                "message": f"Demande d'élévation vers « {payload.role} » envoyée au owner pour approbation."}
+
+    # Rétrogradation vers user : direct même pour admin
+    with get_db() as cur:
+        cur.execute("UPDATE users SET role = %s WHERE id = %s", (payload.role, member_id))
+    return {"ok": True, "role": payload.role, "approval_required": False}
+
+
+# ── Role change requests (owner only) ──────────────────────────────────────
+
+@router.get("/role-requests")
+def list_role_requests(user: CurrentUser = Depends(require_min_role("user"))):
+    """Liste les demandes d'élévation de rôle en attente (owner uniquement)."""
+    if user.role != "owner":
+        raise HTTPException(status_code=403, detail="Réservé au owner.")
+    with get_db() as cur:
+        cur.execute(
+            """SELECT r.id, r.target_user_id, r.current_role, r.requested_role,
+                      r.status, r.created_at,
+                      t.full_name AS target_name, t.email AS target_email,
+                      b.full_name AS requested_by_name
+               FROM role_change_requests r
+               JOIN users t ON t.id = r.target_user_id
+               JOIN users b ON b.id = r.requested_by
+               WHERE r.org_id = %s AND r.status = 'pending'
+               ORDER BY r.created_at DESC""",
+            (user.organization_id,),
+        )
+        return {"requests": rows(cur)}
+
+
+@router.post("/role-requests/{request_id}/approve")
+def approve_role_request(
+    request_id: str,
+    user: CurrentUser = Depends(require_min_role("user")),
+):
+    if user.role != "owner":
+        raise HTTPException(status_code=403, detail="Réservé au owner.")
+    with get_db() as cur:
+        cur.execute(
+            "SELECT * FROM role_change_requests WHERE id = %s AND org_id = %s AND status = 'pending' LIMIT 1",
+            (request_id, user.organization_id),
+        )
+        req = row(cur)
+    if not req:
+        raise HTTPException(status_code=404, detail="Demande introuvable.")
     with get_db() as cur:
         cur.execute(
             "UPDATE users SET role = %s WHERE id = %s",
-            (payload.role, member_id),
+            (req["requested_role"], req["target_user_id"]),
         )
-    return {"ok": True, "role": payload.role}
+        cur.execute(
+            "UPDATE role_change_requests SET status = 'approved', resolved_at = NOW(), resolved_by = %s WHERE id = %s",
+            (user.id, request_id),
+        )
+    return {"ok": True, "role": req["requested_role"]}
+
+
+@router.post("/role-requests/{request_id}/reject")
+def reject_role_request(
+    request_id: str,
+    user: CurrentUser = Depends(require_min_role("user")),
+):
+    if user.role != "owner":
+        raise HTTPException(status_code=403, detail="Réservé au owner.")
+    with get_db() as cur:
+        cur.execute(
+            "UPDATE role_change_requests SET status = 'rejected', resolved_at = NOW(), resolved_by = %s "
+            "WHERE id = %s AND org_id = %s AND status = 'pending'",
+            (user.id, request_id, user.organization_id),
+        )
+    return {"ok": True}
 
 
 # ── Toggle active ──────────────────────────────────────────────────────────

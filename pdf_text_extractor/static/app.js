@@ -3765,7 +3765,7 @@ const HIERARCHY_COLORS = ["#7c3aed","#2563eb","#0891b2","#16a34a","#d97706","#64
 const HIERARCHY_ICONS  = ["🏛️","🎯","🗂️","👔","🔍","👤"];
 
 async function loadTeam() {
-  await Promise.all([_loadMembers(), _loadPendingInvitations(), _loadRHCopilot()]);
+  await Promise.all([_loadMembers(), _loadPendingInvitations(), _loadRoleRequests(), _loadRHCopilot()]);
   loadDepartments();
   loadOrgChart();
   loadAllExternalContractors();
@@ -3844,8 +3844,47 @@ async function _loadPendingInvitations() {
 
 async function changeMemberRole(memberId, role) {
   try {
-    await apiCall(`/api/members/${memberId}/role`, "PATCH", { role });
+    const res = await apiCall(`/api/members/${memberId}/role`, "PATCH", { role });
+    if (res.approval_required) {
+      alert(`Demande envoyée au owner pour approbation.\nL'élévation vers « ${role} » sera effective après validation.`);
+      await _loadRoleRequests();
+    }
     await _loadMembers();
+  } catch (ex) { alert(`Erreur : ${ex.message}`); }
+}
+
+async function _loadRoleRequests() {
+  const wrap = $("role-requests-wrap");
+  const list = $("role-requests-list");
+  if (!wrap || !list) return;
+  if (state.user?.role !== "owner") { wrap.style.display = "none"; return; }
+  try {
+    const { requests } = await apiCall("/api/members/role-requests");
+    if (!requests.length) { wrap.style.display = "none"; return; }
+    wrap.style.display = "block";
+    list.innerHTML = requests.map(r => `
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;margin-bottom:8px;flex-wrap:wrap">
+        <div style="font-size:.9rem">
+          <span style="font-weight:600">${esc(r.target_name || r.target_email)}</span>
+          <span style="color:#64748b;margin:0 6px">·</span>
+          <span class="role-badge" style="background:#e0e7ff;color:#4338ca">${ROLE_LABELS_FR[r.current_role]||r.current_role}</span>
+          <span style="color:#64748b;margin:0 6px">→</span>
+          <span class="role-badge" style="background:#fef3c7;color:#b45309">${ROLE_LABELS_FR[r.requested_role]||r.requested_role}</span>
+          <span style="font-size:.78rem;color:#64748b;margin-left:8px">par ${esc(r.requested_by_name||"")}</span>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-primary btn-sm" style="background:#16a34a;border-color:#16a34a" onclick="resolveRoleRequest('${r.id}','approve')">✓ Approuver</button>
+          <button class="btn btn-outline btn-sm" style="color:#dc2626;border-color:#fecaca" onclick="resolveRoleRequest('${r.id}','reject')">✕ Refuser</button>
+        </div>
+      </div>
+    `).join("");
+  } catch { wrap.style.display = "none"; }
+}
+
+async function resolveRoleRequest(requestId, action) {
+  try {
+    await apiCall(`/api/members/role-requests/${requestId}/${action}`, "POST");
+    await Promise.all([_loadMembers(), _loadRoleRequests()]);
   } catch (ex) { alert(`Erreur : ${ex.message}`); }
 }
 
@@ -3872,6 +3911,22 @@ function openInviteModal() {
   $("inv-error").classList.add("hidden");
   $("invite-form").reset();
   $("copy-confirm").classList.add("hidden");
+  // Non-owner : invitation limitée au rôle Utilisateur
+  const roleNote = $("inv-role-note");
+  const roleSelect = $("inv-role");
+  if (state.user?.role !== "owner") {
+    if (roleSelect) { roleSelect.value = "user"; roleSelect.disabled = true; }
+    if (!roleNote) {
+      const note = document.createElement("p");
+      note.id = "inv-role-note";
+      note.style.cssText = "font-size:.78rem;color:#b45309;margin-top:4px";
+      note.textContent = "Les invités externes rejoignent en tant qu'Utilisateur. Pour un rôle Manager, le owner doit approuver après connexion.";
+      roleSelect?.parentElement?.appendChild(note);
+    } else { roleNote.style.display = ""; }
+  } else {
+    if (roleSelect) roleSelect.disabled = false;
+    if (roleNote) roleNote.style.display = "none";
+  }
 }
 function closeInviteModal() {
   $("invite-modal").classList.add("hidden");
