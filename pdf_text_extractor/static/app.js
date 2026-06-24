@@ -1508,6 +1508,10 @@ async function apiCall(path, method = "GET", body = null) {
     }
     clearAuth(); showAuth("login"); throw new Error("Session expirée.");
   }
+  if (res.status === 402) {
+    _showPaywallWall();
+    throw new Error("Abonnement requis.");
+  }
   const data = await res.json().catch(() => ({ detail: `HTTP ${res.status}` }));
   if (!res.ok) {
     const detail = Array.isArray(data.detail)
@@ -1518,6 +1522,55 @@ async function apiCall(path, method = "GET", body = null) {
     throw err;
   }
   return data;
+}
+
+function _showPaywallWall() {
+  // Ne montrer qu'une seule fois par session
+  if ($("paywall-wall")) return;
+
+  const isOwner = state.user?.role === "owner";
+  const wall = document.createElement("div");
+  wall.id = "paywall-wall";
+  wall.style.cssText = "position:fixed;inset:0;z-index:9999;background:rgba(15,23,42,.92);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px";
+  wall.innerHTML = `
+    <div style="background:#fff;border-radius:20px;padding:48px 40px;max-width:480px;width:100%;text-align:center;box-shadow:0 32px 80px -12px rgba(0,0,0,.4)">
+      <div style="width:64px;height:64px;border-radius:50%;background:#fef3c7;display:grid;place-items:center;margin:0 auto 20px">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      </div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:800;color:#0f172a;margin:0 0 10px;letter-spacing:-.02em">Votre essai gratuit est terminé</h2>
+      <p style="font-size:.9rem;color:#64748b;line-height:1.6;margin:0 0 28px">Souscrivez un plan pour continuer à utiliser NexHire EIP et accéder à tous vos connecteurs et données.</p>
+      ${isOwner ? `
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
+        <button onclick="_paywallSubscribe('professional')" style="height:48px;border-radius:12px;border:none;background:#6366f1;color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;box-shadow:0 4px 14px -4px rgba(99,102,241,.5)">
+          Professional — 299 $/mois
+        </button>
+        <button onclick="_paywallSubscribe('starter')" style="height:44px;border-radius:12px;border:1.5px solid #e2e8f0;background:#f8fafc;color:#1e293b;font-size:.88rem;font-weight:600;cursor:pointer">
+          Starter — 99 $/mois
+        </button>
+        <a href="mailto:contact@nexhire.ca?subject=NexHire%20Enterprise" style="font-size:.82rem;color:#6366f1;text-decoration:none">Enterprise (sur devis) →</a>
+      </div>` : `
+      <div style="background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:12px;padding:14px 18px;margin-bottom:20px;font-size:.85rem;color:#1e40af;text-align:left">
+        Contactez votre administrateur pour renouveler l'abonnement.
+      </div>`}
+      <button onclick="switchTab('billing');document.getElementById('paywall-wall').remove()" style="font-size:.82rem;color:#64748b;background:none;border:none;cursor:pointer;text-decoration:underline">
+        Voir les plans de facturation
+      </button>
+    </div>`;
+  document.body.appendChild(wall);
+}
+
+async function _paywallSubscribe(plan) {
+  try {
+    const res = await fetch("/api/billing/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${state.token}` },
+      body: JSON.stringify({ plan }),
+    });
+    const data = await res.json();
+    if (data.checkout_url) window.location.href = data.checkout_url;
+  } catch {
+    showToast("Erreur lors de la redirection Stripe — réessayez.", "error");
+  }
 }
 
 async function fetchMe() {
@@ -1573,7 +1626,13 @@ $("signup-form").addEventListener("submit", async e => {
       currency: $("signup-currency")?.value || "CAD",
     };
     const phone = $("signup-phone")?.value.trim();
-    if (phone) signupBody.phone = phone;
+    if (!phone || phone.replace(/\D/g, "").length < 7) {
+      err.textContent = "Le numéro de téléphone est requis (min. 7 chiffres).";
+      err.classList.remove("hidden");
+      btn.disabled = false; btn.textContent = "Créer mon compte gratuitement";
+      return;
+    }
+    signupBody.phone = phone;
     const invToken = $("signup-invite-token")?.value;
     if (invToken) signupBody.invite_token = invToken;
     await apiCall("/api/auth/signup", "POST", signupBody);
@@ -3795,6 +3854,9 @@ async function loadSettings() {
     $("sp-email").value    = p.email    || "";
     $("sp-org").value      = p.organization_name || "";
     $("sp-since").value    = p.member_since || "";
+    if ($("sp-phone"))   $("sp-phone").value   = p.phone || "";
+    if ($("sp-org-id"))  $("sp-org-id").textContent  = p.organization_id || state.user?.organization_id || "—";
+    if ($("sp-user-id")) $("sp-user-id").textContent = p.id || state.user?.id || "—";
     if ($("sp-org-type")) {
       $("sp-org-type").value = p.org_type || "entreprise";
       const isAdmForType = ["admin","owner"].includes(p.role);

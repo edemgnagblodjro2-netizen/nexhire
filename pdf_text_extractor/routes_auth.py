@@ -36,7 +36,7 @@ class SignupPayload(BaseModel):
     full_name: str = Field(min_length=1, max_length=255)
     email: EmailStr
     password: str = Field(min_length=12)
-    phone: str | None = Field(default=None, max_length=30)
+    phone: str = Field(min_length=7, max_length=30)
     invite_token: str | None = None
     org_type: str = Field(default="entreprise", pattern="^(entreprise|entrepreneur|hopital|municipalite|universite)$")
     currency: str = Field(default="CAD", pattern="^[A-Z]{3}$")
@@ -60,8 +60,7 @@ def signup(request: Request, payload: SignupPayload, background: BackgroundTasks
             "org_type":  payload.org_type,
             "currency":  payload.currency,
         }
-        if payload.phone:
-            meta["phone"] = payload.phone
+        meta["phone"] = payload.phone
         if payload.invite_token:
             meta["invite_token"] = payload.invite_token
 

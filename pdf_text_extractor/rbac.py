@@ -10,7 +10,7 @@ from auth import CurrentUser, get_current_user
 ROLE_RANK: dict[str, int] = {"user": 1, "manager": 2, "admin": 3, "owner": 4}
 
 # Statuts d'abonnement qui bloquent l'accès aux fonctionnalités payantes.
-_BLOCKED_STATUSES = frozenset({"suspended", "canceled"})
+_BLOCKED_STATUSES = frozenset({"suspended", "canceled", "trial_expired"})
 
 
 def require_active_subscription(user: CurrentUser = Depends(get_current_user)) -> CurrentUser:
