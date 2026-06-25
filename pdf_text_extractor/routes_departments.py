@@ -1097,12 +1097,17 @@ def add_dept_member(
 
     with get_db() as cur:
         cur.execute(
-            "SELECT organization_id FROM users WHERE id = %s LIMIT 1",
+            "SELECT organization_id, email FROM users WHERE id = %s LIMIT 1",
             (payload.user_id,),
         )
         check = rows(cur)
-    if not check or check[0].get("organization_id") != user.organization_id:
-        raise HTTPException(status_code=400, detail="Utilisateur introuvable dans cette organisation.")
+    if not check:
+        raise HTTPException(status_code=400, detail="Utilisateur introuvable.")
+    if check[0].get("organization_id") != user.organization_id:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Cet utilisateur ({check[0].get('email','')}) est rattaché à une autre organisation — appliquez d'abord la correction SQL (organization_id).",
+        )
 
     level = payload.hierarchy_level or TITLE_LEVEL.get(payload.title or "", 6)
     title = payload.title or (HIERARCHY_TITLES[level - 1] if 1 <= level <= 6 else HIERARCHY_TITLES[-1])

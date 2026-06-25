@@ -6718,7 +6718,7 @@ async function loadOrgChart() {
               <button class="btn btn-outline btn-sm" title="Transférer vers un autre département"
                 data-dept-id="${dept.id}" data-dept-name="${esc(dept.name)}"
                 data-member-id="${m.id}" data-member-name="${esc(m.full_name||m.email)}"
-                onclick="openTransferModal(this.dataset.deptId,this.dataset.deptName,this.dataset.memberId,this.dataset.memberName)"
+                onclick="openTransferModal(this.dataset.deptId,this.dataset.deptName,this.dataset.memberId,this.dataset.memberName).catch(e=>alert(e.message))"
                 style="font-size:.72rem;padding:2px 8px">⇄</button>
               <button class="btn btn-sm" title="Retirer du département"
                 data-dept-id="${dept.id}" data-member-id="${m.id}" data-member-name="${esc(m.full_name||m.email)}"
@@ -6790,11 +6790,11 @@ async function openTransferModal(fromDeptId, fromDeptName, memberId, name) {
     const btn = sel.querySelector("#transfer-confirm-btn");
     btn.disabled = true; btn.textContent = "Transfert…";
     try {
+      // POST en premier : si ça échoue, l'utilisateur reste dans l'ancien département
+      await apiCall(`/api/departments/${destId}/members`, "POST", { user_id: memberId, hierarchy_level: 6 });
       if (!keepAccess) {
-        // Par défaut : retirer de l'ancien département → perd tous les droits
         await apiCall(`/api/departments/${fromDeptId}/members/${memberId}`, "DELETE");
       }
-      await apiCall(`/api/departments/${destId}/members`, "POST", { user_id: memberId, hierarchy_level: 6 });
       sel.remove();
       loadOrgChart();
       loadDepartments();
