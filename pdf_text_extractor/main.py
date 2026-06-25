@@ -321,6 +321,10 @@ def create_app(
     def docs_dossier_client():
         return FileResponse(STATIC_DIR / "docs" / "nexhire-eip-dossier-client.html", media_type="text/html")
 
+    @app.get("/docs/nexhire-eip-guide-it.html")
+    def docs_guide_it():
+        return FileResponse(STATIC_DIR / "docs" / "nexhire-eip-guide-it.html", media_type="text/html")
+
     @app.get("/api/health")
     def health():
         return {"status": "ok"}
