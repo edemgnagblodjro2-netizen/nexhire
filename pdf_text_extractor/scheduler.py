@@ -391,6 +391,77 @@ def check_connector_health_all_orgs() -> None:
     )
 
 
+def check_m365_token_expiry_all_orgs() -> None:
+    """Alerte les admins/owners dont le refresh token M365 expire dans <= 14 jours."""
+    try:
+        from datetime import datetime, timezone, timedelta
+        from db import get_db, rows
+        from email_service import send_m365_token_expiry_alert
+    except Exception as exc:
+        logger.error("scheduler import error (m365 token expiry): %s", exc)
+        return
+
+    try:
+        with get_db() as cur:
+            cur.execute(
+                """
+                SELECT c.id, c.refresh_token_issued_at, c.encrypted_credentials,
+                       o.id AS org_id, o.name AS org_name, o.owner_email
+                FROM connectors c
+                JOIN organizations o ON o.id = c.organization_id
+                WHERE c.connector_type = 'microsoft_365'
+                  AND c.status = 'connected'
+                  AND o.owner_email IS NOT NULL
+                  AND o.owner_email <> ''
+                  AND c.refresh_token_issued_at IS NOT NULL
+                """
+            )
+            connectors = rows(cur)
+    except Exception as exc:
+        logger.error("scheduler DB error (m365 token expiry): %s", exc)
+        return
+
+    now = datetime.now(timezone.utc)
+    sent = 0
+    for c in connectors:
+        try:
+            issued_at = c["refresh_token_issued_at"]
+            if isinstance(issued_at, str):
+                issued_at = datetime.fromisoformat(issued_at)
+            if issued_at.tzinfo is None:
+                issued_at = issued_at.replace(tzinfo=timezone.utc)
+            # Refresh tokens M365 expirent après 90 jours d'inactivité
+            expires_at = issued_at + timedelta(days=90)
+            days_left = (expires_at - now).days
+
+            # Alerte à J-14, J-7, et J0 (expiré)
+            if days_left > 14:
+                continue
+
+            # Tente d'extraire l'email du compte de service depuis les credentials
+            service_email = ""
+            try:
+                from crypto import decrypt
+                import json
+                creds = json.loads(decrypt(c["encrypted_credentials"]))
+                service_email = creds.get("user_email") or creds.get("preferred_username") or ""
+            except Exception:
+                pass
+
+            ok = send_m365_token_expiry_alert(
+                to_email=c["owner_email"],
+                org_name=c["org_name"],
+                days_left=max(days_left, 0),
+                service_account_email=service_email,
+            )
+            if ok:
+                sent += 1
+        except Exception as exc:
+            logger.error("m365 token expiry check org %s: %s", c.get("org_name"), exc)
+
+    logger.info("M365 token expiry check — %d alertes envoyées", sent)
+
+
 def send_monthly_reports_all_orgs() -> None:
     """Envoie le rapport mensuel à tous les admins des orgs qui l'ont activé."""
     try:

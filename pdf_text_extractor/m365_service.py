@@ -58,21 +58,41 @@ def _refresh_if_needed(tokens: dict, connector_id: str) -> dict:
             "refresh_token": tokens["refresh_token"],
             "grant_type":    "refresh_token",
         }, timeout=10)
+
+        if resp.status_code in (400, 401):
+            # Refresh token expiré ou révoqué → marque le connecteur en erreur
+            service_client().table("connectors").update({
+                "status":     "error",
+                "last_error": "Token expiré — le compte de service M365 doit être reconnecté.",
+                "updated_at": datetime.now(UTC).isoformat(),
+            }).eq("id", connector_id).execute()
+            return tokens
+
         if resp.status_code != 200:
             return tokens
+
         data = resp.json()
-        new_expires_at = (datetime.now(UTC) + timedelta(seconds=data.get("expires_in", 3600))).isoformat()
+        now = datetime.now(UTC)
+        new_expires_at = (now + timedelta(seconds=data.get("expires_in", 3600))).isoformat()
+        got_new_refresh = bool(data.get("refresh_token"))
         tokens = {
             **tokens,
             "access_token":  data["access_token"],
             "refresh_token": data.get("refresh_token", tokens["refresh_token"]),
             "expires_at":    new_expires_at,
         }
-        service_client().table("connectors").update({
+        update_payload: dict = {
             "encrypted_credentials": encrypt(json.dumps(tokens)),
             "token_expires_at":      new_expires_at,
-            "updated_at":            datetime.now(UTC).isoformat(),
-        }).eq("id", connector_id).execute()
+            "updated_at":            now.isoformat(),
+            "status":                "connected",
+            "last_error":            None,
+        }
+        # Réinitialise l'horloge d'expiration si un nouveau refresh token est émis
+        if got_new_refresh:
+            update_payload["refresh_token_issued_at"] = now.isoformat()
+
+        service_client().table("connectors").update(update_payload).eq("id", connector_id).execute()
     except Exception:
         pass
 

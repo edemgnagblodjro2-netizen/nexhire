@@ -783,3 +783,65 @@ def send_subscription_confirmation(
 </body>
 </html>"""
     return _send(to_email, subject, html)
+
+
+def send_m365_token_expiry_alert(
+    to_email: str,
+    org_name: str,
+    days_left: int,
+    service_account_email: str = "",
+) -> bool:
+    """Alerte l'admin/owner que le refresh token du compte de service M365 expire bientôt."""
+    is_expired = days_left <= 0
+    urgency_color  = "#dc2626" if days_left <= 7 else "#d97706"
+    urgency_bg     = "#fef2f2" if days_left <= 7 else "#fffbeb"
+    urgency_border = "#fecaca" if days_left <= 7 else "#fde68a"
+
+    if is_expired:
+        subject_line = f"🔴 Connexion M365 expirée — reconnexion requise — {org_name}"
+        headline = "La connexion Microsoft 365 est expirée"
+        body_msg = "Le token du compte de service Microsoft 365 a expiré. Les données M365 (licences, SharePoint, Entra) ne sont plus synchronisées."
+    else:
+        subject_line = f"⚠️ Connexion M365 expire dans {days_left} jour{'s' if days_left > 1 else ''} — {org_name}"
+        headline = f"Connexion M365 — expiration dans {days_left} jour{'s' if days_left > 1 else ''}"
+        body_msg = f"Le token OAuth du compte de service Microsoft 365 expirera dans <strong>{days_left} jour{'s' if days_left > 1 else ''}</strong>. Reconnectez-le avant l'expiration pour éviter toute interruption."
+
+    account_row = f'<p style="margin:6px 0 0;font-size:.85rem;color:#475569">Compte : <strong>{service_account_email}</strong></p>' if service_account_email else ""
+
+    html = f"""<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"/></head>
+<body style="font-family:system-ui,sans-serif;background:#f8fafc;margin:0;padding:32px 16px">
+  <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.08)">
+    <div style="background:#0f172a;padding:24px 32px">
+      <span style="font-size:1.2rem;font-weight:800;color:#fff">Nex<span style="color:#818CF8">hire</span>
+        <span style="font-size:.65rem;background:rgba(129,140,248,.2);color:#818CF8;padding:2px 7px;border-radius:99px;margin-left:6px;vertical-align:middle">EIP</span>
+      </span>
+    </div>
+    <div style="padding:28px 32px">
+      <div style="background:{urgency_bg};border:1px solid {urgency_border};border-radius:10px;padding:16px 20px;margin-bottom:20px">
+        <p style="margin:0;font-size:1rem;font-weight:700;color:{urgency_color}">{'🔴' if is_expired else '⚠️'} {headline}</p>
+        {account_row}
+      </div>
+      <p style="color:#475569;margin:0 0 16px">{body_msg}</p>
+      <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:14px 18px;margin:20px 0">
+        <p style="margin:0;font-weight:700;color:#0369a1;font-size:.9rem">Action requise</p>
+        <p style="margin:6px 0 0;color:#0c4a6e;font-size:.85rem">
+          Connectez-vous à NexHire → <strong>Connecteurs → Microsoft 365</strong> → cliquez <strong>Reconnecter</strong>
+          et utilisez le <strong>compte de service dédié</strong> (ex&nbsp;: nexhire-service@votreorg.com).
+        </p>
+      </div>
+      <div style="text-align:center;margin-top:24px">
+        <a href="{APP_URL}/?tab=connectors"
+           style="display:inline-block;background:#0078d4;color:#fff;padding:11px 28px;border-radius:8px;font-weight:700;text-decoration:none">
+          Reconnecter Microsoft 365 →
+        </a>
+      </div>
+    </div>
+    <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
+      <p style="margin:0;color:#94a3b8;font-size:.78rem">© 2026 CivicAI Inc. · contact@nexhire.ca</p>
+    </div>
+  </div>
+</body>
+</html>"""
+    return _send(to_email, subject_line, html)

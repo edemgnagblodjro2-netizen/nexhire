@@ -694,6 +694,7 @@ try:
         index_knowledge_m365_all_orgs,
         check_contract_expiry_all_orgs,
         check_mfa_admin_loss_all_orgs,
+        check_m365_token_expiry_all_orgs,
     )
 
     _scheduler = BackgroundScheduler(timezone="UTC")
@@ -771,6 +772,13 @@ try:
         check_mfa_admin_loss_all_orgs,
         CronTrigger(day_of_week="mon", hour=8, minute=0),
         id="mfa_admin_loss_check",
+        replace_existing=True,
+        misfire_grace_time=3600,
+    )
+    _scheduler.add_job(
+        check_m365_token_expiry_all_orgs,
+        CronTrigger(day_of_week="mon", hour=8, minute=30),
+        id="m365_token_expiry_check",
         replace_existing=True,
         misfire_grace_time=3600,
     )

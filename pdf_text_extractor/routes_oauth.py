@@ -165,7 +165,7 @@ _CONNECTOR_ALLOWED_COLS: frozenset[str] = frozenset({
     "status", "encrypted_credentials", "connected_at", "last_error",
     "updated_at", "token_expires_at", "instance_url", "domain", "base_url",
     "app_id", "client_id", "refresh_token", "access_token_encrypted",
-    "scopes", "expires_at", "user_info",
+    "scopes", "expires_at", "user_info", "refresh_token_issued_at",
 })
 
 
@@ -428,6 +428,9 @@ def oauth_callback(
     db_extra: dict | None = None
     if connector_type == "quickbooks":
         db_extra = {"token_expires_at": (datetime.now(UTC) + timedelta(days=101)).isoformat()}
+    # M365 refresh tokens expirent après 90 jours d'inactivité — horodater l'émission
+    if connector_type == "microsoft_365":
+        db_extra = {"refresh_token_issued_at": datetime.now(UTC).isoformat()}
 
     _upsert_connector(org_id, connector_type, credentials, extra=db_extra)
 

@@ -816,6 +816,7 @@ const CONNECTORS = {
     desc: "Exchange, Teams, SharePoint, OneDrive, Calendrier",
     help_url: "https://portal.azure.com",
     help_label: "Azure App Registration",
+    service_account_note: "💡 Recommandé : utilisez un compte de service dédié (ex : nexhire-service@votreorg.com) plutôt qu'un compte personnel. Le token expire après 90 jours d'inactivité — une alerte sera envoyée à J-14.",
   },
   salesforce: {
     label: "Salesforce CRM", icon: "SF", color: "#00a1e0", method: "oauth",
@@ -2826,6 +2827,7 @@ function buildConnectorCard(type, meta, info) {
     ${connectedAt ? `<p class="connector-meta">Connecté depuis le ${connectedAt}</p>` : ""}
     ${info?.last_error ? `<p class="connector-error">${info.last_error}</p>` : ""}
     ${deptBadges}
+    ${meta.service_account_note && !isConnected ? `<p style="font-size:.78rem;color:#0369a1;background:#f0f9ff;border:1px solid #bae6fd;border-radius:6px;padding:8px 12px;margin:8px 0 0">${meta.service_account_note}</p>` : ""}
     <div class="connector-footer">
       <span class="connector-method-tag">${methodBadge}</span>
       ${meta.help_url && ["admin","owner"].includes(state.user?.role) ? `<a class="connector-help-link" href="${meta.help_url}" target="_blank" rel="noopener">${meta.help_label || "Documentation"} ↗</a>` : ""}
