@@ -48,6 +48,7 @@ class SignupPayload(BaseModel):
 
 
 @router.post("/signup")
+@limiter.limit("5/minute")
 def signup(request: Request, payload: SignupPayload, background: BackgroundTasks):
     """Inscription. Crée le compte Supabase ; un trigger DB crée ensuite
     automatiquement le tenant, l'utilisateur owner et l'essai de 14 jours
@@ -131,7 +132,8 @@ class ForgotPasswordPayload(BaseModel):
 
 
 @router.post("/forgot-password")
-def forgot_password(payload: ForgotPasswordPayload):
+@limiter.limit("3/minute")
+def forgot_password(request: Request, payload: ForgotPasswordPayload):
     """Déclenche l'email de réinitialisation Supabase. Réponse identique quelle que soit l'adresse."""
     try:
         app_url = os.environ.get("APP_URL", "https://agenthub.nexhire.ca")
@@ -156,7 +158,8 @@ class ExchangeCodePayload(BaseModel):
 
 
 @router.post("/exchange-recovery-code")
-def exchange_recovery_code(payload: ExchangeCodePayload):
+@limiter.limit("5/minute")
+def exchange_recovery_code(request: Request, payload: ExchangeCodePayload):
     """Échange un code PKCE Supabase contre un access_token (flow PKCE recovery)."""
     try:
         resp = anon_client().auth.exchange_code_for_session({"auth_code": payload.code})
@@ -168,7 +171,8 @@ def exchange_recovery_code(payload: ExchangeCodePayload):
 
 
 @router.post("/update-password")
-def update_password(payload: UpdatePasswordPayload):
+@limiter.limit("5/minute")
+def update_password(request: Request, payload: UpdatePasswordPayload):
     """Applique le nouveau mot de passe avec le token de récupération Supabase."""
     try:
         sb = anon_client()
@@ -193,6 +197,7 @@ class LoginPayload(BaseModel):
 
 
 @router.post("/login")
+@limiter.limit("10/minute")
 def login(request: Request, payload: LoginPayload, background: BackgroundTasks):
     """Connexion. Retourne le JWT Supabase à passer en Authorization: Bearer."""
     ip = client_ip(request)

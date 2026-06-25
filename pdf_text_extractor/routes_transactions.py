@@ -136,10 +136,41 @@ def transactions_summary(
                 "burn_rate": [], "top_vendors": [], "by_category": []}
 
     org = user.organization_id
-    y_filter = f"AND EXTRACT(YEAR FROM transaction_date) = {year}" if year else ""
-    d_filter = f"AND department_id = '{dept_id}'"                  if dept_id else ""
-    # Filtre dept pour utilisateurs non-manager
-    a_filter = f"AND department_id = ANY(ARRAY{allowed!r}::uuid[])" if allowed is not None else ""
+
+    # Filtres sécurisés — paramètres psycopg2, jamais de f-string sur user input
+    # base_* : totaux + catégories (table sans alias)
+    base_conds:  list[str] = ["organization_id = %s"]
+    base_params: list      = [org]
+    if year:
+        base_conds.append("EXTRACT(YEAR FROM transaction_date) = %s")
+        base_params.append(year)
+    if dept_id:
+        base_conds.append("department_id = %s::uuid")
+        base_params.append(dept_id)
+    if allowed is not None:
+        base_conds.append("department_id = ANY(%s::uuid[])")
+        base_params.append(allowed)
+    base_where = "WHERE " + " AND ".join(base_conds)
+
+    # ft_* : top-vendors (table aliasée ft.)
+    ft_conds:  list[str] = ["ft.organization_id = %s"]
+    ft_params: list      = [org]
+    if year:
+        ft_conds.append("EXTRACT(YEAR FROM ft.transaction_date) = %s")
+        ft_params.append(year)
+    if allowed is not None:
+        ft_conds.append("ft.department_id = ANY(%s::uuid[])")
+        ft_params.append(allowed)
+    ft_where = "WHERE " + " AND ".join(ft_conds)
+
+    # burn_* : burn-rate 12 mois (pas de filtre year/dept_id)
+    burn_conds:  list[str] = ["organization_id = %s",
+                              "transaction_date >= CURRENT_DATE - INTERVAL '12 months'"]
+    burn_params: list      = [org]
+    if allowed is not None:
+        burn_conds.append("department_id = ANY(%s::uuid[])")
+        burn_params.append(allowed)
+    burn_where = "WHERE " + " AND ".join(burn_conds)
 
     with get_db() as cur:
         # Totaux globaux
@@ -152,9 +183,9 @@ def transactions_summary(
               COUNT(*) FILTER (WHERE is_flagged = true)                   AS flagged_count,
               COUNT(DISTINCT vendor_id)                                   AS vendor_count
             FROM public.financial_transactions
-            WHERE organization_id = %s {y_filter} {d_filter} {a_filter}
+            {base_where}
             """,
-            (org,),
+            base_params,
         )
         totals = cur.fetchone()
 
@@ -165,13 +196,11 @@ def transactions_summary(
               TO_CHAR(DATE_TRUNC('month', transaction_date), 'YYYY-MM') AS month,
               SUM(amount) FILTER (WHERE status='paid')                   AS paid
             FROM public.financial_transactions
-            WHERE organization_id = %s
-              AND transaction_date >= CURRENT_DATE - INTERVAL '12 months'
-              {a_filter}
+            {burn_where}
             GROUP BY DATE_TRUNC('month', transaction_date)
             ORDER BY DATE_TRUNC('month', transaction_date)
             """,
-            (org,),
+            burn_params,
         )
         burn_rate = rows(cur)
 
@@ -184,12 +213,12 @@ def transactions_summary(
               COUNT(*)                                         AS count
             FROM public.financial_transactions ft
             LEFT JOIN public.vendors v ON v.id = ft.vendor_id
-            WHERE ft.organization_id = %s {y_filter} {a_filter}
+            {ft_where}
             GROUP BY v.name
             ORDER BY total DESC NULLS LAST
             LIMIT 10
             """,
-            (org,),
+            ft_params,
         )
         top_vendors = rows(cur)
 
@@ -201,11 +230,11 @@ def transactions_summary(
               SUM(amount) FILTER (WHERE status='paid') AS total,
               COUNT(*) AS count
             FROM public.financial_transactions
-            WHERE organization_id = %s {y_filter} {a_filter}
+            {base_where}
             GROUP BY category
             ORDER BY total DESC NULLS LAST
             """,
-            (org,),
+            base_params,
         )
         by_category = rows(cur)
 
