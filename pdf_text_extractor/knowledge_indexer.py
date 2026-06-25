@@ -46,6 +46,7 @@ def index_document(
     source_url: str | None = None,
     connector_id: str | None = None,
     metadata: dict | None = None,
+    department_id: str | None = None,
 ) -> int:
     """Chunk, embed et stocke un document. Retourne le nombre de chunks insérés (0 si déjà à jour)."""
     from db import get_db
@@ -53,14 +54,12 @@ def index_document(
     file_hash = hashlib.sha256(content.encode()).hexdigest()
 
     with get_db() as cur:
-        # Supprime les chunks obsolètes (même doc, contenu différent)
         cur.execute(
             """DELETE FROM knowledge_documents
                WHERE organization_id = %s AND title = %s AND source_type = %s
                  AND file_hash != %s""",
             (org_id, title, source_type, file_hash),
         )
-        # Déjà indexé avec ce contenu → rien à faire
         cur.execute(
             """SELECT 1 FROM knowledge_documents
                WHERE organization_id = %s AND title = %s AND source_type = %s AND file_hash = %s
@@ -74,7 +73,6 @@ def index_document(
     if not chunks:
         return 0
 
-    # Embed par batch de 100 (limite OpenAI)
     all_embeddings: list[list[float]] = []
     for i in range(0, len(chunks), 100):
         all_embeddings.extend(embed_texts(chunks[i : i + 100]))
@@ -84,36 +82,61 @@ def index_document(
             cur.execute(
                 """INSERT INTO knowledge_documents
                    (organization_id, title, source_type, source_url, connector_id,
-                    content_chunk, chunk_index, embedding, metadata, file_hash)
-                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s::vector, %s::jsonb, %s)""",
+                    content_chunk, chunk_index, embedding, metadata, file_hash, department_id)
+                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s::vector, %s::jsonb, %s, %s)""",
                 (
                     org_id, title, source_type, source_url, connector_id,
                     chunk, idx, _emb_str(emb),
-                    json.dumps(metadata or {}), file_hash,
+                    json.dumps(metadata or {}), file_hash, department_id,
                 ),
             )
 
-    logger.info("Indexed '%s' (%s) — %d chunks, org=%s", title, source_type, len(chunks), org_id)
+    logger.info(
+        "Indexed '%s' (%s) — %d chunks, org=%s, dept=%s",
+        title, source_type, len(chunks), org_id, department_id or "org-wide",
+    )
     return len(chunks)
 
 
-def search_knowledge(org_id: str, query: str, k: int = 5) -> list[dict]:
-    """Recherche les k chunks les plus pertinents par similarité cosinus."""
+def search_knowledge(
+    org_id: str,
+    query: str,
+    k: int = 5,
+    allowed_dept_ids: list[str] | None = None,
+) -> list[dict]:
+    """Recherche les k chunks les plus pertinents.
+
+    allowed_dept_ids=None  → admin/owner, pas de filtre département
+    allowed_dept_ids=[]    → user sans département, seulement docs org-wide
+    allowed_dept_ids=[...] → docs du département + docs org-wide (department_id IS NULL)
+    """
     from db import get_db, rows
 
     query_emb = embed_texts([query])[0]
     emb_s = _emb_str(query_emb)
 
+    if allowed_dept_ids is None:
+        dept_clause = ""
+        params = (emb_s, org_id, emb_s, k)
+    elif not allowed_dept_ids:
+        dept_clause = "AND department_id IS NULL"
+        params = (emb_s, org_id, emb_s, k)
+    else:
+        dept_clause = "AND (department_id IS NULL OR department_id = ANY(%s::uuid[]))"
+        params = (emb_s, org_id, allowed_dept_ids, emb_s, k)
+
+    sql = f"""
+        SELECT title, source_type, source_url, content_chunk, metadata, department_id,
+               ROUND((1 - (embedding <=> %s::vector))::numeric, 4) AS similarity
+        FROM knowledge_documents
+        WHERE organization_id = %s
+          {dept_clause}
+        ORDER BY embedding <=> %s::vector
+        LIMIT %s
+    """
+
     with get_db() as cur:
-        cur.execute(
-            """SELECT title, source_type, source_url, content_chunk, metadata,
-                      ROUND((1 - (embedding <=> %s::vector))::numeric, 4) AS similarity
-               FROM knowledge_documents
-               WHERE organization_id = %s
-               ORDER BY embedding <=> %s::vector
-               LIMIT %s""",
-            (emb_s, org_id, emb_s, k),
-        )
+        cur.execute(sql, params)
         return rows(cur)
 
 
@@ -176,6 +199,26 @@ def _extract_text(filename: str, raw: bytes) -> str:
     return raw.decode("utf-8", errors="replace")
 
 
+def _normalize(name: str) -> str:
+    """Normalise un nom pour la comparaison : minuscules, supprime mots génériques."""
+    import unicodedata
+    import re
+    n = unicodedata.normalize("NFD", name.lower())
+    n = "".join(c for c in n if unicodedata.category(c) != "Mn")
+    n = re.sub(r"\b(department|departement|dept|team|equipe|docs|documents|site|sharepoint|group|groupe)\b", "", n)
+    return re.sub(r"\s+", " ", n).strip()
+
+
+def _match_dept(site_name: str, depts: list[dict]) -> str | None:
+    """Retourne l'UUID du département dont le nom correspond au site SharePoint, ou None."""
+    norm_site = _normalize(site_name)
+    for d in depts:
+        norm_dept = _normalize(d["name"])
+        if norm_dept and (norm_dept in norm_site or norm_site in norm_dept):
+            return str(d["id"])
+    return None
+
+
 def _index_drive_items(
     headers: dict,
     drive_id: str,
@@ -184,6 +227,7 @@ def _index_drive_items(
     source_type: str,
     stats: dict,
     title_prefix: str = "",
+    department_id: str | None = None,
 ) -> None:
     import httpx
     GRAPH = "https://graph.microsoft.com/v1.0"
@@ -219,6 +263,7 @@ def _index_drive_items(
                 org_id=org_id, title=title, source_type=source_type,
                 content=content, source_url=web_url,
                 metadata={"item_id": item_id, "drive_id": drive_id},
+                department_id=department_id,
             )
             stats["indexed" if n > 0 else "skipped"] += 1
         except Exception as exc:
@@ -228,8 +273,8 @@ def _index_drive_items(
 
 def index_m365_documents(org_id: str) -> dict:
     """Indexe toutes les bibliothèques SharePoint organisationnelles.
-    OneDrive personnel (/me/drive) est exclu : il appartient au compte OAuth
-    du owner et ne doit pas être visible par tous les membres de l'org.
+    Chaque site SharePoint est automatiquement associé au département NexHire
+    dont le nom correspond. Les sites sans correspondance sont org-wide (visibles par tous).
     """
     try:
         from m365_collector import _auth_headers, _get, _get_all, GRAPH
@@ -244,6 +289,15 @@ def index_m365_documents(org_id: str) -> dict:
 
     stats: dict = {"indexed": 0, "skipped": 0, "errors": 0}
 
+    # Charge les départements de l'org pour le matching
+    from db import get_db, rows as db_rows
+    with get_db() as cur:
+        cur.execute(
+            "SELECT id, name FROM departments WHERE organization_id = %s",
+            (org_id,),
+        )
+        org_depts = db_rows(cur)
+
     # ── SharePoint — sites et bibliothèques de documents ─────────────────────
     try:
         sites = _get_all(
@@ -257,8 +311,13 @@ def index_m365_documents(org_id: str) -> dict:
         sites = []
 
     for site in sites:
-        site_id  = site.get("id", "")
+        site_id   = site.get("id", "")
         site_name = site.get("displayName", "SharePoint")
+        dept_id   = _match_dept(site_name, org_depts)
+        logger.info(
+            "Knowledge SharePoint site='%s' → dept=%s",
+            site_name, dept_id or "org-wide",
+        )
         try:
             drives = _get_all(
                 headers,
@@ -277,6 +336,7 @@ def index_m365_documents(org_id: str) -> dict:
                 _index_drive_items(
                     headers, drive_id, items, org_id, "sharepoint", stats,
                     title_prefix=site_name,
+                    department_id=dept_id,
                 )
         except Exception as exc:
             logger.error("Knowledge SharePoint site=%s error: %s", site_id, exc)

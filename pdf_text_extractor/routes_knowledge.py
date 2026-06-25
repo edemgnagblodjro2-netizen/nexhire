@@ -8,10 +8,22 @@ from pypdf import PdfReader
 
 from auth import CurrentUser
 from db import get_db, rows
-from rbac import require_min_role
+from rbac import require_min_role, ROLE_RANK
 
 router = APIRouter(prefix="/api/knowledge", tags=["knowledge"])
 logger = logging.getLogger(__name__)
+
+
+def _get_allowed_dept_ids(user: CurrentUser) -> list[str] | None:
+    """None = admin/owner → pas de filtre. Liste = IDs autorisés (peut être vide)."""
+    if ROLE_RANK.get(user.role, 0) >= 3 or getattr(user, "is_service_account", False):
+        return None
+    with get_db() as cur:
+        cur.execute(
+            "SELECT department_id FROM department_members WHERE user_id = %s",
+            (user.id,),
+        )
+        return [r["department_id"] for r in rows(cur)]
 
 
 @router.get("/search")
@@ -20,10 +32,11 @@ def search_knowledge(
     k: int = Query(5, ge=1, le=20),
     user: CurrentUser = Depends(require_min_role("user")),
 ):
-    """Recherche sémantique + synthèse IA dans la base de connaissances."""
+    """Recherche sémantique filtrée par département (admin/owner voient tout)."""
+    allowed = _get_allowed_dept_ids(user)
     try:
         from knowledge_indexer import search_knowledge as _search, synthesize_answer
-        chunks = _search(str(user.organization_id), q, k=k)
+        chunks = _search(str(user.organization_id), q, k=k, allowed_dept_ids=allowed)
         answer = synthesize_answer(q, chunks)
     except Exception as exc:
         logger.error("knowledge search error: %s", exc)
@@ -79,20 +92,32 @@ async def upload_document(
 def list_documents(
     user: CurrentUser = Depends(require_min_role("user")),
 ):
-    """Liste les documents indexés pour l'organisation."""
+    """Liste les documents indexés filtrés par département (admin/owner voient tout)."""
+    allowed = _get_allowed_dept_ids(user)
+    org_id = str(user.organization_id)
+
+    if allowed is None:
+        dept_clause = ""
+        params: list = [org_id]
+    elif not allowed:
+        dept_clause = "AND department_id IS NULL"
+        params = [org_id]
+    else:
+        dept_clause = "AND (department_id IS NULL OR department_id = ANY(%s::uuid[]))"
+        params = [org_id, allowed]
+
+    sql = f"""
+        SELECT title, source_type, source_url, department_id,
+               COUNT(*) AS chunk_count,
+               MAX(synced_at) AS synced_at
+        FROM knowledge_documents
+        WHERE organization_id = %s
+          {dept_clause}
+        GROUP BY title, source_type, source_url, department_id
+        ORDER BY MAX(synced_at) DESC
+    """
     with get_db() as cur:
-        cur.execute(
-            """
-            SELECT title, source_type, source_url,
-                   COUNT(*) AS chunk_count,
-                   MAX(synced_at) AS synced_at
-            FROM knowledge_documents
-            WHERE organization_id = %s
-            GROUP BY title, source_type, source_url
-            ORDER BY MAX(synced_at) DESC
-            """,
-            (str(user.organization_id),),
-        )
+        cur.execute(sql, params)
         return rows(cur)
 
 
