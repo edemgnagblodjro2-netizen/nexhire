@@ -114,7 +114,13 @@ def delete_document(
 
 @router.post("/sync-m365")
 def sync_m365(user: CurrentUser = Depends(require_min_role("admin"))):
-    """Indexe OneDrive + SharePoint du connecteur M365 actif de l'organisation."""
+    """Indexe les bibliothèques SharePoint organisationnelles (OneDrive personnel exclu)."""
+    # Purge les documents OneDrive précédemment indexés (mauvaise config antérieure)
+    with get_db() as cur:
+        cur.execute(
+            "DELETE FROM knowledge_documents WHERE organization_id = %s AND source_type = 'onedrive'",
+            (str(user.organization_id),),
+        )
     try:
         from knowledge_indexer import index_m365_documents
         result = index_m365_documents(str(user.organization_id))

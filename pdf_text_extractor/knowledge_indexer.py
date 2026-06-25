@@ -227,7 +227,10 @@ def _index_drive_items(
 
 
 def index_m365_documents(org_id: str) -> dict:
-    """Indexe OneDrive personnel + toutes les bibliothèques SharePoint de l'organisation."""
+    """Indexe toutes les bibliothèques SharePoint organisationnelles.
+    OneDrive personnel (/me/drive) est exclu : il appartient au compte OAuth
+    du owner et ne doit pas être visible par tous les membres de l'org.
+    """
     try:
         from m365_collector import _auth_headers, _get, _get_all, GRAPH
     except Exception as exc:
@@ -241,22 +244,7 @@ def index_m365_documents(org_id: str) -> dict:
 
     stats: dict = {"indexed": 0, "skipped": 0, "errors": 0}
 
-    # ── 1. OneDrive personnel ────────────────────────────────────────────────
-    try:
-        drive_info = _get(headers, f"{GRAPH}/me/drive", {"$select": "id"})
-        od_drive_id = drive_info["id"]
-        items = _get_all(
-            headers,
-            f"{GRAPH}/drives/{od_drive_id}/root/children",
-            {"$select": "name,id,webUrl,file,size", "$top": "200"},
-        )
-        _index_drive_items(headers, od_drive_id, items, org_id, "onedrive", stats)
-        logger.info("Knowledge OneDrive — %d items traités", len(items))
-    except Exception as exc:
-        logger.error("Knowledge OneDrive error: %s", exc)
-        stats["errors"] += 1
-
-    # ── 2. SharePoint — sites et bibliothèques de documents ─────────────────
+    # ── SharePoint — sites et bibliothèques de documents ─────────────────────
     try:
         sites = _get_all(
             headers,
