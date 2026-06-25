@@ -1929,7 +1929,12 @@ $("login-form").addEventListener("submit", async e => {
       body: JSON.stringify({ email: $("login-email").value, password: $("login-password").value }),
     });
     const json = await data.json();
-    if (!data.ok) throw new Error(json.detail || "Connexion échouée.");
+    if (!data.ok) {
+      const msg = Array.isArray(json.detail)
+        ? json.detail.map(e => e.msg || JSON.stringify(e)).join(" · ")
+        : (json.detail || `Erreur ${data.status}`);
+      throw new Error(msg);
+    }
     saveToken(json.access_token, json.refresh_token);
     await fetchMe();
     const _pendingInvite = localStorage.getItem("nexhire_pending_invite");
