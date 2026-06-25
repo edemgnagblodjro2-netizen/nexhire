@@ -1155,11 +1155,18 @@ function showApp() {
   $("user-avatar").textContent     = initials;
   if ($("user-avatar-menu"))   $("user-avatar-menu").textContent   = initials;
   if ($("user-menu-email-text")) $("user-menu-email-text").textContent = u?.email || "";
-  if ($("nx-org-name")) $("nx-org-name").textContent = u?.organization_name || "Mon organisation";
-  if ($("nx-org-plan")) {
-    const _planLabels = { starter: "Plan Starter", professional: "Plan Professional", trial: "Essai gratuit", trialing: "Essai gratuit", cancelled: "Abonnement annulé" };
-    $("nx-org-plan").textContent = _planLabels[u?.subscription_plan] || _planLabels[u?.subscription_status] || "Plan Starter";
-  }
+  const _orgName = u?.organization_name || "Mon organisation";
+  const _planLabels = { starter: "Plan Starter", professional: "Plan Professional", trial: "Essai gratuit", trialing: "Essai gratuit", cancelled: "Abonnement annulé" };
+  const _planLabel  = _planLabels[u?.subscription_plan] || _planLabels[u?.subscription_status] || "Plan Starter";
+
+  // Bloc bas de sidebar (org name + plan)
+  if ($("nx-org-name")) $("nx-org-name").textContent = _orgName;
+  if ($("nx-org-plan")) $("nx-org-plan").textContent = _planLabel;
+
+  // Bloc brand haut de sidebar (remplace "NexHire / Enterprise · EIP")
+  if ($("nx-brand-name"))    $("nx-brand-name").textContent    = _orgName;
+  if ($("nx-brand-sub"))     $("nx-brand-sub").textContent     = _planLabel;
+  if ($("nx-brand-initial")) $("nx-brand-initial").textContent = (_orgName[0] || "N").toUpperCase();
   _updateLangLabel();
 
   // Org logo + brand color — appliqués dès le démarrage (persist au refresh)

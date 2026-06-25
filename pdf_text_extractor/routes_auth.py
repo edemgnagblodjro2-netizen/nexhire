@@ -279,11 +279,12 @@ def me(user: CurrentUser = Depends(get_current_user)):
                 dept_types = [r["dept_type"] for r in rows(cur)]
             with get_db() as cur:
                 cur.execute(
-                    "SELECT logo_url, brand_color FROM organizations WHERE id = %s LIMIT 1",
+                    "SELECT name, logo_url, brand_color FROM organizations WHERE id = %s LIMIT 1",
                     (user.organization_id,),
                 )
                 org = _row(cur) or {}
-            logo_url    = org.get("logo_url")    or None
+            org_name    = org.get("name")       or None
+            logo_url    = org.get("logo_url")   or None
             brand_color = org.get("brand_color") or None
         except Exception:
             pass
@@ -291,13 +292,14 @@ def me(user: CurrentUser = Depends(get_current_user)):
     return {
         "id": user.id,
         "email": user.email,
-        "organization_id": user.organization_id,
+        "organization_id":   user.organization_id,
+        "organization_name": org_name,
         "role": user.role,
         "subscription_status": user.subscription_status,
         "subscription_plan":   user.subscription_plan,
         "is_superadmin": bool(user.email and user.email.lower() in superadmin_emails),
-        "dept_types": dept_types,
-        "currency": user.currency,
-        "logo_url":   logo_url,
+        "dept_types":  dept_types,
+        "currency":    user.currency,
+        "logo_url":    logo_url,
         "brand_color": brand_color,
     }
