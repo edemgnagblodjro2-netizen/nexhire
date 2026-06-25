@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NexHire EIP — Guide de configuration IT</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --navy:    #0f172a;
+    --blue:    #2563eb;
+    --indigo:  #4f46e5;
+    --green:   #16a34a;
+    --orange:  #ea580c;
+    --red:     #dc2626;
+    --slate:   #64748b;
+    --light:   #f8fafc;
+    --border:  #e2e8f0;
+    --radius:  10px;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--navy);
+    background: #fff;
+    font-size: 10.5pt;
+    line-height: 1.6;
+  }
+
+  .page { page-break-after: always; min-height: 100vh; }
+  .page:last-child { page-break-after: avoid; }
+
+  @media print {
+    body { font-size: 10pt; }
+    .page { page-break-after: always; padding: 0; }
+    .no-print { display: none !important; }
+  }
+
+  /* ── COVER ───────────────────────────────────────────── */
+  .cover {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 72px 72px;
+    min-height: 100vh;
+  }
+  .cover-logo { display: flex; align-items: center; gap: 14px; margin-bottom: 64px; }
+  .cover-logo-mark {
+    width: 44px; height: 44px;
+    background: var(--blue); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 900; color: #fff;
+  }
+  .cover-logo-text { font-size: 19px; font-weight: 700; }
+  .cover-logo-text span { color: #818cf8; }
+  .cover-type-tag {
+    display: inline-block;
+    font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    background: rgba(234,88,12,.2); border: 1px solid rgba(234,88,12,.4);
+    color: #fb923c; padding: 3px 10px; border-radius: 20px; margin-bottom: 20px;
+  }
+  .cover-title {
+    font-size: 42px; font-weight: 900; line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .cover-title span { color: #818cf8; }
+  .cover-sub {
+    font-size: 15px; color: rgba(255,255,255,.65); max-width: 520px; line-height: 1.7;
+  }
+  .cover-toc {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px;
+    margin-top: 48px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,.12);
+  }
+  .cover-toc-item {
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .toc-num {
+    font-size: 10px; font-weight: 800; color: #818cf8;
+    background: rgba(129,140,248,.15); border-radius: 4px;
+    padding: 1px 6px; flex-shrink: 0; margin-top: 2px;
+  }
+  .toc-label { font-size: 11px; color: rgba(255,255,255,.8); font-weight: 500; line-height: 1.4; }
+  .cover-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 28px; border-top: 1px solid rgba(255,255,255,.1);
+    font-size: 10px; color: rgba(255,255,255,.4);
+  }
+
+  /* ── INNER PAGE LAYOUT ───────────────────────────────── */
+  .inner {
+    padding: 52px 64px 40px;
+    display: flex; flex-direction: column; min-height: 100vh;
+  }
+  .page-header {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 2px solid var(--navy); padding-bottom: 10px; margin-bottom: 28px;
+  }
+  .page-header-brand { font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+  .page-header-section { font-size: 11px; color: var(--slate); }
+  .page-num { font-size: 9px; color: var(--slate); margin-top: auto; padding-top: 20px; text-align: right; }
+
+  /* ── TYPOGRAPHY ──────────────────────────────────────── */
+  .section-label {
+    font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--blue); display: block; margin-bottom: 4px;
+  }
+  .section-title { font-size: 22px; font-weight: 900; line-height: 1.2; margin-bottom: 6px; }
+  h3 { font-size: 13px; font-weight: 800; margin-bottom: 6px; }
+
+  /* ── CARDS & STEPS ───────────────────────────────────── */
+  .card {
+    border: 1px solid var(--border); border-radius: var(--radius);
+    background: #fff;
+  }
+
+  .step-block { display: flex; flex-direction: column; gap: 8px; }
+  .step {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: var(--light); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 12px 14px;
+  }
+  .step-num {
+    width: 24px; height: 24px; flex-shrink: 0;
+    background: var(--navy); color: #fff;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 800;
+  }
+  .step-body { flex: 1; }
+  .step-title { font-size: 11.5px; font-weight: 700; margin-bottom: 2px; }
+  .step-desc { font-size: 10.5px; color: var(--slate); line-height: 1.6; }
+
+  /* ── CODE BLOCKS ─────────────────────────────────────── */
+  .code-block {
+    background: #0f172a; color: #e2e8f0;
+    border-radius: 8px; padding: 12px 16px;
+    font-family: 'Courier New', monospace; font-size: 10px;
+    line-height: 1.6; overflow: hidden;
+  }
+  .code-comment { color: #475569; }
+  .code-cmd { color: #86efac; }
+  .code-path { color: #fbbf24; }
+  .code-val { color: #a78bfa; }
+
+  /* ── BADGES ──────────────────────────────────────────── */
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 9.5px; font-weight: 700; padding: 3px 9px; border-radius: 20px;
+  }
+  .badge-blue  { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+  .badge-green { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+  .badge-orange{ background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+  .badge-red   { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+  /* ── GRIDS ───────────────────────────────────────────── */
+  .grid-2 { display: flex; gap: 24px; }
+  .grid-2 > * { flex: 1; }
+
+  /* ── WARNING / NOTE BOXES ────────────────────────────── */
+  .notice {
+    border-radius: var(--radius); padding: 12px 14px; font-size: 10.5px; line-height: 1.6;
+  }
+  .notice-blue   { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e3a5f; }
+  .notice-orange { background: #fff7ed; border: 1px solid #fed7aa; color: #7c2d12; }
+  .notice-green  { background: #f0fdf4; border: 1px solid #bbf7d0; color: #14532d; }
+
+  /* ── TABLE ───────────────────────────────────────────── */
+  table { width: 100%; border-collapse: collapse; font-size: 10.5px; }
+  th { background: var(--navy); color: #fff; font-size: 9.5px; font-weight: 700;
+       padding: 7px 10px; text-align: left; }
+  td { padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: var(--light); }
+
+  /* ── CHECKLIST ───────────────────────────────────────── */
+  .checklist { display: flex; flex-direction: column; gap: 5px; }
+  .check-item {
+    display: flex; gap: 8px; align-items: flex-start;
+    font-size: 10.5px; padding: 7px 10px;
+    background: var(--light); border: 1px solid var(--border); border-radius: 7px;
+  }
+  .check-icon { flex-shrink: 0; font-size: 12px; margin-top: 1px; }
+
+  /* ── ROLE TABLE ──────────────────────────────────────── */
+  .role-row { display: flex; align-items: center; gap: 10px; padding: 8px 12px;
+              border-bottom: 1px solid var(--border); }
+  .role-row:last-child { border-bottom: none; }
+  .role-pill {
+    font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 12px;
+    min-width: 60px; text-align: center;
+  }
+  /* ── BOUTON PDF ──────────────────────────────────────── */
+  .pdf-fab {
+    position: fixed; bottom: 28px; right: 28px; z-index: 9999;
+    display: flex; align-items: center; gap: 8px;
+    background: #2563eb; color: #fff; border: none; border-radius: 10px;
+    padding: 10px 18px; font-family: inherit; font-size: 13px; font-weight: 700;
+    cursor: pointer; box-shadow: 0 4px 16px rgba(37,99,235,.35);
+    transition: background .15s;
+  }
+  .pdf-fab:hover { background: #1d4ed8; }
+  .pdf-fab:disabled { background: #93c5fd; cursor: default; }
+  @media print { .pdf-fab { display: none !important; } }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+
+<!-- Bouton téléchargement PDF -->
+<button id="pdf-btn" class="pdf-fab" onclick="generatePDF()">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+  Télécharger PDF
+</button>
+<script>
+function generatePDF() {
+  const btn = document.getElementById('pdf-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Génération…';
+
+  // Force chaque .page à exactement 297mm (A4) pour éviter les pages vides
+  const pages = document.querySelectorAll('#pdf-content .page');
+  const saved = [];
+  pages.forEach((p, i) => {
+    saved[i] = { minHeight: p.style.minHeight, height: p.style.height, overflow: p.style.overflow };
+    p.style.minHeight = '297mm';
+    p.style.height    = '297mm';
+    p.style.overflow  = 'hidden';
+  });
+
+  const opt = {
+    margin: 0,
+    filename: 'NexHire-EIP-Guide-IT.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, letterRendering: true, windowWidth: 794 },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: 'avoid-all', before: '.page' }
+  };
+
+  html2pdf().set(opt).from(document.getElementById('pdf-content')).save().then(() => {
+    pages.forEach((p, i) => {
+      p.style.minHeight = saved[i].minHeight;
+      p.style.height    = saved[i].height;
+      p.style.overflow  = saved[i].overflow;
+    });
+    btn.disabled = false;
+    btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Télécharger PDF';
+  });
+}
+</script>
+
+<div id="pdf-content">
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 1 — COUVERTURE                                                        -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="cover">
+    <div>
+      <div class="cover-logo">
+        <div class="cover-logo-mark">N</div>
+        <div class="cover-logo-text">Nex<span>Hire</span> EIP</div>
+      </div>
+      <div class="cover-type-tag">Usage interne · Équipe IT</div>
+      <div class="cover-title">Guide de<br>configuration<br><span>IT</span></div>
+      <div class="cover-sub">
+        Tout ce dont votre équipe informatique a besoin pour déployer, configurer et maintenir
+        NexHire EIP sur <strong style="color:rgba(255,255,255,.9)">agenthub.nexhire.ca</strong>.
+      </div>
+      <div class="cover-toc">
+        <div class="cover-toc-item">
+          <div class="toc-num">01</div>
+          <div class="toc-label">Prérequis &amp; accès initiaux</div>
+        </div>
+        <div class="cover-toc-item">
+          <div class="toc-num">02</div>
+          <div class="toc-label">Compte de service Microsoft 365</div>
+        </div>
+        <div class="cover-toc-item">
+          <div class="toc-num">03</div>
+          <div class="toc-label">Dossiers NexHire-Public SharePoint</div>
+        </div>
+        <div class="cover-toc-item">
+          <div class="toc-num">04</div>
+          <div class="toc-label">Migrations base de données (Supabase)</div>
+        </div>
+        <div class="cover-toc-item">
+          <div class="toc-num">05</div>
+          <div class="toc-label">Connexion des connecteurs dans NexHire</div>
+        </div>
+        <div class="cover-toc-item">
+          <div class="toc-num">06</div>
+          <div class="toc-label">Mappage SharePoint → Départements</div>
+        </div>
+        <div class="cover-toc-item">
+          <div class="toc-num">07</div>
+          <div class="toc-label">Gestion des utilisateurs &amp; rôles</div>
+        </div>
+        <div class="cover-toc-item">
+          <div class="toc-num">08</div>
+          <div class="toc-label">Maintenance &amp; alertes</div>
+        </div>
+      </div>
+    </div>
+    <div class="cover-footer">
+      <span>NexHire EIP — Guide IT · agenthub.nexhire.ca</span>
+      <span>© 2026 CivicAI Inc. · Confidentiel</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 2 — PRÉREQUIS & ACCÈS INITIAUX                                        -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <div class="page-header-brand">NexHire EIP — Guide IT</div>
+      <div class="page-header-section">01 · Prérequis &amp; accès initiaux</div>
+    </div>
+
+    <div class="grid-2" style="gap:28px;flex:1">
+      <div>
+        <span class="section-label">Prérequis</span>
+        <h2 class="section-title" style="font-size:19px;margin-bottom:14px">Avant de commencer</h2>
+
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
+          <div class="notice notice-blue">
+            <strong>Accès requis :</strong> vous devez être administrateur global (Global Admin) ou administrateur de l'application sur le tenant Microsoft 365 de votre organisation.
+          </div>
+        </div>
+
+        <h3>Informations à préparer</h3>
+        <table style="margin-bottom:16px">
+          <thead>
+            <tr><th>Élément</th><th>Exemple / format</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Nom de domaine M365</td><td>votreorg.onmicrosoft.com</td></tr>
+            <tr><td>Identifiant tenant Azure AD</td><td>GUID (ex. 3a4b5c…)</td></tr>
+            <tr><td>URL SharePoint admin</td><td>https://votreorg-admin.sharepoint.com</td></tr>
+            <tr><td>Adresse email owner NexHire</td><td>admin@votreorg.com</td></tr>
+          </tbody>
+        </table>
+
+        <h3 style="margin-bottom:8px">Navigateurs supportés</h3>
+        <div class="notice notice-green" style="margin-bottom:16px">
+          Chrome 110+, Firefox 115+, Edge 110+. Safari supporté mais non recommandé pour l'administration.
+        </div>
+
+        <h3 style="margin-bottom:8px">Ports et URLs à autoriser (pare-feu)</h3>
+        <div class="code-block">
+<span class="code-comment"># Autorisez en sortie HTTPS (443) :</span>
+<span class="code-path">agenthub.nexhire.ca</span>
+<span class="code-path">graph.microsoft.com</span>
+<span class="code-path">login.microsoftonline.com</span>
+<span class="code-path">api.openai.com</span>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="margin-bottom:10px">Création du compte owner NexHire</h3>
+        <div class="step-block">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">S'inscrire sur agenthub.nexhire.ca</div>
+              <div class="step-desc">Cliquez <em>Créer un compte</em>. Utilisez l'adresse email officielle de l'organisation. Le premier compte créé reçoit automatiquement le rôle <strong>owner</strong>.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">Nommer l'organisation</div>
+              <div class="step-desc">Après inscription, l'assistant de démarrage (onboarding) demande le nom de l'organisation et les départements. Entrez les noms exacts tels qu'ils apparaissent dans vos sites SharePoint — cela facilite le mappage automatique.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">Créer les départements</div>
+              <div class="step-desc">Menu <em>Gestion → Départements</em>. Créez un département par service (RH, Finance, TI, Direction, etc.). Ces noms sont utilisés pour isoler les documents du Centre de connaissances.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-title">Inviter les administrateurs</div>
+              <div class="step-desc">Menu <em>Gestion → Membres → Inviter</em>. Les comptes invités reçoivent le rôle <strong>user</strong> par défaut. Élever au rôle admin nécessite l'approbation explicite du owner (voir section 07).</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="notice notice-orange" style="margin-top:14px">
+          <strong>Important :</strong> ne partagez pas le compte owner. Créez des comptes admin distincts pour les membres de l'équipe IT.
+        </div>
+      </div>
+    </div>
+
+    <div class="page-num">2 / 8 · © 2026 CivicAI Inc. · Confidentiel</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 3 — COMPTE DE SERVICE M365                                             -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <div class="page-header-brand">NexHire EIP — Guide IT</div>
+      <div class="page-header-section">02 · Compte de service Microsoft 365</div>
+    </div>
+
+    <div class="grid-2" style="gap:28px;flex:1">
+      <div>
+        <span class="section-label">Recommandé</span>
+        <h2 class="section-title" style="font-size:19px;margin-bottom:8px">Compte de service dédié</h2>
+        <p style="font-size:11px;color:var(--slate);margin-bottom:16px;line-height:1.7">
+          NexHire EIP se connecte à Microsoft 365 via OAuth 2.0. Il est fortement recommandé d'utiliser un <strong>compte de service dédié</strong> plutôt qu'un compte personnel d'administrateur, pour éviter toute coupure en cas de départ ou de changement de mot de passe.
+        </p>
+
+        <div class="notice notice-orange" style="margin-bottom:16px">
+          <strong>Ne jamais</strong> utiliser le compte d'un employé pour connecter NexHire. Si cet employé quitte l'organisation, la synchronisation M365 sera interrompue.
+        </div>
+
+        <h3 style="margin-bottom:8px">Création dans Azure Active Directory</h3>
+        <div class="step-block">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">Ouvrir le portail Azure</div>
+              <div class="step-desc">portal.azure.com → Azure Active Directory → Utilisateurs → Nouvel utilisateur</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">Renseigner les informations</div>
+              <div class="step-desc">
+                Nom d'utilisateur : <strong>nexhire-service@votreorg.onmicrosoft.com</strong><br>
+                Nom d'affichage : <em>NexHire Service Account</em><br>
+                Rôle Azure AD : <em>Utilisateur standard</em> (pas Admin global)
+              </div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">Configurer le mot de passe permanent</div>
+              <div class="step-desc">
+                Décochez <em>L'utilisateur doit changer son mot de passe à la prochaine connexion</em>.<br>
+                Dans Azure AD → Utilisateurs → Stratégies de mot de passe : activez <strong>Mot de passe sans expiration</strong> pour ce compte spécifiquement.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="margin-bottom:8px">Licence et permissions</h3>
+        <div class="step-block" style="margin-bottom:16px">
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-title">Attribuer une licence M365 Basic</div>
+              <div class="step-desc">
+                Azure AD → Utilisateurs → nexhire-service → Licences → <em>+ Attributions</em><br>
+                Sélectionnez <strong>Microsoft 365 Business Basic</strong> (la moins coûteuse).<br>
+                Cette licence est requise pour le OAuth SharePoint.
+              </div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-body">
+              <div class="step-title">Accès en lecture aux sites SharePoint</div>
+              <div class="step-desc">
+                SharePoint Admin Center → Sites → Sites actifs.<br>
+                Pour chaque site à indexer : <em>Autorisations → Ajouter des membres</em> → ajoutez <strong>nexhire-service</strong> avec le rôle <em>Membre</em> (lecture suffisante).
+              </div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">6</div>
+            <div class="step-body">
+              <div class="step-title">Vérification de connexion</div>
+              <div class="step-desc">
+                Connectez-vous une fois sur <em>portal.office.com</em> avec le compte de service pour activer le compte et accepter les conditions. Le token OAuth ne sera généré qu'après cette activation.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:12px 14px;margin-bottom:12px">
+          <div style="font-size:10px;font-weight:700;color:var(--slate);text-transform:uppercase;margin-bottom:8px">Récapitulatif du compte de service</div>
+          <table>
+            <tr><td style="font-weight:600">UPN</td><td>nexhire-service@votreorg.com</td></tr>
+            <tr><td style="font-weight:600">Licence</td><td>Microsoft 365 Business Basic</td></tr>
+            <tr><td style="font-weight:600">Rôle Azure AD</td><td>Utilisateur standard</td></tr>
+            <tr><td style="font-weight:600">Mot de passe</td><td>Permanent (sans expiration)</td></tr>
+            <tr><td style="font-weight:600">Accès SharePoint</td><td>Membre (lecture) sur sites ciblés</td></tr>
+          </table>
+        </div>
+
+        <div class="notice notice-blue">
+          NexHire envoie une alerte automatique par email à <strong>J-14 et J-7</strong> avant l'expiration du refresh token OAuth (90 jours d'inactivité). Assurez-vous que le owner reçoit ces emails.
+        </div>
+      </div>
+    </div>
+
+    <div class="page-num">3 / 8 · © 2026 CivicAI Inc. · Confidentiel</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 4 — DOSSIERS NEXHIRE-PUBLIC SHAREPOINT                                -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <div class="page-header-brand">NexHire EIP — Guide IT</div>
+      <div class="page-header-section">03 · Dossiers NexHire-Public SharePoint</div>
+    </div>
+
+    <div style="flex:1">
+      <div class="grid-2" style="gap:28px;margin-bottom:20px">
+        <div>
+          <span class="section-label">Contrôle des contenus indexés</span>
+          <h2 class="section-title" style="font-size:19px;margin-bottom:8px">Le dossier NexHire-Public</h2>
+          <p style="font-size:11px;color:var(--slate);line-height:1.7;margin-bottom:12px">
+            NexHire EIP <strong>n'indexe que les fichiers placés dans un dossier nommé exactement <code style="background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:10px">NexHire-Public</code></strong> à la racine de chaque site SharePoint. Aucun autre fichier n'est jamais lu ou indexé.
+          </p>
+          <div class="notice notice-green" style="margin-bottom:12px">
+            Ce mécanisme garantit que seuls les documents explicitement approuvés par IT sont exposés aux utilisateurs NexHire. Les fichiers personnels, les brouillons et les documents restreints restent totalement invisibles.
+          </div>
+          <div class="notice notice-orange">
+            <strong>Nom exact obligatoire :</strong> le dossier doit s'appeler <strong>NexHire-Public</strong> (P majuscule, tiret, pas d'espace). Toute autre orthographe sera ignorée par le moteur d'indexation.
+          </div>
+        </div>
+
+        <div>
+          <h3 style="margin-bottom:10px">Structure SharePoint attendue</h3>
+          <div class="code-block" style="margin-bottom:12px">
+<span class="code-comment"># Structure d'un site SharePoint</span>
+<span class="code-path">Site : RH-Département</span>
+└── Documents (bibliothèque par défaut)
+    ├── <span class="code-val">NexHire-Public/</span>          ← <span class="code-comment">indexé</span>
+    │   ├── Politique-conges.pdf
+    │   ├── Onboarding-2026.docx
+    │   └── Guide-avantages.pdf
+    ├── Privé/                      <span class="code-comment">← ignoré</span>
+    ├── Brouillons/                 <span class="code-comment">← ignoré</span>
+    └── Contrats-confidentiels/     <span class="code-comment">← ignoré</span>
+          </div>
+
+          <h3 style="margin-bottom:8px">Formats supportés</h3>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+            <span class="badge badge-blue">PDF</span>
+            <span class="badge badge-blue">DOCX</span>
+            <span class="badge badge-blue">TXT</span>
+            <span class="badge badge-blue">MD (Markdown)</span>
+            <span class="badge badge-orange">Taille max : 10 Mo par fichier</span>
+          </div>
+
+          <div class="notice notice-blue">
+            Les fichiers au format XLSX, PPTX, images ou ZIP ne sont pas indexés et seront silencieusement ignorés.
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-bottom:10px">Créer le dossier NexHire-Public sur un site SharePoint</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Ouvrir le site SharePoint</div>
+            <div class="step-desc">Naviguez sur le site concerné → onglet <em>Documents</em> (bibliothèque de documents par défaut).</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Créer un nouveau dossier</div>
+            <div class="step-desc">Cliquez <em>+ Nouveau → Dossier</em>. Nommez-le exactement <strong>NexHire-Public</strong>.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Définir les permissions du dossier</div>
+            <div class="step-desc">Clic droit sur le dossier → <em>Gérer l'accès</em>. Assurez-vous que <strong>nexhire-service</strong> a au moins le rôle <em>Lecture</em>.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Déposer les documents approuvés</div>
+            <div class="step-desc">Glissez les documents PDF/DOCX/TXT à partager dans ce dossier. Répétez pour chaque site SharePoint.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-num">4 / 8 · © 2026 CivicAI Inc. · Confidentiel</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 5 — MIGRATIONS BASE DE DONNÉES                                         -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <div class="page-header-brand">NexHire EIP — Guide IT</div>
+      <div class="page-header-section">04 · Migrations base de données (Supabase)</div>
+    </div>
+
+    <div style="flex:1">
+      <div class="notice notice-orange" style="margin-bottom:16px">
+        <strong>Cette étape est réservée aux administrateurs NexHire ayant accès au projet Supabase.</strong> Si NexHire EIP est hébergé en mode SaaS (agenthub.nexhire.ca), ces migrations sont déjà appliquées par l'équipe NexHire. Vérifiez avec votre interlocuteur avant d'exécuter.
+      </div>
+
+      <h3 style="margin-bottom:10px">Ordre d'exécution des migrations</h3>
+      <table style="margin-bottom:16px">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Fichier</th>
+            <th>Description</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>36</strong></td>
+            <td><code style="font-size:9.5px">phase36_role_requests.sql</code></td>
+            <td>Table <em>role_change_requests</em> — demandes d'élévation de rôle</td>
+            <td><span class="badge badge-green">Requis</span></td>
+          </tr>
+          <tr>
+            <td><strong>37</strong></td>
+            <td><code style="font-size:9.5px">phase37_m365_refresh_tracking.sql</code></td>
+            <td>Colonne <em>refresh_token_issued_at</em> dans connectors — suivi expiration token M365</td>
+            <td><span class="badge badge-green">Requis</span></td>
+          </tr>
+          <tr>
+            <td><strong>38</strong></td>
+            <td><code style="font-size:9.5px">phase38_knowledge_dept_isolation.sql</code></td>
+            <td>Colonne <em>department_id</em> dans knowledge_documents — isolation par département</td>
+            <td><span class="badge badge-green">Requis</span></td>
+          </tr>
+          <tr>
+            <td><strong>39</strong></td>
+            <td><code style="font-size:9.5px">phase39_sharepoint_mappings.sql</code></td>
+            <td>Table <em>sharepoint_dept_mappings</em> — mappage sites SharePoint → départements</td>
+            <td><span class="badge badge-green">Requis</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-bottom:8px">Procédure d'exécution dans Supabase</h3>
+      <div class="grid-2" style="gap:20px">
+        <div class="step-block">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">Ouvrir Supabase SQL Editor</div>
+              <div class="step-desc">supabase.com → votre projet → onglet <em>SQL Editor</em> → <em>+ New query</em></div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">Exécuter dans l'ordre</div>
+              <div class="step-desc">Copiez le contenu de chaque fichier SQL dans l'éditeur. Exécutez les migrations dans l'ordre numérique (36 → 37 → 38 → 39).</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">Vérifier le résultat</div>
+              <div class="step-desc">Chaque script utilise <code style="font-size:9.5px">IF NOT EXISTS</code> — aucune erreur si déjà exécuté. Un résultat <em>Success</em> sans erreur rouge confirme la réussite.</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="code-block" style="margin-bottom:12px">
+<span class="code-comment">-- Vérification post-migration (optionnel)</span>
+<span class="code-cmd">SELECT</span> table_name
+<span class="code-cmd">FROM</span> information_schema.tables
+<span class="code-cmd">WHERE</span> table_schema = <span class="code-val">'public'</span>
+  <span class="code-cmd">AND</span> table_name <span class="code-cmd">IN</span> (
+    <span class="code-val">'role_change_requests'</span>,
+    <span class="code-val">'sharepoint_dept_mappings'</span>
+  );
+
+<span class="code-comment">-- Vérification colonnes</span>
+<span class="code-cmd">SELECT</span> column_name
+<span class="code-cmd">FROM</span> information_schema.columns
+<span class="code-cmd">WHERE</span> table_name = <span class="code-val">'knowledge_documents'</span>
+  <span class="code-cmd">AND</span> column_name = <span class="code-val">'department_id'</span>;
+          </div>
+
+          <div class="notice notice-blue">
+            Les migrations utilisent des instructions <strong>ALTER TABLE … ADD COLUMN IF NOT EXISTS</strong> et <strong>CREATE TABLE IF NOT EXISTS</strong> — elles sont donc idempotentes et peuvent être réexécutées sans risque.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-num">5 / 8 · © 2026 CivicAI Inc. · Confidentiel</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 6 — CONNEXION CONNECTEURS + MAPPAGE SHAREPOINT                         -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <div class="page-header-brand">NexHire EIP — Guide IT</div>
+      <div class="page-header-section">05–06 · Connecteurs &amp; Mappage SharePoint</div>
+    </div>
+
+    <div class="grid-2" style="gap:28px;flex:1">
+      <!-- Connecteurs -->
+      <div>
+        <span class="section-label">Section 05</span>
+        <h2 class="section-title" style="font-size:17px;margin-bottom:10px">Connexion des connecteurs</h2>
+
+        <h3 style="margin-bottom:8px">Microsoft 365</h3>
+        <div class="step-block" style="margin-bottom:16px">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">Aller dans Paramètres → Connecteurs</div>
+              <div class="step-desc">Connectez-vous avec le compte <strong>owner</strong> sur agenthub.nexhire.ca.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">Cliquer "Connecter Microsoft 365"</div>
+              <div class="step-desc">Une fenêtre OAuth Microsoft s'ouvre. <strong>Connectez-vous avec le compte de service</strong> (<em>nexhire-service@votreorg.com</em>), pas votre compte personnel.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">Accepter les permissions</div>
+              <div class="step-desc">Microsoft demande les permissions : Sites.Read.All, Files.Read.All, User.Read. Cliquez <em>Accepter</em>. Le connecteur passe à l'état <strong>Connecté</strong>.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-title">Vérifier le statut</div>
+              <div class="step-desc">La tuile M365 affiche le statut <em>Connecté</em> et la date de dernière synchronisation. Si <em>Erreur — token expiré</em> apparaît, reconnectez avec le compte de service.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="notice notice-blue">
+          <strong>Jira / GitHub / autres connecteurs :</strong> même procédure OAuth. Utilisez si possible des comptes de service dédiés (ex. <em>nexhire-jira@org.com</em>).
+        </div>
+      </div>
+
+      <!-- Mappage SharePoint -->
+      <div>
+        <span class="section-label">Section 06</span>
+        <h2 class="section-title" style="font-size:17px;margin-bottom:10px">Mappage SharePoint → Départements</h2>
+        <p style="font-size:10.5px;color:var(--slate);margin-bottom:10px;line-height:1.6">
+          Chaque site SharePoint doit être associé à un département NexHire. Cette opération détermine quels utilisateurs ont accès aux documents de ce site dans le Centre de connaissances.
+        </p>
+
+        <div class="step-block">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">Centre de connaissances → "Détecter les sites"</div>
+              <div class="step-desc">Cliquez le bouton <em>🔍 Détecter les sites SharePoint</em>. NexHire interroge l'API Microsoft Graph et liste tous les sites accessibles via le compte de service.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">Associer chaque site à un département</div>
+              <div class="step-desc">Un menu déroulant apparaît par site. Sélectionnez le département NexHire correspondant. Laissez vide pour un site accessible à toute l'organisation (org-wide).</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">Enregistrer les mappages</div>
+              <div class="step-desc">Cliquez <em>Enregistrer les mappages</em>. Les paramètres sont sauvegardés et seront utilisés à chaque synchronisation.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-title">Lancer la synchronisation</div>
+              <div class="step-desc">Cliquez <em>Indexer maintenant</em>. NexHire parcourt uniquement les dossiers <strong>NexHire-Public</strong> de chaque site et indexe les documents selon les mappages configurés.</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#f8fafc;border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;margin-top:10px">
+          <div style="font-size:10px;font-weight:700;color:var(--slate);text-transform:uppercase;margin-bottom:6px">Résultat attendu</div>
+          <div style="font-size:10.5px;line-height:1.6">
+            Un résumé s'affiche : <em>X documents indexés, Y ignorés</em>. Si un site n'a pas de dossier NexHire-Public, un avertissement ⚠️ est affiché — ce site est ignoré et aucune erreur n'est générée.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-num">6 / 8 · © 2026 CivicAI Inc. · Confidentiel</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 7 — GESTION DES UTILISATEURS & RÔLES                                  -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <div class="page-header-brand">NexHire EIP — Guide IT</div>
+      <div class="page-header-section">07 · Gestion des utilisateurs &amp; rôles</div>
+    </div>
+
+    <div class="grid-2" style="gap:28px;flex:1">
+      <div>
+        <span class="section-label">Rôles disponibles</span>
+        <h2 class="section-title" style="font-size:17px;margin-bottom:12px">Matrice des permissions</h2>
+
+        <div class="card" style="overflow:hidden;margin-bottom:16px">
+          <div class="role-row" style="background:#f8fafc;border-bottom:1px solid var(--border)">
+            <span class="role-pill" style="background:#fdf4ff;color:#7e22ce;border:1px solid #e9d5ff">owner</span>
+            <div style="font-size:10.5px;line-height:1.5">Accès complet. Gère l'organisation, les connecteurs, approuve les demandes d'élévation de rôle. <strong>Un seul par organisation.</strong></div>
+          </div>
+          <div class="role-row" style="border-bottom:1px solid var(--border)">
+            <span class="role-pill" style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe">admin</span>
+            <div style="font-size:10.5px;line-height:1.5">Gestion des membres, connecteurs, Centre de connaissances. Peut inviter de nouveaux utilisateurs. Nécessite approbation du owner pour être promu.</div>
+          </div>
+          <div class="role-row" style="border-bottom:1px solid var(--border)">
+            <span class="role-pill" style="background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0">manager</span>
+            <div style="font-size:10.5px;line-height:1.5">Accès aux rapports budgétaires, licences et historique. Lecture seule sur les données de gestion. Nécessite approbation du owner.</div>
+          </div>
+          <div class="role-row">
+            <span class="role-pill" style="background:#f8fafc;color:var(--slate);border:1px solid var(--border)">user</span>
+            <div style="font-size:10.5px;line-height:1.5">Rôle par défaut pour tout nouvel invité. Accès au Centre de connaissances (son département uniquement) et à l'agent IA.</div>
+          </div>
+        </div>
+
+        <h3 style="margin-bottom:8px">Inviter un utilisateur</h3>
+        <div class="step-block">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">Gestion → Membres → Inviter</div>
+              <div class="step-desc">Entrez l'adresse email. Le rôle initial est toujours <strong>user</strong>. Un email d'invitation est envoyé avec un lien sécurisé.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">L'utilisateur clique le lien d'invitation</div>
+              <div class="step-desc">Il crée son compte ou se connecte. NexHire associe automatiquement son compte à votre organisation avec le rôle correct.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">Assigner au département</div>
+              <div class="step-desc">Gestion → Membres → cliquez sur l'utilisateur → <em>Département</em>. Cette affectation contrôle les documents du Centre de connaissances accessibles.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="margin-bottom:8px">Élever un rôle (admin ou manager)</h3>
+        <div class="notice notice-orange" style="margin-bottom:10px">
+          Promouvoir un utilisateur en <strong>manager</strong> ou <strong>admin</strong> nécessite l'approbation explicite du <strong>owner</strong>. Cette règle s'applique même si la modification est initiée par un admin.
+        </div>
+        <div class="step-block" style="margin-bottom:16px">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">Admin modifie le rôle</div>
+              <div class="step-desc">Gestion → Membres → menu déroulant du rôle. La demande est soumise, l'utilisateur reste <em>user</em> en attendant.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">Owner reçoit la notification</div>
+              <div class="step-desc">Un panneau <em>Demandes de rôle en attente</em> apparaît dans Gestion → Membres pour le owner uniquement.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">Owner approuve ou refuse</div>
+              <div class="step-desc">Cliquez <em>Approuver</em> : le rôle est appliqué immédiatement. Cliquez <em>Refuser</em> : la demande est archivée, le rôle reste inchangé.</div>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="margin-bottom:8px">Supprimer un membre</h3>
+        <div class="notice notice-blue" style="margin-bottom:10px">
+          Un membre peut être supprimé par un admin ou owner. Si un utilisateur s'est inscrit avec une mauvaise organisation (compte conflicté ⚠️), il apparaît dans la liste et peut être retiré.
+        </div>
+
+        <h3 style="margin-bottom:8px">Bonnes pratiques</h3>
+        <div class="checklist">
+          <div class="check-item"><span class="check-icon">✓</span><span>Affectez toujours chaque utilisateur à son département après invitation</span></div>
+          <div class="check-item"><span class="check-icon">✓</span><span>Ne créez pas plus d'un compte owner par organisation</span></div>
+          <div class="check-item"><span class="check-icon">✓</span><span>Révoquez l'accès des employés qui quittent l'organisation dès leur départ</span></div>
+          <div class="check-item"><span class="check-icon">✓</span><span>Auditez régulièrement les rôles manager/admin (Gestion → Membres)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-num">7 / 8 · © 2026 CivicAI Inc. · Confidentiel</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 8 — MAINTENANCE & ALERTES + RÉSOLUTION DE PROBLÈMES                   -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <div class="page-header-brand">NexHire EIP — Guide IT</div>
+      <div class="page-header-section">08 · Maintenance, alertes &amp; résolution de problèmes</div>
+    </div>
+
+    <div class="grid-2" style="gap:28px;flex:1">
+      <div>
+        <span class="section-label">Maintenance périodique</span>
+        <h2 class="section-title" style="font-size:17px;margin-bottom:12px">Calendrier de maintenance</h2>
+
+        <table style="margin-bottom:16px">
+          <thead>
+            <tr><th>Fréquence</th><th>Action</th><th>Responsable</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Hebdomadaire</strong></td>
+              <td>Vérifier le statut des connecteurs (page Paramètres → Connecteurs)</td>
+              <td>IT Admin</td>
+            </tr>
+            <tr>
+              <td><strong>Mensuel</strong></td>
+              <td>Auditer les rôles et membres actifs ; retirer les comptes inactifs</td>
+              <td>Owner / IT Admin</td>
+            </tr>
+            <tr>
+              <td><strong>Mensuel</strong></td>
+              <td>Mettre à jour les dossiers NexHire-Public (ajouter/archiver des documents)</td>
+              <td>IT par département</td>
+            </tr>
+            <tr>
+              <td><strong>Trimestriel</strong></td>
+              <td>Vérifier la date d'expiration du token OAuth M365 (alerte automatique à J-14)</td>
+              <td>Owner</td>
+            </tr>
+            <tr>
+              <td><strong>Au besoin</strong></td>
+              <td>Relancer la synchronisation après ajout de documents dans NexHire-Public</td>
+              <td>IT Admin</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 style="margin-bottom:8px">Alertes email automatiques</h3>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div class="notice notice-orange">
+            <strong>⚠️ J-14 avant expiration token M365 :</strong> email d'avertissement envoyé au owner. Action requise : reconnecter M365 dans Paramètres → Connecteurs avant la coupure.
+          </div>
+          <div class="notice notice-blue" style="border-color:#fecaca;background:#fef2f2;color:#7f1d1d">
+            <strong>🔴 J-7 avant expiration token M365 :</strong> alerte urgente. Sans action, la synchronisation SharePoint sera interrompue et les documents ne seront plus mis à jour.
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="section-label">Résolution de problèmes</span>
+        <h2 class="section-title" style="font-size:17px;margin-bottom:12px">Problèmes courants</h2>
+
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div class="card" style="padding:11px 13px">
+            <div style="font-size:10.5px;font-weight:700;margin-bottom:3px">🔴 Connecteur M365 en erreur "Token expiré"</div>
+            <div style="font-size:10px;color:var(--slate);line-height:1.6">Reconnectez le compte de service dans Paramètres → Connecteurs → Microsoft 365 → Reconnecter. Utilisez toujours le compte <em>nexhire-service@votreorg.com</em>.</div>
+          </div>
+          <div class="card" style="padding:11px 13px">
+            <div style="font-size:10.5px;font-weight:700;margin-bottom:3px">⚠️ Site SharePoint sans dossier NexHire-Public</div>
+            <div style="font-size:10px;color:var(--slate);line-height:1.6">Un avertissement s'affiche lors de la synchronisation. Créez le dossier dans SharePoint (voir section 03) puis relancez la synchronisation.</div>
+          </div>
+          <div class="card" style="padding:11px 13px">
+            <div style="font-size:10.5px;font-weight:700;margin-bottom:3px">❓ Utilisateur ne voit pas de documents dans le Centre de connaissances</div>
+            <div style="font-size:10px;color:var(--slate);line-height:1.6">Vérifiez : (1) l'utilisateur est bien assigné à un département, (2) le site SharePoint est mappé à ce département, (3) des fichiers sont présents dans NexHire-Public.</div>
+          </div>
+          <div class="card" style="padding:11px 13px">
+            <div style="font-size:10.5px;font-weight:700;margin-bottom:3px">❓ Invitation non reçue par l'utilisateur</div>
+            <div style="font-size:10px;color:var(--slate);line-height:1.6">Vérifiez les spams. Re-invitez depuis Gestion → Membres si nécessaire. L'email est envoyé via Resend depuis <em>no-reply@nexhire.ca</em>.</div>
+          </div>
+          <div class="card" style="padding:11px 13px">
+            <div style="font-size:10.5px;font-weight:700;margin-bottom:3px">❓ Utilisateur avec ⚠️ "Org. incorrecte" dans la liste membres</div>
+            <div style="font-size:10px;color:var(--slate);line-height:1.6">L'utilisateur s'est inscrit sans utiliser le lien d'invitation. Supprimez ce compte (bouton Supprimer actif), puis renvoyez l'invitation.</div>
+          </div>
+          <div class="card" style="padding:11px 13px">
+            <div style="font-size:10.5px;font-weight:700;margin-bottom:3px">❓ Sites SharePoint non détectés lors de "Détecter les sites"</div>
+            <div style="font-size:10px;color:var(--slate);line-height:1.6">Vérifiez que le compte de service a bien le rôle <em>Membre</em> sur les sites concernés dans SharePoint Admin Center.</div>
+          </div>
+        </div>
+
+        <div style="background:linear-gradient(135deg,#1e1b4b,#2563eb);border-radius:var(--radius);padding:14px 18px;margin-top:14px;color:#fff;text-align:center">
+          <div style="font-size:11px;font-weight:700;margin-bottom:3px">Support technique NexHire</div>
+          <div style="font-size:10.5px;color:rgba(255,255,255,.75)">contact@nexhire.ca</div>
+          <div style="font-size:9.5px;color:rgba(255,255,255,.5);margin-top:3px">Lundi–vendredi · 9h–17h HNE</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-num">8 / 8 · © 2026 CivicAI Inc. · Confidentiel</div>
+  </div>
+</div>
+
+</div><!-- /pdf-content -->
+</body>
+</html>
