@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>AgentHub Platform</title>
+  <link rel="icon" href="/static/logo.svg" type="image/svg+xml" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:    #2563eb;
+      --primary-dk: #1d4ed8;
+      --sidebar-w:  240px;
+      --header-h:   56px;
+      --text:       #111827;
+      --muted:      #6b7280;
+      --bg:         #f9fafb;
+      --card:       #ffffff;
+      --border:     #e5e7eb;
+      --radius:     8px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Header ─────────────────────────────────────────── */
+    #ws-header {
+      height: var(--header-h);
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 12px;
+      flex-shrink: 0;
+      z-index: 10;
+    }
+
+    #ws-logo {
+      height: 28px;
+      width: auto;
+      object-fit: contain;
+      display: none;
+    }
+
+    #ws-partner-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    #ws-header-spacer { flex: 1; }
+
+    #ws-user-badge {
+      font-size: 13px;
+      color: var(--muted);
+      display: none;
+    }
+
+    /* ── Layout ─────────────────────────────────────────── */
+    #ws-body {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ── Sidebar ────────────────────────────────────────── */
+    #ws-sidebar {
+      width: var(--sidebar-w);
+      background: var(--card);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      overflow-y: auto;
+    }
+
+    .ws-sidebar-section {
+      padding: 16px 12px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--muted);
+    }
+
+    .ws-app-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 9px 14px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      border-radius: var(--radius);
+      margin: 1px 6px;
+      width: calc(100% - 12px);
+      text-align: left;
+      transition: background .15s;
+      position: relative;
+    }
+
+    .ws-app-btn:hover:not(:disabled) { background: var(--bg); }
+
+    .ws-app-btn.active {
+      background: color-mix(in srgb, var(--primary) 10%, transparent);
+      color: var(--primary);
+    }
+
+    .ws-app-btn:disabled { cursor: default; opacity: .65; }
+
+    .ws-app-icon { font-size: 18px; flex-shrink: 0; }
+
+    .ws-app-label {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .ws-app-name {
+      font-size: 13px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ws-app-badge {
+      font-size: 10px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .ws-badge-soon {
+      display: inline-block;
+      font-size: 10px;
+      background: #f3f4f6;
+      color: var(--muted);
+      border-radius: 4px;
+      padding: 1px 5px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    .ws-badge-beta {
+      display: inline-block;
+      font-size: 10px;
+      background: #eff6ff;
+      color: var(--primary);
+      border-radius: 4px;
+      padding: 1px 5px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    /* ── App container ──────────────────────────────────── */
+    #ws-app-container {
+      flex: 1;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    /* ── Loading / Error states ─────────────────────────── */
+    .ws-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 12px;
+      color: var(--muted);
+      padding: 32px;
+      text-align: center;
+    }
+
+    .ws-state-icon { font-size: 40px; }
+    .ws-state-title { font-size: 16px; font-weight: 600; color: var(--text); }
+    .ws-state-msg   { font-size: 14px; max-width: 360px; line-height: 1.5; }
+
+    .ws-spinner {
+      width: 32px; height: 32px;
+      border: 3px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Error banner ───────────────────────────────────── */
+    #ws-error-banner {
+      display: none;
+      position: fixed;
+      bottom: 16px; left: 50%; transform: translateX(-50%);
+      background: #fef2f2;
+      border: 1px solid #fca5a5;
+      color: #b91c1c;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      font-size: 13px;
+      z-index: 100;
+      max-width: 480px;
+      text-align: center;
+    }
+
+    /* ── Responsive ─────────────────────────────────────── */
+    @media (max-width: 640px) {
+      :root { --sidebar-w: 60px; }
+      .ws-app-name, .ws-app-badge, .ws-badge-soon,
+      .ws-badge-beta, .ws-sidebar-section { display: none; }
+      .ws-app-btn { justify-content: center; padding: 10px; }
+      .ws-app-icon { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header id="ws-header">
+    <img id="ws-logo" alt="Logo partenaire" />
+    <span id="ws-partner-name">AgentHub</span>
+    <span id="ws-header-spacer"></span>
+    <span id="ws-user-badge"></span>
+  </header>
+
+  <div id="ws-body">
+    <nav id="ws-sidebar">
+      <div class="ws-sidebar-section">Applications</div>
+      <div id="ws-app-list">
+        <div class="ws-state" style="height:120px">
+          <div class="ws-spinner"></div>
+        </div>
+      </div>
+    </nav>
+
+    <main id="ws-app-container">
+      <div class="ws-state" id="ws-welcome">
+        <div class="ws-state-icon">🚀</div>
+        <div class="ws-state-title">Bienvenue sur AgentHub Platform</div>
+        <div class="ws-state-msg">Sélectionnez une application dans le menu pour commencer.</div>
+      </div>
+    </main>
+  </div>
+
+  <div id="ws-error-banner"></div>
+
+  <script type="module" src="/static/workspace.js"></script>
+</body>
+</html>

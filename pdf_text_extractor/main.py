@@ -134,6 +134,7 @@ from routes_onboarding             import router as onboarding_router
 from routes_search                 import router as search_router
 from routes_import                 import router as import_router
 from routes_knowledge              import router as knowledge_router
+from routes_workspace              import router as workspace_router
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -228,6 +229,7 @@ def create_app(
     app.include_router(search_router)
     app.include_router(import_router)
     app.include_router(knowledge_router)
+    app.include_router(workspace_router)
     app.state.storage = storage or DocumentStore.from_env()
     app.state.assistant = assistant or AssistantService.from_env()
 
@@ -291,6 +293,26 @@ def create_app(
             STATIC_DIR / "myportal.html",
             media_type="text/html",
             headers={"Cache-Control": "no-store, no-cache, must-revalidate, max-age=0"},
+        )
+
+    _WORKSPACE_HEADERS = {"Cache-Control": "no-store, no-cache, must-revalidate, max-age=0"}
+
+    @app.get("/workspace/{slug}")
+    def workspace_shell(slug: str):
+        """Shell AgentHub Platform — point d'entrée pour tous les workspaces partenaires."""
+        return FileResponse(
+            STATIC_DIR / "workspace.html",
+            media_type="text/html",
+            headers=_WORKSPACE_HEADERS,
+        )
+
+    @app.get("/workspace/{slug}/{app_slug}")
+    def workspace_app(slug: str, app_slug: str):
+        """Shell AgentHub Platform — chargement d'une app spécifique via JS côté client."""
+        return FileResponse(
+            STATIC_DIR / "workspace.html",
+            media_type="text/html",
+            headers=_WORKSPACE_HEADERS,
         )
 
     @app.get("/legal/privacy")
