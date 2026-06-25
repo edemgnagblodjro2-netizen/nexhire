@@ -1990,7 +1990,12 @@ $("signup-form").addEventListener("submit", async e => {
     suc.classList.remove("hidden");
     setTimeout(() => showAuth("login"), 4000);
   } catch (ex) {
-    err.textContent = ex.message; err.classList.remove("hidden");
+    if (ex.message === "INVITE_PENDING") {
+      err.innerHTML = `📧 <strong>Vous avez une invitation en attente.</strong><br>Vérifiez votre courriel et utilisez le lien d'invitation pour rejoindre votre organisation. <a href="#" onclick="showAuth('login');return false" style="color:#2563eb;font-weight:700">Se connecter →</a>`;
+    } else {
+      err.textContent = ex.message;
+    }
+    err.classList.remove("hidden");
   } finally {
     btn.disabled = false; btn.textContent = "Créer mon compte gratuitement";
   }

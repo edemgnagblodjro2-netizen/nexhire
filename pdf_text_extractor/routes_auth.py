@@ -52,6 +52,26 @@ def signup(request: Request, payload: SignupPayload, background: BackgroundTasks
     """Inscription. Crée le compte Supabase ; un trigger DB crée ensuite
     automatiquement le tenant, l'utilisateur owner et l'essai de 14 jours
     (voir phase1_onboarding.sql). Les métadonnées portent le nom de l'org."""
+
+    # Bloquer l'inscription directe si l'email a une invitation en attente
+    if not payload.invite_token:
+        try:
+            from db import get_db, row as _row
+            with get_db() as cur:
+                cur.execute(
+                    "SELECT 1 FROM pending_invitations WHERE email = %s AND used_at IS NULL LIMIT 1",
+                    (payload.email.lower(),),
+                )
+                if _row(cur):
+                    raise HTTPException(
+                        status_code=400,
+                        detail="INVITE_PENDING",
+                    )
+        except HTTPException:
+            raise
+        except Exception:
+            pass  # Ne pas bloquer si la vérification DB échoue
+
     try:
         sb = anon_client()
         meta: dict = {
