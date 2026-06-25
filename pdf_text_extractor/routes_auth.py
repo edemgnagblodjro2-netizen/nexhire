@@ -294,6 +294,7 @@ def me(user: CurrentUser = Depends(get_current_user)):
         "organization_id": user.organization_id,
         "role": user.role,
         "subscription_status": user.subscription_status,
+        "subscription_plan":   user.subscription_plan,
         "is_superadmin": bool(user.email and user.email.lower() in superadmin_emails),
         "dept_types": dept_types,
         "currency": user.currency,

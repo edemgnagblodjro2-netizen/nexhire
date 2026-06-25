@@ -35,6 +35,7 @@ class CurrentUser:
     organization_id: str | None
     role: str
     subscription_status: str | None
+    subscription_plan: str | None = None
     is_service_account: bool = False
     currency: str = "CAD"
 
@@ -167,14 +168,16 @@ def get_current_user(authorization: str | None = Header(default=None)) -> Curren
                 org_status = r["status"] if r else None
         except Exception:
             pass
+        org_plan = None
         try:
             with get_db() as cur:
                 cur.execute(
-                    "SELECT currency FROM organizations WHERE id = %s LIMIT 1",
+                    "SELECT currency, subscription_plan FROM organizations WHERE id = %s LIMIT 1",
                     (profile["organization_id"],),
                 )
                 cur_row = db_row(cur)
                 org_currency = (cur_row or {}).get("currency") or "CAD"
+                org_plan     = (cur_row or {}).get("subscription_plan")
         except Exception:
             pass
 
@@ -184,5 +187,6 @@ def get_current_user(authorization: str | None = Header(default=None)) -> Curren
         organization_id=profile.get("organization_id"),
         role=profile.get("role") or "user",
         subscription_status=org_status,
+        subscription_plan=org_plan,
         currency=org_currency,
     )

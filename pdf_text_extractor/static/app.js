@@ -1156,6 +1156,10 @@ function showApp() {
   if ($("user-avatar-menu"))   $("user-avatar-menu").textContent   = initials;
   if ($("user-menu-email-text")) $("user-menu-email-text").textContent = u?.email || "";
   if ($("nx-org-name")) $("nx-org-name").textContent = u?.organization_name || "Mon organisation";
+  if ($("nx-org-plan")) {
+    const _planLabels = { starter: "Plan Starter", professional: "Plan Professional", trial: "Essai gratuit", trialing: "Essai gratuit", cancelled: "Abonnement annulé" };
+    $("nx-org-plan").textContent = _planLabels[u?.subscription_plan] || _planLabels[u?.subscription_status] || "Plan Starter";
+  }
   _updateLangLabel();
 
   // Org logo + brand color — appliqués dès le démarrage (persist au refresh)
