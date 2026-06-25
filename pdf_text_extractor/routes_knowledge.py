@@ -4,6 +4,7 @@ import io
 import logging
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile
+from pydantic import BaseModel
 from pypdf import PdfReader
 
 from auth import CurrentUser
@@ -137,10 +138,68 @@ def delete_document(
     return {"status": "ok"}
 
 
+@router.post("/discover-sharepoint-sites")
+def discover_sharepoint_sites(user: CurrentUser = Depends(require_min_role("admin"))):
+    """Détecte les sites SharePoint disponibles et les enregistre pour le mappage manuel."""
+    try:
+        from knowledge_indexer import discover_m365_sites
+        sites = discover_m365_sites(str(user.organization_id))
+    except Exception as exc:
+        logger.error("SharePoint discover error: %s", exc)
+        raise HTTPException(500, "Erreur lors de la détection des sites SharePoint.")
+    if isinstance(sites, dict) and "error" in sites:
+        raise HTTPException(400, sites["error"])
+    return {"sites": sites}
+
+
+@router.get("/sharepoint-mappings")
+def get_sharepoint_mappings(user: CurrentUser = Depends(require_min_role("admin"))):
+    """Retourne les sites SharePoint avec leurs mappages de département."""
+    org_id = str(user.organization_id)
+    with get_db() as cur:
+        cur.execute(
+            """SELECT m.site_id, m.site_name, m.dept_id, d.name AS dept_name
+               FROM sharepoint_dept_mappings m
+               LEFT JOIN departments d ON d.id = m.dept_id
+               WHERE m.org_id = %s
+               ORDER BY m.site_name""",
+            (org_id,),
+        )
+        mappings = rows(cur)
+        cur.execute(
+            "SELECT id, name FROM departments WHERE organization_id = %s ORDER BY name",
+            (org_id,),
+        )
+        depts = rows(cur)
+    return {"mappings": mappings, "departments": depts}
+
+
+class SiteMappingItem(BaseModel):
+    site_id:  str
+    dept_id:  str | None = None  # None = org-wide
+
+
+@router.put("/sharepoint-mappings")
+def save_sharepoint_mappings(
+    payload: list[SiteMappingItem],
+    user: CurrentUser = Depends(require_min_role("admin")),
+):
+    """Enregistre les mappages sites SharePoint → départements."""
+    org_id = str(user.organization_id)
+    with get_db() as cur:
+        for item in payload:
+            cur.execute(
+                """UPDATE sharepoint_dept_mappings
+                   SET dept_id = %s, updated_at = NOW()
+                   WHERE org_id = %s AND site_id = %s""",
+                (item.dept_id, org_id, item.site_id),
+            )
+    return {"ok": True, "updated": len(payload)}
+
+
 @router.post("/sync-m365")
 def sync_m365(user: CurrentUser = Depends(require_min_role("admin"))):
-    """Indexe les bibliothèques SharePoint organisationnelles (OneDrive personnel exclu)."""
-    # Purge les documents OneDrive précédemment indexés (mauvaise config antérieure)
+    """Indexe les bibliothèques SharePoint en utilisant les mappages manuels."""
     with get_db() as cur:
         cur.execute(
             "DELETE FROM knowledge_documents WHERE organization_id = %s AND source_type = 'onedrive'",

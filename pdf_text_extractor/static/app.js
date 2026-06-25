@@ -13390,6 +13390,9 @@ function knowledgeDrop(evt) {
 }
 
 async function knowledgeLoadDocs() {
+  // Charge les mappages existants si admin
+  if (["admin","owner"].includes(state.user?.role)) knowledgeLoadMappings();
+
   const loading = document.getElementById("kn-docs-loading");
   const empty   = document.getElementById("kn-docs-empty");
   const list    = document.getElementById("kn-docs-list");
@@ -13450,6 +13453,90 @@ async function knowledgeDeleteDoc(btn) {
     knowledgeLoadDocs();
   } catch(e) {
     alert(`Erreur : ${e.message}`);
+  }
+}
+
+async function knowledgeDiscoverSites() {
+  const statusEl = document.getElementById("kn-m365-status");
+  statusEl.className = "kn-upload-status";
+  statusEl.textContent = "Détection des sites SharePoint en cours…";
+  statusEl.classList.remove("hidden");
+  try {
+    await apiCall("/api/knowledge/discover-sharepoint-sites", "POST");
+    statusEl.className = "kn-upload-status ok";
+    statusEl.textContent = "✓ Sites détectés — chargement du mappage…";
+    await knowledgeLoadMappings();
+  } catch (e) {
+    statusEl.className = "kn-upload-status err";
+    statusEl.textContent = `Erreur : ${e.message}`;
+  }
+}
+
+// Cache des départements chargés pour le mappage
+let _spDepts = [];
+
+async function knowledgeLoadMappings() {
+  const wrap = document.getElementById("kn-sp-mapping-wrap");
+  const table = document.getElementById("kn-sp-mapping-table");
+  if (!wrap || !table) return;
+  try {
+    const data = await apiCall("/api/knowledge/sharepoint-mappings");
+    _spDepts = data.departments || [];
+    const mappings = data.mappings || [];
+    if (!mappings.length) {
+      wrap.style.display = "none";
+      return;
+    }
+    wrap.style.display = "block";
+    const deptOptions = `<option value="">🌐 Org-wide (tous les membres)</option>` +
+      _spDepts.map(d => `<option value="${d.id}">${esc(d.name)}</option>`).join("");
+    table.innerHTML = `
+      <table style="width:100%;border-collapse:collapse;font-size:.85rem">
+        <thead>
+          <tr style="background:#f8fafc">
+            <th style="padding:10px 14px;text-align:left;color:#475569;font-size:.78rem;font-weight:600">SITE SHAREPOINT</th>
+            <th style="padding:10px 14px;text-align:left;color:#475569;font-size:.78rem;font-weight:600">DÉPARTEMENT ASSOCIÉ</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${mappings.map(m => `
+            <tr style="border-top:1px solid #e2e8f0">
+              <td style="padding:10px 14px;font-weight:500;color:#1e293b">${esc(m.site_name)}</td>
+              <td style="padding:10px 14px">
+                <select data-site-id="${m.site_id}" class="sp-dept-select"
+                  style="width:100%;padding:6px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:.85rem;background:#fff">
+                  ${deptOptions.replace(
+                    m.dept_id ? `value="${m.dept_id}"` : `value=""`,
+                    m.dept_id ? `value="${m.dept_id}" selected` : `value="" selected`
+                  )}
+                </select>
+              </td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>`;
+  } catch (e) {
+    console.error("knowledgeLoadMappings:", e);
+  }
+}
+
+async function knowledgeSaveMappings() {
+  const selects = document.querySelectorAll(".sp-dept-select");
+  const payload = Array.from(selects).map(s => ({
+    site_id: s.dataset.siteId,
+    dept_id: s.value || null,
+  }));
+  const statusEl = document.getElementById("kn-sp-mapping-status");
+  statusEl.classList.remove("hidden");
+  statusEl.className = "kn-upload-status";
+  statusEl.textContent = "Enregistrement…";
+  try {
+    await apiCall("/api/knowledge/sharepoint-mappings", "PUT", payload);
+    statusEl.className = "kn-upload-status ok";
+    statusEl.textContent = "✓ Mappages enregistrés — relancez l'indexation pour appliquer.";
+  } catch (e) {
+    statusEl.className = "kn-upload-status err";
+    statusEl.textContent = `Erreur : ${e.message}`;
   }
 }
 

@@ -271,6 +271,60 @@ def _index_drive_items(
             stats["errors"] += 1
 
 
+def discover_m365_sites(org_id: str) -> list[dict] | dict:
+    """Détecte les sites SharePoint disponibles et les upsert dans sharepoint_dept_mappings."""
+    try:
+        from m365_collector import _auth_headers, _get_all, GRAPH
+    except Exception as exc:
+        return {"error": "m365_collector non disponible"}
+    try:
+        headers = _auth_headers(org_id)
+    except RuntimeError as exc:
+        return {"error": str(exc)}
+
+    try:
+        sites = _get_all(
+            headers,
+            f"{GRAPH}/sites",
+            {"search": "*", "$select": "id,displayName,webUrl", "$top": "50"},
+        )
+    except Exception as exc:
+        return {"error": str(exc)}
+
+    from db import get_db
+    result = []
+    for site in sites:
+        site_id   = site.get("id", "")
+        site_name = site.get("displayName", "")
+        if not site_id or not site_name:
+            continue
+        with get_db() as cur:
+            cur.execute(
+                """INSERT INTO sharepoint_dept_mappings (org_id, site_id, site_name)
+                   VALUES (%s, %s, %s)
+                   ON CONFLICT (org_id, site_id) DO UPDATE SET site_name = EXCLUDED.site_name""",
+                (org_id, site_id, site_name),
+            )
+        result.append({"site_id": site_id, "site_name": site_name})
+
+    logger.info("Discovered %d SharePoint sites for org=%s", len(result), org_id)
+    return result
+
+
+def _load_site_mappings(org_id: str) -> dict[str, str | None]:
+    """Retourne {site_id: dept_id | None} depuis sharepoint_dept_mappings."""
+    from db import get_db, rows as db_rows
+    try:
+        with get_db() as cur:
+            cur.execute(
+                "SELECT site_id, dept_id FROM sharepoint_dept_mappings WHERE org_id = %s",
+                (org_id,),
+            )
+            return {r["site_id"]: r["dept_id"] for r in db_rows(cur)}
+    except Exception:
+        return {}
+
+
 def index_m365_documents(org_id: str) -> dict:
     """Indexe toutes les bibliothèques SharePoint organisationnelles.
     Chaque site SharePoint est automatiquement associé au département NexHire
@@ -289,7 +343,10 @@ def index_m365_documents(org_id: str) -> dict:
 
     stats: dict = {"indexed": 0, "skipped": 0, "errors": 0}
 
-    # Charge les départements de l'org pour le matching
+    # Charge les mappages manuels (site_id → dept_id)
+    manual_mappings = _load_site_mappings(org_id)
+
+    # Charge les départements pour le fallback auto-matching
     from db import get_db, rows as db_rows
     with get_db() as cur:
         cur.execute(
@@ -313,10 +370,18 @@ def index_m365_documents(org_id: str) -> dict:
     for site in sites:
         site_id   = site.get("id", "")
         site_name = site.get("displayName", "SharePoint")
-        dept_id   = _match_dept(site_name, org_depts)
+
+        # Priorité : mappage manuel → auto-matching → org-wide
+        if site_id in manual_mappings:
+            dept_id = manual_mappings[site_id]
+            source = "manuel"
+        else:
+            dept_id = _match_dept(site_name, org_depts)
+            source = "auto" if dept_id else "org-wide"
+
         logger.info(
-            "Knowledge SharePoint site='%s' → dept=%s",
-            site_name, dept_id or "org-wide",
+            "Knowledge SharePoint site='%s' → dept=%s (%s)",
+            site_name, dept_id or "org-wide", source,
         )
         try:
             drives = _get_all(

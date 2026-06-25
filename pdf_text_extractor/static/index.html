@@ -3915,16 +3915,34 @@
         <div class="kn-m365-info">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:#0078d4"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
           <div>
-            <div style="font-size:.88rem;font-weight:600;color:var(--navy)">OneDrive &amp; SharePoint</div>
+            <div style="font-size:.88rem;font-weight:600;color:var(--navy)">SharePoint</div>
             <div style="font-size:.75rem;color:var(--slate-light)">Indexe PDF, DOCX, TXT de votre connecteur M365</div>
           </div>
         </div>
-        <button type="button" class="btn btn-outline btn-sm" id="kn-m365-btn" onclick="knowledgeSyncM365()">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
-          Indexer maintenant
-        </button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button type="button" class="btn btn-outline btn-sm" onclick="knowledgeDiscoverSites()">
+            🔍 Détecter les sites
+          </button>
+          <button type="button" class="btn btn-outline btn-sm" id="kn-m365-btn" onclick="knowledgeSyncM365()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+            Indexer maintenant
+          </button>
+        </div>
       </div>
       <div id="kn-m365-status" class="kn-upload-status hidden"></div>
+
+      <!-- Mappage sites SharePoint → départements (admin seulement) -->
+      <div id="kn-sp-mapping-wrap" class="admin-only hidden" style="margin-top:16px;display:none">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+          <span style="font-size:.9rem;font-weight:700;color:var(--navy)">🗂️ Mappage SharePoint → Département</span>
+          <button class="btn btn-primary btn-sm" onclick="knowledgeSaveMappings()">Enregistrer les mappages</button>
+        </div>
+        <p style="font-size:.78rem;color:var(--slate);margin:0 0 12px">
+          Associez chaque site SharePoint à un département. Les sites sans département sont visibles par toute l'organisation.
+        </p>
+        <div id="kn-sp-mapping-table"></div>
+        <div id="kn-sp-mapping-status" class="kn-upload-status hidden" style="margin-top:10px"></div>
+      </div>
 
       <!-- Upload de document -->
       <div class="kn-section-title">
