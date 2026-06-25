@@ -8,8 +8,12 @@ import os
 
 logger = logging.getLogger(__name__)
 
-CHUNK_WORDS = 400
+CHUNK_WORDS   = 400
 CHUNK_OVERLAP = 40
+
+# Seul ce dossier est indexé dans chaque site SharePoint.
+# IT doit créer ce dossier et y déposer les documents à partager.
+INDEX_FOLDER = "NexHire-Public"
 
 
 def chunk_text(text: str) -> list[str]:
@@ -393,14 +397,44 @@ def index_m365_documents(org_id: str) -> dict:
                 if drive.get("driveType") not in ("documentLibrary", "business"):
                     continue
                 drive_id = drive["id"]
-                items = _get_all(
-                    headers,
-                    f"{GRAPH}/drives/{drive_id}/root/children",
-                    {"$select": "name,id,webUrl,file,size", "$top": "200"},
-                )
+
+                # Tente d'accéder au dossier NexHire-Public uniquement
+                folder_url = f"{GRAPH}/drives/{drive_id}/root:/{INDEX_FOLDER}:/children"
+                try:
+                    import httpx as _httpx
+                    r = _httpx.get(
+                        folder_url,
+                        headers=headers,
+                        params={"$select": "name,id,webUrl,file,size", "$top": "200"},
+                        timeout=30,
+                    )
+                    if r.status_code == 404:
+                        logger.info(
+                            "Knowledge SharePoint site='%s' drive='%s' — dossier '%s' absent, site ignoré",
+                            site_name, drive.get("name"), INDEX_FOLDER,
+                        )
+                        stats["no_public_folder"] = stats.get("no_public_folder", 0) + 1
+                        continue
+                    r.raise_for_status()
+                    items = r.json().get("value", [])
+                    # Pagination
+                    next_link = r.json().get("@odata.nextLink")
+                    while next_link:
+                        rp = _httpx.get(next_link, headers=headers, timeout=30)
+                        rp.raise_for_status()
+                        items.extend(rp.json().get("value", []))
+                        next_link = rp.json().get("@odata.nextLink")
+                except Exception as folder_exc:
+                    logger.error(
+                        "Knowledge SharePoint site='%s' folder='%s' error: %s",
+                        site_name, INDEX_FOLDER, folder_exc,
+                    )
+                    stats["errors"] += 1
+                    continue
+
                 _index_drive_items(
                     headers, drive_id, items, org_id, "sharepoint", stats,
-                    title_prefix=site_name,
+                    title_prefix=f"{site_name}/{INDEX_FOLDER}",
                     department_id=dept_id,
                 )
         except Exception as exc:

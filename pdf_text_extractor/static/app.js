@@ -13563,11 +13563,15 @@ async function knowledgeSyncM365() {
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(data.detail || `Erreur ${res.status}`);
 
-    const indexed = data.indexed ?? 0;
-    const skipped = data.skipped ?? 0;
-    const errors  = data.errors  ?? 0;
-    statusEl.className = "kn-upload-status ok";
-    statusEl.textContent = `✓ Synchronisation terminée — ${indexed} fichier${indexed > 1 ? "s" : ""} indexé${indexed > 1 ? "s" : ""}, ${skipped} ignoré${skipped > 1 ? "s" : ""}${errors > 0 ? `, ${errors} erreur${errors > 1 ? "s" : ""}` : ""}`;
+    const indexed  = data.indexed          ?? 0;
+    const skipped  = data.skipped          ?? 0;
+    const errors   = data.errors           ?? 0;
+    const noFolder = data.no_public_folder ?? 0;
+    let msg = `✓ Synchronisation terminée — ${indexed} fichier${indexed !== 1 ? "s" : ""} indexé${indexed !== 1 ? "s" : ""}, ${skipped} ignoré${skipped !== 1 ? "s" : ""}`;
+    if (errors  > 0) msg += `, ${errors} erreur${errors !== 1 ? "s" : ""}`;
+    if (noFolder > 0) msg += ` · ⚠️ ${noFolder} site${noFolder !== 1 ? "s" : ""} sans dossier "NexHire-Public" (non indexé${noFolder !== 1 ? "s" : ""})`;
+    statusEl.className = noFolder > 0 ? "kn-upload-status" : "kn-upload-status ok";
+    statusEl.textContent = msg;
     knowledgeLoadDocs();
   } catch(e) {
     const msg = e.name === "AbortError" ? "Délai dépassé." : e.message;
