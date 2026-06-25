@@ -101,28 +101,26 @@ def org_chart(user: CurrentUser = Depends(require_min_role("user"))):
 def list_members(user: CurrentUser = Depends(require_min_role("user"))):
     """Retourne tous les membres de l'organisation + invités mal rattachés (org incorrecte)."""
     with get_db() as cur:
+        # Requête unique (UNION) pour cohérence snapshot — évite race condition
+        # entre membres org et invités mal rattachés (trigger Supabase)
         cur.execute(
-            """SELECT id, email, full_name, role, is_active, created_at, FALSE AS conflicted
-               FROM users
-               WHERE organization_id = %s
-               ORDER BY created_at""",
-            (user.organization_id,),
+            """
+            SELECT id, email, full_name, role, is_active, created_at, FALSE AS conflicted
+            FROM users
+            WHERE organization_id = %s
+
+            UNION
+
+            SELECT u.id, u.email, u.full_name, u.role, u.is_active, u.created_at, TRUE AS conflicted
+            FROM users u
+            JOIN pending_invitations pi ON pi.email = u.email AND pi.org_id = %s
+            WHERE (u.organization_id IS NULL OR u.organization_id != %s)
+
+            ORDER BY created_at
+            """,
+            (user.organization_id, user.organization_id, user.organization_id),
         )
         members = rows(cur)
-        # Invités par cette org mais toujours dans une org différente (trigger Supabase)
-        cur.execute(
-            """SELECT u.id, u.email, u.full_name, u.role, u.is_active, u.created_at, TRUE AS conflicted
-               FROM users u
-               JOIN pending_invitations pi ON pi.email = u.email AND pi.org_id = %s
-               WHERE (u.organization_id IS NULL OR u.organization_id != %s)""",
-            (user.organization_id, user.organization_id),
-        )
-        conflicted = rows(cur)
-
-    seen = {m["id"] for m in members}
-    for c in conflicted:
-        if c["id"] not in seen:
-            members.append(c)
 
     return {"members": members, "total": len(members)}
 

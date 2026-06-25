@@ -21,7 +21,7 @@ from psycopg2.pool import ThreadedConnectionPool
 @lru_cache(maxsize=1)
 def _pool() -> ThreadedConnectionPool:
     dsn = os.environ["DATABASE_URL"]
-    if "sslmode" not in dsn:
+    if "sslmode" not in dsn and os.environ.get("ENVIRONMENT", "production") == "production":
         sep = "&" if "?" in dsn else "?"
         dsn += f"{sep}sslmode=require"
     return ThreadedConnectionPool(minconn=2, maxconn=10, dsn=dsn)

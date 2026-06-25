@@ -116,6 +116,7 @@ def list_documents(
           {dept_clause}
         GROUP BY title, source_type, source_url, department_id
         ORDER BY MAX(synced_at) DESC
+        LIMIT 500
     """
     with get_db() as cur:
         cur.execute(sql, params)

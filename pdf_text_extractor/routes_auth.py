@@ -285,7 +285,11 @@ def refresh_token(payload: RefreshPayload):
 
 @router.get("/me")
 def me(user: CurrentUser = Depends(get_current_user)):
+    import logging as _logging
+    _log = _logging.getLogger(__name__)
     superadmin_emails = {e.strip().lower() for e in os.environ.get("SUPERADMIN_EMAILS", "").split(",") if e.strip()}
+    if not superadmin_emails:
+        _log.warning("SUPERADMIN_EMAILS non configuré — aucun super-administrateur actif.")
 
     dept_types: list[str] = []
     logo_url:   str | None = None

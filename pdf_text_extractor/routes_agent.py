@@ -150,17 +150,23 @@ def _connected_connectors_for_user(user: CurrentUser) -> list[str]:
                     (user.organization_id, dept_ids),
                 )
             return [r["connector_type"] for r in rows(cur)]
-    except Exception:
-        # Table connector_departments pas encore créée → retourne tout
-        try:
-            with get_db() as cur:
-                cur.execute(
-                    "SELECT connector_type FROM connectors WHERE organization_id = %s AND status = 'connected'",
-                    (user.organization_id,),
-                )
-                return [r["connector_type"] for r in rows(cur)]
-        except Exception:
-            return []
+    except Exception as exc:
+        import psycopg2
+        # Dégradation gracieuse UNIQUEMENT si la table connector_departments n'existe pas encore
+        if isinstance(exc, psycopg2.errors.UndefinedTable):
+            logger.warning("connector_departments table manquante — fallback sans filtre dept. Exécutez la migration SQL.")
+            try:
+                with get_db() as cur:
+                    cur.execute(
+                        "SELECT connector_type FROM connectors WHERE organization_id = %s AND status = 'connected'",
+                        (user.organization_id,),
+                    )
+                    return [r["connector_type"] for r in rows(cur)]
+            except Exception:
+                return []
+        # Toute autre erreur remonte pour éviter de masquer un vrai problème
+        logger.error("Erreur get_allowed_connectors: %s", exc)
+        raise
 
 
 def _get_user_dept_type(user_id: str) -> str | None:

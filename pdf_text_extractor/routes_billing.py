@@ -32,15 +32,20 @@ def _stripe(method: str, path: str, data: dict | None = None) -> dict:
     if not key:
         raise HTTPException(status_code=503, detail="Billing non configuré (STRIPE_SECRET_KEY manquant).")
     headers = {"Authorization": f"Bearer {key}"}
-    with httpx.Client(timeout=15) as client:
-        if method == "GET":
-            resp = client.get(f"{STRIPE_API}{path}", headers=headers, params=data)
-        elif method == "POST":
-            resp = client.post(f"{STRIPE_API}{path}", headers=headers, data=data)
-        elif method == "DELETE":
-            resp = client.delete(f"{STRIPE_API}{path}", headers=headers)
-        else:
-            raise ValueError(f"Méthode inconnue: {method}")
+    try:
+        with httpx.Client(timeout=15) as client:
+            if method == "GET":
+                resp = client.get(f"{STRIPE_API}{path}", headers=headers, params=data)
+            elif method == "POST":
+                resp = client.post(f"{STRIPE_API}{path}", headers=headers, data=data)
+            elif method == "DELETE":
+                resp = client.delete(f"{STRIPE_API}{path}", headers=headers)
+            else:
+                raise ValueError(f"Méthode inconnue: {method}")
+    except httpx.TimeoutException:
+        raise HTTPException(status_code=503, detail="Stripe temporairement inaccessible — réessayez dans quelques secondes.")
+    except httpx.RequestError as exc:
+        raise HTTPException(status_code=503, detail=f"Erreur réseau Stripe : {exc}")
     if resp.status_code >= 400:
         err = resp.json().get("error", {}).get("message", resp.text)
         raise HTTPException(status_code=resp.status_code, detail=f"Stripe: {err}")

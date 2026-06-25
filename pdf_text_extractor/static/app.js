@@ -2624,6 +2624,8 @@ async function exportReport(fmt) {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
     apiCall("/api/analytics/event", "POST", { event_type: "export", meta: { format: fmt, period: period_label } }).catch(()=>{});
+  } catch (e) {
+    alert("Erreur export : " + (e.message || e));
   } finally {
     if (btn) { btn.disabled = false; btn.textContent = origText; }
   }

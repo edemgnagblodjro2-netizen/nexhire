@@ -4,11 +4,15 @@ import os
 from dataclasses import dataclass
 from functools import lru_cache
 
+import logging
+
 import jwt
 from jwt import PyJWKClient
 from fastapi import Header, HTTPException, status
 
 from db import get_db, row as db_row, rows as db_rows
+
+logger = logging.getLogger(__name__)
 
 SUPABASE_URL = os.getenv("SUPABASE_URL", "")
 SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET", "")
@@ -60,14 +64,17 @@ def _verify_token(token: str) -> dict:
         )
     except jwt.exceptions.PyJWKClientConnectionError as exc:
         # Panne réseau uniquement → tentative HS256 en dev
+        logger.warning("JWKS inaccessible (%s) — tentative fallback HS256", exc)
         _network_error = exc
-    except jwt.exceptions.PyJWKClientError:
+    except jwt.exceptions.PyJWKClientError as exc:
         # Kid inconnu, JWKS corrompu, etc. → toujours 401, jamais HS256
+        logger.warning("JWKS erreur clé : %s", exc)
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Jeton invalide ou expiré.",
         )
     except jwt.PyJWTError as exc:
+        logger.debug("JWT invalide : %s", type(exc).__name__)
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Jeton invalide ou expiré.",
@@ -75,6 +82,7 @@ def _verify_token(token: str) -> dict:
 
     # Fallback HS256 — développement local uniquement (ALLOW_HS256_FALLBACK=true)
     if not _hs256_fallback_allowed():
+        logger.error("JWKS inaccessible en production et ALLOW_HS256_FALLBACK désactivé.")
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="Service d'authentification temporairement indisponible.",
