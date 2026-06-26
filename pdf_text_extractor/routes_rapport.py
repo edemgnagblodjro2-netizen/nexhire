@@ -25,7 +25,7 @@ def _cobrand_right(partner_name: str, logo_url: str) -> str:
         if logo_url else
         f'<strong class="cobrand-partner-name">{partner_name}</strong>'
     )
-    return f'{partner_el}<span class="cobrand-x">×</span>{platform}'
+    return f'{partner_el}<span class="cobrand-x">|</span>{platform}'
 
 
 _MONTHS_FR = [
