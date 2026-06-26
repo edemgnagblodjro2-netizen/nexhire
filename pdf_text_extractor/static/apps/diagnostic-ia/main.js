@@ -415,9 +415,17 @@ function _showResults(container) {
         ${recsHtml}
       </div>
 
+      <div class="dia-section dia-rapport-section">
+        <h3>📄 Votre rapport complet</h3>
+        <p style="font-size:14px;color:var(--dia-muted);margin-bottom:16px">Accédez à votre rapport détaillé : forces, plan d'action 30/90/180 jours et recommandations ATLAS.</p>
+        <a class="dia-btn-primary" id="dia-rapport-link" href="/rapport/${r.session_id}" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">
+          Voir mon rapport complet →
+        </a>
+      </div>
+
       <div class="dia-section dia-email-section" id="dia-email-section">
-        <h3>Recevoir votre rapport par courriel</h3>
-        <p>Entrez votre courriel pour recevoir un résumé de votre diagnostic. Optionnel.</p>
+        <h3>Recevoir une copie par courriel</h3>
+        <p>Optionnel — nous vous enverrons le lien vers votre rapport.</p>
         <form id="dia-email-form" class="dia-email-form" novalidate>
           <input id="dia-email-input" type="email" placeholder="votre@courriel.com" maxlength="254" />
           <button type="submit" class="dia-btn-secondary">Envoyer</button>
@@ -436,10 +444,15 @@ function _showResults(container) {
     e.preventDefault();
     const email = _el("dia-email-input").value.trim();
     if (!email) return;
+    const btn = _el("dia-email-form").querySelector("button");
+    btn.disabled = true;
+    btn.textContent = "…";
     try {
-      await _patch(`${API}/session/${_state.sessionId}/email`, { company_email: email });
+      const data = await _patch(`${API}/session/${_state.sessionId}/email`, { company_email: email });
       const msg = _el("dia-email-msg");
-      msg.textContent = "✅ Rapport envoyé — vérifiez votre boîte de réception.";
+      msg.textContent = data.email_sent
+        ? "✅ Courriel envoyé — vérifiez votre boîte de réception."
+        : "✅ Courriel enregistré.";
       msg.style.display = "block";
       msg.style.color = "#10b981";
       _el("dia-email-section").querySelector("form").style.display = "none";
@@ -448,6 +461,8 @@ function _showResults(container) {
       msg.textContent = "Erreur lors de l'envoi. Réessayez.";
       msg.style.display = "block";
       msg.style.color = "#ef4444";
+      btn.disabled = false;
+      btn.textContent = "Envoyer";
     }
   });
 

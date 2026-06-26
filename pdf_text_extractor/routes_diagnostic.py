@@ -247,12 +247,35 @@ class EmailPayload(BaseModel):
 def save_email(request: Request, session_id: str, payload: EmailPayload):
     with get_db() as cur:
         cur.execute(
-            "UPDATE diagnostic_sessions SET company_email = %s WHERE id = %s AND status = 'completed' RETURNING id",
+            """
+            UPDATE diagnostic_sessions SET company_email = %s
+            WHERE id = %s AND status = 'completed'
+            RETURNING id, company_name, imai_score, niveau,
+                      (SELECT name FROM partners WHERE id = diagnostic_sessions.partner_id) AS partner_name,
+                      (SELECT primary_color FROM partners WHERE id = diagnostic_sessions.partner_id) AS primary_color
+            """,
             (str(payload.company_email), session_id),
         )
-        if not row(cur):
+        sess = row(cur)
+        if not sess:
             raise HTTPException(status_code=404, detail="Session introuvable ou non complétée.")
-    return JSONResponse(content={"ok": True}, headers=_NO_CACHE)
+
+    from email_service import send_diagnostic_rapport_email
+    import os
+    app_url = os.environ.get("APP_URL", "https://agenthub.nexhire.ca")
+    rapport_url = f"{app_url}/rapport/{session_id}"
+
+    email_sent = send_diagnostic_rapport_email(
+        to_email=str(payload.company_email),
+        company_name=sess["company_name"] or "",
+        partner_name=sess["partner_name"] or "AgentHub",
+        score=float(sess["imai_score"] or 0),
+        niveau=sess["niveau"] or "debutant",
+        primary_color=sess["primary_color"] or "#2563eb",
+        rapport_url=rapport_url,
+    )
+
+    return JSONResponse(content={"ok": True, "email_sent": email_sent, "rapport_url": rapport_url}, headers=_NO_CACHE)
 
 
 # ── GET /api/diagnostic/session/{id}/result — Récupérer les résultats ────────

@@ -136,6 +136,7 @@ from routes_import                 import router as import_router
 from routes_knowledge              import router as knowledge_router
 from routes_workspace              import router as workspace_router
 from routes_diagnostic             import router as diagnostic_router
+from routes_rapport                import router as rapport_router
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -232,6 +233,7 @@ def create_app(
     app.include_router(knowledge_router)
     app.include_router(workspace_router)
     app.include_router(diagnostic_router)
+    app.include_router(rapport_router)
     app.state.storage = storage or DocumentStore.from_env()
     app.state.assistant = assistant or AssistantService.from_env()
 

@@ -785,6 +785,70 @@ def send_subscription_confirmation(
     return _send(to_email, subject, html)
 
 
+def send_diagnostic_rapport_email(
+    to_email: str,
+    company_name: str,
+    partner_name: str,
+    score: float,
+    niveau: str,
+    primary_color: str,
+    rapport_url: str,
+) -> bool:
+    niveau_labels = {"debutant": "Débutant", "intermediaire": "Intermédiaire", "avance": "Avancé"}
+    niveau_colors = {"debutant": "#ef4444",  "intermediaire": "#f59e0b",       "avance": "#10b981"}
+    niveau_label = niveau_labels.get(niveau, niveau)
+    nc = niveau_colors.get(niveau, "#6366f1")
+    subject = f"Votre rapport de maturité IA — {company_name}"
+    html = f"""<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/></head>
+<body style="font-family:Arial,sans-serif;background:#f4f6f9;margin:0;padding:32px 16px">
+  <div style="max-width:560px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.1)">
+
+    <div style="background:{primary_color};padding:28px 36px;color:#fff">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;opacity:.75;margin-bottom:8px">Accélérateur IA · {partner_name}</div>
+      <div style="font-size:22px;font-weight:900">Votre rapport est prêt</div>
+      <div style="font-size:13px;opacity:.82;margin-top:4px">Rapport de maturité IA — IMAI /100</div>
+    </div>
+
+    <div style="padding:28px 36px">
+      <p style="color:#475569;font-size:14px;margin:0 0 20px">Bonjour,</p>
+      <p style="color:#475569;font-size:14px;margin:0 0 24px;line-height:1.65">
+        Votre diagnostic <strong>Parcours IA</strong> pour <strong>{company_name}</strong> est maintenant disponible.
+        Voici un résumé de vos résultats :
+      </p>
+
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:20px 24px;margin-bottom:24px;text-align:center">
+        <div style="font-size:48px;font-weight:900;color:{nc};line-height:1">{score:.0f}</div>
+        <div style="font-size:13px;color:#94a3b8;margin-bottom:8px">/100 — Indice IMAI</div>
+        <span style="display:inline-block;background:{nc}20;color:{nc};padding:5px 18px;border-radius:99px;font-size:14px;font-weight:700">{niveau_label}</span>
+      </div>
+
+      <div style="text-align:center;margin:24px 0">
+        <a href="{rapport_url}"
+           style="display:inline-block;background:{primary_color};color:#fff;padding:14px 36px;
+                  border-radius:10px;font-weight:700;text-decoration:none;font-size:15px">
+          Voir mon rapport complet →
+        </a>
+      </div>
+
+      <p style="color:#94a3b8;font-size:12px;text-align:center;margin:0">
+        Ce rapport est confidentiel et généré pour {company_name} dans le cadre du programme {partner_name}.
+      </p>
+    </div>
+
+    <div style="background:#f8fafc;padding:14px 36px;text-align:center;border-top:1px solid #e2e8f0">
+      <p style="margin:0;color:#94a3b8;font-size:.75rem">
+        Propulsé par <strong style="color:#0f172a">AgentHub Platform</strong> ·
+        <a href="{APP_URL}" style="color:#6366f1">agenthub.nexhire.ca</a> · © 2026 CivicAI Inc.
+      </p>
+    </div>
+  </div>
+</body>
+</html>"""
+    return _send(to_email, subject, html)
+
+
 def send_m365_token_expiry_alert(
     to_email: str,
     org_name: str,
