@@ -71,7 +71,7 @@ def get_rapport(request: Request, session_id: str):
                    s.score_strategie, s.score_personnes, s.score_processus,
                    s.score_technologies, s.score_gouvernance,
                    s.completed_at,
-                   p.name AS partner_name, p.primary_color
+                   p.name AS partner_name, p.primary_color, p.logo_url
             FROM diagnostic_sessions s
             JOIN partners p ON p.id = s.partner_id
             WHERE s.id = %s AND s.status = 'completed'
@@ -108,6 +108,7 @@ def get_rapport(request: Request, session_id: str):
     niveau     = sess["niveau"] or "debutant"
     primary    = sess["primary_color"] or "#2563eb"
     partner_nm = sess["partner_name"] or "AgentHub"
+    logo_url   = sess.get("logo_url") or ""
 
     dim_scores = {
         "strategie":    float(sess["score_strategie"]    or 0),
@@ -141,6 +142,7 @@ def get_rapport(request: Request, session_id: str):
         niveau=niveau,
         primary=primary,
         partner_name=partner_nm,
+        logo_url=logo_url,
         dim_scores=dim_scores,
         weakest_3=weakest_3,
         forces_2=forces_2,
@@ -160,7 +162,7 @@ def _pct_color(val: float) -> str:
 
 def _build_html(
     company_name, sector, size_range, priority_challenge,
-    date_str, score, niveau, primary, partner_name,
+    date_str, score, niveau, primary, partner_name, logo_url,
     dim_scores, weakest_3, forces_2, faiblesses_2,
     recommendations, bench,
 ) -> str:
@@ -287,6 +289,14 @@ def _build_html(
 
       .page { max-width: 960px; margin: 24px auto 48px; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,.12); }
 
+      .cobrand-bar { background: #fff; border-bottom: 1px solid #e2e8f0; padding: 10px 48px; display: flex; justify-content: space-between; align-items: center; }
+      .cobrand-program { font-size: 12px; font-weight: 600; color: #64748b; letter-spacing: .02em; }
+      .cobrand-right { display: flex; align-items: center; gap: 10px; }
+      .cobrand-logo { height: 26px; width: auto; object-fit: contain; }
+      .cobrand-partner-name { font-size: 13px; font-weight: 700; color: #0f172a; }
+      .cobrand-x { font-size: 14px; color: #94a3b8; }
+      .cobrand-platform { font-size: 13px; font-weight: 700; color: #6366f1; }
+
       .rpt-header { padding: 36px 48px 32px; color: #fff; }
       .rpt-eyebrow { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; opacity: .75; margin-bottom: 8px; }
       .rpt-title { font-size: 30px; font-weight: 900; letter-spacing: -.5px; margin-bottom: 4px; }
@@ -377,6 +387,12 @@ def _build_html(
       }
     """
 
+    partner_logo_html = (
+        f'<img class="cobrand-logo" src="{logo_url}" alt="{partner_name}">'
+        if logo_url else
+        f'<strong class="cobrand-partner-name">{partner_name}</strong>'
+    )
+
     return f"""<!doctype html>
 <html lang="fr">
 <head>
@@ -393,9 +409,19 @@ def _build_html(
 
   <div class="page">
 
+    <!-- Co-branding -->
+    <div class="cobrand-bar">
+      <span class="cobrand-program">Programme Accélérateur IA PME</span>
+      <div class="cobrand-right">
+        {partner_logo_html}
+        <span class="cobrand-x">×</span>
+        <span class="cobrand-platform">AgentHub Platform</span>
+      </div>
+    </div>
+
     <!-- En-tête -->
     <div class="rpt-header" style="background:{primary}">
-      <div class="rpt-eyebrow">Accélérateur IA · {partner_name}</div>
+      <div class="rpt-eyebrow">Programme Accélérateur IA PME · {partner_name}</div>
       <div class="rpt-title">Rapport de maturité IA</div>
       <div class="rpt-subtitle">Indice de Maturité en Intelligence Artificielle (IMAI /100)</div>
       <div class="rpt-powered">Propulsé par AgentHub Platform · © 2026 CivicAI Inc.</div>
@@ -469,7 +495,7 @@ def _build_html(
         {recs_html}
         <div class="atlas-note">
           <span class="atlas-av">🤖</span>
-          <p>Ces recommandations sont générées par <strong>ATLAS</strong>, votre conseiller IA, en fonction des résultats spécifiques de {company_name}. Elles constituent un point de départ — votre conseiller CCI3R peut vous accompagner dans leur mise en œuvre.</p>
+          <p>Ces recommandations sont générées par <strong>ATLAS</strong>, votre conseiller IA, en fonction des résultats spécifiques de {company_name}. Elles constituent un point de départ — votre conseiller {partner_name} peut vous accompagner dans leur mise en œuvre.</p>
         </div>
       </div>
 
@@ -477,7 +503,7 @@ def _build_html(
 
     <!-- Pied de page -->
     <div class="rpt-footer">
-      <div class="footer-brand">Propulsé par <strong>AgentHub Platform</strong> · {partner_name}</div>
+      <div class="footer-brand"><strong>AgentHub Platform</strong> · Powered by <strong>CivicAI Inc.</strong></div>
       <div class="footer-conf">Rapport confidentiel{f" · Généré le {date_str}" if date_str else ""} · Pour usage interne uniquement</div>
     </div>
 
@@ -530,7 +556,7 @@ _REG_DIM_RECS: dict[str, str] = {
 def get_rapport_regional(request: Request, partner_slug: str):
     with get_db() as cur:
         cur.execute(
-            "SELECT id, name, primary_color FROM partners WHERE slug = %s AND is_active = true LIMIT 1",
+            "SELECT id, name, primary_color, logo_url FROM partners WHERE slug = %s AND is_active = true LIMIT 1",
             (partner_slug,),
         )
         partner = row(cur)
@@ -614,13 +640,14 @@ def get_rapport_regional(request: Request, partner_slug: str):
     return HTMLResponse(content=_build_regional_html(
         partner_name=partner["name"],
         primary=partner["primary_color"] or "#2563eb",
+        logo_url=partner.get("logo_url") or "",
         d=d,
         use_demo=use_demo,
         today_str=today_str,
     ))
 
 
-def _build_regional_html(partner_name: str, primary: str, d: dict, use_demo: bool, today_str: str) -> str:
+def _build_regional_html(partner_name: str, primary: str, logo_url: str, d: dict, use_demo: bool, today_str: str) -> str:
     total      = d["total"]
     imai_avg   = d["imai_avg"]
     niveaux    = d["niveaux"]
@@ -755,6 +782,13 @@ def _build_regional_html(partner_name: str, primary: str, d: dict, use_demo: boo
       .print-bar button { background: #6366f1; color: #fff; border: none; border-radius: 8px; padding: 10px 28px; font-size: 14px; font-weight: 700; cursor: pointer; }
       .print-bar button:hover { opacity: .9; }
       .page { max-width: 960px; margin: 24px auto 48px; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,.12); }
+      .cobrand-bar { background: #fff; border-bottom: 1px solid #e2e8f0; padding: 10px 48px; display: flex; justify-content: space-between; align-items: center; }
+      .cobrand-program { font-size: 12px; font-weight: 600; color: #64748b; letter-spacing: .02em; }
+      .cobrand-right { display: flex; align-items: center; gap: 10px; }
+      .cobrand-logo { height: 26px; width: auto; object-fit: contain; }
+      .cobrand-partner-name { font-size: 13px; font-weight: 700; color: #0f172a; }
+      .cobrand-x { font-size: 14px; color: #94a3b8; }
+      .cobrand-platform { font-size: 13px; font-weight: 700; color: #6366f1; }
       .rpt-header { padding: 36px 48px 32px; color: #fff; }
       .rpt-eyebrow { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; opacity: .75; margin-bottom: 8px; }
       .rpt-title { font-size: 30px; font-weight: 900; letter-spacing: -.5px; margin-bottom: 4px; }
@@ -841,12 +875,18 @@ def _build_regional_html(partner_name: str, primary: str, d: dict, use_demo: boo
       }
     """
 
+    reg_logo_html = (
+        f'<img class="cobrand-logo" src="{logo_url}" alt="{partner_name}">'
+        if logo_url else
+        f'<strong class="cobrand-partner-name">{partner_name}</strong>'
+    )
+
     return f"""<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Rapport régional — Accélérateur IA · {partner_name}</title>
+  <title>Rapport régional — Programme Accélérateur IA PME · {partner_name}</title>
   <style>{css}</style>
 </head>
 <body>
@@ -855,8 +895,18 @@ def _build_regional_html(partner_name: str, primary: str, d: dict, use_demo: boo
   </div>
   <div class="page">
 
+    <!-- Co-branding -->
+    <div class="cobrand-bar">
+      <span class="cobrand-program">Programme Accélérateur IA PME</span>
+      <div class="cobrand-right">
+        {reg_logo_html}
+        <span class="cobrand-x">×</span>
+        <span class="cobrand-platform">AgentHub Platform</span>
+      </div>
+    </div>
+
     <div class="rpt-header" style="background:{primary}">
-      <div class="rpt-eyebrow">Accélérateur IA · {partner_name}</div>
+      <div class="rpt-eyebrow">Programme Accélérateur IA PME · {partner_name}</div>
       <div class="rpt-title">Rapport régional {demo_badge}</div>
       <div class="rpt-subtitle">Synthèse complète — indicateurs, tendances et recommandations sectorielles</div>
       <div class="rpt-powered">Propulsé par AgentHub Platform · © 2026 CivicAI Inc. · Généré le {today_str}</div>
@@ -962,7 +1012,7 @@ def _build_regional_html(partner_name: str, primary: str, d: dict, use_demo: boo
     </div>
 
     <div class="rpt-footer">
-      <div class="footer-brand">Propulsé par <strong>AgentHub Platform</strong> · {partner_name}</div>
+      <div class="footer-brand"><strong>AgentHub Platform</strong> · Powered by <strong>CivicAI Inc.</strong></div>
       <div class="footer-conf">Rapport confidentiel · Réservé à l'usage interne de {partner_name}</div>
     </div>
 

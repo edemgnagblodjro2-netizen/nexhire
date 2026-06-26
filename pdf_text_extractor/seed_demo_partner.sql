@@ -8,8 +8,8 @@
 INSERT INTO partners (slug, name, primary_color, plan, is_active)
 VALUES (
   'demo',
-  'Programme Démonstration',
-  '#7c3aed',   -- violet — distinct de CCI3R pour reconnaître visuellement le mode démo
+  'CCI3R',
+  '#7c3aed',   -- violet — distinct du bleu CCI3R pour reconnaître visuellement le mode démo
   'starter',
   true
 )
@@ -50,5 +50,5 @@ DO UPDATE SET
   is_demo    = true;
 
 -- ── Résultat attendu ────────────────────────────────────────────────
--- /workspace/demo  →  Accélérateur IA Programme Démonstration (violet)
--- /workspace/cci3r →  Accélérateur IA CCI3R (bleu)
+-- /workspace/demo  →  Accélérateur IA CCI3R (violet — mode démo)
+-- /workspace/cci3r →  Accélérateur IA CCI3R (bleu — production)
