@@ -962,8 +962,8 @@ def _build_regional_html(partner_name: str, primary: str, logo_url: str, d: dict
       <!-- Proposition de projet pilote -->
       <div class="pilot-box">
         <div class="pilot-header">
-          <span class="pilot-badge">Proposition</span>
-          <strong>Projet pilote · Phase 1 — 5 à 10 entreprises membres</strong>
+          <span class="pilot-badge">Programme conjoint</span>
+          <strong>{partner_name} × AgentHub Platform — Phase 1 · 5 à 10 entreprises membres</strong>
         </div>
         <div class="pilot-flow">
           <div class="pilot-step"><div class="pilot-step-icon">📋</div><div class="pilot-step-label">Diagnostic</div></div>
@@ -978,34 +978,35 @@ def _build_regional_html(partner_name: str, primary: str, logo_url: str, d: dict
         </div>
       </div>
 
-      <!-- Impact attendu -->
+      <!-- Complémentarité du programme -->
       <div class="section impact-section">
-        <h2 class="section-title">Impact attendu</h2>
+        <h2 class="section-title">Complémentarité du programme</h2>
         <div class="impact-grid">
           <div class="impact-col">
-            <div class="impact-title">Pour les PMEs</div>
+            <div class="impact-title">Les PMEs bénéficient de</div>
             <ul>
-              <li>✓ Comprendre leur maturité IA</li>
-              <li>✓ Prioriser leurs investissements</li>
-              <li>✓ Réduire les risques</li>
-              <li>✓ Accélérer leur transformation</li>
+              <li>✓ Un diagnostic de maturité IA</li>
+              <li>✓ Un plan d'action personnalisé</li>
+              <li>✓ Un accompagnement structuré</li>
+              <li>✓ Une mesure concrète des progrès</li>
             </ul>
           </div>
           <div class="impact-col">
-            <div class="impact-title">Pour {partner_name}</div>
+            <div class="impact-title">{partner_name} apporte</div>
             <ul>
-              <li>✓ Comprendre les besoins du territoire</li>
-              <li>✓ Adapter les formations</li>
-              <li>✓ Créer de nouveaux services</li>
-              <li>✓ Mesurer l'impact économique</li>
+              <li>✓ Sa connaissance des entreprises</li>
+              <li>✓ Sa crédibilité et son réseau</li>
+              <li>✓ La mobilisation des membres</li>
+              <li>✓ L'ancrage dans le territoire</li>
             </ul>
           </div>
           <div class="impact-col">
-            <div class="impact-title">Pour les partenaires</div>
+            <div class="impact-title">AgentHub apporte</div>
             <ul>
-              <li>✓ Identifier les besoins des PMEs</li>
-              <li>✓ Être recommandés par la Chambre</li>
-              <li>✓ Accompagner les entreprises</li>
+              <li>✓ La plateforme et le diagnostic</li>
+              <li>✓ ATLAS, conseiller IA personnel</li>
+              <li>✓ Les analyses et tableaux de bord</li>
+              <li>✓ Les outils de mesure d'impact</li>
             </ul>
           </div>
         </div>
@@ -1014,9 +1015,11 @@ def _build_regional_html(partner_name: str, primary: str, logo_url: str, d: dict
     </div>
 
     <div class="footer-legal">
-      Ce rapport est généré automatiquement par <strong>AgentHub Platform</strong> à partir de données agrégées
-      et anonymisées recueillies auprès des entreprises participantes. Son objectif est d'aider {partner_name}
-      à orienter ses programmes, ses formations et ses initiatives en matière d'intelligence artificielle.
+      Ce rapport s'inscrit dans le cadre du programme conjoint <strong>{partner_name} × AgentHub Platform</strong>.
+      Les données sont agrégées et anonymisées à partir des diagnostics réalisés par les entreprises participantes.
+      <strong>{partner_name}</strong> apporte sa connaissance du territoire, sa crédibilité et son réseau de membres.
+      <strong>AgentHub Platform</strong> fournit la plateforme, les analyses et les outils de mesure
+      pour accompagner les PMEs dans leur progression vers l'intelligence artificielle.
     </div>
 
     <div class="rpt-footer">
