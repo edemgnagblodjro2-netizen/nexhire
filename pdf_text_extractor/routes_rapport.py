@@ -517,11 +517,11 @@ _DEMO_REGIONAL = {
 }
 
 _REG_DIM_RECS: dict[str, str] = {
-    "gouvernance":  "Animer un atelier pratique « Gouvernance IA responsable » (2 h) pour les PMEs dont le score est inférieur à 50/100.",
-    "personnes":    "Proposer un programme de formation Copilot / IA générative en partenariat avec un organisme de formation accrédité.",
-    "processus":    "Organiser une clinique d'automatisation : accompagnement individuel de 3 h pour cartographier les processus à automatiser.",
-    "strategie":    "Faciliter des cercles stratégiques entre dirigeants (groupes de 6–8 PMEs) pour co-construire leur feuille de route IA.",
-    "technologies": "Négocier un accès groupé à des outils IA (Copilot, Power BI) pour réduire les coûts d'entrée pour les membres.",
+    "gouvernance":  "Mettre en place un parcours régional « Gouvernance IA responsable » afin d'accompagner les entreprises dont le score est inférieur à 50/100 vers des pratiques d'utilisation responsable de l'IA.",
+    "personnes":    "Développer un programme régional de montée en compétences en IA générative, en mobilisant les partenaires formation de la CCI3R pour couvrir l'ensemble du territoire.",
+    "processus":    "Identifier un premier groupe pilote de PMEs souhaitant automatiser leurs processus afin de documenter les gains obtenus et créer des cas de succès régionaux valorisables auprès des membres.",
+    "strategie":    "Structurer un programme d'accompagnement stratégique pour aider les dirigeants à formaliser leur feuille de route IA sur 12 à 24 mois, avec des indicateurs de succès mesurables.",
+    "technologies": "Négocier un accès groupé aux outils IA pour les membres de la CCI3R, réduisant les barrières à l'entrée et accélérant le déploiement à l'échelle du territoire.",
 }
 
 
@@ -795,11 +795,32 @@ def _build_regional_html(partner_name: str, primary: str, d: dict, use_demo: boo
       .rec-num { flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: 800; }
       .rec-item strong { font-size: 14px; font-weight: 700; display: block; margin-bottom: 5px; }
       .rec-item p { font-size: 13px; color: #64748b; line-height: 1.6; margin: 0; }
-      .next-steps { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 20px 24px; }
-      .next-steps h3 { font-size: 15px; font-weight: 700; color: #166534; margin-bottom: 12px; }
-      .next-steps ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-      .next-steps li { font-size: 13px; color: #166534; }
-      .rpt-footer { background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 20px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+      .pilot-box { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 24px 28px; margin-bottom: 28px; }
+      .pilot-header { margin-bottom: 20px; }
+      .pilot-badge { display: inline-block; background: #eef2ff; color: #4f46e5; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 3px 10px; border-radius: 4px; margin-right: 10px; vertical-align: middle; }
+      .pilot-header strong { font-size: 15px; color: #0f172a; }
+      .pilot-flow { display: flex; align-items: center; flex-wrap: wrap; gap: 0; }
+      .pilot-step { background: #fff; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; text-align: center; flex: 1; min-width: 110px; }
+      .pilot-step-icon { font-size: 20px; margin-bottom: 6px; }
+      .pilot-step-label { font-size: 12px; font-weight: 700; color: #0f172a; }
+      .pilot-arrow { font-size: 18px; color: #94a3b8; padding: 0 6px; flex-shrink: 0; }
+      .impact-section { margin-bottom: 28px; }
+      .impact-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+      .impact-col { border-radius: 10px; padding: 20px 18px; }
+      .impact-col:nth-child(1) { background: #f0f9ff; border: 1px solid #bae6fd; }
+      .impact-col:nth-child(2) { background: #f0fdf4; border: 1px solid #bbf7d0; }
+      .impact-col:nth-child(3) { background: #faf5ff; border: 1px solid #e9d5ff; }
+      .impact-title { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 12px; }
+      .impact-col:nth-child(1) .impact-title { color: #0369a1; }
+      .impact-col:nth-child(2) .impact-title { color: #166534; }
+      .impact-col:nth-child(3) .impact-title { color: #7c3aed; }
+      .impact-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+      .impact-col li { font-size: 13px; line-height: 1.5; }
+      .impact-col:nth-child(1) li { color: #0369a1; }
+      .impact-col:nth-child(2) li { color: #166534; }
+      .impact-col:nth-child(3) li { color: #7c3aed; }
+      .footer-legal { font-size: 12px; color: #64748b; line-height: 1.55; padding: 16px 48px; border-top: 1px solid #e2e8f0; background: #f8fafc; }
+      .rpt-footer { background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 14px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
       .footer-brand { font-size: 13px; color: #64748b; }
       .footer-brand strong { color: #0f172a; }
       .footer-conf { font-size: 12px; color: #94a3b8; }
@@ -807,11 +828,13 @@ def _build_regional_html(partner_name: str, primary: str, d: dict, use_demo: boo
         body { background: #fff; }
         .print-bar { display: none !important; }
         .page { box-shadow: none; margin: 0; border-radius: 0; max-width: none; }
-        .section, .kpi-grid { break-inside: avoid; }
+        .section, .kpi-grid, .pilot-box, .impact-grid { break-inside: avoid; }
       }
       @media (max-width: 700px) {
-        .rpt-header, .rpt-body, .rpt-footer { padding-left: 20px; padding-right: 20px; }
-        .kpi-grid { grid-template-columns: 1fr; }
+        .rpt-header, .rpt-body, .rpt-footer, .footer-legal { padding-left: 20px; padding-right: 20px; }
+        .kpi-grid, .impact-grid { grid-template-columns: 1fr; }
+        .pilot-flow { flex-direction: column; align-items: stretch; }
+        .pilot-arrow { transform: rotate(90deg); text-align: center; }
         .sec-name { min-width: 100px; }
         .dim-name { min-width: 85px; }
         .niv-legend { flex-direction: column; gap: 6px; }
@@ -878,16 +901,64 @@ def _build_regional_html(partner_name: str, primary: str, d: dict, use_demo: boo
         {recs_ch}
       </div>
 
-      <div class="next-steps">
-        <h3>✅ Prochaines étapes suggérées</h3>
-        <ul>
-          <li>→ Présenter ce rapport lors du prochain conseil d'administration ou comité économique.</li>
-          <li>→ Sélectionner 5 à 10 PMEs prioritaires pour un accompagnement individuel approfondi.</li>
-          <li>→ Planifier 2 à 3 ateliers collectifs sur les dimensions les plus faibles du portefeuille.</li>
-          <li>→ Prévoir un rapport régional actualisé à 90 jours pour mesurer la progression.</li>
-        </ul>
+      <!-- Proposition de projet pilote -->
+      <div class="pilot-box">
+        <div class="pilot-header">
+          <span class="pilot-badge">Proposition</span>
+          <strong>Projet pilote · Phase 1 — 5 à 10 entreprises membres</strong>
+        </div>
+        <div class="pilot-flow">
+          <div class="pilot-step"><div class="pilot-step-icon">📋</div><div class="pilot-step-label">Diagnostic</div></div>
+          <div class="pilot-arrow">→</div>
+          <div class="pilot-step"><div class="pilot-step-icon">📄</div><div class="pilot-step-label">Plan d'action</div></div>
+          <div class="pilot-arrow">→</div>
+          <div class="pilot-step"><div class="pilot-step-icon">🤝</div><div class="pilot-step-label">Accompagnement</div></div>
+          <div class="pilot-arrow">→</div>
+          <div class="pilot-step"><div class="pilot-step-icon">📊</div><div class="pilot-step-label">Rapport à 90 jours</div></div>
+          <div class="pilot-arrow">→</div>
+          <div class="pilot-step"><div class="pilot-step-icon">🗺️</div><div class="pilot-step-label">Rapport régional</div></div>
+        </div>
       </div>
 
+      <!-- Impact attendu -->
+      <div class="section impact-section">
+        <h2 class="section-title">Impact attendu</h2>
+        <div class="impact-grid">
+          <div class="impact-col">
+            <div class="impact-title">Pour les PMEs</div>
+            <ul>
+              <li>✓ Comprendre leur maturité IA</li>
+              <li>✓ Prioriser leurs investissements</li>
+              <li>✓ Réduire les risques</li>
+              <li>✓ Accélérer leur transformation</li>
+            </ul>
+          </div>
+          <div class="impact-col">
+            <div class="impact-title">Pour {partner_name}</div>
+            <ul>
+              <li>✓ Comprendre les besoins du territoire</li>
+              <li>✓ Adapter les formations</li>
+              <li>✓ Créer de nouveaux services</li>
+              <li>✓ Mesurer l'impact économique</li>
+            </ul>
+          </div>
+          <div class="impact-col">
+            <div class="impact-title">Pour les partenaires</div>
+            <ul>
+              <li>✓ Identifier les besoins des PMEs</li>
+              <li>✓ Être recommandés par la Chambre</li>
+              <li>✓ Accompagner les entreprises</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-legal">
+      Ce rapport est généré automatiquement par <strong>AgentHub Platform</strong> à partir de données agrégées
+      et anonymisées recueillies auprès des entreprises participantes. Son objectif est d'aider {partner_name}
+      à orienter ses programmes, ses formations et ses initiatives en matière d'intelligence artificielle.
     </div>
 
     <div class="rpt-footer">
