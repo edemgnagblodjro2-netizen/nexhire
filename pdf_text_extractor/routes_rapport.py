@@ -8,6 +8,8 @@ from diagnostic_questions import compute_imai
 
 router = APIRouter(prefix="/rapport", tags=["rapport"])
 
+_AGENTHUB_LOGO = "https://lisvylfiqfsrjfvyppqh.supabase.co/storage/v1/object/public/assets/logos/agenthub-platform.png"
+
 _MONTHS_FR = [
     "", "janvier", "février", "mars", "avril", "mai", "juin",
     "juillet", "août", "septembre", "octobre", "novembre", "décembre",
@@ -293,9 +295,9 @@ def _build_html(
       .cobrand-program { font-size: 12px; font-weight: 600; color: #64748b; letter-spacing: .02em; }
       .cobrand-right { display: flex; align-items: center; gap: 10px; }
       .cobrand-logo { height: 26px; width: auto; object-fit: contain; }
+      .cobrand-platform-logo { height: 22px; }
       .cobrand-partner-name { font-size: 13px; font-weight: 700; color: #0f172a; }
       .cobrand-x { font-size: 14px; color: #94a3b8; }
-      .cobrand-platform { font-size: 13px; font-weight: 700; color: #6366f1; }
 
       .rpt-header { padding: 36px 48px 32px; color: #fff; }
       .rpt-eyebrow { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; opacity: .75; margin-bottom: 8px; }
@@ -415,7 +417,7 @@ def _build_html(
       <div class="cobrand-right">
         {partner_logo_html}
         <span class="cobrand-x">×</span>
-        <span class="cobrand-platform">AgentHub Platform</span>
+        <img class="cobrand-logo cobrand-platform-logo" src="{_AGENTHUB_LOGO}" alt="AgentHub Platform">
       </div>
     </div>
 
@@ -786,9 +788,9 @@ def _build_regional_html(partner_name: str, primary: str, logo_url: str, d: dict
       .cobrand-program { font-size: 12px; font-weight: 600; color: #64748b; letter-spacing: .02em; }
       .cobrand-right { display: flex; align-items: center; gap: 10px; }
       .cobrand-logo { height: 26px; width: auto; object-fit: contain; }
+      .cobrand-platform-logo { height: 22px; }
       .cobrand-partner-name { font-size: 13px; font-weight: 700; color: #0f172a; }
       .cobrand-x { font-size: 14px; color: #94a3b8; }
-      .cobrand-platform { font-size: 13px; font-weight: 700; color: #6366f1; }
       .rpt-header { padding: 36px 48px 32px; color: #fff; }
       .rpt-eyebrow { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; opacity: .75; margin-bottom: 8px; }
       .rpt-title { font-size: 30px; font-weight: 900; letter-spacing: -.5px; margin-bottom: 4px; }
@@ -901,7 +903,7 @@ def _build_regional_html(partner_name: str, primary: str, logo_url: str, d: dict
       <div class="cobrand-right">
         {reg_logo_html}
         <span class="cobrand-x">×</span>
-        <span class="cobrand-platform">AgentHub Platform</span>
+        <img class="cobrand-logo cobrand-platform-logo" src="{_AGENTHUB_LOGO}" alt="AgentHub Platform">
       </div>
     </div>
 
