@@ -558,7 +558,7 @@ _DEMO_REGIONAL = {
 
 _REG_DIM_RECS: dict[str, str] = {
     "gouvernance":  "Mettre en place un parcours régional « Gouvernance IA responsable » afin d'accompagner les entreprises dont le score est inférieur à 50/100 vers des pratiques d'utilisation responsable de l'IA.",
-    "personnes":    "Développer un programme régional de montée en compétences en IA générative, en mobilisant les partenaires formation de la CCI3R pour couvrir l'ensemble du territoire.",
+    "personnes":    "Développer un programme régional de montée en compétences en IA générative, en mobilisant les partenaires formation de {partner_name} pour couvrir l'ensemble du territoire.",
     "processus":    "Identifier un premier groupe pilote de PMEs souhaitant automatiser leurs processus afin de documenter les gains obtenus et créer des cas de succès régionaux valorisables auprès des membres.",
     "strategie":    "Structurer un programme d'accompagnement stratégique pour aider les dirigeants à formaliser leur feuille de route IA sur 12 à 24 mois, avec des indicateurs de succès mesurables.",
     "technologies": "Négocier un accès groupé aux outils IA pour les membres de la CCI3R, réduisant les barrières à l'entrée et accélérant le déploiement à l'échelle du territoire.",
@@ -774,7 +774,7 @@ def _build_regional_html(partner_name: str, primary: str, logo_url: str, d: dict
     top3_weakest = [k for k, _ in sorted_dims[:3]]
     recs_ch = ""
     for i, dim in enumerate(top3_weakest, 1):
-        rec = _REG_DIM_RECS.get(dim, "")
+        rec = _REG_DIM_RECS.get(dim, "").format(partner_name=partner_name)
         if rec:
             recs_ch += (
                 f'<div class="rec-item">'
