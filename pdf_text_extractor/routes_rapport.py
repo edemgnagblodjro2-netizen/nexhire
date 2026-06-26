@@ -10,6 +10,24 @@ router = APIRouter(prefix="/rapport", tags=["rapport"])
 
 _AGENTHUB_LOGO = "https://lisvylfiqfsrjfvyppqh.supabase.co/storage/v1/object/public/assets/logos/agenthub-platform.png"
 
+
+def _cobrand_right(partner_name: str, logo_url: str) -> str:
+    """Génère le côté droit de la barre cobrand.
+    - logo partenaire distinct → [logo partenaire] × [logo AgentHub]
+    - pas de logo            → NomPartenaire × [logo AgentHub]
+    - logo == AgentHub       → [logo AgentHub] seul (pas de doublon)
+    """
+    platform = f'<img class="cobrand-logo cobrand-platform-logo" src="{_AGENTHUB_LOGO}" alt="AgentHub Platform">'
+    if logo_url == _AGENTHUB_LOGO:
+        return platform
+    partner_el = (
+        f'<img class="cobrand-logo" src="{logo_url}" alt="{partner_name}">'
+        if logo_url else
+        f'<strong class="cobrand-partner-name">{partner_name}</strong>'
+    )
+    return f'{partner_el}<span class="cobrand-x">×</span>{platform}'
+
+
 _MONTHS_FR = [
     "", "janvier", "février", "mars", "avril", "mai", "juin",
     "juillet", "août", "septembre", "octobre", "novembre", "décembre",
@@ -389,11 +407,7 @@ def _build_html(
       }
     """
 
-    partner_logo_html = (
-        f'<img class="cobrand-logo" src="{logo_url}" alt="{partner_name}">'
-        if logo_url else
-        f'<strong class="cobrand-partner-name">{partner_name}</strong>'
-    )
+    cobrand_right_html = _cobrand_right(partner_name, logo_url)
 
     return f"""<!doctype html>
 <html lang="fr">
@@ -415,9 +429,7 @@ def _build_html(
     <div class="cobrand-bar">
       <span class="cobrand-program">Programme Accélérateur IA PME</span>
       <div class="cobrand-right">
-        {partner_logo_html}
-        <span class="cobrand-x">×</span>
-        <img class="cobrand-logo cobrand-platform-logo" src="{_AGENTHUB_LOGO}" alt="AgentHub Platform">
+        {cobrand_right_html}
       </div>
     </div>
 
@@ -877,11 +889,7 @@ def _build_regional_html(partner_name: str, primary: str, logo_url: str, d: dict
       }
     """
 
-    reg_logo_html = (
-        f'<img class="cobrand-logo" src="{logo_url}" alt="{partner_name}">'
-        if logo_url else
-        f'<strong class="cobrand-partner-name">{partner_name}</strong>'
-    )
+    cobrand_right_reg = _cobrand_right(partner_name, logo_url)
 
     return f"""<!doctype html>
 <html lang="fr">
@@ -901,9 +909,7 @@ def _build_regional_html(partner_name: str, primary: str, logo_url: str, d: dict
     <div class="cobrand-bar">
       <span class="cobrand-program">Programme Accélérateur IA PME</span>
       <div class="cobrand-right">
-        {reg_logo_html}
-        <span class="cobrand-x">×</span>
-        <img class="cobrand-logo cobrand-platform-logo" src="{_AGENTHUB_LOGO}" alt="AgentHub Platform">
+        {cobrand_right_reg}
       </div>
     </div>
 
