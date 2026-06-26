@@ -484,3 +484,417 @@ def _build_html(
   </div>
 </body>
 </html>"""
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Rapport régional — GET /rapport/regional/{partner_slug}
+# ═══════════════════════════════════════════════════════════════════════════════
+
+_DEMO_REGIONAL = {
+    "total": 42,
+    "imai_avg": 58.3,
+    "niveaux": {"debutant": 10, "intermediaire": 24, "avance": 8},
+    "dimensions": {
+        "strategie": 61.2, "personnes": 54.8, "processus": 58.3,
+        "technologies": 62.7, "gouvernance": 49.1,
+    },
+    "by_sector": [
+        {"sector": "Manufacturier",                  "count": 18, "imai_avg": 62.1},
+        {"sector": "Services professionnels",         "count": 8,  "imai_avg": 55.4},
+        {"sector": "Construction",                    "count": 6,  "imai_avg": 48.7},
+        {"sector": "Commerce de détail",              "count": 5,  "imai_avg": 61.2},
+        {"sector": "Transport et logistique",         "count": 3,  "imai_avg": 45.3},
+        {"sector": "Technologies de l'information",   "count": 2,  "imai_avg": 71.8},
+    ],
+    "challenges": [
+        {"label": "Automatiser des tâches répétitives",      "count": 35},
+        {"label": "Analyser mes données pour mieux décider", "count": 28},
+        {"label": "Rester compétitif face à mes concurrents","count": 22},
+        {"label": "Améliorer le service à la clientèle",     "count": 18},
+        {"label": "Réduire mes coûts opérationnels",         "count": 15},
+    ],
+    "is_demo": True,
+}
+
+_REG_DIM_RECS: dict[str, str] = {
+    "gouvernance":  "Animer un atelier pratique « Gouvernance IA responsable » (2 h) pour les PMEs dont le score est inférieur à 50/100.",
+    "personnes":    "Proposer un programme de formation Copilot / IA générative en partenariat avec un organisme de formation accrédité.",
+    "processus":    "Organiser une clinique d'automatisation : accompagnement individuel de 3 h pour cartographier les processus à automatiser.",
+    "strategie":    "Faciliter des cercles stratégiques entre dirigeants (groupes de 6–8 PMEs) pour co-construire leur feuille de route IA.",
+    "technologies": "Négocier un accès groupé à des outils IA (Copilot, Power BI) pour réduire les coûts d'entrée pour les membres.",
+}
+
+
+@router.get("/regional/{partner_slug}", response_class=HTMLResponse)
+@limiter.limit("30/minute")
+def get_rapport_regional(request: Request, partner_slug: str):
+    with get_db() as cur:
+        cur.execute(
+            "SELECT id, name, primary_color FROM partners WHERE slug = %s AND is_active = true LIMIT 1",
+            (partner_slug,),
+        )
+        partner = row(cur)
+        if not partner:
+            raise HTTPException(status_code=404, detail="Partenaire introuvable.")
+
+        partner_id = str(partner["id"])
+
+        cur.execute(
+            """
+            SELECT COUNT(*) AS total,
+                   ROUND(AVG(imai_score)::numeric, 1) AS imai_avg,
+                   COUNT(*) FILTER (WHERE niveau = 'debutant')      AS nb_debutant,
+                   COUNT(*) FILTER (WHERE niveau = 'intermediaire') AS nb_intermediaire,
+                   COUNT(*) FILTER (WHERE niveau = 'avance')        AS nb_avance,
+                   ROUND(AVG(score_strategie)::numeric, 1)    AS dim_strategie,
+                   ROUND(AVG(score_personnes)::numeric, 1)    AS dim_personnes,
+                   ROUND(AVG(score_processus)::numeric, 1)    AS dim_processus,
+                   ROUND(AVG(score_technologies)::numeric, 1) AS dim_technologies,
+                   ROUND(AVG(score_gouvernance)::numeric, 1)  AS dim_gouvernance
+            FROM diagnostic_sessions
+            WHERE partner_id = %s AND status = 'completed'
+            """,
+            (partner_id,),
+        )
+        overall = row(cur)
+
+        cur.execute(
+            """
+            SELECT sector, COUNT(*) AS count,
+                   ROUND(AVG(imai_score)::numeric, 1) AS imai_avg
+            FROM diagnostic_sessions
+            WHERE partner_id = %s AND status = 'completed' AND sector IS NOT NULL
+            GROUP BY sector ORDER BY count DESC LIMIT 6
+            """,
+            (partner_id,),
+        )
+        by_sector_rows = rows(cur)
+
+        cur.execute(
+            """
+            SELECT priority_challenge AS label, COUNT(*) AS count
+            FROM diagnostic_sessions
+            WHERE partner_id = %s AND status = 'completed'
+              AND priority_challenge IS NOT NULL AND priority_challenge <> ''
+            GROUP BY priority_challenge ORDER BY count DESC LIMIT 5
+            """,
+            (partner_id,),
+        )
+        challenge_rows = rows(cur)
+
+    total    = int(overall["total"] or 0)
+    use_demo = total < 5
+
+    if use_demo:
+        d = _DEMO_REGIONAL
+    else:
+        d = {
+            "total":    total,
+            "imai_avg": float(overall["imai_avg"] or 0),
+            "niveaux": {
+                "debutant":      int(overall["nb_debutant"]      or 0),
+                "intermediaire": int(overall["nb_intermediaire"] or 0),
+                "avance":        int(overall["nb_avance"]        or 0),
+            },
+            "dimensions": {
+                "strategie":    float(overall["dim_strategie"]    or 0),
+                "personnes":    float(overall["dim_personnes"]    or 0),
+                "processus":    float(overall["dim_processus"]    or 0),
+                "technologies": float(overall["dim_technologies"] or 0),
+                "gouvernance":  float(overall["dim_gouvernance"]  or 0),
+            },
+            "by_sector":  [{"sector": s["sector"], "count": int(s["count"]), "imai_avg": float(s["imai_avg"] or 0)} for s in by_sector_rows],
+            "challenges": [{"label": c["label"], "count": int(c["count"])} for c in challenge_rows],
+            "is_demo":    False,
+        }
+
+    from datetime import date as _date
+    today_str = f"{_date.today().day} {_MONTHS_FR[_date.today().month]} {_date.today().year}"
+
+    return HTMLResponse(content=_build_regional_html(
+        partner_name=partner["name"],
+        primary=partner["primary_color"] or "#2563eb",
+        d=d,
+        use_demo=use_demo,
+        today_str=today_str,
+    ))
+
+
+def _build_regional_html(partner_name: str, primary: str, d: dict, use_demo: bool, today_str: str) -> str:
+    total      = d["total"]
+    imai_avg   = d["imai_avg"]
+    niveaux    = d["niveaux"]
+    dims       = d["dimensions"]
+    sectors    = d["by_sector"]
+    challenges = d["challenges"]
+
+    roi_h     = round(total * 3.5)
+    avg_color = _pct_color(imai_avg)
+    demo_badge = '<span class="demo-badge">DÉMO</span>' if use_demo else ""
+
+    # KPI cards
+    kpi_html = (
+        f'<div class="kpi-card"><div class="kpi-val">{total}</div><div class="kpi-label">Entreprises participantes</div></div>'
+        f'<div class="kpi-card"><div class="kpi-val" style="color:{avg_color}">{imai_avg:.1f}<span>/100</span></div><div class="kpi-label">IMAI moyen du programme</div></div>'
+        f'<div class="kpi-card"><div class="kpi-val" style="color:#10b981">{roi_h} h</div><div class="kpi-label">Potentiel d\'optimisation / mois</div></div>'
+    )
+
+    # Répartition niveaux
+    nd = niveaux["debutant"]; ni = niveaux["intermediaire"]; na = niveaux["avance"]
+    total_niv = nd + ni + na or 1
+    pct_d = round(nd / total_niv * 100); pct_i = round(ni / total_niv * 100); pct_a = round(na / total_niv * 100)
+    niv_html = (
+        f'<div class="niv-bar">'
+        f'<div class="niv-seg" style="width:{pct_d}%;background:#ef4444"></div>'
+        f'<div class="niv-seg" style="width:{pct_i}%;background:#f59e0b"></div>'
+        f'<div class="niv-seg" style="width:{pct_a}%;background:#10b981"></div>'
+        f'</div>'
+        f'<div class="niv-legend">'
+        f'<span class="niv-pill" style="color:#ef4444">🔴 Débutant — {nd} ({pct_d}%)</span>'
+        f'<span class="niv-pill" style="color:#f59e0b">🟡 Intermédiaire — {ni} ({pct_i}%)</span>'
+        f'<span class="niv-pill" style="color:#10b981">🟢 Avancé — {na} ({pct_a}%)</span>'
+        f'</div>'
+    )
+
+    # Dimensions
+    dim_bars = ""
+    for dim in list(DIM_LABELS.keys()):
+        val = dims.get(dim, 0)
+        c   = _pct_color(val)
+        dim_bars += (
+            f'<div class="dim-row">'
+            f'<span class="dim-name">{DIM_LABELS[dim]}</span>'
+            f'<div class="dim-track"><div class="dim-fill" style="width:{val:.0f}%;background:{c}"></div></div>'
+            f'<span class="dim-val" style="color:{c}">{val:.1f}/100</span>'
+            f'</div>'
+        )
+
+    # Secteurs
+    max_imai = max((s["imai_avg"] for s in sectors), default=100) or 100
+    sector_rows = ""
+    for s in sectors:
+        c = _pct_color(s["imai_avg"])
+        w = round(s["imai_avg"] / max_imai * 100)
+        sector_rows += (
+            f'<div class="sec-row">'
+            f'<span class="sec-name">{s["sector"]}</span>'
+            f'<span class="sec-count">{s["count"]} entreprises</span>'
+            f'<div class="dim-track"><div class="dim-fill" style="width:{w}%;background:{c}"></div></div>'
+            f'<span class="dim-val" style="color:{c}">{s["imai_avg"]:.1f}</span>'
+            f'</div>'
+        )
+
+    # Défis
+    total_ch = sum(c["count"] for c in challenges) or 1
+    challenge_html = ""
+    for i, ch in enumerate(challenges, 1):
+        pct = round(ch["count"] / total_ch * 100)
+        challenge_html += (
+            f'<div class="ch-row">'
+            f'<span class="ch-num">{i}</span>'
+            f'<div class="ch-content">'
+            f'<span class="ch-label">{ch["label"]}</span>'
+            f'<div class="dim-track" style="margin-top:4px"><div class="dim-fill" style="width:{pct}%;background:{primary}"></div></div>'
+            f'</div>'
+            f'<span class="ch-pct">{pct}%</span>'
+            f'</div>'
+        )
+
+    # Insights IA
+    sorted_dims  = sorted(dims.items(), key=lambda x: x[1])
+    weakest_dim  = sorted_dims[0]
+    best_dim     = sorted_dims[-1]
+    top_ch_label = challenges[0]["label"] if challenges else "l'automatisation"
+    top_ch_pct   = round(challenges[0]["count"] / total_ch * 100) if challenges else 0
+    best_sector  = max(sectors, key=lambda s: s["imai_avg"]) if sectors else None
+    worst_sector = min(sectors, key=lambda s: s["imai_avg"]) if sectors else None
+
+    ins = [
+        f"<strong>{top_ch_pct} % des entreprises</strong> identifient « {top_ch_label} » comme leur principal défi — c'est la priorité opérationnelle n° 1 du programme.",
+        f"La dimension <strong>{DIM_LABELS[weakest_dim[0]]}</strong> ({weakest_dim[1]:.1f}/100) est la plus faible du portefeuille. Un programme ciblé sur ce levier génèrerait le plus grand impact collectif.",
+    ]
+    if best_sector and worst_sector and best_sector["sector"] != worst_sector["sector"]:
+        ins.append(
+            f"Le secteur <strong>{best_sector['sector']}</strong> se distingue ({best_sector['imai_avg']:.1f}/100) "
+            f"contre {worst_sector['imai_avg']:.1f}/100 pour <strong>{worst_sector['sector']}</strong> — "
+            "un potentiel de mentorat inter-sectoriel à exploiter."
+        )
+    else:
+        ins.append(
+            f"La dimension <strong>{DIM_LABELS[best_dim[0]]}</strong> ({best_dim[1]:.1f}/100) est le point fort collectif — "
+            "capitaliser dessus pour des cas d'usage à fort ROI immédiat."
+        )
+    insights_html = "".join(
+        f'<div class="insight-item"><span class="insight-icon">💡</span><p>{txt}</p></div>'
+        for txt in ins
+    )
+
+    # Recommandations Chambre
+    top3_weakest = [k for k, _ in sorted_dims[:3]]
+    recs_ch = ""
+    for i, dim in enumerate(top3_weakest, 1):
+        rec = _REG_DIM_RECS.get(dim, "")
+        if rec:
+            recs_ch += (
+                f'<div class="rec-item">'
+                f'<div class="rec-num" style="background:{primary}">{i}</div>'
+                f'<div><strong>Priorité {i} — {DIM_LABELS[dim]}</strong><p>{rec}</p></div>'
+                f'</div>'
+            )
+
+    demo_notice_html = (
+        '<div class="demo-notice">⚠️ <strong>Données de démonstration</strong> — ces résultats sont simulés '
+        '(moins de 5 participations réelles enregistrées). Les données réelles s\'afficheront automatiquement '
+        'dès le déploiement du programme.</div>'
+    ) if use_demo else ""
+
+    css = """
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: Arial, Helvetica, sans-serif; background: #f0f4f8; color: #1e293b; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .print-bar { background: #1e293b; padding: 14px 24px; text-align: center; }
+      .print-bar button { background: #6366f1; color: #fff; border: none; border-radius: 8px; padding: 10px 28px; font-size: 14px; font-weight: 700; cursor: pointer; }
+      .print-bar button:hover { opacity: .9; }
+      .page { max-width: 960px; margin: 24px auto 48px; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,.12); }
+      .rpt-header { padding: 36px 48px 32px; color: #fff; }
+      .rpt-eyebrow { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; opacity: .75; margin-bottom: 8px; }
+      .rpt-title { font-size: 30px; font-weight: 900; letter-spacing: -.5px; margin-bottom: 4px; }
+      .rpt-subtitle { font-size: 14px; opacity: .82; }
+      .rpt-powered { font-size: 11px; opacity: .55; margin-top: 20px; }
+      .rpt-body { padding: 36px 48px 28px; }
+      .demo-notice { background: #fef3c7; border: 1px solid #fde68a; border-radius: 8px; padding: 10px 16px; font-size: 13px; color: #92400e; margin-bottom: 24px; }
+      .demo-badge { font-size: 10px; font-weight: 700; background: rgba(255,255,255,.25); color: #fff; padding: 2px 8px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
+      .kpi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+      .kpi-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 22px 20px; text-align: center; }
+      .kpi-val { font-size: 36px; font-weight: 900; letter-spacing: -1px; line-height: 1; margin-bottom: 6px; }
+      .kpi-val span { font-size: 16px; font-weight: 500; color: #94a3b8; }
+      .kpi-label { font-size: 13px; color: #64748b; }
+      .section { margin-bottom: 28px; }
+      .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #f1f5f9; }
+      .niv-bar { height: 16px; border-radius: 8px; overflow: hidden; display: flex; margin-bottom: 12px; }
+      .niv-seg { height: 100%; }
+      .niv-legend { display: flex; flex-wrap: wrap; gap: 20px; }
+      .niv-pill { font-size: 13px; font-weight: 600; }
+      .dim-row { display: flex; align-items: center; gap: 14px; margin-bottom: 11px; }
+      .dim-name { font-size: 13px; color: #64748b; min-width: 115px; }
+      .dim-track { flex: 1; height: 10px; background: #f1f5f9; border-radius: 5px; overflow: hidden; }
+      .dim-fill { height: 100%; border-radius: 5px; }
+      .dim-val { font-size: 14px; font-weight: 700; min-width: 60px; text-align: right; }
+      .sec-row { display: flex; align-items: center; gap: 12px; margin-bottom: 11px; }
+      .sec-name { font-size: 13px; color: #64748b; min-width: 165px; }
+      .sec-count { font-size: 12px; color: #94a3b8; min-width: 95px; text-align: right; }
+      .ch-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+      .ch-num { width: 22px; height: 22px; border-radius: 50%; background: #f1f5f9; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #64748b; flex-shrink: 0; }
+      .ch-content { flex: 1; }
+      .ch-label { font-size: 13px; color: #1e293b; }
+      .ch-pct { font-size: 14px; font-weight: 700; min-width: 40px; text-align: right; color: #475569; }
+      .insight-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 10px; margin-bottom: 10px; }
+      .insight-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+      .insight-item p { font-size: 13px; color: #0369a1; line-height: 1.65; }
+      .rec-item { display: flex; gap: 16px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid #f1f5f9; }
+      .rec-item:last-child { border-bottom: none; }
+      .rec-num { flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: 800; }
+      .rec-item strong { font-size: 14px; font-weight: 700; display: block; margin-bottom: 5px; }
+      .rec-item p { font-size: 13px; color: #64748b; line-height: 1.6; margin: 0; }
+      .next-steps { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 20px 24px; }
+      .next-steps h3 { font-size: 15px; font-weight: 700; color: #166534; margin-bottom: 12px; }
+      .next-steps ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+      .next-steps li { font-size: 13px; color: #166534; }
+      .rpt-footer { background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 20px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+      .footer-brand { font-size: 13px; color: #64748b; }
+      .footer-brand strong { color: #0f172a; }
+      .footer-conf { font-size: 12px; color: #94a3b8; }
+      @media print {
+        body { background: #fff; }
+        .print-bar { display: none !important; }
+        .page { box-shadow: none; margin: 0; border-radius: 0; max-width: none; }
+        .section, .kpi-grid { break-inside: avoid; }
+      }
+      @media (max-width: 700px) {
+        .rpt-header, .rpt-body, .rpt-footer { padding-left: 20px; padding-right: 20px; }
+        .kpi-grid { grid-template-columns: 1fr; }
+        .sec-name { min-width: 100px; }
+        .dim-name { min-width: 85px; }
+        .niv-legend { flex-direction: column; gap: 6px; }
+      }
+    """
+
+    return f"""<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Rapport régional — Accélérateur IA · {partner_name}</title>
+  <style>{css}</style>
+</head>
+<body>
+  <div class="print-bar">
+    <button onclick="window.print()">🖨️ Imprimer / Sauvegarder en PDF</button>
+  </div>
+  <div class="page">
+
+    <div class="rpt-header" style="background:{primary}">
+      <div class="rpt-eyebrow">Accélérateur IA · {partner_name}</div>
+      <div class="rpt-title">Rapport régional {demo_badge}</div>
+      <div class="rpt-subtitle">Synthèse complète — indicateurs, tendances et recommandations sectorielles</div>
+      <div class="rpt-powered">Propulsé par AgentHub Platform · © 2026 CivicAI Inc. · Généré le {today_str}</div>
+    </div>
+
+    <div class="rpt-body">
+
+      {demo_notice_html}
+
+      <div class="section">
+        <h2 class="section-title">Vue d'ensemble du programme</h2>
+        <div class="kpi-grid">{kpi_html}</div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Répartition des niveaux de maturité</h2>
+        {niv_html}
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Scores moyens par dimension</h2>
+        {dim_bars}
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">IMAI moyen par secteur</h2>
+        {sector_rows}
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Défis prioritaires identifiés par les PMEs</h2>
+        {challenge_html}
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Insights IA — Observations clés</h2>
+        {insights_html}
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Recommandations pour {partner_name}</h2>
+        {recs_ch}
+      </div>
+
+      <div class="next-steps">
+        <h3>✅ Prochaines étapes suggérées</h3>
+        <ul>
+          <li>→ Présenter ce rapport lors du prochain conseil d'administration ou comité économique.</li>
+          <li>→ Sélectionner 5 à 10 PMEs prioritaires pour un accompagnement individuel approfondi.</li>
+          <li>→ Planifier 2 à 3 ateliers collectifs sur les dimensions les plus faibles du portefeuille.</li>
+          <li>→ Prévoir un rapport régional actualisé à 90 jours pour mesurer la progression.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="rpt-footer">
+      <div class="footer-brand">Propulsé par <strong>AgentHub Platform</strong> · {partner_name}</div>
+      <div class="footer-conf">Rapport confidentiel · Réservé à l'usage interne de {partner_name}</div>
+    </div>
+
+  </div>
+</body>
+</html>"""

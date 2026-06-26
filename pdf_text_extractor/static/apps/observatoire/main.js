@@ -343,10 +343,7 @@ function _render(container, d) {
     </div>`;
 
   document.getElementById("obs-dl-btn")?.addEventListener("click", () => {
-    const btn = document.getElementById("obs-dl-btn");
-    btn.textContent = "📋 En préparation — disponible prochainement";
-    btn.disabled = true;
-    btn.style.opacity = ".7";
+    window.open(`/rapport/regional/${_state.partnerSlug}`, "_blank", "noopener");
   });
 }
 
