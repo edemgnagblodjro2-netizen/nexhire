@@ -65,7 +65,7 @@ function _reset(partnerSlug, context) {
 // ── Platform Contract ─────────────────────────────────────────────────────────
 export default {
   slug:    "diagnostic-ia",
-  name:    "Diagnostic IA",
+  name:    "Parcours IA",
   version: "1.0",
 
   mount(container, context) {
@@ -98,10 +98,18 @@ function _showWelcome(container) {
       <div class="dia-card dia-welcome-card">
         <div class="dia-atlas-avatar">🤖</div>
         <div class="dia-atlas-bubble">
-          <p class="dia-atlas-name">Atlas</p>
-          <p>Bonjour ! Je suis <strong>Atlas</strong>, votre guide pour ce diagnostic de maturité IA.</p>
-          <p>En <strong>10 à 15 minutes</strong>, je vais évaluer votre organisation sur 5 dimensions clés et vous remettre votre <strong>Indice de Maturité IA (IMAI)</strong> sur 100, ainsi qu'un plan d'action personnalisé.</p>
-          <p>Ce diagnostic est <strong>gratuit et confidentiel</strong>. Aucun compte requis.</p>
+          <p class="dia-atlas-name">Atlas — Conseiller IA</p>
+          <p>Bonjour ! Je suis <strong>ATLAS</strong>, votre conseiller IA. En quelques minutes, je vais mieux comprendre votre entreprise afin de vous proposer un <strong>plan d'action personnalisé</strong>.</p>
+          <p>Ce parcours est <strong>gratuit et confidentiel</strong>. Aucun compte requis.</p>
+        </div>
+        <div class="dia-value-prop">
+          <p class="dia-vp-label">Ce parcours vous permettra de :</p>
+          <ul class="dia-vp-list">
+            <li>✓ Évaluer votre maturité IA (score IMAI /100)</li>
+            <li>✓ Obtenir un plan d'action sur 5 dimensions</li>
+            <li>✓ Identifier vos priorités d'action</li>
+          </ul>
+          <p class="dia-vp-duration">⏱ Durée : 10 minutes</p>
         </div>
         <div class="dia-dimensions-preview">
           <span class="dia-dim-tag">📋 Stratégie</span>
@@ -111,7 +119,7 @@ function _showWelcome(container) {
           <span class="dia-dim-tag">⚖️ Gouvernance</span>
         </div>
         <button class="dia-btn-primary" id="dia-start-btn">
-          Commencer le diagnostic →
+          Commencer mon parcours →
         </button>
       </div>
     </div>`;
@@ -172,7 +180,7 @@ function _showProfile(container) {
           </div>
           <div id="dia-profile-error" class="dia-error" style="display:none"></div>
           <button type="submit" class="dia-btn-primary" id="dia-profile-submit">
-            Démarrer le diagnostic →
+            Lancer mon évaluation →
           </button>
         </form>
       </div>
@@ -210,7 +218,7 @@ function _showProfile(container) {
       _render(container);
     } catch (err) {
       _el("dia-profile-submit").disabled = false;
-      _el("dia-profile-submit").textContent = "Démarrer le diagnostic →";
+      _el("dia-profile-submit").textContent = "Lancer mon évaluation →";
       _showFormError("dia-profile-error", err.message);
     }
   });
@@ -419,7 +427,7 @@ function _showResults(container) {
 
       <div class="dia-restart">
         <button class="dia-btn-ghost" id="dia-restart-btn">
-          ← Faire un nouveau diagnostic
+          ← Recommencer le parcours
         </button>
       </div>
     </div>`;
@@ -552,6 +560,34 @@ function _injectStyles(primaryColor) {
 
     /* Welcome */
     .dia-welcome-card { align-items: center; text-align: center; }
+
+    .dia-value-prop {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-align: left;
+      width: 100%;
+    }
+
+    .dia-vp-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--dia-text);
+      margin-bottom: 8px;
+    }
+
+    .dia-vp-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 10px;
+    }
+
+    .dia-vp-list li { font-size: 13px; color: #0369a1; }
+
+    .dia-vp-duration { font-size: 12px; color: var(--dia-muted); font-style: italic; }
 
     .dia-dimensions-preview {
       display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;

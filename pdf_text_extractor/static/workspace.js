@@ -6,21 +6,30 @@
 const $ = (id) => document.getElementById(id);
 
 // ── State ─────────────────────────────────────────────────────────────────────
-let _partner   = null;   // config partenaire chargée depuis /api/workspace/{slug}
-let _apps      = [];     // catalogue complet
-let _activeApp = null;   // slug de l'app montée
-let _module    = null;   // module JS actif ({ mount, unmount })
+let _partner   = null;
+let _apps      = [];
+let _activeApp = null;
+let _module    = null;
 
-// Extrait le slug depuis /workspace/{slug}/... ou /workspace/{slug}
 const _slug = () => {
   const parts = location.pathname.split("/").filter(Boolean);
-  return parts[1] || null;   // ['workspace', 'cci3r', 'diagnostic-ia'] → 'cci3r'
+  return parts[1] || null;
 };
 
 const _appSlugFromPath = () => {
   const parts = location.pathname.split("/").filter(Boolean);
-  return parts[2] || null;   // 'diagnostic-ia' or null
+  return parts[2] || null;
 };
+
+// Display name overrides — frontend aliases without touching app_registry
+const APP_NAME_OVERRIDES = {
+  "diagnostic-ia": "Parcours IA",
+  "observatoire":  "Observatoire",
+};
+
+function _displayName(app) {
+  return APP_NAME_OVERRIDES[app.slug] || app.name;
+}
 
 // ── Bootstrap ─────────────────────────────────────────────────────────────────
 async function boot() {
@@ -43,12 +52,13 @@ async function boot() {
     applyBranding(_partner);
     renderSidebar(_apps);
 
-    // Naviguer vers l'app dans l'URL si présente
     const appFromUrl = _appSlugFromPath();
     if (appFromUrl) {
       const app = _apps.find(a => a.slug === appFromUrl && a.is_installed);
-      if (app) navigateTo(slug, app);
+      if (app) { navigateTo(slug, app); return; }
     }
+
+    showHomeDashboard();
 
   } catch (err) {
     showErrorBanner(err.message);
@@ -57,19 +67,17 @@ async function boot() {
 
 // ── Branding ──────────────────────────────────────────────────────────────────
 function applyBranding(partner) {
-  document.title = partner.name + " · AgentHub";
+  document.title = partner.name + " · Accélérateur IA";
   $("ws-partner-name").textContent = partner.name;
 
   if (partner.logo_url) {
     const logo = $("ws-logo");
     logo.src = partner.logo_url;
     logo.style.display = "block";
-    $("ws-partner-name").style.display = "none";
   }
 
   if (partner.primary_color) {
     document.documentElement.style.setProperty("--primary", partner.primary_color);
-    // Génère une version légèrement plus foncée pour les hovers
     document.documentElement.style.setProperty("--primary-dk", partner.primary_color);
   }
 
@@ -95,8 +103,7 @@ function renderSidebar(apps) {
     btn.className = "ws-app-btn";
     btn.dataset.slug = app.slug;
 
-    const isComing = !app.is_installed;
-    if (isComing) btn.disabled = true;
+    if (!app.is_installed) btn.disabled = true;
 
     let badge = "";
     if (app.catalog_status === "coming_soon") {
@@ -108,7 +115,7 @@ function renderSidebar(apps) {
     btn.innerHTML = `
       <span class="ws-app-icon">${app.icon || "📦"}</span>
       <span class="ws-app-label">
-        <span class="ws-app-name">${app.name}</span>
+        <span class="ws-app-name">${_displayName(app)}</span>
       </span>
       ${badge}
     `;
@@ -131,7 +138,6 @@ function setActiveBtn(slug) {
 async function navigateTo(partnerSlug, app) {
   if (_activeApp === app.slug) return;
 
-  // Unmount app précédente
   if (_module && typeof _module.unmount === "function") {
     _module.unmount($("ws-app-container"));
   }
@@ -142,23 +148,20 @@ async function navigateTo(partnerSlug, app) {
   showLoading();
 
   try {
-    // Import dynamique du module app
     const mod = await import(`/static/apps/${app.slug}/main.js`);
     _module    = mod.default;
     _activeApp = app.slug;
 
-    // Mettre à jour l'URL sans recharger la page
     const newPath = `/workspace/${partnerSlug}/${app.slug}`;
     if (location.pathname !== newPath) {
       history.pushState({ appSlug: app.slug }, "", newPath);
     }
 
-    // Contexte passé à l'app
     const context = {
       partnerSlug,
-      partner:  _partner,
+      partner:   _partner,
       appConfig: app.config || {},
-      user:     null,   // injecté par l'app si auth nécessaire
+      user:      null,
     };
 
     $("ws-app-container").innerHTML = "";
@@ -167,23 +170,90 @@ async function navigateTo(partnerSlug, app) {
   } catch (err) {
     _activeApp = null;
     setActiveBtn(null);
-    showAppError(app.name, err.message);
+    showAppError(_displayName(app), err.message);
   }
 }
 
-// Gestion du bouton Retour du navigateur
 window.addEventListener("popstate", (e) => {
   const appSlug = e.state?.appSlug || _appSlugFromPath();
   if (appSlug) {
     const app = _apps.find(a => a.slug === appSlug && a.is_installed);
-    if (app) navigateTo(_slug(), app);
-  } else {
-    if (_module?.unmount) _module.unmount($("ws-app-container"));
-    _module = null; _activeApp = null;
-    setActiveBtn(null);
-    showWelcome();
+    if (app) { navigateTo(_slug(), app); return; }
   }
+  if (_module?.unmount) _module.unmount($("ws-app-container"));
+  _module = null; _activeApp = null;
+  setActiveBtn(null);
+  showHomeDashboard();
 });
+
+// ── Home Dashboard ────────────────────────────────────────────────────────────
+function showHomeDashboard() {
+  const container = $("ws-app-container");
+  setActiveBtn(null);
+
+  const partnerName = _partner?.name || "AgentHub";
+
+  const appCards = _apps.map(app => {
+    const name = _displayName(app);
+    if (app.is_installed) {
+      return `
+        <div class="wsh-app-card">
+          <div class="wsh-app-card-icon">${app.icon || "📦"}</div>
+          <div class="wsh-app-card-name">${name}</div>
+          <button class="wsh-app-card-btn" data-slug="${app.slug}">
+            Commencer →
+          </button>
+        </div>`;
+    }
+    return `
+      <div class="wsh-app-card wsh-app-card-soon">
+        <div class="wsh-app-card-icon">${app.icon || "📦"}</div>
+        <div class="wsh-app-card-name">${name}</div>
+        <span class="wsh-soon-badge">🚀 Disponible prochainement</span>
+      </div>`;
+  }).join("");
+
+  container.innerHTML = `
+    <div class="wsh-home">
+      <div class="wsh-hero">
+        <div class="wsh-hero-eyebrow">Programme officiel · ${partnerName}</div>
+        <h1 class="wsh-hero-title">Accélérateur IA</h1>
+        <p class="wsh-hero-sub">Propulsé par AgentHub Platform</p>
+      </div>
+
+      <div class="wsh-progress-card">
+        <div class="wsh-progress-header">
+          <span>Votre progression</span>
+          <strong>0 %</strong>
+        </div>
+        <div class="wsh-progress-track">
+          <div class="wsh-progress-fill" style="width:0%"></div>
+        </div>
+        <p class="wsh-progress-hint">Commencez par le Parcours IA pour débuter votre progression.</p>
+      </div>
+
+      <div class="wsh-value-prop">
+        <p class="wsh-vp-title">Ce programme vous permettra de :</p>
+        <ul class="wsh-vp-list">
+          <li>✓ Évaluer la maturité IA de votre organisation</li>
+          <li>✓ Obtenir un plan d'action personnalisé</li>
+          <li>✓ Vous comparer aux organisations de votre secteur</li>
+          <li>✓ Suivre votre progression dans le temps</li>
+        </ul>
+        <p class="wsh-vp-duration">⏱ Durée estimée : 10 minutes</p>
+      </div>
+
+      <div>
+        <h2 class="wsh-apps-title">Applications</h2>
+        <div class="wsh-app-grid">${appCards}</div>
+      </div>
+    </div>`;
+
+  container.querySelectorAll(".wsh-app-card-btn").forEach(btn => {
+    const app = _apps.find(a => a.slug === btn.dataset.slug);
+    if (app) btn.addEventListener("click", () => navigateTo(_slug(), app));
+  });
+}
 
 // ── États visuels ─────────────────────────────────────────────────────────────
 function showLoading() {
@@ -191,15 +261,6 @@ function showLoading() {
     <div class="ws-state">
       <div class="ws-spinner"></div>
       <div class="ws-state-msg">Chargement…</div>
-    </div>`;
-}
-
-function showWelcome() {
-  $("ws-app-container").innerHTML = `
-    <div class="ws-state" id="ws-welcome">
-      <div class="ws-state-icon">🚀</div>
-      <div class="ws-state-title">Bienvenue sur AgentHub Platform</div>
-      <div class="ws-state-msg">Sélectionnez une application dans le menu pour commencer.</div>
     </div>`;
 }
 
