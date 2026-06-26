@@ -15,7 +15,23 @@ const DIM_LABELS = {
 
 const DIM_ORDER = ["strategie", "processus", "technologies", "personnes", "gouvernance"];
 
-// Données de démonstration — utilisées si l'API retourne 0 sessions
+const DIM_ACTIONS = {
+  strategie:    { icon: "🧭", title: "Atelier Stratégie IA",    desc: "Définir une feuille de route IA sur 12 mois" },
+  personnes:    { icon: "👥", title: "Formation équipes",        desc: "Programme de montée en compétences IA" },
+  processus:    { icon: "⚙️", title: "Atelier Automatisation",  desc: "Identifier les processus à fort potentiel" },
+  technologies: { icon: "💻", title: "Déploiement outils IA",   desc: "Copilot, automatisation et outils sectoriels" },
+  gouvernance:  { icon: "⚖️", title: "Atelier Gouvernance IA",  desc: "Charte d'utilisation responsable de l'IA" },
+};
+
+const CHALLENGE_SHORT = {
+  "Automatiser des tâches répétitives":          "Automatisation",
+  "Analyser mes données pour mieux décider":     "Analyse de données",
+  "Améliorer le service à la clientèle":         "Service client",
+  "Réduire mes coûts opérationnels":             "Réduction des coûts",
+  "Rester compétitif face à mes concurrents":    "Compétitivité",
+};
+
+// ── Données démo — affichées si moins de 5 sessions réelles ──────────────────
 function _demoData() {
   return {
     total:    42,
@@ -38,10 +54,10 @@ function _demoData() {
       gouvernance:  38.7,
     },
     challenges: [
-      { label: "Automatiser des tâches répétitives",    count: 16 },
+      { label: "Automatiser des tâches répétitives",     count: 16 },
       { label: "Analyser mes données pour mieux décider", count: 11 },
-      { label: "Améliorer le service à la clientèle",   count:  8 },
-      { label: "Réduire mes coûts opérationnels",       count:  5 },
+      { label: "Améliorer le service à la clientèle",    count:  8 },
+      { label: "Réduire mes coûts opérationnels",        count:  5 },
       { label: "Rester compétitif face à mes concurrents", count: 2 },
     ],
   };
@@ -76,7 +92,8 @@ async function _loadAndRender(container) {
     const res = await fetch(`${API}/${_state.partnerSlug}/stats`, { credentials: "include" });
     if (!res.ok) throw new Error();
     const data = await res.json();
-    _render(container, data.total > 0 ? data : _demoData());
+    // Utiliser les données démo si moins de 5 sessions (pas assez pour être représentatif)
+    _render(container, data.total >= 5 ? data : _demoData());
   } catch {
     _render(container, _demoData());
   }
@@ -86,12 +103,6 @@ async function _loadAndRender(container) {
 function _showSkeleton(container) {
   container.innerHTML = `
     <div class="obs-wrap">
-      <div class="obs-header">
-        <div>
-          <h1 class="obs-title">Observatoire IA</h1>
-          <p class="obs-subtitle">Tableau de bord analytique · Programme Accélérateur IA</p>
-        </div>
-      </div>
       <div class="obs-loading">
         <div class="obs-spinner"></div>
         <p>Chargement des données…</p>
@@ -99,21 +110,58 @@ function _showSkeleton(container) {
     </div>`;
 }
 
+// ── Insights auto-générés depuis les données ──────────────────────────────────
+function _buildInsights(d) {
+  const items = [];
+
+  if (d.challenges.length > 0) {
+    const top = d.challenges[0];
+    const pct = Math.round(top.count / d.total * 100);
+    const short = CHALLENGE_SHORT[top.label] || top.label;
+    items.push(`${pct}% des organisations participantes identifient <strong>${short.toLowerCase()}</strong> comme priorité numéro un.`);
+  }
+
+  const weakest = DIM_ORDER.reduce((a, b) => d.dimensions[a] < d.dimensions[b] ? a : b);
+  items.push(`La dimension <strong>${DIM_LABELS[weakest]}</strong> constitue le principal point de progression — score moyen : ${d.dimensions[weakest].toFixed(0)}/100.`);
+
+  if (d.by_sector.length > 0) {
+    const best = [...d.by_sector].sort((a, b) => b.imai_avg - a.imai_avg)[0];
+    items.push(`Le secteur <strong>${best.sector}</strong> affiche l'indice de maturité le plus élevé parmi les participants (${best.imai_avg.toFixed(0)}/100).`);
+  }
+
+  return items;
+}
+
+// ── Actions recommandées depuis les dimensions faibles ────────────────────────
+function _buildActions(d) {
+  return DIM_ORDER
+    .slice()
+    .sort((a, b) => d.dimensions[a] - d.dimensions[b])
+    .slice(0, 3)
+    .map(dim => DIM_ACTIONS[dim]);
+}
+
 // ── Dashboard ─────────────────────────────────────────────────────────────────
 function _render(container, d) {
-  const today = new Date().toLocaleDateString("fr-CA", { year: "numeric", month: "long", day: "numeric" });
-  const niveauTotal = d.niveaux.debutant + d.niveaux.intermediaire + d.niveaux.avance;
-  const pDeb = niveauTotal ? Math.round(d.niveaux.debutant      / niveauTotal * 100) : 0;
-  const pInt = niveauTotal ? Math.round(d.niveaux.intermediaire / niveauTotal * 100) : 0;
-  const pAdv = 100 - pDeb - pInt;
+  const today    = new Date().toLocaleDateString("fr-CA", { year: "numeric", month: "long", day: "numeric" });
+  const nTotal   = d.niveaux.debutant + d.niveaux.intermediaire + d.niveaux.avance;
+  const pDeb     = nTotal ? Math.round(d.niveaux.debutant      / nTotal * 100) : 0;
+  const pInt     = nTotal ? Math.round(d.niveaux.intermediaire / nTotal * 100) : 0;
+  const pAdv     = 100 - pDeb - pInt;
 
-  const avgLabel = d.imai_avg < 34 ? "Débutant" : d.imai_avg < 67 ? "Intermédiaire" : "Avancé";
-  const avgColor = d.imai_avg < 34 ? "#ef4444"  : d.imai_avg < 67 ? "#f59e0b"       : "#10b981";
+  const avgColor = d.imai_avg < 34 ? "#ef4444" : d.imai_avg < 67 ? "#f59e0b" : "#10b981";
+  const avgLabel = d.imai_avg < 34 ? "Débutant"   : d.imai_avg < 67 ? "Intermédiaire" : "Avancé";
 
-  const sectorMax = Math.max(...d.by_sector.map(s => s.count), 1);
+  // KPI secondaires
+  const roi          = Math.round(d.total * 3.5);
+  const topChallenge = d.challenges.length > 0
+    ? (CHALLENGE_SHORT[d.challenges[0].label] || d.challenges[0].label)
+    : "Automatisation";
+
+  const sectorMax    = Math.max(...d.by_sector.map(s => s.count), 1);
 
   const sectorBars = d.by_sector.map(s => {
-    const pct = Math.round(s.count / sectorMax * 100);
+    const pct   = Math.round(s.count / sectorMax * 100);
     const share = Math.round(s.count / d.total * 100);
     return `
       <div class="obs-bar-row">
@@ -126,7 +174,7 @@ function _render(container, d) {
   }).join("");
 
   const dimBars = DIM_ORDER.map(dim => {
-    const val = d.dimensions[dim] || 0;
+    const val   = d.dimensions[dim] || 0;
     const color = val >= 67 ? "#10b981" : val >= 34 ? "#f59e0b" : "#ef4444";
     return `
       <div class="obs-dim-row">
@@ -145,15 +193,33 @@ function _render(container, d) {
           <span class="obs-ch-label">${c.label}</span>
           <span class="obs-ch-count">${c.count}</span>
         </div>`).join("")
-    : `<p class="obs-no-data">Données disponibles après 10+ parcours complétés.</p>`;
+    : `<p class="obs-no-data">Disponible après 10+ parcours complétés.</p>`;
+
+  const insights    = _buildInsights(d);
+  const insightItems = insights.map(txt => `
+    <div class="obs-insight-item">
+      <span class="obs-insight-dot"></span>
+      <p>${txt}</p>
+    </div>`).join("");
+
+  const actions     = _buildActions(d);
+  const actionItems = actions.map(a => `
+    <div class="obs-action-item">
+      <span class="obs-action-icon">${a.icon}</span>
+      <div>
+        <strong>${a.title}</strong>
+        <p>${a.desc}</p>
+      </div>
+    </div>`).join("");
 
   container.innerHTML = `
     <div class="obs-wrap">
 
+      <!-- En-tête -->
       <div class="obs-header">
         <div>
           <h1 class="obs-title">Observatoire IA</h1>
-          <p class="obs-subtitle">Tableau de bord analytique · Programme Accélérateur IA</p>
+          <p class="obs-subtitle">Vision en temps réel de l'adoption de l'intelligence artificielle par les organisations participantes.</p>
         </div>
         <div class="obs-header-right">
           ${d.is_demo ? '<span class="obs-demo-badge">Données démo</span>' : ""}
@@ -161,7 +227,7 @@ function _render(container, d) {
         </div>
       </div>
 
-      <!-- KPIs -->
+      <!-- KPIs principaux -->
       <div class="obs-kpi-grid">
         <div class="obs-kpi-card">
           <div class="obs-kpi-icon">🏢</div>
@@ -172,7 +238,7 @@ function _render(container, d) {
         <div class="obs-kpi-card obs-kpi-accent" style="--accent:${avgColor}">
           <div class="obs-kpi-icon">🧮</div>
           <div class="obs-kpi-value" style="color:${avgColor}">${d.imai_avg.toFixed(1)}<span class="obs-kpi-unit">/100</span></div>
-          <div class="obs-kpi-label">Indice IMAI moyen</div>
+          <div class="obs-kpi-label">Indice de maturité IA moyen</div>
           <div class="obs-kpi-sub" style="color:${avgColor}">Niveau ${avgLabel}</div>
         </div>
         <div class="obs-kpi-card">
@@ -181,6 +247,33 @@ function _render(container, d) {
           <div class="obs-kpi-label">Niveau intermédiaire</div>
           <div class="obs-kpi-sub">${d.niveaux.intermediaire} organisations</div>
         </div>
+      </div>
+
+      <!-- KPIs secondaires -->
+      <div class="obs-kpi-secondary">
+        <div class="obs-kpi-card obs-kpi-sm">
+          <div class="obs-kpi-sm-icon">🎯</div>
+          <div>
+            <div class="obs-kpi-sm-label">Priorité #1</div>
+            <div class="obs-kpi-sm-value">${topChallenge}</div>
+          </div>
+        </div>
+        <div class="obs-kpi-card obs-kpi-sm">
+          <div class="obs-kpi-sm-icon">⏱</div>
+          <div>
+            <div class="obs-kpi-sm-label">ROI estimé</div>
+            <div class="obs-kpi-sm-value">${roi} h <span class="obs-kpi-sm-sub">/ mois</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Insights IA -->
+      <div class="obs-section obs-insights-section">
+        <div class="obs-insights-header">
+          <span class="obs-insights-badge">✦ Insights IA</span>
+          <span class="obs-insights-sub">Observations générées automatiquement</span>
+        </div>
+        <div class="obs-insights-list">${insightItems}</div>
       </div>
 
       <!-- Niveaux de maturité -->
@@ -210,7 +303,7 @@ function _render(container, d) {
         </div>
       </div>
 
-      <!-- Deux colonnes: secteurs + défis -->
+      <!-- Secteurs + Défis -->
       <div class="obs-two-col">
         <div class="obs-section">
           <h3>Répartition par secteur</h3>
@@ -224,12 +317,37 @@ function _render(container, d) {
 
       <!-- Dimensions -->
       <div class="obs-section">
-        <h3>Scores moyens par dimension IMAI</h3>
+        <h3>Scores moyens par dimension</h3>
         <div class="obs-dims">${dimBars}</div>
         <p class="obs-dims-note">Pondérations : Stratégie 25% · Gouvernance 25% · Technologies 20% · Processus 20% · Personnes 10%</p>
       </div>
 
+      <!-- Actions recommandées -->
+      <div class="obs-section">
+        <h3>Actions recommandées pour votre programme</h3>
+        <p class="obs-actions-intro">Basées sur les dimensions les plus faibles de vos organisations membres.</p>
+        <div class="obs-actions">${actionItems}</div>
+      </div>
+
+      <!-- Rapport régional -->
+      <div class="obs-report-card">
+        <div class="obs-report-text">
+          <strong>Rapport régional · Accélérateur IA</strong>
+          <p>Synthèse complète — indicateurs, tendances, recommandations sectorielles.</p>
+        </div>
+        <button class="obs-report-btn" id="obs-dl-btn">
+          ⬇ Télécharger le rapport
+        </button>
+      </div>
+
     </div>`;
+
+  document.getElementById("obs-dl-btn")?.addEventListener("click", () => {
+    const btn = document.getElementById("obs-dl-btn");
+    btn.textContent = "📋 En préparation — disponible prochainement";
+    btn.disabled = true;
+    btn.style.opacity = ".7";
+  });
 }
 
 // ── Styles ────────────────────────────────────────────────────────────────────
@@ -271,12 +389,14 @@ function _injectStyles(primaryColor) {
       font-size: 22px;
       font-weight: 800;
       color: var(--obs-text);
-      margin-bottom: 2px;
+      margin-bottom: 4px;
     }
 
     .obs-subtitle {
       font-size: 13px;
       color: var(--obs-muted);
+      max-width: 520px;
+      line-height: 1.5;
     }
 
     .obs-header-right {
@@ -295,10 +415,7 @@ function _injectStyles(primaryColor) {
       padding: 3px 8px;
     }
 
-    .obs-updated {
-      font-size: 12px;
-      color: var(--obs-muted);
-    }
+    .obs-updated { font-size: 12px; color: var(--obs-muted); }
 
     /* Loading */
     .obs-loading {
@@ -328,6 +445,12 @@ function _injectStyles(primaryColor) {
       gap: 12px;
     }
 
+    .obs-kpi-secondary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
     .obs-kpi-card {
       background: var(--obs-card);
       border: 1px solid var(--obs-border);
@@ -344,31 +467,23 @@ function _injectStyles(primaryColor) {
     }
 
     .obs-kpi-icon { font-size: 22px; margin-bottom: 6px; }
+    .obs-kpi-value { font-size: 32px; font-weight: 800; line-height: 1; color: var(--obs-text); }
+    .obs-kpi-unit  { font-size: 16px; font-weight: 500; color: var(--obs-muted); }
+    .obs-kpi-label { font-size: 13px; font-weight: 600; color: var(--obs-text); margin-top: 4px; }
+    .obs-kpi-sub   { font-size: 12px; color: var(--obs-muted); }
 
-    .obs-kpi-value {
-      font-size: 32px;
-      font-weight: 800;
-      line-height: 1;
-      color: var(--obs-text);
+    /* KPI secondaires */
+    .obs-kpi-sm {
+      flex-direction: row;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
     }
 
-    .obs-kpi-unit {
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--obs-muted);
-    }
-
-    .obs-kpi-label {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--obs-text);
-      margin-top: 4px;
-    }
-
-    .obs-kpi-sub {
-      font-size: 12px;
-      color: var(--obs-muted);
-    }
+    .obs-kpi-sm-icon { font-size: 24px; flex-shrink: 0; }
+    .obs-kpi-sm-label { font-size: 11px; color: var(--obs-muted); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+    .obs-kpi-sm-value { font-size: 18px; font-weight: 700; color: var(--obs-text); margin-top: 2px; }
+    .obs-kpi-sm-sub   { font-size: 13px; font-weight: 400; color: var(--obs-muted); }
 
     /* Sections */
     .obs-section {
@@ -379,12 +494,61 @@ function _injectStyles(primaryColor) {
     }
 
     .obs-section h3 {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       color: var(--obs-text);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       text-transform: uppercase;
-      letter-spacing: .04em;
+      letter-spacing: .05em;
+    }
+
+    /* Insights IA */
+    .obs-insights-section {
+      background: linear-gradient(135deg,
+        color-mix(in srgb, var(--obs-primary) 6%, white),
+        color-mix(in srgb, var(--obs-primary) 3%, white));
+      border-color: color-mix(in srgb, var(--obs-primary) 20%, transparent);
+    }
+
+    .obs-insights-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .obs-insights-badge {
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--obs-primary);
+      color: #fff;
+      border-radius: 4px;
+      padding: 3px 10px;
+    }
+
+    .obs-insights-sub { font-size: 12px; color: var(--obs-muted); }
+
+    .obs-insights-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .obs-insight-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .obs-insight-dot {
+      width: 6px; height: 6px;
+      background: var(--obs-primary);
+      border-radius: 50%;
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+
+    .obs-insight-item p {
+      font-size: 14px;
+      color: var(--obs-text);
+      line-height: 1.5;
+      margin: 0;
     }
 
     /* Stacked bar */
@@ -401,11 +565,7 @@ function _injectStyles(primaryColor) {
     .obs-seg-int { background: #f59e0b; }
     .obs-seg-adv { background: #10b981; }
 
-    .obs-niveau-legend {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
+    .obs-niveau-legend { display: flex; gap: 20px; flex-wrap: wrap; }
 
     .obs-niv-item {
       display: flex;
@@ -421,13 +581,9 @@ function _injectStyles(primaryColor) {
       flex-shrink: 0;
     }
 
-    .obs-niv-count {
-      font-size: 12px;
-      color: var(--obs-muted);
-      margin-left: 2px;
-    }
+    .obs-niv-count { font-size: 12px; color: var(--obs-muted); margin-left: 2px; }
 
-    /* Two-col layout */
+    /* Two-col */
     .obs-two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -437,11 +593,7 @@ function _injectStyles(primaryColor) {
     /* Sector bars */
     .obs-bars { display: flex; flex-direction: column; gap: 10px; }
 
-    .obs-bar-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .obs-bar-row { display: flex; align-items: center; gap: 10px; }
 
     .obs-bar-label {
       font-size: 12px;
@@ -454,11 +606,9 @@ function _injectStyles(primaryColor) {
     }
 
     .obs-bar-track {
-      flex: 1;
-      height: 10px;
+      flex: 1; height: 10px;
       background: var(--obs-bg);
-      border-radius: 5px;
-      overflow: hidden;
+      border-radius: 5px; overflow: hidden;
       border: 1px solid var(--obs-border);
     }
 
@@ -469,38 +619,23 @@ function _injectStyles(primaryColor) {
       transition: width .6s ease;
     }
 
-    .obs-bar-val {
-      font-size: 12px;
-      font-weight: 600;
-      min-width: 52px;
-      text-align: right;
-      color: var(--obs-text);
-    }
-
+    .obs-bar-val { font-size: 12px; font-weight: 600; min-width: 52px; text-align: right; color: var(--obs-text); }
     .obs-bar-pct { font-weight: 400; color: var(--obs-muted); }
 
     /* Challenges */
     .obs-challenges { display: flex; flex-direction: column; gap: 8px; }
 
     .obs-ch-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 10px;
-      background: var(--obs-bg);
-      border-radius: 6px;
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 10px; background: var(--obs-bg); border-radius: 6px;
     }
 
     .obs-ch-rank {
       width: 20px; height: 20px;
       background: var(--obs-primary);
-      color: #fff;
-      border-radius: 50%;
-      font-size: 11px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      color: #fff; border-radius: 50%;
+      font-size: 11px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
 
@@ -512,53 +647,78 @@ function _injectStyles(primaryColor) {
     /* Dimension bars */
     .obs-dims { display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
 
-    .obs-dim-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    .obs-dim-row { display: flex; align-items: center; gap: 12px; }
 
-    .obs-dim-label {
-      font-size: 13px;
-      color: var(--obs-muted);
-      min-width: 100px;
-    }
+    .obs-dim-label { font-size: 13px; color: var(--obs-muted); min-width: 100px; }
 
     .obs-dim-track {
-      flex: 1;
-      height: 10px;
+      flex: 1; height: 10px; background: var(--obs-bg);
+      border-radius: 5px; overflow: hidden; border: 1px solid var(--obs-border);
+    }
+
+    .obs-dim-bar { height: 100%; border-radius: 5px; transition: width .8s ease; }
+    .obs-dim-val { font-size: 13px; font-weight: 700; min-width: 28px; text-align: right; }
+
+    .obs-dims-note { font-size: 11px; color: var(--obs-muted); font-style: italic; }
+
+    /* Actions recommandées */
+    .obs-actions-intro { font-size: 13px; color: var(--obs-muted); margin-bottom: 14px; }
+
+    .obs-actions { display: flex; flex-direction: column; gap: 10px; }
+
+    .obs-action-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 12px 14px;
       background: var(--obs-bg);
-      border-radius: 5px;
-      overflow: hidden;
+      border-radius: 8px;
+      border-left: 3px solid var(--obs-primary);
+    }
+
+    .obs-action-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+
+    .obs-action-item strong { font-size: 14px; display: block; margin-bottom: 2px; }
+    .obs-action-item p      { font-size: 13px; color: var(--obs-muted); margin: 0; }
+
+    /* Rapport CTA */
+    .obs-report-card {
+      background: var(--obs-card);
       border: 1px solid var(--obs-border);
+      border-radius: var(--obs-radius);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
-    .obs-dim-bar {
-      height: 100%;
-      border-radius: 5px;
-      transition: width .8s ease;
-    }
+    .obs-report-text { flex: 1; min-width: 180px; }
+    .obs-report-text strong { font-size: 14px; display: block; margin-bottom: 3px; }
+    .obs-report-text p      { font-size: 13px; color: var(--obs-muted); }
 
-    .obs-dim-val {
+    .obs-report-btn {
+      padding: 10px 20px;
+      background: var(--obs-primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
       font-size: 13px;
-      font-weight: 700;
-      min-width: 28px;
-      text-align: right;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .15s;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
-
-    .obs-dims-note {
-      font-size: 11px;
-      color: var(--obs-muted);
-      font-style: italic;
-    }
+    .obs-report-btn:hover:not(:disabled) { opacity: .9; }
+    .obs-report-btn:disabled { cursor: default; }
 
     /* Responsive */
     @media (max-width: 640px) {
-      .obs-kpi-grid { grid-template-columns: 1fr 1fr; }
+      .obs-kpi-grid      { grid-template-columns: 1fr 1fr; }
       .obs-kpi-grid > :last-child { grid-column: span 2; }
-      .obs-two-col { grid-template-columns: 1fr; }
-      .obs-wrap { padding: 16px 12px 40px; }
-      .obs-bar-label { min-width: 90px; max-width: 90px; }
+      .obs-kpi-secondary { grid-template-columns: 1fr; }
+      .obs-two-col       { grid-template-columns: 1fr; }
+      .obs-wrap          { padding: 16px 12px 40px; }
+      .obs-bar-label     { min-width: 90px; max-width: 90px; }
     }
   `;
   document.head.appendChild(style);

@@ -107,7 +107,7 @@ function renderSidebar(apps) {
 
     let badge = "";
     if (app.catalog_status === "coming_soon") {
-      badge = `<span class="ws-badge-soon">Bientôt</span>`;
+      badge = `<span class="ws-badge-soon">T4 2026</span>`;
     } else if (app.catalog_status === "available_beta") {
       badge = `<span class="ws-badge-beta">Bêta</span>`;
     }
@@ -209,7 +209,7 @@ function showHomeDashboard() {
       <div class="wsh-app-card wsh-app-card-soon">
         <div class="wsh-app-card-icon">${app.icon || "📦"}</div>
         <div class="wsh-app-card-name">${name}</div>
-        <span class="wsh-soon-badge">🚀 Disponible prochainement</span>
+        <span class="wsh-soon-badge">🚀 En préparation · T4 2026</span>
       </div>`;
   }).join("");
 
