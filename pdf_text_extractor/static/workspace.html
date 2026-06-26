@@ -385,6 +385,36 @@
       padding: 5px 10px;
     }
 
+    /* CTA Pilote */
+    .wsh-cta-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .wsh-cta-text { flex: 1; min-width: 180px; }
+    .wsh-cta-text strong { font-size: 14px; display: block; margin-bottom: 3px; }
+    .wsh-cta-text p { font-size: 13px; color: var(--muted); }
+
+    .wsh-cta-btn {
+      white-space: nowrap;
+      padding: 10px 20px;
+      background: var(--primary);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: opacity .15s;
+      flex-shrink: 0;
+    }
+    .wsh-cta-btn:hover { opacity: .9; }
+
     /* ── Loading / Error states ─────────────────────────── */
     .ws-state {
       display: flex;

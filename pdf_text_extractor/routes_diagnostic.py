@@ -284,6 +284,94 @@ def get_result(request: Request, session_id: str):
     return JSONResponse(content=_build_result(session_id, result, bench), headers=_NO_CACHE)
 
 
+# ── GET /api/diagnostic/{partner_slug}/stats ──────────────────────────────────
+
+@router.get("/{partner_slug}/stats")
+@limiter.limit("30/minute")
+def get_stats(request: Request, partner_slug: str):
+    with get_db() as cur:
+        cur.execute("SELECT id FROM partners WHERE slug = %s AND is_active = true LIMIT 1", (partner_slug,))
+        p = row(cur)
+        if not p:
+            raise HTTPException(status_code=404, detail="Partenaire introuvable.")
+
+        partner_id = str(p["id"])
+
+        cur.execute(
+            """
+            SELECT
+                COUNT(*)                                           AS total,
+                ROUND(AVG(imai_score)::numeric, 1)                AS imai_avg,
+                COUNT(*) FILTER (WHERE niveau = 'debutant')       AS nb_debutant,
+                COUNT(*) FILTER (WHERE niveau = 'intermediaire')  AS nb_intermediaire,
+                COUNT(*) FILTER (WHERE niveau = 'avance')         AS nb_avance,
+                ROUND(AVG(score_strategie)::numeric, 1)           AS dim_strategie,
+                ROUND(AVG(score_personnes)::numeric, 1)           AS dim_personnes,
+                ROUND(AVG(score_processus)::numeric, 1)           AS dim_processus,
+                ROUND(AVG(score_technologies)::numeric, 1)        AS dim_technologies,
+                ROUND(AVG(score_gouvernance)::numeric, 1)         AS dim_gouvernance
+            FROM diagnostic_sessions
+            WHERE partner_id = %s AND status = 'completed'
+            """,
+            (partner_id,),
+        )
+        overall = row(cur)
+
+        cur.execute(
+            """
+            SELECT sector, COUNT(*) AS count,
+                   ROUND(AVG(imai_score)::numeric, 1) AS imai_avg
+            FROM diagnostic_sessions
+            WHERE partner_id = %s AND status = 'completed' AND sector IS NOT NULL
+            GROUP BY sector ORDER BY count DESC LIMIT 8
+            """,
+            (partner_id,),
+        )
+        by_sector = rows(cur)
+
+        cur.execute(
+            """
+            SELECT priority_challenge AS label, COUNT(*) AS count
+            FROM diagnostic_sessions
+            WHERE partner_id = %s AND status = 'completed'
+              AND priority_challenge IS NOT NULL AND priority_challenge <> ''
+            GROUP BY priority_challenge ORDER BY count DESC LIMIT 6
+            """,
+            (partner_id,),
+        )
+        challenges = rows(cur)
+
+    total = int(overall["total"] or 0)
+    return JSONResponse(
+        content={
+            "total":    total,
+            "imai_avg": float(overall["imai_avg"] or 0),
+            "niveaux": {
+                "debutant":      int(overall["nb_debutant"]      or 0),
+                "intermediaire": int(overall["nb_intermediaire"] or 0),
+                "avance":        int(overall["nb_avance"]        or 0),
+            },
+            "dimensions": {
+                "strategie":    float(overall["dim_strategie"]    or 0),
+                "personnes":    float(overall["dim_personnes"]    or 0),
+                "processus":    float(overall["dim_processus"]    or 0),
+                "technologies": float(overall["dim_technologies"] or 0),
+                "gouvernance":  float(overall["dim_gouvernance"]  or 0),
+            },
+            "by_sector": [
+                {"sector": s["sector"], "count": int(s["count"]),
+                 "imai_avg": float(s["imai_avg"] or 0)}
+                for s in by_sector
+            ],
+            "challenges": [
+                {"label": c["label"], "count": int(c["count"])}
+                for c in challenges
+            ],
+        },
+        headers=_NO_CACHE,
+    )
+
+
 # ── GET /api/diagnostic/{partner_slug}/benchmark ──────────────────────────────
 
 @router.get("/{partner_slug}/benchmark")

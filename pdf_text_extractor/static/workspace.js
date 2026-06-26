@@ -247,6 +247,15 @@ function showHomeDashboard() {
         <h2 class="wsh-apps-title">Applications</h2>
         <div class="wsh-app-grid">${appCards}</div>
       </div>
+
+      <div class="wsh-cta-card">
+        <div class="wsh-cta-text">
+          <strong>Votre organisation veut lancer ce programme ?</strong>
+          <p>Rejoignez le réseau de partenaires AgentHub et déployez votre propre Accélérateur IA.</p>
+        </div>
+        <a href="mailto:contact@nexhire.ca" class="wsh-cta-btn">Planifier un pilote →</a>
+      </div>
+
     </div>`;
 
   container.querySelectorAll(".wsh-app-card-btn").forEach(btn => {
