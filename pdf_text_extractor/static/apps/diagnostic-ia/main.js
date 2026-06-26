@@ -437,7 +437,7 @@ function _showResults(container) {
     const email = _el("dia-email-input").value.trim();
     if (!email) return;
     try {
-      await _post(`${API}/session/${_state.sessionId}/complete`, { company_email: email });
+      await _patch(`${API}/session/${_state.sessionId}/email`, { company_email: email });
       const msg = _el("dia-email-msg");
       msg.textContent = "✅ Rapport envoyé — vérifiez votre boîte de réception.";
       msg.style.display = "block";
@@ -477,6 +477,23 @@ function _niveauDesc(niv) {
   if (niv === "debutant")      return "Votre organisation débute son parcours IA. Des gains rapides sont accessibles dès maintenant.";
   if (niv === "intermediaire") return "Vous avez de bonnes bases. Il est temps de structurer et d'accélérer votre démarche.";
   return "Votre organisation est en avance sur la maturité IA. Continuez à innover et à partager vos apprentissages.";
+}
+
+async function _patch(url, body) {
+  const res = await fetch(url, {
+    method:  "PATCH",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify(body),
+  });
+  const data = await res.json();
+  if (!res.ok) {
+    const msg = Array.isArray(data.detail)
+      ? data.detail.map(e => e.msg || JSON.stringify(e)).join(" · ")
+      : (data.detail || `Erreur ${res.status}`);
+    throw new Error(msg);
+  }
+  return data;
 }
 
 async function _post(url, body) {

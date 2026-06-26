@@ -236,6 +236,25 @@ def complete_session(request: Request, session_id: str, payload: CompletePayload
     )
 
 
+# ── PATCH /api/diagnostic/session/{id}/email — Enregistrer l'email post-résultats ──
+
+class EmailPayload(BaseModel):
+    company_email: EmailStr
+
+
+@router.patch("/session/{session_id}/email")
+@limiter.limit("10/minute")
+def save_email(request: Request, session_id: str, payload: EmailPayload):
+    with get_db() as cur:
+        cur.execute(
+            "UPDATE diagnostic_sessions SET company_email = %s WHERE id = %s AND status = 'completed' RETURNING id",
+            (str(payload.company_email), session_id),
+        )
+        if not row(cur):
+            raise HTTPException(status_code=404, detail="Session introuvable ou non complétée.")
+    return JSONResponse(content={"ok": True}, headers=_NO_CACHE)
+
+
 # ── GET /api/diagnostic/session/{id}/result — Récupérer les résultats ────────
 
 @router.get("/session/{session_id}/result")
