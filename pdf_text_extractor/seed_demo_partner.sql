@@ -52,3 +52,4 @@ DO UPDATE SET
 -- ── Résultat attendu ────────────────────────────────────────────────
 -- /workspace/demo  →  Accélérateur IA CCI3R (violet — mode démo)
 -- /workspace/cci3r →  Accélérateur IA CCI3R (bleu — production)
+

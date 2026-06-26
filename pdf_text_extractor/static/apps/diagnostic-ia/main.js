@@ -10,10 +10,12 @@
 const API = '/api/diagnostic';
 
 const SECTORS = [
-  "Manufacturier", "Commerce de détail", "Services professionnels",
-  "Construction", "Transport et logistique", "Technologies de l'information",
-  "Santé et services sociaux", "Éducation et formation",
-  "Tourisme et hôtellerie", "Agroalimentaire", "Finance et assurance", "Autre",
+  "Professionnels", "Commercial", "Communications",
+  "Associations et regroupements", "Alimentation, hôtellerie et restauration",
+  "Industriel manufacturier", "Immobilier", "Événementiel",
+  "Finances", "Construction", "Santé",
+  "Arts et culture", "Éducation", "Environnement",
+  "Entreprises de services", "Administration publique", "Autre",
 ];
 
 const CHALLENGES = [
