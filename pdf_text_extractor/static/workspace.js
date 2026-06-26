@@ -67,12 +67,17 @@ async function boot() {
 
 // ── Branding ──────────────────────────────────────────────────────────────────
 function applyBranding(partner) {
-  document.title = partner.name + " · Accélérateur IA";
-  $("ws-partner-name").textContent = partner.name;
+  const heroTitle = partner.hero_title || "Accélérateur IA";
+  const heroSub   = partner.hero_subtitle || "Propulsé par AgentHub Platform";
+
+  document.title = `${partner.name} · ${heroTitle}`;
+  $("ws-program-name").textContent = heroTitle;
+  $("ws-powered-by").textContent   = heroSub;
 
   if (partner.logo_url) {
     const logo = $("ws-logo");
     logo.src = partner.logo_url;
+    logo.alt = partner.name;
     logo.style.display = "block";
   }
 
@@ -192,6 +197,8 @@ function showHomeDashboard() {
   setActiveBtn(null);
 
   const partnerName = _partner?.name || "AgentHub";
+  const heroTitle   = _partner?.hero_title    || "Accélérateur IA";
+  const heroSub     = _partner?.hero_subtitle || "Propulsé par AgentHub Platform";
 
   const appCards = _apps.map(app => {
     const name = _displayName(app);
@@ -216,9 +223,9 @@ function showHomeDashboard() {
   container.innerHTML = `
     <div class="wsh-home">
       <div class="wsh-hero">
-        <div class="wsh-hero-eyebrow">Programme officiel · ${partnerName}</div>
-        <h1 class="wsh-hero-title">Accélérateur IA</h1>
-        <p class="wsh-hero-sub">Propulsé par AgentHub Platform</p>
+        <div class="wsh-hero-eyebrow">${partnerName}</div>
+        <h1 class="wsh-hero-title">${heroTitle}</h1>
+        <p class="wsh-hero-sub">${heroSub}</p>
       </div>
 
       <div class="wsh-progress-card">

@@ -15,6 +15,7 @@ def _get_partner(cur, slug: str) -> dict:
         """
         SELECT id, slug, name, description, logo_url,
                primary_color, secondary_color, favicon_url,
+               hero_title, hero_subtitle,
                city, region, country, website, plan, is_active
         FROM partners
         WHERE slug = %s
@@ -53,6 +54,8 @@ def get_workspace(request: Request, slug: str):
             "primary_color":   partner["primary_color"],
             "secondary_color": partner["secondary_color"],
             "favicon_url":     partner["favicon_url"],
+            "hero_title":      partner["hero_title"],
+            "hero_subtitle":   partner["hero_subtitle"],
             "city":            partner["city"],
             "region":          partner["region"],
             "country":         partner["country"],
@@ -114,6 +117,8 @@ def get_workspace_apps(request: Request, slug: str):
                 "name":          partner["name"],
                 "primary_color": partner["primary_color"],
                 "logo_url":      partner["logo_url"],
+                "hero_title":    partner["hero_title"],
+                "hero_subtitle": partner["hero_subtitle"],
             },
             "apps": apps,
         },
@@ -137,6 +142,8 @@ def get_workspace_config(request: Request, slug: str):
         "primary_color":   partner["primary_color"],
         "secondary_color": partner["secondary_color"],
         "favicon_url":     partner["favicon_url"],
+        "hero_title":      partner["hero_title"],
+        "hero_subtitle":   partner["hero_subtitle"],
     }
 
 
