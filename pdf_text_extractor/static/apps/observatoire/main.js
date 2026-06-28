@@ -117,9 +117,11 @@ function _renderAccessDenied(container) {
         <h2 class="obs-state-title">Accès réservé</h2>
         <p class="obs-state-text">
           Cet Observatoire est réservé à l'administrateur du programme partenaire.
-          Si vous êtes l'administrateur, votre session a peut-être expiré — reconnectez-vous pour continuer.
+          L'accès est attribué par AgentHub lors de l'activation de votre compte.
         </p>
-        <a class="obs-retry-btn" href="/?auth=login" style="text-decoration:none">Se reconnecter</a>
+        <p class="obs-state-text" style="margin-top:8px;font-size:13px">
+          Besoin d'accès ? Contactez <a href="mailto:contact@nexhire.ca" style="color:var(--obs-primary)">contact@nexhire.ca</a>.
+        </p>
       </div>
     </div>`;
 }

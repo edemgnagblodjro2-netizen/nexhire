@@ -2,7 +2,7 @@
 import logging
 import os
 
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, Header, HTTPException, Request
 from fastapi.responses import HTMLResponse
 
 from db import get_db, row, rows
@@ -12,7 +12,8 @@ from auth import CurrentUser, get_current_user
 from privacy import K_ANON_MIN
 
 logger = logging.getLogger("rapport")
-_GATING_ENFORCED = os.getenv("RAPPORT_GATING_ENFORCED", "false").lower() == "true"
+_GATING_ENFORCED          = os.getenv("RAPPORT_GATING_ENFORCED",  "false").lower() == "true"
+_REGIONAL_AUTH_ENFORCED   = os.getenv("REGIONAL_AUTH_ENFORCED",   "false").lower() == "true"
 
 router = APIRouter(prefix="/rapport", tags=["rapport"])
 
@@ -640,12 +641,19 @@ _REG_DIM_RECS: dict[str, str] = {
 }
 
 
+def _get_regional_auth(authorization: str | None = Header(default=None)) -> CurrentUser | None:
+    """Auth conditionnelle : appliquée seulement si REGIONAL_AUTH_ENFORCED=true."""
+    if not _REGIONAL_AUTH_ENFORCED:
+        return None
+    return get_current_user(authorization)
+
+
 @router.get("/regional/{partner_slug}", response_class=HTMLResponse)
 @limiter.limit("30/minute")
 def get_rapport_regional(
     request: Request,
     partner_slug: str,
-    user: CurrentUser = Depends(get_current_user),
+    user: CurrentUser | None = Depends(_get_regional_auth),
 ):
     with get_db() as cur:
         cur.execute(
@@ -656,7 +664,7 @@ def get_rapport_regional(
         if not partner:
             raise HTTPException(status_code=404, detail="Partenaire introuvable.")
 
-        if str(getattr(user, "partner_id", None)) != str(partner["id"]):
+        if _REGIONAL_AUTH_ENFORCED and str(getattr(user, "partner_id", None)) != str(partner["id"]):
             raise HTTPException(status_code=403, detail="Accès réservé à l'administrateur de ce programme.")
 
         partner_id = str(partner["id"])
