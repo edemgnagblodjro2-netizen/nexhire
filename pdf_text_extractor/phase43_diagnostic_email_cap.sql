@@ -15,6 +15,14 @@ WHERE a.id > b.id
   AND a.question_code = b.question_code;
 
 -- 3. Contrainte unique — permet le vrai upsert (DO UPDATE) dans le code
-ALTER TABLE diagnostic_answers
-  ADD CONSTRAINT IF NOT EXISTS uq_answer_session_question
-  UNIQUE (session_id, question_code);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint
+    WHERE conname = 'uq_answer_session_question'
+  ) THEN
+    ALTER TABLE diagnostic_answers
+      ADD CONSTRAINT uq_answer_session_question
+      UNIQUE (session_id, question_code);
+  END IF;
+END $$;
