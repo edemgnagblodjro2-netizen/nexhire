@@ -17,7 +17,7 @@ _REGIONAL_AUTH_ENFORCED   = os.getenv("REGIONAL_AUTH_ENFORCED",   "false").lower
 
 router = APIRouter(prefix="/rapport", tags=["rapport"])
 
-_AGENTHUB_LOGO = "https://lisvylfiqfsrjfvyppqh.supabase.co/storage/v1/object/public/assets/logos/agenthub-platform.png"
+_AGENTHUB_LOGO = "https://lisvylfiqfsrjfvyppqh.supabase.co/storage/v1/object/public/assets/logos/civicai.png"
 
 
 def _cobrand_right(partner_name: str, logo_url: str) -> str:
