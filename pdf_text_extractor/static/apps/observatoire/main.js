@@ -112,9 +112,13 @@ async function _loadAndRender(container) {
 function _renderAccessDenied(container) {
   container.innerHTML = `
     <div class="obs-wrap">
-      <div class="obs-loading">
-        <p style="font-size:15px;font-weight:600;color:#1e293b">Accès non autorisé</p>
-        <p style="font-size:13px;color:#6b7280">Vous devez être administrateur de ce programme pour accéder à l'Observatoire.</p>
+      <div class="obs-state">
+        <div class="obs-state-icon">🔒</div>
+        <h2 class="obs-state-title">Accès réservé</h2>
+        <p class="obs-state-text">
+          L'Observatoire est réservé à l'administrateur du programme.
+          Connectez-vous avec le compte partenaire pour consulter les données de votre territoire.
+        </p>
       </div>
     </div>`;
 }
@@ -122,11 +126,20 @@ function _renderAccessDenied(container) {
 function _renderError(container) {
   container.innerHTML = `
     <div class="obs-wrap">
-      <div class="obs-loading">
-        <p style="font-size:15px;font-weight:600;color:#1e293b">Erreur de chargement</p>
-        <p style="font-size:13px;color:#6b7280">Impossible de récupérer les données. Rechargez la page ou réessayez plus tard.</p>
+      <div class="obs-state">
+        <div class="obs-state-icon">⚠️</div>
+        <h2 class="obs-state-title">Données momentanément indisponibles</h2>
+        <p class="obs-state-text">
+          Impossible de charger l'Observatoire pour l'instant.
+          Vérifiez votre connexion et réessayez.
+        </p>
+        <button class="obs-retry-btn" id="obs-retry-btn">Réessayer</button>
       </div>
     </div>`;
+  document.getElementById("obs-retry-btn")?.addEventListener("click", () => {
+    _showSkeleton(container);
+    _loadAndRender(container);
+  });
 }
 
 // ── Skeleton ──────────────────────────────────────────────────────────────────
@@ -737,6 +750,31 @@ function _injectStyles(primaryColor) {
     }
     .obs-report-btn:hover:not(:disabled) { opacity: .9; }
     .obs-report-btn:disabled { cursor: default; }
+
+    /* Écrans d'état (accès refusé / erreur) */
+    .obs-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 56px 24px;
+      gap: 10px;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+    .obs-state-icon { font-size: 36px; margin-bottom: 4px; }
+    .obs-state-title { font-size: 18px; font-weight: 700; color: var(--obs-text); }
+    .obs-state-text { font-size: 14px; color: var(--obs-muted); line-height: 1.6; }
+    .obs-retry-btn {
+      margin-top: 12px;
+      padding: 10px 22px;
+      background: var(--obs-primary);
+      color: #fff; border: none; border-radius: 8px;
+      font-size: 13px; font-weight: 600; cursor: pointer;
+      transition: opacity .15s;
+    }
+    .obs-retry-btn:hover { opacity: .9; }
 
     /* Responsive */
     @media (max-width: 640px) {
