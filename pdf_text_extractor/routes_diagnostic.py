@@ -2,7 +2,7 @@ import hmac
 import logging
 import os
 from datetime import timezone
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request
+from fastapi import APIRouter, BackgroundTasks, Depends, Header, HTTPException, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, EmailStr, Field
 
@@ -16,6 +16,7 @@ from diagnostic_questions import (
 from privacy import K_ANON_MIN, TEST_SESSION_SECRET
 
 logger = logging.getLogger("diagnostic")
+_STATS_AUTH_ENFORCED = os.getenv("STATS_AUTH_ENFORCED", "false").lower() == "true"
 
 router = APIRouter(prefix="/api/diagnostic", tags=["diagnostic"])
 
@@ -381,15 +382,22 @@ def get_result(request: Request, session_id: str):
 
 # ── GET /api/diagnostic/{partner_slug}/stats ──────────────────────────────────
 
+def _get_stats_auth(authorization: str | None = Header(default=None)) -> CurrentUser | None:
+    """Auth conditionnelle : appliquée seulement si STATS_AUTH_ENFORCED=true."""
+    if not _STATS_AUTH_ENFORCED:
+        return None
+    return get_current_user(authorization)
+
+
 @router.get("/{partner_slug}/stats")
 @limiter.limit("30/minute")
-def get_stats(request: Request, partner_slug: str, user: CurrentUser = Depends(get_current_user)):
+def get_stats(request: Request, partner_slug: str, user: CurrentUser | None = Depends(_get_stats_auth)):
     with get_db() as cur:
         cur.execute("SELECT id FROM partners WHERE slug = %s AND is_active = true LIMIT 1", (partner_slug,))
         p = row(cur)
         if not p:
             raise HTTPException(status_code=404, detail="Partenaire introuvable.")
-        if str(getattr(user, "partner_id", None)) != str(p["id"]):
+        if _STATS_AUTH_ENFORCED and str(getattr(user, "partner_id", None)) != str(p["id"]):
             raise HTTPException(status_code=403, detail="Accès réservé à l'administrateur de ce workspace.")
 
         partner_id = str(p["id"])
