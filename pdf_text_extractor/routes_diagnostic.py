@@ -1,5 +1,7 @@
+import logging
+import os
 from datetime import timezone
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, EmailStr, Field
 
@@ -11,15 +13,21 @@ from diagnostic_questions import (
     get_next_question, compute_imai,
 )
 
+logger = logging.getLogger("diagnostic")
+
 router = APIRouter(prefix="/api/diagnostic", tags=["diagnostic"])
+
+MAX_EMAIL_SENDS_PER_SESSION = 2
 
 _NO_CACHE = {"Cache-Control": "no-store, no-cache, must-revalidate, max-age=0"}
 
 SECTORS = [
-    "Manufacturier", "Commerce de détail", "Services professionnels",
-    "Construction", "Transport et logistique", "Technologies de l'information",
-    "Santé et services sociaux", "Éducation et formation",
-    "Tourisme et hôtellerie", "Agroalimentaire", "Finance et assurance", "Autre",
+    "Professionnels", "Commercial", "Communications",
+    "Associations et regroupements", "Alimentation, hôtellerie et restauration",
+    "Industriel manufacturier", "Immobilier", "Événementiel",
+    "Finances", "Construction", "Santé",
+    "Arts et culture", "Éducation", "Environnement",
+    "Entreprises de services", "Administration publique", "Autre",
 ]
 
 SIZE_RANGES = ["1-9", "10-49", "50-199", "200+"]
@@ -74,16 +82,14 @@ class StartPayload(BaseModel):
     size_range:         str
     priority_challenge: str | None = Field(None, max_length=255)
 
-    @property
-    def size_range_valid(self) -> bool:
-        return self.size_range in SIZE_RANGES
-
 
 @router.post("/session")
 @limiter.limit("10/minute")
 def start_session(request: Request, payload: StartPayload):
     if payload.size_range not in SIZE_RANGES:
         raise HTTPException(status_code=422, detail=f"size_range invalide. Valeurs acceptées : {SIZE_RANGES}")
+    if payload.sector not in SECTORS:
+        raise HTTPException(status_code=422, detail="Secteur invalide.")
 
     with get_db() as cur:
         partner_id = _get_partner_id(cur, payload.partner_slug)
@@ -132,7 +138,7 @@ def submit_answer(request: Request, session_id: str, payload: AnswerPayload):
     with get_db() as cur:
         cur.execute("SELECT id FROM diagnostic_sessions WHERE id = %s AND status = 'in_progress' LIMIT 1", (session_id,))
         if not row(cur):
-            raise HTTPException(status_code=404, detail="Session introuvable ou déjà terminée.")
+            raise HTTPException(status_code=404, detail="Session introuvable.")
 
         # Insérer la réponse (upsert — au cas où l'utilisateur revient en arrière)
         cur.execute(
@@ -140,7 +146,10 @@ def submit_answer(request: Request, session_id: str, payload: AnswerPayload):
             INSERT INTO diagnostic_answers
               (session_id, question_code, dimension, answer, score, is_conditional)
             VALUES (%s, %s, %s, %s, %s, %s)
-            ON CONFLICT DO NOTHING
+            ON CONFLICT (session_id, question_code) DO UPDATE
+              SET answer = EXCLUDED.answer,
+                  score  = EXCLUDED.score,
+                  answered_at = now()
             """,
             (session_id, payload.question_code, q["dimension"],
              payload.answer, score, q["is_conditional"]),
@@ -243,30 +252,64 @@ class EmailPayload(BaseModel):
     company_email: EmailStr
 
 
+def _send_rapport_async(to_email, company_name, partner_name,
+                        score, niveau, primary_color, rapport_url):
+    """Exécuté après la réponse HTTP — n'impacte jamais le temps de réponse."""
+    try:
+        from email_service import send_diagnostic_rapport_email
+        send_diagnostic_rapport_email(
+            to_email=to_email, company_name=company_name,
+            partner_name=partner_name, score=score, niveau=niveau,
+            primary_color=primary_color, rapport_url=rapport_url,
+        )
+    except Exception:
+        logger.exception("Échec envoi rapport à %s", to_email)
+
+
 @router.patch("/session/{session_id}/email")
-@limiter.limit("10/minute")
-def save_email(request: Request, session_id: str, payload: EmailPayload):
+@limiter.limit("5/hour;15/day")
+def save_email(
+    request: Request,
+    session_id: str,
+    payload: EmailPayload,
+    background_tasks: BackgroundTasks,
+):
     with get_db() as cur:
         cur.execute(
             """
-            UPDATE diagnostic_sessions SET company_email = %s
-            WHERE id = %s AND status = 'completed'
+            UPDATE diagnostic_sessions SET
+                company_email      = %s,
+                email_send_count   = email_send_count + 1,
+                last_email_sent_at = now()
+            WHERE id = %s
+              AND status = 'completed'
+              AND email_send_count < %s
             RETURNING id, company_name, imai_score, niveau,
-                      (SELECT name FROM partners WHERE id = diagnostic_sessions.partner_id) AS partner_name,
+                      (SELECT name          FROM partners WHERE id = diagnostic_sessions.partner_id) AS partner_name,
                       (SELECT primary_color FROM partners WHERE id = diagnostic_sessions.partner_id) AS primary_color
             """,
-            (str(payload.company_email), session_id),
+            (str(payload.company_email), session_id, MAX_EMAIL_SENDS_PER_SESSION),
         )
         sess = row(cur)
-        if not sess:
-            raise HTTPException(status_code=404, detail="Session introuvable ou non complétée.")
 
-    from email_service import send_diagnostic_rapport_email
-    import os
+        if not sess:
+            cur.execute(
+                "SELECT email_send_count FROM diagnostic_sessions WHERE id = %s AND status = 'completed' LIMIT 1",
+                (session_id,),
+            )
+            existing = row(cur)
+            if existing and existing["email_send_count"] >= MAX_EMAIL_SENDS_PER_SESSION:
+                raise HTTPException(
+                    status_code=429,
+                    detail="Limite d'envois atteinte. Utilisez le lien direct vers votre rapport.",
+                )
+            raise HTTPException(status_code=404, detail="Session introuvable.")
+
     app_url = os.environ.get("APP_URL", "https://agenthub.nexhire.ca")
     rapport_url = f"{app_url}/rapport/{session_id}"
 
-    email_sent = send_diagnostic_rapport_email(
+    background_tasks.add_task(
+        _send_rapport_async,
         to_email=str(payload.company_email),
         company_name=sess["company_name"] or "",
         partner_name=sess["partner_name"] or "AgentHub",
@@ -276,7 +319,10 @@ def save_email(request: Request, session_id: str, payload: EmailPayload):
         rapport_url=rapport_url,
     )
 
-    return JSONResponse(content={"ok": True, "email_sent": email_sent, "rapport_url": rapport_url}, headers=_NO_CACHE)
+    return JSONResponse(
+        content={"ok": True, "email_queued": True, "rapport_url": rapport_url},
+        headers=_NO_CACHE,
+    )
 
 
 # ── GET /api/diagnostic/session/{id}/result — Récupérer les résultats ────────
@@ -297,7 +343,7 @@ def get_result(request: Request, session_id: str):
         )
         sess = row(cur)
         if not sess:
-            raise HTTPException(status_code=404, detail="Résultats introuvables.")
+            raise HTTPException(status_code=404, detail="Session introuvable.")
 
         _, _, ans_rows = _session_answers(cur, session_id)
 

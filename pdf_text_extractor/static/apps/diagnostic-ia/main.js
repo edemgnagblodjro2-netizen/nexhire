@@ -467,11 +467,9 @@ function _showResults(container) {
     btn.disabled = true;
     btn.textContent = "…";
     try {
-      const data = await _patch(`${API}/session/${_state.sessionId}/email`, { company_email: email });
+      await _patch(`${API}/session/${_state.sessionId}/email`, { company_email: email });
       const msg = _el("dia-email-msg");
-      msg.textContent = data.email_sent
-        ? "✅ Courriel envoyé — vérifiez votre boîte de réception."
-        : "✅ Courriel enregistré.";
+      msg.textContent = "✅ Envoi en cours — vérifiez votre boîte d'ici quelques minutes.";
       msg.style.display = "block";
       msg.style.color = "#10b981";
       _el("dia-email-section").querySelector("form").style.display = "none";
