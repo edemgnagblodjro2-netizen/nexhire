@@ -1,295 +1,319 @@
 /**
- * AgentHub Platform — Workspace Shell
- * Navigation + catalogue d'apps + lazy loading des modules
+ * AgentHub Platform — Workspace Shell v2
+ * Sprint 1: sidebar professionnelle, dashboard, architecture modulaire
  */
+
+// ── Icons (Lucide-style SVG inline) ──────────────────────────────────────────
+const IC = {
+  home:       `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+  sparkles:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M19 3l.8 2.2L22 6l-2.2.8L19 9l-.8-2.2L16 6l2.2-.8z"/><path d="M5 17l.6 1.4L7 19l-1.4.6L5 21l-.6-1.4L3 19l1.4-.6z"/></svg>`,
+  chart:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>`,
+  eye:        `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`,
+  shield:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+  zap:        `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+  book:       `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`,
+  grid:       `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>`,
+  file:       `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`,
+  settings:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
+  users:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  dollar:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+  trending:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>`,
+  megaphone:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>`,
+  headset:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>`,
+  store:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`,
+};
+
+const icon = (name) => `<span class="ws-nav-icon">${IC[name] || IC.grid}</span>`;
+
+// ── Navigation structure (fixed shell, not from DB) ───────────────────────────
+const NAV = [
+  {
+    items: [
+      { id: 'dashboard', label: 'Tableau de bord', iconKey: 'home', route: '__dashboard__' },
+    ],
+  },
+  {
+    section: 'Intelligence artificielle',
+    items: [
+      { id: 'atlas',        label: 'ATLAS AI',        iconKey: 'sparkles', appSlug: 'atlas',         defaultSoon: true },
+      { id: 'diagnostic',   label: 'Diagnostic IA',   iconKey: 'chart',    appSlug: 'diagnostic-ia' },
+      { id: 'observatoire', label: 'Observatoire IA', iconKey: 'eye',      appSlug: 'observatoire'  },
+      { id: 'gouvernance',  label: 'Gouvernance IA',  iconKey: 'shield',   appSlug: 'gouvernance',   defaultSoon: true },
+    ],
+  },
+  {
+    section: 'Productivité',
+    items: [
+      { id: 'automation', label: 'Automatisations', iconKey: 'zap',  appSlug: 'automation', defaultSoon: true },
+      { id: 'knowledge',  label: 'Knowledge Hub',   iconKey: 'book', appSlug: 'knowledge',  defaultSoon: true },
+      { id: 'optimizer',  label: 'M365 Optimizer',  iconKey: 'grid', appSlug: 'ms365',      defaultSoon: true },
+    ],
+  },
+  {
+    section: 'Analytique',
+    items: [
+      { id: 'reports', label: 'Rapports', iconKey: 'file', appSlug: 'reports', defaultSoon: true },
+    ],
+  },
+  {
+    section: 'Administration',
+    items: [
+      { id: 'settings', label: 'Paramètres', iconKey: 'settings', route: '__settings__', defaultSoon: true },
+    ],
+  },
+];
+
+const COMING_SOON = [
+  { id: 'rh',          label: 'RH Intelligence',       iconKey: 'users'     },
+  { id: 'finance',     label: 'Finance Intelligence',   iconKey: 'dollar'    },
+  { id: 'sales',       label: 'Sales Intelligence',     iconKey: 'trending'  },
+  { id: 'marketing',   label: 'Marketing Intelligence', iconKey: 'megaphone' },
+  { id: 'support',     label: 'Service Client IA',      iconKey: 'headset'   },
+  { id: 'marketplace', label: 'Marketplace d\'agents',  iconKey: 'store'     },
+];
+
+// ── State ─────────────────────────────────────────────────────────────────────
+const _state = {
+  partner:    null,
+  dbApps:     [],
+  activeId:   null,
+  activeApp:  null,
+  module:     null,
+};
 
 const $ = (id) => document.getElementById(id);
 
-// ── State ─────────────────────────────────────────────────────────────────────
-let _partner   = null;
-let _apps      = [];
-let _activeApp = null;
-let _module    = null;
+const _slug = () => location.pathname.split('/').filter(Boolean)[1] || null;
+const _pathApp = () => location.pathname.split('/').filter(Boolean)[2] || null;
 
-const _slug = () => {
-  const parts = location.pathname.split("/").filter(Boolean);
-  return parts[1] || null;
-};
-
-const _appSlugFromPath = () => {
-  const parts = location.pathname.split("/").filter(Boolean);
-  return parts[2] || null;
-};
-
-// Display name overrides — frontend aliases without touching app_registry
-const APP_NAME_OVERRIDES = {
-  "diagnostic-ia": "Parcours IA",
-  "observatoire":  "Observatoire",
-};
-
-function _displayName(app) {
-  return APP_NAME_OVERRIDES[app.slug] || app.name;
-}
-
-// ── Bootstrap ─────────────────────────────────────────────────────────────────
+// ── Boot ──────────────────────────────────────────────────────────────────────
 async function boot() {
   const slug = _slug();
-  if (!slug) { showError("URL de workspace invalide."); return; }
+  if (!slug) { _showFatal('URL de workspace invalide.'); return; }
 
   try {
-    const [partnerRes, appsRes] = await Promise.all([
-      fetch(`/api/workspace/${slug}`, { credentials: "include" }),
-      fetch(`/api/workspace/${slug}/apps`, { credentials: "include" }),
+    const [pRes, aRes] = await Promise.all([
+      fetch(`/api/workspace/${slug}`, { credentials: 'include' }),
+      fetch(`/api/workspace/${slug}/apps`, { credentials: 'include' }),
     ]);
 
-    if (!partnerRes.ok) throw new Error((await partnerRes.json()).detail || "Workspace introuvable.");
-    if (!appsRes.ok)    throw new Error((await appsRes.json()).detail    || "Erreur chargement apps.");
+    if (!pRes.ok) throw new Error((await pRes.json()).detail || 'Workspace introuvable.');
+    if (!aRes.ok) throw new Error((await aRes.json()).detail || 'Erreur chargement apps.');
 
-    _partner = await partnerRes.json();
-    const data = await appsRes.json();
-    _apps = data.apps || [];
+    _state.partner = await pRes.json();
+    _state.dbApps  = (await aRes.json()).apps || [];
 
-    applyBranding(_partner);
-    renderSidebar(_apps);
+    _applyBranding(_state.partner);
+    _renderNav();
 
-    const appFromUrl = _appSlugFromPath();
-    if (appFromUrl) {
-      const app = _apps.find(a => a.slug === appFromUrl && a.is_installed);
-      if (app) { navigateTo(slug, app); return; }
+    const appFromPath = _pathApp();
+    if (appFromPath) {
+      const navItem = _resolveNavItems().find(n => n.appSlug === appFromPath && n.enabled);
+      if (navItem) { _navigateTo(navItem); return; }
     }
 
-    showHomeDashboard();
+    _navigateTo({ id: 'dashboard', label: 'Tableau de bord', route: '__dashboard__' });
 
   } catch (err) {
-    showErrorBanner(err.message);
+    _toast(err.message, 'error');
   }
 }
 
 // ── Branding ──────────────────────────────────────────────────────────────────
-function applyBranding(partner) {
-  const heroTitle = partner.hero_title || "Accélérateur IA";
-  const heroSub   = partner.hero_subtitle || "Propulsé par AgentHub Platform";
+function _applyBranding(p) {
+  document.title = `${p.name} · AgentHub`;
+  $('ws-program-name').textContent = p.hero_title   || p.name || 'AgentHub';
+  $('ws-powered-by').textContent   = p.hero_subtitle || 'AgentHub Platform';
 
-  document.title = `${partner.name} · ${heroTitle}`;
-  $("ws-program-name").textContent = heroTitle;
-  $("ws-powered-by").textContent   = heroSub;
-
-  if (partner.logo_url) {
-    const logo = $("ws-logo");
-    logo.src = partner.logo_url;
-    logo.alt = partner.name;
-    logo.style.display = "block";
+  if (p.logo_url) {
+    const logo = $('ws-logo');
+    logo.src = p.logo_url; logo.alt = p.name; logo.style.display = 'block';
   }
 
-  if (partner.primary_color) {
-    document.documentElement.style.setProperty("--primary", partner.primary_color);
-    document.documentElement.style.setProperty("--primary-dk", partner.primary_color);
+  if (p.primary_color) {
+    const r = document.documentElement.style;
+    r.setProperty('--primary',    p.primary_color);
+    r.setProperty('--primary-dk', p.primary_color);
+    r.setProperty('--primary-lt', p.primary_color + '20');
+    r.setProperty('--primary-a10', p.primary_color + '1a');
   }
 
-  if (partner.favicon_url) {
-    let link = document.querySelector("link[rel='icon']");
-    if (!link) { link = document.createElement("link"); link.rel = "icon"; document.head.appendChild(link); }
-    link.href = partner.favicon_url;
+  const initials = (p.name || 'AG').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+  $('ws-user-avatar').textContent = initials;
+
+  if (p.favicon_url) {
+    let link = document.querySelector("link[rel='icon']") || document.createElement('link');
+    link.rel = 'icon'; link.href = p.favicon_url; document.head.appendChild(link);
   }
+}
+
+// ── Nav resolution ────────────────────────────────────────────────────────────
+function _resolveNavItems() {
+  const resolved = [];
+  for (const group of NAV) {
+    for (const item of group.items) {
+      if (item.route) {
+        resolved.push({ ...item, enabled: item.route !== '__settings__' || false, soon: item.defaultSoon || false });
+        continue;
+      }
+      if (item.appSlug) {
+        const dbApp = _state.dbApps.find(a => a.slug === item.appSlug);
+        const enabled = !!(dbApp && dbApp.is_installed);
+        resolved.push({ ...item, enabled, app: dbApp || null, soon: !enabled });
+      }
+    }
+  }
+  return resolved;
 }
 
 // ── Sidebar ───────────────────────────────────────────────────────────────────
-function renderSidebar(apps) {
-  const list = $("ws-app-list");
-  list.innerHTML = "";
+function _renderNav() {
+  const nav = $('ws-nav');
+  const resolved = _resolveNavItems();
+  let idx = 0;
+  let html = '';
 
-  if (!apps.length) {
-    list.innerHTML = '<div style="padding:12px;font-size:13px;color:var(--muted)">Aucune application.</div>';
-    return;
-  }
+  for (const group of NAV) {
+    html += `<div class="ws-nav-section">`;
+    if (group.section) html += `<div class="ws-nav-label">${group.section}</div>`;
 
-  for (const app of apps) {
-    const btn = document.createElement("button");
-    btn.className = "ws-app-btn";
-    btn.dataset.slug = app.slug;
-
-    if (!app.is_installed) btn.disabled = true;
-
-    let badge = "";
-    if (app.catalog_status === "coming_soon") {
-      badge = `<span class="ws-badge-soon">T4 2026</span>`;
-    } else if (app.catalog_status === "available_beta") {
-      badge = `<span class="ws-badge-beta">Bêta</span>`;
+    for (const item of group.items) {
+      const r = resolved[idx++];
+      const disabled = r.soon ? 'disabled' : '';
+      const badge = r.soon
+        ? `<span class="ws-nav-badge ws-badge-soon">Bientôt</span>`
+        : '';
+      html += `
+        <button class="ws-nav-item" data-id="${item.id}" ${disabled}
+          aria-label="${item.label}">
+          ${icon(item.iconKey)}
+          <span class="ws-nav-name">${item.label}</span>
+          ${badge}
+        </button>`;
     }
 
-    btn.innerHTML = `
-      <span class="ws-app-icon">${app.icon || "📦"}</span>
-      <span class="ws-app-label">
-        <span class="ws-app-name">${_displayName(app)}</span>
-      </span>
-      ${badge}
-    `;
-
-    if (app.is_installed) {
-      btn.addEventListener("click", () => navigateTo(_slug(), app));
-    }
-
-    list.appendChild(btn);
+    html += `</div>`;
   }
+
+  // À venir section
+  html += `<div class="ws-sidebar-divider"></div>`;
+  html += `<div class="ws-nav-section"><div class="ws-nav-label">À venir</div>`;
+  for (const cs of COMING_SOON) {
+    html += `
+      <button class="ws-nav-item" disabled aria-label="${cs.label}">
+        ${icon(cs.iconKey)}
+        <span class="ws-nav-name">${cs.label}</span>
+        <span class="ws-nav-badge ws-badge-soon">Bientôt</span>
+      </button>`;
+  }
+  html += `</div>`;
+
+  nav.innerHTML = html;
+
+  nav.querySelectorAll('.ws-nav-item:not([disabled])').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const r = _resolveNavItems().find(n => n.id === btn.dataset.id);
+      if (r) _navigateTo(r);
+    });
+  });
 }
 
-function setActiveBtn(slug) {
-  document.querySelectorAll(".ws-app-btn").forEach(b => {
-    b.classList.toggle("active", b.dataset.slug === slug);
+function _setActiveNav(id) {
+  document.querySelectorAll('.ws-nav-item').forEach(b => {
+    b.classList.toggle('active', b.dataset.id === id);
   });
+  _state.activeId = id;
+}
+
+// ── Breadcrumb ────────────────────────────────────────────────────────────────
+function _setBreadcrumb(label) {
+  const partnerName = _state.partner?.name || 'AgentHub';
+  $('ws-breadcrumb').innerHTML =
+    `<span>${partnerName}</span>
+     <span class="bc-sep">›</span>
+     <span class="bc-current">${label}</span>`;
 }
 
 // ── Navigation ────────────────────────────────────────────────────────────────
-async function navigateTo(partnerSlug, app) {
-  if (_activeApp === app.slug) return;
+async function _navigateTo(navItem) {
+  if (_state.module?.unmount) _state.module.unmount($('ws-app-container'));
+  _state.module = null; _state.activeApp = null;
 
-  if (_module && typeof _module.unmount === "function") {
-    _module.unmount($("ws-app-container"));
-  }
-  _module    = null;
-  _activeApp = null;
-
-  setActiveBtn(app.slug);
-  showLoading();
+  _setActiveNav(navItem.id);
+  _setBreadcrumb(navItem.label);
+  _showLoading();
 
   try {
-    const mod = await import(`/static/apps/${app.slug}/main.js`);
-    _module    = mod.default;
-    _activeApp = app.slug;
+    if (navItem.route === '__dashboard__') {
+      const mod = await import('/static/workspace/dashboard/main.js');
+      _state.module = mod.default;
+      history.replaceState({ id: 'dashboard' }, '', `/workspace/${_slug()}`);
 
-    const newPath = `/workspace/${partnerSlug}/${app.slug}`;
-    if (location.pathname !== newPath) {
-      history.pushState({ appSlug: app.slug }, "", newPath);
+    } else if (navItem.appSlug && navItem.enabled) {
+      const mod = await import(`/static/apps/${navItem.appSlug}/main.js`);
+      _state.module = mod.default;
+      _state.activeApp = navItem.appSlug;
+      const newPath = `/workspace/${_slug()}/${navItem.appSlug}`;
+      if (location.pathname !== newPath) history.pushState({ id: navItem.id }, '', newPath);
+
+    } else {
+      _showComingSoon(navItem.label);
+      return;
     }
 
-    const context = {
-      partnerSlug,
-      partner:   _partner,
-      appConfig: app.config || {},
-      user:      null,
+    const ctx = {
+      partnerSlug: _slug(),
+      partner:     _state.partner,
+      appConfig:   navItem.app?.config || {},
+      user:        null,
     };
 
-    $("ws-app-container").innerHTML = "";
-    _module.mount($("ws-app-container"), context);
+    $('ws-app-container').innerHTML = '';
+    _state.module.mount($('ws-app-container'), ctx);
 
   } catch (err) {
-    _activeApp = null;
-    setActiveBtn(null);
-    showAppError(_displayName(app), err.message);
+    _showAppError(navItem.label, err.message);
   }
 }
 
-window.addEventListener("popstate", (e) => {
-  const appSlug = e.state?.appSlug || _appSlugFromPath();
-  if (appSlug) {
-    const app = _apps.find(a => a.slug === appSlug && a.is_installed);
-    if (app) { navigateTo(_slug(), app); return; }
+window.addEventListener('popstate', (e) => {
+  const id = e.state?.id || _pathApp();
+  if (id) {
+    const r = _resolveNavItems().find(n => n.id === id || n.appSlug === id);
+    if (r) { _navigateTo(r); return; }
   }
-  if (_module?.unmount) _module.unmount($("ws-app-container"));
-  _module = null; _activeApp = null;
-  setActiveBtn(null);
-  showHomeDashboard();
+  if (_state.module?.unmount) _state.module.unmount($('ws-app-container'));
+  _state.module = null;
+  _navigateTo({ id: 'dashboard', label: 'Tableau de bord', route: '__dashboard__' });
 });
 
-// ── Home Dashboard ────────────────────────────────────────────────────────────
-function showHomeDashboard() {
-  const container = $("ws-app-container");
-  setActiveBtn(null);
-
-  const partnerName = _partner?.name || "AgentHub";
-  const heroTitle   = _partner?.hero_title    || "Accélérateur IA";
-  const heroSub     = _partner?.hero_subtitle || "Propulsé par AgentHub Platform";
-
-  const appCards = _apps.map(app => {
-    const name = _displayName(app);
-    if (app.is_installed) {
-      return `
-        <div class="wsh-app-card">
-          <div class="wsh-app-card-icon">${app.icon || "📦"}</div>
-          <div class="wsh-app-card-name">${name}</div>
-          <button class="wsh-app-card-btn" data-slug="${app.slug}">
-            Commencer →
-          </button>
-        </div>`;
-    }
-    return `
-      <div class="wsh-app-card wsh-app-card-soon">
-        <div class="wsh-app-card-icon">${app.icon || "📦"}</div>
-        <div class="wsh-app-card-name">${name}</div>
-        <span class="wsh-soon-badge">🚀 En préparation · T4 2026</span>
-      </div>`;
-  }).join("");
-
-  container.innerHTML = `
-    <div class="wsh-home">
-      <div class="wsh-hero">
-        <div class="wsh-hero-eyebrow">${partnerName}</div>
-        <h1 class="wsh-hero-title">${heroTitle}</h1>
-        <p class="wsh-hero-sub">${heroSub}</p>
-      </div>
-
-      <div class="wsh-progress-card">
-        <div class="wsh-progress-header">
-          <span>Votre progression</span>
-          <strong>0 %</strong>
-        </div>
-        <div class="wsh-progress-track">
-          <div class="wsh-progress-fill" style="width:0%"></div>
-        </div>
-        <p class="wsh-progress-hint">Commencez par le Parcours IA pour débuter votre progression.</p>
-      </div>
-
-      <div class="wsh-value-prop">
-        <p class="wsh-vp-title">Ce programme vous permettra de :</p>
-        <ul class="wsh-vp-list">
-          <li>✓ Évaluer la maturité IA de votre organisation</li>
-          <li>✓ Obtenir un plan d'action personnalisé</li>
-          <li>✓ Vous comparer aux organisations de votre secteur</li>
-          <li>✓ Suivre votre progression dans le temps</li>
-        </ul>
-        <p class="wsh-vp-duration">⏱ Durée estimée : 10 minutes</p>
-      </div>
-
-      <div>
-        <h2 class="wsh-apps-title">Applications</h2>
-        <div class="wsh-app-grid">${appCards}</div>
-      </div>
-
-      <div class="wsh-cta-card">
-        <div class="wsh-cta-text">
-          <strong>Votre organisation veut lancer ce programme ?</strong>
-          <p>Rejoignez le réseau de partenaires AgentHub et déployez votre propre Accélérateur IA.</p>
-        </div>
-        <a href="mailto:contact@nexhire.ca" class="wsh-cta-btn">Planifier un pilote →</a>
-      </div>
-
-    </div>`;
-
-  container.querySelectorAll(".wsh-app-card-btn").forEach(btn => {
-    const app = _apps.find(a => a.slug === btn.dataset.slug);
-    if (app) btn.addEventListener("click", () => navigateTo(_slug(), app));
-  });
-}
-
-// ── États visuels ─────────────────────────────────────────────────────────────
-function showLoading() {
-  $("ws-app-container").innerHTML = `
+// ── States visuels ────────────────────────────────────────────────────────────
+function _showLoading() {
+  $('ws-app-container').innerHTML = `
     <div class="ws-state">
       <div class="ws-spinner"></div>
-      <div class="ws-state-msg">Chargement…</div>
     </div>`;
 }
 
-function showAppError(appName, msg) {
-  $("ws-app-container").innerHTML = `
+function _showAppError(name, msg) {
+  $('ws-app-container').innerHTML = `
     <div class="ws-state">
       <div class="ws-state-icon">⚠️</div>
-      <div class="ws-state-title">Impossible de charger ${appName}</div>
-      <div class="ws-state-msg">${msg || "Une erreur est survenue. Veuillez réessayer."}</div>
+      <div class="ws-state-title">Impossible de charger ${name}</div>
+      <div class="ws-state-msg">${msg || 'Une erreur est survenue. Veuillez réessayer.'}</div>
     </div>`;
 }
 
-function showError(msg) {
+function _showComingSoon(name) {
+  $('ws-app-container').innerHTML = `
+    <div class="ws-state">
+      <div class="ws-state-icon">🚀</div>
+      <div class="ws-state-title">${name}</div>
+      <div class="ws-state-msg">Ce module est en cours de développement et sera disponible prochainement.</div>
+    </div>`;
+}
+
+function _showFatal(msg) {
   document.body.innerHTML = `
     <div class="ws-state" style="height:100vh">
       <div class="ws-state-icon">❌</div>
@@ -298,11 +322,14 @@ function showError(msg) {
     </div>`;
 }
 
-function showErrorBanner(msg) {
-  const banner = $("ws-error-banner");
-  banner.textContent = msg;
-  banner.style.display = "block";
-  setTimeout(() => { banner.style.display = "none"; }, 5000);
+// ── Toast ─────────────────────────────────────────────────────────────────────
+function _toast(msg, type = 'info') {
+  const el = document.createElement('div');
+  el.className = 'ws-toast-item';
+  if (type === 'error') el.style.background = '#dc2626';
+  el.textContent = msg;
+  $('ws-toast').appendChild(el);
+  setTimeout(() => el.remove(), 4000);
 }
 
 // ── Start ─────────────────────────────────────────────────────────────────────
