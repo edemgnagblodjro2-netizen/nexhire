@@ -481,6 +481,48 @@ def get_stats(request: Request, partner_slug: str, user: CurrentUser | None = De
     )
 
 
+# ── GET /api/diagnostic/{partner_slug}/sessions ──────────────────────────────
+
+@router.get("/{partner_slug}/sessions")
+@limiter.limit("30/minute")
+def get_sessions(request: Request, partner_slug: str):
+    """Historique des 20 dernières sessions complétées (affichage historique, non-auth)."""
+    with get_db() as cur:
+        cur.execute("SELECT id FROM partners WHERE slug = %s AND is_active = true LIMIT 1", (partner_slug,))
+        p = row(cur)
+        if not p:
+            raise HTTPException(status_code=404, detail="Partenaire introuvable.")
+
+        cur.execute(
+            """
+            SELECT id, company_name, sector, imai_score, niveau, completed_at
+            FROM diagnostic_sessions
+            WHERE partner_id = %s AND status = 'completed' AND is_test = false
+            ORDER BY completed_at DESC
+            LIMIT 20
+            """,
+            (str(p["id"]),),
+        )
+        session_rows = rows(cur)
+
+    return JSONResponse(
+        content={
+            "sessions": [
+                {
+                    "id":           str(s["id"]),
+                    "company_name": s["company_name"],
+                    "sector":       s["sector"],
+                    "imai_score":   float(s["imai_score"] or 0),
+                    "niveau":       s["niveau"],
+                    "completed_at": s["completed_at"].isoformat() if s["completed_at"] else None,
+                }
+                for s in session_rows
+            ],
+        },
+        headers=_NO_CACHE,
+    )
+
+
 # ── GET /api/diagnostic/{partner_slug}/benchmark ──────────────────────────────
 
 @router.get("/{partner_slug}/benchmark")

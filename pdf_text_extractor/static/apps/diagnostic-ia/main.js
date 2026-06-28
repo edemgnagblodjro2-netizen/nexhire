@@ -55,12 +55,13 @@ function _reset(partnerSlug, context) {
   _state = {
     partnerSlug,
     context,
-    sessionId:     null,
-    currentQ:      null,
-    totalCore:     10,
-    answeredCore:  0,
-    results:       null,
-    step:          "welcome",  // welcome | profile | questions | calculating | results
+    sessionId:        null,
+    currentQ:         null,
+    totalCore:        10,
+    answeredCore:     0,
+    results:          null,
+    historySessions:  [],
+    step: "loading",  // loading | history | welcome | profile | questions | calculating | results
   };
 }
 
@@ -74,7 +75,8 @@ export default {
     _reset(context.partnerSlug, context);
     container.style.setProperty("--dia-primary", context.partner?.primary_color || "#2563eb");
     _injectStyles();
-    _render(container);
+    _render(container);            // shows loading spinner immediately
+    _loadHistory(container);       // async: transitions to history or welcome
   },
 
   unmount(container) {
@@ -86,12 +88,112 @@ export default {
 // ── Render dispatcher ─────────────────────────────────────────────────────────
 function _render(container) {
   switch (_state.step) {
+    case "loading":     _showLoading(container);    break;
+    case "history":     _showHistory(container);    break;
     case "welcome":     _showWelcome(container);    break;
     case "profile":     _showProfile(container);    break;
     case "questions":   _showQuestion(container);   break;
     case "calculating": _showCalculating(container); break;
     case "results":     _showResults(container);    break;
   }
+}
+
+// ── Screen: Loading ───────────────────────────────────────────────────────────
+function _showLoading(container) {
+  container.innerHTML = `
+    <div class="dia-wrap" style="display:flex;align-items:center;justify-content:center;min-height:300px">
+      <div class="dia-spinner"></div>
+    </div>`;
+}
+
+// ── Screen: History ───────────────────────────────────────────────────────────
+async function _loadHistory(container) {
+  try {
+    const res = await fetch(`${API}/${_state.partnerSlug}/sessions`);
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    if (data.sessions?.length > 0) {
+      _state.historySessions = data.sessions;
+      _state.step = "history";
+    } else {
+      _state.step = "welcome";
+    }
+  } catch {
+    _state.step = "welcome";
+  }
+  if (_state) _render(container);
+}
+
+function _showHistory(container) {
+  const NIVEAU_COLOR = {
+    debutant: "#ef4444", intermediaire: "#f59e0b", avance: "#10b981",
+  };
+  const NIVEAU_LABEL = {
+    debutant: "Débutant", intermediaire: "Intermédiaire", avance: "Avancé",
+  };
+
+  const cards = _state.historySessions.map(s => {
+    const color = NIVEAU_COLOR[s.niveau] || "#6b7280";
+    const label = NIVEAU_LABEL[s.niveau] || s.niveau || "—";
+    const score = Math.round(s.imai_score);
+    const date  = s.completed_at
+      ? new Date(s.completed_at).toLocaleDateString("fr-CA", { day: "numeric", month: "short", year: "numeric" })
+      : "";
+    return `
+      <div class="dia-hist-card">
+        <div class="dia-hist-score" style="color:${color}">
+          ${score}<small>/100</small>
+        </div>
+        <div class="dia-hist-info">
+          <div class="dia-hist-company">${s.company_name || "—"}</div>
+          <div class="dia-hist-meta">
+            ${s.sector || ""}
+            <span class="dia-hist-niveau" style="background:${color}22;color:${color}">${label}</span>
+            ${date ? `· ${date}` : ""}
+          </div>
+        </div>
+        <button class="dia-hist-view" data-id="${s.id}">Voir résultats</button>
+      </div>`;
+  }).join("");
+
+  container.innerHTML = `
+    <div class="dia-wrap">
+      <div class="dia-atlas-avatar small" style="margin-bottom:4px">🤖</div>
+      <div class="dia-atlas-bubble" style="margin-bottom:20px">
+        <p class="dia-atlas-name">Atlas</p>
+        <p>Voici vos diagnostics récents. Consultez un rapport ou démarrez une nouvelle évaluation.</p>
+      </div>
+      <div class="dia-history-list">${cards}</div>
+      <button class="dia-btn-primary" id="dia-new-btn">
+        + Nouveau diagnostic
+      </button>
+    </div>`;
+
+  container.querySelectorAll('.dia-hist-view').forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const id = btn.dataset.id;
+      btn.disabled = true;
+      btn.textContent = "Chargement…";
+      try {
+        const res = await fetch(`${API}/session/${id}/result`);
+        if (!res.ok) throw new Error("Résultat introuvable.");
+        const data = await res.json();
+        _state.results  = data;
+        _state.sessionId = id;
+        _state.step     = "results";
+        _render(container);
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = "Voir résultats";
+        alert(err.message);
+      }
+    });
+  });
+
+  _el("dia-new-btn").addEventListener("click", () => {
+    _state.step = "welcome";
+    _render(container);
+  });
 }
 
 // ── Screen: Welcome ───────────────────────────────────────────────────────────
@@ -452,7 +554,7 @@ function _showResults(container) {
 
       <div class="dia-restart">
         <button class="dia-btn-ghost" id="dia-restart-btn">
-          ← Recommencer le parcours
+          ${_state.historySessions?.length > 0 ? "← Retour à l'historique" : "← Recommencer le parcours"}
         </button>
       </div>
     </div>`;
@@ -478,7 +580,8 @@ function _showResults(container) {
   });
 
   _el("dia-restart-btn")?.addEventListener("click", () => {
-    _state.step = "welcome";
+    const hasHistory = _state.historySessions?.length > 0;
+    _state.step = hasHistory ? "history" : "welcome";
     _state.sessionId = null;
     _state.results = null;
     _render(container);
@@ -854,6 +957,43 @@ function _injectStyles() {
     }
 
     .dia-restart { text-align: center; padding-top: 8px; }
+
+    /* History */
+    .dia-history-list {
+      display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;
+    }
+    .dia-hist-card {
+      background: var(--dia-card); border: 1px solid var(--dia-border);
+      border-radius: var(--dia-radius); padding: 16px 20px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .dia-hist-score {
+      font-size: 24px; font-weight: 900; min-width: 54px;
+      text-align: center; flex-shrink: 0; line-height: 1;
+    }
+    .dia-hist-score small {
+      display: block; font-size: 11px; font-weight: 500;
+      color: var(--dia-muted); margin-top: 1px;
+    }
+    .dia-hist-info { flex: 1; min-width: 0; }
+    .dia-hist-company {
+      font-size: 14px; font-weight: 600; color: var(--dia-text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .dia-hist-meta { font-size: 12px; color: var(--dia-muted); margin-top: 3px; }
+    .dia-hist-niveau {
+      display: inline-block; padding: 2px 9px; border-radius: 20px;
+      font-size: 11px; font-weight: 700; margin-left: 6px;
+    }
+    .dia-hist-view {
+      font-size: 13px; font-weight: 600; color: var(--dia-primary);
+      background: none; border: 1px solid var(--dia-primary);
+      border-radius: 7px; padding: 6px 14px; cursor: pointer;
+      flex-shrink: 0; white-space: nowrap; transition: background .12s;
+    }
+    .dia-hist-view:hover {
+      background: color-mix(in srgb, var(--dia-primary) 8%, transparent);
+    }
 
     /* Responsive */
     @media (max-width: 540px) {

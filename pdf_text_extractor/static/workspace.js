@@ -35,7 +35,7 @@ const NAV = [
   {
     section: 'Intelligence artificielle',
     items: [
-      { id: 'atlas',        label: 'ATLAS AI',        iconKey: 'sparkles', appSlug: 'atlas',         defaultSoon: true },
+      { id: 'atlas',        label: 'ATLAS AI',        iconKey: 'sparkles', route: '__atlas__' },
       { id: 'diagnostic',   label: 'Diagnostic IA',   iconKey: 'chart',    appSlug: 'diagnostic-ia' },
       { id: 'observatoire', label: 'Observatoire IA', iconKey: 'eye',      appSlug: 'observatoire'  },
       { id: 'gouvernance',  label: 'Gouvernance IA',  iconKey: 'shield',   appSlug: 'gouvernance',   defaultSoon: true },
@@ -108,7 +108,11 @@ async function boot() {
 
     const appFromPath = _pathApp();
     if (appFromPath) {
-      const navItem = _resolveNavItems().find(n => n.appSlug === appFromPath && n.enabled);
+      const resolved = _resolveNavItems();
+      const navItem = resolved.find(n =>
+        (n.appSlug === appFromPath && n.enabled) ||
+        (n.id === appFromPath && n.route && n.enabled)
+      );
       if (navItem) { _navigateTo(navItem); return; }
     }
 
@@ -248,6 +252,12 @@ async function _navigateTo(navItem) {
       const mod = await import('/static/workspace/dashboard/main.js');
       _state.module = mod.default;
       history.replaceState({ id: 'dashboard' }, '', `/workspace/${_slug()}`);
+
+    } else if (navItem.route === '__atlas__') {
+      const mod = await import('/static/workspace/atlas/main.js');
+      _state.module = mod.default;
+      const newPath = `/workspace/${_slug()}/atlas`;
+      if (location.pathname !== newPath) history.pushState({ id: 'atlas' }, '', newPath);
 
     } else if (navItem.appSlug && navItem.enabled) {
       const mod = await import(`/static/apps/${navItem.appSlug}/main.js`);
