@@ -5021,7 +5021,10 @@ async function init() {
   }
 
   const stored = localStorage.getItem("nexhire_token");
-  if (!stored) { showLanding(); return; }
+  if (!stored) {
+    if (_up.get("auth") === "login") { showAuth("login"); return; }
+    showLanding(); return;
+  }
   state.token = stored;
   try {
     await fetchMe();

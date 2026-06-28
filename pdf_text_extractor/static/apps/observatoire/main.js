@@ -119,7 +119,7 @@ function _renderAccessDenied(container) {
           Cet Observatoire est réservé à l'administrateur du programme partenaire.
           Si vous êtes l'administrateur, votre session a peut-être expiré — reconnectez-vous pour continuer.
         </p>
-        <a class="obs-retry-btn" href="/login" style="text-decoration:none">Se reconnecter</a>
+        <a class="obs-retry-btn" href="/?auth=login" style="text-decoration:none">Se reconnecter</a>
       </div>
     </div>`;
 }
