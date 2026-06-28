@@ -1,10 +1,16 @@
 """Rapport de maturité IA — page HTML auto-contenue, imprimable en PDF."""
+import logging
+import os
+
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import HTMLResponse
 
 from db import get_db, row, rows
 from rate_limiter import limiter
 from diagnostic_questions import compute_imai
+
+logger = logging.getLogger("rapport")
+_GATING_ENFORCED = os.getenv("RAPPORT_GATING_ENFORCED", "false").lower() == "true"
 
 router = APIRouter(prefix="/rapport", tags=["rapport"])
 
@@ -78,12 +84,26 @@ NIVEAU_DESC   = {
 }
 
 
+def _check_rapport_access(cur, session_id: str) -> None:
+    if not _GATING_ENFORCED:
+        return
+    cur.execute(
+        "SELECT email_send_count FROM diagnostic_sessions WHERE id = %s AND status = 'completed'",
+        (session_id,),
+    )
+    sess = row(cur)
+    if not sess or sess["email_send_count"] == 0:
+        logger.warning("rapport gated: session=%s no email submitted", session_id)
+        raise HTTPException(status_code=403, detail="Veuillez soumettre votre courriel pour accéder au rapport.")
+
+
 # ── Route ─────────────────────────────────────────────────────────────────────
 
 @router.get("/{session_id}", response_class=HTMLResponse)
 @limiter.limit("30/minute")
 def get_rapport(request: Request, session_id: str):
     with get_db() as cur:
+        _check_rapport_access(cur, session_id)
         cur.execute(
             """
             SELECT s.company_name, s.sector, s.size_range, s.priority_challenge,

@@ -434,22 +434,20 @@ function _showResults(container) {
         ${recsHtml}
       </div>
 
-      <div class="dia-section dia-rapport-section">
+      <div class="dia-section" id="dia-gate-section">
         <h3>📄 Votre rapport complet</h3>
-        <p style="font-size:14px;color:var(--dia-muted);margin-bottom:16px">Accédez à votre rapport détaillé : forces, plan d'action 30/90/180 jours et recommandations ATLAS.</p>
-        <a class="dia-btn-primary" id="dia-rapport-link" href="/rapport/${r.session_id}" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">
-          Voir mon rapport complet →
-        </a>
-      </div>
-
-      <div class="dia-section dia-email-section" id="dia-email-section">
-        <h3>Recevoir une copie par courriel</h3>
-        <p>Optionnel — nous vous enverrons le lien vers votre rapport.</p>
+        <p style="font-size:14px;color:var(--dia-muted);margin-bottom:16px">Entrez votre courriel pour accéder à votre rapport personnalisé : forces, plan d'action 30/90/180 jours et recommandations ATLAS.</p>
         <form id="dia-email-form" class="dia-email-form" novalidate>
-          <input id="dia-email-input" type="email" placeholder="votre@courriel.com" maxlength="254" />
-          <button type="submit" class="dia-btn-secondary">Envoyer</button>
+          <input id="dia-email-input" type="email" placeholder="votre@courriel.com" maxlength="254" required />
+          <button type="submit" class="dia-btn-primary">Accéder au rapport →</button>
         </form>
-        <div id="dia-email-msg" style="display:none"></div>
+        <div id="dia-email-msg" style="display:none;margin-top:10px;font-size:13px"></div>
+        <div id="dia-rapport-revealed" style="display:none;margin-top:16px">
+          <a class="dia-btn-primary" href="/rapport/${r.session_id}" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">
+            Voir mon rapport complet →
+          </a>
+          <p style="font-size:12px;color:var(--dia-muted);margin-top:8px;text-align:center">Un lien vous a également été envoyé par courriel.</p>
+        </div>
       </div>
 
       <div class="dia-restart">
@@ -468,18 +466,14 @@ function _showResults(container) {
     btn.textContent = "…";
     try {
       await _patch(`${API}/session/${_state.sessionId}/email`, { company_email: email });
-      const msg = _el("dia-email-msg");
-      msg.textContent = "✅ Envoi en cours — vérifiez votre boîte d'ici quelques minutes.";
-      msg.style.display = "block";
-      msg.style.color = "#10b981";
-      _el("dia-email-section").querySelector("form").style.display = "none";
+      _revealRapport();
     } catch {
       const msg = _el("dia-email-msg");
       msg.textContent = "Erreur lors de l'envoi. Réessayez.";
       msg.style.display = "block";
       msg.style.color = "#ef4444";
       btn.disabled = false;
-      btn.textContent = "Envoyer";
+      btn.textContent = "Accéder au rapport →";
     }
   });
 
@@ -509,6 +503,19 @@ function _niveauDesc(niv) {
   if (niv === "debutant")      return "Votre organisation débute son parcours IA. Des gains rapides sont accessibles dès maintenant.";
   if (niv === "intermediaire") return "Vous avez de bonnes bases. Il est temps de structurer et d'accélérer votre démarche.";
   return "Votre organisation est en avance sur la maturité IA. Continuez à innover et à partager vos apprentissages.";
+}
+
+function _revealRapport() {
+  const form = _el("dia-email-form");
+  if (form) form.style.display = "none";
+  const msg = _el("dia-email-msg");
+  if (msg) {
+    msg.textContent = "✅ Rapport envoyé — vérifiez votre courriel d'ici quelques minutes.";
+    msg.style.display = "block";
+    msg.style.color = "#10b981";
+  }
+  const revealed = _el("dia-rapport-revealed");
+  if (revealed) revealed.style.display = "block";
 }
 
 async function _patch(url, body) {
