@@ -86,9 +86,10 @@ NIVEAU_DESC   = {
 }
 
 
-def _check_rapport_access(cur, session_id: str) -> None:
+def _check_rapport_access(cur, session_id: str) -> bool:
+    """Retourne True si l'accès est autorisé, False si le rapport est gated sans email."""
     if not _GATING_ENFORCED:
-        return
+        return True
     cur.execute(
         "SELECT email_send_count FROM diagnostic_sessions WHERE id = %s AND status = 'completed'",
         (session_id,),
@@ -96,7 +97,46 @@ def _check_rapport_access(cur, session_id: str) -> None:
     sess = row(cur)
     if not sess or sess["email_send_count"] == 0:
         logger.warning("rapport gated: session=%s no email submitted", session_id)
-        raise HTTPException(status_code=403, detail="Veuillez soumettre votre courriel pour accéder au rapport.")
+        return False
+    return True
+
+
+def _build_gate_html(partner_slug: str | None) -> str:
+    back_url = f"/workspace/{partner_slug}/diagnostic-ia" if partner_slug else "/"
+    return f"""<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Rapport protégé</title>
+  <style>
+    *,*::before,*::after{{box-sizing:border-box;margin:0;padding:0}}
+    body{{font-family:Arial,Helvetica,sans-serif;background:#f0f4f8;color:#1e293b;
+      min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}}
+    .gate{{background:#fff;border-radius:14px;box-shadow:0 8px 40px rgba(0,0,0,.1);
+      max-width:440px;width:100%;padding:40px 36px;text-align:center}}
+    .gate-icon{{font-size:40px;margin-bottom:16px}}
+    .gate h1{{font-size:20px;font-weight:800;color:#0f172a;margin-bottom:10px}}
+    .gate p{{font-size:14px;color:#64748b;line-height:1.6;margin-bottom:24px}}
+    .gate-btn{{display:inline-block;background:#6366f1;color:#fff;text-decoration:none;
+      border-radius:8px;padding:12px 28px;font-size:14px;font-weight:700}}
+    .gate-btn:hover{{opacity:.9}}
+    .gate-foot{{font-size:12px;color:#94a3b8;margin-top:20px}}
+  </style>
+</head>
+<body>
+  <div class="gate">
+    <div class="gate-icon">🔒</div>
+    <h1>Ce rapport nécessite votre courriel</h1>
+    <p>
+      Pour accéder à votre rapport de maturité IA, indiquez votre courriel
+      à la fin de votre diagnostic. Une copie vous y sera également envoyée.
+    </p>
+    <a class="gate-btn" href="{back_url}">Retour au diagnostic</a>
+    <p class="gate-foot">Vous avez déjà soumis votre courriel&nbsp;? Vérifiez le lien reçu par message.</p>
+  </div>
+</body>
+</html>"""
 
 
 # ── Route ─────────────────────────────────────────────────────────────────────
@@ -105,7 +145,20 @@ def _check_rapport_access(cur, session_id: str) -> None:
 @limiter.limit("30/minute")
 def get_rapport(request: Request, session_id: str):
     with get_db() as cur:
-        _check_rapport_access(cur, session_id)
+        if not _check_rapport_access(cur, session_id):
+            cur.execute(
+                """
+                SELECT p.slug
+                FROM diagnostic_sessions s
+                JOIN partners p ON p.id = s.partner_id
+                WHERE s.id = %s
+                LIMIT 1
+                """,
+                (session_id,),
+            )
+            r = row(cur)
+            partner_slug = r["slug"] if r else None
+            return HTMLResponse(content=_build_gate_html(partner_slug), status_code=403)
         cur.execute(
             """
             SELECT s.company_name, s.sector, s.size_range, s.priority_challenge,
