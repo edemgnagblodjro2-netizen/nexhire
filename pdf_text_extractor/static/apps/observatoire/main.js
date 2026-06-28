@@ -116,9 +116,10 @@ function _renderAccessDenied(container) {
         <div class="obs-state-icon">🔒</div>
         <h2 class="obs-state-title">Accès réservé</h2>
         <p class="obs-state-text">
-          L'Observatoire est réservé à l'administrateur du programme.
-          Connectez-vous avec le compte partenaire pour consulter les données de votre territoire.
+          Cet Observatoire est réservé à l'administrateur du programme partenaire.
+          Si vous êtes l'administrateur, votre session a peut-être expiré — reconnectez-vous pour continuer.
         </p>
+        <a class="obs-retry-btn" href="/login" style="text-decoration:none">Se reconnecter</a>
       </div>
     </div>`;
 }
