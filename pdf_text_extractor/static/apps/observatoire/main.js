@@ -100,13 +100,33 @@ export default {
 async function _loadAndRender(container) {
   try {
     const res = await fetch(`${API}/${_state.partnerSlug}/stats`, { credentials: "include" });
-    if (!res.ok) throw new Error();
+    if (res.status === 401 || res.status === 403) return _renderAccessDenied(container);
+    if (!res.ok) return _renderError(container);
     const data = await res.json();
-    // Utiliser les données démo si moins de 5 sessions (pas assez pour être représentatif)
     _render(container, data.total >= 5 ? data : _demoData());
   } catch {
-    _render(container, _demoData());
+    _renderError(container);
   }
+}
+
+function _renderAccessDenied(container) {
+  container.innerHTML = `
+    <div class="obs-wrap">
+      <div class="obs-loading">
+        <p style="font-size:15px;font-weight:600;color:#1e293b">Accès non autorisé</p>
+        <p style="font-size:13px;color:#6b7280">Vous devez être administrateur de ce programme pour accéder à l'Observatoire.</p>
+      </div>
+    </div>`;
+}
+
+function _renderError(container) {
+  container.innerHTML = `
+    <div class="obs-wrap">
+      <div class="obs-loading">
+        <p style="font-size:15px;font-weight:600;color:#1e293b">Erreur de chargement</p>
+        <p style="font-size:13px;color:#6b7280">Impossible de récupérer les données. Rechargez la page ou réessayez plus tard.</p>
+      </div>
+    </div>`;
 }
 
 // ── Skeleton ──────────────────────────────────────────────────────────────────

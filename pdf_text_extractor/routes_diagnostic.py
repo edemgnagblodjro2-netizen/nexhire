@@ -12,6 +12,7 @@ from diagnostic_questions import (
     QUESTIONS_BY_CODE, SCORE_MAP, TOTAL_CORE,
     get_next_question, compute_imai,
 )
+from privacy import K_ANON_MIN
 
 logger = logging.getLogger("diagnostic")
 
@@ -414,9 +415,11 @@ def get_stats(request: Request, partner_slug: str, user: CurrentUser = Depends(g
                    ROUND(AVG(imai_score)::numeric, 1) AS imai_avg
             FROM diagnostic_sessions
             WHERE partner_id = %s AND status = 'completed' AND sector IS NOT NULL
-            GROUP BY sector ORDER BY count DESC LIMIT 8
+            GROUP BY sector
+            HAVING COUNT(*) >= %s
+            ORDER BY count DESC LIMIT 8
             """,
-            (partner_id,),
+            (partner_id, K_ANON_MIN),
         )
         by_sector = rows(cur)
 
@@ -426,9 +429,11 @@ def get_stats(request: Request, partner_slug: str, user: CurrentUser = Depends(g
             FROM diagnostic_sessions
             WHERE partner_id = %s AND status = 'completed'
               AND priority_challenge IS NOT NULL AND priority_challenge <> ''
-            GROUP BY priority_challenge ORDER BY count DESC LIMIT 6
+            GROUP BY priority_challenge
+            HAVING COUNT(*) >= %s
+            ORDER BY count DESC LIMIT 6
             """,
-            (partner_id,),
+            (partner_id, K_ANON_MIN),
         )
         challenges = rows(cur)
 

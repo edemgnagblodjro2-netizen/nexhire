@@ -2,12 +2,14 @@
 import logging
 import os
 
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import HTMLResponse
 
 from db import get_db, row, rows
 from rate_limiter import limiter
 from diagnostic_questions import compute_imai
+from auth import CurrentUser, get_current_user
+from privacy import K_ANON_MIN
 
 logger = logging.getLogger("rapport")
 _GATING_ENFORCED = os.getenv("RAPPORT_GATING_ENFORCED", "false").lower() == "true"
@@ -559,12 +561,12 @@ _DEMO_REGIONAL = {
         "technologies": 62.7, "gouvernance": 49.1,
     },
     "by_sector": [
-        {"sector": "Manufacturier",                  "count": 18, "imai_avg": 62.1},
-        {"sector": "Services professionnels",         "count": 8,  "imai_avg": 55.4},
-        {"sector": "Construction",                    "count": 6,  "imai_avg": 48.7},
-        {"sector": "Commerce de détail",              "count": 5,  "imai_avg": 61.2},
-        {"sector": "Transport et logistique",         "count": 3,  "imai_avg": 45.3},
-        {"sector": "Technologies de l'information",   "count": 2,  "imai_avg": 71.8},
+        {"sector": "Industriel manufacturier",                 "count": 9, "imai_avg": 62.1},
+        {"sector": "Professionnels",                           "count": 7, "imai_avg": 66.4},
+        {"sector": "Commercial",                               "count": 6, "imai_avg": 59.5},
+        {"sector": "Construction",                             "count": 6, "imai_avg": 48.7},
+        {"sector": "Alimentation, hôtellerie et restauration", "count": 5, "imai_avg": 47.6},
+        {"sector": "Entreprises de services",                  "count": 5, "imai_avg": 63.8},
     ],
     "challenges": [
         {"label": "Automatiser des tâches répétitives",      "count": 35},
@@ -581,13 +583,17 @@ _REG_DIM_RECS: dict[str, str] = {
     "personnes":    "Développer un programme régional de montée en compétences en IA générative, en mobilisant les partenaires formation de {partner_name} pour couvrir l'ensemble du territoire.",
     "processus":    "Identifier un premier groupe pilote de PMEs souhaitant automatiser leurs processus afin de documenter les gains obtenus et créer des cas de succès régionaux valorisables auprès des membres.",
     "strategie":    "Structurer un programme d'accompagnement stratégique pour aider les dirigeants à formaliser leur feuille de route IA sur 12 à 24 mois, avec des indicateurs de succès mesurables.",
-    "technologies": "Négocier un accès groupé aux outils IA pour les membres de la CCI3R, réduisant les barrières à l'entrée et accélérant le déploiement à l'échelle du territoire.",
+    "technologies": "Négocier un accès groupé aux outils IA pour les membres de {partner_name}, réduisant les barrières à l'entrée et accélérant le déploiement à l'échelle du territoire.",
 }
 
 
 @router.get("/regional/{partner_slug}", response_class=HTMLResponse)
 @limiter.limit("30/minute")
-def get_rapport_regional(request: Request, partner_slug: str):
+def get_rapport_regional(
+    request: Request,
+    partner_slug: str,
+    user: CurrentUser = Depends(get_current_user),
+):
     with get_db() as cur:
         cur.execute(
             "SELECT id, name, primary_color, logo_url FROM partners WHERE slug = %s AND is_active = true LIMIT 1",
@@ -596,6 +602,9 @@ def get_rapport_regional(request: Request, partner_slug: str):
         partner = row(cur)
         if not partner:
             raise HTTPException(status_code=404, detail="Partenaire introuvable.")
+
+        if str(getattr(user, "partner_id", None)) != str(partner["id"]):
+            raise HTTPException(status_code=403, detail="Accès réservé à l'administrateur de ce programme.")
 
         partner_id = str(partner["id"])
 
@@ -624,9 +633,11 @@ def get_rapport_regional(request: Request, partner_slug: str):
                    ROUND(AVG(imai_score)::numeric, 1) AS imai_avg
             FROM diagnostic_sessions
             WHERE partner_id = %s AND status = 'completed' AND sector IS NOT NULL
-            GROUP BY sector ORDER BY count DESC LIMIT 6
+            GROUP BY sector
+            HAVING COUNT(*) >= %s
+            ORDER BY count DESC LIMIT 6
             """,
-            (partner_id,),
+            (partner_id, K_ANON_MIN),
         )
         by_sector_rows = rows(cur)
 
@@ -636,9 +647,11 @@ def get_rapport_regional(request: Request, partner_slug: str):
             FROM diagnostic_sessions
             WHERE partner_id = %s AND status = 'completed'
               AND priority_challenge IS NOT NULL AND priority_challenge <> ''
-            GROUP BY priority_challenge ORDER BY count DESC LIMIT 5
+            GROUP BY priority_challenge
+            HAVING COUNT(*) >= %s
+            ORDER BY count DESC LIMIT 5
             """,
-            (partner_id,),
+            (partner_id, K_ANON_MIN),
         )
         challenge_rows = rows(cur)
 
@@ -744,6 +757,17 @@ def _build_regional_html(partner_name: str, primary: str, logo_url: str, d: dict
             f'<span class="dim-val" style="color:{c}">{s["imai_avg"]:.1f}</span>'
             f'</div>'
         )
+    if not sector_rows:
+        sector_rows = '<p class="masked-note">Pas encore assez de participants par secteur pour une ventilation fiable (minimum 5 par secteur).</p>'
+
+    masked_note = ""
+    if not use_demo:
+        shown = sum(s["count"] for s in sectors)
+        if shown < total:
+            masked_note = (
+                f'<p class="masked-note">Certains secteurs comptant moins de {K_ANON_MIN} participants '
+                f'ne sont pas affichés individuellement afin de préserver la confidentialité des entreprises.</p>'
+            )
 
     # Défis
     total_ch = sum(c["count"] for c in challenges) or 1
@@ -766,7 +790,7 @@ def _build_regional_html(partner_name: str, primary: str, logo_url: str, d: dict
     weakest_dim  = sorted_dims[0]
     best_dim     = sorted_dims[-1]
     top_ch_label = challenges[0]["label"] if challenges else "l'automatisation"
-    top_ch_pct   = round(challenges[0]["count"] / total_ch * 100) if challenges else 0
+    top_ch_pct   = round(challenges[0]["count"] / total * 100) if challenges and total > 0 else 0
     best_sector  = max(sectors, key=lambda s: s["imai_avg"]) if sectors else None
     worst_sector = min(sectors, key=lambda s: s["imai_avg"]) if sectors else None
 
@@ -887,6 +911,7 @@ def _build_regional_html(partner_name: str, primary: str, logo_url: str, d: dict
       .impact-col:nth-child(1) li { color: #0369a1; }
       .impact-col:nth-child(2) li { color: #166534; }
       .impact-col:nth-child(3) li { color: #7c3aed; }
+      .masked-note { font-size: 12px; color: #92400e; background: #fef3c7; border: 1px solid #fde68a; border-radius: 6px; padding: 8px 12px; margin-bottom: 12px; }
       .footer-legal { font-size: 12px; color: #64748b; line-height: 1.55; padding: 16px 48px; border-top: 1px solid #e2e8f0; background: #f8fafc; }
       .rpt-footer { background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 14px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
       .footer-brand { font-size: 13px; color: #64748b; }
@@ -961,7 +986,7 @@ def _build_regional_html(partner_name: str, primary: str, logo_url: str, d: dict
 
       <div class="section">
         <h2 class="section-title">IMAI moyen par secteur</h2>
-        {sector_rows}
+        {masked_note}{sector_rows}
       </div>
 
       <div class="section">
