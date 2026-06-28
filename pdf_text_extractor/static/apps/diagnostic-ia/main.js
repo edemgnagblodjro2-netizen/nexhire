@@ -72,7 +72,8 @@ export default {
 
   mount(container, context) {
     _reset(context.partnerSlug, context);
-    _injectStyles(context.partner?.primary_color || "#2563eb");
+    container.style.setProperty("--dia-primary", context.partner?.primary_color || "#2563eb");
+    _injectStyles();
     _render(container);
   },
 
@@ -318,14 +319,30 @@ function _showCalculating(container) {
 
 async function _finalize(container) {
   try {
-    const results = await _post(`${API}/session/${_state.sessionId}/complete`, {});
+    const results = await _post(`${API}/session/${_state.sessionId}/complete`, {}, 15000);
     _state.results = results;
     _state.step = "results";
     _render(container);
   } catch (err) {
-    _state.step = "questions";
-    _showFormError("dia-q-error", "Erreur lors de la finalisation : " + err.message);
+    _showCalculatingError(container, err.message);
   }
+}
+
+function _showCalculatingError(container, msg) {
+  container.innerHTML = `
+    <div class="dia-wrap">
+      <div class="dia-card" style="text-align:center;padding:48px 24px;gap:16px">
+        <div style="font-size:40px">⚠️</div>
+        <p style="font-size:15px;font-weight:600;color:var(--dia-text)">Une erreur est survenue</p>
+        <p style="font-size:13px;color:var(--dia-muted)">${msg || "Impossible de finaliser le parcours."}</p>
+        <button class="dia-btn-primary" id="dia-retry-btn">Réessayer</button>
+      </div>
+    </div>`;
+  _el("dia-retry-btn").addEventListener("click", () => {
+    _state.step = "calculating";
+    _render(container);
+    _finalize(container);
+  });
 }
 
 // ── Screen: Results ───────────────────────────────────────────────────────────
@@ -513,13 +530,15 @@ async function _patch(url, body) {
   return data;
 }
 
-async function _post(url, body) {
-  const res = await fetch(url, {
+async function _post(url, body, timeoutMs) {
+  const opts = {
     method:  "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
     body: JSON.stringify(body),
-  });
+  };
+  if (timeoutMs) opts.signal = AbortSignal.timeout(timeoutMs);
+  const res = await fetch(url, opts);
   const data = await res.json();
   if (!res.ok) {
     const msg = Array.isArray(data.detail)
@@ -531,14 +550,14 @@ async function _post(url, body) {
 }
 
 // ── Styles ────────────────────────────────────────────────────────────────────
-function _injectStyles(primaryColor) {
+function _injectStyles() {
   if (_styleInjected) return;
   _styleInjected = true;
 
   const style = document.createElement("style");
   style.textContent = `
     :root {
-      --dia-primary: ${primaryColor};
+      --dia-primary: #2563eb;
       --dia-text:    #111827;
       --dia-muted:   #6b7280;
       --dia-bg:      #f9fafb;

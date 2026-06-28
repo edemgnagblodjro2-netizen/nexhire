@@ -1,8 +1,9 @@
 from datetime import timezone
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, EmailStr, Field
 
+from auth import CurrentUser, get_current_user
 from db import get_db, row, rows
 from rate_limiter import limiter
 from diagnostic_questions import (
@@ -330,12 +331,14 @@ def get_result(request: Request, session_id: str):
 
 @router.get("/{partner_slug}/stats")
 @limiter.limit("30/minute")
-def get_stats(request: Request, partner_slug: str):
+def get_stats(request: Request, partner_slug: str, user: CurrentUser = Depends(get_current_user)):
     with get_db() as cur:
         cur.execute("SELECT id FROM partners WHERE slug = %s AND is_active = true LIMIT 1", (partner_slug,))
         p = row(cur)
         if not p:
             raise HTTPException(status_code=404, detail="Partenaire introuvable.")
+        if str(getattr(user, "partner_id", None)) != str(p["id"]):
+            raise HTTPException(status_code=403, detail="Accès réservé à l'administrateur de ce workspace.")
 
         partner_id = str(p["id"])
 
@@ -418,12 +421,14 @@ def get_stats(request: Request, partner_slug: str):
 
 @router.get("/{partner_slug}/benchmark")
 @limiter.limit("30/minute")
-def get_benchmark(request: Request, partner_slug: str):
+def get_benchmark(request: Request, partner_slug: str, user: CurrentUser = Depends(get_current_user)):
     with get_db() as cur:
         cur.execute("SELECT id FROM partners WHERE slug = %s AND is_active = true LIMIT 1", (partner_slug,))
         p = row(cur)
         if not p:
             raise HTTPException(status_code=404, detail="Partenaire introuvable.")
+        if str(getattr(user, "partner_id", None)) != str(p["id"]):
+            raise HTTPException(status_code=403, detail="Accès réservé à l'administrateur de ce workspace.")
 
         cur.execute(
             """
