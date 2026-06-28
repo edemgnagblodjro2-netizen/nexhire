@@ -674,7 +674,7 @@ def get_rapport_regional(
                    ROUND(AVG(score_technologies)::numeric, 1) AS dim_technologies,
                    ROUND(AVG(score_gouvernance)::numeric, 1)  AS dim_gouvernance
             FROM diagnostic_sessions
-            WHERE partner_id = %s AND status = 'completed'
+            WHERE partner_id = %s AND status = 'completed' AND is_test = false
             """,
             (partner_id,),
         )
@@ -685,7 +685,7 @@ def get_rapport_regional(
             SELECT sector, COUNT(*) AS count,
                    ROUND(AVG(imai_score)::numeric, 1) AS imai_avg
             FROM diagnostic_sessions
-            WHERE partner_id = %s AND status = 'completed' AND sector IS NOT NULL
+            WHERE partner_id = %s AND status = 'completed' AND is_test = false AND sector IS NOT NULL
             GROUP BY sector
             HAVING COUNT(*) >= %s
             ORDER BY count DESC LIMIT 6
@@ -698,7 +698,7 @@ def get_rapport_regional(
             """
             SELECT priority_challenge AS label, COUNT(*) AS count
             FROM diagnostic_sessions
-            WHERE partner_id = %s AND status = 'completed'
+            WHERE partner_id = %s AND status = 'completed' AND is_test = false
               AND priority_challenge IS NOT NULL AND priority_challenge <> ''
             GROUP BY priority_challenge
             HAVING COUNT(*) >= %s

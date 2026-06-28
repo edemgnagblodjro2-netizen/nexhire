@@ -1,3 +1,4 @@
+import hmac
 import logging
 import os
 from datetime import timezone
@@ -12,7 +13,7 @@ from diagnostic_questions import (
     QUESTIONS_BY_CODE, SCORE_MAP, TOTAL_CORE,
     get_next_question, compute_imai,
 )
-from privacy import K_ANON_MIN
+from privacy import K_ANON_MIN, TEST_SESSION_SECRET
 
 logger = logging.getLogger("diagnostic")
 
@@ -92,17 +93,21 @@ def start_session(request: Request, payload: StartPayload):
     if payload.sector not in SECTORS:
         raise HTTPException(status_code=422, detail="Secteur invalide.")
 
+    # Comparaison à temps constant — secret vide désactive le marquage (sécurité par défaut).
+    test_header = request.headers.get("X-Test-Session", "")
+    is_test = bool(TEST_SESSION_SECRET) and hmac.compare_digest(test_header, TEST_SESSION_SECRET)
+
     with get_db() as cur:
         partner_id = _get_partner_id(cur, payload.partner_slug)
         cur.execute(
             """
             INSERT INTO diagnostic_sessions
-              (partner_id, company_name, sector, size_range, priority_challenge, status)
-            VALUES (%s, %s, %s, %s, %s, 'in_progress')
+              (partner_id, company_name, sector, size_range, priority_challenge, status, is_test)
+            VALUES (%s, %s, %s, %s, %s, 'in_progress', %s)
             RETURNING id
             """,
             (partner_id, payload.company_name, payload.sector,
-             payload.size_range, payload.priority_challenge),
+             payload.size_range, payload.priority_challenge, is_test),
         )
         session_id = str(row(cur)["id"])
 
@@ -403,7 +408,7 @@ def get_stats(request: Request, partner_slug: str, user: CurrentUser = Depends(g
                 ROUND(AVG(score_technologies)::numeric, 1)        AS dim_technologies,
                 ROUND(AVG(score_gouvernance)::numeric, 1)         AS dim_gouvernance
             FROM diagnostic_sessions
-            WHERE partner_id = %s AND status = 'completed'
+            WHERE partner_id = %s AND status = 'completed' AND is_test = false
             """,
             (partner_id,),
         )
@@ -414,7 +419,7 @@ def get_stats(request: Request, partner_slug: str, user: CurrentUser = Depends(g
             SELECT sector, COUNT(*) AS count,
                    ROUND(AVG(imai_score)::numeric, 1) AS imai_avg
             FROM diagnostic_sessions
-            WHERE partner_id = %s AND status = 'completed' AND sector IS NOT NULL
+            WHERE partner_id = %s AND status = 'completed' AND is_test = false AND sector IS NOT NULL
             GROUP BY sector
             HAVING COUNT(*) >= %s
             ORDER BY count DESC LIMIT 8
@@ -427,7 +432,7 @@ def get_stats(request: Request, partner_slug: str, user: CurrentUser = Depends(g
             """
             SELECT priority_challenge AS label, COUNT(*) AS count
             FROM diagnostic_sessions
-            WHERE partner_id = %s AND status = 'completed'
+            WHERE partner_id = %s AND status = 'completed' AND is_test = false
               AND priority_challenge IS NOT NULL AND priority_challenge <> ''
             GROUP BY priority_challenge
             HAVING COUNT(*) >= %s
