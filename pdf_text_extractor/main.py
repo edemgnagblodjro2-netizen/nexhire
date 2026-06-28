@@ -351,6 +351,10 @@ def create_app(
     def docs_guide_it():
         return FileResponse(STATIC_DIR / "docs" / "nexhire-eip-guide-it.html", media_type="text/html")
 
+    @app.get("/docs/presentation-cci3r")
+    def docs_presentation_cci3r():
+        return FileResponse(STATIC_DIR / "docs" / "presentation-cci3r-2026.html", media_type="text/html")
+
     @app.get("/api/health")
     def health():
         return {"status": "ok"}
