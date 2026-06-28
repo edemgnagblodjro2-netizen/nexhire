@@ -293,7 +293,8 @@ def save_email(
               AND email_send_count < %s
             RETURNING id, company_name, imai_score, niveau,
                       (SELECT name          FROM partners WHERE id = diagnostic_sessions.partner_id) AS partner_name,
-                      (SELECT primary_color FROM partners WHERE id = diagnostic_sessions.partner_id) AS primary_color
+                      (SELECT primary_color FROM partners WHERE id = diagnostic_sessions.partner_id) AS primary_color,
+                      (SELECT slug          FROM partners WHERE id = diagnostic_sessions.partner_id) AS partner_slug
             """,
             (str(payload.company_email), session_id, MAX_EMAIL_SENDS_PER_SESSION),
         )
@@ -312,8 +313,9 @@ def save_email(
                 )
             raise HTTPException(status_code=404, detail="Session introuvable.")
 
-    app_url = os.environ.get("APP_URL", "https://agenthub.nexhire.ca")
-    rapport_url = f"{app_url}/rapport/{session_id}"
+    portal_url   = os.environ.get("PORTAL_URL", "https://myportal.nexhire.ca")
+    partner_slug = sess["partner_slug"] or "demo"
+    rapport_url  = f"{portal_url}/workspace/{partner_slug}/diagnostic-ia"
 
     background_tasks.add_task(
         _send_rapport_async,
