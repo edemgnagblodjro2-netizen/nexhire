@@ -5,18 +5,28 @@
 -- ═══════════════════════════════════════════════════════════════════
 
 -- 1. Partner demo
-INSERT INTO partners (slug, name, primary_color, plan, is_active)
+INSERT INTO partners (slug, name, hero_title, hero_subtitle, primary_color, plan, is_active)
 VALUES (
   'demo',
   'CCI3R',
+  'Système d''exploitation IA',
+  'Mesurez · Gouvernez · Opérez · Amplifiez',
   '#7c3aed',   -- violet — distinct du bleu CCI3R pour reconnaître visuellement le mode démo
   'starter',
   true
 )
 ON CONFLICT (slug) DO UPDATE SET
-  name          = EXCLUDED.name,
-  primary_color = EXCLUDED.primary_color,
-  is_active     = true;
+  name           = EXCLUDED.name,
+  hero_title     = EXCLUDED.hero_title,
+  hero_subtitle  = EXCLUDED.hero_subtitle,
+  primary_color  = EXCLUDED.primary_color,
+  is_active      = true;
+
+-- Mettre à jour cci3r également
+UPDATE partners SET
+  hero_title    = 'Système d''exploitation IA',
+  hero_subtitle = 'Mesurez · Gouvernez · Opérez · Amplifiez'
+WHERE slug = 'cci3r';
 
 -- 2. Enregistrer les apps Sprint 2 dans le catalogue (idempotent)
 INSERT INTO app_registry
