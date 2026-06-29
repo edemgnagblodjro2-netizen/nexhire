@@ -250,7 +250,7 @@ def create_app(
         CORSMiddleware,
         allow_origins=_origins,
         allow_credentials=False,
-        allow_methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+        allow_methods=["GET", "HEAD", "POST", "PATCH", "DELETE", "OPTIONS"],
         allow_headers=["Authorization", "Content-Type", "X-Request-ID"],
     )
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
@@ -273,6 +273,11 @@ def create_app(
             media_type="application/manifest+json",
             headers={"Cache-Control": "public, max-age=86400"},
         )
+
+    @app.head("/")
+    def root_head():
+        from fastapi.responses import Response
+        return Response(status_code=200)
 
     @app.get("/")
     def root(request: Request):
