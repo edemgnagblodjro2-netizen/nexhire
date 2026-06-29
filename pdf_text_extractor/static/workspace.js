@@ -13,6 +13,10 @@ const IC = {
   zap:        `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
   book:       `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`,
   grid:       `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>`,
+  link:       `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`,
+  graduation: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`,
+  layers:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`,
+  award:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>`,
   file:       `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`,
   settings:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
   users:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
@@ -58,18 +62,23 @@ const NAV = [
   {
     section: 'Administration',
     items: [
-      { id: 'settings', label: 'Paramètres', iconKey: 'settings', route: '__settings__', defaultSoon: true },
+      { id: 'settings', label: 'Paramètres', iconKey: 'settings', appSlug: 'settings', defaultSoon: true },
     ],
   },
 ];
 
 const COMING_SOON = [
-  { id: 'rh',          label: 'RH Intelligence',       iconKey: 'users'     },
-  { id: 'finance',     label: 'Finance Intelligence',   iconKey: 'dollar'    },
-  { id: 'sales',       label: 'Sales Intelligence',     iconKey: 'trending'  },
-  { id: 'marketing',   label: 'Marketing Intelligence', iconKey: 'megaphone' },
-  { id: 'support',     label: 'Service Client IA',      iconKey: 'headset'   },
-  { id: 'marketplace', label: 'Marketplace d\'agents',  iconKey: 'store'     },
+  { id: 'rh',          label: 'RH Intelligence',       iconKey: 'users'      },
+  { id: 'finance',     label: 'Finance Intelligence',   iconKey: 'dollar'     },
+  { id: 'sales',       label: 'Sales Intelligence',     iconKey: 'trending'   },
+  { id: 'marketing',   label: 'Marketing Intelligence', iconKey: 'megaphone'  },
+  { id: 'support',     label: 'Service Client IA',      iconKey: 'headset'    },
+  { id: 'marketplace', label: 'Marketplace d\'agents',  iconKey: 'store'      },
+  { id: 'connectors',  label: 'Connecteurs',            iconKey: 'link'       },
+  { id: 'formation',   label: 'Centre de Formation',    iconKey: 'graduation' },
+  { id: 'projects',    label: 'Projets IA',             iconKey: 'layers'     },
+  { id: 'grants',      label: 'Centre de Subventions',  iconKey: 'award'      },
+  { id: 'civicstore',  label: 'CivicAI Store',          iconKey: 'store'      },
 ];
 
 // ── State ─────────────────────────────────────────────────────────────────────
@@ -157,7 +166,7 @@ function _resolveNavItems() {
   for (const group of NAV) {
     for (const item of group.items) {
       if (item.route) {
-        resolved.push({ ...item, enabled: item.route !== '__settings__' || false, soon: item.defaultSoon || false });
+        resolved.push({ ...item, enabled: true, soon: false });
         continue;
       }
       if (item.appSlug) {

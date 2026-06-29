@@ -18,14 +18,94 @@ ON CONFLICT (slug) DO UPDATE SET
   primary_color = EXCLUDED.primary_color,
   is_active     = true;
 
--- 2. Installer diagnostic-ia + observatoire pour le partner demo
+-- 2. Enregistrer les apps Sprint 2 dans le catalogue (idempotent)
+INSERT INTO app_registry
+  (slug, name, description, icon, category, layer, version, status,
+   permissions, dependencies, entry_path, sort_order)
+VALUES
+  (
+    'gouvernance',
+    'Gouvernance IA',
+    'Checklist Loi 25, génération de politique IA, registre des outils IA.',
+    '⚖️', 'governance', 'app', '1.0', 'available',
+    '{"min_role": "user", "min_plan": "starter"}',
+    '{"core": [], "apps": []}',
+    '/workspace/{slug}/gouvernance',
+    30
+  ),
+  (
+    'reports',
+    'Rapports',
+    'Rapports individuels et régionaux de cohorte, exports CSV.',
+    '📊', 'analytics', 'app', '1.0', 'available',
+    '{"min_role": "user", "min_plan": "starter"}',
+    '{"core": [], "apps": ["diagnostic-ia"]}',
+    '/workspace/{slug}/reports',
+    40
+  ),
+  (
+    'settings',
+    'Paramètres',
+    'Configuration du workspace : profil, apparence, apps installées, sécurité.',
+    '⚙️', 'platform', 'app', '1.0', 'available',
+    '{"min_role": "user", "min_plan": "starter"}',
+    '{"core": [], "apps": []}',
+    '/workspace/{slug}/settings',
+    90
+  ),
+  (
+    'automation',
+    'Automatisations',
+    'Automatisations IA — Power Automate, agents ATLAS, 400+ connecteurs.',
+    '⚡', 'productivity', 'app', '0.5', 'coming_soon',
+    '{"min_role": "user", "min_plan": "growth"}',
+    '{"core": [], "apps": []}',
+    '/workspace/{slug}/automation',
+    50
+  ),
+  (
+    'knowledge',
+    'Knowledge Hub',
+    'Base de connaissance privée — ATLAS répond avec vos documents sectoriels.',
+    '📚', 'productivity', 'app', '0.5', 'coming_soon',
+    '{"min_role": "user", "min_plan": "growth"}',
+    '{"core": [], "apps": []}',
+    '/workspace/{slug}/knowledge',
+    60
+  ),
+  (
+    'ms365',
+    'M365 Optimizer',
+    'Audit et optimisation Microsoft 365 — licences, sécurité Entra, adoption Copilot.',
+    '🪟', 'productivity', 'app', '0.5', 'coming_soon',
+    '{"min_role": "user", "min_plan": "growth"}',
+    '{"core": [], "apps": []}',
+    '/workspace/{slug}/ms365',
+    70
+  )
+ON CONFLICT (slug) DO UPDATE SET
+  name        = EXCLUDED.name,
+  description = EXCLUDED.description,
+  status      = EXCLUDED.status,
+  sort_order  = EXCLUDED.sort_order;
+
+-- 3. Installer toutes les apps disponibles pour le partner demo
 WITH p AS (SELECT id FROM partners WHERE slug = 'demo')
 INSERT INTO installed_apps (partner_id, app_slug, is_enabled, config)
 SELECT p.id, app_slug, true, '{}'::jsonb
-FROM p, (VALUES ('diagnostic-ia'), ('observatoire')) AS apps(app_slug)
+FROM p, (VALUES
+  ('diagnostic-ia'),
+  ('observatoire'),
+  ('gouvernance'),
+  ('reports'),
+  ('settings'),
+  ('automation'),
+  ('knowledge'),
+  ('ms365')
+) AS apps(app_slug)
 ON CONFLICT (partner_id, app_slug) DO UPDATE SET is_enabled = true;
 
--- 3. Benchmark de démonstration (mêmes données que CCI3R)
+-- 4. Benchmark de démonstration (mêmes données que CCI3R)
 WITH p AS (SELECT id FROM partners WHERE slug = 'demo')
 INSERT INTO diagnostic_benchmarks (
   partner_id, period_start, sector, size_range, sample_size,
@@ -52,4 +132,5 @@ DO UPDATE SET
 -- ── Résultat attendu ────────────────────────────────────────────────
 -- /workspace/demo  →  Accélérateur IA CCI3R (violet — mode démo)
 -- /workspace/cci3r →  Accélérateur IA CCI3R (bleu — production)
+
 
