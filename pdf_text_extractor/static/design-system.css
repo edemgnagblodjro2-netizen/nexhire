@@ -219,21 +219,79 @@ select.ds-input { cursor: pointer; }
 }
 .ds-table td { padding: 11px 14px; border-bottom: 1px solid var(--border-2); color: var(--text-body); vertical-align: middle; }
 .ds-table tr:last-child td { border-bottom: none; }
+.ds-table tbody tr { transition: background .1s; }
+.ds-table tbody tr:hover { background: var(--bg); }
 .ds-table-name { font-weight: 600; color: var(--text); }
 
 /* ── Empty state ─────────────────────────────────────────────────── */
 .ds-empty {
+  display: flex; flex-direction: column; align-items: center;
   text-align: center; padding: var(--sp-12) var(--sp-6);
-  color: var(--muted); font-size: 14px; line-height: 1.6;
+  gap: 6px;
+}
+.ds-empty.ds-empty-card {
   background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-lg);
 }
-.ds-empty-icon { font-size: 48px; margin-bottom: var(--sp-3); }
+.ds-empty-icon  { font-size: 42px; line-height: 1; margin-bottom: 6px; opacity: .75; }
+.ds-empty-title { font-size: 15px; font-weight: 700; color: var(--text); }
+.ds-empty-desc  { font-size: 13px; color: var(--text-sub); max-width: 340px; line-height: 1.6; }
+.ds-empty-action {
+  margin-top: 12px; display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 20px; background: var(--primary); color: #fff;
+  border: none; border-radius: var(--r); font-size: 13px; font-weight: 600;
+  cursor: pointer; text-decoration: none; transition: opacity .15s;
+  font-family: var(--font);
+}
+.ds-empty-action:hover { opacity: .88; }
+.ds-empty-action-ghost {
+  background: transparent; color: var(--text-2);
+  border: 1.5px solid var(--border);
+}
+.ds-empty-action-ghost:hover { background: var(--bg); opacity: 1; border-color: var(--primary); color: var(--primary); }
+
+/* ── Skeleton shimmer ────────────────────────────────────────────── */
+@keyframes ds-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.ds-skeleton {
+  background: linear-gradient(90deg, var(--bg-2) 25%, var(--border) 50%, var(--bg-2) 75%);
+  background-size: 200% 100%;
+  animation: ds-shimmer 1.4s ease-in-out infinite;
+  border-radius: var(--r-sm);
+}
 
 /* ── Modal ───────────────────────────────────────────────────────── */
-.ds-modal { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-.ds-modal-box { background: var(--card); border-radius: var(--r-xl); padding: 28px; width: 540px; max-width: 92vw; max-height: 90vh; overflow-y: auto; }
-.ds-modal-title  { margin: 0 0 20px; font-size: 16px; font-weight: 700; color: var(--text); }
-.ds-modal-footer { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }
+.ds-modal {
+  position: fixed; inset: 0; background: rgba(0,0,0,.45);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000; backdrop-filter: blur(2px);
+  animation: ds-modal-fade .15s ease;
+}
+@keyframes ds-modal-fade { from { opacity: 0; } to { opacity: 1; } }
+.ds-modal-box {
+  background: var(--card); border-radius: var(--r-xl);
+  width: 540px; max-width: 92vw; max-height: 90vh; overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,.15), 0 0 0 1px var(--border);
+  animation: ds-modal-in .2s ease;
+}
+@keyframes ds-modal-in { from { opacity: 0; transform: scale(.97) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+.ds-modal-hd {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border-2);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.ds-modal-title { margin: 0; font-size: 15px; font-weight: 700; color: var(--text); }
+.ds-modal-close {
+  width: 28px; height: 28px; border: none; background: none; border-radius: var(--r-sm);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  color: var(--text-sub); font-size: 20px; line-height: 1; transition: background .1s;
+  font-family: var(--font);
+}
+.ds-modal-close:hover { background: var(--bg); color: var(--text); }
+.ds-modal-body   { padding: 20px 24px; }
+.ds-modal-footer { padding: 16px 24px; border-top: 1px solid var(--border-2); display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+.ds-modal-title-row { margin: 0 0 20px; font-size: 16px; font-weight: 700; color: var(--text); }
 
 /* ── KPI Card ────────────────────────────────────────────────────── */
 .ds-kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--sp-4); }

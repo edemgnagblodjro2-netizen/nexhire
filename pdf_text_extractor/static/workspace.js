@@ -220,18 +220,14 @@ function _renderNav() {
     html += `</div>`;
   }
 
-  // À venir section
+  // À venir — compact icon grid (réduit le bruit visuel)
   html += `<div class="ws-sidebar-divider"></div>`;
   html += `<div class="ws-nav-section"><div class="ws-nav-label">À venir</div>`;
+  html += `<div class="ws-coming-grid">`;
   for (const cs of COMING_SOON) {
-    html += `
-      <button class="ws-nav-item" disabled aria-label="${cs.label}">
-        ${icon(cs.iconKey)}
-        <span class="ws-nav-name">${cs.label}</span>
-        <span class="ws-nav-badge ws-badge-soon">Bientôt</span>
-      </button>`;
+    html += `<button class="ws-coming-btn" disabled title="${cs.label}" aria-label="${cs.label}">${icon(cs.iconKey)}</button>`;
   }
-  html += `</div>`;
+  html += `</div></div>`;
 
   nav.innerHTML = html;
 
@@ -330,38 +326,66 @@ function _showLoading() {
 function _showAppError(name, msg) {
   $('ws-app-container').innerHTML = `
     <div class="ws-state">
-      <div class="ws-state-icon">⚠️</div>
-      <div class="ws-state-title">Impossible de charger ${name}</div>
-      <div class="ws-state-msg">${msg || 'Une erreur est survenue. Veuillez réessayer.'}</div>
+      <div class="ds-empty">
+        <div class="ds-empty-icon">⚠️</div>
+        <div class="ds-empty-title">Impossible de charger ${name}</div>
+        <div class="ds-empty-desc">${msg || 'Une erreur est survenue. Vérifiez votre connexion et réessayez.'}</div>
+        <button class="ds-empty-action ds-empty-action-ghost" onclick="location.reload()">Réessayer</button>
+      </div>
     </div>`;
 }
 
 function _showComingSoon(name) {
   $('ws-app-container').innerHTML = `
     <div class="ws-state">
-      <div class="ws-state-icon">🚀</div>
-      <div class="ws-state-title">${name}</div>
-      <div class="ws-state-msg">Ce module est en cours de développement et sera disponible prochainement.</div>
+      <div class="ds-empty">
+        <div class="ds-empty-icon">🚀</div>
+        <div class="ds-empty-title">${name}</div>
+        <div class="ds-empty-desc">Ce module est en cours de développement et sera disponible prochainement dans votre espace de travail.</div>
+      </div>
     </div>`;
 }
 
 function _showFatal(msg) {
   document.body.innerHTML = `
-    <div class="ws-state" style="height:100vh">
-      <div class="ws-state-icon">❌</div>
-      <div class="ws-state-title">Workspace introuvable</div>
-      <div class="ws-state-msg">${msg}</div>
+    <div style="height:100dvh;display:flex;align-items:center;justify-content:center;background:var(--bg,#f8fafc);font-family:system-ui,sans-serif">
+      <div class="ds-empty">
+        <div class="ds-empty-icon">🔒</div>
+        <div class="ds-empty-title">Workspace introuvable</div>
+        <div class="ds-empty-desc">${msg}</div>
+        <a href="/" class="ds-empty-action ds-empty-action-ghost">Retour à l'accueil</a>
+      </div>
     </div>`;
 }
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
 function _toast(msg, type = 'info') {
+  const icons = { info: 'ℹ️', success: '✅', warning: '⚠️', error: '❌' };
+  const types = { info: '', success: 't-success', warning: 't-warning', error: 't-error' };
   const el = document.createElement('div');
-  el.className = 'ws-toast-item';
-  if (type === 'error') el.style.background = '#dc2626';
-  el.textContent = msg;
+  el.className = `ws-toast-item ${types[type] || ''}`.trim();
+  el.innerHTML = `<span class="t-icon">${icons[type] || icons.info}</span><span class="t-msg">${msg}</span>`;
   $('ws-toast').appendChild(el);
-  setTimeout(() => el.remove(), 4000);
+  setTimeout(() => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateX(12px)';
+    setTimeout(() => el.remove(), 200);
+  }, 3800);
+}
+
+// ── Modal ─────────────────────────────────────────────────────────────────────
+function _modal({ title, body, footer = '', onClose } = {}) {
+  const overlay = document.getElementById('ws-modal-overlay');
+  document.getElementById('ws-modal-title').textContent = title || '';
+  document.getElementById('ws-modal-body').innerHTML = body || '';
+  document.getElementById('ws-modal-ft').innerHTML = footer;
+  overlay.classList.add('open');
+  const close = () => { overlay.classList.remove('open'); onClose?.(); };
+  document.getElementById('ws-modal-close').onclick = close;
+  const esc = (e) => { if (e.key === 'Escape') { close(); document.removeEventListener('keydown', esc); } };
+  document.addEventListener('keydown', esc);
+  overlay.onclick = (e) => { if (e.target === overlay) close(); };
+  return close;
 }
 
 // ── Start ─────────────────────────────────────────────────────────────────────

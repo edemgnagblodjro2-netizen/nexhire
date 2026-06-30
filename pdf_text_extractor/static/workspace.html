@@ -13,7 +13,7 @@
     html, body { height: 100%; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+      font-family: var(--font);
       background: var(--bg);
       color: var(--text);
       display: flex;
@@ -126,7 +126,10 @@
       cursor: pointer;
       flex-shrink: 0;
       margin-left: 4px;
+      border: 2px solid transparent;
+      transition: border-color .15s;
     }
+    #ws-user-avatar:hover { border-color: var(--primary); }
 
     /* ── Layout ─────────────────────────────────────────────────────── */
     #ws-layout {
@@ -143,9 +146,10 @@
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
-      overflow-y: auto;
-      overflow-x: hidden;
+      overflow: hidden;
     }
+
+    #ws-nav { flex: 1; overflow-y: auto; overflow-x: hidden; }
 
     .ws-nav-section {
       padding: 20px 12px 4px;
@@ -172,11 +176,12 @@
       border-radius: var(--radius);
       cursor: pointer;
       text-align: left;
-      transition: background .12s, color .12s;
+      transition: background .12s, color .12s, box-shadow .12s;
       color: var(--text-2);
       font-size: 13.5px;
       font-weight: 500;
       position: relative;
+      box-shadow: inset 3px 0 0 transparent;
     }
 
     .ws-nav-item:hover:not(:disabled) {
@@ -188,6 +193,7 @@
       background: var(--primary-a10);
       color: var(--primary);
       font-weight: 600;
+      box-shadow: inset 3px 0 0 var(--primary);
     }
 
     .ws-nav-item.active .ws-nav-icon svg { stroke: var(--primary); }
@@ -219,19 +225,54 @@
     }
 
     .ws-badge-soon {
-      background: #f1f5f9;
+      background: var(--bg-2);
       color: var(--muted);
     }
 
     .ws-badge-new {
-      background: #dcfce7;
-      color: #15803d;
+      background: var(--color-ok-bg);
+      color: var(--color-ok-text);
     }
 
     .ws-sidebar-divider {
       height: 1px;
       background: var(--border);
       margin: 8px 16px;
+    }
+
+    /* ── Coming-soon compact grid ───────────────────────────────────── */
+    .ws-coming-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      padding: 2px 4px 6px;
+    }
+
+    .ws-coming-btn {
+      height: 32px;
+      border: none;
+      background: none;
+      border-radius: var(--r-sm);
+      cursor: not-allowed;
+      opacity: .28;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity .12s;
+    }
+    .ws-coming-btn:hover { opacity: .45; }
+
+    /* ── Sidebar footer ─────────────────────────────────────────────── */
+    #ws-sidebar-footer {
+      padding: 10px 20px;
+      border-top: 1px solid var(--border-2);
+      font-size: 11px;
+      color: var(--muted);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      letter-spacing: .01em;
     }
 
     /* ── Main content ───────────────────────────────────────────────── */
@@ -274,31 +315,71 @@
     /* ── Toast ──────────────────────────────────────────────────────── */
     #ws-toast {
       position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
+      bottom: 20px; right: 20px;
       z-index: 100;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-end;
       gap: 8px;
       pointer-events: none;
     }
 
     .ws-toast-item {
-      background: var(--text);
-      color: #fff;
-      padding: 10px 18px;
-      border-radius: var(--radius);
-      font-size: 13px;
-      font-weight: 500;
-      max-width: 400px;
-      text-align: center;
+      display: flex; align-items: center; gap: 10px;
+      background: var(--card);
+      color: var(--text);
+      padding: 12px 16px;
+      border-radius: var(--r);
+      font-size: 13px; font-weight: 500;
+      max-width: 360px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.1), 0 0 0 1px var(--border);
       animation: toast-in .2s ease;
       pointer-events: auto;
+      border-left: 3px solid var(--border);
+      transition: opacity .2s, transform .2s;
     }
+    .ws-toast-item.t-success { border-left-color: var(--color-ok); }
+    .ws-toast-item.t-error   { border-left-color: var(--color-err); }
+    .ws-toast-item.t-warning { border-left-color: var(--color-warn); }
+    .ws-toast-item .t-icon   { font-size: 15px; flex-shrink: 0; }
+    .ws-toast-item .t-msg    { flex: 1; line-height: 1.4; }
 
-    @keyframes toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes toast-in { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: translateX(0); } }
+
+    /* ── Modal ───────────────────────────────────────────────────────── */
+    #ws-modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.4);
+      z-index: 200;
+      display: none; align-items: center; justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(2px);
+    }
+    #ws-modal-overlay.open { display: flex; animation: ds-modal-fade .15s ease; }
+    #ws-modal-box {
+      background: var(--card); border-radius: var(--r-xl);
+      width: 100%; max-width: 480px; max-height: calc(100vh - 40px);
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,.15), 0 0 0 1px var(--border);
+      animation: ds-modal-in .2s ease;
+    }
+    #ws-modal-hd {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border-2);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    #ws-modal-title { font-size: 15px; font-weight: 700; color: var(--text); }
+    #ws-modal-close {
+      width: 28px; height: 28px; border: none; background: none; border-radius: var(--r-sm);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: var(--text-sub); font-size: 20px; line-height: 1; transition: background .1s;
+    }
+    #ws-modal-close:hover { background: var(--bg); color: var(--text); }
+    #ws-modal-body { padding: 20px 24px; }
+    #ws-modal-ft {
+      padding: 14px 24px; border-top: 1px solid var(--border-2);
+      display: flex; align-items: center; justify-content: flex-end; gap: 8px;
+    }
 
     /* ── Responsive ─────────────────────────────────────────────────── */
     @media (max-width: 768px) {
@@ -307,6 +388,7 @@
       .ws-nav-item { justify-content: center; padding: 10px; }
       #ws-topbar-brand { padding: 0 10px; border-right: none; }
       #ws-breadcrumb { display: none; }
+      .ws-coming-grid, #ws-sidebar-footer { display: none; }
     }
   </style>
 </head>
@@ -341,6 +423,7 @@
           <div class="ws-spinner"></div>
         </div>
       </div>
+      <div id="ws-sidebar-footer">AgentHub Platform</div>
     </nav>
 
     <main id="ws-main">
@@ -353,6 +436,18 @@
   </div>
 
   <div id="ws-toast"></div>
+
+  <!-- Modal partagé -->
+  <div id="ws-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="ws-modal-title">
+    <div id="ws-modal-box">
+      <div id="ws-modal-hd">
+        <span id="ws-modal-title"></span>
+        <button id="ws-modal-close" aria-label="Fermer">×</button>
+      </div>
+      <div id="ws-modal-body"></div>
+      <div id="ws-modal-ft"></div>
+    </div>
+  </div>
 
   <script type="module" src="/static/workspace.js"></script>
 </body>

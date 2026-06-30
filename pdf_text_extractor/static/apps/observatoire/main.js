@@ -149,9 +149,22 @@ function _renderError(container) {
 function _showSkeleton(container) {
   container.innerHTML = `
     <div class="obs-wrap">
-      <div class="obs-loading">
-        <div class="obs-spinner"></div>
-        <p>Chargement des données…</p>
+      <div class="obs-header">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div class="ds-skeleton" style="height:24px;width:220px"></div>
+          <div class="ds-skeleton" style="height:14px;width:380px;max-width:90%"></div>
+        </div>
+      </div>
+      <div class="obs-kpi-grid">
+        ${Array(3).fill('<div class="ds-skeleton" style="height:110px;border-radius:var(--r-md)"></div>').join('')}
+      </div>
+      <div class="obs-kpi-secondary">
+        ${Array(2).fill('<div class="ds-skeleton" style="height:70px;border-radius:var(--r-md)"></div>').join('')}
+      </div>
+      <div class="ds-skeleton" style="height:130px;border-radius:var(--r-md)"></div>
+      <div class="obs-two-col">
+        <div class="ds-skeleton" style="height:280px;border-radius:var(--r-md)"></div>
+        <div class="ds-skeleton" style="height:280px;border-radius:var(--r-md)"></div>
       </div>
     </div>`;
 }
@@ -195,7 +208,7 @@ function _render(container, d) {
   const pInt     = nTotal ? Math.round(d.niveaux.intermediaire / nTotal * 100) : 0;
   const pAdv     = 100 - pDeb - pInt;
 
-  const avgColor = d.imai_avg < 34 ? "#ef4444" : d.imai_avg < 67 ? "#f59e0b" : "#10b981";
+  const avgColor = d.imai_avg < 34 ? "var(--color-err)" : d.imai_avg < 67 ? "var(--color-warn)" : "var(--color-ok)";
   const avgLabel = d.imai_avg < 34 ? "Débutant"   : d.imai_avg < 67 ? "Intermédiaire" : "Avancé";
 
   // KPI secondaires
@@ -221,7 +234,7 @@ function _render(container, d) {
 
   const dimBars = DIM_ORDER.map(dim => {
     const val   = d.dimensions[dim] || 0;
-    const color = val >= 67 ? "#10b981" : val >= 34 ? "#f59e0b" : "#ef4444";
+    const color = val >= 67 ? "var(--color-ok)" : val >= 34 ? "var(--color-warn)" : "var(--color-err)";
     return `
       <div class="obs-dim-row">
         <span class="obs-dim-label">${DIM_LABELS[dim]}</span>
@@ -495,7 +508,7 @@ function _injectStyles() {
 
     .obs-kpi-accent {
       border-color: color-mix(in srgb, var(--accent, var(--primary)) 30%, transparent);
-      background: color-mix(in srgb, var(--accent, var(--primary)) 5%, white);
+      background: color-mix(in srgb, var(--accent, var(--primary)) 5%, var(--card));
     }
 
     .obs-kpi-icon { font-size: 22px; margin-bottom: 6px; }
@@ -537,8 +550,8 @@ function _injectStyles() {
     /* Insights IA */
     .obs-insights-section {
       background: linear-gradient(135deg,
-        color-mix(in srgb, var(--primary) 6%, white),
-        color-mix(in srgb, var(--primary) 3%, white));
+        color-mix(in srgb, var(--primary) 6%, var(--card)),
+        color-mix(in srgb, var(--primary) 3%, var(--card)));
       border-color: color-mix(in srgb, var(--primary) 20%, transparent);
     }
 

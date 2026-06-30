@@ -78,13 +78,40 @@ function _render(el) {
 
 async function _loadSessions(el) {
   const box = el.querySelector('#rpt-sessions');
+
+  // Skeleton rows pendant le chargement
+  box.innerHTML = `
+<div class="rpt-table-wrap">
+  <table class="rpt-table">
+    <thead><tr>
+      <th>Entreprise</th><th>Secteur</th><th>Score IMAI</th><th>Niveau</th><th>Date</th><th>Rapport</th>
+    </tr></thead>
+    <tbody>
+      ${Array(5).fill(`
+      <tr>
+        <td><div class="ds-skeleton rpt-skel" style="width:68%"></div></td>
+        <td><div class="ds-skeleton rpt-skel" style="width:80%"></div></td>
+        <td><div class="ds-skeleton rpt-skel" style="width:40%"></div></td>
+        <td><div class="ds-skeleton rpt-skel" style="width:55%"></div></td>
+        <td><div class="ds-skeleton rpt-skel" style="width:50%"></div></td>
+        <td><div class="ds-skeleton rpt-skel" style="width:30%"></div></td>
+      </tr>`).join('')}
+    </tbody>
+  </table>
+</div>`;
+
   try {
     const res = await fetch(`${API}/${_st.slug}/sessions`);
     if (!res.ok) throw new Error();
     const { sessions } = await res.json();
 
     if (!sessions?.length) {
-      box.innerHTML = `<div class="rpt-empty">Aucune session complétée pour le moment. Les rapports individuels apparaîtront ici dès qu'une entreprise membre complète le diagnostic.</div>`;
+      box.innerHTML = `
+<div class="ds-empty ds-empty-card" style="padding:40px 24px">
+  <div class="ds-empty-icon">📊</div>
+  <div class="ds-empty-title">Aucun diagnostic complété</div>
+  <div class="ds-empty-desc">Les rapports individuels apparaîtront ici dès qu'une organisation membre termine son diagnostic.</div>
+</div>`;
       return;
     }
 
@@ -109,7 +136,12 @@ async function _loadSessions(el) {
   </table>
 </div>`;
   } catch {
-    box.innerHTML = `<div class="rpt-empty">Impossible de charger les sessions. Vérifiez votre connexion.</div>`;
+    box.innerHTML = `
+<div class="ds-empty ds-empty-card" style="padding:40px 24px">
+  <div class="ds-empty-icon">⚠️</div>
+  <div class="ds-empty-title">Impossible de charger les sessions</div>
+  <div class="ds-empty-desc">Vérifiez votre connexion et actualisez la page.</div>
+</div>`;
   }
 }
 
@@ -161,12 +193,14 @@ function _css() {
 .rpt-section-sub{font-size:12px;color:var(--muted)}
 .rpt-loading{display:flex;align-items:center;gap:10px;padding:32px;color:var(--muted);font-size:13px}
 .rpt-spinner{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:ds-spin .65s linear infinite}
-.rpt-empty{padding:32px;text-align:center;color:var(--muted);font-size:13px;background:var(--bg);border:1px solid var(--border);border-radius:var(--r-lg)}
 .rpt-table-wrap{overflow-x:auto;border-radius:var(--r-lg);border:1px solid var(--border)}
 .rpt-table{width:100%;border-collapse:collapse;font-size:13px}
 .rpt-table th{text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:10px 14px;background:var(--bg);border-bottom:1px solid var(--border)}
 .rpt-table td{padding:11px 14px;border-bottom:1px solid var(--border-2);color:var(--text-body);vertical-align:middle}
 .rpt-table tr:last-child td{border-bottom:none}
+.rpt-table tbody tr{transition:background .1s}
+.rpt-table tbody tr:hover{background:var(--bg)}
+.rpt-skel{height:12px;display:block;border-radius:var(--r-sm)}
 .rpt-td-name{font-weight:600;color:var(--text)}
 .rpt-td-sector{color:var(--text-sub);font-size:12px}
 .rpt-td-date{color:var(--muted);font-size:12px}
