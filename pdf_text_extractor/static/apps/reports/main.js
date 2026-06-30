@@ -47,7 +47,7 @@ function _render(el) {
       <span class="rpt-section-sub">20 dernières sessions complétées</span>
     </div>
     <div id="rpt-sessions">
-      <div class="rpt-loading"><div class="rpt-spinner"></div><span>Chargement des sessions…</span></div>
+      <div class="rpt-loading"><div class="ds-spinner ds-spinner-sm"></div><span>Chargement des sessions…</span></div>
     </div>
   </div>
 
@@ -83,8 +83,8 @@ async function _loadSessions(el) {
 
   // Skeleton rows pendant le chargement
   box.innerHTML = `
-<div class="rpt-table-wrap">
-  <table class="rpt-table">
+<div class="ds-table-wrap">
+  <table class="ds-table">
     <thead><tr>
       <th>Entreprise</th><th>Secteur</th><th>Score IMAI</th><th>Niveau</th><th>Date</th><th>Rapport</th>
     </tr></thead>
@@ -119,8 +119,8 @@ async function _loadSessions(el) {
 
     const niv = { debutant:'🟡 Débutant', intermediaire:'🔵 Intermédiaire', avance:'🟢 Avancé' };
     box.innerHTML = `
-<div class="rpt-table-wrap">
-  <table class="rpt-table">
+<div class="ds-table-wrap">
+  <table class="ds-table">
     <thead><tr>
       <th>Entreprise</th><th>Secteur</th><th>Score IMAI</th><th>Niveau</th><th>Date</th><th>Rapport</th>
     </tr></thead>
@@ -191,14 +191,6 @@ function _css() {
 .rpt-section-title{font-size:16px;font-weight:700;color:var(--text);margin:0}
 .rpt-section-sub{font-size:12px;color:var(--muted)}
 .rpt-loading{display:flex;align-items:center;gap:10px;padding:32px;color:var(--muted);font-size:13px}
-.rpt-spinner{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:ds-spin .65s linear infinite}
-.rpt-table-wrap{overflow-x:auto;border-radius:var(--r-lg);border:1px solid var(--border)}
-.rpt-table{width:100%;border-collapse:collapse;font-size:13px}
-.rpt-table th{text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:10px 14px;background:var(--bg);border-bottom:1px solid var(--border)}
-.rpt-table td{padding:11px 14px;border-bottom:1px solid var(--border-2);color:var(--text-body);vertical-align:middle}
-.rpt-table tr:last-child td{border-bottom:none}
-.rpt-table tbody tr{transition:background .1s}
-.rpt-table tbody tr:hover{background:var(--bg)}
 .rpt-skel{height:12px;display:block;border-radius:var(--r-sm)}
 .rpt-td-name{font-weight:600;color:var(--text)}
 .rpt-td-sector{color:var(--text-sub);font-size:12px}

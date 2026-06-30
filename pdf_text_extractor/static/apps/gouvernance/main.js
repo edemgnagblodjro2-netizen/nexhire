@@ -300,8 +300,8 @@ function _renderRegistre() {
     <div style="font-size:48px;margin-bottom:12px">🤖</div>
     <p>Aucun outil enregistré.<br>Ajoutez les outils IA utilisés dans votre organisation pour maintenir votre registre de conformité.</p>
   </div>` : `
-  <div class="gov-table-wrap">
-    <table class="gov-table">
+  <div class="ds-table-wrap">
+    <table class="ds-table">
       <thead><tr>
         <th>Outil</th><th>Catégorie</th><th>Usage</th>
         <th>Données perso.</th><th>Conformant</th><th></th>
@@ -448,11 +448,6 @@ function _css() {
 .gov-reg-hd{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:20px;flex-wrap:wrap}
 .gov-reg-hd .gov-btn-p{margin-top:0}
 .gov-empty{text-align:center;padding:48px 24px;color:var(--muted);font-size:14px;line-height:1.6}
-.gov-table-wrap{overflow-x:auto;border-radius:var(--r-lg);border:1px solid var(--border)}
-.gov-table{width:100%;border-collapse:collapse;font-size:13px}
-.gov-table th{text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:10px 14px;background:var(--bg);border-bottom:1px solid var(--border)}
-.gov-table td{padding:11px 14px;border-bottom:1px solid var(--border-2);color:var(--text-body)}
-.gov-table tr:last-child td{border-bottom:none}
 .gov-td-name{font-weight:600;color:var(--text)}
 .gov-tag{background:var(--bg-2);color:var(--text-2);font-size:11px;padding:2px 8px;border-radius:var(--r-pill);white-space:nowrap}
 .gov-badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:var(--r-pill);white-space:nowrap}

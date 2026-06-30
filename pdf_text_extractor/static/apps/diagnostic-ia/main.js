@@ -925,15 +925,6 @@ function _injectStyles() {
     .dia-answer-label { font-size: 14px; font-weight: 600; }
     .dia-answer-sub { font-size: 11px; color: var(--text-sub); text-align: center; }
 
-    /* Spinner */
-    .dia-spinner {
-      width: 32px; height: 32px;
-      border: 3px solid var(--border);
-      border-top-color: var(--primary);
-      border-radius: 50%;
-      animation: ds-spin .7s linear infinite;
-    }
-
     /* Results */
     .dia-results-header {
       display: flex; align-items: center; gap: 32px;
