@@ -121,7 +121,20 @@ def signup(request: Request, payload: SignupPayload, background: BackgroundTasks
     else:
         background.add_task(_send_welcome, payload.email, payload.full_name, payload.organization_name)
 
-    return {"status": "ok", "user_id": getattr(res.user, "id", None)}
+    # Si Supabase a retourné une session, la confirmation email est désactivée
+    # → on peut connecter l'utilisateur immédiatement sans vérification.
+    # Si session est None → confirmation requise, le compte est en attente.
+    session = res.session
+    access_token  = getattr(session, "access_token",  None) if session else None
+    refresh_token = getattr(session, "refresh_token", None) if session else None
+
+    return {
+        "status":                "ok",
+        "user_id":               getattr(res.user, "id", None),
+        "confirmation_required": access_token is None,
+        "access_token":          access_token,
+        "refresh_token":         refresh_token,
+    }
 
 
 def _send_welcome(email: str, full_name: str, org_name: str) -> None:

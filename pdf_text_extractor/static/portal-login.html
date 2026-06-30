@@ -21,6 +21,10 @@
     /* ── Colonne gauche — branding ──────────────────────────────────────── */
     .pl-brand {
       background: linear-gradient(155deg, #1e1b4b 0%, #312e81 45%, #4c1d95 100%);
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,.055) 1px, transparent 1px),
+        linear-gradient(155deg, #1e1b4b 0%, #312e81 45%, #4c1d95 100%);
+      background-size: 28px 28px, 100% 100%;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -33,16 +37,16 @@
       content: '';
       position: absolute;
       top: -80px; right: -80px;
-      width: 340px; height: 340px;
-      background: radial-gradient(circle, rgba(139,92,246,.25) 0%, transparent 70%);
+      width: 380px; height: 380px;
+      background: radial-gradient(circle, rgba(139,92,246,.28) 0%, transparent 70%);
       pointer-events: none;
     }
     .pl-brand::after {
       content: '';
       position: absolute;
       bottom: -60px; left: -40px;
-      width: 260px; height: 260px;
-      background: radial-gradient(circle, rgba(99,102,241,.2) 0%, transparent 70%);
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, rgba(99,102,241,.22) 0%, transparent 70%);
       pointer-events: none;
     }
 
@@ -54,12 +58,22 @@
       gap: 12px;
       margin-bottom: 52px;
     }
-    .pl-logo-img { height: 32px; width: auto; filter: brightness(0) invert(1); }
+    .pl-logo-img { height: 30px; width: auto; filter: brightness(0) invert(1); }
+    .pl-logo-text { line-height: 1.2; }
     .pl-logo-name {
-      font-size: 16px;
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: 800;
       color: white;
-      letter-spacing: -.01em;
+      letter-spacing: -.02em;
+      display: block;
+    }
+    .pl-logo-product {
+      font-size: 11px;
+      font-weight: 500;
+      color: rgba(255,255,255,.5);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      display: block;
     }
 
     .pl-tagline {
@@ -120,11 +134,34 @@
     .pl-partner-badge-text { font-size: 12px; color: rgba(255,255,255,.7); line-height: 1.4; }
     .pl-partner-badge-name { font-weight: 700; color: white; font-size: 13px; }
 
+    /* ── Indicateurs de confiance ───────────────────────────────────────── */
+    .pl-trust {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 28px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(255,255,255,.1);
+    }
+    .pl-trust li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: rgba(255,255,255,.65);
+    }
+    .pl-trust li span.pl-trust-icon { font-size: 14px; flex-shrink: 0; }
+
     .pl-brand-footer {
       position: relative; z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
       font-size: 11px;
-      color: rgba(255,255,255,.35);
+      color: rgba(255,255,255,.3);
     }
+    .pl-brand-footer strong { color: rgba(255,255,255,.5); font-weight: 600; }
 
     /* ── Colonne droite — formulaire ────────────────────────────────────── */
     .pl-form-col {
@@ -132,7 +169,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 48px 32px;
+      padding: 32px;
+      min-height: 100dvh;
     }
 
     .pl-form-wrap {
@@ -250,11 +288,32 @@
     .pl-divider::after  { right: 0; }
 
     /* État succès inscription */
-    .pl-success { display: none; text-align: center; padding: 24px 0; }
+    .pl-success { display: none; text-align: center; padding: 16px 0; }
     .pl-success.visible { display: block; }
-    .pl-success-icon { font-size: 44px; margin-bottom: 16px; }
-    .pl-success-title { font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
-    .pl-success-desc { font-size: 13px; color: var(--text-sub); line-height: 1.6; margin-bottom: 20px; }
+    .pl-success-icon { font-size: 44px; margin-bottom: 14px; }
+    .pl-success-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--color-ok-bg); color: var(--color-ok-text);
+      font-size: 12px; font-weight: 700; padding: 4px 12px;
+      border-radius: var(--r-pill); margin-bottom: 14px;
+    }
+    .pl-success-title { font-size: 20px; font-weight: 800; color: var(--text); margin-bottom: 8px; letter-spacing: -.02em; }
+    .pl-success-desc { font-size: 13px; color: var(--text-sub); line-height: 1.6; margin-bottom: 8px; }
+    .pl-success-email {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 8px 14px;
+      font-size: 13px; font-weight: 600; color: var(--text);
+      margin: 8px 0 20px;
+    }
+    .pl-success-actions { display: flex; flex-direction: column; gap: 10px; }
+    .pl-gmail-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 10px 20px; border-radius: var(--r); font-size: 13px; font-weight: 600;
+      text-decoration: none; background: #EA4335; color: white; cursor: pointer; border: none;
+      transition: opacity .15s;
+    }
+    .pl-gmail-btn:hover { opacity: .88; }
 
     /* Spinner bouton */
     .pl-btn-spinner {
@@ -284,18 +343,27 @@
   <div class="pl-brand">
     <div class="pl-brand-top">
       <div class="pl-logo-row">
-        <img src="/static/logo.svg" alt="AgentHub" class="pl-logo-img">
-        <span class="pl-logo-name">AgentHub Platform</span>
+        <img src="/static/logo.svg" alt="CivicAI" class="pl-logo-img">
+        <div class="pl-logo-text">
+          <span class="pl-logo-name">CivicAI</span>
+          <span class="pl-logo-product">AgentHub Platform</span>
+        </div>
       </div>
 
       <div class="pl-tagline">Le système d'exploitation de <em>l'intelligence</em> d'entreprise</div>
-      <p class="pl-sub">Mesurez votre maturité IA, gouvernez vos données et amplifiez votre organisation avec ATLAS.</p>
+      <p class="pl-sub">Évaluez votre maturité IA, gouvernez votre organisation et accélérez votre transformation numérique.</p>
 
       <ul class="pl-features">
-        <li><span class="pl-check">✓</span>Diagnostic IA IMAI</li>
+        <li><span class="pl-check">✓</span>Diagnostic de maturité IA</li>
         <li><span class="pl-check">✓</span>Gouvernance &amp; Loi 25</li>
         <li><span class="pl-check">✓</span>ATLAS AI — votre conseiller</li>
         <li><span class="pl-check">✓</span>Rapports &amp; Observatoire</li>
+      </ul>
+
+      <ul class="pl-trust">
+        <li><span class="pl-trust-icon">🔒</span>Hébergement Canada</li>
+        <li><span class="pl-trust-icon">🛡️</span>Conforme Loi 25</li>
+        <li><span class="pl-trust-icon">🔐</span>Données confidentielles</li>
       </ul>
 
       <div class="pl-partner-badge" id="pl-partner-badge">
@@ -307,7 +375,11 @@
       </div>
     </div>
 
-    <div class="pl-brand-footer">© 2026 CivicAI Inc. · AgentHub Platform</div>
+    <div class="pl-brand-footer">
+      <span>© 2026 CivicAI Inc.</span>
+      <span>·</span>
+      <span>Propulsé par <strong>ATLAS AI</strong></span>
+    </div>
   </div>
 
   <!-- ── Colonne droite : formulaire ────────────────────────────────────── -->
@@ -403,15 +475,24 @@
           <div id="signup-error"   class="ds-alert ds-alert-err" style="margin-bottom:16px;display:none"></div>
 
           <div id="signup-success" class="pl-success">
-            <div class="pl-success-icon">✉️</div>
+            <div class="pl-success-icon">📧</div>
+            <div class="pl-success-badge">✓ Compte créé avec succès</div>
             <div class="pl-success-title">Vérifiez votre courriel</div>
-            <p class="pl-success-desc">
-              Un lien de confirmation a été envoyé à <strong id="signup-email-sent"></strong>.<br>
-              Cliquez sur le lien pour activer votre compte, puis connectez-vous.
-            </p>
-            <button class="ds-btn ds-btn-outline" onclick="switchTab('login')">
-              Aller à la connexion →
-            </button>
+            <p class="pl-success-desc">Nous avons envoyé un lien de confirmation à :</p>
+            <div class="pl-success-email">
+              <span>✉️</span>
+              <span id="signup-email-sent"></span>
+            </div>
+            <p class="pl-success-desc">Cliquez sur le lien reçu pour activer votre compte.</p>
+            <div class="pl-success-actions">
+              <a class="pl-gmail-btn" id="btn-open-gmail" href="https://mail.google.com" target="_blank">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6ZM20 6L12 13L4 6H20ZM20 18H4V8L12 15L20 8V18Z" fill="white"/></svg>
+                Ouvrir Gmail
+              </a>
+              <button class="ds-btn ds-btn-outline" onclick="switchTab('login')">
+                Retour à la connexion →
+              </button>
+            </div>
           </div>
 
           <form id="signup-form" onsubmit="handleSignup(event)">
