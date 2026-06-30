@@ -73,7 +73,6 @@ export default {
 
   mount(container, context) {
     _reset(context.partnerSlug, context);
-    container.style.setProperty("--dia-primary", context.partner?.primary_color || "#2563eb");
     _injectStyles();
     _render(container);            // shows loading spinner immediately
     _loadHistory(container);       // async: transitions to history or welcome
@@ -411,8 +410,8 @@ function _showCalculating(container) {
       <div class="dia-card" style="text-align:center;padding:48px 24px">
         <div style="font-size:48px;margin-bottom:16px">🧮</div>
         <div class="dia-spinner" style="margin:0 auto 16px"></div>
-        <p style="font-size:16px;font-weight:600;color:var(--dia-text)">Calcul de votre IMAI…</p>
-        <p style="font-size:14px;color:var(--dia-muted);margin-top:8px">
+        <p style="font-size:16px;font-weight:600;color:var(--text)">Calcul de votre IMAI…</p>
+        <p style="font-size:14px;color:var(--text-sub);margin-top:8px">
           Atlas analyse vos réponses et prépare vos recommandations.
         </p>
       </div>
@@ -435,8 +434,8 @@ function _showCalculatingError(container, msg) {
     <div class="dia-wrap">
       <div class="dia-card" style="text-align:center;padding:48px 24px;gap:16px">
         <div style="font-size:40px">⚠️</div>
-        <p style="font-size:15px;font-weight:600;color:var(--dia-text)">Une erreur est survenue</p>
-        <p style="font-size:13px;color:var(--dia-muted)">${msg || "Impossible de finaliser le parcours."}</p>
+        <p style="font-size:15px;font-weight:600;color:var(--text)">Une erreur est survenue</p>
+        <p style="font-size:13px;color:var(--text-sub)">${msg || "Impossible de finaliser le parcours."}</p>
         <button class="dia-btn-primary" id="dia-retry-btn">Réessayer</button>
       </div>
     </div>`;
@@ -664,16 +663,6 @@ function _injectStyles() {
 
   const style = document.createElement("style");
   style.textContent = `
-    :root {
-      --dia-primary: #2563eb;
-      --dia-text:    #111827;
-      --dia-muted:   #6b7280;
-      --dia-bg:      #f9fafb;
-      --dia-card:    #ffffff;
-      --dia-border:  #e5e7eb;
-      --dia-radius:  12px;
-    }
-
     .dia-wrap {
       max-width: 680px;
       margin: 0 auto;
@@ -683,9 +672,9 @@ function _injectStyles() {
     .dia-results-wrap { max-width: 720px; }
 
     .dia-card {
-      background: var(--dia-card);
-      border: 1px solid var(--dia-border);
-      border-radius: var(--dia-radius);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
       padding: 28px 24px;
       display: flex;
       flex-direction: column;
@@ -696,7 +685,7 @@ function _injectStyles() {
     .dia-atlas-avatar {
       font-size: 40px;
       width: 56px; height: 56px;
-      background: linear-gradient(135deg, var(--dia-primary), color-mix(in srgb, var(--dia-primary) 60%, #000));
+      background: linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--primary) 60%, #000));
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
@@ -704,8 +693,8 @@ function _injectStyles() {
     .dia-atlas-avatar.small { font-size: 22px; width: 36px; height: 36px; }
 
     .dia-atlas-bubble {
-      background: #f0f9ff;
-      border: 1px solid #bae6fd;
+      background: var(--color-info-soft);
+      border: 1px solid var(--color-info-border);
       border-radius: 0 12px 12px 12px;
       padding: 16px 18px;
       display: flex; flex-direction: column; gap: 8px;
@@ -714,17 +703,17 @@ function _injectStyles() {
     .dia-atlas-name {
       font-size: 12px; font-weight: 700;
       text-transform: uppercase; letter-spacing: .06em;
-      color: var(--dia-primary);
+      color: var(--primary);
     }
 
-    .dia-atlas-bubble p { font-size: 15px; line-height: 1.6; color: var(--dia-text); }
+    .dia-atlas-bubble p { font-size: 15px; line-height: 1.6; color: var(--text); }
 
     /* Welcome */
     .dia-welcome-card { align-items: center; text-align: center; }
 
     .dia-value-prop {
-      background: #f0f9ff;
-      border: 1px solid #bae6fd;
+      background: var(--color-info-soft);
+      border: 1px solid var(--color-info-border);
       border-radius: 8px;
       padding: 14px 16px;
       text-align: left;
@@ -734,7 +723,7 @@ function _injectStyles() {
     .dia-vp-label {
       font-size: 13px;
       font-weight: 600;
-      color: var(--dia-text);
+      color: var(--text);
       margin-bottom: 8px;
     }
 
@@ -746,23 +735,23 @@ function _injectStyles() {
       margin-bottom: 10px;
     }
 
-    .dia-vp-list li { font-size: 13px; color: #0369a1; }
+    .dia-vp-list li { font-size: 13px; color: var(--color-info-text); }
 
-    .dia-vp-duration { font-size: 12px; color: var(--dia-muted); font-style: italic; }
+    .dia-vp-duration { font-size: 12px; color: var(--text-sub); font-style: italic; }
 
     .dia-dimensions-preview {
       display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
     }
 
     .dia-dim-tag {
-      background: var(--dia-bg); border: 1px solid var(--dia-border);
+      background: var(--bg); border: 1px solid var(--border);
       border-radius: 20px; padding: 4px 12px;
-      font-size: 13px; color: var(--dia-muted);
+      font-size: 13px; color: var(--text-sub);
     }
 
     /* Buttons */
     .dia-btn-primary {
-      background: var(--dia-primary); color: #fff;
+      background: var(--primary); color: #fff;
       border: none; border-radius: 8px;
       padding: 13px 28px; font-size: 15px; font-weight: 600;
       cursor: pointer; transition: opacity .15s;
@@ -772,16 +761,16 @@ function _injectStyles() {
     .dia-btn-primary:disabled { opacity: .6; cursor: default; }
 
     .dia-btn-secondary {
-      background: transparent; color: var(--dia-primary);
-      border: 1px solid var(--dia-primary); border-radius: 8px;
+      background: transparent; color: var(--primary);
+      border: 1px solid var(--primary); border-radius: 8px;
       padding: 10px 20px; font-size: 14px; font-weight: 600;
       cursor: pointer; transition: background .15s;
       white-space: nowrap;
     }
-    .dia-btn-secondary:hover { background: color-mix(in srgb, var(--dia-primary) 8%, transparent); }
+    .dia-btn-secondary:hover { background: color-mix(in srgb, var(--primary) 8%, transparent); }
 
     .dia-btn-ghost {
-      background: none; border: none; color: var(--dia-muted);
+      background: none; border: none; color: var(--text-sub);
       font-size: 14px; cursor: pointer; padding: 8px 0;
       text-decoration: underline;
     }
@@ -790,30 +779,30 @@ function _injectStyles() {
     .dia-form { display: flex; flex-direction: column; gap: 16px; }
     .dia-field { display: flex; flex-direction: column; gap: 6px; }
     .dia-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .dia-field label { font-size: 14px; font-weight: 500; color: var(--dia-text); }
-    .dia-req { color: #ef4444; }
+    .dia-field label { font-size: 14px; font-weight: 500; color: var(--text); }
+    .dia-req { color: var(--color-err); }
     .dia-field input, .dia-field select {
-      border: 1px solid var(--dia-border); border-radius: 8px;
+      border: 1px solid var(--border); border-radius: 8px;
       padding: 10px 12px; font-size: 14px;
       transition: border-color .15s;
     }
     .dia-field input:focus, .dia-field select:focus {
-      outline: none; border-color: var(--dia-primary);
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--dia-primary) 15%, transparent);
+      outline: none; border-color: var(--primary);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 15%, transparent);
     }
     .dia-error {
-      color: #ef4444; font-size: 13px;
-      background: #fef2f2; border: 1px solid #fca5a5;
+      color: var(--color-err); font-size: 13px;
+      background: var(--color-err-soft); border: 1px solid var(--color-err-border);
       border-radius: 6px; padding: 8px 12px;
     }
 
     /* Progress */
     .dia-progress-bar-wrap {
-      height: 4px; background: var(--dia-border);
+      height: 4px; background: var(--border);
       border-radius: 2px; margin-bottom: 10px; overflow: hidden;
     }
     .dia-progress-bar {
-      height: 100%; background: var(--dia-primary);
+      height: 100%; background: var(--primary);
       border-radius: 2px; transition: width .4s ease;
     }
     .dia-progress-label {
@@ -821,54 +810,53 @@ function _injectStyles() {
       align-items: center; margin-bottom: 16px;
     }
     .dia-dim-chip {
-      background: color-mix(in srgb, var(--dia-primary) 12%, transparent);
-      color: var(--dia-primary); border-radius: 20px;
+      background: color-mix(in srgb, var(--primary) 12%, transparent);
+      color: var(--primary); border-radius: 20px;
       padding: 3px 12px; font-size: 12px; font-weight: 600;
     }
-    .dia-progress-count { font-size: 13px; color: var(--dia-muted); }
+    .dia-progress-count { font-size: 13px; color: var(--text-sub); }
 
     /* Question */
     .dia-question-card { gap: 16px; }
     .dia-q-text { font-size: 17px; line-height: 1.6; font-weight: 500; }
-    .dia-q-hint { font-size: 13px; color: var(--dia-muted); font-style: italic; margin-top: 2px; }
+    .dia-q-hint { font-size: 13px; color: var(--text-sub); font-style: italic; margin-top: 2px; }
 
     .dia-answer-btns {
       display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
     }
     .dia-answer-btn {
       display: flex; flex-direction: column; align-items: center; gap: 6px;
-      padding: 16px 8px; border: 2px solid var(--dia-border);
-      border-radius: 10px; background: var(--dia-card);
+      padding: 16px 8px; border: 2px solid var(--border);
+      border-radius: 10px; background: var(--card);
       cursor: pointer; transition: border-color .15s, background .15s;
     }
     .dia-answer-btn:hover:not(:disabled) {
-      border-color: var(--dia-primary);
-      background: color-mix(in srgb, var(--dia-primary) 5%, transparent);
+      border-color: var(--primary);
+      background: color-mix(in srgb, var(--primary) 5%, transparent);
     }
     .dia-answer-btn.selected {
-      border-color: var(--dia-primary);
-      background: color-mix(in srgb, var(--dia-primary) 10%, transparent);
+      border-color: var(--primary);
+      background: color-mix(in srgb, var(--primary) 10%, transparent);
     }
     .dia-answer-btn:disabled { opacity: .7; cursor: default; }
     .dia-answer-icon { font-size: 24px; }
     .dia-answer-label { font-size: 14px; font-weight: 600; }
-    .dia-answer-sub { font-size: 11px; color: var(--dia-muted); text-align: center; }
+    .dia-answer-sub { font-size: 11px; color: var(--text-sub); text-align: center; }
 
     /* Spinner */
     .dia-spinner {
       width: 32px; height: 32px;
-      border: 3px solid var(--dia-border);
-      border-top-color: var(--dia-primary);
+      border: 3px solid var(--border);
+      border-top-color: var(--primary);
       border-radius: 50%;
-      animation: dia-spin .7s linear infinite;
+      animation: ds-spin .7s linear infinite;
     }
-    @keyframes dia-spin { to { transform: rotate(360deg); } }
 
     /* Results */
     .dia-results-header {
       display: flex; align-items: center; gap: 32px;
-      background: var(--dia-card); border: 1px solid var(--dia-border);
-      border-radius: var(--dia-radius); padding: 28px 24px; margin-bottom: 16px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r-lg); padding: 28px 24px; margin-bottom: 16px;
     }
 
     .dia-gauge-wrap { position: relative; flex-shrink: 0; width: 120px; }
@@ -878,18 +866,18 @@ function _injectStyles() {
       transform: translateX(-50%);
       font-size: 28px; font-weight: 800; letter-spacing: -1px;
     }
-    .dia-gauge-score span { font-size: 14px; font-weight: 500; color: var(--dia-muted); }
+    .dia-gauge-score span { font-size: 14px; font-weight: 500; color: var(--text-sub); }
 
     .dia-niveau-badge {
       display: inline-block; padding: 5px 16px;
       border-radius: 20px; font-size: 14px; font-weight: 700;
       margin-bottom: 8px;
     }
-    .dia-niveau-desc { font-size: 14px; color: var(--dia-muted); line-height: 1.5; }
+    .dia-niveau-desc { font-size: 14px; color: var(--text-sub); line-height: 1.5; }
 
     .dia-section {
-      background: var(--dia-card); border: 1px solid var(--dia-border);
-      border-radius: var(--dia-radius); padding: 24px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r-lg); padding: 24px;
       margin-bottom: 16px;
     }
     .dia-section h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
@@ -898,9 +886,9 @@ function _injectStyles() {
     .dia-dim-row {
       display: flex; align-items: center; gap: 12px; margin-bottom: 10px;
     }
-    .dia-dim-name { font-size: 13px; color: var(--dia-muted); min-width: 100px; }
+    .dia-dim-name { font-size: 13px; color: var(--text-sub); min-width: 100px; }
     .dia-dim-bar-wrap {
-      flex: 1; height: 8px; background: var(--dia-bg);
+      flex: 1; height: 8px; background: var(--bg);
       border-radius: 4px; overflow: hidden;
     }
     .dia-dim-bar { height: 100%; border-radius: 4px; transition: width .8s ease; }
@@ -913,47 +901,47 @@ function _injectStyles() {
     .dia-bench-item {
       display: flex; flex-direction: column; align-items: center; gap: 4px;
       flex: 1; min-width: 72px;
-      background: var(--dia-bg); border-radius: 8px; padding: 12px 8px;
+      background: var(--bg); border-radius: 8px; padding: 12px 8px;
     }
     .dia-bench-item.highlight {
-      background: color-mix(in srgb, var(--bench-color, #2563eb) 12%, transparent);
-      border: 1px solid var(--bench-color, #2563eb);
+      background: color-mix(in srgb, var(--bench-color, var(--primary)) 12%, transparent);
+      border: 1px solid var(--bench-color, var(--primary));
     }
     .dia-bench-val { font-size: 22px; font-weight: 700; }
-    .dia-bench-label { font-size: 11px; color: var(--dia-muted); text-align: center; }
+    .dia-bench-label { font-size: 11px; color: var(--text-sub); text-align: center; }
     .dia-demo-badge {
       display: inline-block; font-size: 10px; font-weight: 700;
-      background: #fef3c7; color: #92400e; padding: 1px 8px;
+      background: var(--color-warn-bg); color: var(--color-warn-on); padding: 1px 8px;
       border-radius: 4px; margin-left: 8px; vertical-align: middle;
     }
-    .dia-sample { font-size: 12px; color: var(--dia-muted); margin-left: 8px; }
+    .dia-sample { font-size: 12px; color: var(--text-sub); margin-left: 8px; }
 
     /* Recommendations */
     .dia-rec {
       display: flex; gap: 16px; align-items: flex-start;
-      padding: 14px 0; border-bottom: 1px solid var(--dia-border);
+      padding: 14px 0; border-bottom: 1px solid var(--border);
     }
     .dia-rec:last-child { border-bottom: none; }
     .dia-rec-num {
       flex-shrink: 0; width: 28px; height: 28px;
-      background: var(--dia-primary); color: #fff;
+      background: var(--primary); color: #fff;
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
       font-size: 13px; font-weight: 700;
     }
     .dia-rec strong { font-size: 14px; display: block; margin-bottom: 4px; }
-    .dia-rec p { font-size: 14px; color: var(--dia-muted); line-height: 1.5; margin: 0; }
+    .dia-rec p { font-size: 14px; color: var(--text-sub); line-height: 1.5; margin: 0; }
 
     /* Email */
     .dia-email-form {
       display: flex; gap: 10px; margin-top: 12px;
     }
     .dia-email-form input {
-      flex: 1; border: 1px solid var(--dia-border); border-radius: 8px;
+      flex: 1; border: 1px solid var(--border); border-radius: 8px;
       padding: 10px 12px; font-size: 14px;
     }
     .dia-email-form input:focus {
-      outline: none; border-color: var(--dia-primary);
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--dia-primary) 15%, transparent);
+      outline: none; border-color: var(--primary);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 15%, transparent);
     }
 
     .dia-restart { text-align: center; padding-top: 8px; }
@@ -963,8 +951,8 @@ function _injectStyles() {
       display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;
     }
     .dia-hist-card {
-      background: var(--dia-card); border: 1px solid var(--dia-border);
-      border-radius: var(--dia-radius); padding: 16px 20px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r-lg); padding: 16px 20px;
       display: flex; align-items: center; gap: 16px;
     }
     .dia-hist-score {
@@ -973,26 +961,26 @@ function _injectStyles() {
     }
     .dia-hist-score small {
       display: block; font-size: 11px; font-weight: 500;
-      color: var(--dia-muted); margin-top: 1px;
+      color: var(--text-sub); margin-top: 1px;
     }
     .dia-hist-info { flex: 1; min-width: 0; }
     .dia-hist-company {
-      font-size: 14px; font-weight: 600; color: var(--dia-text);
+      font-size: 14px; font-weight: 600; color: var(--text);
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .dia-hist-meta { font-size: 12px; color: var(--dia-muted); margin-top: 3px; }
+    .dia-hist-meta { font-size: 12px; color: var(--text-sub); margin-top: 3px; }
     .dia-hist-niveau {
       display: inline-block; padding: 2px 9px; border-radius: 20px;
       font-size: 11px; font-weight: 700; margin-left: 6px;
     }
     .dia-hist-view {
-      font-size: 13px; font-weight: 600; color: var(--dia-primary);
-      background: none; border: 1px solid var(--dia-primary);
+      font-size: 13px; font-weight: 600; color: var(--primary);
+      background: none; border: 1px solid var(--primary);
       border-radius: 7px; padding: 6px 14px; cursor: pointer;
       flex-shrink: 0; white-space: nowrap; transition: background .12s;
     }
     .dia-hist-view:hover {
-      background: color-mix(in srgb, var(--dia-primary) 8%, transparent);
+      background: color-mix(in srgb, var(--primary) 8%, transparent);
     }
 
     /* Responsive */

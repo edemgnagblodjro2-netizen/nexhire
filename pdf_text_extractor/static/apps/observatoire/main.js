@@ -85,7 +85,7 @@ export default {
 
   mount(container, context) {
     _state = { partnerSlug: context.partnerSlug, context };
-    _injectStyles(context.partner?.primary_color || "#2563eb");
+    _injectStyles();
     _showSkeleton(container);
     _loadAndRender(container);
   },
@@ -120,7 +120,7 @@ function _renderAccessDenied(container) {
           L'accès est attribué par AgentHub lors de l'activation de votre compte.
         </p>
         <p class="obs-state-text" style="margin-top:8px;font-size:13px">
-          Besoin d'accès ? Contactez <a href="mailto:contact@nexhire.ca" style="color:var(--obs-primary)">contact@nexhire.ca</a>.
+          Besoin d'accès ? Contactez <a href="mailto:contact@nexhire.ca" style="color:var(--primary)">contact@nexhire.ca</a>.
         </p>
       </div>
     </div>`;
@@ -394,22 +394,12 @@ function _render(container, d) {
 }
 
 // ── Styles ────────────────────────────────────────────────────────────────────
-function _injectStyles(primaryColor) {
+function _injectStyles() {
   if (_styleInjected) return;
   _styleInjected = true;
 
   const style = document.createElement("style");
   style.textContent = `
-    :root {
-      --obs-primary: ${primaryColor};
-      --obs-text:    #111827;
-      --obs-muted:   #6b7280;
-      --obs-bg:      #f9fafb;
-      --obs-card:    #ffffff;
-      --obs-border:  #e5e7eb;
-      --obs-radius:  10px;
-    }
-
     .obs-wrap {
       max-width: 900px;
       margin: 0 auto;
@@ -431,13 +421,13 @@ function _injectStyles(primaryColor) {
     .obs-title {
       font-size: 22px;
       font-weight: 800;
-      color: var(--obs-text);
+      color: var(--text);
       margin-bottom: 4px;
     }
 
     .obs-subtitle {
       font-size: 13px;
-      color: var(--obs-muted);
+      color: var(--text-sub);
       max-width: 520px;
       line-height: 1.5;
     }
@@ -452,13 +442,13 @@ function _injectStyles(primaryColor) {
     .obs-demo-badge {
       font-size: 11px;
       font-weight: 700;
-      background: #fef3c7;
-      color: #92400e;
+      background: var(--color-warn-bg);
+      color: var(--color-warn-on);
       border-radius: 4px;
       padding: 3px 8px;
     }
 
-    .obs-updated { font-size: 12px; color: var(--obs-muted); }
+    .obs-updated { font-size: 12px; color: var(--text-sub); }
 
     /* Loading */
     .obs-loading {
@@ -468,18 +458,17 @@ function _injectStyles(primaryColor) {
       justify-content: center;
       padding: 64px 24px;
       gap: 12px;
-      color: var(--obs-muted);
+      color: var(--text-sub);
       font-size: 14px;
     }
 
     .obs-spinner {
       width: 32px; height: 32px;
-      border: 3px solid var(--obs-border);
-      border-top-color: var(--obs-primary);
+      border: 3px solid var(--border);
+      border-top-color: var(--primary);
       border-radius: 50%;
-      animation: obs-spin .7s linear infinite;
+      animation: ds-spin .7s linear infinite;
     }
-    @keyframes obs-spin { to { transform: rotate(360deg); } }
 
     /* KPI Grid */
     .obs-kpi-grid {
@@ -495,9 +484,9 @@ function _injectStyles(primaryColor) {
     }
 
     .obs-kpi-card {
-      background: var(--obs-card);
-      border: 1px solid var(--obs-border);
-      border-radius: var(--obs-radius);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
       padding: 20px 18px;
       display: flex;
       flex-direction: column;
@@ -505,15 +494,15 @@ function _injectStyles(primaryColor) {
     }
 
     .obs-kpi-accent {
-      border-color: color-mix(in srgb, var(--accent, var(--obs-primary)) 30%, transparent);
-      background: color-mix(in srgb, var(--accent, var(--obs-primary)) 5%, white);
+      border-color: color-mix(in srgb, var(--accent, var(--primary)) 30%, transparent);
+      background: color-mix(in srgb, var(--accent, var(--primary)) 5%, white);
     }
 
     .obs-kpi-icon { font-size: 22px; margin-bottom: 6px; }
-    .obs-kpi-value { font-size: 32px; font-weight: 800; line-height: 1; color: var(--obs-text); }
-    .obs-kpi-unit  { font-size: 16px; font-weight: 500; color: var(--obs-muted); }
-    .obs-kpi-label { font-size: 13px; font-weight: 600; color: var(--obs-text); margin-top: 4px; }
-    .obs-kpi-sub   { font-size: 12px; color: var(--obs-muted); }
+    .obs-kpi-value { font-size: 32px; font-weight: 800; line-height: 1; color: var(--text); }
+    .obs-kpi-unit  { font-size: 16px; font-weight: 500; color: var(--text-sub); }
+    .obs-kpi-label { font-size: 13px; font-weight: 600; color: var(--text); margin-top: 4px; }
+    .obs-kpi-sub   { font-size: 12px; color: var(--text-sub); }
 
     /* KPI secondaires */
     .obs-kpi-sm {
@@ -524,22 +513,22 @@ function _injectStyles(primaryColor) {
     }
 
     .obs-kpi-sm-icon { font-size: 24px; flex-shrink: 0; }
-    .obs-kpi-sm-label { font-size: 11px; color: var(--obs-muted); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
-    .obs-kpi-sm-value { font-size: 18px; font-weight: 700; color: var(--obs-text); margin-top: 2px; }
-    .obs-kpi-sm-sub   { font-size: 13px; font-weight: 400; color: var(--obs-muted); }
+    .obs-kpi-sm-label { font-size: 11px; color: var(--text-sub); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+    .obs-kpi-sm-value { font-size: 18px; font-weight: 700; color: var(--text); margin-top: 2px; }
+    .obs-kpi-sm-sub   { font-size: 13px; font-weight: 400; color: var(--text-sub); }
 
     /* Sections */
     .obs-section {
-      background: var(--obs-card);
-      border: 1px solid var(--obs-border);
-      border-radius: var(--obs-radius);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
       padding: 20px 24px;
     }
 
     .obs-section h3 {
       font-size: 13px;
       font-weight: 700;
-      color: var(--obs-text);
+      color: var(--text);
       margin-bottom: 14px;
       text-transform: uppercase;
       letter-spacing: .05em;
@@ -548,9 +537,9 @@ function _injectStyles(primaryColor) {
     /* Insights IA */
     .obs-insights-section {
       background: linear-gradient(135deg,
-        color-mix(in srgb, var(--obs-primary) 6%, white),
-        color-mix(in srgb, var(--obs-primary) 3%, white));
-      border-color: color-mix(in srgb, var(--obs-primary) 20%, transparent);
+        color-mix(in srgb, var(--primary) 6%, white),
+        color-mix(in srgb, var(--primary) 3%, white));
+      border-color: color-mix(in srgb, var(--primary) 20%, transparent);
     }
 
     .obs-insights-header {
@@ -563,13 +552,13 @@ function _injectStyles(primaryColor) {
     .obs-insights-badge {
       font-size: 12px;
       font-weight: 700;
-      background: var(--obs-primary);
+      background: var(--primary);
       color: #fff;
       border-radius: 4px;
       padding: 3px 10px;
     }
 
-    .obs-insights-sub { font-size: 12px; color: var(--obs-muted); }
+    .obs-insights-sub { font-size: 12px; color: var(--text-sub); }
 
     .obs-insights-list { display: flex; flex-direction: column; gap: 10px; }
 
@@ -581,7 +570,7 @@ function _injectStyles(primaryColor) {
 
     .obs-insight-dot {
       width: 6px; height: 6px;
-      background: var(--obs-primary);
+      background: var(--primary);
       border-radius: 50%;
       margin-top: 7px;
       flex-shrink: 0;
@@ -589,7 +578,7 @@ function _injectStyles(primaryColor) {
 
     .obs-insight-item p {
       font-size: 14px;
-      color: var(--obs-text);
+      color: var(--text);
       line-height: 1.5;
       margin: 0;
     }
@@ -604,9 +593,9 @@ function _injectStyles(primaryColor) {
     }
 
     .obs-stacked-seg { height: 100%; transition: width .6s ease; }
-    .obs-seg-deb { background: #ef4444; }
-    .obs-seg-int { background: #f59e0b; }
-    .obs-seg-adv { background: #10b981; }
+    .obs-seg-deb { background: var(--color-err); }
+    .obs-seg-int { background: var(--color-warn); }
+    .obs-seg-adv { background: var(--color-ok); }
 
     .obs-niveau-legend { display: flex; gap: 20px; flex-wrap: wrap; }
 
@@ -615,7 +604,7 @@ function _injectStyles(primaryColor) {
       align-items: center;
       gap: 6px;
       font-size: 13px;
-      color: var(--obs-text);
+      color: var(--text);
     }
 
     .obs-niv-dot {
@@ -624,7 +613,7 @@ function _injectStyles(primaryColor) {
       flex-shrink: 0;
     }
 
-    .obs-niv-count { font-size: 12px; color: var(--obs-muted); margin-left: 2px; }
+    .obs-niv-count { font-size: 12px; color: var(--text-sub); margin-left: 2px; }
 
     /* Two-col */
     .obs-two-col {
@@ -640,7 +629,7 @@ function _injectStyles(primaryColor) {
 
     .obs-bar-label {
       font-size: 12px;
-      color: var(--obs-text);
+      color: var(--text);
       min-width: 130px;
       max-width: 130px;
       overflow: hidden;
@@ -650,83 +639,83 @@ function _injectStyles(primaryColor) {
 
     .obs-bar-track {
       flex: 1; height: 10px;
-      background: var(--obs-bg);
+      background: var(--bg);
       border-radius: 5px; overflow: hidden;
-      border: 1px solid var(--obs-border);
+      border: 1px solid var(--border);
     }
 
     .obs-bar-fill {
       height: 100%;
-      background: var(--obs-primary);
+      background: var(--primary);
       border-radius: 5px;
       transition: width .6s ease;
     }
 
-    .obs-bar-val { font-size: 12px; font-weight: 600; min-width: 52px; text-align: right; color: var(--obs-text); }
-    .obs-bar-pct { font-weight: 400; color: var(--obs-muted); }
+    .obs-bar-val { font-size: 12px; font-weight: 600; min-width: 52px; text-align: right; color: var(--text); }
+    .obs-bar-pct { font-weight: 400; color: var(--text-sub); }
 
     /* Challenges */
     .obs-challenges { display: flex; flex-direction: column; gap: 8px; }
 
     .obs-ch-row {
       display: flex; align-items: center; gap: 10px;
-      padding: 8px 10px; background: var(--obs-bg); border-radius: 6px;
+      padding: 8px 10px; background: var(--bg); border-radius: 6px;
     }
 
     .obs-ch-rank {
       width: 20px; height: 20px;
-      background: var(--obs-primary);
+      background: var(--primary);
       color: #fff; border-radius: 50%;
       font-size: 11px; font-weight: 700;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
 
-    .obs-ch-label { font-size: 12px; color: var(--obs-text); flex: 1; line-height: 1.3; }
-    .obs-ch-count { font-size: 12px; font-weight: 700; color: var(--obs-muted); flex-shrink: 0; }
+    .obs-ch-label { font-size: 12px; color: var(--text); flex: 1; line-height: 1.3; }
+    .obs-ch-count { font-size: 12px; font-weight: 700; color: var(--text-sub); flex-shrink: 0; }
 
-    .obs-no-data { font-size: 13px; color: var(--obs-muted); font-style: italic; }
+    .obs-no-data { font-size: 13px; color: var(--text-sub); font-style: italic; }
 
     /* Dimension bars */
     .obs-dims { display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
 
     .obs-dim-row { display: flex; align-items: center; gap: 12px; }
 
-    .obs-dim-label { font-size: 13px; color: var(--obs-muted); min-width: 100px; }
+    .obs-dim-label { font-size: 13px; color: var(--text-sub); min-width: 100px; }
 
     .obs-dim-track {
-      flex: 1; height: 10px; background: var(--obs-bg);
-      border-radius: 5px; overflow: hidden; border: 1px solid var(--obs-border);
+      flex: 1; height: 10px; background: var(--bg);
+      border-radius: 5px; overflow: hidden; border: 1px solid var(--border);
     }
 
     .obs-dim-bar { height: 100%; border-radius: 5px; transition: width .8s ease; }
     .obs-dim-val { font-size: 13px; font-weight: 700; min-width: 28px; text-align: right; }
 
-    .obs-dims-note { font-size: 11px; color: var(--obs-muted); font-style: italic; }
+    .obs-dims-note { font-size: 11px; color: var(--text-sub); font-style: italic; }
 
     /* Actions recommandées */
-    .obs-actions-intro { font-size: 13px; color: var(--obs-muted); margin-bottom: 14px; }
+    .obs-actions-intro { font-size: 13px; color: var(--text-sub); margin-bottom: 14px; }
 
     .obs-actions { display: flex; flex-direction: column; gap: 10px; }
 
     .obs-action-item {
       display: flex; gap: 14px; align-items: flex-start;
       padding: 12px 14px;
-      background: var(--obs-bg);
+      background: var(--bg);
       border-radius: 8px;
-      border-left: 3px solid var(--obs-primary);
+      border-left: 3px solid var(--primary);
     }
 
     .obs-action-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
 
     .obs-action-item strong { font-size: 14px; display: block; margin-bottom: 2px; }
-    .obs-action-item p      { font-size: 13px; color: var(--obs-muted); margin: 0; }
+    .obs-action-item p      { font-size: 13px; color: var(--text-sub); margin: 0; }
 
     /* Rapport CTA */
     .obs-report-card {
-      background: var(--obs-card);
-      border: 1px solid var(--obs-border);
-      border-radius: var(--obs-radius);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
       padding: 20px 24px;
       display: flex;
       align-items: center;
@@ -736,11 +725,11 @@ function _injectStyles(primaryColor) {
 
     .obs-report-text { flex: 1; min-width: 180px; }
     .obs-report-text strong { font-size: 14px; display: block; margin-bottom: 3px; }
-    .obs-report-text p      { font-size: 13px; color: var(--obs-muted); }
+    .obs-report-text p      { font-size: 13px; color: var(--text-sub); }
 
     .obs-report-btn {
       padding: 10px 20px;
-      background: var(--obs-primary);
+      background: var(--primary);
       color: #fff;
       border: none;
       border-radius: 8px;
@@ -767,12 +756,12 @@ function _injectStyles(primaryColor) {
       margin: 0 auto;
     }
     .obs-state-icon { font-size: 36px; margin-bottom: 4px; }
-    .obs-state-title { font-size: 18px; font-weight: 700; color: var(--obs-text); }
-    .obs-state-text { font-size: 14px; color: var(--obs-muted); line-height: 1.6; }
+    .obs-state-title { font-size: 18px; font-weight: 700; color: var(--text); }
+    .obs-state-text { font-size: 14px; color: var(--text-sub); line-height: 1.6; }
     .obs-retry-btn {
       margin-top: 12px;
       padding: 10px 22px;
-      background: var(--obs-primary);
+      background: var(--primary);
       color: #fff; border: none; border-radius: 8px;
       font-size: 13px; font-weight: 600; cursor: pointer;
       transition: opacity .15s;

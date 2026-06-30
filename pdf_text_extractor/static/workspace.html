@@ -6,27 +6,9 @@
   <meta name="robots" content="noindex, nofollow">
   <title>AgentHub Platform</title>
   <link rel="icon" href="/static/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/design-system.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --primary:       #6366f1;
-      --primary-dk:    #4f46e5;
-      --primary-lt:    #ede9fe;
-      --primary-a10:   color-mix(in srgb, #6366f1 10%, transparent);
-      --sidebar-w:     260px;
-      --topbar-h:      56px;
-      --text:          #0f172a;
-      --text-2:        #475569;
-      --muted:         #94a3b8;
-      --bg:            #f8fafc;
-      --card:          #ffffff;
-      --border:        #e2e8f0;
-      --radius:        8px;
-      --radius-lg:     12px;
-      --shadow-sm:     0 1px 3px rgba(0,0,0,.06);
-      --shadow:        0 4px 16px rgba(0,0,0,.08);
-    }
 
     html, body { height: 100%; }
 
@@ -286,10 +268,8 @@
       border: 2.5px solid var(--border);
       border-top-color: var(--primary);
       border-radius: 50%;
-      animation: spin .65s linear infinite;
+      animation: ds-spin .65s linear infinite;
     }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
 
     /* ── Toast ──────────────────────────────────────────────────────── */
     #ws-toast {
