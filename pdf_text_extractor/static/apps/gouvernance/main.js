@@ -135,12 +135,18 @@ function _render(el) {
     </div>
   </div>
 
-  <div class="gov-fw-picker">
-    <span class="gov-fw-label">Référentiel :</span>
-    ${Object.values(FRAMEWORKS).map(f => `
-      <button class="gov-fw-btn${_st.framework===f.id?' gov-fw-btn-a':''}" data-fw="${f.id}">${f.icon} ${f.label}</button>
-    `).join('')}
-  </div>
+  <details class="gov-fw-details"${_st.framework !== 'loi25' ? ' open' : ''}>
+    <summary class="gov-fw-summary">
+      <span class="gov-fw-active-name">${fw.icon} ${fw.label}</span>
+      <span class="gov-fw-change-btn">Changer</span>
+    </summary>
+    <div class="gov-fw-picker">
+      <span class="gov-fw-label">Référentiel :</span>
+      ${Object.values(FRAMEWORKS).map(f => `
+        <button class="gov-fw-btn${_st.framework===f.id?' gov-fw-btn-a':''}" data-fw="${f.id}">${f.icon} ${f.label}</button>
+      `).join('')}
+    </div>
+  </details>
 
   <div class="gov-tabs">
     <button class="gov-tab${_st.tab==='conformite'?' gov-tab-a':''}" data-tab="conformite">${fw.icon} Conformité ${fw.label}</button>
@@ -414,6 +420,12 @@ function _css() {
 .gov-fw-btn{background:var(--bg);border:1px solid var(--border);color:var(--text-2);border-radius:var(--r);padding:6px 12px;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .15s}
 .gov-fw-btn:hover{border-color:var(--primary);color:var(--primary)}
 .gov-fw-btn-a{background:var(--primary-lt);border-color:var(--primary);color:var(--primary);font-weight:600}
+.gov-fw-details{margin-bottom:16px}
+.gov-fw-summary{display:flex;align-items:center;gap:8px;cursor:pointer;list-style:none;width:fit-content;padding:3px 0}
+.gov-fw-summary::-webkit-details-marker{display:none}
+.gov-fw-active-name{font-size:13px;font-weight:600;color:var(--text-2)}
+.gov-fw-change-btn{font-size:11px;color:var(--primary);font-weight:600;background:var(--primary-lt);border-radius:var(--r-pill);padding:2px 9px}
+.gov-fw-details .gov-fw-picker{margin-top:10px}
 .gov-ring{position:relative;flex-shrink:0;text-align:center;width:88px}
 .gov-ring-val{position:absolute;top:24px;left:0;right:0;font-size:18px;font-weight:800}
 .gov-ring-lbl{position:absolute;bottom:8px;left:0;right:0;font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}

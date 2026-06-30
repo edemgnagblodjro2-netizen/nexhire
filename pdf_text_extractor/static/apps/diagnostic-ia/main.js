@@ -350,6 +350,10 @@ function _showQuestion(container) {
   const timeLeft  = Math.ceil(remaining * 0.5);
   const timeLabel = timeLeft <= 1 ? '< 1 min' : `~${timeLeft} min`;
 
+  const motivText = remaining <= 2 && remaining > 0
+    ? `<p class="dia-progress-motiv">Plus que ${remaining} question${remaining > 1 ? 's' : ''} — vous êtes presque au bout de votre diagnostic. 🎯</p>`
+    : '';
+
   container.innerHTML = `
     <div class="dia-wrap">
       <div class="dia-progress-hd">
@@ -364,6 +368,7 @@ function _showQuestion(container) {
           <span class="dia-progress-num">Question <strong>${_state.answeredCore + 1}</strong> sur ${_state.totalCore}</span>
           <span class="dia-progress-time">⏱ ${timeLabel} restante${timeLeft > 1 ? 's' : ''}</span>
         </div>
+        ${motivText}
       </div>
       <div class="dia-card dia-question-card">
         <div class="dia-atlas-avatar small">🤖</div>
@@ -591,7 +596,7 @@ function _showResults(container) {
         <p style="font-size:14px;color:var(--text-sub);margin-bottom:16px">Entrez votre courriel pour accéder à votre rapport personnalisé : forces, plan d'action 30/90/180 jours et recommandations ATLAS.</p>
         <form id="dia-email-form" class="dia-email-form" novalidate>
           <input id="dia-email-input" type="email" placeholder="votre@courriel.com" maxlength="254" required />
-          <button type="submit" class="dia-btn-primary">Accéder au rapport →</button>
+          <button type="submit" class="dia-btn-primary">Recevoir mon rapport personnalisé →</button>
         </form>
         <div id="dia-email-msg" style="display:none;margin-top:10px;font-size:13px"></div>
         <div id="dia-rapport-revealed" style="display:none;margin-top:16px">
@@ -628,7 +633,7 @@ function _showResults(container) {
       msg.textContent = "Erreur lors de l'envoi. Réessayez.";
       msg.style.display = "block";
       msg.style.color = "var(--color-err)";
-      btn.disabled = false; btn.textContent = "Accéder au rapport →";
+      btn.disabled = false; btn.textContent = "Recevoir mon rapport personnalisé →";
     }
   });
 
@@ -674,7 +679,7 @@ function _buildStepsHtml(weakestDim) {
         <div class="dia-step-icon">📄</div>
         <div class="dia-step-title">Accéder à votre rapport complet</div>
         <div class="dia-step-desc">Plan d'action 30/90/180 jours, forces, axes de progrès — votre feuille de route IA personnalisée par ATLAS.</div>
-        <button class="dia-step-btn dia-step-btn-outline" data-scroll="dia-gate-section">Déverrouiller le rapport →</button>
+        <button class="dia-step-btn dia-step-btn-outline" data-scroll="dia-gate-section">Recevoir mon rapport personnalisé →</button>
       </div>
     </div>`;
 }
@@ -932,6 +937,11 @@ function _injectStyles() {
     .dia-progress-num { font-size: 13px; color: var(--text-sub); }
     .dia-progress-num strong { color: var(--text); }
     .dia-progress-time { font-size: 12px; color: var(--primary); font-weight: 600; }
+    .dia-progress-motiv {
+      margin: 10px 0 0; font-size: 13px; font-weight: 600; color: var(--primary);
+      text-align: center; padding: 8px 14px; border-radius: var(--r);
+      background: color-mix(in srgb, var(--primary) 8%, transparent);
+    }
 
     /* Question */
     .dia-question-card { gap: 16px; }
