@@ -432,26 +432,6 @@ function _injectStyles() {
       gap: 16px;
     }
 
-    /* Loading */
-    .obs-loading {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 64px 24px;
-      gap: 12px;
-      color: var(--text-sub);
-      font-size: 14px;
-    }
-
-    .obs-spinner {
-      width: 32px; height: 32px;
-      border: 3px solid var(--border);
-      border-top-color: var(--primary);
-      border-radius: 50%;
-      animation: ds-spin .7s linear infinite;
-    }
-
     /* KPI Grid */
     .obs-kpi-grid {
       display: grid;
@@ -698,19 +678,7 @@ function _injectStyles() {
     .obs-action-card strong { font-size: 14px; font-weight: 700; color: var(--text); }
     .obs-action-card p { font-size: 13px; color: var(--text-sub); margin: 0; line-height: 1.5; }
 
-    /* (legacy selectors kept for compat) */
-    .obs-action-item {
-      display: flex; gap: 14px; align-items: flex-start;
-      padding: 12px 14px;
-      background: var(--bg);
-      border-radius: 8px;
-      border-left: 3px solid var(--primary);
-    }
-
-    .obs-action-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
-
-    .obs-action-item strong { font-size: 14px; display: block; margin-bottom: 2px; }
-    .obs-action-item p      { font-size: 13px; color: var(--text-sub); margin: 0; }
+    .obs-action-icon { font-size: 22px; flex-shrink: 0; }
 
     /* Rapport CTA */
     .obs-report-card {
