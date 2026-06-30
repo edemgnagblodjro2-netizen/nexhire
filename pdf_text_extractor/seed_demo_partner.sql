@@ -9,8 +9,8 @@ INSERT INTO partners (slug, name, hero_title, hero_subtitle, primary_color, plan
 VALUES (
   'demo',
   'CCI3R',
-  'Système d''exploitation IA',
-  'Mesurez · Gouvernez · Opérez · Amplifiez',
+  'AgentHub Platform',
+  'L''Enterprise Intelligence Platform propulsée par ATLAS AI.',
   '#7c3aed',   -- violet — distinct du bleu CCI3R pour reconnaître visuellement le mode démo
   'starter',
   true
@@ -24,8 +24,8 @@ ON CONFLICT (slug) DO UPDATE SET
 
 -- Mettre à jour cci3r également
 UPDATE partners SET
-  hero_title    = 'Système d''exploitation IA',
-  hero_subtitle = 'Mesurez · Gouvernez · Opérez · Amplifiez'
+  hero_title    = 'AgentHub Platform',
+  hero_subtitle = 'L''Enterprise Intelligence Platform propulsée par ATLAS AI.'
 WHERE slug = 'cci3r';
 
 -- 2. Enregistrer les apps Sprint 2 dans le catalogue (idempotent)
