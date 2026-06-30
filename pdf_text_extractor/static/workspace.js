@@ -81,6 +81,16 @@ const COMING_SOON = [
   { id: 'civicstore',  label: 'CivicAI Store',          iconKey: 'store'      },
 ];
 
+// ── Vocabulary adaptation par type de partenaire ─────────────────────────────
+const VOCAB = {
+  chamber:      { members: 'membres',  cohort: 'cohorte',    member: 'membre',   orgs: 'entreprises membres' },
+  incubator:    { members: 'startups', cohort: 'promotion',  member: 'startup',  orgs: 'startups en cohorte' },
+  association:  { members: 'membres',  cohort: 'cohorte',    member: 'membre',   orgs: 'membres participants' },
+  municipality: { members: 'services', cohort: 'programme',  member: 'service',  orgs: 'services participants' },
+  university:   { members: 'projets',  cohort: 'cohorte',    member: 'projet',   orgs: 'projets en cohorte' },
+  direct:       { members: 'équipes',  cohort: 'programme',  member: 'équipe',   orgs: 'équipes participantes' },
+};
+
 // ── State ─────────────────────────────────────────────────────────────────────
 const _state = {
   partner:    null,
@@ -88,6 +98,7 @@ const _state = {
   activeId:   null,
   activeApp:  null,
   module:     null,
+  vocab:      VOCAB.chamber,
 };
 
 const $ = (id) => document.getElementById(id);
@@ -111,6 +122,7 @@ async function boot() {
 
     _state.partner = await pRes.json();
     _state.dbApps  = (await aRes.json()).apps || [];
+    _state.vocab   = VOCAB[_state.partner.partner_type] || VOCAB.chamber;
 
     _applyBranding(_state.partner);
     _renderNav();
@@ -284,6 +296,7 @@ async function _navigateTo(navItem) {
       partnerSlug: _slug(),
       partner:     _state.partner,
       appConfig:   navItem.app?.config || {},
+      vocab:       _state.vocab,
       user:        null,
     };
 

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Mon espace IA</title>
+  <link rel="icon" href="/static/logo.svg" type="image/svg+xml">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --primary: #7c3aed; --primary-lt: #ede9fe; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8fafc; color: #0f172a; min-height: 100dvh; }
+
+    #org-topbar {
+      background: white; border-bottom: 1px solid #e2e8f0;
+      padding: 12px 24px; display: flex; align-items: center;
+      justify-content: space-between; gap: 16px; position: sticky; top: 0; z-index: 10;
+    }
+    #org-topbar-brand { display: flex; align-items: center; gap: 10px; }
+    #org-logo { height: 28px; width: auto; object-fit: contain; display: none; }
+    #org-partner-name { font-size: 13px; font-weight: 700; color: #0f172a; }
+    #org-powered { font-size: 11px; color: #94a3b8; }
+    .org-topbar-link { font-size: 12px; font-weight: 600; color: var(--primary); text-decoration: none; }
+    .org-topbar-link:hover { text-decoration: underline; }
+
+    #org-main { max-width: 900px; margin: 0 auto; padding: 32px 24px 64px; }
+
+    .org-hero {
+      background: linear-gradient(135deg, #faf5ff, #f5f3ff);
+      border: 1px solid #ddd6fe; border-radius: 20px;
+      padding: 32px; display: flex; gap: 24px;
+      align-items: center; margin-bottom: 28px; flex-wrap: wrap;
+    }
+    .org-hero-text { flex: 1; min-width: 200px; }
+    .org-hero-tag { font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .07em; color: var(--primary); margin-bottom: 6px; }
+    .org-hero-name { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
+    .org-hero-sub { font-size: 13px; color: #64748b; }
+    .org-score-ring { flex-shrink: 0; text-align: center; width: 100px; }
+    .org-score-val { font-size: 26px; font-weight: 900; margin-top: 4px; }
+    .org-score-lbl { font-size: 11px; color: #94a3b8; }
+    .org-niveau { display: inline-block; font-size: 12px; font-weight: 700;
+      padding: 3px 12px; border-radius: 99px; margin-top: 8px; }
+
+    .org-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
+    .org-card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; }
+    .org-card-title { font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 16px;
+      padding-bottom: 10px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 8px; }
+
+    .org-dim { display: flex; flex-direction: column; gap: 10px; }
+    .org-dim-row { display: flex; align-items: center; gap: 10px; }
+    .org-dim-label { font-size: 12px; color: #64748b; width: 100px; flex-shrink: 0; }
+    .org-dim-bar-wrap { flex: 1; background: #f1f5f9; border-radius: 99px; height: 8px; overflow: hidden; }
+    .org-dim-bar { height: 100%; border-radius: 99px; transition: width .5s ease; }
+    .org-dim-val { font-size: 12px; font-weight: 700; width: 36px; text-align: right; flex-shrink: 0; }
+
+    .org-reco { display: flex; flex-direction: column; gap: 10px; }
+    .org-reco-item { display: flex; gap: 10px; align-items: flex-start;
+      background: #f8fafc; border-radius: 10px; padding: 12px; }
+    .org-reco-num { width: 22px; height: 22px; border-radius: 50%; background: var(--primary-lt);
+      color: var(--primary); font-size: 11px; font-weight: 800; display: flex;
+      align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .org-reco-txt { font-size: 13px; color: #334155; line-height: 1.5; }
+
+    .org-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 28px; }
+    .org-action-card { background: white; border: 1.5px solid #e2e8f0; border-radius: 14px;
+      padding: 20px; display: flex; flex-direction: column; gap: 8px; text-decoration: none; transition: border-color .15s, box-shadow .15s; }
+    .org-action-card:hover { border-color: var(--primary); box-shadow: 0 4px 16px rgba(124,58,237,.1); }
+    .org-action-icon { font-size: 24px; }
+    .org-action-title { font-size: 13px; font-weight: 700; color: #0f172a; }
+    .org-action-desc { font-size: 12px; color: #94a3b8; line-height: 1.4; }
+    .org-action-cta { font-size: 12px; font-weight: 700; color: var(--primary); margin-top: auto; }
+
+    .org-state { display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-height: 60vh; gap: 12px; color: #94a3b8; text-align: center; }
+    .org-spinner { width: 28px; height: 28px; border: 2.5px solid #e2e8f0;
+      border-top-color: var(--primary); border-radius: 50%; animation: spin .65s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .org-footer { text-align: center; font-size: 11px; color: #cbd5e1; margin-top: 48px; }
+    .org-footer a { color: #94a3b8; text-decoration: none; }
+
+    @media(max-width:640px) {
+      #org-main { padding: 20px 16px 48px; }
+      .org-grid, .org-actions { grid-template-columns: 1fr; }
+      .org-hero { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<header id="org-topbar">
+  <div id="org-topbar-brand">
+    <img id="org-logo" alt="Logo partenaire">
+    <div>
+      <div id="org-partner-name">AgentHub</div>
+      <div id="org-powered">Votre espace IA personnel</div>
+    </div>
+  </div>
+  <a id="org-workspace-link" href="#" class="org-topbar-link">← Retour au programme</a>
+</header>
+
+<main id="org-main">
+  <div class="org-state" id="org-loading">
+    <div class="org-spinner"></div>
+    <span>Chargement de votre espace…</span>
+  </div>
+  <div id="org-content" style="display:none"></div>
+</main>
+
+<script type="module" src="/static/org.js"></script>
+</body>
+</html>

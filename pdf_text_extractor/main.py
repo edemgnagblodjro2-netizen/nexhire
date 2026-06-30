@@ -137,6 +137,7 @@ from routes_knowledge              import router as knowledge_router
 from routes_workspace              import router as workspace_router
 from routes_diagnostic             import router as diagnostic_router
 from routes_rapport                import router as rapport_router
+from routes_org                    import router as org_router
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -234,6 +235,7 @@ def create_app(
     app.include_router(workspace_router)
     app.include_router(diagnostic_router)
     app.include_router(rapport_router)
+    app.include_router(org_router)
     app.state.storage = storage or DocumentStore.from_env()
     app.state.assistant = assistant or AssistantService.from_env()
 
@@ -320,6 +322,15 @@ def create_app(
         """Shell AgentHub Platform — chargement d'une app spécifique via JS côté client."""
         return FileResponse(
             STATIC_DIR / "workspace.html",
+            media_type="text/html",
+            headers=_WORKSPACE_HEADERS,
+        )
+
+    @app.get("/org/{session_id}")
+    def org_workspace(session_id: str):
+        """Espace personnel de l'organisation (PME) — accessible via lien depuis le rapport."""
+        return FileResponse(
+            STATIC_DIR / "org.html",
             media_type="text/html",
             headers=_WORKSPACE_HEADERS,
         )

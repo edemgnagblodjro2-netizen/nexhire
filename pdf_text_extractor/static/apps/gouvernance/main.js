@@ -1,63 +1,123 @@
 /**
  * AgentHub Platform — App: Gouvernance IA
- * Conformité Loi 25 · Politique IA · Registre des outils
+ * Multi-framework : Loi 25 Québec · ISO 42001 · NIST AI RMF
  */
 
-const LOI25 = [
-  { id: 'p1a', phase: 'Phase 1 — Sept. 2022', label: 'Désignation d\'un Responsable de la Protection des Renseignements Personnels (RPRP)' },
-  { id: 'p1b', phase: 'Phase 1 — Sept. 2022', label: 'Coordonnées du RPRP publiées sur le site web de l\'organisation' },
-  { id: 'p2a', phase: 'Phase 2 — Sept. 2023', label: 'Registre des incidents de confidentialité mis en place' },
-  { id: 'p2b', phase: 'Phase 2 — Sept. 2023', label: 'Procédure de notification des incidents à la CAI et aux personnes concernées' },
-  { id: 'p2c', phase: 'Phase 2 — Sept. 2023', label: 'Politique de confidentialité claire, accessible et compréhensible pour les membres' },
-  { id: 'p2d', phase: 'Phase 2 — Sept. 2023', label: 'Évaluation des facteurs relatifs à la vie privée (EFVP) pour les nouveaux projets numériques' },
-  { id: 'p2e', phase: 'Phase 2 — Sept. 2023', label: 'Droits des individus documentés et applicables : accès, rectification, portabilité' },
-  { id: 'p2f', phase: 'Phase 2 — Sept. 2023', label: 'Consentement explicite pour la collecte et l\'utilisation des données personnelles' },
-  { id: 'p3a', phase: 'Phase 3 — Sept. 2024', label: 'Droit à la désindexation et au déréférencement mis en œuvre' },
-  { id: 'p3b', phase: 'Phase 3 — Sept. 2024', label: 'Destruction sécurisée des données en fin de cycle de vie documentée' },
-  { id: 'p3c', phase: 'Phase 3 — Sept. 2024', label: 'Consentement et transparence pour les décisions automatisées par IA' },
-  { id: 'p3d', phase: 'Phase 3 — Sept. 2024', label: 'Divulgation de l\'utilisation de l\'IA aux personnes concernées (chatbots, scoring, etc.)' },
-  { id: 'ga',  phase: 'Gouvernance IA',        label: 'Formation du personnel sur la protection des données et l\'IA responsable' },
-  { id: 'gb',  phase: 'Gouvernance IA',        label: 'Contrats avec fournisseurs tiers IA conformes à la Loi 25' },
-  { id: 'gc',  phase: 'Gouvernance IA',        label: 'Politique d\'utilisation responsable de l\'IA rédigée et communiquée aux équipes' },
-];
+const FRAMEWORKS = {
+  loi25: {
+    id:    'loi25',
+    label: 'Loi 25 — Québec',
+    icon:  '⚖️',
+    desc:  'Loi modernisant des dispositions législatives en matière de protection des renseignements personnels (2022-2024)',
+    items: [
+      { id: 'p1a', phase: 'Phase 1 — Sept. 2022', label: 'Désignation d\'un Responsable de la Protection des Renseignements Personnels (RPRP)' },
+      { id: 'p1b', phase: 'Phase 1 — Sept. 2022', label: 'Coordonnées du RPRP publiées sur le site web de l\'organisation' },
+      { id: 'p2a', phase: 'Phase 2 — Sept. 2023', label: 'Registre des incidents de confidentialité mis en place' },
+      { id: 'p2b', phase: 'Phase 2 — Sept. 2023', label: 'Procédure de notification des incidents à la CAI et aux personnes concernées' },
+      { id: 'p2c', phase: 'Phase 2 — Sept. 2023', label: 'Politique de confidentialité claire, accessible et compréhensible pour les membres' },
+      { id: 'p2d', phase: 'Phase 2 — Sept. 2023', label: 'Évaluation des facteurs relatifs à la vie privée (EFVP) pour les nouveaux projets numériques' },
+      { id: 'p2e', phase: 'Phase 2 — Sept. 2023', label: 'Droits des individus documentés et applicables : accès, rectification, portabilité' },
+      { id: 'p2f', phase: 'Phase 2 — Sept. 2023', label: 'Consentement explicite pour la collecte et l\'utilisation des données personnelles' },
+      { id: 'p3a', phase: 'Phase 3 — Sept. 2024', label: 'Droit à la désindexation et au déréférencement mis en œuvre' },
+      { id: 'p3b', phase: 'Phase 3 — Sept. 2024', label: 'Destruction sécurisée des données en fin de cycle de vie documentée' },
+      { id: 'p3c', phase: 'Phase 3 — Sept. 2024', label: 'Consentement et transparence pour les décisions automatisées par IA' },
+      { id: 'p3d', phase: 'Phase 3 — Sept. 2024', label: 'Divulgation de l\'utilisation de l\'IA aux personnes concernées (chatbots, scoring, etc.)' },
+      { id: 'ga',  phase: 'Gouvernance IA',        label: 'Formation du personnel sur la protection des données et l\'IA responsable' },
+      { id: 'gb',  phase: 'Gouvernance IA',        label: 'Contrats avec fournisseurs tiers IA conformes à la Loi 25' },
+      { id: 'gc',  phase: 'Gouvernance IA',        label: 'Politique d\'utilisation responsable de l\'IA rédigée et communiquée aux équipes' },
+    ],
+  },
+  iso42001: {
+    id:    'iso42001',
+    label: 'ISO 42001',
+    icon:  '🌐',
+    desc:  'Norme internationale pour les systèmes de management de l\'intelligence artificielle (2023)',
+    items: [
+      { id: 'i01', phase: '4 — Contexte de l\'organisme', label: 'Compréhension de l\'organisation et de son contexte IA (parties prenantes, domaine d\'application)' },
+      { id: 'i02', phase: '4 — Contexte de l\'organisme', label: 'Détermination du périmètre du système de management IA documenté' },
+      { id: 'i03', phase: '5 — Leadership',               label: 'Engagement de la direction sur la politique IA et l\'attribution des responsabilités' },
+      { id: 'i04', phase: '5 — Leadership',               label: 'Politique de système de management IA établie, communiquée et accessible' },
+      { id: 'i05', phase: '6 — Planification',            label: 'Évaluation des risques IA : identification, analyse et traitement documentés' },
+      { id: 'i06', phase: '6 — Planification',            label: 'Objectifs IA définis, mesurables et suivis dans le temps' },
+      { id: 'i07', phase: '7 — Support',                  label: 'Ressources, compétences et sensibilisation IA du personnel évaluées' },
+      { id: 'i08', phase: '8 — Réalisation',              label: 'Processus de développement ou d\'acquisition de systèmes IA documentés' },
+      { id: 'i09', phase: '8 — Réalisation',              label: 'Évaluation d\'impact IA réalisée avant déploiement de tout système à risque élevé' },
+      { id: 'i10', phase: '9 — Évaluation',               label: 'Surveillance, mesure, analyse et évaluation du système de management IA' },
+      { id: 'i11', phase: '9 — Évaluation',               label: 'Audit interne du système de management IA planifié et réalisé' },
+      { id: 'i12', phase: '10 — Amélioration',            label: 'Non-conformités identifiées, traitées et utilisées pour l\'amélioration continue' },
+    ],
+  },
+  nist_ai_rmf: {
+    id:    'nist_ai_rmf',
+    label: 'NIST AI RMF',
+    icon:  '🇺🇸',
+    desc:  'AI Risk Management Framework — National Institute of Standards and Technology (2023)',
+    items: [
+      { id: 'n01', phase: 'GOVERN — Culture',     label: 'Politiques, processus et pratiques organisationnels sur la gestion des risques IA établis' },
+      { id: 'n02', phase: 'GOVERN — Culture',     label: 'Rôles et responsabilités pour la gestion des risques IA définis et assignés' },
+      { id: 'n03', phase: 'GOVERN — Culture',     label: 'Formation et sensibilisation des équipes aux risques IA réalisées' },
+      { id: 'n04', phase: 'MAP — Contextualiser', label: 'Contexte d\'utilisation des systèmes IA documenté (cas d\'usage, parties prenantes, objectifs)' },
+      { id: 'n05', phase: 'MAP — Contextualiser', label: 'Catégorisation des risques IA par impact potentiel (probabilité × gravité)' },
+      { id: 'n06', phase: 'MEASURE — Évaluer',    label: 'Métriques d\'évaluation des risques IA définies et appliquées aux systèmes déployés' },
+      { id: 'n07', phase: 'MEASURE — Évaluer',    label: 'Tests de biais, d\'équité et de robustesse des modèles IA documentés' },
+      { id: 'n08', phase: 'MEASURE — Évaluer',    label: 'Evaluation de la transparence et de l\'explicabilité des décisions IA' },
+      { id: 'n09', phase: 'MANAGE — Traiter',     label: 'Plans de traitement des risques IA identifiés mis en place et suivis' },
+      { id: 'n10', phase: 'MANAGE — Traiter',     label: 'Procédure de retrait ou de correction d\'un système IA défaillant documentée' },
+      { id: 'n11', phase: 'MANAGE — Traiter',     label: 'Monitoring continu des systèmes IA en production (dérive, incidents, performances)' },
+    ],
+  },
+};
+
+const LOI25 = FRAMEWORKS.loi25.items;
 
 const S_COLOR = { done: '#10b981', partial: '#f59e0b', todo: '#e2e8f0' };
 const S_ICON  = { done: '✓', partial: '◐', todo: '' };
 
 let _st = null;
 
-const _key  = (slug) => `aghub_gov_${slug}`;
+const _key  = (slug, fw) => `aghub_gov_${slug}_${fw}`;
 
-function _load(slug) {
+function _load(slug, fw) {
   try {
-    const s = JSON.parse(localStorage.getItem(_key(slug)) || '{}');
-    return { tab: 'conformite', checklist: s.checklist || {}, registre: s.registre || [], pol: s.pol || {} };
-  } catch { return { tab: 'conformite', checklist: {}, registre: [], pol: {} }; }
+    const s = JSON.parse(localStorage.getItem(_key(slug, fw)) || '{}');
+    return { tab: 'conformite', framework: fw, checklist: s.checklist || {}, registre: s.registre || [], pol: s.pol || {} };
+  } catch { return { tab: 'conformite', framework: fw, checklist: {}, registre: [], pol: {} }; }
 }
 
 function _save() {
-  try { localStorage.setItem(_key(_st.slug), JSON.stringify({ checklist: _st.checklist, registre: _st.registre, pol: _st.pol })); } catch {}
+  try {
+    localStorage.setItem(
+      _key(_st.slug, _st.framework),
+      JSON.stringify({ checklist: _st.checklist, registre: _st.registre, pol: _st.pol })
+    );
+  } catch {}
 }
 
+function _items() { return (FRAMEWORKS[_st.framework] || FRAMEWORKS.loi25).items; }
+
 function _score() {
-  const done    = LOI25.filter(i => _st.checklist[i.id] === 'done').length;
-  const partial = LOI25.filter(i => _st.checklist[i.id] === 'partial').length;
-  return Math.round((done + partial * 0.5) / LOI25.length * 100);
+  const items   = _items();
+  const done    = items.filter(i => _st.checklist[i.id] === 'done').length;
+  const partial = items.filter(i => _st.checklist[i.id] === 'partial').length;
+  return Math.round((done + partial * 0.5) / items.length * 100);
 }
 
 function _scoreColor(s) { return s >= 75 ? '#10b981' : s >= 45 ? '#f59e0b' : '#ef4444'; }
 
 // ── Render root ───────────────────────────────────────────────────────────────
 function _render(el) {
-  const sc = _score(), cc = _scoreColor(sc);
-  const phases = [...new Set(LOI25.map(i => i.phase))];
+  const sc  = _score(), cc = _scoreColor(sc);
+  const fw  = FRAMEWORKS[_st.framework] || FRAMEWORKS.loi25;
+  const items = _items();
+  const phases = [...new Set(items.map(i => i.phase))];
 
   el.innerHTML = `
 <div class="gov-wrap">
   <div class="gov-header">
     <div>
       <h1 class="gov-h1">Gouvernance IA</h1>
-      <p class="gov-sub">Conformité Loi 25 · Politique d'utilisation · Registre des outils IA</p>
+      <p class="gov-sub">${fw.icon} ${fw.label} · Politique d'utilisation · Registre des outils IA</p>
+      <p class="gov-fw-desc">${fw.desc}</p>
     </div>
     <div class="gov-ring">
       <svg viewBox="0 0 36 36" style="width:88px;height:88px;transform:rotate(-90deg)">
@@ -70,8 +130,15 @@ function _render(el) {
     </div>
   </div>
 
+  <div class="gov-fw-picker">
+    <span class="gov-fw-label">Référentiel :</span>
+    ${Object.values(FRAMEWORKS).map(f => `
+      <button class="gov-fw-btn${_st.framework===f.id?' gov-fw-btn-a':''}" data-fw="${f.id}">${f.icon} ${f.label}</button>
+    `).join('')}
+  </div>
+
   <div class="gov-tabs">
-    <button class="gov-tab${_st.tab==='conformite'?' gov-tab-a':''}" data-tab="conformite">⚖️ Conformité Loi 25</button>
+    <button class="gov-tab${_st.tab==='conformite'?' gov-tab-a':''}" data-tab="conformite">${fw.icon} Conformité ${fw.label}</button>
     <button class="gov-tab${_st.tab==='politique'?' gov-tab-a':''}" data-tab="politique">📋 Politique IA</button>
     <button class="gov-tab${_st.tab==='registre'?' gov-tab-a':''}" data-tab="registre">🗂️ Registre des outils</button>
   </div>
@@ -88,8 +155,9 @@ function _render(el) {
 
 // ── Tab: Conformité ───────────────────────────────────────────────────────────
 function _renderConformite(phases) {
+  const allItems = _items();
   return phases.map(ph => {
-    const items = LOI25.filter(i => i.phase === ph);
+    const items = allItems.filter(i => i.phase === ph);
     const done  = items.filter(i => _st.checklist[i.id] === 'done').length;
     return `
 <div class="gov-phase">
@@ -247,6 +315,16 @@ function _renderRegistre() {
 
 // ── Event binding ─────────────────────────────────────────────────────────────
 function _bind(el) {
+  el.querySelectorAll('.gov-fw-btn').forEach(b => b.addEventListener('click', () => {
+    if (_st.framework === b.dataset.fw) return;
+    _save();
+    const loaded = _load(_st.slug, b.dataset.fw);
+    _st.framework = b.dataset.fw;
+    _st.checklist = loaded.checklist;
+    _st.tab = 'conformite';
+    _render(el);
+  }));
+
   el.querySelectorAll('.gov-tab').forEach(b => b.addEventListener('click', () => { _st.tab = b.dataset.tab; _render(el); }));
 
   el.querySelectorAll('[data-sel]').forEach(s => s.addEventListener('change', () => {
@@ -292,9 +370,15 @@ function _css() {
   const s = document.createElement('style'); s.id='gov-css';
   s.textContent = `
 .gov-wrap{padding:32px;max-width:960px;margin:0 auto;font-family:system-ui,-apple-system,sans-serif}
-.gov-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;gap:16px;flex-wrap:wrap}
+.gov-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:16px;flex-wrap:wrap}
 .gov-h1{font-size:22px;font-weight:700;color:#0f172a;margin:0 0 4px}
 .gov-sub{font-size:13px;color:#64748b;margin:0}
+.gov-fw-desc{font-size:12px;color:#94a3b8;margin:4px 0 0;max-width:480px}
+.gov-fw-picker{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.gov-fw-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:#94a3b8}
+.gov-fw-btn{background:#f8fafc;border:1px solid #e2e8f0;color:#475569;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .15s}
+.gov-fw-btn:hover{border-color:#7c3aed;color:#7c3aed}
+.gov-fw-btn-a{background:#ede9fe;border-color:#7c3aed;color:#7c3aed;font-weight:600}
 .gov-ring{position:relative;flex-shrink:0;text-align:center;width:88px}
 .gov-ring-val{position:absolute;top:24px;left:0;right:0;font-size:18px;font-weight:800}
 .gov-ring-lbl{position:absolute;bottom:8px;left:0;right:0;font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:#94a3b8}
@@ -353,8 +437,8 @@ function _css() {
 export default {
   mount(container, ctx) {
     _css();
-    const d = _load(ctx.partnerSlug);
-    _st = { ...d, slug: ctx.partnerSlug };
+    const fw = ctx.appConfig?.compliance_framework || 'loi25';
+    _st = { ..._load(ctx.partnerSlug, fw), slug: ctx.partnerSlug };
     _render(container);
   },
   unmount(container) {

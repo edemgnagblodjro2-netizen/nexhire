@@ -16,7 +16,7 @@ def _get_partner(cur, slug: str) -> dict:
         SELECT id, slug, name, description, logo_url,
                primary_color, secondary_color, favicon_url,
                hero_title, hero_subtitle,
-               city, region, country, website, plan, is_active
+               city, region, country, website, plan, partner_type, is_active
         FROM partners
         WHERE slug = %s
         LIMIT 1
@@ -61,6 +61,7 @@ def get_workspace(request: Request, slug: str):
             "country":         partner["country"],
             "website":         partner["website"],
             "plan":            partner["plan"],
+            "partner_type":    partner["partner_type"] or "chamber",
         },
         headers=_NO_CACHE,
     )
