@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>AgentHub Platform — Connexion</title>
+  <link rel="icon" href="/static/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/design-system.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; font-family: var(--font); background: var(--bg); color: var(--text); }
+
+    /* ── Layout deux colonnes ───────────────────────────────────────────── */
+    .pl-shell {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100dvh;
+    }
+
+    /* ── Colonne gauche — branding ──────────────────────────────────────── */
+    .pl-brand {
+      background: linear-gradient(155deg, #1e1b4b 0%, #312e81 45%, #4c1d95 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 48px 52px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pl-brand::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 340px; height: 340px;
+      background: radial-gradient(circle, rgba(139,92,246,.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .pl-brand::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -40px;
+      width: 260px; height: 260px;
+      background: radial-gradient(circle, rgba(99,102,241,.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .pl-brand-top { position: relative; z-index: 1; }
+
+    .pl-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 52px;
+    }
+    .pl-logo-img { height: 32px; width: auto; filter: brightness(0) invert(1); }
+    .pl-logo-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -.01em;
+    }
+
+    .pl-tagline {
+      font-size: 28px;
+      font-weight: 800;
+      color: white;
+      line-height: 1.25;
+      letter-spacing: -.02em;
+      margin-bottom: 12px;
+    }
+    .pl-tagline em {
+      font-style: normal;
+      background: linear-gradient(90deg, #a78bfa, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .pl-sub {
+      font-size: 14px;
+      color: rgba(255,255,255,.6);
+      line-height: 1.6;
+      margin-bottom: 44px;
+    }
+
+    .pl-features { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .pl-features li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255,255,255,.85);
+    }
+    .pl-features li span.pl-check {
+      width: 22px; height: 22px;
+      background: rgba(139,92,246,.3);
+      border: 1px solid rgba(139,92,246,.5);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px;
+      color: #c4b5fd;
+      flex-shrink: 0;
+    }
+
+    .pl-partner-badge {
+      display: none;
+      margin-top: 32px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: var(--r-lg);
+      padding: 14px 18px;
+      gap: 10px;
+      align-items: center;
+    }
+    .pl-partner-badge.visible { display: flex; }
+    .pl-partner-badge-icon { font-size: 22px; }
+    .pl-partner-badge-text { font-size: 12px; color: rgba(255,255,255,.7); line-height: 1.4; }
+    .pl-partner-badge-name { font-weight: 700; color: white; font-size: 13px; }
+
+    .pl-brand-footer {
+      position: relative; z-index: 1;
+      font-size: 11px;
+      color: rgba(255,255,255,.35);
+    }
+
+    /* ── Colonne droite — formulaire ────────────────────────────────────── */
+    .pl-form-col {
+      background: var(--card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 32px;
+    }
+
+    .pl-form-wrap {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    /* ── Onglets ────────────────────────────────────────────────────────── */
+    .pl-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 32px;
+      border-bottom: 2px solid var(--border);
+    }
+    .pl-tab {
+      flex: 1;
+      padding: 10px 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-sub);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      transition: color .15s, border-color .15s;
+      text-align: center;
+    }
+    .pl-tab.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    /* ── Bloquage invitation requise ────────────────────────────────────── */
+    .pl-invite-wall {
+      display: none;
+      text-align: center;
+      padding: 32px 0;
+    }
+    .pl-invite-wall.visible { display: block; }
+    .pl-invite-icon { font-size: 40px; margin-bottom: 16px; }
+    .pl-invite-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .pl-invite-desc { font-size: 13px; color: var(--text-sub); line-height: 1.6; }
+
+    /* ── Formulaire ─────────────────────────────────────────────────────── */
+    .pl-section { display: none; }
+    .pl-section.active { display: block; }
+
+    .pl-form-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+      letter-spacing: -.02em;
+    }
+    .pl-form-sub {
+      font-size: 13px;
+      color: var(--text-sub);
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    .pl-field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 16px; }
+    .pl-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--text-sub); }
+    .pl-input { width: 100%; }
+
+    .pl-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .pl-check-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .pl-check-row input[type="checkbox"] {
+      accent-color: var(--primary);
+      width: 15px; height: 15px;
+      cursor: pointer;
+    }
+    .pl-check-row label { font-size: 13px; color: var(--text-2); cursor: pointer; }
+
+    .pl-submit {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+
+    .pl-secondary {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-sub);
+    }
+    .pl-secondary a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .pl-secondary a:hover { text-decoration: underline; }
+
+    .pl-divider {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 20px 0;
+      position: relative;
+    }
+    .pl-divider::before, .pl-divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: calc(50% - 24px);
+      height: 1px;
+      background: var(--border);
+    }
+    .pl-divider::before { left: 0; }
+    .pl-divider::after  { right: 0; }
+
+    /* État succès inscription */
+    .pl-success { display: none; text-align: center; padding: 24px 0; }
+    .pl-success.visible { display: block; }
+    .pl-success-icon { font-size: 44px; margin-bottom: 16px; }
+    .pl-success-title { font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+    .pl-success-desc { font-size: 13px; color: var(--text-sub); line-height: 1.6; margin-bottom: 20px; }
+
+    /* Spinner bouton */
+    .pl-btn-spinner {
+      display: inline-block;
+      width: 14px; height: 14px;
+      border: 2px solid rgba(255,255,255,.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: ds-spin .6s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    /* ── Responsive ─────────────────────────────────────────────────────── */
+    @media (max-width: 720px) {
+      .pl-shell { grid-template-columns: 1fr; }
+      .pl-brand { display: none; }
+      .pl-form-col { padding: 32px 20px; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="pl-shell">
+
+  <!-- ── Colonne gauche : branding ──────────────────────────────────────── -->
+  <div class="pl-brand">
+    <div class="pl-brand-top">
+      <div class="pl-logo-row">
+        <img src="/static/logo.svg" alt="AgentHub" class="pl-logo-img">
+        <span class="pl-logo-name">AgentHub Platform</span>
+      </div>
+
+      <div class="pl-tagline">Le système d'exploitation de <em>l'intelligence</em> d'entreprise</div>
+      <p class="pl-sub">Mesurez votre maturité IA, gouvernez vos données et amplifiez votre organisation avec ATLAS.</p>
+
+      <ul class="pl-features">
+        <li><span class="pl-check">✓</span>Diagnostic IA IMAI</li>
+        <li><span class="pl-check">✓</span>Gouvernance &amp; Loi 25</li>
+        <li><span class="pl-check">✓</span>ATLAS AI — votre conseiller</li>
+        <li><span class="pl-check">✓</span>Rapports &amp; Observatoire</li>
+      </ul>
+
+      <div class="pl-partner-badge" id="pl-partner-badge">
+        <span class="pl-partner-badge-icon">🏛️</span>
+        <div>
+          <div class="pl-partner-badge-text">Vous rejoignez</div>
+          <div class="pl-partner-badge-name" id="pl-partner-name">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pl-brand-footer">© 2026 CivicAI Inc. · AgentHub Platform</div>
+  </div>
+
+  <!-- ── Colonne droite : formulaire ────────────────────────────────────── -->
+  <div class="pl-form-col">
+    <div class="pl-form-wrap">
+
+      <div class="pl-tabs">
+        <button class="pl-tab active" id="tab-login" onclick="switchTab('login')">Connexion</button>
+        <button class="pl-tab" id="tab-signup" onclick="switchTab('signup')">Créer un compte</button>
+      </div>
+
+      <!-- ── Connexion ── -->
+      <div class="pl-section active" id="section-login">
+        <div class="pl-form-title">Bon retour 👋</div>
+        <p class="pl-form-sub">Connectez-vous à votre espace AgentHub.</p>
+
+        <div id="login-error" class="ds-alert ds-alert-err" style="margin-bottom:16px;display:none"></div>
+
+        <form id="login-form" onsubmit="handleLogin(event)">
+          <div class="pl-field">
+            <label class="pl-label" for="login-email">Adresse courriel</label>
+            <input class="ds-input pl-input" id="login-email" type="email"
+                   placeholder="vous@organisation.ca" required autocomplete="email">
+          </div>
+          <div class="pl-field">
+            <label class="pl-label" for="login-password">Mot de passe</label>
+            <input class="ds-input pl-input" id="login-password" type="password"
+                   placeholder="••••••••" required autocomplete="current-password">
+          </div>
+
+          <div class="pl-check-row">
+            <input type="checkbox" id="login-remember">
+            <label for="login-remember">Se souvenir de moi</label>
+          </div>
+
+          <button type="submit" class="ds-btn ds-btn-primary ds-btn-lg pl-submit" id="login-btn">
+            Connexion
+          </button>
+        </form>
+
+        <p class="pl-secondary" style="margin-bottom:8px">
+          <a href="#" onclick="switchTab('forgot');return false">Mot de passe oublié ?</a>
+        </p>
+        <p class="pl-secondary">
+          Pas encore de compte ?
+          <a href="#" onclick="switchTab('signup');return false">Créer un compte</a>
+        </p>
+      </div>
+
+      <!-- ── Mot de passe oublié ── -->
+      <div class="pl-section" id="section-forgot">
+        <div class="pl-form-title">Mot de passe oublié</div>
+        <p class="pl-form-sub">Entrez votre courriel — nous vous enverrons un lien de réinitialisation.</p>
+
+        <div id="forgot-error"   class="ds-alert ds-alert-err"  style="margin-bottom:16px;display:none"></div>
+        <div id="forgot-success" class="ds-alert ds-alert-ok"   style="margin-bottom:16px;display:none"></div>
+
+        <form id="forgot-form" onsubmit="handleForgot(event)">
+          <div class="pl-field">
+            <label class="pl-label" for="forgot-email">Adresse courriel</label>
+            <input class="ds-input pl-input" id="forgot-email" type="email"
+                   placeholder="vous@organisation.ca" required autocomplete="email">
+          </div>
+          <button type="submit" class="ds-btn ds-btn-primary ds-btn-lg pl-submit" id="forgot-btn">
+            Envoyer le lien
+          </button>
+        </form>
+
+        <p class="pl-secondary">
+          <a href="#" onclick="switchTab('login');return false">← Retour à la connexion</a>
+        </p>
+      </div>
+
+      <!-- ── Inscription ── -->
+      <div class="pl-section" id="section-signup">
+
+        <!-- Mur d'invitation — affiché si pas de lien partenaire valide -->
+        <div class="pl-invite-wall" id="pl-invite-wall">
+          <div class="pl-invite-icon">🔒</div>
+          <div class="pl-invite-title">Invitation requise</div>
+          <p class="pl-invite-desc">
+            Pour créer un compte, vous avez besoin d'un lien d'invitation de votre
+            chambre ou organisation partenaire.<br><br>
+            Contactez votre coordinateur ou administrateur pour obtenir votre lien.
+          </p>
+        </div>
+
+        <!-- Formulaire d'inscription — affiché uniquement avec un partenaire valide -->
+        <div id="signup-form-wrap" style="display:none">
+          <div class="pl-form-title">Créer votre compte</div>
+          <p class="pl-form-sub" id="signup-sub">Remplissez les informations ci-dessous pour rejoindre votre espace.</p>
+
+          <div id="signup-error"   class="ds-alert ds-alert-err" style="margin-bottom:16px;display:none"></div>
+
+          <div id="signup-success" class="pl-success">
+            <div class="pl-success-icon">✉️</div>
+            <div class="pl-success-title">Vérifiez votre courriel</div>
+            <p class="pl-success-desc">
+              Un lien de confirmation a été envoyé à <strong id="signup-email-sent"></strong>.<br>
+              Cliquez sur le lien pour activer votre compte, puis connectez-vous.
+            </p>
+            <button class="ds-btn ds-btn-outline" onclick="switchTab('login')">
+              Aller à la connexion →
+            </button>
+          </div>
+
+          <form id="signup-form" onsubmit="handleSignup(event)">
+            <div class="pl-row">
+              <div class="pl-field">
+                <label class="pl-label" for="signup-fname">Prénom</label>
+                <input class="ds-input pl-input" id="signup-fname" type="text"
+                       placeholder="Marie" required autocomplete="given-name">
+              </div>
+              <div class="pl-field">
+                <label class="pl-label" for="signup-lname">Nom</label>
+                <input class="ds-input pl-input" id="signup-lname" type="text"
+                       placeholder="Tremblay" required autocomplete="family-name">
+              </div>
+            </div>
+            <div class="pl-field">
+              <label class="pl-label" for="signup-email">Courriel</label>
+              <input class="ds-input pl-input" id="signup-email" type="email"
+                     placeholder="marie.tremblay@organisation.ca" required autocomplete="email">
+            </div>
+            <div class="pl-field">
+              <label class="pl-label" for="signup-phone">Téléphone</label>
+              <input class="ds-input pl-input" id="signup-phone" type="tel"
+                     placeholder="+1 514 555-0000" required autocomplete="tel">
+            </div>
+            <div class="pl-field">
+              <label class="pl-label" for="signup-password">Mot de passe</label>
+              <input class="ds-input pl-input" id="signup-password" type="password"
+                     placeholder="12 caractères min." required minlength="12" autocomplete="new-password">
+            </div>
+
+            <button type="submit" class="ds-btn ds-btn-primary ds-btn-lg pl-submit" id="signup-btn">
+              Créer mon compte
+            </button>
+          </form>
+
+          <p class="pl-secondary" style="margin-top:4px">
+            Déjà un compte ?
+            <a href="#" onclick="switchTab('login');return false">Se connecter</a>
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="/static/portal-login.js"></script>
+</body>
+</html>

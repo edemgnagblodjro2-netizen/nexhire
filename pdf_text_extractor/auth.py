@@ -42,6 +42,7 @@ class CurrentUser:
     subscription_plan: str | None = None
     is_service_account: bool = False
     currency: str = "CAD"
+    partner_id: str | None = None
 
 
 # ── Vérification du jeton ──────────────────────────────────────────────────
@@ -197,4 +198,14 @@ def get_current_user(authorization: str | None = Header(default=None)) -> Curren
         subscription_status=org_status,
         subscription_plan=org_plan,
         currency=org_currency,
+        partner_id=str(profile["partner_id"]) if profile.get("partner_id") else None,
     )
+
+
+def get_optional_user(authorization: str | None = Header(default=None)) -> "CurrentUser | None":
+    """Identité optionnelle — None si aucun header Authorization.
+    Lève 401 si un token est fourni mais invalide/expiré (ne masque pas les erreurs réelles).
+    """
+    if not authorization:
+        return None
+    return get_current_user(authorization)

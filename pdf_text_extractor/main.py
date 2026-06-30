@@ -308,6 +308,15 @@ def create_app(
 
     _WORKSPACE_HEADERS = {"Cache-Control": "no-store, no-cache, must-revalidate, max-age=0"}
 
+    @app.get("/inscription")
+    def portal_inscription():
+        """Page de connexion / inscription portail — entrée partenaire via ?partenaire={slug}."""
+        return FileResponse(
+            STATIC_DIR / "portal-login.html",
+            media_type="text/html",
+            headers=_WORKSPACE_HEADERS,
+        )
+
     @app.get("/workspace/{slug}")
     def workspace_shell(slug: str):
         """Shell AgentHub Platform — point d'entrée pour tous les workspaces partenaires."""

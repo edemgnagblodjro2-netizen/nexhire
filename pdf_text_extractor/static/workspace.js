@@ -99,6 +99,7 @@ const _state = {
   activeApp:  null,
   module:     null,
   vocab:      VOCAB.chamber,
+  user:       null,
 };
 
 const $ = (id) => document.getElementById(id);
@@ -112,15 +113,20 @@ async function boot() {
   if (!slug) { _showFatal('URL de workspace invalide.'); return; }
 
   try {
+    const _token   = localStorage.getItem('nexhire_token');
+    const _authHdr = _token ? { Authorization: `Bearer ${_token}` } : {};
+
     const [pRes, aRes] = await Promise.all([
-      fetch(`/api/workspace/${slug}`, { credentials: 'include' }),
-      fetch(`/api/workspace/${slug}/apps`, { credentials: 'include' }),
+      fetch(`/api/workspace/${slug}`, { credentials: 'include', headers: _authHdr }),
+      fetch(`/api/workspace/${slug}/apps`, { credentials: 'include', headers: _authHdr }),
     ]);
 
     if (!pRes.ok) throw new Error((await pRes.json()).detail || 'Workspace introuvable.');
     if (!aRes.ok) throw new Error((await aRes.json()).detail || 'Erreur chargement apps.');
 
-    _state.partner = await pRes.json();
+    const pData    = await pRes.json();
+    _state.partner = pData;
+    _state.user    = pData.viewer?.authenticated ? pData.viewer : null;
     _state.dbApps  = (await aRes.json()).apps || [];
     _state.vocab   = VOCAB[_state.partner.partner_type] || VOCAB.chamber;
 
@@ -293,7 +299,7 @@ async function _navigateTo(navItem) {
       partner:     _state.partner,
       appConfig:   navItem.app?.config || {},
       vocab:       _state.vocab,
-      user:        null,
+      user:        _state.user || null,
     };
 
     $('ws-app-container').innerHTML = '';

@@ -36,6 +36,7 @@ class SignupPayload(BaseModel):
     password: str = Field(min_length=12)
     phone: str = Field(min_length=7, max_length=30)
     invite_token: str | None = None
+    partner_slug: str | None = Field(default=None, pattern=r"^[a-z0-9-]{1,80}$")
     org_type: str = Field(default="entreprise", pattern="^(entreprise|entrepreneur|hopital|municipalite|universite)$")
     currency: str = Field(default="CAD", pattern="^[A-Z]{3}$")
 
@@ -51,6 +52,26 @@ def signup(request: Request, payload: SignupPayload, background: BackgroundTasks
     """Inscription. Crée le compte Supabase ; un trigger DB crée ensuite
     automatiquement le tenant, l'utilisateur owner et l'essai de 14 jours
     (voir phase1_onboarding.sql). Les métadonnées portent le nom de l'org."""
+
+    # partner_slug et invite_token sont mutuellement exclusifs en Phase 1
+    if payload.partner_slug and payload.invite_token:
+        raise HTTPException(status_code=400, detail="Impossible de combiner un lien partenaire et un jeton d'invitation.")
+
+    # Valider le partenaire côté serveur avant d'appeler Supabase
+    if payload.partner_slug:
+        try:
+            from db import get_db, row as _row
+            with get_db() as cur:
+                cur.execute(
+                    "SELECT id FROM partners WHERE slug = %s AND is_active = true LIMIT 1",
+                    (payload.partner_slug,),
+                )
+                if not _row(cur):
+                    raise HTTPException(status_code=400, detail="PARTNER_INVALID")
+        except HTTPException:
+            raise
+        except Exception:
+            raise HTTPException(status_code=400, detail="PARTNER_INVALID")
 
     # Bloquer l'inscription directe si l'email a une invitation en attente
     if not payload.invite_token:
@@ -82,6 +103,8 @@ def signup(request: Request, payload: SignupPayload, background: BackgroundTasks
         meta["phone"] = payload.phone
         if payload.invite_token:
             meta["invite_token"] = payload.invite_token
+        if payload.partner_slug:
+            meta["partner_slug"] = payload.partner_slug
 
         res = sb.auth.sign_up(
             {
@@ -289,9 +312,26 @@ def me(user: CurrentUser = Depends(get_current_user)):
     if not superadmin_emails:
         _log.warning("SUPERADMIN_EMAILS non configuré — aucun super-administrateur actif.")
 
-    dept_types: list[str] = []
-    logo_url:   str | None = None
-    brand_color: str | None = None
+    dept_types:   list[str] = []
+    logo_url:     str | None = None
+    brand_color:  str | None = None
+    org_name:     str | None = None
+    partner_slug: str | None = None
+
+    # Résoudre le slug du partenaire si l'utilisateur en est membre
+    if user.partner_id:
+        try:
+            from db import get_db, row as _row
+            with get_db() as cur:
+                cur.execute(
+                    "SELECT slug FROM partners WHERE id = %s LIMIT 1",
+                    (user.partner_id,),
+                )
+                p = _row(cur)
+                partner_slug = p["slug"] if p else None
+        except Exception:
+            pass
+
     if user.organization_id:
         try:
             from db import get_db, row as _row, rows
@@ -329,4 +369,6 @@ def me(user: CurrentUser = Depends(get_current_user)):
         "currency":    user.currency,
         "logo_url":    logo_url,
         "brand_color": brand_color,
+        "partner_id":   user.partner_id,
+        "partner_slug": partner_slug,
     }

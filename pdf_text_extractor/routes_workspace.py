@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import JSONResponse
 
-from auth import CurrentUser, get_current_user
+from auth import CurrentUser, get_current_user, get_optional_user
 from db import get_db, row, rows
 from rate_limiter import limiter
 
@@ -42,9 +42,19 @@ def _substitute_slug(entry_path: str | None, slug: str) -> str | None:
 
 @router.get("/{slug}")
 @limiter.limit("60/minute")
-def get_workspace(request: Request, slug: str):
+def get_workspace(request: Request, slug: str, user: CurrentUser | None = Depends(get_optional_user)):
     with get_db() as cur:
         partner = _get_partner(cur, slug)
+
+    viewer: dict | None = None
+    if user and user.partner_id and str(user.partner_id) == str(partner["id"]):
+        viewer = {
+            "authenticated":   True,
+            "user_id":         str(user.id),
+            "email":           user.email,
+            "organization_id": str(user.organization_id) if user.organization_id else None,
+        }
+
     return JSONResponse(
         content={
             "slug":            partner["slug"],
@@ -62,6 +72,7 @@ def get_workspace(request: Request, slug: str):
             "website":         partner["website"],
             "plan":            partner["plan"],
             "partner_type":    partner["partner_type"] or "chamber",
+            "viewer":          viewer or {"authenticated": False},
         },
         headers=_NO_CACHE,
     )
