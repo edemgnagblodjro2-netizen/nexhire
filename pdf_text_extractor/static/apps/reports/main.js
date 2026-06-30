@@ -145,7 +145,7 @@ async function _loadSessions(el) {
   }
 }
 
-function _scoreColor(s) { return s >= 70 ? '#10b981' : s >= 45 ? '#f59e0b' : '#ef4444'; }
+function _scoreColor(s) { return s >= 70 ? 'var(--color-ok)' : s >= 45 ? 'var(--color-warn)' : 'var(--color-err)'; }
 
 function _bindExports(el) {
   el.querySelector('#rpt-csv')?.addEventListener('click', async () => {

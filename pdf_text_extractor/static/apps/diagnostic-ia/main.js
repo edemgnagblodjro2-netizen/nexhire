@@ -42,9 +42,9 @@ const NIVEAU_LABELS = {
 };
 
 const NIVEAU_COLORS = {
-  debutant:      "#ef4444",
-  intermediaire: "#f59e0b",
-  avance:        "#10b981",
+  debutant:      "var(--color-err)",
+  intermediaire: "var(--color-warn)",
+  avance:        "var(--color-ok)",
 };
 
 // ── State ─────────────────────────────────────────────────────────────────────
@@ -100,8 +100,11 @@ function _render(container) {
 // ── Screen: Loading ───────────────────────────────────────────────────────────
 function _showLoading(container) {
   container.innerHTML = `
-    <div class="dia-wrap" style="display:flex;align-items:center;justify-content:center;min-height:300px">
-      <div class="dia-spinner"></div>
+    <div class="dia-wrap">
+      <div class="ds-empty" style="padding:80px 24px">
+        <div class="ds-spinner"></div>
+        <div class="ds-empty-desc" style="margin-top:12px">Chargement…</div>
+      </div>
     </div>`;
 }
 
@@ -125,14 +128,14 @@ async function _loadHistory(container) {
 
 function _showHistory(container) {
   const NIVEAU_COLOR = {
-    debutant: "#ef4444", intermediaire: "#f59e0b", avance: "#10b981",
+    debutant: "var(--color-err)", intermediaire: "var(--color-warn)", avance: "var(--color-ok)",
   };
   const NIVEAU_LABEL = {
     debutant: "Débutant", intermediaire: "Intermédiaire", avance: "Avancé",
   };
 
   const cards = _state.historySessions.map(s => {
-    const color = NIVEAU_COLOR[s.niveau] || "#6b7280";
+    const color = NIVEAU_COLOR[s.niveau] || "var(--muted)";
     const label = NIVEAU_LABEL[s.niveau] || s.niveau || "—";
     const score = Math.round(s.imai_score);
     const date  = s.completed_at
@@ -407,13 +410,11 @@ async function _submitAnswer(container, answer) {
 function _showCalculating(container) {
   container.innerHTML = `
     <div class="dia-wrap">
-      <div class="dia-card" style="text-align:center;padding:48px 24px">
-        <div style="font-size:48px;margin-bottom:16px">🧮</div>
-        <div class="dia-spinner" style="margin:0 auto 16px"></div>
-        <p style="font-size:16px;font-weight:600;color:var(--text)">Calcul de votre IMAI…</p>
-        <p style="font-size:14px;color:var(--text-sub);margin-top:8px">
-          Atlas analyse vos réponses et prépare vos recommandations.
-        </p>
+      <div class="ds-empty ds-empty-card" style="padding:64px 24px">
+        <div class="ds-empty-icon">🧮</div>
+        <div class="ds-spinner" style="margin:4px 0 8px"></div>
+        <div class="ds-empty-title">Calcul de votre score IMAI…</div>
+        <div class="ds-empty-desc">Atlas analyse vos réponses et prépare vos recommandations personnalisées.</div>
       </div>
     </div>`;
 }
@@ -432,11 +433,11 @@ async function _finalize(container) {
 function _showCalculatingError(container, msg) {
   container.innerHTML = `
     <div class="dia-wrap">
-      <div class="dia-card" style="text-align:center;padding:48px 24px;gap:16px">
-        <div style="font-size:40px">⚠️</div>
-        <p style="font-size:15px;font-weight:600;color:var(--text)">Une erreur est survenue</p>
-        <p style="font-size:13px;color:var(--text-sub)">${msg || "Impossible de finaliser le parcours."}</p>
-        <button class="dia-btn-primary" id="dia-retry-btn">Réessayer</button>
+      <div class="ds-empty ds-empty-card" style="padding:64px 24px">
+        <div class="ds-empty-icon">⚠️</div>
+        <div class="ds-empty-title">Une erreur est survenue</div>
+        <div class="ds-empty-desc">${msg || "Impossible de finaliser le parcours."}</div>
+        <button class="ds-empty-action-ghost" id="dia-retry-btn">Réessayer</button>
       </div>
     </div>`;
   _el("dia-retry-btn").addEventListener("click", () => {
@@ -451,7 +452,7 @@ function _showResults(container) {
   const r     = _state.results;
   const score = r.imai_score;
   const niv   = r.niveau;
-  const color = NIVEAU_COLORS[niv] || "#2563eb";
+  const color = NIVEAU_COLORS[niv] || "var(--primary)";
 
   // Scores par dimension
   const dimBars = Object.entries(r.scores).map(([dim, val]) => `
@@ -507,7 +508,7 @@ function _showResults(container) {
       <div class="dia-results-header">
         <div class="dia-gauge-wrap">
           <svg class="dia-gauge" viewBox="0 0 120 70">
-            <path d="M10,60 A50,50 0 0,1 110,60" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
+            <path d="M10,60 A50,50 0 0,1 110,60" fill="none" style="stroke:var(--border)" stroke-width="10" stroke-linecap="round"/>
             <path d="M10,60 A50,50 0 0,1 110,60" fill="none" stroke="${color}"
               stroke-width="10" stroke-linecap="round"
               stroke-dasharray="${(score / 100 * 157).toFixed(1)} 157"
@@ -572,7 +573,7 @@ function _showResults(container) {
       const msg = _el("dia-email-msg");
       msg.textContent = "Erreur lors de l'envoi. Réessayez.";
       msg.style.display = "block";
-      msg.style.color = "#ef4444";
+      msg.style.color = "var(--color-err)";
       btn.disabled = false;
       btn.textContent = "Accéder au rapport →";
     }
@@ -596,9 +597,9 @@ function _showFormError(id, msg) {
 }
 
 function _dimColor(val) {
-  if (val >= 67) return "#10b981";
-  if (val >= 34) return "#f59e0b";
-  return "#ef4444";
+  if (val >= 67) return "var(--color-ok)";
+  if (val >= 34) return "var(--color-warn)";
+  return "var(--color-err)";
 }
 
 function _niveauDesc(niv) {
@@ -614,7 +615,7 @@ function _revealRapport() {
   if (msg) {
     msg.textContent = "✅ Rapport envoyé — vérifiez votre courriel d'ici quelques minutes.";
     msg.style.display = "block";
-    msg.style.color = "#10b981";
+    msg.style.color = "var(--color-ok)";
   }
   const revealed = _el("dia-rapport-revealed");
   if (revealed) revealed.style.display = "block";
@@ -779,11 +780,12 @@ function _injectStyles() {
     .dia-form { display: flex; flex-direction: column; gap: 16px; }
     .dia-field { display: flex; flex-direction: column; gap: 6px; }
     .dia-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .dia-field label { font-size: 14px; font-weight: 500; color: var(--text); }
+    .dia-field label { font-size: 13px; font-weight: 600; color: var(--text-2); }
     .dia-req { color: var(--color-err); }
     .dia-field input, .dia-field select {
       border: 1px solid var(--border); border-radius: 8px;
       padding: 10px 12px; font-size: 14px;
+      font-family: var(--font); color: var(--text); background: var(--card);
       transition: border-color .15s;
     }
     .dia-field input:focus, .dia-field select:focus {
@@ -833,12 +835,14 @@ function _injectStyles() {
     .dia-answer-btn:hover:not(:disabled) {
       border-color: var(--primary);
       background: color-mix(in srgb, var(--primary) 5%, transparent);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
     }
     .dia-answer-btn.selected {
       border-color: var(--primary);
       background: color-mix(in srgb, var(--primary) 10%, transparent);
     }
-    .dia-answer-btn:disabled { opacity: .7; cursor: default; }
+    .dia-answer-btn:disabled { opacity: .7; cursor: default; transform: none; box-shadow: none; }
     .dia-answer-icon { font-size: 24px; }
     .dia-answer-label { font-size: 14px; font-weight: 600; }
     .dia-answer-sub { font-size: 11px; color: var(--text-sub); text-align: center; }
@@ -938,6 +942,7 @@ function _injectStyles() {
     .dia-email-form input {
       flex: 1; border: 1px solid var(--border); border-radius: 8px;
       padding: 10px 12px; font-size: 14px;
+      font-family: var(--font); color: var(--text); background: var(--card);
     }
     .dia-email-form input:focus {
       outline: none; border-color: var(--primary);
@@ -954,7 +959,9 @@ function _injectStyles() {
       background: var(--card); border: 1px solid var(--border);
       border-radius: var(--r-lg); padding: 16px 20px;
       display: flex; align-items: center; gap: 16px;
+      transition: box-shadow .15s, border-color .15s;
     }
+    .dia-hist-card:hover { box-shadow: var(--shadow-sm); border-color: var(--border-2); }
     .dia-hist-score {
       font-size: 24px; font-weight: 900; min-width: 54px;
       text-align: center; flex-shrink: 0; line-height: 1;

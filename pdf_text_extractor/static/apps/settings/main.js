@@ -99,7 +99,7 @@ function _renderApps(apps) {
   return `
 <div class="set-section">
   <h2 class="set-section-title">Applications installées (${installed.length})</h2>
-  ${installed.length === 0 ? '<p style="color:#94a3b8;font-size:13px">Aucune application installée.</p>' : `
+  ${installed.length === 0 ? '<p style="color:var(--muted);font-size:13px">Aucune application installée.</p>' : `
   <div class="set-apps-list">
     ${installed.map(a => `
     <div class="set-app-row">

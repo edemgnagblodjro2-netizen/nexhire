@@ -70,7 +70,7 @@ const FRAMEWORKS = {
 
 const LOI25 = FRAMEWORKS.loi25.items;
 
-const S_COLOR = { done: '#10b981', partial: '#f59e0b', todo: '#e2e8f0' };
+const S_COLOR = { done: 'var(--color-ok)', partial: 'var(--color-warn)', todo: 'var(--border)' };
 const S_ICON  = { done: '✓', partial: '◐', todo: '' };
 
 let _st = null;
@@ -102,7 +102,7 @@ function _score() {
   return Math.round((done + partial * 0.5) / items.length * 100);
 }
 
-function _scoreColor(s) { return s >= 75 ? '#10b981' : s >= 45 ? '#f59e0b' : '#ef4444'; }
+function _scoreColor(s) { return s >= 75 ? 'var(--color-ok)' : s >= 45 ? 'var(--color-warn)' : 'var(--color-err)'; }
 
 // ── Render root ───────────────────────────────────────────────────────────────
 function _render(el) {
@@ -121,7 +121,7 @@ function _render(el) {
     </div>
     <div class="gov-ring">
       <svg viewBox="0 0 36 36" style="width:88px;height:88px;transform:rotate(-90deg)">
-        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#f1f5f9" stroke-width="3"/>
+        <circle cx="18" cy="18" r="15.9" fill="none" style="stroke:var(--border)" stroke-width="3"/>
         <circle cx="18" cy="18" r="15.9" fill="none" stroke="${cc}" stroke-width="3"
           stroke-dasharray="${sc} ${100-sc}" stroke-dashoffset="25" stroke-linecap="round"/>
       </svg>
@@ -256,7 +256,7 @@ function _renderRegistre() {
   <div class="gov-reg-hd">
     <div>
       <h3 class="gov-card-title" style="margin:0">Registre des outils IA</h3>
-      <p style="font-size:13px;color:#64748b;margin:4px 0 0">Inventaire des outils d'intelligence artificielle utilisés dans votre organisation (exigé par la Loi 25 pour les outils traitant des données personnelles).</p>
+      <p style="font-size:13px;color:var(--text-sub);margin:4px 0 0">Inventaire des outils d'intelligence artificielle utilisés dans votre organisation (exigé par la Loi 25 pour les outils traitant des données personnelles).</p>
     </div>
     <button class="gov-btn-p" id="reg-add">+ Ajouter un outil</button>
   </div>
@@ -276,7 +276,7 @@ function _renderRegistre() {
         <tr>
           <td class="gov-td-name">${o.nom}</td>
           <td><span class="gov-tag">${o.categorie}</span></td>
-          <td style="font-size:13px;color:#475569">${o.usage||'—'}</td>
+          <td style="font-size:13px;color:var(--text-2)">${o.usage||'—'}</td>
           <td>${o.dp ? '<span class="gov-badge b-warn">Oui</span>' : '<span class="gov-badge b-ok">Non</span>'}</td>
           <td>${o.conf==='oui'?'<span class="gov-badge b-ok">✓ Oui</span>':o.conf==='partiel'?'<span class="gov-badge b-warn">◐ Partiel</span>':'<span class="gov-badge b-err">✗ Non</span>'}</td>
           <td><button class="gov-del" data-del="${i}">×</button></td>
@@ -287,7 +287,7 @@ function _renderRegistre() {
 
   <div class="gov-modal" id="reg-modal" style="display:none">
     <div class="gov-modal-box">
-      <h3 style="margin:0 0 20px;font-size:16px;font-weight:700;color:#0f172a">Nouvel outil IA</h3>
+      <h3 style="margin:0 0 20px;font-size:16px;font-weight:700;color:var(--text)">Nouvel outil IA</h3>
       <div class="gov-grid2">
         <div class="gov-field"><label>Nom de l'outil *</label>
           <input class="gov-inp" id="r-nom" placeholder="ChatGPT, Copilot, ATLAS..."/></div>
