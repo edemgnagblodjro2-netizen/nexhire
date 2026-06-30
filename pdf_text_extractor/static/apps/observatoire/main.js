@@ -149,10 +149,11 @@ function _renderError(container) {
 function _showSkeleton(container) {
   container.innerHTML = `
     <div class="obs-wrap">
-      <div class="obs-header">
-        <div style="display:flex;flex-direction:column;gap:8px">
-          <div class="ds-skeleton" style="height:24px;width:220px"></div>
-          <div class="ds-skeleton" style="height:14px;width:380px;max-width:90%"></div>
+      <div class="ds-page-header">
+        <div class="ds-ph-left">
+          <div class="ds-skeleton" style="height:24px;width:220px;border-radius:6px"></div>
+          <div class="ds-skeleton" style="height:14px;width:380px;max-width:90%;margin-top:8px;border-radius:4px"></div>
+          <div class="ds-skeleton" style="height:12px;width:200px;max-width:80%;margin-top:6px;border-radius:4px"></div>
         </div>
       </div>
       <div class="obs-kpi-grid">
@@ -275,14 +276,20 @@ function _render(container, d) {
     <div class="obs-wrap">
 
       <!-- En-tête -->
-      <div class="obs-header">
-        <div>
-          <h1 class="obs-title">Observatoire IA</h1>
-          <p class="obs-subtitle">Vision en temps réel de l'adoption de l'intelligence artificielle par les organisations participantes.</p>
+      <div class="ds-page-header">
+        <div class="ds-ph-left">
+          <h1 class="ds-ph-title">Observatoire IA</h1>
+          <p class="ds-ph-sub">Vision en temps réel de l'adoption de l'IA par les organisations participantes.</p>
+          <div class="ds-ph-meta">
+            <span class="ds-ph-meta-item">🏢 <strong>${d.total}</strong> organisations</span>
+            <span class="ds-ph-meta-sep">·</span>
+            <span class="ds-ph-meta-item">Score moyen : <strong style="color:${avgColor}">${d.imai_avg.toFixed(1)}/100</strong></span>
+            <span class="ds-ph-meta-sep">·</span>
+            <span class="ds-ph-meta-item">Mis à jour le ${today}</span>
+          </div>
         </div>
-        <div class="obs-header-right">
-          ${d.is_demo ? '<span class="obs-demo-badge">Données démo</span>' : ""}
-          <span class="obs-updated">Mis à jour le ${today}</span>
+        <div class="ds-ph-right">
+          ${d.is_demo ? '<span class="ds-badge ds-badge-warn">Données démo</span>' : ""}
         </div>
       </div>
 
@@ -421,47 +428,6 @@ function _injectStyles() {
       flex-direction: column;
       gap: 16px;
     }
-
-    /* Header */
-    .obs-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .obs-title {
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-
-    .obs-subtitle {
-      font-size: 13px;
-      color: var(--text-sub);
-      max-width: 520px;
-      line-height: 1.5;
-    }
-
-    .obs-header-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-shrink: 0;
-    }
-
-    .obs-demo-badge {
-      font-size: 11px;
-      font-weight: 700;
-      background: var(--color-warn-bg);
-      color: var(--color-warn-on);
-      border-radius: 4px;
-      padding: 3px 8px;
-    }
-
-    .obs-updated { font-size: 12px; color: var(--text-sub); }
 
     /* Loading */
     .obs-loading {

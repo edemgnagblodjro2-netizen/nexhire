@@ -113,14 +113,19 @@ function _render(el) {
 
   el.innerHTML = `
 <div class="gov-wrap">
-  <div class="gov-header">
-    <div>
-      <h1 class="gov-h1">Gouvernance IA</h1>
-      <p class="gov-sub">${fw.icon} ${fw.label} · Politique d'utilisation · Registre des outils IA</p>
-      <p class="gov-fw-desc">${fw.desc}</p>
+  <div class="ds-page-header">
+    <div class="ds-ph-left">
+      <h1 class="ds-ph-title">Gouvernance IA</h1>
+      <p class="ds-ph-sub">${fw.icon} ${fw.label} · Politique d'utilisation · Registre des outils IA</p>
+      <p class="ds-ph-desc">${fw.desc}</p>
+      <div class="ds-ph-meta">
+        <span class="ds-ph-meta-item">Conformité actuelle :&nbsp;<strong style="color:${cc}">${sc}%</strong></span>
+        <span class="ds-ph-meta-sep">·</span>
+        <span class="ds-ph-meta-item">${_items().length} points de contrôle</span>
+      </div>
     </div>
     <div class="gov-ring">
-      <svg viewBox="0 0 36 36" style="width:88px;height:88px;transform:rotate(-90deg)">
+      <svg viewBox="0 0 36 36" style="width:80px;height:80px;transform:rotate(-90deg)">
         <circle cx="18" cy="18" r="15.9" fill="none" style="stroke:var(--border)" stroke-width="3"/>
         <circle cx="18" cy="18" r="15.9" fill="none" stroke="${cc}" stroke-width="3"
           stroke-dasharray="${sc} ${100-sc}" stroke-dashoffset="25" stroke-linecap="round"/>
@@ -370,10 +375,6 @@ function _css() {
   const s = document.createElement('style'); s.id='gov-css';
   s.textContent = `
 .gov-wrap{padding:var(--sp-8);max-width:960px;margin:0 auto;font-family:var(--font)}
-.gov-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:16px;flex-wrap:wrap}
-.gov-h1{font-size:22px;font-weight:700;color:var(--text);margin:0 0 4px}
-.gov-sub{font-size:13px;color:var(--text-sub);margin:0}
-.gov-fw-desc{font-size:12px;color:var(--muted);margin:4px 0 0;max-width:480px}
 .gov-fw-picker{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
 .gov-fw-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
 .gov-fw-btn{background:var(--bg);border:1px solid var(--border);color:var(--text-2);border-radius:var(--r);padding:6px 12px;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .15s}

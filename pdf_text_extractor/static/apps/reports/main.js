@@ -10,10 +10,13 @@ let _st = null;
 function _render(el) {
   el.innerHTML = `
 <div class="rpt-wrap">
-  <div class="rpt-header">
-    <div>
-      <h1 class="rpt-h1">Rapports</h1>
-      <p class="rpt-sub">Rapports de diagnostic, rapport régional de cohorte et exports de données.</p>
+  <div class="ds-page-header">
+    <div class="ds-ph-left">
+      <h1 class="ds-ph-title">Rapports</h1>
+      <p class="ds-ph-sub">Diagnostics individuels, rapport régional de cohorte et exports de données.</p>
+    </div>
+    <div class="ds-ph-right">
+      <a class="rpt-btn-primary" href="/rapport/regional/${_st.slug}" target="_blank" style="white-space:nowrap">📊 Rapport régional →</a>
     </div>
   </div>
 
@@ -22,17 +25,16 @@ function _render(el) {
       <div class="rpt-card-icon">📊</div>
       <div class="rpt-card-body">
         <h3>Rapport régional de cohorte</h3>
-        <p>Vue d'ensemble consolidée de la cohorte : score IMAI moyen, répartition par secteur, niveaux de maturité et tendances. Idéal pour le conseil d'administration et les partenaires.</p>
+        <p>Vue d'ensemble consolidée : score IMAI moyen, répartition par secteur, niveaux de maturité et tendances. Idéal pour le CA et les partenaires.</p>
         <div class="rpt-tags"><span>PDF</span><span>Cobranding</span><span>Partageable</span></div>
       </div>
-      <a class="rpt-btn-primary" href="/rapport/regional/${_st.slug}" target="_blank">Voir le rapport régional →</a>
     </div>
 
     <div class="rpt-card">
       <div class="rpt-card-icon">🎯</div>
       <div class="rpt-card-body">
         <h3>Rapports individuels</h3>
-        <p>Rapport personnalisé pour chaque entreprise membre : score détaillé par dimension, priorités d'action et recommandations ciblées.</p>
+        <p>Rapport personnalisé par organisation : score par dimension, priorités d'action et recommandations ATLAS ciblées.</p>
         <div class="rpt-tags"><span>PDF</span><span>Cobranding</span><span>Email auto</span></div>
       </div>
       <p class="rpt-card-note">↓ Sélectionner une session ci-dessous</p>
@@ -173,9 +175,6 @@ function _css() {
   const s = document.createElement('style'); s.id = 'rpt-css';
   s.textContent = `
 .rpt-wrap{padding:var(--sp-8);max-width:1000px;margin:0 auto;font-family:var(--font)}
-.rpt-header{margin-bottom:28px}
-.rpt-h1{font-size:22px;font-weight:700;color:var(--text);margin:0 0 4px}
-.rpt-sub{font-size:13px;color:var(--text-sub);margin:0}
 .rpt-grid-top{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px}
 .rpt-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--sp-6);display:flex;flex-direction:column;gap:12px}
 .rpt-card-featured{border-color:var(--primary);background:linear-gradient(135deg,var(--primary-lt),var(--bg))}
