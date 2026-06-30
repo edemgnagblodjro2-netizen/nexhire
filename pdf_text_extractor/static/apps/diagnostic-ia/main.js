@@ -59,6 +59,7 @@ function _reset(partnerSlug, context) {
     currentQ:         null,
     totalCore:        10,
     answeredCore:     0,
+    dimensionsSeen:   [],
     results:          null,
     historySessions:  [],
     step: "loading",  // loading | history | welcome | profile | questions | calculating | results
@@ -337,14 +338,32 @@ function _showQuestion(container) {
   const progress = Math.round((_state.answeredCore / _state.totalCore) * 100);
   const dimLabel = DIMENSION_LABELS[q.dimension] || q.dimension;
 
+  // Track dimension order (driven by API sequence)
+  if (!_state.dimensionsSeen.includes(q.dimension)) {
+    _state.dimensionsSeen.push(q.dimension);
+  }
+  const dimIndex = _state.dimensionsSeen.length;
+  const dimTotal = 5;
+
+  // Estimated time remaining (avg ~30s per question)
+  const remaining = _state.totalCore - _state.answeredCore;
+  const timeLeft  = Math.ceil(remaining * 0.5);
+  const timeLabel = timeLeft <= 1 ? '< 1 min' : `~${timeLeft} min`;
+
   container.innerHTML = `
     <div class="dia-wrap">
-      <div class="dia-progress-bar-wrap">
-        <div class="dia-progress-bar" style="width:${progress}%"></div>
-      </div>
-      <div class="dia-progress-label">
-        <span class="dia-dim-chip">${dimLabel}</span>
-        <span class="dia-progress-count">${_state.answeredCore} / ${_state.totalCore} questions</span>
+      <div class="dia-progress-hd">
+        <div class="dia-progress-top">
+          <span class="dia-dim-chip">${dimLabel}</span>
+          <span class="dia-dim-pos">Dimension ${dimIndex} sur ${dimTotal}</span>
+        </div>
+        <div class="dia-progress-bar-wrap">
+          <div class="dia-progress-bar" style="width:${progress}%"></div>
+        </div>
+        <div class="dia-progress-foot">
+          <span class="dia-progress-num">Question <strong>${_state.answeredCore + 1}</strong> sur ${_state.totalCore}</span>
+          <span class="dia-progress-time">⏱ ${timeLabel} restante${timeLeft > 1 ? 's' : ''}</span>
+        </div>
       </div>
       <div class="dia-card dia-question-card">
         <div class="dia-atlas-avatar small">🤖</div>
@@ -423,6 +442,17 @@ async function _finalize(container) {
   try {
     const results = await _post(`${API}/session/${_state.sessionId}/complete`, {}, 15000);
     _state.results = results;
+    // Persist summary for Dashboard dynamic update
+    try {
+      localStorage.setItem(`nh_last_diag_${_state.partnerSlug}`, JSON.stringify({
+        score:     Math.round(results.imai_score),
+        niveau:    results.niveau,
+        company:   results.company_name || '',
+        date:      new Date().toISOString(),
+        sessionId: results.session_id,
+        scores:    results.scores || {},
+      }));
+    } catch {}
     _state.step = "results";
     _render(container);
   } catch (err) {
@@ -877,24 +907,31 @@ function _injectStyles() {
     }
 
     /* Progress */
-    .dia-progress-bar-wrap {
-      height: 4px; background: var(--border);
-      border-radius: 2px; margin-bottom: 10px; overflow: hidden;
-    }
-    .dia-progress-bar {
-      height: 100%; background: var(--primary);
-      border-radius: 2px; transition: width .4s ease;
-    }
-    .dia-progress-label {
+    .dia-progress-hd { margin-bottom: 20px; }
+    .dia-progress-top {
       display: flex; justify-content: space-between;
-      align-items: center; margin-bottom: 16px;
+      align-items: center; margin-bottom: 10px;
     }
     .dia-dim-chip {
       background: color-mix(in srgb, var(--primary) 12%, transparent);
       color: var(--primary); border-radius: 20px;
-      padding: 3px 12px; font-size: 12px; font-weight: 600;
+      padding: 3px 12px; font-size: 12px; font-weight: 700;
     }
-    .dia-progress-count { font-size: 13px; color: var(--text-sub); }
+    .dia-dim-pos { font-size: 12px; color: var(--text-sub); font-weight: 500; }
+    .dia-progress-bar-wrap {
+      height: 8px; background: var(--border);
+      border-radius: 4px; margin-bottom: 8px; overflow: hidden;
+    }
+    .dia-progress-bar {
+      height: 100%; background: var(--primary);
+      border-radius: 4px; transition: width .5s ease;
+    }
+    .dia-progress-foot {
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .dia-progress-num { font-size: 13px; color: var(--text-sub); }
+    .dia-progress-num strong { color: var(--text); }
+    .dia-progress-time { font-size: 12px; color: var(--primary); font-weight: 600; }
 
     /* Question */
     .dia-question-card { gap: 16px; }

@@ -316,25 +316,28 @@ const CSS = `
 </style>`;
 
 const DEMO_RECS = [
-  {
-    dim: 'Stratégie',
-    text: 'Organisez un atelier de 2 h pour cartographier 3 cas d\'usage IA à fort potentiel dans les 30 prochains jours.',
-  },
-  {
-    dim: 'Personnes',
-    text: 'Identifiez un « champion numérique » dans votre équipe et évaluez les compétences IA actuelles de l\'organisation.',
-  },
-  {
-    dim: 'Gouvernance',
-    text: 'Prenez connaissance de la Loi 25 et vos obligations concernant la protection des renseignements personnels avec l\'IA.',
-  },
+  { dim: 'Stratégie',   text: 'Organisez un atelier de 2 h pour cartographier 3 cas d\'usage IA à fort potentiel dans les 30 prochains jours.' },
+  { dim: 'Personnes',   text: 'Identifiez un « champion numérique » dans votre équipe et évaluez les compétences IA actuelles de l\'organisation.' },
+  { dim: 'Gouvernance', text: 'Prenez connaissance de la Loi 25 et vos obligations concernant la protection des renseignements personnels avec l\'IA.' },
 ];
 
 const DEMO_ACTIVITY = [
   { icon: '📊', color: 'var(--primary-lt)',    title: 'Diagnostic IA disponible', meta: 'Évaluez la maturité IA de votre organisation', time: 'Maintenant' },
-  { icon: '🤖', color: 'var(--color-info-bg)', title: 'ATLAS est prêt', meta: 'Votre copilote IA personnel vous attend', time: 'Disponible' },
-  { icon: '📄', color: 'var(--color-ok-bg)',   title: 'Rapport régional', meta: 'Synthèse de votre programme partenaire', time: 'Disponible' },
+  { icon: '🤖', color: 'var(--color-info-bg)', title: 'ATLAS est prêt',           meta: 'Votre copilote IA personnel vous attend',       time: 'Disponible' },
+  { icon: '📄', color: 'var(--color-ok-bg)',   title: 'Rapport régional',         meta: 'Synthèse de votre programme partenaire',        time: 'Disponible' },
 ];
+
+const DIM_LABELS_DB = {
+  strategie: 'Stratégie', personnes: 'Personnes', processus: 'Processus',
+  technologies: 'Technologies', gouvernance: 'Gouvernance',
+};
+const DIM_GUIDANCE = {
+  strategie:    'Définissez vos objectifs IA à 6 et 12 mois avec une feuille de route claire et des indicateurs mesurables.',
+  personnes:    'Identifiez un champion IA dans votre équipe et planifiez la montée en compétences de votre organisation.',
+  processus:    'Cartographiez vos tâches répétitives à fort potentiel d\'automatisation et priorisez les gains rapides.',
+  technologies: 'Évaluez vos outils actuels et identifiez les solutions IA adaptées à votre secteur d\'activité.',
+  gouvernance:  'Complétez la checklist Loi 25, rédigez votre politique d\'utilisation de l\'IA et inventoriez vos outils.',
+};
 
 function _kpiCard({ label, value, icon, iconBg, delta }) {
   return `
@@ -351,15 +354,47 @@ function _kpiCard({ label, value, icon, iconBg, delta }) {
 function _render(container, ctx) {
   const partnerName = ctx?.partner?.name || 'AgentHub';
   const partnerSlug = ctx?.partnerSlug  || 'demo';
-  const today = new Date().toLocaleDateString('fr-CA', { weekday: 'long', day: 'numeric', month: 'long' });
+  const today    = new Date().toLocaleDateString('fr-CA', { weekday: 'long', day: 'numeric', month: 'long' });
   const todayCap = today.charAt(0).toUpperCase() + today.slice(1);
+
+  // Read last diagnostic result from localStorage
+  let diag = null;
+  try {
+    const raw = localStorage.getItem(`nh_last_diag_${partnerSlug}`);
+    if (raw) diag = JSON.parse(raw);
+  } catch {}
+  const hasDiag = !!diag;
+
+  // Derived display values (only used when hasDiag)
+  const SCORE_COLOR = { debutant: 'var(--color-err)', intermediaire: 'var(--color-warn)', avance: 'var(--color-ok)' };
+  const NIVEAU_LBL  = { debutant: 'Débutant', intermediaire: 'Intermédiaire', avance: 'Avancé' };
+  const scoreColor  = hasDiag ? (SCORE_COLOR[diag.niveau] || 'var(--primary)') : null;
+  const scoreLabel  = hasDiag ? (NIVEAU_LBL[diag.niveau]  || '')               : null;
+  const dateLabel   = hasDiag ? new Date(diag.date).toLocaleDateString('fr-CA', { month: 'long', day: 'numeric' }) : null;
+
+  // Activity items — real if diagnostic done
+  const activityItems = hasDiag
+    ? [
+        { icon: '✅', color: 'var(--color-ok-bg)',   title: `Diagnostic complété · Score ${diag.score}/100`,   meta: `${diag.company} · Niveau ${scoreLabel}`, time: dateLabel },
+        { icon: '🤖', color: 'var(--color-info-bg)', title: 'ATLAS est prêt',                                   meta: 'Consultez vos recommandations personnalisées', time: 'Disponible' },
+        { icon: '📄', color: 'var(--color-ok-bg)',   title: 'Rapport régional',                                 meta: 'Synthèse de votre programme partenaire',       time: 'Disponible' },
+      ]
+    : DEMO_ACTIVITY;
+
+  // ATLAS recs — personalized from weakest dims if diagnostic done
+  const atlasRecs = hasDiag
+    ? Object.entries(diag.scores || {})
+        .sort(([, a], [, b]) => a - b)
+        .slice(0, 3)
+        .map(([dim]) => ({ dim: DIM_LABELS_DB[dim] || dim, text: DIM_GUIDANCE[dim] || '' }))
+    : DEMO_RECS;
 
   container.innerHTML = CSS + `
 <div class="db-root">
 
-  <div class="db-demo-notice">
+  ${!hasDiag ? `<div class="db-demo-notice">
     ℹ️ <strong>Données de démonstration</strong> — Complétez votre premier diagnostic pour voir vos vraies métriques.
-  </div>
+  </div>` : ''}
 
   <div class="db-header">
     <div>
@@ -370,18 +405,33 @@ function _render(container, ctx) {
 
   <div class="db-welcome">
     <div class="db-welcome-body">
-      <h3>Démarrez votre programme Accélérateur IA</h3>
-      <div class="db-welcome-track"><div class="db-welcome-fill" style="width:0%"></div></div>
-      <div class="db-welcome-hint">0 % complété · Complétez le diagnostic pour obtenir votre score de maturité</div>
+      ${hasDiag
+        ? `<h3>Score IMAI <strong style="color:rgba(255,255,255,.95)">${diag.score}/100</strong> · ${scoreLabel}</h3>
+           <div class="db-welcome-track"><div class="db-welcome-fill" style="width:${diag.score}%"></div></div>
+           <div class="db-welcome-hint">Évalué le ${dateLabel} · ${diag.company}</div>`
+        : `<h3>Démarrez votre programme Accélérateur IA</h3>
+           <div class="db-welcome-track"><div class="db-welcome-fill" style="width:0%"></div></div>
+           <div class="db-welcome-hint">0 % complété · Complétez le diagnostic pour obtenir votre score</div>`
+      }
     </div>
-    <button class="db-welcome-cta" data-action="diagnostic">Démarrer le diagnostic →</button>
+    <button class="db-welcome-cta" data-action="diagnostic">
+      ${hasDiag ? 'Voir mes résultats →' : 'Démarrer le diagnostic →'}
+    </button>
   </div>
 
   <div class="db-kpi-grid">
-    ${_kpiCard({ label: 'Maturité IA',     value: '—', icon: '🧠', iconBg: 'var(--primary-lt)',      delta: 'Complétez le diagnostic' })}
-    ${_kpiCard({ label: 'Diagnostics',     value: '0', icon: '📊', iconBg: 'var(--color-info-bg)',   delta: '1 diagnostic à démarrer' })}
-    ${_kpiCard({ label: 'Recommandations', value: '3', icon: '💡', iconBg: 'var(--color-warn-bg)',   delta: 'Prêtes pour votre équipe' })}
-    ${_kpiCard({ label: 'Alertes',         value: '0', icon: '🔔', iconBg: 'var(--bg-2)',            delta: 'Aucune alerte active' })}
+    ${_kpiCard({ label: 'Maturité IA',
+      value: hasDiag ? `<span style="color:${scoreColor}">${diag.score}</span>` : '—',
+      icon: '🧠', iconBg: 'var(--primary-lt)',
+      delta: hasDiag ? `Niveau ${scoreLabel}` : 'Complétez le diagnostic' })}
+    ${_kpiCard({ label: 'Diagnostics',
+      value: hasDiag ? '1' : '0',
+      icon: '📊', iconBg: 'var(--color-info-bg)',
+      delta: hasDiag ? `Dernier : ${dateLabel}` : '1 diagnostic à démarrer' })}
+    ${_kpiCard({ label: 'Recommandations', value: '3', icon: '💡', iconBg: 'var(--color-warn-bg)',
+      delta: hasDiag ? 'Basées sur votre score IMAI' : 'Prêtes pour votre équipe' })}
+    ${_kpiCard({ label: 'Alertes', value: '0', icon: '🔔', iconBg: 'var(--bg-2)',
+      delta: 'Aucune alerte active' })}
   </div>
 
   <div class="db-grid">
@@ -391,7 +441,7 @@ function _render(container, ctx) {
         <span class="db-card-title">Activité récente</span>
       </div>
       <div class="db-activity-list">
-        ${DEMO_ACTIVITY.map(a => `
+        ${activityItems.map(a => `
         <div class="db-activity-item">
           <div class="db-activity-dot" style="background:${a.color}">${a.icon}</div>
           <div class="db-activity-body">
@@ -411,8 +461,8 @@ function _render(container, ctx) {
         <button class="db-action-btn" data-action="diagnostic">
           <div class="db-action-icon" style="background:var(--primary-lt)">📊</div>
           <div class="db-action-body">
-            <strong>Démarrer le diagnostic</strong>
-            <span>Évaluer votre maturité IA</span>
+            <strong>${hasDiag ? 'Refaire le diagnostic' : 'Démarrer le diagnostic'}</strong>
+            <span>${hasDiag ? 'Mesurer votre progression' : 'Évaluer votre maturité IA'}</span>
           </div>
           <span class="db-action-chevron">›</span>
         </button>
@@ -440,10 +490,11 @@ function _render(container, ctx) {
   <div class="db-atlas-wrap">
     <div class="db-atlas-hd">
       <span class="db-atlas-badge">✨ ATLAS AI</span>
-      <span class="db-atlas-title">Recommandations prioritaires</span>
+      <span class="db-atlas-title">${hasDiag ? 'Vos priorités d\'action personnalisées' : 'Recommandations prioritaires'}</span>
+      ${!hasDiag ? '<span style="font-size:11px;color:var(--muted);margin-left:auto;font-weight:500">Démo</span>' : ''}
     </div>
     <div class="db-rec-list">
-      ${DEMO_RECS.map((r, i) => `
+      ${atlasRecs.map((r, i) => `
       <div class="db-rec">
         <div class="db-rec-num">${i + 1}</div>
         <div>
