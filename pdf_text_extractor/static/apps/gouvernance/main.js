@@ -161,7 +161,36 @@ function _render(el) {
 // ── Tab: Conformité ───────────────────────────────────────────────────────────
 function _renderConformite(phases) {
   const allItems = _items();
-  return phases.map(ph => {
+
+  // Bloc "3 actions prioritaires" — items non complétés, dans l'ordre naturel
+  const unchecked = allItems.filter(i => _st.checklist[i.id] !== 'done');
+  const top3 = unchecked.slice(0, 3);
+
+  const priorityBlock = top3.length > 0 ? `
+<div class="gov-priority-block">
+  <div class="gov-priority-hd">
+    <span>🎯</span>
+    <h3>Actions prioritaires</h3>
+    <span class="gov-priority-count">${unchecked.length} item${unchecked.length > 1 ? 's' : ''} restant${unchecked.length > 1 ? 's' : ''}</span>
+  </div>
+  <div class="gov-priority-list">
+    ${top3.map((item, i) => `
+    <div class="gov-priority-item">
+      <span class="gov-priority-num">${i + 1}</span>
+      <div class="gov-priority-info">
+        <div class="gov-priority-phase">${item.phase}</div>
+        <div class="gov-priority-label">${item.label}</div>
+      </div>
+      <button class="gov-check-quick" data-quick="${item.id}">Compléter ✓</button>
+    </div>`).join('')}
+  </div>
+</div>` : `
+<div class="ds-ph-context" style="background:var(--color-ok-soft);border-color:var(--color-ok-border);color:var(--color-ok-on);margin-bottom:20px">
+  <span class="ds-ph-context-icon">✅</span>
+  <div><strong>Référentiel complété !</strong> Tous les points de contrôle sont cochés pour ${(FRAMEWORKS[_st.framework] || FRAMEWORKS.loi25).label}.</div>
+</div>`;
+
+  return priorityBlock + phases.map(ph => {
     const items = allItems.filter(i => i.phase === ph);
     const done  = items.filter(i => _st.checklist[i.id] === 'done').length;
     return `
@@ -188,6 +217,7 @@ function _renderConformite(phases) {
 }
 
 // ── Tab: Politique ────────────────────────────────────────────────────────────
+
 function _renderPolitique() {
   const p = _st.pol;
   const generated = p.nom_org ? _genPolitique(p) : '';
@@ -336,6 +366,10 @@ function _bind(el) {
     _st.checklist[s.dataset.sel] = s.value; _save(); _render(el);
   }));
 
+  el.querySelectorAll('[data-quick]').forEach(b => b.addEventListener('click', () => {
+    _st.checklist[b.dataset.quick] = 'done'; _save(); _render(el);
+  }));
+
   const polGen = el.querySelector('#pol-gen');
   if (polGen) polGen.addEventListener('click', () => {
     _st.pol = { nom_org: el.querySelector('#pn')?.value||'', secteur: el.querySelector('#ps')?.value||'', responsable: el.querySelector('#pr')?.value||'', email: el.querySelector('#pe')?.value||'', usage_ia: el.querySelector('#pu')?.value||'' };
@@ -429,7 +463,19 @@ function _css() {
 .gov-del:hover{color:var(--color-err)}
 .gov-modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:1000}
 .gov-modal-box{background:var(--card);border-radius:var(--r-xl);padding:28px;width:540px;max-width:92vw;max-height:90vh;overflow-y:auto}
-@media(max-width:600px){.gov-wrap{padding:var(--sp-4)}.gov-grid2{grid-template-columns:1fr}.gov-sel{display:none}}
+.gov-priority-block{background:linear-gradient(135deg,color-mix(in srgb,var(--primary) 5%,var(--card)),var(--card));border:1px solid var(--primary-a10);border-radius:var(--r-lg);padding:20px 24px;margin-bottom:20px}
+.gov-priority-hd{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.gov-priority-hd h3{font-size:15px;font-weight:700;color:var(--text);margin:0;flex:1}
+.gov-priority-count{background:var(--bg-2);color:var(--muted);font-size:11px;font-weight:600;padding:2px 8px;border-radius:var(--r-pill)}
+.gov-priority-list{display:flex;flex-direction:column;gap:8px}
+.gov-priority-item{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:11px 16px}
+.gov-priority-num{width:24px;height:24px;border-radius:50%;background:var(--primary);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.gov-priority-info{flex:1;min-width:0}
+.gov-priority-phase{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px}
+.gov-priority-label{font-size:13px;font-weight:600;color:var(--text);line-height:1.4}
+.gov-check-quick{font-size:12px;font-weight:600;color:var(--color-ok-text);background:var(--color-ok-bg);border:none;border-radius:var(--r);padding:6px 12px;cursor:pointer;white-space:nowrap;flex-shrink:0;font-family:var(--font);transition:opacity .15s}
+.gov-check-quick:hover{opacity:.8}
+@media(max-width:600px){.gov-wrap{padding:var(--sp-4)}.gov-grid2{grid-template-columns:1fr}.gov-sel{display:none}.gov-check-quick{display:none}}
 @media print{.gov-tabs,.gov-btn-p,.gov-btn-outline,.gov-reg-hd button{display:none}.gov-pol-text{font-size:12pt;line-height:1.8}}
 `;
   document.head.appendChild(s);

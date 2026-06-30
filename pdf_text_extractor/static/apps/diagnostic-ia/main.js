@@ -449,12 +449,28 @@ function _showCalculatingError(container, msg) {
 
 // ── Screen: Results ───────────────────────────────────────────────────────────
 function _showResults(container) {
-  const r     = _state.results;
-  const score = r.imai_score;
-  const niv   = r.niveau;
-  const color = NIVEAU_COLORS[niv] || "var(--primary)";
+  const r       = _state.results;
+  const score   = r.imai_score;
+  const niv     = r.niveau;
+  const color   = NIVEAU_COLORS[niv] || "var(--primary)";
+  const company = r.company_name || "Votre organisation";
 
-  // Scores par dimension
+  // Dimension la plus faible → étape 1 personnalisée
+  const sortedDims  = Object.entries(r.scores).sort(([,a],[,b]) => a - b);
+  const weakestDim  = sortedDims[0][0];
+  const strongestDim = sortedDims[sortedDims.length - 1][0];
+
+  // Narration contextuelle ATLAS
+  const NIV_NARRATIVE = {
+    debutant:      "est au début de son parcours IA. Des gains rapides sont accessibles dès maintenant.",
+    intermediaire: "a de bonnes bases en IA. Il est temps de structurer et d'accélérer.",
+    avance:        "est en avance sur la maturité IA. L'enjeu est de consolider et d'innover.",
+  };
+  const narrative = `<strong>${company}</strong> ${NIV_NARRATIVE[niv] || NIV_NARRATIVE.intermediaire}
+    Point fort : <strong>${DIMENSION_LABELS[strongestDim]}</strong>.
+    Priorité d'action : <strong>${DIMENSION_LABELS[weakestDim]}</strong>.`;
+
+  // Barres de dimension
   const dimBars = Object.entries(r.scores).map(([dim, val]) => `
     <div class="dia-dim-row">
       <span class="dia-dim-name">${DIMENSION_LABELS[dim]}</span>
@@ -468,27 +484,17 @@ function _showResults(container) {
   let benchHtml = "";
   if (r.benchmark) {
     const b = r.benchmark;
-    const demoNote = b.is_demo ? `<span class="dia-demo-badge">DÉMO</span>` : `<span class="dia-sample">${b.sample_size} organisations</span>`;
+    const demoNote = b.is_demo
+      ? `<span class="dia-demo-badge">DÉMO</span>`
+      : `<span class="dia-sample">${b.sample_size} organisations</span>`;
     benchHtml = `
       <div class="dia-section">
         <h3>Comparaison sectorielle ${demoNote}</h3>
         <div class="dia-bench-row">
-          <div class="dia-bench-item">
-            <span class="dia-bench-val">${b.imai_avg.toFixed(1)}</span>
-            <span class="dia-bench-label">Moyenne</span>
-          </div>
-          <div class="dia-bench-item">
-            <span class="dia-bench-val">${b.imai_p25.toFixed(1)}</span>
-            <span class="dia-bench-label">25e percentile</span>
-          </div>
-          <div class="dia-bench-item highlight" style="--bench-color:${color}">
-            <span class="dia-bench-val">${score.toFixed(1)}</span>
-            <span class="dia-bench-label">Votre score</span>
-          </div>
-          <div class="dia-bench-item">
-            <span class="dia-bench-val">${b.imai_p75.toFixed(1)}</span>
-            <span class="dia-bench-label">75e percentile</span>
-          </div>
+          <div class="dia-bench-item"><span class="dia-bench-val">${b.imai_avg.toFixed(1)}</span><span class="dia-bench-label">Moyenne</span></div>
+          <div class="dia-bench-item"><span class="dia-bench-val">${b.imai_p25.toFixed(1)}</span><span class="dia-bench-label">25e percentile</span></div>
+          <div class="dia-bench-item highlight" style="--bench-color:${color}"><span class="dia-bench-val">${score.toFixed(1)}</span><span class="dia-bench-label">Votre score</span></div>
+          <div class="dia-bench-item"><span class="dia-bench-val">${b.imai_p75.toFixed(1)}</span><span class="dia-bench-label">75e percentile</span></div>
         </div>
       </div>`;
   }
@@ -497,14 +503,13 @@ function _showResults(container) {
   const recsHtml = Object.entries(r.recommendations).map(([dim, text], i) => `
     <div class="dia-rec">
       <div class="dia-rec-num">${i + 1}</div>
-      <div>
-        <strong>${DIMENSION_LABELS[dim]}</strong>
-        <p>${text}</p>
-      </div>
+      <div><strong>${DIMENSION_LABELS[dim]}</strong><p>${text}</p></div>
     </div>`).join("");
 
   container.innerHTML = `
     <div class="dia-wrap dia-results-wrap">
+
+      <!-- Score header -->
       <div class="dia-results-header">
         <div class="dia-gauge-wrap">
           <svg class="dia-gauge" viewBox="0 0 120 70">
@@ -524,6 +529,19 @@ function _showResults(container) {
         </div>
       </div>
 
+      <!-- Narration ATLAS -->
+      <div class="ds-ph-context">
+        <span class="ds-ph-context-icon">🤖</span>
+        <div><strong>Atlas ·</strong> ${narrative}</div>
+      </div>
+
+      <!-- 3 Prochaines étapes — section la plus visible -->
+      <div class="dia-section">
+        <h3>🎯 Vos 3 prochaines étapes</h3>
+        ${_buildStepsHtml(weakestDim)}
+      </div>
+
+      <!-- Scores par dimension -->
       <div class="dia-section">
         <h3>Scores par dimension</h3>
         ${dimBars}
@@ -531,24 +549,29 @@ function _showResults(container) {
 
       ${benchHtml}
 
-      <div class="dia-section">
-        <h3>Vos 3 priorités d'action</h3>
+      <!-- Recommandations ATLAS -->
+      <div class="dia-section" id="dia-recs">
+        <h3>Recommandations ATLAS</h3>
         ${recsHtml}
       </div>
 
+      <!-- Rapport complet (gate email) -->
       <div class="dia-section" id="dia-gate-section">
         <h3>📄 Votre rapport complet</h3>
-        <p style="font-size:14px;color:var(--dia-muted);margin-bottom:16px">Entrez votre courriel pour accéder à votre rapport personnalisé : forces, plan d'action 30/90/180 jours et recommandations ATLAS.</p>
+        <p style="font-size:14px;color:var(--text-sub);margin-bottom:16px">Entrez votre courriel pour accéder à votre rapport personnalisé : forces, plan d'action 30/90/180 jours et recommandations ATLAS.</p>
         <form id="dia-email-form" class="dia-email-form" novalidate>
           <input id="dia-email-input" type="email" placeholder="votre@courriel.com" maxlength="254" required />
           <button type="submit" class="dia-btn-primary">Accéder au rapport →</button>
         </form>
         <div id="dia-email-msg" style="display:none;margin-top:10px;font-size:13px"></div>
         <div id="dia-rapport-revealed" style="display:none;margin-top:16px">
-          <a class="dia-btn-primary" href="/rapport/${r.session_id}" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">
+          <a class="dia-btn-primary" href="/rapport/${r.session_id}" target="_blank" rel="noopener"
+            style="display:block;text-align:center;text-decoration:none">
             Voir mon rapport complet →
           </a>
-          <p style="font-size:12px;color:var(--dia-muted);margin-top:8px;text-align:center">Un lien vous a également été envoyé par courriel.</p>
+          <p style="font-size:12px;color:var(--muted);margin-top:8px;text-align:center">
+            Un lien vous a également été envoyé par courriel.
+          </p>
         </div>
       </div>
 
@@ -559,13 +582,14 @@ function _showResults(container) {
       </div>
     </div>`;
 
+  _bindResultsActions(container);
+
   _el("dia-email-form")?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const email = _el("dia-email-input").value.trim();
     if (!email) return;
     const btn = _el("dia-email-form").querySelector("button");
-    btn.disabled = true;
-    btn.textContent = "…";
+    btn.disabled = true; btn.textContent = "…";
     try {
       await _patch(`${API}/session/${_state.sessionId}/email`, { company_email: email });
       _revealRapport();
@@ -574,17 +598,71 @@ function _showResults(container) {
       msg.textContent = "Erreur lors de l'envoi. Réessayez.";
       msg.style.display = "block";
       msg.style.color = "var(--color-err)";
-      btn.disabled = false;
-      btn.textContent = "Accéder au rapport →";
+      btn.disabled = false; btn.textContent = "Accéder au rapport →";
     }
   });
 
   _el("dia-restart-btn")?.addEventListener("click", () => {
     const hasHistory = _state.historySessions?.length > 0;
-    _state.step = hasHistory ? "history" : "welcome";
-    _state.sessionId = null;
-    _state.results = null;
+    _state.step    = hasHistory ? "history" : "welcome";
+    _state.sessionId = null; _state.results = null;
     _render(container);
+  });
+}
+
+// ── 3 étapes personnalisées (basées sur la dimension la plus faible) ───────────
+function _buildStepsHtml(weakestDim) {
+  const STEP1 = {
+    gouvernance:  { icon: '⚖️', title: 'Renforcer la gouvernance IA',      desc: 'Complétez la checklist Loi 25, rédigez votre politique d\'utilisation de l\'IA et inventoriez vos outils.',           navId: 'gouvernance', cta: 'Ouvrir Gouvernance IA →' },
+    strategie:    { icon: '🎯', title: 'Structurer votre stratégie IA',     desc: 'Définissez vos objectifs IA à 6 et 12 mois avec les recommandations personnalisées d\'ATLAS ci-dessous.',           navId: null,           cta: 'Voir les recommandations ↓' },
+    personnes:    { icon: '👥', title: 'Former et mobiliser vos équipes',   desc: 'Identifiez les profils prioritaires à sensibiliser et planifiez un programme de montée en compétences IA.',        navId: null,           cta: 'Voir les recommandations ↓' },
+    processus:    { icon: '⚙️', title: 'Automatiser vos processus clés',    desc: 'Cartographiez les tâches répétitives à fort potentiel d\'automatisation dans vos opérations quotidiennes.',        navId: null,           cta: 'Voir les recommandations ↓' },
+    technologies: { icon: '💻', title: 'Optimiser vos outils IA',           desc: 'Évaluez et documentez les solutions IA utilisées dans votre organisation pour assurer leur conformité Loi 25.',  navId: 'gouvernance', cta: 'Registre des outils IA →' },
+  };
+  const s1 = STEP1[weakestDim] || STEP1.strategie;
+
+  return `
+    <div class="dia-steps-grid">
+      <div class="dia-step-card dia-step-accent">
+        <div class="dia-step-num">Priorité 1</div>
+        <div class="dia-step-icon">${s1.icon}</div>
+        <div class="dia-step-title">${s1.title}</div>
+        <div class="dia-step-desc">${s1.desc}</div>
+        ${s1.navId
+          ? `<button class="dia-step-btn" data-nav="${s1.navId}">${s1.cta}</button>`
+          : `<button class="dia-step-btn dia-step-btn-outline" data-scroll="dia-recs">${s1.cta}</button>`}
+      </div>
+      <div class="dia-step-card">
+        <div class="dia-step-num">Priorité 2</div>
+        <div class="dia-step-icon">👁️</div>
+        <div class="dia-step-title">Comparer avec la cohorte</div>
+        <div class="dia-step-desc">Voyez où votre score se situe par rapport aux autres organisations de votre secteur et identifiez les meilleures pratiques.</div>
+        <button class="dia-step-btn" data-nav="observatoire">Voir l'Observatoire →</button>
+      </div>
+      <div class="dia-step-card">
+        <div class="dia-step-num">Priorité 3</div>
+        <div class="dia-step-icon">📄</div>
+        <div class="dia-step-title">Accéder à votre rapport complet</div>
+        <div class="dia-step-desc">Plan d'action 30/90/180 jours, forces, axes de progrès — votre feuille de route IA personnalisée par ATLAS.</div>
+        <button class="dia-step-btn dia-step-btn-outline" data-scroll="dia-gate-section">Déverrouiller le rapport →</button>
+      </div>
+    </div>`;
+}
+
+// ── Navigation depuis les résultats ──────────────────────────────────────────
+function _bindResultsActions(container) {
+  container.querySelectorAll('[data-nav]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const navId = btn.dataset.nav;
+      history.pushState({ id: navId }, '', `/workspace/${_state.partnerSlug}/${navId}`);
+      window.dispatchEvent(new PopStateEvent('popstate', { state: { id: navId } }));
+    });
+  });
+  container.querySelectorAll('[data-scroll]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.getElementById(btn.dataset.scroll)
+        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   });
 }
 
@@ -990,6 +1068,36 @@ function _injectStyles() {
       background: color-mix(in srgb, var(--primary) 8%, transparent);
     }
 
+    /* Step cards (3 prochaines étapes) */
+    .dia-steps-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 8px;
+    }
+    .dia-step-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r-lg); padding: 20px 18px;
+      display: flex; flex-direction: column; gap: 8px;
+      transition: box-shadow .15s, border-color .15s;
+    }
+    .dia-step-card:hover { box-shadow: var(--shadow-sm); border-color: var(--border-2); }
+    .dia-step-accent { border-left: 3px solid var(--primary); }
+    .dia-step-num { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+    .dia-step-icon { font-size: 26px; }
+    .dia-step-title { font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.3; }
+    .dia-step-desc { font-size: 13px; color: var(--text-sub); line-height: 1.5; flex: 1; }
+    .dia-step-btn {
+      background: var(--primary); color: #fff;
+      border: none; border-radius: var(--r);
+      padding: 9px 14px; font-size: 13px; font-weight: 600;
+      cursor: pointer; font-family: var(--font);
+      text-align: center; transition: opacity .15s; margin-top: 4px;
+    }
+    .dia-step-btn:hover { opacity: .88; }
+    .dia-step-btn-outline {
+      background: transparent; color: var(--primary);
+      border: 1.5px solid var(--primary);
+    }
+    .dia-step-btn-outline:hover { background: var(--primary-a10); opacity: 1; }
+
     /* Responsive */
     @media (max-width: 540px) {
       .dia-field-row { grid-template-columns: 1fr; }
@@ -997,6 +1105,7 @@ function _injectStyles() {
       .dia-results-header { flex-direction: column; text-align: center; }
       .dia-email-form { flex-direction: column; }
       .dia-dim-name { min-width: 80px; font-size: 12px; }
+      .dia-steps-grid { grid-template-columns: 1fr; }
     }
   `;
   document.head.appendChild(style);

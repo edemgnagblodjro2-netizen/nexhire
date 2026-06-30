@@ -263,13 +263,14 @@ function _render(container, d) {
     </div>`).join("");
 
   const actions     = _buildActions(d);
-  const actionItems = actions.map(a => `
-    <div class="obs-action-item">
-      <span class="obs-action-icon">${a.icon}</span>
-      <div>
-        <strong>${a.title}</strong>
-        <p>${a.desc}</p>
+  const actionItems = actions.map((a, i) => `
+    <div class="obs-action-card">
+      <div class="obs-action-card-top">
+        <span class="obs-action-num">${i + 1}</span>
+        <span class="obs-action-icon">${a.icon}</span>
       </div>
+      <strong>${a.title}</strong>
+      <p>${a.desc}</p>
     </div>`).join("");
 
   container.innerHTML = `
@@ -333,13 +334,22 @@ function _render(container, d) {
         </div>
       </div>
 
-      <!-- Insights IA -->
+      <!-- Insights + Actions ATLAS (avant les graphiques) -->
       <div class="obs-section obs-insights-section">
         <div class="obs-insights-header">
-          <span class="obs-insights-badge">✦ Insights IA</span>
-          <span class="obs-insights-sub">Observations générées automatiquement</span>
+          <span class="obs-insights-badge">🤖 ATLAS · Observations</span>
+          <span class="obs-insights-sub">Générées automatiquement depuis les données de votre cohorte</span>
         </div>
         <div class="obs-insights-list">${insightItems}</div>
+      </div>
+
+      <!-- Actions recommandées — immédiatement après les insights -->
+      <div class="obs-section">
+        <div class="obs-actions-hd">
+          <h3>🎯 Actions recommandées pour votre programme</h3>
+          <span class="obs-actions-sub">Basées sur les dimensions les plus faibles de vos organisations membres</span>
+        </div>
+        <div class="obs-action-cards">${actionItems}</div>
       </div>
 
       <!-- Niveaux de maturité -->
@@ -386,13 +396,6 @@ function _render(container, d) {
         <h3>Scores moyens par dimension</h3>
         <div class="obs-dims">${dimBars}</div>
         <p class="obs-dims-note">Pondérations : Stratégie 25% · Gouvernance 25% · Technologies 20% · Processus 20% · Personnes 10%</p>
-      </div>
-
-      <!-- Actions recommandées -->
-      <div class="obs-section">
-        <h3>Actions recommandées pour votre programme</h3>
-        <p class="obs-actions-intro">Basées sur les dimensions les plus faibles de vos organisations membres.</p>
-        <div class="obs-actions">${actionItems}</div>
       </div>
 
       <!-- Rapport régional -->
@@ -672,11 +675,30 @@ function _injectStyles() {
 
     .obs-dims-note { font-size: 11px; color: var(--text-sub); font-style: italic; }
 
-    /* Actions recommandées */
-    .obs-actions-intro { font-size: 13px; color: var(--text-sub); margin-bottom: 14px; }
+    /* Actions recommandées — cards */
+    .obs-actions-hd { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+    .obs-actions-hd h3 { font-size: 15px; font-weight: 700; margin: 0; }
+    .obs-actions-sub { font-size: 12px; color: var(--muted); }
 
-    .obs-actions { display: flex; flex-direction: column; gap: 10px; }
+    .obs-action-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
 
+    .obs-action-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r-lg); padding: 18px;
+      display: flex; flex-direction: column; gap: 6px;
+      border-left: 3px solid var(--primary);
+      transition: box-shadow .15s;
+    }
+    .obs-action-card:hover { box-shadow: var(--shadow-sm); }
+    .obs-action-card-top { display: flex; align-items: center; justify-content: space-between; }
+    .obs-action-num {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .07em; color: var(--muted);
+    }
+    .obs-action-card strong { font-size: 14px; font-weight: 700; color: var(--text); }
+    .obs-action-card p { font-size: 13px; color: var(--text-sub); margin: 0; line-height: 1.5; }
+
+    /* (legacy selectors kept for compat) */
     .obs-action-item {
       display: flex; gap: 14px; align-items: flex-start;
       padding: 12px 14px;
@@ -749,12 +771,13 @@ function _injectStyles() {
 
     /* Responsive */
     @media (max-width: 640px) {
-      .obs-kpi-grid      { grid-template-columns: 1fr 1fr; }
+      .obs-kpi-grid        { grid-template-columns: 1fr 1fr; }
       .obs-kpi-grid > :last-child { grid-column: span 2; }
-      .obs-kpi-secondary { grid-template-columns: 1fr; }
-      .obs-two-col       { grid-template-columns: 1fr; }
-      .obs-wrap          { padding: 16px 12px 40px; }
-      .obs-bar-label     { min-width: 90px; max-width: 90px; }
+      .obs-kpi-secondary   { grid-template-columns: 1fr; }
+      .obs-two-col         { grid-template-columns: 1fr; }
+      .obs-wrap            { padding: 16px 12px 40px; }
+      .obs-bar-label       { min-width: 90px; max-width: 90px; }
+      .obs-action-cards    { grid-template-columns: 1fr; }
     }
   `;
   document.head.appendChild(style);
