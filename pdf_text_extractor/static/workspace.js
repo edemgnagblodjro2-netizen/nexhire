@@ -240,7 +240,7 @@ function _applyBranding(p) {
 function _applyUserInfo(profile) {
   if (!profile) return;
 
-  const fullName = profile.organization_name ? profile.full_name || '' : '';
+  const fullName = profile.full_name || '';
   const displayName = fullName || profile.email?.split('@')[0] || '—';
   const parts = displayName.trim().split(' ');
   const firstName = parts[0] || '';

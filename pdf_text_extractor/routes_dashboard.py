@@ -1,5 +1,4 @@
 """Dashboard exécutif — vue DG / owner : santé de l'organisation par département."""
-from __future__ import annotations
 
 from datetime import date, timedelta
 
