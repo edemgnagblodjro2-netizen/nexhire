@@ -348,6 +348,9 @@ function _showTokenModal(sa, token) {
   });
 
   document.querySelector('#sa-tok-ok')?.addEventListener('click', _closeModal);
+
+  const _escHandler = (e) => { if (e.key === 'Escape') { document.removeEventListener('keydown', _escHandler); _closeModal(); } };
+  document.addEventListener('keydown', _escHandler);
 }
 
 // ── Create modal ──────────────────────────────────────────────────────────────

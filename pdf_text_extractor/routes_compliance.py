@@ -8,8 +8,7 @@ Droits des personnes concernées :
   GET  /api/compliance/alerts           → alertes sécurité non acquittées (admin)
   POST /api/compliance/alerts/{id}/ack  → acquitter une alerte (admin)
 """
-from __future__ import annotations
-
+import os
 from datetime import UTC, datetime
 
 from fastapi import APIRouter, Depends, HTTPException, Request
@@ -142,7 +141,7 @@ def request_deletion(
         if admin:
             from email_service import _send
             _send(
-                "edemgnagblodjro2@gmail.com",
+                os.environ.get("DPO_EMAIL", "dpo@nexhire.ca"),
                 f"Loi 25 — Demande de suppression reçue",
                 f"<p>Utilisateur : {uid}<br>Organisation : {oid}<br>"
                 f"Raison : {payload.reason or 'non précisée'}</p>"
@@ -165,7 +164,7 @@ def data_processing_manifest():
     """Registre des traitements de données — transparent et public."""
     return {
         "responsable":    "NexHire / Edem Gnagblodjro",
-        "contact_dpo":    "edemgnagblodjro2@gmail.com",
+        "contact_dpo":    os.environ.get("DPO_EMAIL", "dpo@nexhire.ca"),
         "loi_applicable": ["Loi 25 (Québec)", "PIPEDA (Canada fédéral)"],
         "traitements": [
             {

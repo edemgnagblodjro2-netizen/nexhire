@@ -1,6 +1,5 @@
 """Paramètres utilisateur — profil, mot de passe, SSO + formulaire contact public."""
-from __future__ import annotations
-
+import os
 from html import escape
 
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, status
@@ -57,7 +56,7 @@ def contact_form(payload: ContactRequest):
     </table>
     """
     email_service._send(
-        "edemgnagblodjro2@gmail.com",
+        os.environ.get("CONTACT_EMAIL", "support@nexhire.ca"),
         f"EIP — Nouveau contact : {escape(payload.name)} ({escape(payload.company)})",
         html,
     )

@@ -166,6 +166,12 @@ async function boot() {
       fetch(`/api/workspace/${slug}/apps`, { credentials: 'include', headers: _authHdr }),
     ]);
 
+    if (pRes.status === 401 || aRes.status === 401) {
+      localStorage.removeItem('nexhire_token');
+      localStorage.removeItem('nexhire_refresh_token');
+      window.location.href = `/inscription?partenaire=${slug}`;
+      return;
+    }
     if (!pRes.ok) throw new Error((await pRes.json()).detail || 'Workspace introuvable.');
     if (!aRes.ok) throw new Error((await aRes.json()).detail || 'Erreur chargement apps.');
 
