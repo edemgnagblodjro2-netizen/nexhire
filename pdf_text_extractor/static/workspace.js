@@ -533,6 +533,27 @@ function _initTopbar() {
     window.location.href = slug ? `/inscription?partenaire=${slug}` : '/inscription';
   });
 
+  // User menu — navigation items
+  const _userNavMap = {
+    'Mon profil':                'settings',
+    'Mon organisation':          'settings',
+    'Préférences notifications': 'settings',
+    'Inviter un utilisateur':    'identity',
+    'Support':                   'help',
+  };
+  $('ws-user-panel')?.querySelectorAll('.ws-menu-item').forEach(btn => {
+    if (btn.id === 'ws-logout-btn') return;
+    const title = btn.querySelector('.ws-menu-item-title')?.textContent?.trim();
+    const navId = _userNavMap[title];
+    if (!navId) return;
+    btn.addEventListener('click', () => {
+      _closeAllPanels();
+      const r = _resolveNavItems().find(n => n.id === navId);
+      if (r && r.enabled) _navigateTo(r);
+      else if (r) _toast(`${r.label} — module en cours de déploiement`, 'info');
+    });
+  });
+
   // Sidebar toggle
   $('ws-sidebar-toggle')?.addEventListener('click', _toggleSidebar);
   $('ws-collapse-btn')?.addEventListener('click', _toggleSidebar);

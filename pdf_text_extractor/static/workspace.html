@@ -280,12 +280,36 @@
 
     #ws-sidebar {
       width: var(--sidebar-w);
-      background: rgba(249,249,249,.96);
+      background: linear-gradient(180deg,
+        color-mix(in srgb, var(--primary, #0078d4) 40%, #001428) 0%,
+        color-mix(in srgb, var(--primary, #0078d4) 65%, #000) 55%,
+        var(--primary, #0078d4) 100%);
       backdrop-filter: blur(40px) saturate(180%);
       -webkit-backdrop-filter: blur(40px) saturate(180%);
-      border-right: 1px solid rgba(0,0,0,.06);
+      border-right: 1px solid rgba(0,0,0,.18);
       display: flex; flex-direction: column; flex-shrink: 0; overflow: hidden;
     }
+
+    /* ── Sidebar dark (brand gradient) — overrides texte ───────────── */
+    #ws-nav { scrollbar-color: rgba(255,255,255,.15) transparent; }
+    #ws-sidebar .ws-nav-label { color: rgba(255,255,255,.45); }
+    #ws-sidebar .ws-nav-item { color: rgba(255,255,255,.78); }
+    #ws-sidebar .ws-nav-item::before {
+      background: radial-gradient(circle at var(--rx,50%) var(--ry,50%),
+        rgba(255,255,255,.18) 0%, transparent 60%);
+    }
+    #ws-sidebar .ws-nav-item:hover:not(:disabled) { background: rgba(255,255,255,.1); color: #fff; }
+    #ws-sidebar .ws-nav-item.active { background: rgba(255,255,255,.18); color: #fff; font-weight: 600; }
+    #ws-sidebar .ws-nav-item.active::after { background: rgba(255,255,255,.9); }
+    #ws-sidebar .ws-nav-item.active .ws-nav-icon svg { stroke: #fff; }
+    #ws-sidebar .ws-nav-item.soon { opacity: .42; }
+    #ws-sidebar .ws-sidebar-divider { background: rgba(255,255,255,.1); }
+    #ws-sidebar-footer { border-top-color: rgba(255,255,255,.1); }
+    #ws-sidebar .ws-demo-label { color: rgba(255,255,255,.65); }
+    #ws-sidebar .ws-demo-switch { background: rgba(255,255,255,.25); }
+    #ws-sidebar .ws-demo-switch.on { background: rgba(255,255,255,.85); }
+    #ws-sidebar .ws-collapse-btn { color: rgba(255,255,255,.5); }
+    #ws-sidebar .ws-collapse-btn:hover { background: rgba(255,255,255,.1); color: rgba(255,255,255,.9); }
     #ws-nav { flex: 1; overflow-y: auto; overflow-x: hidden; }
 
     .ws-nav-section { padding: 16px 10px 4px; }
