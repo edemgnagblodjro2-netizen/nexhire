@@ -52,7 +52,7 @@ const NAV = [
     items: [
       { id: 'observatoire',      label: 'Observatoire',          iconKey: 'eye',      appSlug: 'observatoire' },
       { id: 'reports',           label: 'Rapports & Exports',    iconKey: 'file',     appSlug: 'reports' },
-      { id: 'enterprise-intel',  label: 'Coûts & Optimisation',  iconKey: 'chart',    appSlug: 'enterprise-intel', defaultSoon: true },
+      { id: 'enterprise-intel',  label: 'Coûts & Optimisation',  iconKey: 'chart',    appSlug: 'enterprise-intel' },
     ],
   },
   {
@@ -65,7 +65,7 @@ const NAV = [
   {
     section: 'Identity & Access',
     items: [
-      { id: 'identity', label: 'Utilisateurs & Accès', iconKey: 'users',  appSlug: 'identity', defaultSoon: true },
+      { id: 'identity', label: 'Utilisateurs & Accès', iconKey: 'users',  appSlug: 'identity' },
       { id: 'sso-mfa',  label: 'SSO & MFA',            iconKey: 'shield', appSlug: 'sso-mfa',  defaultSoon: true },
     ],
   },
@@ -251,7 +251,7 @@ function _applyUserInfo(profile) {
 }
 
 // Apps core livrées avec la plateforme — toujours disponibles sans besoin d'activation DB
-const CORE_APPS = new Set(['diagnostic-ia', 'gouvernance', 'observatoire', 'reports', 'settings', 'security', 'ms365', 'integrations']);
+const CORE_APPS = new Set(['diagnostic-ia', 'gouvernance', 'observatoire', 'reports', 'settings', 'security', 'ms365', 'integrations', 'enterprise-intel', 'identity']);
 
 // ── Nav resolution ────────────────────────────────────────────────────────────
 function _resolveNavItems() {
