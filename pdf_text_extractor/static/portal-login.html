@@ -453,6 +453,35 @@
         </p>
       </div>
 
+      <!-- ── Réinitialisation mot de passe ── -->
+      <div class="pl-section" id="section-reset">
+        <div class="pl-form-title">Nouveau mot de passe</div>
+        <p class="pl-form-sub">Choisissez un mot de passe sécurisé pour votre compte.</p>
+
+        <div id="reset-error"   class="ds-alert ds-alert-err" style="margin-bottom:16px;display:none"></div>
+        <div id="reset-success" class="ds-alert ds-alert-ok"  style="margin-bottom:16px;display:none"></div>
+
+        <form id="reset-form" onsubmit="handleResetPassword(event)">
+          <div class="pl-field">
+            <label class="pl-label" for="reset-password">Nouveau mot de passe</label>
+            <input class="ds-input pl-input" id="reset-password" type="password"
+                   placeholder="Minimum 12 caractères" required autocomplete="new-password">
+          </div>
+          <div class="pl-field">
+            <label class="pl-label" for="reset-confirm">Confirmer le mot de passe</label>
+            <input class="ds-input pl-input" id="reset-confirm" type="password"
+                   placeholder="Répétez le mot de passe" required autocomplete="new-password">
+          </div>
+          <button type="submit" class="ds-btn ds-btn-primary ds-btn-lg pl-submit" id="reset-btn">
+            Enregistrer le nouveau mot de passe
+          </button>
+        </form>
+
+        <p class="pl-secondary">
+          <a href="#" onclick="switchTab('login');return false">← Retour à la connexion</a>
+        </p>
+      </div>
+
       <!-- ── Inscription ── -->
       <div class="pl-section" id="section-signup">
 

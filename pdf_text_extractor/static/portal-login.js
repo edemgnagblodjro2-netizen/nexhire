@@ -11,8 +11,7 @@ const _partnerSlug = _params.get('partenaire') || null;
 // ── Onglets ──────────────────────────────────────────────────────────────────
 
 function switchTab(tab) {
-  const tabs     = ['login', 'signup', 'forgot'];
-  const sections = ['section-login', 'section-signup', 'section-forgot'];
+  const sections = ['section-login', 'section-signup', 'section-forgot', 'section-reset'];
   const tabBtns  = ['tab-login', 'tab-signup'];
 
   sections.forEach(id => {
@@ -280,9 +279,75 @@ async function handleSignup(e) {
   }
 }
 
+// ── Réinitialisation mot de passe ─────────────────────────────────────────────
+
+let _recoveryToken = null;
+
+async function handleResetPassword(e) {
+  e.preventDefault();
+  _hideEl('reset-error');
+  _hideEl('reset-success');
+  _setBtnLoading('reset-btn', true);
+
+  const password = document.getElementById('reset-password').value;
+  const confirm  = document.getElementById('reset-confirm').value;
+
+  if (password !== confirm) {
+    _setHTML('reset-error', 'Les mots de passe ne correspondent pas.');
+    _showEl('reset-error');
+    _setBtnLoading('reset-btn', false);
+    return;
+  }
+  if (password.length < 12) {
+    _setHTML('reset-error', 'Le mot de passe doit contenir au moins 12 caractères.');
+    _showEl('reset-error');
+    _setBtnLoading('reset-btn', false);
+    return;
+  }
+
+  try {
+    const res  = await fetch('/api/auth/update-password', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ access_token: _recoveryToken, new_password: password }),
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      _setHTML('reset-error', data.detail || 'Échec de la mise à jour. Réessayez ou demandez un nouveau lien.');
+      _showEl('reset-error');
+      return;
+    }
+
+    _setHTML('reset-success', 'Mot de passe mis à jour avec succès. Vous pouvez maintenant vous connecter.');
+    _showEl('reset-success');
+    document.getElementById('reset-form').style.display = 'none';
+
+    setTimeout(() => switchTab('login'), 2500);
+  } catch {
+    _setHTML('reset-error', 'Erreur réseau. Vérifiez votre connexion et réessayez.');
+    _showEl('reset-error');
+  } finally {
+    _setBtnLoading('reset-btn', false);
+  }
+}
+
 // ── Retour de confirmation Supabase ────────────────────────────────────────────
 // Quand l'utilisateur clique le lien de confirmation dans son email,
 // Supabase redirige vers /inscription avec les tokens dans le hash (#access_token=...).
+
+function _handleRecoveryRedirect() {
+  const hash        = new URLSearchParams(location.hash.replace(/^#/, ''));
+  const accessToken = hash.get('access_token');
+  const type        = hash.get('type');
+
+  if (!accessToken || type !== 'recovery') return false;
+
+  history.replaceState(null, '', location.pathname + location.search);
+  _recoveryToken = accessToken;
+  switchTab('reset');
+  return true;
+}
 
 async function _handleConfirmationRedirect() {
   const hash         = new URLSearchParams(location.hash.replace(/^#/, ''));
@@ -315,6 +380,7 @@ async function _handleConfirmationRedirect() {
 // ── Init ──────────────────────────────────────────────────────────────────────
 
 (async () => {
+  if (_handleRecoveryRedirect()) return;
   const handled = await _handleConfirmationRedirect();
   if (!handled) _initPartner();
 })();

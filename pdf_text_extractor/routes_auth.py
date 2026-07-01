@@ -189,7 +189,7 @@ def forgot_password(request: Request, payload: ForgotPasswordPayload):
     """Déclenche l'email de réinitialisation Supabase. Réponse identique quelle que soit l'adresse."""
     try:
         app_url = os.environ.get("APP_URL", "https://myportal.nexhire.ca")
-        anon_client().auth.reset_password_for_email(payload.email, {"redirect_to": app_url})
+        anon_client().auth.reset_password_for_email(payload.email, {"redirect_to": f"{app_url}/inscription"})
     except Exception:
         pass
     return {"status": "ok", "message": "Si cet email est enregistré, un lien de réinitialisation vous a été envoyé."}
