@@ -50,22 +50,18 @@
       align-items: center;
       gap: 8px;
       padding: 0 8px 0 4px;
-      border-right: 1px solid rgba(0,0,0,.18);
+      border-right: 1px solid rgba(0,0,0,.10);
       height: 100%;
       transition: width .2s ease;
       overflow: hidden;
-      background: linear-gradient(160deg, #003570 0%, #004E9A 45%, var(--primary) 100%);
+      background: #fff;
     }
 
     /* ── Brand section icon/text overrides ─────────────────────────── */
-    #ws-topbar-brand .ws-icon-btn { color: rgba(255,255,255,.82); }
-    #ws-topbar-brand .ws-icon-btn::before {
-      background: radial-gradient(circle at var(--rx,50%) var(--ry,50%),
-        rgba(255,255,255,.18) 0%, transparent 70%);
-    }
-    #ws-topbar-brand .ws-icon-btn:hover { background: rgba(255,255,255,.14); color: #fff; }
-    #ws-program-name { color: rgba(255,255,255,.96); }
-    #ws-powered-by   { color: rgba(255,255,255,.60); }
+    #ws-topbar-brand .ws-icon-btn { color: var(--text-sub); }
+    #ws-topbar-brand .ws-icon-btn:hover { background: rgba(0,0,0,.05); color: var(--text); }
+    #ws-program-name { color: var(--text); }
+    #ws-powered-by   { color: var(--muted); }
 
     #ws-logo { height: 26px; width: auto; object-fit: contain; display: none; flex-shrink: 0; }
 
