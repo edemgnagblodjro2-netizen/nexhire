@@ -9,9 +9,7 @@
   <link rel="stylesheet" href="/static/design-system.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html, body { height: 100%; }
-
     body {
       font-family: var(--font);
       background: var(--bg);
@@ -22,17 +20,18 @@
       height: 100dvh;
     }
 
-    /* ── Topbar ─────────────────────────────────────────────────────── */
+    /* ── Topbar ───────────────────────────────────────────────────── */
     #ws-topbar {
       height: var(--topbar-h);
       background: var(--card);
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
-      padding: 0 16px 0 0;
-      gap: 8px;
+      padding: 0 12px 0 0;
+      gap: 4px;
       flex-shrink: 0;
       z-index: 20;
+      position: relative;
     }
 
     #ws-topbar-brand {
@@ -40,332 +39,329 @@
       flex-shrink: 0;
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 0 16px;
+      gap: 8px;
+      padding: 0 8px 0 4px;
       border-right: 1px solid var(--border);
       height: 100%;
-    }
-
-    #ws-logo {
-      height: 28px;
-      width: auto;
-      object-fit: contain;
-      display: none;
-      flex-shrink: 0;
-    }
-
-    #ws-brand-text { min-width: 0; }
-
-    #ws-program-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text);
-      white-space: nowrap;
+      transition: width .2s ease;
       overflow: hidden;
-      text-overflow: ellipsis;
     }
 
+    #ws-logo { height: 26px; width: auto; object-fit: contain; display: none; flex-shrink: 0; }
+
+    #ws-brand-text { min-width: 0; overflow: hidden; transition: opacity .15s; }
+    #ws-program-name {
+      font-size: 13px; font-weight: 700; color: var(--text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
     #ws-powered-by {
-      font-size: 11px;
-      color: var(--muted);
-      white-space: nowrap;
+      font-size: 10px; color: var(--muted); white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis;
     }
 
     #ws-topbar-center {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      padding: 0 16px;
+      flex: 1; display: flex; align-items: center; padding: 0 12px; gap: 10px;
     }
 
     #ws-breadcrumb {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      color: var(--text-2);
+      display: flex; align-items: center; gap: 6px;
+      font-size: 13px; color: var(--text-2);
+      min-width: 0; flex-shrink: 1;
     }
+    #ws-breadcrumb .bc-sep { color: var(--muted); flex-shrink: 0; }
+    #ws-breadcrumb .bc-current { color: var(--text); font-weight: 600; white-space: nowrap; }
 
-    #ws-breadcrumb .bc-sep { color: var(--muted); }
-    #ws-breadcrumb .bc-current { color: var(--text); font-weight: 600; }
+    #ws-topbar-spacer { flex: 1; }
 
-    #ws-topbar-right {
-      display: flex;
-      align-items: center;
-      gap: 4px;
+    /* Search trigger */
+    #ws-search-trigger {
+      display: flex; align-items: center; gap: 7px;
+      height: 32px; padding: 0 10px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--r); cursor: pointer; color: var(--muted);
+      font-size: 12.5px; min-width: 160px; max-width: 260px;
+      transition: border-color .15s, box-shadow .15s;
       flex-shrink: 0;
     }
+    #ws-search-trigger:hover { border-color: var(--primary); background: var(--card); }
+    #ws-search-trigger svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .ws-search-placeholder { flex: 1; }
+    .ws-search-kbd {
+      font-size: 9.5px; background: var(--card); border: 1px solid var(--border);
+      border-radius: 3px; padding: 1px 5px; color: var(--muted);
+      white-space: nowrap; flex-shrink: 0;
+    }
+
+    /* ── Topbar right ──────────────────────────────────────────────── */
+    #ws-topbar-right { display: flex; align-items: center; gap: 2px; flex-shrink: 0; }
 
     .ws-icon-btn {
-      width: 36px;
-      height: 36px;
-      border: none;
-      background: none;
-      border-radius: var(--radius);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-2);
-      transition: background .12s;
+      width: 34px; height: 34px; border: none; background: none;
+      border-radius: var(--r); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-2); transition: background .12s, color .12s;
+      flex-shrink: 0; position: relative;
     }
     .ws-icon-btn:hover { background: var(--bg); color: var(--text); }
     .ws-icon-btn svg { width: 18px; height: 18px; }
 
+    .ws-tb-sep { width: 1px; height: 22px; background: var(--border); margin: 0 6px; flex-shrink: 0; }
+
+    /* ── Dropdown wraps ──────────────────────────────────────────── */
+    .ws-tb-wrap { position: relative; display: inline-flex; }
+
+    .ws-tb-panel {
+      position: absolute; top: calc(100% + 8px); left: 0;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      box-shadow: 0 8px 32px rgba(0,0,0,.12), 0 0 0 1px rgba(0,0,0,.04);
+      z-index: 400; width: 360px; max-height: 500px;
+      overflow: hidden; display: none; flex-direction: column;
+    }
+    .ws-tb-panel.open { display: flex; animation: ws-panel-in .15s ease; }
+    .ws-tb-panel-right { left: auto; right: 0; }
+    .ws-tb-panel-sm { width: 280px; }
+    .ws-tb-panel-user { width: 230px; }
+
+    @keyframes ws-panel-in {
+      from { opacity: 0; transform: translateY(-6px) scale(.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Notification badge */
+    .ws-notif-badge {
+      position: absolute; top: 4px; right: 4px;
+      min-width: 16px; height: 16px;
+      background: var(--color-err); color: #fff;
+      border-radius: var(--r-pill); font-size: 9px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 3px; pointer-events: none;
+    }
+    .ws-notif-badge[hidden] { display: none; }
+
+    /* Panel header */
+    .ws-panel-hd {
+      padding: 12px 16px 10px; border-bottom: 1px solid var(--border-2);
+      display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+    }
+    .ws-panel-hd-title { font-size: 13px; font-weight: 700; color: var(--text); }
+    .ws-panel-hd-action {
+      font-size: 11px; font-weight: 600; color: var(--primary);
+      background: none; border: none; cursor: pointer; padding: 0;
+    }
+    .ws-panel-hd-action:hover { text-decoration: underline; }
+
+    /* Notification list */
+    .ws-notif-scroll { overflow-y: auto; flex: 1; }
+    .ws-notif-item {
+      display: flex; gap: 11px; padding: 10px 16px;
+      border-bottom: 1px solid var(--border-2);
+      cursor: pointer; transition: background .1s;
+    }
+    .ws-notif-item:last-child { border-bottom: none; }
+    .ws-notif-item:hover { background: var(--bg); }
+    .ws-notif-item.unread { background: var(--primary-a10); }
+    .ws-notif-ico { font-size: 18px; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+    .ws-notif-body { flex: 1; min-width: 0; }
+    .ws-notif-title { font-size: 12.5px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ws-notif-sub { font-size: 11px; color: var(--text-sub); margin-top: 1px; line-height: 1.4; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    .ws-notif-time { font-size: 10px; color: var(--muted); margin-top: 3px; }
+    .ws-notif-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--primary); flex-shrink: 0; margin-top: 5px; }
+
+    .ws-panel-ft {
+      padding: 9px 16px; border-top: 1px solid var(--border-2); text-align: center; flex-shrink: 0;
+    }
+    .ws-panel-ft button, .ws-panel-ft a {
+      font-size: 12px; font-weight: 600; color: var(--primary);
+      background: none; border: none; cursor: pointer; text-decoration: none;
+    }
+    .ws-panel-ft button:hover, .ws-panel-ft a:hover { text-decoration: underline; }
+
+    /* Menu lists (help, settings, user) */
+    .ws-menu-list { padding: 6px; overflow-y: auto; flex: 1; }
+    .ws-menu-item {
+      display: flex; align-items: center; gap: 10px; padding: 8px 10px;
+      border-radius: var(--r); cursor: pointer; color: var(--text-2);
+      font-size: 12.5px; font-weight: 500; transition: background .1s, color .1s;
+      text-decoration: none; border: none; background: none; width: 100%; text-align: left;
+      font-family: var(--font);
+    }
+    .ws-menu-item:hover { background: var(--bg); color: var(--text); }
+    .ws-menu-item.danger:hover { background: var(--color-err-soft); color: var(--color-err-text); }
+    .ws-menu-item-icon {
+      width: 30px; height: 30px; border-radius: var(--r-sm); background: var(--bg-2);
+      display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0;
+    }
+    .ws-menu-item-body { flex: 1; min-width: 0; }
+    .ws-menu-item-title { font-size: 12.5px; font-weight: 600; color: inherit; display: block; }
+    .ws-menu-item-desc { font-size: 10.5px; color: var(--muted); display: block; }
+    .ws-menu-divider { height: 1px; background: var(--border-2); margin: 4px 8px; }
+    .ws-menu-section { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); padding: 8px 10px 4px; }
+
+    /* Version tag */
+    .ws-version-tag { padding: 6px 16px 10px; text-align: center; font-size: 10.5px; color: var(--muted); border-top: 1px solid var(--border-2); flex-shrink: 0; }
+
+    /* User trigger */
+    .ws-user-trigger {
+      display: flex; align-items: center; gap: 7px; padding: 3px 6px 3px 3px;
+      background: none; border: 1px solid transparent; border-radius: var(--r);
+      cursor: pointer; height: 40px; transition: background .12s, border-color .12s;
+      font-family: var(--font);
+    }
+    .ws-user-trigger:hover { background: var(--bg); border-color: var(--border); }
+    .ws-user-trigger[aria-expanded="true"] { background: var(--bg); border-color: var(--border); }
     #ws-user-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: var(--primary-lt);
-      color: var(--primary-dk);
-      font-size: 12px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      flex-shrink: 0;
-      margin-left: 4px;
-      border: 2px solid transparent;
-      transition: border-color .15s;
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--primary-lt); color: var(--primary-dk);
+      font-size: 11px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-    #ws-user-avatar:hover { border-color: var(--primary); }
+    #ws-user-info { display: flex; flex-direction: column; align-items: flex-start; }
+    #ws-user-name { font-size: 12px; font-weight: 600; color: var(--text); white-space: nowrap; line-height: 1.3; }
+    #ws-user-org  { font-size: 10px; color: var(--muted); white-space: nowrap; }
+    .ws-chevron { color: var(--muted); transition: transform .2s; flex-shrink: 0; }
+    .ws-user-trigger[aria-expanded="true"] .ws-chevron { transform: rotate(180deg); }
 
-    /* ── Layout ─────────────────────────────────────────────────────── */
-    #ws-layout {
-      display: flex;
-      flex: 1;
-      overflow: hidden;
+    /* User panel header */
+    .ws-upanel-hd { padding: 12px 16px 10px; border-bottom: 1px solid var(--border-2); flex-shrink: 0; }
+    .ws-upanel-name { font-size: 13.5px; font-weight: 700; color: var(--text); }
+    .ws-upanel-email { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .ws-upanel-role {
+      display: inline-flex; align-items: center; margin-top: 6px;
+      font-size: 10.5px; font-weight: 600; padding: 2px 8px;
+      border-radius: var(--r-pill); background: var(--primary-lt); color: var(--primary-dk);
     }
 
-    /* ── Sidebar ────────────────────────────────────────────────────── */
+    /* ── Sidebar collapse ─────────────────────────────────────────── */
+    #ws-sidebar { transition: width .2s ease; }
+
+    body.sidebar-collapsed { --sidebar-w: 56px; }
+    body.sidebar-collapsed #ws-topbar-brand { padding: 0 6px; }
+    body.sidebar-collapsed #ws-brand-text,
+    body.sidebar-collapsed .ws-nav-name,
+    body.sidebar-collapsed .ws-nav-label,
+    body.sidebar-collapsed .ws-nav-badge,
+    body.sidebar-collapsed #ws-sidebar-footer .ws-demo-row,
+    body.sidebar-collapsed .ws-collapse-text { display: none; }
+    body.sidebar-collapsed .ws-nav-item { justify-content: center; padding: 8px; }
+    body.sidebar-collapsed .ws-collapse-btn { justify-content: center; }
+    body.sidebar-collapsed .ws-collapse-btn svg { transform: rotate(180deg); }
+
+    /* ── Layout ───────────────────────────────────────────────────── */
+    #ws-layout { display: flex; flex: 1; overflow: hidden; }
+
     #ws-sidebar {
-      width: var(--sidebar-w);
-      background: var(--card);
+      width: var(--sidebar-w); background: var(--card);
       border-right: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      flex-shrink: 0;
-      overflow: hidden;
+      display: flex; flex-direction: column; flex-shrink: 0; overflow: hidden;
     }
-
     #ws-nav { flex: 1; overflow-y: auto; overflow-x: hidden; }
 
-    .ws-nav-section {
-      padding: 20px 12px 4px;
-    }
-
+    .ws-nav-section { padding: 16px 10px 4px; }
     .ws-nav-label {
-      font-size: 10.5px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .07em;
-      color: var(--muted);
-      padding: 0 8px;
-      margin-bottom: 2px;
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .07em; color: var(--muted); padding: 0 8px; margin-bottom: 2px;
     }
-
     .ws-nav-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      width: 100%;
-      padding: 8px 10px;
-      border: none;
-      background: none;
-      border-radius: var(--radius);
-      cursor: pointer;
-      text-align: left;
+      display: flex; align-items: center; gap: 10px; width: 100%; padding: 7px 10px;
+      border: none; background: none; border-radius: var(--r);
+      cursor: pointer; text-align: left;
       transition: background .12s, color .12s, box-shadow .12s;
-      color: var(--text-2);
-      font-size: 13.5px;
-      font-weight: 500;
-      position: relative;
-      box-shadow: inset 3px 0 0 transparent;
+      color: var(--text-2); font-size: 13px; font-weight: 500;
+      position: relative; box-shadow: inset 3px 0 0 transparent;
+      font-family: var(--font);
     }
-
-    .ws-nav-item:hover:not(:disabled) {
-      background: var(--bg);
-      color: var(--text);
-    }
-
+    .ws-nav-item:hover:not(:disabled) { background: var(--bg); color: var(--text); }
     .ws-nav-item.active {
-      background: var(--primary-a10);
-      color: var(--primary);
-      font-weight: 600;
-      box-shadow: inset 3px 0 0 var(--primary);
+      background: var(--primary-a10); color: var(--primary);
+      font-weight: 600; box-shadow: inset 3px 0 0 var(--primary);
     }
-
     .ws-nav-item.active .ws-nav-icon svg { stroke: var(--primary); }
+    .ws-nav-item:disabled { cursor: default; opacity: .4; }
 
-    .ws-nav-item:disabled {
-      cursor: default;
-      opacity: .55;
-    }
-
-    .ws-nav-icon {
-      flex-shrink: 0;
-      width: 18px;
-      height: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
+    .ws-nav-icon { flex-shrink: 0; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; }
     .ws-nav-icon svg { width: 16px; height: 16px; }
-
     .ws-nav-name { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ws-nav-badge { font-size: 9.5px; font-weight: 600; border-radius: 4px; padding: 2px 5px; flex-shrink: 0; }
+    .ws-badge-soon { background: var(--bg-2); color: var(--muted); }
+    .ws-badge-new  { background: var(--color-ok-bg); color: var(--color-ok-text); }
 
-    .ws-nav-badge {
-      font-size: 10px;
-      font-weight: 600;
-      border-radius: 4px;
-      padding: 2px 6px;
-      flex-shrink: 0;
-    }
+    .ws-sidebar-divider { height: 1px; background: var(--border); margin: 6px 12px; }
 
-    .ws-badge-soon {
-      background: var(--bg-2);
-      color: var(--muted);
-    }
-
-    .ws-badge-new {
-      background: var(--color-ok-bg);
-      color: var(--color-ok-text);
-    }
-
-    .ws-sidebar-divider {
-      height: 1px;
-      background: var(--border);
-      margin: 8px 16px;
-    }
-
-    /* ── Coming-soon compact grid ───────────────────────────────────── */
-    .ws-coming-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-      padding: 2px 4px 6px;
-    }
-
-    .ws-coming-btn {
-      height: 32px;
-      border: none;
-      background: none;
-      border-radius: var(--r-sm);
-      cursor: not-allowed;
-      opacity: .28;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: opacity .12s;
-    }
-    .ws-coming-btn:hover { opacity: .45; }
-
-    /* ── Sidebar footer ─────────────────────────────────────────────── */
+    /* Sidebar footer */
     #ws-sidebar-footer {
-      padding: 10px 20px;
-      border-top: 1px solid var(--border-2);
-      font-size: 11px;
-      color: var(--muted);
-      flex-shrink: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      letter-spacing: .01em;
+      padding: 8px 10px 6px; border-top: 1px solid var(--border-2); flex-shrink: 0;
     }
-
-    /* ── Main content ───────────────────────────────────────────────── */
-    #ws-main {
-      flex: 1;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      position: relative;
+    .ws-demo-row {
+      display: flex; align-items: center; justify-content: space-between; padding: 4px 8px 8px;
     }
+    .ws-demo-label { font-size: 12px; color: var(--text-sub); font-weight: 500; }
+    .ws-demo-switch {
+      width: 30px; height: 17px; border-radius: 9px;
+      background: var(--muted); border: none; padding: 0; cursor: pointer;
+      position: relative; transition: background .2s; flex-shrink: 0;
+    }
+    .ws-demo-switch.on { background: var(--primary); }
+    .ws-demo-switch::after {
+      content: ''; position: absolute; top: 2px; left: 2px;
+      width: 13px; height: 13px; border-radius: 50%; background: #fff; transition: transform .2s;
+    }
+    .ws-demo-switch.on::after { transform: translateX(13px); }
+    .ws-collapse-btn {
+      display: flex; align-items: center; gap: 6px; padding: 6px 8px;
+      border: none; background: none; border-radius: var(--r); cursor: pointer;
+      width: 100%; color: var(--muted); font-size: 12px; font-family: var(--font);
+      transition: background .1s, color .1s;
+    }
+    .ws-collapse-btn:hover { background: var(--bg-2); color: var(--text-2); }
+    .ws-collapse-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
 
+    /* ── Main ─────────────────────────────────────────────────────── */
+    #ws-main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; position: relative; }
     #ws-app-container { flex: 1; }
 
-    /* ── Loading / Error states ─────────────────────────────────────── */
+    /* ── States ───────────────────────────────────────────────────── */
     .ws-state {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      min-height: 200px;
-      gap: 12px;
-      color: var(--muted);
-      padding: 32px;
-      text-align: center;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      height: 100%; min-height: 200px; gap: 12px; color: var(--muted); padding: 32px; text-align: center;
     }
-
-    .ws-state-icon { font-size: 36px; }
-    .ws-state-title { font-size: 15px; font-weight: 600; color: var(--text); }
-    .ws-state-msg { font-size: 13px; max-width: 320px; line-height: 1.6; }
-
     .ws-spinner {
-      width: 28px; height: 28px;
-      border: 2.5px solid var(--border);
-      border-top-color: var(--primary);
-      border-radius: 50%;
-      animation: ds-spin .65s linear infinite;
+      width: 28px; height: 28px; border: 2.5px solid var(--border);
+      border-top-color: var(--primary); border-radius: 50%; animation: ds-spin .65s linear infinite;
     }
 
-    /* ── Toast ──────────────────────────────────────────────────────── */
+    /* ── Toast ────────────────────────────────────────────────────── */
     #ws-toast {
-      position: fixed;
-      bottom: 20px; right: 20px;
-      z-index: 100;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 8px;
-      pointer-events: none;
+      position: fixed; bottom: 20px; right: 20px; z-index: 500;
+      display: flex; flex-direction: column; align-items: flex-end; gap: 8px; pointer-events: none;
     }
-
     .ws-toast-item {
-      display: flex; align-items: center; gap: 10px;
-      background: var(--card);
-      color: var(--text);
-      padding: 12px 16px;
-      border-radius: var(--r);
-      font-size: 13px; font-weight: 500;
-      max-width: 360px;
+      display: flex; align-items: center; gap: 10px; background: var(--card); color: var(--text);
+      padding: 12px 16px; border-radius: var(--r); font-size: 13px; font-weight: 500; max-width: 360px;
       box-shadow: 0 4px 24px rgba(0,0,0,.1), 0 0 0 1px var(--border);
-      animation: toast-in .2s ease;
-      pointer-events: auto;
-      border-left: 3px solid var(--border);
-      transition: opacity .2s, transform .2s;
+      animation: toast-in .2s ease; pointer-events: auto;
+      border-left: 3px solid var(--border); transition: opacity .2s, transform .2s;
     }
     .ws-toast-item.t-success { border-left-color: var(--color-ok); }
     .ws-toast-item.t-error   { border-left-color: var(--color-err); }
     .ws-toast-item.t-warning { border-left-color: var(--color-warn); }
     .ws-toast-item .t-icon   { font-size: 15px; flex-shrink: 0; }
     .ws-toast-item .t-msg    { flex: 1; line-height: 1.4; }
-
     @keyframes toast-in { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: translateX(0); } }
 
-    /* ── Modal ───────────────────────────────────────────────────────── */
+    /* ── Modal ────────────────────────────────────────────────────── */
     #ws-modal-overlay {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,.4);
-      z-index: 200;
-      display: none; align-items: center; justify-content: center;
-      padding: 20px;
-      backdrop-filter: blur(2px);
+      position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 600;
+      display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(2px);
     }
     #ws-modal-overlay.open { display: flex; animation: ds-modal-fade .15s ease; }
     #ws-modal-box {
-      background: var(--card); border-radius: var(--r-xl);
-      width: 100%; max-width: 480px; max-height: calc(100vh - 40px);
-      overflow-y: auto;
-      box-shadow: 0 20px 60px rgba(0,0,0,.15), 0 0 0 1px var(--border);
-      animation: ds-modal-in .2s ease;
+      background: var(--card); border-radius: var(--r-xl); width: 100%; max-width: 480px;
+      max-height: calc(100vh - 40px); overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,.15), 0 0 0 1px var(--border); animation: ds-modal-in .2s ease;
     }
     #ws-modal-hd {
-      padding: 20px 24px 16px;
-      border-bottom: 1px solid var(--border-2);
+      padding: 20px 24px 16px; border-bottom: 1px solid var(--border-2);
       display: flex; align-items: center; justify-content: space-between;
     }
     #ws-modal-title { font-size: 15px; font-weight: 700; color: var(--text); }
@@ -376,68 +372,240 @@
     }
     #ws-modal-close:hover { background: var(--bg); color: var(--text); }
     #ws-modal-body { padding: 20px 24px; }
-    #ws-modal-ft {
-      padding: 14px 24px; border-top: 1px solid var(--border-2);
-      display: flex; align-items: center; justify-content: flex-end; gap: 8px;
+    #ws-modal-ft { padding: 14px 24px; border-top: 1px solid var(--border-2); display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+
+    /* ── Search overlay (command palette) ─────────────────────────── */
+    #ws-search-overlay {
+      position: fixed; inset: 0; z-index: 700;
+      background: rgba(0,0,0,.45); backdrop-filter: blur(4px);
+      display: none; align-items: flex-start; justify-content: center; padding: 80px 16px 16px;
+    }
+    #ws-search-overlay.open { display: flex; animation: ds-modal-fade .15s ease; }
+    #ws-search-box {
+      width: 100%; max-width: 560px; background: var(--card); border-radius: var(--r-xl);
+      box-shadow: 0 20px 60px rgba(0,0,0,.2), 0 0 0 1px var(--border);
+      max-height: calc(100vh - 120px); display: flex; flex-direction: column;
+      animation: ds-modal-in .18s ease;
+    }
+    .ws-search-iw {
+      display: flex; align-items: center; gap: 10px; padding: 0 16px;
+      border-bottom: 1px solid var(--border-2); flex-shrink: 0;
+    }
+    .ws-search-iw svg { width: 17px; height: 17px; color: var(--muted); flex-shrink: 0; }
+    #ws-search-input {
+      flex: 1; border: none; outline: none; font-size: 15px; font-family: var(--font);
+      color: var(--text); background: transparent; padding: 15px 0;
+    }
+    #ws-search-input::placeholder { color: var(--muted); }
+    .ws-search-esc {
+      font-size: 10px; font-family: var(--font); background: var(--bg);
+      border: 1px solid var(--border); border-radius: 3px; padding: 2px 6px; color: var(--muted); cursor: pointer;
+    }
+    #ws-search-results { overflow-y: auto; flex: 1; }
+    .ws-sr-section { padding: 6px 0 4px; }
+    .ws-sr-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); padding: 4px 16px; }
+    .ws-sr-item {
+      display: flex; align-items: center; gap: 10px; padding: 9px 16px;
+      cursor: pointer; border: none; background: none; width: 100%; text-align: left;
+      transition: background .1s; font-family: var(--font);
+    }
+    .ws-sr-item:hover, .ws-sr-item.focused { background: var(--primary-a10); }
+    .ws-sr-icon { width: 30px; height: 30px; border-radius: var(--r-sm); background: var(--bg-2); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+    .ws-sr-title { font-size: 13px; font-weight: 500; color: var(--text); display: block; }
+    .ws-sr-sub   { font-size: 11px; color: var(--muted); display: block; }
+    .ws-search-footer-bar {
+      padding: 8px 16px; border-top: 1px solid var(--border-2);
+      display: flex; gap: 16px; font-size: 11px; color: var(--muted); flex-shrink: 0;
+    }
+    .ws-search-footer-bar kbd {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 3px;
+      padding: 1px 5px; font-size: 10px;
     }
 
-    /* ── Responsive ─────────────────────────────────────────────────── */
+    /* ── Responsive ───────────────────────────────────────────────── */
     @media (max-width: 768px) {
       :root { --sidebar-w: 56px; }
-      .ws-nav-name, .ws-nav-label, .ws-nav-badge, .ws-brand-text { display: none; }
-      .ws-nav-item { justify-content: center; padding: 10px; }
-      #ws-topbar-brand { padding: 0 10px; border-right: none; }
+      .ws-nav-name, .ws-nav-label, .ws-nav-badge { display: none; }
+      .ws-nav-item { justify-content: center; padding: 8px; }
+      #ws-topbar-brand { padding: 0 6px; }
+      #ws-brand-text { display: none; }
       #ws-breadcrumb { display: none; }
-      .ws-coming-grid, #ws-sidebar-footer { display: none; }
+      .ws-search-placeholder, .ws-search-kbd { display: none; }
+      #ws-search-trigger { min-width: 34px; width: 34px; justify-content: center; padding: 0; }
+      #ws-user-info { display: none; }
+      .ws-chevron { display: none; }
+      .ws-user-trigger { padding: 3px; }
+      .ws-tb-sep { display: none; }
+      #ws-sidebar-footer .ws-demo-row { display: none; }
+      .ws-collapse-text { display: none; }
+      .ws-collapse-btn { justify-content: center; }
     }
   </style>
 </head>
 <body>
 
   <header id="ws-topbar">
+
+    <!-- Brand -->
     <div id="ws-topbar-brand">
+      <button id="ws-sidebar-toggle" class="ws-icon-btn" title="Menu" aria-label="Basculer le menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
       <img id="ws-logo" alt="Logo">
       <div id="ws-brand-text">
         <div id="ws-program-name">AgentHub</div>
         <div id="ws-powered-by">AgentHub Platform</div>
       </div>
     </div>
+
+    <!-- Center: breadcrumb + search -->
     <div id="ws-topbar-center">
       <div id="ws-breadcrumb"></div>
+      <div id="ws-topbar-spacer"></div>
+      <div id="ws-search-trigger" role="button" tabindex="0" aria-label="Rechercher (Ctrl+K)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span class="ws-search-placeholder">Rechercher…</span>
+        <kbd class="ws-search-kbd">Ctrl K</kbd>
+      </div>
     </div>
+
+    <!-- Right -->
     <div id="ws-topbar-right">
-      <button class="ws-icon-btn" id="ws-notif-btn" title="Notifications">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-      </button>
-      <button class="ws-icon-btn" title="Aide">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      </button>
-      <div id="ws-user-avatar">AG</div>
+
+      <!-- Notifications -->
+      <div class="ws-tb-wrap">
+        <button class="ws-icon-btn" id="ws-notif-btn" title="Notifications">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="ws-notif-badge" id="ws-notif-badge">3</span>
+        </button>
+        <div class="ws-tb-panel" id="ws-notif-panel">
+          <div class="ws-panel-hd">
+            <span class="ws-panel-hd-title">Notifications</span>
+            <button class="ws-panel-hd-action" id="ws-notif-mark-all">Tout marquer lu</button>
+          </div>
+          <div class="ws-notif-scroll" id="ws-notif-list"></div>
+          <div class="ws-panel-ft"><button>Voir toutes les notifications</button></div>
+        </div>
+      </div>
+
+      <!-- Help -->
+      <div class="ws-tb-wrap">
+        <button class="ws-icon-btn" id="ws-help-btn" title="Centre d'aide">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </button>
+        <div class="ws-tb-panel ws-tb-panel-sm" id="ws-help-panel">
+          <div class="ws-panel-hd"><span class="ws-panel-hd-title">Centre d'aide</span></div>
+          <div class="ws-menu-list">
+            <button class="ws-menu-item"><span class="ws-menu-item-icon">📚</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Documentation</span><span class="ws-menu-item-desc">Guides et tutoriels</span></span></button>
+            <button class="ws-menu-item"><span class="ws-menu-item-icon">🎓</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Tutoriels vidéo</span><span class="ws-menu-item-desc">Apprenez à votre rythme</span></span></button>
+            <button class="ws-menu-item"><span class="ws-menu-item-icon">❓</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">FAQ</span><span class="ws-menu-item-desc">Questions fréquentes</span></span></button>
+            <div class="ws-menu-divider"></div>
+            <button class="ws-menu-item" id="ws-help-atlas-btn"><span class="ws-menu-item-icon">🤖</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Discuter avec ATLAS</span><span class="ws-menu-item-desc">Votre conseiller IA 24/7</span></span></button>
+            <button class="ws-menu-item"><span class="ws-menu-item-icon">💬</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Contacter le support</span><span class="ws-menu-item-desc">Lun–Ven 9h–17h EST</span></span></button>
+          </div>
+          <div class="ws-version-tag" id="ws-version-text">AgentHub Platform v1.0 RC1</div>
+        </div>
+      </div>
+
+      <!-- Settings -->
+      <div class="ws-tb-wrap">
+        <button class="ws-icon-btn" id="ws-settings-btn" title="Paramètres rapides">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+        <div class="ws-tb-panel ws-tb-panel-sm ws-tb-panel-right" id="ws-settings-panel">
+          <div class="ws-panel-hd"><span class="ws-panel-hd-title">Paramètres rapides</span></div>
+          <div class="ws-menu-list">
+            <div class="ws-menu-section">Préférences</div>
+            <button class="ws-menu-item"><span class="ws-menu-item-icon">🌐</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Langue</span><span class="ws-menu-item-desc">Français (Canada)</span></span></button>
+            <button class="ws-menu-item"><span class="ws-menu-item-icon">🌙</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Thème</span><span class="ws-menu-item-desc">Clair (sombre : à venir)</span></span></button>
+            <div class="ws-menu-divider"></div>
+            <div class="ws-menu-section">Organisation</div>
+            <button class="ws-menu-item"><span class="ws-menu-item-icon">🏢</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Mon organisation</span><span class="ws-menu-item-desc">Gérer les paramètres</span></span></button>
+            <button class="ws-menu-item"><span class="ws-menu-item-icon">👥</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Utilisateurs & équipes</span><span class="ws-menu-item-desc">Invitations et rôles</span></span></button>
+            <button class="ws-menu-item"><span class="ws-menu-item-icon">🔑</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Clés API</span><span class="ws-menu-item-desc">Accès développeur (bientôt)</span></span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ws-tb-sep"></div>
+
+      <!-- User menu -->
+      <div class="ws-tb-wrap">
+        <button class="ws-user-trigger" id="ws-user-btn" aria-expanded="false" aria-haspopup="true">
+          <div id="ws-user-avatar">AG</div>
+          <div id="ws-user-info">
+            <span id="ws-user-name">—</span>
+            <span id="ws-user-org">—</span>
+          </div>
+          <svg class="ws-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="ws-tb-panel ws-tb-panel-user ws-tb-panel-right" id="ws-user-panel">
+          <div class="ws-upanel-hd">
+            <div class="ws-upanel-name" id="ws-up-name">—</div>
+            <div class="ws-upanel-email" id="ws-up-email">—</div>
+            <div class="ws-upanel-role" id="ws-up-role">Utilisateur</div>
+          </div>
+          <div class="ws-menu-list">
+            <button class="ws-menu-item"><span class="ws-menu-item-icon">👤</span><span class="ws-menu-item-title">Mon profil</span></button>
+            <button class="ws-menu-item"><span class="ws-menu-item-icon">🏢</span><span class="ws-menu-item-title">Mon organisation</span></button>
+            <button class="ws-menu-item"><span class="ws-menu-item-icon">🔔</span><span class="ws-menu-item-title">Préférences notifications</span></button>
+            <div class="ws-menu-divider"></div>
+            <button class="ws-menu-item"><span class="ws-menu-item-icon">👥</span><span class="ws-menu-item-title">Inviter un utilisateur</span></button>
+            <button class="ws-menu-item"><span class="ws-menu-item-icon">💬</span><span class="ws-menu-item-title">Support</span></button>
+            <div class="ws-menu-divider"></div>
+            <button class="ws-menu-item danger" id="ws-logout-btn"><span class="ws-menu-item-icon">🚪</span><span class="ws-menu-item-title">Déconnexion</span></button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </header>
 
   <div id="ws-layout">
+
     <nav id="ws-sidebar">
       <div id="ws-nav">
-        <div class="ws-state" style="min-height:120px">
-          <div class="ws-spinner"></div>
-        </div>
+        <div class="ws-state" style="min-height:120px"><div class="ws-spinner"></div></div>
       </div>
-      <div id="ws-sidebar-footer">AgentHub Platform</div>
+      <div id="ws-sidebar-footer">
+        <div class="ws-demo-row" id="ws-demo-row">
+          <span class="ws-demo-label">Mode démo</span>
+          <button class="ws-demo-switch" id="ws-demo-switch" role="switch" aria-checked="false" title="Mode démo"></button>
+        </div>
+        <button class="ws-collapse-btn" id="ws-collapse-btn" title="Réduire le menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          <span class="ws-collapse-text">Réduire le menu</span>
+        </button>
+      </div>
     </nav>
 
     <main id="ws-main">
       <div id="ws-app-container">
-        <div class="ws-state">
-          <div class="ws-spinner"></div>
-        </div>
+        <div class="ws-state"><div class="ws-spinner"></div></div>
       </div>
     </main>
+
+  </div>
+
+  <!-- Search overlay (command palette) -->
+  <div id="ws-search-overlay" role="dialog" aria-label="Recherche globale">
+    <div id="ws-search-box">
+      <div class="ws-search-iw">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="ws-search-input" placeholder="Rechercher dans AgentHub…" autocomplete="off" spellcheck="false">
+        <kbd class="ws-search-esc">Esc</kbd>
+      </div>
+      <div class="ws-search-results" id="ws-search-results"></div>
+      <div class="ws-search-footer-bar">
+        <span><kbd>↑↓</kbd> naviguer</span>
+        <span><kbd>↵</kbd> ouvrir</span>
+        <span><kbd>Esc</kbd> fermer</span>
+      </div>
+    </div>
   </div>
 
   <div id="ws-toast"></div>
 
-  <!-- Modal partagé -->
   <div id="ws-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="ws-modal-title">
     <div id="ws-modal-box">
       <div id="ws-modal-hd">

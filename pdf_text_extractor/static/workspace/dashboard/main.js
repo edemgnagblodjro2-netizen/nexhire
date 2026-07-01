@@ -305,6 +305,35 @@ const CSS = `
 .db-rec strong { display: block; font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
 .db-rec p { font-size: 12px; color: var(--text-sub); line-height: 1.5; margin: 0; }
 
+/* ── Date range selector ─────────────────────────────────────────── */
+.db-date-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border: 1px solid var(--border);
+  border-radius: var(--r); background: var(--card);
+  font-size: 13px; font-weight: 500; color: var(--text-2);
+  cursor: pointer; white-space: nowrap; flex-shrink: 0;
+  transition: border-color .15s, background .15s; font-family: var(--font);
+}
+.db-date-btn:hover { border-color: var(--primary); background: var(--bg); color: var(--text); }
+
+/* ── KPI progress bar ────────────────────────────────────────────── */
+.db-kpi-bar { height: 4px; background: var(--bg-2); border-radius: 2px; margin-top: 8px; overflow: hidden; }
+.db-kpi-bar-fill { height: 100%; border-radius: 2px; }
+
+/* ── IMAI chart section ──────────────────────────────────────────── */
+.db-chart-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-lg); overflow: hidden; margin-bottom: 16px;
+}
+.db-chart-body { padding: 16px 20px 12px; }
+.db-chart-period { display: flex; gap: 6px; }
+.db-chart-period button {
+  padding: 3px 10px; border-radius: var(--r-pill); border: 1px solid var(--border);
+  background: none; font-size: 11.5px; font-weight: 500; color: var(--muted); cursor: pointer;
+  transition: all .12s; font-family: var(--font);
+}
+.db-chart-period button.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
 /* ── Responsive ───────────────────────────────────────────────────── */
 @media (max-width: 900px) {
   .db-kpi-grid { grid-template-columns: repeat(2, 1fr); }
@@ -339,7 +368,7 @@ const DIM_GUIDANCE = {
   gouvernance:  'Complétez la checklist Loi 25, rédigez votre politique d\'utilisation de l\'IA et inventoriez vos outils.',
 };
 
-function _kpiCard({ label, value, icon, iconBg, delta }) {
+function _kpiCard({ label, value, icon, iconBg, delta, bar, barColor }) {
   return `
     <div class="db-kpi">
       <div class="db-kpi-hd">
@@ -347,15 +376,61 @@ function _kpiCard({ label, value, icon, iconBg, delta }) {
         <span class="db-kpi-icon" style="background:${iconBg}">${icon}</span>
       </div>
       <div class="db-kpi-val">${value}</div>
-      <div class="db-kpi-delta">${delta}</div>
+      ${bar !== undefined ? `<div class="db-kpi-bar"><div class="db-kpi-bar-fill" style="width:${bar}%;background:${barColor||'var(--primary)'}"></div></div>` : ''}
+      <div class="db-kpi-delta${delta.startsWith('↗') ? ' up' : ''}">${delta}</div>
     </div>`;
+}
+
+function _buildIMAIChart(data, labels) {
+  const W = 420, H = 90, P = { t: 14, r: 12, b: 22, l: 28 };
+  const cW = W - P.l - P.r, cH = H - P.t - P.b;
+  const minV = Math.min(...data) - 8, maxV = Math.max(...data) + 8, rng = maxV - minV;
+  const pts  = data.map((v, i) => ({
+    x: P.l + (i / (data.length - 1)) * cW,
+    y: P.t + (1 - (v - minV) / rng) * cH,
+  }));
+  let path = `M ${pts[0].x} ${pts[0].y}`;
+  for (let i = 1; i < pts.length; i++) {
+    const cx = (pts[i-1].x + pts[i].x) / 2;
+    path += ` C ${cx} ${pts[i-1].y} ${cx} ${pts[i].y} ${pts[i].x} ${pts[i].y}`;
+  }
+  const area = `${path} L ${pts.at(-1).x} ${P.t+cH} L ${pts[0].x} ${P.t+cH} Z`;
+  const last = pts.at(-1);
+  return `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:${H}px">
+    <defs>
+      <linearGradient id="dbg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="var(--primary)" stop-opacity=".18"/>
+        <stop offset="100%" stop-color="var(--primary)" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    ${[25,50,75].map(v => {
+      if (v < minV || v > maxV) return '';
+      const y = P.t + (1-(v-minV)/rng)*cH;
+      return `<line x1="${P.l}" y1="${y}" x2="${W-P.r}" y2="${y}" stroke="var(--border)" stroke-width="1"/>
+              <text x="${P.l-3}" y="${y+3.5}" text-anchor="end" font-size="9" fill="var(--muted)">${v}</text>`;
+    }).join('')}
+    <path d="${area}" fill="url(#dbg)"/>
+    <path d="${path}" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    ${pts.map((pt, i) => {
+      const isLast = i === pts.length - 1;
+      return `<circle cx="${pt.x}" cy="${pt.y}" r="${isLast ? 5 : 3}" fill="var(--card)" stroke="var(--primary)" stroke-width="2"/>
+              ${isLast ? `<text x="${pt.x}" y="${pt.y-9}" text-anchor="middle" font-size="11" font-weight="700" fill="var(--primary)">${data[i]}</text>` : `<text x="${pt.x}" y="${pt.y-7}" text-anchor="middle" font-size="9" fill="var(--muted)">${data[i]}</text>`}`;
+    }).join('')}
+    ${labels.map((lbl, i) => {
+      const x = P.l + (i / (labels.length-1)) * cW;
+      return `<text x="${x}" y="${H-3}" text-anchor="middle" font-size="9" fill="var(--muted)">${lbl}</text>`;
+    }).join('')}
+  </svg>`;
 }
 
 function _render(container, ctx) {
   const partnerName = ctx?.partner?.name || 'AgentHub';
   const partnerSlug = ctx?.partnerSlug  || 'demo';
-  const today    = new Date().toLocaleDateString('fr-CA', { weekday: 'long', day: 'numeric', month: 'long' });
-  const todayCap = today.charAt(0).toUpperCase() + today.slice(1);
+  const today     = new Date().toLocaleDateString('fr-CA', { weekday: 'long', day: 'numeric', month: 'long' });
+  const todayCap  = today.charAt(0).toUpperCase() + today.slice(1);
+  const firstName = ctx?.userProfile?.full_name?.split(' ')[0]
+                 || ctx?.userProfile?.email?.split('@')[0]
+                 || null;
 
   // Read last diagnostic result from localStorage
   let diag = null;
@@ -398,9 +473,13 @@ function _render(container, ctx) {
 
   <div class="db-header">
     <div>
-      <div class="db-greeting">Bonjour, ${partnerName}</div>
-      <div class="db-sub">${todayCap} · Programme Accélérateur IA</div>
+      <div class="db-greeting">Bonjour${firstName ? ` ${firstName}` : ''} 👋</div>
+      <div class="db-sub">${todayCap} · Programme Accélérateur IA · ${partnerName}</div>
     </div>
+    <button class="db-date-btn" title="Sélectionner une période">
+      📅 ${(() => { const d = new Date(); const end = d.toLocaleDateString('fr-CA',{day:'numeric',month:'long',year:'numeric'}); const start = new Date(d-7*86400000).toLocaleDateString('fr-CA',{day:'numeric',month:'long'}); return `${start} – ${end}`; })()}
+      <span style="opacity:.5;font-size:11px">▾</span>
+    </button>
   </div>
 
   <div class="db-welcome">
@@ -420,18 +499,28 @@ function _render(container, ctx) {
   </div>
 
   <div class="db-kpi-grid">
-    ${_kpiCard({ label: 'Maturité IA',
-      value: hasDiag ? `<span style="color:${scoreColor}">${diag.score}</span>` : '—',
-      icon: '🧠', iconBg: 'var(--primary-lt)',
-      delta: hasDiag ? `Niveau ${scoreLabel}` : 'Complétez le diagnostic' })}
-    ${_kpiCard({ label: 'Diagnostics',
-      value: hasDiag ? '1' : '0',
-      icon: '📊', iconBg: 'var(--color-info-bg)',
-      delta: hasDiag ? `Dernier : ${dateLabel}` : '1 diagnostic à démarrer' })}
-    ${_kpiCard({ label: 'Recommandations', value: '3', icon: '💡', iconBg: 'var(--color-warn-bg)',
-      delta: hasDiag ? 'Basées sur votre score IMAI' : 'Prêtes pour votre équipe' })}
-    ${_kpiCard({ label: 'Alertes', value: '0', icon: '🔔', iconBg: 'var(--bg-2)',
-      delta: 'Aucune alerte active' })}
+    ${_kpiCard({
+      label: 'Score de maturité IA (IMAI)',
+      value: hasDiag ? `<span style="color:${scoreColor}">${diag.score}</span><span style="font-size:16px;font-weight:500;color:var(--muted)">/100</span>` : '—',
+      icon: '🎯', iconBg: 'var(--primary-lt)',
+      bar: hasDiag ? diag.score : undefined, barColor: scoreColor,
+      delta: hasDiag ? `↗ Niveau ${scoreLabel}` : 'Complétez le diagnostic' })}
+    ${_kpiCard({
+      label: 'Conformité Loi 25',
+      value: '72<span style="font-size:16px;font-weight:500;color:var(--muted)">%</span>',
+      icon: '🛡️', iconBg: 'var(--color-info-bg)',
+      bar: 72, barColor: 'var(--color-info)',
+      delta: '↗ +12 % vs le mois dernier' })}
+    ${_kpiCard({
+      label: 'Actions prioritaires',
+      value: '7',
+      icon: '📋', iconBg: 'var(--color-warn-bg)',
+      delta: '⚠️ À traiter · en retard' })}
+    ${_kpiCard({
+      label: 'Utilisateurs actifs',
+      value: '12',
+      icon: '👥', iconBg: 'var(--color-ok-bg)',
+      delta: '↗ +3 nouveaux ce mois-ci' })}
   </div>
 
   <div class="db-grid">
@@ -485,6 +574,23 @@ function _render(container, ctx) {
       </div>
     </div>
 
+  </div>
+
+  <!-- IMAI Evolution chart -->
+  <div class="db-chart-card" style="margin-bottom:16px">
+    <div class="db-card-hd">
+      <span class="db-card-title">Évolution du score IMAI</span>
+      <div class="db-chart-period">
+        <button class="active">6 derniers mois</button>
+        <button>12 mois</button>
+      </div>
+    </div>
+    <div class="db-chart-body">
+      ${_buildIMAIChart(
+        hasDiag ? [28, 35, 42, 48, 50, diag.score] : [28, 35, 42, 48, 50, 58],
+        ['Janv.','Févr.','Mars','Avr.','Mai','Juin']
+      )}
+    </div>
   </div>
 
   <div class="db-atlas-wrap">
