@@ -80,7 +80,7 @@ QB_CLIENT_SECRET=
 
 # Environnement
 ENVIRONMENT=production
-BASE_URL=https://agenthub.nexhire.ca
+BASE_URL=https://myportal.nexhire.ca
 ```
 
 ---

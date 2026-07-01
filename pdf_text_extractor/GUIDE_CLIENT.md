@@ -7,7 +7,7 @@ Version 2.0 — Juin 2026 · support@nexhire.ca
 
 ## Démarrage rapide
 
-1. Créez votre compte sur **agenthub.nexhire.ca**
+1. Créez votre compte sur **myportal.nexhire.ca**
 2. Acceptez les CGU et la politique de confidentialité
 3. Configurez votre organisation (nom, logo, devise)
 4. Invitez vos collaborateurs via **Paramètres → Membres**
@@ -332,7 +332,7 @@ Parc IT → Contrats → modifiez le contrat → décochez *Renouvellement autom
 
 - **Email :** support@nexhire.ca
 - **Dans l'application :** ? → Aide → formulaire de demande
-- **Documentation en ligne :** agenthub.nexhire.ca
+- **Documentation en ligne :** myportal.nexhire.ca
 
 ---
 

@@ -1,4 +1,4 @@
-# Guide Interne — AgentHub Operations (NexHire)
+# Guide Interne — MyPortal Operations (CivicAI / NexHire)
 
 Document opérationnel pour l'équipe NexHire. Mis à jour le 2026-06-19.
 
@@ -162,7 +162,7 @@ Si un test échoue, ne pas déployer avant correction.
 
 ## Runbook : onboarder un nouveau client M365
 
-1. Client crée son compte AgentHub
+1. Client crée son compte MyPortal (myportal.nexhire.ca/inscription?partenaire={slug})
 2. Aller dans **Paramètres → Organisation** → noter l'`org_id`
 3. Client va dans **Connecteurs → Microsoft 365 → Connecter**
 4. Client se connecte avec son compte admin Microsoft
@@ -223,7 +223,7 @@ Si un test échoue, ne pas déployer avant correction.
 - **Espace :** AgentHub Demo (Scrum) — types : Task · Story · Feature · Request · Bug
 - **Statuts :** To Do → In Progress → In Review → Done
 - **OAuth App :** developer.atlassian.com/console/myapps
-- **Callback :** `https://agenthub.nexhire.ca/api/connectors/oauth/callback`
+- **Callback :** `https://myportal.nexhire.ca/api/connectors/oauth/callback`
 - **Env vars Render :** `JIRA_CLIENT_ID` · `JIRA_CLIENT_SECRET` · `JIRA_REDIRECT_URI`
 
 > ⚠️ Passer au plan **Standard** (7 $/user/mois) quand un client dépasse 10 users ou a besoin d'automatisations avancées.

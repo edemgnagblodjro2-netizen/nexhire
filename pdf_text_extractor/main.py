@@ -401,7 +401,33 @@ def create_app(
 
     @app.get("/api/health")
     def health():
-        return {"status": "ok"}
+        """Health check public — utilisé par Render, UptimeRobot, et les monitors externes."""
+        db_ok = False
+        db_latency_ms = None
+        try:
+            import time
+            from db import get_db, row as _row
+            t0 = time.monotonic()
+            with get_db() as _cur:
+                _cur.execute("SELECT 1")
+                _row(_cur)
+            db_latency_ms = round((time.monotonic() - t0) * 1000, 1)
+            db_ok = True
+        except Exception:
+            pass
+
+        scheduler_ok = hasattr(app.state, "_scheduler_running") and app.state._scheduler_running
+
+        status_str = "ok" if db_ok else "degraded"
+        return {
+            "status": status_str,
+            "version": "1.0.0",
+            "environment": os.getenv("ENVIRONMENT", "production"),
+            "db": "ok" if db_ok else "error",
+            "db_latency_ms": db_latency_ms,
+            "scheduler": "ok" if scheduler_ok else "unknown",
+            "timestamp": __import__("datetime").datetime.utcnow().isoformat() + "Z",
+        }
 
     @app.get("/api/readiness")
     def readiness(user: CurrentUser = Depends(require_min_role("admin"))):
