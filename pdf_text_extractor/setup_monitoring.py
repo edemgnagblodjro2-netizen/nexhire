@@ -38,21 +38,49 @@ MONITORS = [
     },
 ]
 
-UPTIMEROBOT_API = "https://api.uptimerobot.com/v2"
+UPTIMEROBOT_API_V2  = "https://api.uptimerobot.com/v2"
+UPTIMEROBOT_API_V3  = "https://api.uptimerobot.com/v3"
 
 
-def _post(endpoint: str, api_key: str, data: dict) -> dict:
+def _post_v2(endpoint: str, api_key: str, data: dict) -> dict:
+    """Format legacy v2 — api_key dans le body form-urlencoded."""
     data["api_key"] = api_key
     data["format"] = "json"
     payload = urllib.parse.urlencode(data).encode()
     req = urllib.request.Request(
-        f"{UPTIMEROBOT_API}/{endpoint}",
+        f"{UPTIMEROBOT_API_V2}/{endpoint}",
         data=payload,
         headers={"Content-Type": "application/x-www-form-urlencoded"},
         method="POST",
     )
     with urllib.request.urlopen(req, timeout=15) as resp:
         return json.loads(resp.read())
+
+
+def _post_v3(endpoint: str, api_key: str, data: dict) -> dict:
+    """Format v3 — Bearer token dans Authorization header + JSON body."""
+    payload = json.dumps(data).encode()
+    req = urllib.request.Request(
+        f"{UPTIMEROBOT_API_V3}/{endpoint}",
+        data=payload,
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {api_key}",
+        },
+        method="POST",
+    )
+    with urllib.request.urlopen(req, timeout=15) as resp:
+        return json.loads(resp.read())
+
+
+def _post(endpoint: str, api_key: str, data: dict) -> dict:
+    """Essaie v2 d'abord, puis v3 si 403/401."""
+    try:
+        return _post_v2(endpoint, api_key, dict(data))
+    except urllib.error.HTTPError as e:
+        if e.code in (401, 403):
+            return _post_v3(endpoint, api_key, data)
+        raise
 
 
 def get_alert_contact(api_key: str) -> str | None:
