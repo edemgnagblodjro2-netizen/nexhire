@@ -43,11 +43,20 @@ const NAV = [
     ],
   },
   {
+    section: 'Intelligence Décisionnelle',
+    items: [
+      { id: 'decisions',      label: 'Décisions IA',           iconKey: 'zap',      route: '__decisions__' },
+      { id: 'initiatives',    label: 'Initiatives',            iconKey: 'chart',    route: '__initiatives__' },
+      { id: 'playbooks',      label: 'Playbooks',              iconKey: 'book',     route: '__playbooks__' },
+      { id: 'orchestrations', label: "Centre d'Orchestration", iconKey: 'zap',      route: '__orchestrations__' },
+    ],
+  },
+  {
     section: 'Gouvernance',
     items: [
       { id: 'gouvernance', label: 'Gouvernance & Loi 25', iconKey: 'shield', appSlug: 'gouvernance' },
-      { id: 'conformite',  label: 'Conformité',           iconKey: 'check',  appSlug: 'conformite', defaultSoon: true },
-      { id: 'politiques',  label: 'Politiques',           iconKey: 'file',   appSlug: 'politiques', defaultSoon: true },
+      { id: 'conformite',  label: 'Conformité Causale',   iconKey: 'check',  route: '__conformite__' },
+      { id: 'politiques',  label: 'Politiques Vivantes',  iconKey: 'file',   route: '__politiques__' },
     ],
   },
   {
@@ -373,6 +382,42 @@ async function _navigateTo(navItem) {
       _state.module = mod.default;
       const newPath = `/workspace/${_slug()}/atlas`;
       if (location.pathname !== newPath) history.pushState({ id: 'atlas' }, '', newPath);
+
+    } else if (navItem.route === '__decisions__') {
+      const mod = await import('/static/workspace/decisions/main.js');
+      _state.module = mod.default;
+      const newPath = `/workspace/${_slug()}/decisions`;
+      if (location.pathname !== newPath) history.pushState({ id: 'decisions' }, '', newPath);
+
+    } else if (navItem.route === '__playbooks__') {
+      const mod = await import('/static/workspace/playbooks/main.js');
+      _state.module = mod.default;
+      const newPath = `/workspace/${_slug()}/playbooks`;
+      if (location.pathname !== newPath) history.pushState({ id: 'playbooks' }, '', newPath);
+
+    } else if (navItem.route === '__orchestrations__') {
+      const mod = await import('/static/workspace/orchestrations/main.js');
+      _state.module = mod.default;
+      const newPath = `/workspace/${_slug()}/orchestrations`;
+      if (location.pathname !== newPath) history.pushState({ id: 'orchestrations' }, '', newPath);
+
+    } else if (navItem.route === '__initiatives__') {
+      const mod = await import('/static/workspace/initiatives/main.js');
+      _state.module = mod.default;
+      const newPath = `/workspace/${_slug()}/initiatives`;
+      if (location.pathname !== newPath) history.pushState({ id: 'initiatives' }, '', newPath);
+
+    } else if (navItem.route === '__politiques__') {
+      const mod = await import('/static/workspace/politiques/main.js');
+      _state.module = mod.default;
+      const newPath = `/workspace/${_slug()}/politiques`;
+      if (location.pathname !== newPath) history.pushState({ id: 'politiques' }, '', newPath);
+
+    } else if (navItem.route === '__conformite__') {
+      const mod = await import('/static/workspace/conformite/main.js');
+      _state.module = mod.default;
+      const newPath = `/workspace/${_slug()}/conformite`;
+      if (location.pathname !== newPath) history.pushState({ id: 'conformite' }, '', newPath);
 
     } else if (navItem.appSlug && navItem.enabled) {
       const mod = await import(`/static/apps/${navItem.appSlug}/main.js`);

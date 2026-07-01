@@ -138,6 +138,13 @@ from routes_workspace              import router as workspace_router
 from routes_diagnostic             import router as diagnostic_router
 from routes_rapport                import router as rapport_router
 from routes_org                    import router as org_router
+from routes_decisions              import router as decisions_router
+from routes_playbooks              import router as playbooks_router
+from routes_orchestrations         import router as orchestrations_router
+from routes_initiatives            import router as initiatives_router
+from routes_atlas_v3               import router as atlas_v3_router
+from routes_politiques             import router as politiques_router
+from routes_conformite_causale     import router as conformite_causale_router
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -236,6 +243,13 @@ def create_app(
     app.include_router(diagnostic_router)
     app.include_router(rapport_router)
     app.include_router(org_router)
+    app.include_router(decisions_router)
+    app.include_router(playbooks_router)
+    app.include_router(orchestrations_router)
+    app.include_router(initiatives_router)
+    app.include_router(atlas_v3_router)
+    app.include_router(politiques_router)
+    app.include_router(conformite_causale_router)
     app.state.storage = storage or DocumentStore.from_env()
     app.state.assistant = assistant or AssistantService.from_env()
 
