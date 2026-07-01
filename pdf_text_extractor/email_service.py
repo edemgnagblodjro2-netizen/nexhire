@@ -337,8 +337,10 @@ def send_welcome_email(
     full_name: str,
     org_name: str,
     trial_days: int = 14,
+    partner_slug: str | None = None,
 ) -> bool:
     first_name = full_name.split()[0] if full_name else "là"
+    cta_url = f"{APP_URL}/workspace/{partner_slug}" if partner_slug else f"{APP_URL}/inscription"
     subject = f"Bienvenue sur AgentHub, {first_name} — votre espace est prêt"
     html = f"""<!doctype html>
 <html lang="fr">
@@ -389,9 +391,9 @@ def send_welcome_email(
       </div>
 
       <div style="text-align:center;margin:24px 0">
-        <a href="{APP_URL}/inscription"
+        <a href="{cta_url}"
            style="display:inline-block;background:#6366f1;color:#fff;padding:13px 32px;border-radius:8px;font-weight:700;text-decoration:none;font-size:.95rem">
-          Accéder à mon espace →
+          Accéder à mon tableau de bord →
         </a>
       </div>
       <p style="color:#94a3b8;font-size:.82rem;text-align:center;margin:0">Des questions ? Répondez à cet email — nous sommes là pour vous aider.</p>

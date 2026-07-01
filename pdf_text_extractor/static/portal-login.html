@@ -252,15 +252,12 @@
     }
     .pl-check-row label { font-size: 13px; color: var(--text-2); cursor: pointer; }
 
-    /* Type d'organisation — cards radio */
+    /* Type d'organisation — cards radio 3×2 */
     .pl-org-types {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
       margin-top: 6px;
-    }
-    @media (max-width: 520px) {
-      .pl-org-types { grid-template-columns: repeat(3, 1fr); }
     }
     .pl-org-type { display: block; cursor: pointer; }
     .pl-org-type input[type="radio"] { display: none; }
@@ -268,21 +265,41 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 5px;
-      padding: 10px 4px;
+      gap: 8px;
+      padding: 16px 8px 12px;
       border: 1.5px solid #e2e8f0;
-      border-radius: 10px;
+      border-radius: 12px;
       background: #fff;
       transition: all .15s;
+      min-height: 80px;
+      justify-content: center;
     }
-    .pl-org-type:hover .pl-org-type-card { border-color: #818CF8; }
+    .pl-org-type:hover .pl-org-type-card { border-color: #818CF8; background: #f5f3ff; }
     .pl-org-type input[type="radio"]:checked + .pl-org-type-card {
       border-color: #6366f1;
       background: #eef2ff;
+      box-shadow: 0 0 0 3px rgba(99,102,241,.15);
     }
-    .pl-org-type-icon { font-size: 22px; line-height: 1; }
-    .pl-org-type-label { font-size: 10px; font-weight: 600; color: #475569; text-align: center; line-height: 1.2; }
+    .pl-org-type-icon { font-size: 28px; line-height: 1; }
+    .pl-org-type-label { font-size: 11px; font-weight: 600; color: #475569; text-align: center; line-height: 1.3; }
     .pl-org-type input[type="radio"]:checked + .pl-org-type-card .pl-org-type-label { color: #4338ca; }
+
+    /* CGU */
+    .pl-cgu { display: flex; align-items: flex-start; gap: 10px; margin: 4px 0 16px; }
+    .pl-cgu input[type="checkbox"] { margin-top: 2px; flex-shrink: 0; accent-color: #6366f1; width: 16px; height: 16px; }
+    .pl-cgu-text { font-size: 12px; color: #64748b; line-height: 1.5; }
+    .pl-cgu-text a { color: #6366f1; text-decoration: underline; }
+    .pl-trial-badge {
+      text-align: center;
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 18px;
+      padding: 8px;
+      background: #f0fdf4;
+      border-radius: 8px;
+      border: 1px solid #bbf7d0;
+    }
+    .pl-trial-badge strong { color: #16a34a; }
 
     .pl-submit {
       width: 100%;
@@ -556,84 +573,116 @@
             </div>
           </div>
 
+          <div class="pl-trial-badge">
+            <strong>14 jours d'essai gratuit</strong> — aucune carte de crédit requise
+          </div>
+
           <form id="signup-form" onsubmit="handleSignup(event)">
-            <div class="pl-row">
-              <div class="pl-field">
-                <label class="pl-label" for="signup-fname">Prénom</label>
-                <input class="ds-input pl-input" id="signup-fname" type="text"
-                       placeholder="Marie" required autocomplete="given-name">
-              </div>
-              <div class="pl-field">
-                <label class="pl-label" for="signup-lname">Nom</label>
-                <input class="ds-input pl-input" id="signup-lname" type="text"
-                       placeholder="Tremblay" required autocomplete="family-name">
-              </div>
-            </div>
             <div class="pl-field">
-              <label class="pl-label" for="signup-email">Courriel</label>
-              <input class="ds-input pl-input" id="signup-email" type="email"
-                     placeholder="marie.tremblay@organisation.ca" required autocomplete="email">
-            </div>
-            <div class="pl-field">
-              <label class="pl-label" for="signup-phone">Téléphone</label>
-              <input class="ds-input pl-input" id="signup-phone" type="tel"
-                     placeholder="+1 514 555-0000" required autocomplete="tel">
-            </div>
-            <div class="pl-field">
-              <label class="pl-label" for="signup-org-name">Nom de votre organisation</label>
+              <label class="pl-label" for="signup-org-name">Nom de l'organisation <span style="color:#dc2626">*</span></label>
               <input class="ds-input pl-input" id="signup-org-name" type="text"
-                     placeholder="Ex. : Ville de Laval, Hôpital Saint-Luc…" required maxlength="255" autocomplete="organization">
+                     placeholder="Ex. : Ville de Laval, Hôpital Saint-Luc, Entreprise XYZ…"
+                     required maxlength="255" autocomplete="organization">
             </div>
             <div class="pl-field">
-              <label class="pl-label">Type d'organisation</label>
-              <div class="pl-org-types" id="signup-org-types">
+              <label class="pl-label">Type d'organisation <span style="color:#dc2626">*</span></label>
+              <div class="pl-org-types">
                 <label class="pl-org-type">
                   <input type="radio" name="org_type" value="entreprise" required>
                   <span class="pl-org-type-card">
                     <span class="pl-org-type-icon">🏢</span>
-                    <span class="pl-org-type-label">Entreprise</span>
+                    <span class="pl-org-type-label">Entreprise privée</span>
                   </span>
                 </label>
                 <label class="pl-org-type">
-                  <input type="radio" name="org_type" value="municipalite">
+                  <input type="radio" name="org_type" value="pme">
                   <span class="pl-org-type-card">
-                    <span class="pl-org-type-icon">🏙️</span>
-                    <span class="pl-org-type-label">Municipal</span>
+                    <span class="pl-org-type-icon">🏭</span>
+                    <span class="pl-org-type-label">PME / PMI</span>
                   </span>
                 </label>
                 <label class="pl-org-type">
                   <input type="radio" name="org_type" value="hopital">
                   <span class="pl-org-type-card">
                     <span class="pl-org-type-icon">🏥</span>
-                    <span class="pl-org-type-label">Santé</span>
+                    <span class="pl-org-type-label">Hôpital / Santé</span>
+                  </span>
+                </label>
+                <label class="pl-org-type">
+                  <input type="radio" name="org_type" value="municipalite">
+                  <span class="pl-org-type-card">
+                    <span class="pl-org-type-icon">🏛️</span>
+                    <span class="pl-org-type-label">Municipalité</span>
                   </span>
                 </label>
                 <label class="pl-org-type">
                   <input type="radio" name="org_type" value="universite">
                   <span class="pl-org-type-card">
                     <span class="pl-org-type-icon">🎓</span>
-                    <span class="pl-org-type-label">Éducation</span>
+                    <span class="pl-org-type-label">Université / École</span>
                   </span>
                 </label>
                 <label class="pl-org-type">
                   <input type="radio" name="org_type" value="entrepreneur">
                   <span class="pl-org-type-card">
-                    <span class="pl-org-type-icon">👤</span>
-                    <span class="pl-org-type-label">Entrepreneur</span>
+                    <span class="pl-org-type-icon">🚀</span>
+                    <span class="pl-org-type-label">Startup / Entrepreneur</span>
                   </span>
                 </label>
               </div>
             </div>
             <div class="pl-field">
-              <label class="pl-label" for="signup-password">Mot de passe</label>
+              <label class="pl-label" for="signup-currency">Devise de l'organisation</label>
+              <select class="ds-input pl-input" id="signup-currency">
+                <option value="CAD" selected>🇨🇦 Dollar canadien (CAD)</option>
+                <option value="USD">🇺🇸 Dollar américain (USD)</option>
+                <option value="EUR">🇪🇺 Euro (EUR)</option>
+              </select>
+            </div>
+            <div class="pl-row">
+              <div class="pl-field">
+                <label class="pl-label" for="signup-fname">Prénom <span style="color:#dc2626">*</span></label>
+                <input class="ds-input pl-input" id="signup-fname" type="text"
+                       placeholder="Marie" required autocomplete="given-name">
+              </div>
+              <div class="pl-field">
+                <label class="pl-label" for="signup-lname">Nom <span style="color:#dc2626">*</span></label>
+                <input class="ds-input pl-input" id="signup-lname" type="text"
+                       placeholder="Tremblay" required autocomplete="family-name">
+              </div>
+            </div>
+            <div class="pl-field">
+              <label class="pl-label" for="signup-email">Adresse courriel <span style="color:#dc2626">*</span></label>
+              <input class="ds-input pl-input" id="signup-email" type="email"
+                     placeholder="marie.tremblay@organisation.ca" required autocomplete="email">
+            </div>
+            <div class="pl-field">
+              <label class="pl-label" for="signup-phone">Numéro de téléphone <span style="color:#dc2626">*</span></label>
+              <input class="ds-input pl-input" id="signup-phone" type="tel"
+                     placeholder="+1 514 555-0000" required autocomplete="tel">
+            </div>
+            <div class="pl-field">
+              <label class="pl-label" for="signup-password">Mot de passe (min. 12 caractères) <span style="color:#dc2626">*</span></label>
               <input class="ds-input pl-input" id="signup-password" type="password"
-                     placeholder="12 caractères min." required minlength="12" autocomplete="new-password">
+                     placeholder="••••••••••••" required minlength="12" autocomplete="new-password">
+            </div>
+
+            <div class="pl-cgu">
+              <input type="checkbox" id="signup-cgu" required>
+              <span class="pl-cgu-text">
+                J'accepte les <a href="/legal/tos" target="_blank">Conditions d'utilisation</a>
+                et la <a href="/legal/privacy" target="_blank">Politique de confidentialité</a> d'AgentHub Platform.
+              </span>
             </div>
 
             <button type="submit" class="ds-btn ds-btn-primary ds-btn-lg pl-submit" id="signup-btn">
-              Créer mon compte
+              Créer mon compte →
             </button>
           </form>
+
+          <p class="pl-secondary" style="text-align:center;margin-top:16px">
+            Déjà un compte ? <a href="#" onclick="switchTab('login');return false">Se connecter</a>
+          </p>
 
           <p class="pl-secondary" style="margin-top:4px">
             Déjà un compte ?

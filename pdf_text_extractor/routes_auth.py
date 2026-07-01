@@ -37,7 +37,7 @@ class SignupPayload(BaseModel):
     phone: str = Field(min_length=7, max_length=30)
     invite_token: str | None = None
     partner_slug: str | None = Field(default=None, pattern=r"^[a-z0-9-]{1,80}$")
-    org_type: str = Field(default="entreprise", pattern="^(entreprise|entrepreneur|hopital|municipalite|universite)$")
+    org_type: str = Field(default="entreprise", pattern="^(entreprise|pme|entrepreneur|hopital|municipalite|universite)$")
     currency: str = Field(default="CAD", pattern="^[A-Z]{3}$")
 
     @field_validator("password")
@@ -137,7 +137,7 @@ def signup(request: Request, payload: SignupPayload, background: BackgroundTasks
     if payload.invite_token:
         background.add_task(_notify_member_join, payload.invite_token, payload.email)
     else:
-        background.add_task(_send_welcome, payload.email, payload.full_name, payload.organization_name)
+        background.add_task(_send_welcome, payload.email, payload.full_name, payload.organization_name, payload.partner_slug)
 
     # Si Supabase a retourné une session, la confirmation email est désactivée
     # → on peut connecter l'utilisateur immédiatement sans vérification.
@@ -155,10 +155,10 @@ def signup(request: Request, payload: SignupPayload, background: BackgroundTasks
     }
 
 
-def _send_welcome(email: str, full_name: str, org_name: str) -> None:
+def _send_welcome(email: str, full_name: str, org_name: str, partner_slug: str | None = None) -> None:
     try:
         from email_service import send_welcome_email
-        send_welcome_email(to_email=email, full_name=full_name, org_name=org_name)
+        send_welcome_email(to_email=email, full_name=full_name, org_name=org_name, partner_slug=partner_slug)
     except Exception:
         pass
 

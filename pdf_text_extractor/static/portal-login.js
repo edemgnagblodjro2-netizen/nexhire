@@ -207,13 +207,22 @@ async function handleSignup(e) {
   const email    = document.getElementById('signup-email').value.trim();
   const phone    = document.getElementById('signup-phone').value.trim();
   const org_name = document.getElementById('signup-org-name').value.trim();
-  const org_type = (document.querySelector('input[name="org_type"]:checked') || {}).value || 'entreprise';
+  const org_type = (document.querySelector('input[name="org_type"]:checked') || {}).value || '';
+  const currency = (document.getElementById('signup-currency') || {}).value || 'CAD';
   const password = document.getElementById('signup-password').value;
+  const cgu      = document.getElementById('signup-cgu');
 
   const full_name = `${fname} ${lname}`.trim();
 
   if (!org_type) {
     _setHTML('signup-error', 'Veuillez sélectionner le type de votre organisation.');
+    _showEl('signup-error');
+    _setBtnLoading('signup-btn', false);
+    return;
+  }
+
+  if (cgu && !cgu.checked) {
+    _setHTML('signup-error', 'Vous devez accepter les conditions d\'utilisation pour continuer.');
     _showEl('signup-error');
     _setBtnLoading('signup-btn', false);
     return;
@@ -227,6 +236,7 @@ async function handleSignup(e) {
       password,
       organization_name: org_name || 'Mon organisation',
       org_type,
+      currency,
       partner_slug: _partnerSlug || undefined,
     };
 
