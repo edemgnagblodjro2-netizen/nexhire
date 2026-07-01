@@ -95,6 +95,7 @@ const NAV = [
     items: [
       { id: 'billing',          label: 'Facturation',        iconKey: 'file',     appSlug: 'billing' },
       { id: 'service-accounts', label: 'Comptes de service', iconKey: 'key',      appSlug: 'service-accounts' },
+      { id: 'help',             label: 'Centre d\'aide',     iconKey: 'help',     appSlug: 'help' },
       { id: 'settings',         label: 'Paramètres',         iconKey: 'settings', appSlug: 'settings' },
     ],
   },
@@ -260,7 +261,7 @@ function _applyUserInfo(profile) {
 }
 
 // Apps core livrées avec la plateforme — toujours disponibles sans besoin d'activation DB
-const CORE_APPS = new Set(['diagnostic-ia', 'gouvernance', 'observatoire', 'reports', 'settings', 'security', 'ms365', 'integrations', 'enterprise-intel', 'identity', 'executive', 'departments', 'knowledge', 'billing', 'service-accounts']);
+const CORE_APPS = new Set(['diagnostic-ia', 'gouvernance', 'observatoire', 'reports', 'settings', 'security', 'ms365', 'integrations', 'enterprise-intel', 'identity', 'executive', 'departments', 'knowledge', 'billing', 'service-accounts', 'help']);
 
 // ── Nav resolution ────────────────────────────────────────────────────────────
 function _resolveNavItems() {
@@ -382,6 +383,11 @@ async function _navigateTo(navItem) {
   }
 }
 
+window.addEventListener('ws:navigate', (e) => {
+  const r = _resolveNavItems().find(n => n.id === e.detail?.id);
+  if (r) _navigateTo(r);
+});
+
 window.addEventListener('popstate', (e) => {
   const id = e.state?.id || _pathApp();
   if (id) {
@@ -435,6 +441,21 @@ function _initTopbar() {
     _closeAllPanels();
     const r = _resolveNavItems().find(n => n.id === 'atlas');
     if (r) _navigateTo(r);
+  });
+
+  // Help → Centre d'aide (FAQ & support ticket)
+  function _gotoHelp() {
+    _closeAllPanels();
+    const r = _resolveNavItems().find(n => n.id === 'help');
+    if (r) _navigateTo(r);
+  }
+
+  // Wire topbar FAQ and "Contacter le support" buttons by text content
+  $('ws-help-panel')?.querySelectorAll('.ws-menu-item').forEach(btn => {
+    const title = btn.querySelector('.ws-menu-item-title')?.textContent?.trim();
+    if (title === 'FAQ' || title === 'Contacter le support') {
+      btn.addEventListener('click', _gotoHelp);
+    }
   });
 
   // Logout
