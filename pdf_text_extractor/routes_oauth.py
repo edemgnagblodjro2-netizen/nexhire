@@ -27,7 +27,7 @@ from rbac import require_active_subscription, require_min_role
 router = APIRouter(prefix="/api/connectors", tags=["connectors-oauth"])
 
 _STATE_TTL = 10  # minutes
-APP_URL = os.environ.get("APP_URL", "https://agenthub.nexhire.ca")
+APP_URL = os.environ.get("APP_URL", "https://myportal.nexhire.ca")
 
 # ── Config des connecteurs OAuth ──────────────────────────────────────────────
 

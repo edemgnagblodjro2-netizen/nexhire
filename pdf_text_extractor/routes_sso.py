@@ -22,7 +22,7 @@ from rbac import require_min_role
 
 router = APIRouter(prefix="/api/sso", tags=["sso"])
 
-APP_URL = os.environ.get("APP_URL", "https://agenthub.nexhire.ca")
+APP_URL = os.environ.get("APP_URL", "https://myportal.nexhire.ca")
 
 # Clé de signature HMAC pour le state OAuth — évite le CSRF sur le callback SSO
 _SSO_STATE_KEY = (

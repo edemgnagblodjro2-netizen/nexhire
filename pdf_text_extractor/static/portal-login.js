@@ -281,6 +281,41 @@ async function handleSignup(e) {
   }
 }
 
+// ── Retour de confirmation Supabase ────────────────────────────────────────────
+// Quand l'utilisateur clique le lien de confirmation dans son email,
+// Supabase redirige vers /inscription avec les tokens dans le hash (#access_token=...).
+
+async function _handleConfirmationRedirect() {
+  const hash         = new URLSearchParams(location.hash.replace(/^#/, ''));
+  const accessToken  = hash.get('access_token');
+  const refreshToken = hash.get('refresh_token');
+  const type         = hash.get('type');
+
+  if (!accessToken || type !== 'signup') return false;
+
+  // Nettoyer l'URL (supprimer le hash avec les tokens)
+  history.replaceState(null, '', location.pathname + location.search);
+
+  _saveToken({ access_token: accessToken, refresh_token: refreshToken });
+
+  try {
+    const meRes = await fetch('/api/auth/me', {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    const me = meRes.ok ? await meRes.json() : null;
+    window.location.href = (me && me.partner_slug)
+      ? `/workspace/${me.partner_slug}`
+      : '/app';
+  } catch {
+    window.location.href = '/app';
+  }
+
+  return true;
+}
+
 // ── Init ──────────────────────────────────────────────────────────────────────
 
-_initPartner();
+(async () => {
+  const handled = await _handleConfirmationRedirect();
+  if (!handled) _initPartner();
+})();

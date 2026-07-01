@@ -118,7 +118,7 @@ def check_contract_expiry_all_orgs() -> None:
         from db import get_db, rows
         from email_service import _send
         import os
-        APP_URL = os.environ.get("APP_URL", "https://agenthub.nexhire.ca")
+        APP_URL = os.environ.get("APP_URL", "https://myportal.nexhire.ca")
     except Exception as exc:
         logger.error("scheduler import error (contract expiry): %s", exc)
         return
@@ -215,7 +215,7 @@ def check_mfa_admin_loss_all_orgs() -> None:
         from db import get_db, rows
         from email_service import _send
         import os
-        APP_URL = os.environ.get("APP_URL", "https://agenthub.nexhire.ca")
+        APP_URL = os.environ.get("APP_URL", "https://myportal.nexhire.ca")
     except Exception as exc:
         logger.error("scheduler import error (mfa admin loss): %s", exc)
         return

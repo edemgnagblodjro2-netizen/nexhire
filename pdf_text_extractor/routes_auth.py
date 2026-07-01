@@ -106,11 +106,18 @@ def signup(request: Request, payload: SignupPayload, background: BackgroundTasks
         if payload.partner_slug:
             meta["partner_slug"] = payload.partner_slug
 
+        portal_url    = os.environ.get("APP_URL", "https://myportal.nexhire.ca")
+        redirect_path = f"/inscription?partenaire={payload.partner_slug}" if payload.partner_slug else "/inscription"
+        email_redirect_to = f"{portal_url}{redirect_path}"
+
         res = sb.auth.sign_up(
             {
                 "email": payload.email,
                 "password": payload.password,
-                "options": {"data": meta},
+                "options": {
+                    "data": meta,
+                    "email_redirect_to": email_redirect_to,
+                },
             }
         )
     except Exception as exc:
@@ -170,7 +177,7 @@ class ForgotPasswordPayload(BaseModel):
 def forgot_password(request: Request, payload: ForgotPasswordPayload):
     """Déclenche l'email de réinitialisation Supabase. Réponse identique quelle que soit l'adresse."""
     try:
-        app_url = os.environ.get("APP_URL", "https://agenthub.nexhire.ca")
+        app_url = os.environ.get("APP_URL", "https://myportal.nexhire.ca")
         anon_client().auth.reset_password_for_email(payload.email, {"redirect_to": app_url})
     except Exception:
         pass

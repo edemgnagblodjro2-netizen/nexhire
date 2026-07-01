@@ -1,5 +1,4 @@
 """Stripe billing — checkout, portail client, webhooks abonnement."""
-from __future__ import annotations
 
 import hashlib
 import hmac
@@ -21,7 +20,7 @@ STRIPE_SECRET_KEY     = os.environ.get("STRIPE_SECRET_KEY", "")
 STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
 STRIPE_PRICE_STARTER       = os.environ.get("STRIPE_PRICE_STARTER", "")
 STRIPE_PRICE_PROFESSIONAL  = os.environ.get("STRIPE_PRICE_PROFESSIONAL", "")
-APP_URL               = os.environ.get("APP_URL", "https://agenthub.nexhire.ca")
+APP_URL               = os.environ.get("APP_URL", "https://myportal.nexhire.ca")
 
 STRIPE_API = "https://api.stripe.com/v1"
 
@@ -223,15 +222,10 @@ async def stripe_webhook(request: Request, background: BackgroundTasks):
 
 
 def _mark_event_processed(event_id: str) -> bool:
-    """Tente d'enregistrer l'event_id. Retourne True si nouveau, False si déjà traité."""
+    """Tente d'enregistrer l'event_id. Retourne True si nouveau, False si déjà traité.
+    La table stripe_processed_events doit exister (phase_stripe_idempotency.sql)."""
     try:
         with get_db() as cur:
-            cur.execute("""
-                CREATE TABLE IF NOT EXISTS stripe_processed_events (
-                    event_id   TEXT PRIMARY KEY,
-                    processed_at TIMESTAMPTZ DEFAULT NOW()
-                )
-            """)
             cur.execute(
                 "INSERT INTO stripe_processed_events (event_id) VALUES (%s) ON CONFLICT DO NOTHING",
                 (event_id,),
