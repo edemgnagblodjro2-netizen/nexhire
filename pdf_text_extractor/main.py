@@ -399,7 +399,7 @@ def create_app(
     def docs_presentation_cci3r():
         return FileResponse(STATIC_DIR / "docs" / "presentation-cci3r-2026.html", media_type="text/html")
 
-    @app.get("/api/health")
+    @app.api_route("/api/health", methods=["GET", "HEAD"])
     def health():
         """Health check public — utilisé par Render, UptimeRobot, et les monitors externes."""
         db_ok = False
