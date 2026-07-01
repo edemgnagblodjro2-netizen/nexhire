@@ -121,7 +121,18 @@ def signup(request: Request, payload: SignupPayload, background: BackgroundTasks
             }
         )
     except Exception as exc:
-        raise HTTPException(status_code=400, detail="Inscription échouée — vérifiez les informations saisies.") from exc
+        import sys
+        raw = str(exc).lower()
+        print(f"[auth] signup error ({type(exc).__name__}): {exc}", file=sys.stderr)
+        if "already registered" in raw or "already exists" in raw or "user_already_exists" in raw:
+            raise HTTPException(status_code=400, detail="Un compte existe déjà avec cette adresse courriel. Utilisez la connexion ou réinitialisez votre mot de passe.")
+        if "password" in raw and ("weak" in raw or "short" in raw or "characters" in raw):
+            raise HTTPException(status_code=400, detail="Le mot de passe ne respecte pas les exigences de sécurité Supabase.")
+        if "rate" in raw or "too many" in raw:
+            raise HTTPException(status_code=429, detail="Trop de tentatives — réessayez dans quelques minutes.")
+        if "invalid" in raw and "email" in raw:
+            raise HTTPException(status_code=400, detail="Adresse courriel invalide.")
+        raise HTTPException(status_code=400, detail=f"Inscription échouée : {exc}") from exc
 
     if payload.invite_token:
         background.add_task(_notify_member_join, payload.invite_token, payload.email)
