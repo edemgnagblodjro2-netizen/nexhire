@@ -93,7 +93,8 @@ const NAV = [
   {
     section: 'Administration',
     items: [
-      { id: 'settings', label: 'Paramètres', iconKey: 'settings', appSlug: 'settings' },
+      { id: 'billing',  label: 'Facturation',  iconKey: 'file',     appSlug: 'billing' },
+      { id: 'settings', label: 'Paramètres',   iconKey: 'settings', appSlug: 'settings' },
     ],
   },
 ];
@@ -258,7 +259,7 @@ function _applyUserInfo(profile) {
 }
 
 // Apps core livrées avec la plateforme — toujours disponibles sans besoin d'activation DB
-const CORE_APPS = new Set(['diagnostic-ia', 'gouvernance', 'observatoire', 'reports', 'settings', 'security', 'ms365', 'integrations', 'enterprise-intel', 'identity', 'executive', 'departments', 'knowledge']);
+const CORE_APPS = new Set(['diagnostic-ia', 'gouvernance', 'observatoire', 'reports', 'settings', 'security', 'ms365', 'integrations', 'enterprise-intel', 'identity', 'executive', 'departments', 'knowledge', 'billing']);
 
 // ── Nav resolution ────────────────────────────────────────────────────────────
 function _resolveNavItems() {
