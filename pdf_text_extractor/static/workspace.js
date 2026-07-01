@@ -225,6 +225,9 @@ function _applyUserInfo(profile) {
   setTxt('ws-up-role', roleMap[profile.role] || profile.role || 'Utilisateur');
 }
 
+// Apps core livrées avec la plateforme — toujours disponibles sans besoin d'activation DB
+const CORE_APPS = new Set(['diagnostic-ia', 'gouvernance', 'observatoire', 'reports', 'settings']);
+
 // ── Nav resolution ────────────────────────────────────────────────────────────
 function _resolveNavItems() {
   const resolved = [];
@@ -235,8 +238,9 @@ function _resolveNavItems() {
         continue;
       }
       if (item.appSlug) {
-        const dbApp  = _state.dbApps.find(a => a.slug === item.appSlug);
-        const enabled = !!(dbApp && dbApp.is_installed);
+        const dbApp   = _state.dbApps.find(a => a.slug === item.appSlug);
+        const isCore  = CORE_APPS.has(item.appSlug);
+        const enabled = isCore || !!(dbApp && dbApp.is_installed);
         resolved.push({ ...item, enabled, app: dbApp || null, soon: !enabled });
       }
     }
