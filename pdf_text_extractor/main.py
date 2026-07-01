@@ -26,7 +26,7 @@ from fastapi import BackgroundTasks, Body, Depends, FastAPI, File, Form, HTTPExc
 from auth import CurrentUser
 from rbac import require_min_role
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
@@ -307,6 +307,11 @@ def create_app(
         )
 
     _WORKSPACE_HEADERS = {"Cache-Control": "no-store, no-cache, must-revalidate, max-age=0"}
+
+    @app.get("/app")
+    def app_legacy_redirect():
+        """Ancienne URL de l'EIP — redirige vers le portail d'inscription."""
+        return RedirectResponse(url="/inscription", status_code=302)
 
     @app.get("/inscription")
     def portal_inscription():

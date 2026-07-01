@@ -22,6 +22,7 @@ const IC = {
   building:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>`,
   key:        `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>`,
   help:       `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+  store:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1-5h16l1 5"/><path d="M3 9h18v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 9v2a3 3 0 0 0 6 0V9"/></svg>`,
 };
 
 const icon = (name) => `<span class="ws-nav-icon">${IC[name] || IC.grid}</span>`;
@@ -64,6 +65,12 @@ const NAV = [
     ],
   },
   {
+    section: 'Marketplace',
+    items: [
+      { id: 'marketplace', label: 'Workspace Marketplace', iconKey: 'store', appSlug: 'marketplace' },
+    ],
+  },
+  {
     section: 'Centre d\'intégrations',
     items: [
       { id: 'integrations', label: 'Tous les connecteurs', iconKey: 'zap',      appSlug: 'integrations' },
@@ -73,9 +80,8 @@ const NAV = [
   {
     section: 'Identity & Access',
     items: [
-      { id: 'identity',    label: 'Utilisateurs & Accès', iconKey: 'users',    appSlug: 'identity' },
-      { id: 'departments', label: 'Départements',          iconKey: 'building', appSlug: 'departments' },
-      { id: 'sso-mfa',     label: 'SSO & MFA',             iconKey: 'shield',   appSlug: 'sso-mfa', defaultSoon: true },
+      { id: 'identity',    label: 'Utilisateurs & Accès', iconKey: 'users',  appSlug: 'identity' },
+      { id: 'sso-mfa',     label: 'SSO & MFA',             iconKey: 'shield', appSlug: 'sso-mfa', defaultSoon: true },
     ],
   },
   {
@@ -269,7 +275,7 @@ function _applyUserInfo(profile) {
 }
 
 // Apps core livrées avec la plateforme — toujours disponibles sans besoin d'activation DB
-const CORE_APPS = new Set(['diagnostic-ia', 'gouvernance', 'observatoire', 'reports', 'settings', 'security', 'ms365', 'integrations', 'enterprise-intel', 'identity', 'executive', 'departments', 'knowledge', 'billing', 'service-accounts', 'help']);
+const CORE_APPS = new Set(['diagnostic-ia', 'gouvernance', 'observatoire', 'reports', 'settings', 'security', 'ms365', 'integrations', 'enterprise-intel', 'identity', 'executive', 'departments', 'knowledge', 'billing', 'service-accounts', 'help', 'marketplace']);
 
 // ── Nav resolution ────────────────────────────────────────────────────────────
 function _resolveNavItems() {

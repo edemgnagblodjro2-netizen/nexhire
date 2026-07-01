@@ -152,7 +152,7 @@ async function handleLogin(e) {
     if (me && me.partner_slug) {
       window.location.href = `/workspace/${me.partner_slug}`;
     } else {
-      window.location.href = '/app';
+      window.location.href = '/inscription';
     }
 
   } catch {
@@ -304,9 +304,9 @@ async function _handleConfirmationRedirect() {
     const me = meRes.ok ? await meRes.json() : null;
     window.location.href = (me && me.partner_slug)
       ? `/workspace/${me.partner_slug}`
-      : '/app';
+      : '/inscription';
   } catch {
-    window.location.href = '/app';
+    window.location.href = '/inscription';
   }
 
   return true;
