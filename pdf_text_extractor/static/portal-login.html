@@ -8,379 +8,331 @@
   <link rel="icon" href="/static/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/static/design-system.css">
   <style>
+    /* ── Fluent Design System — Portal Login ───────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; font-family: var(--font); background: var(--bg); color: var(--text); }
+    html, body {
+      height: 100%;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
 
-    /* ── Layout deux colonnes ───────────────────────────────────────────── */
+    /* ── Layout ─────────────────────────────────────────────────────────── */
     .pl-shell {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.1fr 1fr;
       min-height: 100dvh;
     }
 
-    /* ── Colonne gauche — branding ──────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════════════════════
+       COLONNE GAUCHE — Branding Fluent / Microsoft 365 style
+       ═══════════════════════════════════════════════════════════════════════ */
     .pl-brand {
-      background: linear-gradient(155deg, #1e1b4b 0%, #312e81 45%, #4c1d95 100%);
-      background-image:
-        radial-gradient(circle, rgba(255,255,255,.055) 1px, transparent 1px),
-        linear-gradient(155deg, #1e1b4b 0%, #312e81 45%, #4c1d95 100%);
-      background-size: 28px 28px, 100% 100%;
+      background: linear-gradient(160deg, #003067 0%, #004E9A 40%, #0078D4 80%, #1890E8 100%);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 48px 52px;
+      padding: 44px 52px;
       position: relative;
       overflow: hidden;
     }
 
+    /* Mica-style ambient layers */
     .pl-brand::before {
       content: '';
       position: absolute;
-      top: -80px; right: -80px;
-      width: 380px; height: 380px;
-      background: radial-gradient(circle, rgba(139,92,246,.28) 0%, transparent 70%);
+      top: -120px; right: -120px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(24,144,232,.45) 0%, transparent 65%);
       pointer-events: none;
     }
     .pl-brand::after {
       content: '';
       position: absolute;
-      bottom: -60px; left: -40px;
-      width: 280px; height: 280px;
-      background: radial-gradient(circle, rgba(99,102,241,.22) 0%, transparent 70%);
+      bottom: -80px; left: -60px;
+      width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(0,90,180,.4) 0%, transparent 65%);
       pointer-events: none;
     }
 
-    .pl-brand-top { position: relative; z-index: 1; }
+    /* Subtle grid overlay */
+    .pl-brand-grid {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
 
+    .pl-brand-top  { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; }
+    .pl-brand-foot { position: relative; z-index: 1; }
+
+    /* Logo */
     .pl-logo-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 52px;
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 56px;
     }
-    .pl-logo-img { height: 30px; width: auto; filter: brightness(0) invert(1); }
+    .pl-logo-mark {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: rgba(255,255,255,.18); display: flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(255,255,255,.22); backdrop-filter: blur(8px);
+    }
+    .pl-logo-mark svg { width: 20px; height: 20px; color: white; }
     .pl-logo-text { line-height: 1.2; }
-    .pl-logo-name {
-      font-size: 18px;
-      font-weight: 800;
-      color: white;
-      letter-spacing: -.02em;
-      display: block;
-    }
-    .pl-logo-product {
-      font-size: 11px;
-      font-weight: 500;
-      color: rgba(255,255,255,.5);
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      display: block;
+    .pl-logo-name  { font-size: 15px; font-weight: 700; color: white; display: block; letter-spacing: -.01em; }
+    .pl-logo-badge {
+      display: inline-block; font-size: 9px; font-weight: 700;
+      background: rgba(255,255,255,.18); color: rgba(255,255,255,.9);
+      padding: 1px 6px; border-radius: 2px; letter-spacing: .08em;
+      text-transform: uppercase; margin-top: 2px;
     }
 
+    /* Tagline */
     .pl-tagline {
-      font-size: 28px;
-      font-weight: 800;
-      color: white;
-      line-height: 1.25;
-      letter-spacing: -.02em;
-      margin-bottom: 12px;
+      font-size: 32px; font-weight: 700; color: white;
+      line-height: 1.2; letter-spacing: -.02em; margin-bottom: 14px;
     }
     .pl-tagline em {
       font-style: normal;
-      background: linear-gradient(90deg, #a78bfa, #818cf8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      background: linear-gradient(90deg, #85D4FF, #C8EAFF);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-
-    .pl-sub {
-      font-size: 14px;
-      color: rgba(255,255,255,.6);
-      line-height: 1.6;
-      margin-bottom: 44px;
+    .pl-sub-text {
+      font-size: 14px; color: rgba(255,255,255,.65);
+      line-height: 1.65; margin-bottom: 40px; max-width: 360px;
     }
 
-    .pl-features { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    /* Floating product card */
+    .pl-product-card {
+      background: rgba(255,255,255,.1);
+      backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 32px;
+      max-width: 360px;
+    }
+    .pl-product-card-hd {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 14px;
+    }
+    .pl-product-card-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+    }
+    .pl-product-card-title { font-size: 11px; font-weight: 700; color: rgba(255,255,255,.9); text-transform: uppercase; letter-spacing: .06em; }
+    .pl-metrics-row { display: flex; gap: 16px; }
+    .pl-metric { flex: 1; }
+    .pl-metric-val  { font-size: 22px; font-weight: 700; color: white; line-height: 1; }
+    .pl-metric-label { font-size: 10px; color: rgba(255,255,255,.55); margin-top: 2px; }
+    .pl-mini-bar { height: 3px; background: rgba(255,255,255,.15); border-radius: 2px; margin-top: 8px; overflow: hidden; }
+    .pl-mini-bar-fill { height: 100%; border-radius: 2px; background: rgba(133,212,255,.8); transition: width .6s ease; }
+
+    /* Features */
+    .pl-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
     .pl-features li {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 14px;
-      font-weight: 500;
-      color: rgba(255,255,255,.85);
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13.5px; font-weight: 400; color: rgba(255,255,255,.82);
     }
-    .pl-features li span.pl-check {
-      width: 22px; height: 22px;
-      background: rgba(139,92,246,.3);
-      border: 1px solid rgba(139,92,246,.5);
-      border-radius: 50%;
+    .pl-feat-check {
+      width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(133,212,255,.25); border: 1px solid rgba(133,212,255,.4);
       display: flex; align-items: center; justify-content: center;
-      font-size: 11px;
-      color: #c4b5fd;
-      flex-shrink: 0;
     }
+    .pl-feat-check svg { width: 10px; height: 10px; color: #85D4FF; }
 
+    /* Trust badges */
+    .pl-trust-row {
+      display: flex; align-items: center; gap: 16px;
+      padding-top: 20px; border-top: 1px solid rgba(255,255,255,.1);
+    }
+    .pl-trust-item {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 11px; color: rgba(255,255,255,.5);
+    }
+    .pl-trust-item svg { width: 13px; height: 13px; flex-shrink: 0; opacity: .7; }
+
+    /* Partner badge */
     .pl-partner-badge {
-      display: none;
-      margin-top: 32px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.15);
-      border-radius: var(--r-lg);
-      padding: 14px 18px;
-      gap: 10px;
-      align-items: center;
+      display: none; gap: 10px; align-items: center;
+      margin-bottom: 20px;
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18);
+      border-radius: 8px; padding: 12px 16px;
     }
     .pl-partner-badge.visible { display: flex; }
-    .pl-partner-badge-icon { font-size: 22px; }
-    .pl-partner-badge-text { font-size: 12px; color: rgba(255,255,255,.7); line-height: 1.4; }
-    .pl-partner-badge-name { font-weight: 700; color: white; font-size: 13px; }
+    .pl-partner-badge-icon { font-size: 20px; }
+    .pl-partner-badge-text { font-size: 11px; color: rgba(255,255,255,.65); line-height: 1.4; }
+    .pl-partner-badge-name { font-weight: 700; color: white; font-size: 13px; display: block; }
 
-    /* ── Indicateurs de confiance ───────────────────────────────────────── */
-    .pl-trust {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 28px;
-      padding-top: 28px;
-      border-top: 1px solid rgba(255,255,255,.1);
-    }
-    .pl-trust li {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 12px;
-      color: rgba(255,255,255,.65);
-    }
-    .pl-trust li span.pl-trust-icon { font-size: 14px; flex-shrink: 0; }
-
+    /* Brand footer */
     .pl-brand-footer {
-      position: relative; z-index: 1;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 11px;
-      color: rgba(255,255,255,.3);
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; color: rgba(255,255,255,.28);
     }
-    .pl-brand-footer strong { color: rgba(255,255,255,.5); font-weight: 600; }
 
-    /* ── Colonne droite — formulaire ────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════════════════════
+       COLONNE DROITE — Formulaire Fluent
+       ═══════════════════════════════════════════════════════════════════════ */
     .pl-form-col {
       background: var(--card);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 32px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 48px 40px;
       min-height: 100dvh;
+      overflow-y: auto;
     }
 
-    .pl-form-wrap {
-      width: 100%;
-      max-width: 400px;
-    }
+    .pl-form-wrap { width: 100%; max-width: 380px; }
 
-    /* ── Onglets ────────────────────────────────────────────────────────── */
+    /* Onglets */
     .pl-tabs {
-      display: flex;
-      gap: 0;
-      margin-bottom: 32px;
-      border-bottom: 2px solid var(--border);
+      display: flex; gap: 0; margin-bottom: 28px;
+      border-bottom: 1px solid var(--border);
     }
     .pl-tab {
-      flex: 1;
-      padding: 10px 0;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-sub);
-      background: none;
-      border: none;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -2px;
-      cursor: pointer;
-      transition: color .15s, border-color .15s;
-      text-align: center;
+      flex: 1; padding: 10px 0;
+      font-size: 14px; font-weight: 400; color: var(--text-sub);
+      background: none; border: none; border-bottom: 2px solid transparent;
+      margin-bottom: -1px; cursor: pointer;
+      transition: color var(--transition); text-align: center; font-family: var(--font);
     }
-    .pl-tab.active {
-      color: var(--primary);
-      border-bottom-color: var(--primary);
-    }
+    .pl-tab.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 600; }
+    .pl-tab:hover:not(.active) { color: var(--text-2); }
 
-    /* ── Bloquage invitation requise ────────────────────────────────────── */
-    .pl-invite-wall {
-      display: none;
-      text-align: center;
-      padding: 32px 0;
-    }
-    .pl-invite-wall.visible { display: block; }
-    .pl-invite-icon { font-size: 40px; margin-bottom: 16px; }
-    .pl-invite-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
-    .pl-invite-desc { font-size: 13px; color: var(--text-sub); line-height: 1.6; }
-
-    /* ── Formulaire ─────────────────────────────────────────────────────── */
-    .pl-section { display: none; }
+    /* Sections */
+    .pl-section { display: none; animation: ds-fade-in .2s ease; }
     .pl-section.active { display: block; }
 
+    /* Titre form */
     .pl-form-title {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--text);
-      margin-bottom: 6px;
-      letter-spacing: -.02em;
+      font-size: 22px; font-weight: 600; color: var(--text);
+      margin-bottom: 6px; letter-spacing: -.02em;
     }
-    .pl-form-sub {
-      font-size: 13px;
-      color: var(--text-sub);
-      margin-bottom: 28px;
-      line-height: 1.5;
-    }
+    .pl-form-sub { font-size: 13px; color: var(--text-sub); margin-bottom: 24px; line-height: 1.5; }
 
-    .pl-field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 16px; }
-    .pl-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--text-sub); }
+    /* Fields */
+    .pl-field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+    .pl-label { font-size: 13px; font-weight: 600; color: var(--text-2); }
     .pl-input { width: 100%; }
 
-    .pl-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .pl-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-    .pl-check-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 20px;
-    }
+    /* Remember me / checkbox row */
+    .pl-check-row { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
     .pl-check-row input[type="checkbox"] {
-      accent-color: var(--primary);
-      width: 15px; height: 15px;
-      cursor: pointer;
+      accent-color: var(--primary); width: 15px; height: 15px; cursor: pointer;
     }
-    .pl-check-row label { font-size: 13px; color: var(--text-2); cursor: pointer; }
+    .pl-check-row label { font-size: 13px; color: var(--text-sub); cursor: pointer; }
 
-    /* Type d'organisation — cards radio 3×2 */
-    .pl-org-types {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 6px;
-    }
+    /* Org type cards */
+    .pl-org-types { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 5px; }
     .pl-org-type { display: block; cursor: pointer; }
     .pl-org-type input[type="radio"] { display: none; }
     .pl-org-type-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      padding: 16px 8px 12px;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 12px;
-      background: #fff;
-      transition: all .15s;
-      min-height: 80px;
-      justify-content: center;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      padding: 14px 6px 10px;
+      border: 1px solid var(--border); border-radius: 8px;
+      background: var(--card);
+      transition: all var(--transition); min-height: 76px; justify-content: center;
     }
-    .pl-org-type:hover .pl-org-type-card { border-color: #818CF8; background: #f5f3ff; }
+    .pl-org-type:hover .pl-org-type-card {
+      border-color: var(--primary); background: var(--primary-lt);
+    }
     .pl-org-type input[type="radio"]:checked + .pl-org-type-card {
-      border-color: #6366f1;
-      background: #eef2ff;
-      box-shadow: 0 0 0 3px rgba(99,102,241,.15);
+      border-color: var(--primary); background: var(--primary-lt);
+      box-shadow: 0 0 0 1px var(--primary);
     }
-    .pl-org-type-icon { font-size: 28px; line-height: 1; }
-    .pl-org-type-label { font-size: 11px; font-weight: 600; color: #475569; text-align: center; line-height: 1.3; }
-    .pl-org-type input[type="radio"]:checked + .pl-org-type-card .pl-org-type-label { color: #4338ca; }
+    .pl-org-type-icon { font-size: 24px; line-height: 1; }
+    .pl-org-type-label { font-size: 11px; font-weight: 600; color: var(--text-sub); text-align: center; line-height: 1.3; }
+    .pl-org-type input[type="radio"]:checked + .pl-org-type-card .pl-org-type-label { color: var(--primary-dk); }
 
     /* CGU */
-    .pl-cgu { display: flex; align-items: flex-start; gap: 10px; margin: 4px 0 16px; }
-    .pl-cgu input[type="checkbox"] { margin-top: 2px; flex-shrink: 0; accent-color: #6366f1; width: 16px; height: 16px; }
-    .pl-cgu-text { font-size: 12px; color: #64748b; line-height: 1.5; }
-    .pl-cgu-text a { color: #6366f1; text-decoration: underline; }
+    .pl-cgu { display: flex; align-items: flex-start; gap: 8px; margin: 6px 0 14px; }
+    .pl-cgu input[type="checkbox"] { margin-top: 2px; flex-shrink: 0; accent-color: var(--primary); width: 15px; height: 15px; }
+    .pl-cgu-text { font-size: 12px; color: var(--text-sub); line-height: 1.5; }
+    .pl-cgu-text a { color: var(--primary); text-decoration: none; }
+    .pl-cgu-text a:hover { text-decoration: underline; }
+
+    /* Trial badge */
     .pl-trial-badge {
-      text-align: center;
-      font-size: 12px;
-      color: #64748b;
-      margin-bottom: 18px;
-      padding: 8px;
-      background: #f0fdf4;
-      border-radius: 8px;
-      border: 1px solid #bbf7d0;
+      text-align: center; font-size: 12px; color: var(--color-ok-on);
+      margin-bottom: 16px; padding: 8px 14px;
+      background: var(--color-ok-soft); border-radius: 4px;
+      border: 1px solid var(--color-ok-border);
     }
-    .pl-trial-badge strong { color: #16a34a; }
+    .pl-trial-badge strong { color: var(--color-ok-text); }
 
-    .pl-submit {
-      width: 100%;
-      margin-bottom: 16px;
-    }
+    /* Submit */
+    .pl-submit { width: 100%; margin-bottom: 14px; }
 
-    .pl-secondary {
-      text-align: center;
-      font-size: 13px;
-      color: var(--text-sub);
-    }
-    .pl-secondary a {
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 600;
-    }
+    /* Secondary links */
+    .pl-secondary { text-align: center; font-size: 13px; color: var(--text-sub); margin-top: 4px; }
+    .pl-secondary a { color: var(--primary); text-decoration: none; font-weight: 600; }
     .pl-secondary a:hover { text-decoration: underline; }
 
+    /* Divider */
     .pl-divider {
-      text-align: center;
-      font-size: 12px;
-      color: var(--muted);
-      margin: 20px 0;
-      position: relative;
+      text-align: center; font-size: 12px; color: var(--muted);
+      margin: 16px 0; position: relative;
     }
     .pl-divider::before, .pl-divider::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      width: calc(50% - 24px);
-      height: 1px;
-      background: var(--border);
+      content: ''; position: absolute; top: 50%;
+      width: calc(50% - 22px); height: 1px; background: var(--border);
     }
     .pl-divider::before { left: 0; }
     .pl-divider::after  { right: 0; }
 
-    /* État succès inscription */
-    .pl-success { display: none; text-align: center; padding: 16px 0; }
-    .pl-success.visible { display: block; }
-    .pl-success-icon { font-size: 44px; margin-bottom: 14px; }
+    /* Invite wall */
+    .pl-invite-wall { display: none; text-align: center; padding: 28px 0; }
+    .pl-invite-wall.visible { display: block; }
+    .pl-invite-icon  { font-size: 36px; margin-bottom: 12px; }
+    .pl-invite-title { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+    .pl-invite-desc  { font-size: 13px; color: var(--text-sub); line-height: 1.65; }
+
+    /* Success state */
+    .pl-success { display: none; text-align: center; padding: 12px 0; }
+    .pl-success.visible { display: block; animation: ds-fade-in .25s ease; }
+    .pl-success-icon { font-size: 42px; margin-bottom: 12px; }
     .pl-success-badge {
-      display: inline-flex; align-items: center; gap: 6px;
+      display: inline-flex; align-items: center; gap: 5px;
       background: var(--color-ok-bg); color: var(--color-ok-text);
-      font-size: 12px; font-weight: 700; padding: 4px 12px;
-      border-radius: var(--r-pill); margin-bottom: 14px;
+      font-size: 11px; font-weight: 700; padding: 3px 10px;
+      border-radius: var(--r-pill); margin-bottom: 12px;
     }
-    .pl-success-title { font-size: 20px; font-weight: 800; color: var(--text); margin-bottom: 8px; letter-spacing: -.02em; }
-    .pl-success-desc { font-size: 13px; color: var(--text-sub); line-height: 1.6; margin-bottom: 8px; }
+    .pl-success-title { font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 7px; }
+    .pl-success-desc  { font-size: 13px; color: var(--text-sub); line-height: 1.6; margin-bottom: 7px; }
     .pl-success-email {
       display: inline-flex; align-items: center; gap: 6px;
       background: var(--bg); border: 1px solid var(--border);
-      border-radius: var(--r); padding: 8px 14px;
+      border-radius: var(--r); padding: 7px 14px;
       font-size: 13px; font-weight: 600; color: var(--text);
-      margin: 8px 0 20px;
+      margin: 7px 0 18px;
     }
-    .pl-success-actions { display: flex; flex-direction: column; gap: 10px; }
+    .pl-success-actions { display: flex; flex-direction: column; gap: 8px; }
     .pl-gmail-btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 10px 20px; border-radius: var(--r); font-size: 13px; font-weight: 600;
+      padding: 8px 18px; border-radius: var(--r); font-size: 13px; font-weight: 600;
       text-decoration: none; background: #EA4335; color: white; cursor: pointer; border: none;
-      transition: opacity .15s;
+      transition: opacity var(--transition); font-family: var(--font);
     }
     .pl-gmail-btn:hover { opacity: .88; }
 
     /* Spinner bouton */
     .pl-btn-spinner {
-      display: inline-block;
-      width: 14px; height: 14px;
-      border: 2px solid rgba(255,255,255,.4);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: ds-spin .6s linear infinite;
-      vertical-align: middle;
-      margin-right: 6px;
+      display: inline-block; width: 14px; height: 14px;
+      border: 2px solid rgba(255,255,255,.35); border-top-color: white;
+      border-radius: 50%; animation: ds-spin .6s linear infinite;
+      vertical-align: middle; margin-right: 6px;
     }
 
     /* ── Responsive ─────────────────────────────────────────────────────── */
-    @media (max-width: 720px) {
+    @media (max-width: 820px) {
       .pl-shell { grid-template-columns: 1fr; }
       .pl-brand { display: none; }
-      .pl-form-col { padding: 32px 20px; align-items: flex-start; }
+      .pl-form-col { padding: 32px 24px; justify-content: flex-start; padding-top: 48px; }
+    }
+    @media (max-width: 420px) {
+      .pl-form-col { padding: 24px 16px; }
     }
   </style>
 </head>
@@ -388,46 +340,113 @@
 
 <div class="pl-shell">
 
-  <!-- ── Colonne gauche : branding ──────────────────────────────────────── -->
+  <!-- ── Colonne gauche : branding Fluent ──────────────────────────────── -->
   <div class="pl-brand">
+    <div class="pl-brand-grid"></div>
+
     <div class="pl-brand-top">
+
+      <!-- Logo -->
       <div class="pl-logo-row">
-        <img src="/static/logo.svg" alt="CivicAI" class="pl-logo-img">
+        <div class="pl-logo-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
+        </div>
         <div class="pl-logo-text">
-          <span class="pl-logo-name">CivicAI</span>
-          <span class="pl-logo-product">AgentHub Platform</span>
+          <span class="pl-logo-name">AgentHub</span>
+          <span class="pl-logo-badge">Platform</span>
         </div>
       </div>
 
-      <div class="pl-tagline">Le système d'exploitation de <em>l'intelligence</em> d'entreprise</div>
-      <p class="pl-sub">Évaluez votre maturité IA, gouvernez votre organisation et accélérez votre transformation numérique.</p>
-
-      <ul class="pl-features">
-        <li><span class="pl-check">✓</span>Diagnostic de maturité IA</li>
-        <li><span class="pl-check">✓</span>Gouvernance &amp; Loi 25</li>
-        <li><span class="pl-check">✓</span>ATLAS AI — votre conseiller</li>
-        <li><span class="pl-check">✓</span>Rapports &amp; Observatoire</li>
-      </ul>
-
-      <ul class="pl-trust">
-        <li><span class="pl-trust-icon">🔒</span>Hébergement Canada</li>
-        <li><span class="pl-trust-icon">🛡️</span>Conforme Loi 25</li>
-        <li><span class="pl-trust-icon">🔐</span>Données confidentielles</li>
-      </ul>
-
+      <!-- Partner badge -->
       <div class="pl-partner-badge" id="pl-partner-badge">
         <span class="pl-partner-badge-icon">🏛️</span>
         <div>
-          <div class="pl-partner-badge-text">Vous rejoignez</div>
-          <div class="pl-partner-badge-name" id="pl-partner-name">—</div>
+          <span class="pl-partner-badge-text">Vous rejoignez</span>
+          <span class="pl-partner-badge-name" id="pl-partner-name">—</span>
         </div>
       </div>
+
+      <!-- Tagline -->
+      <div class="pl-tagline">La plateforme IA pour <em>organisations modernes</em></div>
+      <p class="pl-sub-text">Évaluez votre maturité IA, gouvernez vos données et accélérez votre transformation numérique — en une seule plateforme.</p>
+
+      <!-- Floating product card -->
+      <div class="pl-product-card">
+        <div class="pl-product-card-hd">
+          <div class="pl-product-card-dot" style="background:#85D4FF"></div>
+          <span class="pl-product-card-title">Score de maturité IA — Tableau de bord</span>
+        </div>
+        <div class="pl-metrics-row">
+          <div class="pl-metric">
+            <div class="pl-metric-val">74</div>
+            <div class="pl-metric-label">Score IMAI / 100</div>
+            <div class="pl-mini-bar"><div class="pl-mini-bar-fill" style="width:74%"></div></div>
+          </div>
+          <div class="pl-metric">
+            <div class="pl-metric-val">12</div>
+            <div class="pl-metric-label">Actions en cours</div>
+            <div class="pl-mini-bar"><div class="pl-mini-bar-fill" style="width:48%"></div></div>
+          </div>
+          <div class="pl-metric">
+            <div class="pl-metric-val">3</div>
+            <div class="pl-metric-label">Connecteurs actifs</div>
+            <div class="pl-mini-bar"><div class="pl-mini-bar-fill" style="width:30%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <ul class="pl-features">
+        <li>
+          <span class="pl-feat-check">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          Diagnostic de maturité IA en 10 minutes
+        </li>
+        <li>
+          <span class="pl-feat-check">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          ATLAS — copilote IA disponible 24h/24
+        </li>
+        <li>
+          <span class="pl-feat-check">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          Gouvernance &amp; conformité Loi 25
+        </li>
+        <li>
+          <span class="pl-feat-check">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          Connecteurs Microsoft 365, SAP, Jira et +20
+        </li>
+      </ul>
+
     </div>
 
-    <div class="pl-brand-footer">
-      <span>© 2026 CivicAI Inc.</span>
-      <span>·</span>
-      <span>Propulsé par <strong>ATLAS AI</strong></span>
+    <!-- Footer trust -->
+    <div class="pl-brand-foot">
+      <div class="pl-trust-row">
+        <div class="pl-trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Hébergement Canada
+        </div>
+        <div class="pl-trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Conforme Loi 25
+        </div>
+        <div class="pl-trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="20 6 9 17 4 12"/></svg>
+          SOC 2 Type II
+        </div>
+      </div>
+      <div class="pl-brand-footer" style="margin-top:12px">
+        <span>© 2026 CivicAI Inc.</span><span>·</span><span>Propulsé par ATLAS AI</span>
+      </div>
     </div>
   </div>
 
@@ -680,13 +699,8 @@
             </button>
           </form>
 
-          <p class="pl-secondary" style="text-align:center;margin-top:16px">
+          <p class="pl-secondary" style="margin-top:14px">
             Déjà un compte ? <a href="#" onclick="switchTab('login');return false">Se connecter</a>
-          </p>
-
-          <p class="pl-secondary" style="margin-top:4px">
-            Déjà un compte ?
-            <a href="#" onclick="switchTab('login');return false">Se connecter</a>
           </p>
         </div>
 
@@ -698,5 +712,28 @@
 </div>
 
 <script src="/static/portal-login.js"></script>
+<script>
+  /* ── Fluent Reveal highlight sur les boutons ────────────────── */
+  document.querySelectorAll('.ds-btn').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      btn.style.setProperty('--rx', ((e.clientX - r.left) / r.width * 100) + '%');
+      btn.style.setProperty('--ry', ((e.clientY - r.top)  / r.height * 100) + '%');
+    });
+  });
+
+  /* ── Reveal cards (org type) ────────────────────────────────── */
+  document.querySelectorAll('.pl-org-type-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width * 100).toFixed(1);
+      const y = ((e.clientY - r.top)  / r.height * 100).toFixed(1);
+      card.style.background = `radial-gradient(circle at ${x}% ${y}%, var(--primary-a20) 0%, var(--primary-lt) 80%)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.background = '';
+    });
+  });
+</script>
 </body>
 </html>

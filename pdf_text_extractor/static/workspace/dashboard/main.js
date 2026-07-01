@@ -6,9 +6,10 @@
 const CSS = `
 <style>
 .db-root {
-  padding: 28px 32px 48px;
+  padding: 24px 32px 48px;
   max-width: 1200px;
   font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ── Demo notice ──────────────────────────────────────────────────── */
@@ -35,21 +36,22 @@ const CSS = `
   flex-wrap: wrap;
 }
 .db-greeting {
-  font-size: 20px;
-  font-weight: 800;
+  font-size: 22px;
+  font-weight: 600;
   color: var(--text);
   margin-bottom: 3px;
+  letter-spacing: -.02em;
 }
 .db-sub {
   font-size: 13px;
   color: var(--text-sub);
 }
 
-/* ── Welcome / onboarding card ────────────────────────────────────── */
+/* ── Welcome / hero card — Fluent ────────────────────────────────── */
 .db-welcome {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dk) 100%);
-  border-radius: var(--r-xl);
-  padding: 22px 28px;
+  background: linear-gradient(135deg, #003D82 0%, #0063B1 45%, #0078D4 100%);
+  border-radius: var(--r-lg);
+  padding: 24px 28px;
   color: #fff;
   margin-bottom: 20px;
   display: flex;
@@ -57,24 +59,31 @@ const CSS = `
   gap: 24px;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,120,212,.22);
 }
 .db-welcome::before {
   content: '';
   position: absolute;
-  top: -48px; right: -16px;
-  width: 140px; height: 140px;
-  background: rgba(255,255,255,.07);
-  border-radius: 50%;
+  top: -60px; right: -40px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(255,255,255,.10) 0%, transparent 65%);
   pointer-events: none;
 }
 .db-welcome::after {
   content: '';
   position: absolute;
-  bottom: -36px; right: 100px;
-  width: 90px; height: 90px;
-  background: rgba(255,255,255,.04);
-  border-radius: 50%;
+  bottom: -40px; left: 40%;
+  width: 160px; height: 160px;
+  background: radial-gradient(circle, rgba(24,144,232,.25) 0%, transparent 65%);
   pointer-events: none;
+}
+/* Grid overlay like the login panel */
+.db-welcome-grid {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 .db-welcome-body { flex: 1; position: relative; }
 .db-welcome-body h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; opacity: .96; }
@@ -115,11 +124,22 @@ const CSS = `
   padding: 18px 20px;
   display: flex;
   flex-direction: column;
-  transition: box-shadow .15s, transform .15s;
+  transition: box-shadow var(--transition), transform var(--transition);
   cursor: default;
-}
-.db-kpi:hover {
   box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+.db-kpi::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at var(--rx, -100%) var(--ry, -100%),
+    rgba(0,120,212,.06) 0%, transparent 50%);
+  opacity: 0; transition: opacity .25s; pointer-events: none;
+}
+.db-kpi:hover::before { opacity: 1; }
+.db-kpi:hover {
+  box-shadow: var(--shadow);
   transform: translateY(-1px);
 }
 
@@ -131,11 +151,10 @@ const CSS = `
 }
 
 .db-kpi-label {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .06em;
-  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-sub);
+  letter-spacing: 0;
 }
 
 .db-kpi-icon {
@@ -147,8 +166,8 @@ const CSS = `
 
 .db-kpi-val {
   font-size: 28px;
-  font-weight: 900;
-  letter-spacing: -1px;
+  font-weight: 700;
+  letter-spacing: -.02em;
   color: var(--text);
   line-height: 1;
   margin-bottom: 6px;
@@ -483,7 +502,8 @@ function _render(container, ctx) {
   </div>
 
   <div class="db-welcome">
-    <div class="db-welcome-body">
+    <div class="db-welcome-grid"></div>
+    <div class="db-welcome-body" style="position:relative;z-index:1">
       ${hasDiag
         ? `<h3>Score IMAI <strong style="color:rgba(255,255,255,.95)">${diag.score}/100</strong> · ${scoreLabel}</h3>
            <div class="db-welcome-track"><div class="db-welcome-fill" style="width:${diag.score}%"></div></div>
@@ -623,7 +643,20 @@ function _render(container, ctx) {
   });
 }
 
+function _initRevealCards(container) {
+  container.querySelectorAll('.db-kpi').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--rx', ((e.clientX - r.left) / r.width  * 100).toFixed(1) + '%');
+      card.style.setProperty('--ry', ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%');
+    });
+  });
+}
+
 export default {
-  mount(container, ctx) { _render(container, ctx); },
-  unmount(container)    { container.innerHTML = ''; },
+  mount(container, ctx) {
+    _render(container, ctx);
+    _initRevealCards(container);
+  },
+  unmount(container) { container.innerHTML = ''; },
 };
