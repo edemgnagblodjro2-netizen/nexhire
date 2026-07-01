@@ -43,9 +43,16 @@ const NAV = [
     section: 'Gouvernance',
     items: [
       { id: 'gouvernance', label: 'Gouvernance & Loi 25', iconKey: 'shield',  appSlug: 'gouvernance' },
+      { id: 'security',    label: 'Sécurité & Audit',     iconKey: 'alert',   appSlug: 'security' },
       { id: 'conformite',  label: 'Conformité',           iconKey: 'check',   appSlug: 'conformite',  defaultSoon: true },
       { id: 'politiques',  label: 'Politiques',           iconKey: 'file',    appSlug: 'politiques',  defaultSoon: true },
-      { id: 'risques',     label: 'Risques',              iconKey: 'alert',   appSlug: 'risques',     defaultSoon: true },
+    ],
+  },
+  {
+    section: 'Intégrations',
+    items: [
+      { id: 'integrations', label: 'Centre de connecteurs', iconKey: 'zap',      appSlug: 'integrations' },
+      { id: 'ms365',        label: 'Microsoft 365',         iconKey: 'building', appSlug: 'ms365' },
     ],
   },
   {
@@ -226,7 +233,7 @@ function _applyUserInfo(profile) {
 }
 
 // Apps core livrées avec la plateforme — toujours disponibles sans besoin d'activation DB
-const CORE_APPS = new Set(['diagnostic-ia', 'gouvernance', 'observatoire', 'reports', 'settings']);
+const CORE_APPS = new Set(['diagnostic-ia', 'gouvernance', 'observatoire', 'reports', 'settings', 'security', 'ms365', 'integrations']);
 
 // ── Nav resolution ────────────────────────────────────────────────────────────
 function _resolveNavItems() {
