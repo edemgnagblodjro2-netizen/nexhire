@@ -339,35 +339,59 @@ def send_welcome_email(
     trial_days: int = 14,
 ) -> bool:
     first_name = full_name.split()[0] if full_name else "là"
-    subject = f"Bienvenue sur NexHire, {first_name} 👋"
+    subject = f"Bienvenue sur AgentHub, {first_name} — votre espace est prêt"
     html = f"""<!doctype html>
 <html lang="fr">
 <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/></head>
 <body style="font-family:system-ui,sans-serif;background:#f8fafc;margin:0;padding:32px 16px">
   <div style="max-width:560px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.08)">
-    <div style="background:#0f172a;padding:26px 32px">
-      <span style="font-size:1.25rem;font-weight:800;color:#fff">Nex<span style="color:#818CF8">hire</span>
-        <span style="font-size:.65rem;background:rgba(129,140,248,.2);color:#818CF8;padding:2px 7px;border-radius:99px;margin-left:6px;vertical-align:middle">EIP</span>
-      </span>
+    <div style="background:#0f172a;padding:26px 32px;display:flex;align-items:center;gap:12px">
+      <span style="font-size:1.25rem;font-weight:800;color:#fff">Agent<span style="color:#818CF8">Hub</span></span>
+      <span style="font-size:.65rem;background:rgba(129,140,248,.2);color:#818CF8;padding:2px 8px;border-radius:99px;font-weight:700;letter-spacing:.04em">PLATFORM</span>
     </div>
     <div style="padding:32px">
-      <h2 style="margin:0 0 8px;color:#0f172a">Bienvenue, {first_name} ! 🎉</h2>
-      <p style="color:#475569;margin:0 0 20px">Votre organisation <strong>{org_name}</strong> est prête sur NexHire Enterprise Intelligence Platform. Vous disposez de <strong>{trial_days} jours d'essai gratuit</strong> pour explorer toutes les fonctionnalités.</p>
+      <h2 style="margin:0 0 8px;color:#0f172a">Bienvenue, {first_name} !</h2>
+      <p style="color:#475569;margin:0 0 8px">Votre espace <strong>{org_name}</strong> est actif sur AgentHub Platform.</p>
+      <p style="color:#475569;margin:0 0 24px">Vous disposez de <strong>{trial_days} jours d'essai gratuit</strong> pour explorer la plateforme et mesurer votre maturité IA.</p>
 
-      <div style="background:#eef2ff;border-radius:10px;padding:20px;margin:0 0 24px">
-        <p style="margin:0 0 12px;font-weight:700;color:#3730a3">Pour commencer :</p>
-        <ol style="margin:0;padding-left:20px;color:#475569;line-height:1.8">
-          <li>Ajoutez vos départements dans <strong>Workspaces</strong></li>
-          <li>Connectez vos outils (Microsoft 365, SAP, Jira…) dans <strong>Connecteurs</strong></li>
-          <li>Invitez votre équipe dans <strong>Équipe</strong></li>
-          <li>Posez votre première question à l'<strong>Agent IA</strong></li>
-        </ol>
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:20px;margin:0 0 24px">
+        <p style="margin:0 0 14px;font-weight:700;color:#1e293b;font-size:.95rem">Par où commencer :</p>
+        <table style="width:100%;border-collapse:collapse">
+          <tr>
+            <td style="padding:8px 0;vertical-align:top;width:28px;font-size:18px">📊</td>
+            <td style="padding:8px 0;vertical-align:top">
+              <strong style="color:#1e293b">Lancez votre Diagnostic IA</strong><br>
+              <span style="color:#64748b;font-size:.85rem">Évaluez la maturité numérique de votre organisation en 10 minutes.</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:8px 0;vertical-align:top;font-size:18px">✨</td>
+            <td style="padding:8px 0;vertical-align:top">
+              <strong style="color:#1e293b">Posez votre première question à ATLAS</strong><br>
+              <span style="color:#64748b;font-size:.85rem">Votre assistant IA disponible 24h/24 pour guider vos décisions.</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:8px 0;vertical-align:top;font-size:18px">🏪</td>
+            <td style="padding:8px 0;vertical-align:top">
+              <strong style="color:#1e293b">Explorez la Marketplace</strong><br>
+              <span style="color:#64748b;font-size:.85rem">Installez les espaces de travail adaptés à vos départements (Finance, RH, IT…).</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:8px 0;vertical-align:top;font-size:18px">🔗</td>
+            <td style="padding:8px 0;vertical-align:top">
+              <strong style="color:#1e293b">Connectez vos outils</strong><br>
+              <span style="color:#64748b;font-size:.85rem">Microsoft 365, SAP, Jira, Salesforce et plus de 20 connecteurs disponibles.</span>
+            </td>
+          </tr>
+        </table>
       </div>
 
       <div style="text-align:center;margin:24px 0">
-        <a href="{APP_URL}"
+        <a href="{APP_URL}/inscription"
            style="display:inline-block;background:#6366f1;color:#fff;padding:13px 32px;border-radius:8px;font-weight:700;text-decoration:none;font-size:.95rem">
-          Accéder à mon tableau de bord →
+          Accéder à mon espace →
         </a>
       </div>
       <p style="color:#94a3b8;font-size:.82rem;text-align:center;margin:0">Des questions ? Répondez à cet email — nous sommes là pour vous aider.</p>
