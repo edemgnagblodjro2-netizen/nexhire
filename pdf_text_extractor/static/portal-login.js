@@ -238,35 +238,34 @@ async function handleSignup(e) {
       return;
     }
 
-    // Confirmation non requise (Supabase email confirm désactivé) → auto-login
-    if (!data.confirmation_required && data.access_token) {
-      _saveToken(data);
-      const meRes = await fetch('/api/auth/me', {
-        headers: { Authorization: `Bearer ${data.access_token}` },
-      });
-      const me = meRes.ok ? await meRes.json() : null;
-      window.location.href = (me && me.partner_slug)
-        ? `/workspace/${me.partner_slug}`
-        : '/app';
-      return;
-    }
-
-    // Confirmation requise → afficher l'écran de succès
+    // Dans tous les cas : afficher l'écran de succès, jamais de redirect automatique.
     document.getElementById('signup-email-sent').textContent = email;
     document.getElementById('signup-form').style.display = 'none';
 
-    // Adapter le bouton d'ouverture de messagerie selon le domaine
-    const gmailBtn = document.getElementById('btn-open-gmail');
-    if (gmailBtn) {
-      const domain = email.split('@')[1] || '';
-      if (domain.includes('outlook') || domain.includes('hotmail') || domain.includes('live')) {
-        gmailBtn.href = 'https://outlook.live.com/mail/inbox';
-        gmailBtn.innerHTML = gmailBtn.innerHTML.replace('Ouvrir Gmail', 'Ouvrir Outlook');
-        gmailBtn.style.background = '#0078D4';
-      } else if (domain.includes('yahoo')) {
-        gmailBtn.href = 'https://mail.yahoo.com';
-        gmailBtn.innerHTML = gmailBtn.innerHTML.replace('Ouvrir Gmail', 'Ouvrir Yahoo Mail');
-        gmailBtn.style.background = '#6001D2';
+    if (!data.confirmation_required) {
+      // Supabase a créé la session sans confirmation email.
+      // On NE sauvegarde PAS le token — l'utilisateur doit se connecter explicitement.
+      const titleEl = document.querySelector('#signup-success .pl-success-title');
+      if (titleEl) titleEl.textContent = 'Connectez-vous pour accéder à votre espace';
+      document.querySelectorAll('#signup-success .pl-success-desc').forEach(el => el.style.display = 'none');
+      const emailBox = document.querySelector('#signup-success .pl-success-email');
+      if (emailBox) emailBox.style.display = 'none';
+      const gmailBtn = document.getElementById('btn-open-gmail');
+      if (gmailBtn) gmailBtn.style.display = 'none';
+    } else {
+      // Confirmation email requise → adapter le bouton messagerie selon le domaine
+      const gmailBtn = document.getElementById('btn-open-gmail');
+      if (gmailBtn) {
+        const domain = email.split('@')[1] || '';
+        if (domain.includes('outlook') || domain.includes('hotmail') || domain.includes('live')) {
+          gmailBtn.href = 'https://outlook.live.com/mail/inbox';
+          gmailBtn.innerHTML = gmailBtn.innerHTML.replace('Ouvrir Gmail', 'Ouvrir Outlook');
+          gmailBtn.style.background = '#0078D4';
+        } else if (domain.includes('yahoo')) {
+          gmailBtn.href = 'https://mail.yahoo.com';
+          gmailBtn.innerHTML = gmailBtn.innerHTML.replace('Ouvrir Gmail', 'Ouvrir Yahoo Mail');
+          gmailBtn.style.background = '#6001D2';
+        }
       }
     }
 
