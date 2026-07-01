@@ -48,6 +48,12 @@ const NAV = [
     ],
   },
   {
+    section: 'Vue Direction',
+    items: [
+      { id: 'executive', label: 'Dashboard Exécutif', iconKey: 'building', appSlug: 'executive' },
+    ],
+  },
+  {
     section: 'Enterprise Intelligence',
     items: [
       { id: 'observatoire',      label: 'Observatoire',          iconKey: 'eye',      appSlug: 'observatoire' },
@@ -251,7 +257,7 @@ function _applyUserInfo(profile) {
 }
 
 // Apps core livrées avec la plateforme — toujours disponibles sans besoin d'activation DB
-const CORE_APPS = new Set(['diagnostic-ia', 'gouvernance', 'observatoire', 'reports', 'settings', 'security', 'ms365', 'integrations', 'enterprise-intel', 'identity']);
+const CORE_APPS = new Set(['diagnostic-ia', 'gouvernance', 'observatoire', 'reports', 'settings', 'security', 'ms365', 'integrations', 'enterprise-intel', 'identity', 'executive']);
 
 // ── Nav resolution ────────────────────────────────────────────────────────────
 function _resolveNavItems() {
