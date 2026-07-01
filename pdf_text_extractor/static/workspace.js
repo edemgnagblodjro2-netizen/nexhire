@@ -71,8 +71,9 @@ const NAV = [
   {
     section: 'Identity & Access',
     items: [
-      { id: 'identity', label: 'Utilisateurs & Accès', iconKey: 'users',  appSlug: 'identity' },
-      { id: 'sso-mfa',  label: 'SSO & MFA',            iconKey: 'shield', appSlug: 'sso-mfa',  defaultSoon: true },
+      { id: 'identity',    label: 'Utilisateurs & Accès', iconKey: 'users',    appSlug: 'identity' },
+      { id: 'departments', label: 'Départements',          iconKey: 'building', appSlug: 'departments' },
+      { id: 'sso-mfa',     label: 'SSO & MFA',             iconKey: 'shield',   appSlug: 'sso-mfa', defaultSoon: true },
     ],
   },
   {
@@ -257,7 +258,7 @@ function _applyUserInfo(profile) {
 }
 
 // Apps core livrées avec la plateforme — toujours disponibles sans besoin d'activation DB
-const CORE_APPS = new Set(['diagnostic-ia', 'gouvernance', 'observatoire', 'reports', 'settings', 'security', 'ms365', 'integrations', 'enterprise-intel', 'identity', 'executive']);
+const CORE_APPS = new Set(['diagnostic-ia', 'gouvernance', 'observatoire', 'reports', 'settings', 'security', 'ms365', 'integrations', 'enterprise-intel', 'identity', 'executive', 'departments']);
 
 // ── Nav resolution ────────────────────────────────────────────────────────────
 function _resolveNavItems() {
