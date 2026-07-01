@@ -252,6 +252,38 @@
     }
     .pl-check-row label { font-size: 13px; color: var(--text-2); cursor: pointer; }
 
+    /* Type d'organisation — cards radio */
+    .pl-org-types {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-top: 6px;
+    }
+    @media (max-width: 520px) {
+      .pl-org-types { grid-template-columns: repeat(3, 1fr); }
+    }
+    .pl-org-type { display: block; cursor: pointer; }
+    .pl-org-type input[type="radio"] { display: none; }
+    .pl-org-type-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      padding: 10px 4px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      background: #fff;
+      transition: all .15s;
+    }
+    .pl-org-type:hover .pl-org-type-card { border-color: #818CF8; }
+    .pl-org-type input[type="radio"]:checked + .pl-org-type-card {
+      border-color: #6366f1;
+      background: #eef2ff;
+    }
+    .pl-org-type-icon { font-size: 22px; line-height: 1; }
+    .pl-org-type-label { font-size: 10px; font-weight: 600; color: #475569; text-align: center; line-height: 1.2; }
+    .pl-org-type input[type="radio"]:checked + .pl-org-type-card .pl-org-type-label { color: #4338ca; }
+
     .pl-submit {
       width: 100%;
       margin-bottom: 16px;
@@ -546,6 +578,51 @@
               <label class="pl-label" for="signup-phone">Téléphone</label>
               <input class="ds-input pl-input" id="signup-phone" type="tel"
                      placeholder="+1 514 555-0000" required autocomplete="tel">
+            </div>
+            <div class="pl-field">
+              <label class="pl-label" for="signup-org-name">Nom de votre organisation</label>
+              <input class="ds-input pl-input" id="signup-org-name" type="text"
+                     placeholder="Ex. : Ville de Laval, Hôpital Saint-Luc…" required maxlength="255" autocomplete="organization">
+            </div>
+            <div class="pl-field">
+              <label class="pl-label">Type d'organisation</label>
+              <div class="pl-org-types" id="signup-org-types">
+                <label class="pl-org-type">
+                  <input type="radio" name="org_type" value="entreprise" required>
+                  <span class="pl-org-type-card">
+                    <span class="pl-org-type-icon">🏢</span>
+                    <span class="pl-org-type-label">Entreprise</span>
+                  </span>
+                </label>
+                <label class="pl-org-type">
+                  <input type="radio" name="org_type" value="municipalite">
+                  <span class="pl-org-type-card">
+                    <span class="pl-org-type-icon">🏙️</span>
+                    <span class="pl-org-type-label">Municipal</span>
+                  </span>
+                </label>
+                <label class="pl-org-type">
+                  <input type="radio" name="org_type" value="hopital">
+                  <span class="pl-org-type-card">
+                    <span class="pl-org-type-icon">🏥</span>
+                    <span class="pl-org-type-label">Santé</span>
+                  </span>
+                </label>
+                <label class="pl-org-type">
+                  <input type="radio" name="org_type" value="universite">
+                  <span class="pl-org-type-card">
+                    <span class="pl-org-type-icon">🎓</span>
+                    <span class="pl-org-type-label">Éducation</span>
+                  </span>
+                </label>
+                <label class="pl-org-type">
+                  <input type="radio" name="org_type" value="entrepreneur">
+                  <span class="pl-org-type-card">
+                    <span class="pl-org-type-icon">👤</span>
+                    <span class="pl-org-type-label">Entrepreneur</span>
+                  </span>
+                </label>
+              </div>
             </div>
             <div class="pl-field">
               <label class="pl-label" for="signup-password">Mot de passe</label>

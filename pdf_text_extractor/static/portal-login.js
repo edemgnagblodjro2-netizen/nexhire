@@ -206,9 +206,18 @@ async function handleSignup(e) {
   const lname    = document.getElementById('signup-lname').value.trim();
   const email    = document.getElementById('signup-email').value.trim();
   const phone    = document.getElementById('signup-phone').value.trim();
+  const org_name = document.getElementById('signup-org-name').value.trim();
+  const org_type = (document.querySelector('input[name="org_type"]:checked') || {}).value || 'entreprise';
   const password = document.getElementById('signup-password').value;
 
   const full_name = `${fname} ${lname}`.trim();
+
+  if (!org_type) {
+    _setHTML('signup-error', 'Veuillez sélectionner le type de votre organisation.');
+    _showEl('signup-error');
+    _setBtnLoading('signup-btn', false);
+    return;
+  }
 
   try {
     const body = {
@@ -216,6 +225,8 @@ async function handleSignup(e) {
       email,
       phone,
       password,
+      organization_name: org_name || 'Mon organisation',
+      org_type,
       partner_slug: _partnerSlug || undefined,
     };
 
