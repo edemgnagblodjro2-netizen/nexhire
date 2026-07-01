@@ -1,7 +1,6 @@
 /**
- * ATLAS AI — Module de chat IA
- * Copilote IA pour la transformation numérique des PME
- * Sprint 2 · AgentHub Platform
+ * ATLAS AI — Copilote IA
+ * Connecté à /api/agent/query — OpenAI GPT-4o via connecteurs organisationnels
  */
 
 const CSS = `<style>
@@ -20,6 +19,7 @@ const CSS = `<style>
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
+  flex-wrap: wrap;
 }
 
 .atlas-header-badge {
@@ -49,11 +49,48 @@ const CSS = `<style>
   flex-shrink: 0;
 }
 
-.atlas-header-sub {
+.atl-controls {
   margin-left: auto;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.atl-select {
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 4px 7px;
+  font-size: 12px;
+  color: #475569;
+  background: #f8fafc;
+  cursor: pointer;
+  outline: none;
+  font-family: inherit;
+}
+
+.atl-select:hover { border-color: #6366f1; }
+
+.atl-quota-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 11.5px;
-  color: #94a3b8;
-  font-style: italic;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.atl-quota-track {
+  width: 60px;
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.atl-quota-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width .4s;
 }
 
 .atlas-messages {
@@ -113,6 +150,12 @@ const CSS = `<style>
   margin-top: 2px;
 }
 
+.atl-msg-body {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
 .atlas-bubble {
   padding: 12px 16px;
   font-size: 13.5px;
@@ -138,6 +181,49 @@ const CSS = `<style>
 .atlas-bubble p:last-child { margin: 0; }
 .atlas-bubble ul { margin: 6px 0; padding-left: 18px; }
 .atlas-bubble li { margin-bottom: 4px; }
+
+.atlas-bubble-err {
+  background: #fef2f2 !important;
+  border-color: #fecaca !important;
+  color: #991b1b !important;
+  border-radius: 4px 12px 12px 12px !important;
+}
+
+.atlas-warning {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  border: 1px solid;
+}
+
+.atlas-warning.warn-connector {
+  background: #fff7ed;
+  border-color: #fed7aa;
+  color: #92400e;
+}
+
+.atlas-warning.warn-simulated {
+  background: #fffbeb;
+  border-color: #fde68a;
+  color: #78350f;
+}
+
+.atlas-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 2px;
+}
+
+.atlas-source-chip {
+  padding: 2px 9px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 99px;
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+}
 
 .atlas-typing-bubble {
   display: flex;
@@ -191,19 +277,12 @@ const CSS = `<style>
   background: #f5f3ff;
 }
 
-.atlas-disclaimer {
-  text-align: center;
-  font-size: 11px;
-  color: #94a3b8;
-  padding: 4px 24px 8px;
-}
-
 .atlas-input-area {
   padding: 14px 24px;
   background: #fff;
   border-top: 1px solid #e2e8f0;
   display: flex;
-  gap: 10px;
+  gap: 8px;
   align-items: flex-end;
   flex-shrink: 0;
 }
@@ -231,6 +310,23 @@ const CSS = `<style>
 
 .atlas-input::placeholder { color: #94a3b8; }
 
+.atl-vision-btn {
+  width: 38px;
+  height: 38px;
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+  background: #f8fafc;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  flex-shrink: 0;
+  transition: border-color .12s, color .12s;
+}
+
+.atl-vision-btn:hover { border-color: #6366f1; color: #6366f1; }
+
 .atlas-send-btn {
   width: 40px;
   height: 40px;
@@ -250,9 +346,13 @@ const CSS = `<style>
 .atlas-send-btn:active:not(:disabled) { transform: scale(.94); }
 .atlas-send-btn:disabled { background: #e2e8f0; cursor: not-allowed; }
 
-.atlas-send-btn svg {
+.atlas-send-btn svg, .atl-vision-btn svg {
   width: 16px; height: 16px;
   stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 @media (max-width: 680px) {
@@ -260,84 +360,79 @@ const CSS = `<style>
   .atlas-suggestions { padding: 0 16px 12px; }
   .atlas-input-area { padding: 10px 16px; }
   .atlas-msg { max-width: 92%; }
+  .atl-controls { margin-left: 0; width: 100%; }
 }
 </style>`;
 
-// ── Demo response engine ───────────────────────────────────────────────────────
-
 const SUGGESTIONS = [
-  "Qu'est-ce que l'IMAI ?",
-  "Par où commencer avec l'IA ?",
-  "Comment réduire mes coûts ?",
+  "Analyse mes licences inutilisées",
+  "Résume l'état de mon budget",
+  "Quelles sont mes priorités IA ?",
   "Qu'est-ce que la Loi 25 ?",
-  "Quel est mon plan d'action ?",
+  "Comment optimiser mes coûts IT ?",
 ];
 
-const RESPONSES = [
-  {
-    match: /imai|score|maturit/i,
-    reply: `L'**Indice de Maturité en Intelligence Artificielle (IMAI)** est notre mesure propriétaire, de 0 à 100, qui évalue la préparation IA de votre organisation sur 5 dimensions :\n\n• **Stratégie** — vision et planification IA\n• **Personnes** — compétences et adoption du changement\n• **Processus** — intégration dans les opérations\n• **Technologies** — outils et infrastructure\n• **Gouvernance** — éthique, données et conformité\n\nUn score de 70+ indique une organisation prête à passer à l'échelle IA.`,
-  },
-  {
-    match: /commencer|début|par où|premiers? pas|start/i,
-    reply: `La meilleure première étape est toujours le **Diagnostic IA**. Il prend moins de 10 minutes et vous donne :\n\n• Votre score IMAI personnalisé\n• Un portrait de vos 5 dimensions de maturité\n• Un plan d'action sur 30 / 90 / 180 jours\n\nVous pouvez le lancer maintenant depuis le menu **Diagnostic IA** à gauche.`,
-  },
-  {
-    match: /coût|économ|réduire|budget|opérationnel/i,
-    reply: `L'IA peut réduire vos coûts opérationnels de **15 à 40 %** selon votre secteur. Les gains les plus rapides viennent de :\n\n1. **Automatisation des tâches répétitives** — rapports, saisies de données, relances clients\n2. **Service client IA** — chatbots pour les demandes de premier niveau\n3. **Analyse prédictive** — anticiper les problèmes avant qu'ils coûtent cher\n\nVotre Diagnostic IA identifiera les opportunités spécifiques à votre contexte.`,
-  },
-  {
-    match: /loi 25|confidential|vie priv|données personnelles|rgpd|privacy/i,
-    reply: `La **Loi 25** (Québec) impose des obligations importantes lorsque vous utilisez l'IA avec des données personnelles :\n\n• **Consentement éclairé** — les individus doivent savoir si une décision automatisée les concerne\n• **Responsable désigné** — nommer un responsable de la protection formellement\n• **Évaluation des facteurs relatifs à la vie privée** — obligatoire avant tout nouveau projet IA\n• **Droit d'accès et de correction** — les personnes peuvent consulter et corriger leurs données\n\nNotre dimension **Gouvernance IA** vous aide à évaluer votre conformité actuelle.`,
-  },
-  {
-    match: /plan|action|roadmap|feuille de route|étape|priorité/i,
-    reply: `Votre plan d'action IA personnalisé se construit en 3 horizons :\n\n**30 jours** — Audit interne, identification de 2-3 cas d'usage prioritaires, formation initiale de l'équipe\n\n**90 jours** — Pilote sur le cas d'usage #1, mise en place des politiques de gouvernance de base\n\n**180 jours** — Déploiement élargi, mesure des résultats, passage au cas d'usage #2\n\nCompletez votre **Diagnostic IA** pour obtenir un plan adapté à votre niveau de maturité actuel.`,
-  },
-  {
-    match: /secteur|industrie|pme|manufactur|santé|éducation|commerce|hospit/i,
-    reply: `L'IA offre des opportunités dans tous les secteurs, mais les applications varient :\n\n• **Manufacturier** — maintenance prédictive, optimisation de la chaîne logistique\n• **Santé** — aide au triage, gestion des dossiers, prise de rendez-vous\n• **Commerce** — personnalisation client, gestion des stocks, prévision de la demande\n• **Services professionnels** — automatisation documentaire, analyse contractuelle\n\nMentionnez votre secteur dans le **Diagnostic IA** pour des recommandations ciblées.`,
-  },
-  {
-    match: /atlas|qui es.tu|qui êtes-vous|présente-toi|c.est quoi/i,
-    reply: `Je suis **ATLAS**, votre copilote IA personnel sur AgentHub Platform.\n\nJe suis conçu pour vous accompagner dans votre parcours de transformation numérique : expliquer les concepts IA, vous guider vers les bons outils, et interpréter vos résultats de diagnostic.\n\nEn mode démo, je fonctionne avec des réponses préprogrammées. Lorsque votre compte sera activé, je me connecterai à vos données réelles pour des recommandations encore plus précises.`,
-  },
-  {
-    match: /diagnostic|parcours|évaluation|questionnaire/i,
-    reply: `Le **Diagnostic IA** est votre point de départ. En 10 minutes, il évalue vos 5 dimensions de maturité IA :\n\n• 📋 **Stratégie** — Vision et planification\n• 👥 **Personnes** — Compétences et adoption\n• ⚙️ **Processus** — Intégration opérationnelle\n• 💻 **Technologies** — Outils et infrastructure\n• ⚖️ **Gouvernance** — Éthique et conformité\n\nRésultat : votre score IMAI + un plan d'action personnalisé sur 3 horizons temporels.`,
-  },
-];
+const WELCOME_MSG = `Bonjour ! Je suis **ATLAS**, votre copilote IA connecté à vos données organisationnelles.\n\nJe peux analyser vos licences, votre budget, vos contrats, vos effectifs et vous guider dans votre transformation numérique — en m'appuyant sur vos connecteurs actifs.\n\nComment puis-je vous aider aujourd'hui ?`;
 
-const DEFAULT_REPLY = `Bonne question ! En tant que copilote IA d'AgentHub, je peux vous aider à :\n\n• Comprendre votre **score IMAI** et vos dimensions de maturité\n• Explorer les **opportunités IA** pour votre secteur\n• Naviguer dans votre **plan d'action** personnalisé\n• Comprendre les **obligations légales** (Loi 25)\n\nQue souhaitez-vous explorer ?`;
+// ── State ──────────────────────────────────────────────────────────────────────
 
-const WELCOME_MSG = `Bonjour ! Je suis **ATLAS**, votre copilote IA pour la transformation numérique de votre organisation.\n\nJe suis ici pour répondre à vos questions sur l'intelligence artificielle, interpréter vos résultats de diagnostic et vous guider vers les bonnes actions.\n\nComment puis-je vous aider aujourd'hui ?`;
+let _msgs      = [];
+let _container = null;
+let _isTyping  = false;
+let _lang      = 'fr';
+let _mode      = 'enterprise';
 
-function _matchResponse(text) {
-  for (const { match, reply } of RESPONSES) {
-    if (match.test(text)) return reply;
-  }
-  return DEFAULT_REPLY;
+// ── API helpers ────────────────────────────────────────────────────────────────
+
+function _token() {
+  return localStorage.getItem('nexhire_token') || '';
 }
 
-function _md(text) {
-  return text
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\n\n/g, '</p><p>')
-    .replace(/\n/g, '<br>')
-    .replace(/^/, '<p>')
-    .replace(/$/, '</p>');
+function _headers() {
+  return { 'Content-Type': 'application/json', Authorization: `Bearer ${_token()}` };
 }
 
-// ── Module state ──────────────────────────────────────────────────────────────
+async function _loadQuota() {
+  try {
+    const r = await fetch('/api/agent/quota', { headers: _headers(), credentials: 'include' });
+    if (!r.ok || !_container) return;
+    const q = await r.json();
+    const el = _container.querySelector('#atl-quota');
+    if (!el) return;
+    const pct = Math.min(100, Math.round(q.used / q.limit * 100));
+    const color = pct >= 90 ? '#ef4444' : pct >= 70 ? '#f59e0b' : '#10b981';
+    el.innerHTML = `
+      <span>${q.used} / ${q.limit}</span>
+      <div class="atl-quota-track">
+        <div class="atl-quota-fill" style="width:${pct}%;background:${color}"></div>
+      </div>`;
+  } catch (_) {}
+}
 
-let _msgs       = [];
-let _container  = null;
-let _isTyping   = false;
+// ── Markdown renderer ─────────────────────────────────────────────────────────
 
-// ── Chat helpers ──────────────────────────────────────────────────────────────
+function _md(raw) {
+  let s = raw
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/^#{1,3}\s+(.+)$/gm, '<strong>$1</strong>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 
-function _addMessage(role, text) {
-  _msgs.push({ role, text });
+  return s.split(/\n\n+/).map(block => {
+    block = block.trim();
+    if (!block) return '';
+    const lines = block.split('\n');
+    const allList = lines.every(l => /^[-•*]\s/.test(l) || /^\d+\.\s/.test(l));
+    if (allList) {
+      return '<ul>' + lines.map(l => `<li>${l.replace(/^[-•*\d.]+\s+/, '')}</li>`).join('') + '</ul>';
+    }
+    return `<p>${block.replace(/\n/g, '<br>')}</p>`;
+  }).join('');
+}
+
+// ── Render ────────────────────────────────────────────────────────────────────
+
+function _addMessage(role, text, meta = {}) {
+  _msgs.push({ role, text, ...meta });
   _renderMessages();
 }
 
@@ -349,9 +444,7 @@ function _showTyping() {
   el.id = 'atl-typing';
   el.innerHTML = `
     <div class="atlas-avatar">✨</div>
-    <div class="atlas-typing-bubble">
-      <span></span><span></span><span></span>
-    </div>`;
+    <div class="atlas-typing-bubble"><span></span><span></span><span></span></div>`;
   msgs.appendChild(el);
   msgs.scrollTop = msgs.scrollHeight;
 }
@@ -363,14 +456,60 @@ function _hideTyping() {
 function _renderMessages() {
   const msgs = _container?.querySelector('.atlas-messages');
   if (!msgs) return;
-  msgs.innerHTML = _msgs.map(m => `
-    <div class="atlas-msg ${m.role === 'user' ? 'user' : ''}">
-      ${m.role === 'atlas'
-        ? `<div class="atlas-avatar">✨</div>`
-        : `<div class="atlas-user-avatar">Vous</div>`}
-      <div class="atlas-bubble">${_md(m.text)}</div>
-    </div>`).join('');
+
+  msgs.innerHTML = _msgs.map(m => {
+    const isUser  = m.role === 'user';
+    const isError = m.role === 'error';
+
+    const escapedText = m.text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+    const bubbleHtml = isUser || isError
+      ? `<div class="atlas-bubble${isError ? ' atlas-bubble-err' : ''}">${escapedText}</div>`
+      : `<div class="atlas-bubble">${_md(m.text)}</div>`;
+
+    const warningsHtml = [
+      m.connectorWarnings?.length
+        ? `<div class="atlas-warning warn-connector">⚠️ Connecteurs en erreur : ${m.connectorWarnings.join(', ')} — données potentiellement incomplètes.</div>`
+        : '',
+      m.hasSimulated
+        ? `<div class="atlas-warning warn-simulated">🔶 Certaines données sont simulées (connecteurs non configurés).</div>`
+        : '',
+    ].join('');
+
+    const sourcesHtml = m.sources?.length
+      ? `<div class="atlas-sources">${m.sources.map(s => `<span class="atlas-source-chip">${s}</span>`).join('')}</div>`
+      : '';
+
+    if (isUser) {
+      return `
+        <div class="atlas-msg user">
+          <div class="atlas-user-avatar">Vous</div>
+          ${bubbleHtml}
+        </div>`;
+    }
+    return `
+      <div class="atlas-msg">
+        <div class="atlas-avatar">✨</div>
+        <div class="atl-msg-body">
+          ${warningsHtml}
+          ${bubbleHtml}
+          ${sourcesHtml}
+        </div>
+      </div>`;
+  }).join('');
+
   msgs.scrollTop = msgs.scrollHeight;
+}
+
+// ── Send message ──────────────────────────────────────────────────────────────
+
+function _setInputState(disabled) {
+  const input   = _container?.querySelector('.atlas-input');
+  const sendBtn = _container?.querySelector('.atlas-send-btn');
+  const visBtn  = _container?.querySelector('.atl-vision-btn');
+  if (input)   { input.disabled = disabled; if (!disabled) input.focus(); }
+  if (sendBtn) sendBtn.disabled = disabled;
+  if (visBtn)  visBtn.disabled  = disabled;
 }
 
 async function _sendMessage(text) {
@@ -380,31 +519,106 @@ async function _sendMessage(text) {
   const sugg = _container?.querySelector('.atlas-suggestions');
   if (sugg) sugg.style.display = 'none';
 
+  const input = _container?.querySelector('.atlas-input');
+  if (input) { input.value = ''; input.style.height = 'auto'; }
+
   _addMessage('user', text);
   _showTyping();
+  _setInputState(true);
 
-  const input  = _container?.querySelector('.atlas-input');
-  const sendBtn = _container?.querySelector('.atlas-send-btn');
-  if (input)   { input.value = ''; input.style.height = 'auto'; input.disabled = true; }
-  if (sendBtn) sendBtn.disabled = true;
+  try {
+    const r = await fetch('/api/agent/query', {
+      method: 'POST',
+      headers: _headers(),
+      credentials: 'include',
+      body: JSON.stringify({ question: text, assistant_mode: _mode, language: _lang }),
+    });
 
-  await new Promise(r => setTimeout(r, 700 + Math.random() * 700));
+    if (!_container) return;
+    _hideTyping();
 
-  if (!_container) return; // unmounted during delay
-  _hideTyping();
-  _addMessage('atlas', _matchResponse(text));
+    if (!r.ok) {
+      const err = await r.json().catch(() => ({}));
+      const msg = r.status === 402
+        ? 'Votre abonnement est inactif. Veuillez renouveler votre plan pour utiliser ATLAS.'
+        : err.detail || `Erreur ${r.status} — réessayez dans quelques instants.`;
+      _addMessage('error', msg);
+    } else {
+      const data = await r.json();
+      _addMessage('atlas', data.answer, {
+        sources:           data.sources,
+        connectorWarnings: data.connector_warnings,
+        hasSimulated:      data.has_simulated_data,
+      });
+      _loadQuota();
+    }
+  } catch (_) {
+    if (!_container) return;
+    _hideTyping();
+    _addMessage('error', 'Connexion impossible. Vérifiez votre réseau et réessayez.');
+  }
 
-  if (input)   { input.disabled = false; input.focus(); }
-  if (sendBtn) sendBtn.disabled = false;
+  _setInputState(false);
   _isTyping = false;
+}
+
+// ── Vision ────────────────────────────────────────────────────────────────────
+
+async function _sendVision(file) {
+  if (_isTyping) return;
+  _isTyping = true;
+
+  _addMessage('user', `📎 Image : ${file.name || 'capture'}`);
+  _showTyping();
+  _setInputState(true);
+
+  const question = _container?.querySelector('.atlas-input')?.value?.trim()
+    || 'Analyse cette image.';
+
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    const b64  = e.target.result.split(',')[1];
+    const mime = file.type || 'image/png';
+
+    try {
+      const r = await fetch('/api/agent/vision', {
+        method: 'POST',
+        headers: _headers(),
+        credentials: 'include',
+        body: JSON.stringify({ image_b64: b64, mime_type: mime, question, language: _lang }),
+      });
+
+      if (!_container) return;
+      _hideTyping();
+
+      if (!r.ok) {
+        const err = await r.json().catch(() => ({}));
+        _addMessage('error', err.detail || `Erreur ${r.status}`);
+      } else {
+        const data = await r.json();
+        _addMessage('atlas', data.answer);
+        _loadQuota();
+      }
+    } catch (_) {
+      if (!_container) return;
+      _hideTyping();
+      _addMessage('error', 'Connexion impossible pendant l\'analyse visuelle.');
+    }
+
+    _setInputState(false);
+    _isTyping = false;
+  };
+  reader.readAsDataURL(file);
 }
 
 // ── Mount ─────────────────────────────────────────────────────────────────────
 
-function _mount(container, ctx) {
+function _mount(container) {
   _msgs      = [];
   _container = container;
   _isTyping  = false;
+  _lang      = 'fr';
+  _mode      = 'enterprise';
 
   container.innerHTML = CSS + `
   <div class="atlas-root">
@@ -412,7 +626,22 @@ function _mount(container, ctx) {
       <div class="atlas-status-dot"></div>
       <span class="atlas-header-badge">✨ ATLAS AI</span>
       <span class="atlas-header-title">Copilote IA</span>
-      <span class="atlas-header-sub">Mode démo · Réponses préprogrammées</span>
+
+      <div class="atl-controls">
+        <select class="atl-select" id="atl-lang">
+          <option value="fr">FR</option>
+          <option value="en">EN</option>
+        </select>
+        <select class="atl-select" id="atl-mode">
+          <option value="enterprise">Entreprise</option>
+          <option value="municipal">Municipalité</option>
+          <option value="recruiting">Recrutement</option>
+        </select>
+      </div>
+
+      <div class="atl-quota-wrap" id="atl-quota">
+        <span>—</span>
+      </div>
     </div>
 
     <div class="atlas-messages"></div>
@@ -421,54 +650,80 @@ function _mount(container, ctx) {
       ${SUGGESTIONS.map(s => `<button class="atlas-chip">${s}</button>`).join('')}
     </div>
 
-    <div class="atlas-disclaimer">
-      ATLAS est en mode démo. Activez votre compte pour les recommandations personnalisées basées sur vos données.
-    </div>
-
     <div class="atlas-input-area">
       <textarea class="atlas-input" rows="1"
-        placeholder="Posez votre question à ATLAS…"
-        maxlength="500"></textarea>
+        placeholder="Posez votre question à ATLAS… (Ctrl+V pour coller une image)"
+        maxlength="2000"></textarea>
+      <button class="atl-vision-btn" title="Analyser une image">
+        <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      </button>
       <button class="atlas-send-btn" title="Envoyer">
-        <svg fill="none" viewBox="0 0 24 24" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round">
-          <line x1="22" y1="2" x2="11" y2="13"/>
-          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </button>
     </div>
   </div>`;
 
-  // Welcome message with slight delay for polish
+  // Welcome message
   setTimeout(() => _addMessage('atlas', WELCOME_MSG), 280);
+
+  // Quota
+  _loadQuota();
 
   // Suggestion chips
   container.querySelectorAll('.atlas-chip').forEach(chip => {
     chip.addEventListener('click', () => _sendMessage(chip.textContent.trim()));
   });
 
-  // Textarea: auto-resize + Enter to send
+  // Language / mode selectors
+  container.querySelector('#atl-lang').addEventListener('change', e => { _lang = e.target.value; });
+  container.querySelector('#atl-mode').addEventListener('change', e => { _mode = e.target.value; });
+
+  // Textarea: auto-resize + Enter to send + Ctrl+V image paste
   const input   = container.querySelector('.atlas-input');
   const sendBtn = container.querySelector('.atlas-send-btn');
+  const visBtn  = container.querySelector('.atl-vision-btn');
 
   input.addEventListener('input', () => {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 120) + 'px';
   });
 
-  input.addEventListener('keydown', (e) => {
+  input.addEventListener('keydown', e => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       _sendMessage(input.value.trim());
     }
   });
 
+  // Ctrl+V paste — detect image in clipboard
+  input.addEventListener('paste', e => {
+    const items = Array.from(e.clipboardData?.items || []);
+    const img   = items.find(i => i.type.startsWith('image/'));
+    if (img) {
+      e.preventDefault();
+      _sendVision(img.getAsFile());
+    }
+  });
+
   sendBtn.addEventListener('click', () => _sendMessage(input.value.trim()));
+
+  // Vision button — file picker
+  const fileInput = document.createElement('input');
+  fileInput.type   = 'file';
+  fileInput.accept = 'image/*';
+  fileInput.style.display = 'none';
+  container.appendChild(fileInput);
+
+  visBtn.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files[0]) _sendVision(fileInput.files[0]);
+    fileInput.value = '';
+  });
 }
 
 export default {
-  mount(container, ctx)  { _mount(container, ctx); },
-  unmount(container)     {
+  mount(container)  { _mount(container); },
+  unmount(container) {
     container.innerHTML = '';
     _msgs = []; _container = null; _isTyping = false;
   },
