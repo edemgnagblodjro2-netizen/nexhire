@@ -307,7 +307,18 @@ function _renderCards(container, allConnectors, filter, connected) {
       if (!meta) return;
 
       if (action === 'oauth') {
-        window.location.href = `/api/oauth/${type}/oauth/start?slug=${btnSlug}`;
+        try {
+          btn.disabled = true; btn.textContent = '⏳ Connexion…';
+          const res = await _api(`/api/connectors/${type}/oauth/start`, { method: 'POST', body: '{}' });
+          if (res?.authorization_url) {
+            window.location.href = res.authorization_url;
+          } else {
+            throw new Error('URL manquante');
+          }
+        } catch (e) {
+          btn.disabled = false; btn.textContent = '🔗 Connecter';
+          alert(`Erreur OAuth : ${e.message}`);
+        }
         return;
       }
       if (action === 'credentials') {
