@@ -310,10 +310,9 @@ function _renderNav() {
 
     for (const item of group.items) {
       const r = resolved[idx++];
-      const disabled = r.soon ? 'disabled' : '';
-      const badge    = r.soon ? `<span class="ws-nav-badge ws-badge-soon">Bientôt</span>` : '';
+      const badge = r.soon ? `<span class="ws-nav-badge ws-badge-soon">Bientôt</span>` : '';
       html += `
-        <button class="ws-nav-item" data-id="${item.id}" ${disabled} aria-label="${item.label}">
+        <button class="ws-nav-item${r.soon ? ' soon' : ''}" data-id="${item.id}" aria-label="${item.label}">
           ${icon(item.iconKey)}
           <span class="ws-nav-name">${item.label}</span>
           ${badge}
@@ -325,10 +324,17 @@ function _renderNav() {
 
   nav.innerHTML = html;
 
-  nav.querySelectorAll('.ws-nav-item:not([disabled])').forEach(btn => {
+  nav.querySelectorAll('.ws-nav-item').forEach(btn => {
     btn.addEventListener('click', () => {
       const r = _resolveNavItems().find(n => n.id === btn.dataset.id);
-      if (r) _navigateTo(r);
+      if (!r) return;
+      if (r.soon) {
+        _setActiveNav(r.id);
+        _setBreadcrumb(r.label);
+        _showComingSoon(r.label);
+      } else {
+        _navigateTo(r);
+      }
     });
   });
 }
@@ -393,7 +399,9 @@ async function _navigateTo(navItem) {
     _state.module.mount($('ws-app-container'), ctx);
 
   } catch (err) {
-    _showAppError(navItem.label, err.message);
+    const isNotFound = err?.name === 'TypeError' || err?.message?.includes('Failed to fetch') || err?.message?.includes('404') || err?.message?.includes('NetworkError');
+    if (isNotFound) _showComingSoon(navItem.label);
+    else _showAppError(navItem.label, err.message);
   }
 }
 
