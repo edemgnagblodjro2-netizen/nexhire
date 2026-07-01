@@ -24,7 +24,7 @@ const IC = {
 
 const icon = (name) => `<span class="ws-nav-icon">${IC[name] || IC.grid}</span>`;
 
-// ── Navigation (matches screenshot sections) ───────────────────────────────────
+// ── Navigation Enterprise ──────────────────────────────────────────────────────
 const NAV = [
   {
     items: [
@@ -42,33 +42,51 @@ const NAV = [
   {
     section: 'Gouvernance',
     items: [
-      { id: 'gouvernance', label: 'Gouvernance & Loi 25', iconKey: 'shield',  appSlug: 'gouvernance' },
-      { id: 'security',    label: 'Sécurité & Audit',     iconKey: 'alert',   appSlug: 'security' },
-      { id: 'conformite',  label: 'Conformité',           iconKey: 'check',   appSlug: 'conformite',  defaultSoon: true },
-      { id: 'politiques',  label: 'Politiques',           iconKey: 'file',    appSlug: 'politiques',  defaultSoon: true },
+      { id: 'gouvernance', label: 'Gouvernance & Loi 25', iconKey: 'shield', appSlug: 'gouvernance' },
+      { id: 'conformite',  label: 'Conformité',           iconKey: 'check',  appSlug: 'conformite', defaultSoon: true },
+      { id: 'politiques',  label: 'Politiques',           iconKey: 'file',   appSlug: 'politiques', defaultSoon: true },
     ],
   },
   {
-    section: 'Intégrations',
+    section: 'Enterprise Intelligence',
     items: [
-      { id: 'integrations', label: 'Centre de connecteurs', iconKey: 'zap',      appSlug: 'integrations' },
-      { id: 'ms365',        label: 'Microsoft 365',         iconKey: 'building', appSlug: 'ms365' },
+      { id: 'observatoire',      label: 'Observatoire',          iconKey: 'eye',      appSlug: 'observatoire' },
+      { id: 'reports',           label: 'Rapports & Exports',    iconKey: 'file',     appSlug: 'reports' },
+      { id: 'enterprise-intel',  label: 'Coûts & Optimisation',  iconKey: 'chart',    appSlug: 'enterprise-intel', defaultSoon: true },
     ],
   },
   {
-    section: 'Observatoire & Rapports',
+    section: 'Centre d\'intégrations',
     items: [
-      { id: 'observatoire', label: 'Observatoire', iconKey: 'eye',      appSlug: 'observatoire' },
-      { id: 'reports',      label: 'Rapports',     iconKey: 'file',     appSlug: 'reports' },
-      { id: 'exports',      label: 'Exports',      iconKey: 'download', appSlug: 'exports', defaultSoon: true },
+      { id: 'integrations', label: 'Tous les connecteurs', iconKey: 'zap',      appSlug: 'integrations' },
+      { id: 'ms365',        label: 'Microsoft 365',        iconKey: 'building', appSlug: 'ms365' },
+    ],
+  },
+  {
+    section: 'Identity & Access',
+    items: [
+      { id: 'identity', label: 'Utilisateurs & Accès', iconKey: 'users',  appSlug: 'identity', defaultSoon: true },
+      { id: 'sso-mfa',  label: 'SSO & MFA',            iconKey: 'shield', appSlug: 'sso-mfa',  defaultSoon: true },
+    ],
+  },
+  {
+    section: 'Security Center',
+    items: [
+      { id: 'security', label: 'Tableau de sécurité', iconKey: 'alert', appSlug: 'security' },
+      { id: 'audit',    label: 'Journal d\'audit',     iconKey: 'file',  appSlug: 'security' },
+    ],
+  },
+  {
+    section: 'Productivité',
+    items: [
+      { id: 'knowledge',  label: 'Knowledge Hub', iconKey: 'book', appSlug: 'knowledge' },
+      { id: 'automation', label: 'Automatisation', iconKey: 'zap',  appSlug: 'automation', defaultSoon: true },
     ],
   },
   {
     section: 'Administration',
     items: [
-      { id: 'organisation', label: 'Organisation', iconKey: 'building', appSlug: 'organisation', defaultSoon: true },
-      { id: 'users',        label: 'Utilisateurs', iconKey: 'users',    appSlug: 'users',        defaultSoon: true },
-      { id: 'settings',     label: 'Paramètres',   iconKey: 'settings', appSlug: 'settings' },
+      { id: 'settings', label: 'Paramètres', iconKey: 'settings', appSlug: 'settings' },
     ],
   },
 ];
