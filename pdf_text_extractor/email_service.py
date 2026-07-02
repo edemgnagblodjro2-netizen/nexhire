@@ -34,8 +34,11 @@ def send_invite_email(
     role: str,
     invite_token: str,
     invited_by_name: str = "Un administrateur",
+    partner_slug: str = "",
 ) -> bool:
-    invite_url = f"{APP_URL}?invite={invite_token}"
+    invite_url = f"{APP_URL}/inscription?invite={invite_token}"
+    if partner_slug:
+        invite_url += f"&partenaire={partner_slug}"
     role_labels = {
         "user":    "Utilisateur",
         "manager": "Manager",
@@ -43,57 +46,68 @@ def send_invite_email(
     }
     role_label = role_labels.get(role, role)
 
-    subject = f"Vous êtes invité à rejoindre {org_name} sur NexHire EIP"
+    subject = f"Vous êtes invité à rejoindre {org_name} sur AgentHub Platform"
     html = f"""<!doctype html>
 <html lang="fr">
 <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/></head>
-<body style="font-family:system-ui,sans-serif;background:#f8fafc;margin:0;padding:32px 16px">
+<body style="font-family:system-ui,sans-serif;background:#f1f5f9;margin:0;padding:32px 16px">
   <div style="max-width:560px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.08)">
 
     <!-- En-tête -->
-    <div style="background:#0f172a;padding:26px 32px;display:flex;align-items:center;justify-content:space-between">
-      <span style="font-size:1.25rem;font-weight:800;color:#fff">Nex<span style="color:#818CF8">hire</span>
-        <span style="font-size:.65rem;background:rgba(129,140,248,.2);color:#818CF8;padding:2px 7px;border-radius:99px;margin-left:6px;vertical-align:middle">EIP</span>
-      </span>
-      <span style="color:#94a3b8;font-size:.82rem">Invitation</span>
+    <div style="background:linear-gradient(135deg,#1e1b4b 0%,#312e81 60%,#4c1d95 100%);padding:26px 32px">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td>
+          <span style="font-size:1.2rem;font-weight:800;color:#fff;letter-spacing:-.01em">AgentHub</span>
+          <span style="font-size:.6rem;background:rgba(255,255,255,.18);color:rgba(255,255,255,.9);padding:2px 7px;border-radius:2px;margin-left:6px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;vertical-align:middle">Platform</span>
+        </td>
+        <td align="right"><span style="color:rgba(255,255,255,.55);font-size:.8rem">Invitation</span></td>
+      </tr></table>
+    </div>
+
+    <!-- Bannière invitation -->
+    <div style="background:#eef2ff;border-bottom:2px solid #c7d2fe;padding:22px 32px;text-align:center">
+      <div style="font-size:2rem;margin-bottom:10px">&#x2709;&#xFE0F;</div>
+      <h2 style="margin:0 0 8px;color:#1e1b4b;font-size:1.15rem;font-weight:800">Vous êtes invité à rejoindre {org_name}</h2>
+      <p style="margin:0;color:#475569;font-size:.9rem">
+        <strong style="color:#1e1b4b">{invited_by_name}</strong> vous a ajouté en tant que
+        <strong style="color:#6366f1">{role_label}</strong>.
+      </p>
     </div>
 
     <!-- Corps -->
     <div style="padding:32px">
-      <!-- Titre invitation -->
-      <div style="text-align:center;margin-bottom:24px">
-        <div style="display:inline-block;background:#eef2ff;border-radius:50%;width:56px;height:56px;line-height:56px;font-size:1.6rem;margin-bottom:12px">✉️</div>
-        <h2 style="margin:0 0 6px;color:#0f172a;font-size:1.2rem;font-weight:800">Vous êtes invité à rejoindre {org_name}</h2>
-        <p style="margin:0;color:#64748b;font-size:.9rem"><strong style="color:#0f172a">{invited_by_name}</strong> vous a ajouté en tant que <strong style="color:#6366f1">{role_label}</strong>.</p>
-      </div>
 
-      <!-- Description NexHire EIP -->
-      <div style="background:#f8faff;border:1.5px solid #e0e7ff;border-radius:12px;padding:20px 22px;margin-bottom:24px">
-        <p style="margin:0 0 12px;font-size:.88rem;color:#3730a3;font-weight:700;text-transform:uppercase;letter-spacing:.05em">À propos de NexHire EIP</p>
-        <p style="margin:0 0 14px;color:#475569;font-size:.9rem;line-height:1.65">
-          NexHire EIP est une <strong style="color:#0f172a">plateforme d'intelligence et de gouvernance d'entreprise</strong> alimentée par l'IA.
-          Elle connecte vos systèmes, données et applications afin de fournir une <strong style="color:#0f172a">vue unifiée de votre organisation</strong>,
-          des analyses en temps réel et des recommandations intelligentes pour soutenir la prise de décision.
+      <!-- Description AgentHub Platform -->
+      <div style="background:#f8faff;border:1.5px solid #e0e7ff;border-radius:12px;padding:20px 22px;margin-bottom:28px">
+        <p style="margin:0 0 10px;font-size:.8rem;color:#3730a3;font-weight:700;text-transform:uppercase;letter-spacing:.06em">AgentHub Platform — par CivicAI</p>
+        <p style="margin:0 0 14px;color:#475569;font-size:.88rem;line-height:1.7">
+          Plateforme <strong style="color:#1e1b4b">d'intelligence organisationnelle</strong> propulsée par l'IA.
+          Diagnostiquez votre maturité IA, gouvernez vos données et accélérez votre transformation numérique
+          — en une seule plateforme conforme Loi 25.
         </p>
-        <!-- Pills connecteurs -->
-        <div style="display:flex;flex-wrap:wrap;gap:6px">
-          <span style="background:#fff;border:1px solid #e2e8f0;border-radius:99px;padding:3px 10px;font-size:.76rem;font-weight:600;color:#475569">Microsoft 365</span>
-          <span style="background:#fff;border:1px solid #e2e8f0;border-radius:99px;padding:3px 10px;font-size:.76rem;font-weight:600;color:#475569">Salesforce</span>
-          <span style="background:#fff;border:1px solid #e2e8f0;border-radius:99px;padding:3px 10px;font-size:.76rem;font-weight:600;color:#475569">Jira</span>
-          <span style="background:#fff;border:1px solid #e2e8f0;border-radius:99px;padding:3px 10px;font-size:.76rem;font-weight:600;color:#475569">SAP</span>
-          <span style="background:#fff;border:1px solid #e2e8f0;border-radius:99px;padding:3px 10px;font-size:.76rem;font-weight:600;color:#475569">SharePoint</span>
-          <span style="background:#fff;border:1px solid #e2e8f0;border-radius:99px;padding:3px 10px;font-size:.76rem;font-weight:600;color:#475569">Power BI</span>
-          <span style="background:#eef2ff;border:1px solid #c7d2fe;border-radius:99px;padding:3px 10px;font-size:.76rem;font-weight:600;color:#6366f1">+ bien d'autres</span>
-        </div>
+        <table cellpadding="0" cellspacing="0" border="0"><tr>
+          <td style="padding:2px 4px"><span style="background:#fff;border:1px solid #e2e8f0;border-radius:99px;padding:3px 10px;font-size:.73rem;font-weight:600;color:#475569">Microsoft 365</span></td>
+          <td style="padding:2px 4px"><span style="background:#fff;border:1px solid #e2e8f0;border-radius:99px;padding:3px 10px;font-size:.73rem;font-weight:600;color:#475569">Jira</span></td>
+          <td style="padding:2px 4px"><span style="background:#fff;border:1px solid #e2e8f0;border-radius:99px;padding:3px 10px;font-size:.73rem;font-weight:600;color:#475569">SAP</span></td>
+          <td style="padding:2px 4px"><span style="background:#eef2ff;border:1px solid #c7d2fe;border-radius:99px;padding:3px 10px;font-size:.73rem;font-weight:600;color:#6366f1">+20 autres</span></td>
+        </tr></table>
       </div>
 
-      <!-- CTA -->
-      <div style="text-align:center;margin:28px 0 20px">
+      <!-- CTA — bouton solide (pas de gradient pour la compat. email) -->
+      <div style="text-align:center;margin-bottom:24px">
         <a href="{invite_url}"
-           style="display:inline-block;background:linear-gradient(135deg,#818CF8,#6366f1);color:#fff;padding:14px 36px;border-radius:10px;font-weight:700;text-decoration:none;font-size:.95rem;letter-spacing:.01em;box-shadow:0 4px 14px rgba(99,102,241,.35)">
-          Accepter l'invitation →
+           style="display:inline-block;background-color:#6366f1;color:#ffffff;padding:15px 40px;border-radius:10px;font-weight:700;text-decoration:none;font-size:.95rem;letter-spacing:.01em;border:0;mso-padding-alt:0">
+          Accepter l'invitation &rarr;
         </a>
       </div>
+
+      <p style="color:#94a3b8;font-size:.76rem;text-align:center;margin:0">
+        Ce lien est valide <strong>7 jours</strong>. Si vous ne reconnaissez pas cette invitation, ignorez cet email.
+      </p>
+      <p style="color:#cbd5e1;font-size:.72rem;text-align:center;margin:10px 0 0">
+        Lien direct : <a href="{invite_url}" style="color:#6366f1;word-break:break-all">{invite_url}</a>
+      </p>
+    </div>
 
       <p style="color:#94a3b8;font-size:.78rem;text-align:center;margin:0">
         Ce lien est valide <strong>7 jours</strong>. Si vous ne reconnaissez pas cette invitation, ignorez cet email.
@@ -102,8 +116,8 @@ def send_invite_email(
 
     <!-- Pied de page -->
     <div style="background:#f8fafc;padding:14px 32px;text-align:center;border-top:1px solid #e2e8f0">
-      <p style="margin:0;color:#94a3b8;font-size:.76rem">
-        © 2026 CivicAI Inc. · <a href="{APP_URL}" style="color:#6366f1">myportal.nexhire.ca</a> · Conçu pour les organisations canadiennes 🍁
+      <p style="margin:0;color:#94a3b8;font-size:.74rem">
+        &copy; 2026 CivicAI Inc. &middot; <a href="{APP_URL}" style="color:#6366f1;text-decoration:none">AgentHub Platform</a> &middot; Conçu pour les organisations canadiennes &#x1F341;
       </p>
     </div>
   </div>

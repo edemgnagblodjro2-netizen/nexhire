@@ -5,8 +5,10 @@
  * pour que workspace.js puisse les lire sur le même origin.
  */
 
-const _params  = new URLSearchParams(location.search);
+const _params      = new URLSearchParams(location.search);
 const _partnerSlug = _params.get('partenaire') || null;
+const _inviteToken = _params.get('invite')     || null;
+if (_inviteToken) sessionStorage.setItem('nh_pending_invite', _inviteToken);
 
 // ── Onglets ──────────────────────────────────────────────────────────────────
 
@@ -90,6 +92,37 @@ function _showSignupForm() {
   if (form) form.style.display = 'block';
 }
 
+async function _initInvite() {
+  const token = _inviteToken || sessionStorage.getItem('nh_pending_invite');
+  if (!token) return;
+  try {
+    const res = await fetch(`/api/members/invite/validate?token=${encodeURIComponent(token)}`);
+    if (!res.ok) {
+      sessionStorage.removeItem('nh_pending_invite');
+      return;
+    }
+    const inv = await res.json();
+    // Pré-remplir le courriel dans les deux formulaires
+    const loginEmail  = document.getElementById('login-email');
+    const signupEmail = document.getElementById('signup-email');
+    if (loginEmail  && inv.email) loginEmail.value  = inv.email;
+    if (signupEmail && inv.email) signupEmail.value = inv.email;
+    // Bannière d'invitation dans les deux sections
+    const orgName   = inv.org_name || 'votre organisation';
+    const roleLabel = { user: 'Utilisateur', manager: 'Manager', admin: 'Administrateur' }[inv.role] || inv.role;
+    const bannerHtml = `<div style="background:#eef2ff;border:1px solid #c7d2fe;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:.88rem;color:#3730a3">
+      <strong>Invitation reçue</strong> — Rejoignez <strong>${orgName}</strong> en tant que <em>${roleLabel}</em>. Connectez-vous ou créez un compte pour accepter.
+    </div>`;
+    ['section-login', 'section-signup'].forEach(sId => {
+      const sec = document.getElementById(sId);
+      if (!sec) return;
+      const div = document.createElement('div');
+      div.innerHTML = bannerHtml;
+      sec.insertBefore(div.firstElementChild, sec.firstChild);
+    });
+  } catch {}
+}
+
 // ── Helpers token ─────────────────────────────────────────────────────────────
 
 function _saveToken(data) {
@@ -142,17 +175,27 @@ async function handleLogin(e) {
 
     _saveToken(data);
 
-    // Déterminer la destination via /api/auth/me
-    const meRes  = await fetch('/api/auth/me', {
-      headers: { Authorization: `Bearer ${data.access_token}` },
-    });
-    const me = meRes.ok ? await meRes.json() : null;
-
-    if (me && me.partner_slug) {
-      window.location.href = `/workspace/${me.partner_slug}`;
-    } else {
-      window.location.href = '/inscription';
+    // Appliquer l'invitation en attente si présente
+    const pendingInvite = _inviteToken || sessionStorage.getItem('nh_pending_invite');
+    if (pendingInvite) {
+      try {
+        await fetch('/api/members/apply-invite', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${data.access_token}` },
+          body:    JSON.stringify({ token: pendingInvite }),
+        });
+        sessionStorage.removeItem('nh_pending_invite');
+      } catch {}
     }
+
+    // Rediriger : partner depuis l'URL d'invitation, sinon via /api/auth/me
+    if (_partnerSlug) {
+      window.location.href = `/workspace/${_partnerSlug}`;
+      return;
+    }
+    const meRes = await fetch('/api/auth/me', { headers: { Authorization: `Bearer ${data.access_token}` } });
+    const me    = meRes.ok ? await meRes.json() : null;
+    window.location.href = (me && me.partner_slug) ? `/workspace/${me.partner_slug}` : '/inscription';
 
   } catch {
     _setHTML('login-error', 'Erreur réseau. Vérifiez votre connexion et réessayez.');
@@ -383,6 +426,19 @@ async function _handleConfirmationRedirect() {
 
   _saveToken({ access_token: accessToken, refresh_token: refreshToken });
 
+  // Appliquer l'invitation stockée avant la confirmation email
+  const storedInvite = sessionStorage.getItem('nh_pending_invite');
+  if (storedInvite) {
+    try {
+      await fetch('/api/members/apply-invite', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessToken}` },
+        body:    JSON.stringify({ token: storedInvite }),
+      });
+      sessionStorage.removeItem('nh_pending_invite');
+    } catch {}
+  }
+
   try {
     const meRes = await fetch('/api/auth/me', {
       headers: { Authorization: `Bearer ${accessToken}` },
@@ -403,5 +459,8 @@ async function _handleConfirmationRedirect() {
 (async () => {
   if (_handleRecoveryRedirect()) return;
   const handled = await _handleConfirmationRedirect();
-  if (!handled) _initPartner();
+  if (!handled) {
+    await _initPartner();
+    await _initInvite();
+  }
 })();

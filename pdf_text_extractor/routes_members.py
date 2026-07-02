@@ -188,6 +188,7 @@ def invite_member(
     token = inv.get("token", "")
 
     # Envoie l'email d'invitation (non-bloquant)
+    partner_slug = ""
     try:
         from email_service import send_invite_email
         with get_db() as cur:
@@ -197,15 +198,30 @@ def invite_member(
                 (user.organization_id, user.id),
             )
             meta = row(cur) or {}
+        with get_db() as cur:
+            cur.execute(
+                """SELECT p.slug FROM partners p
+                   JOIN organizations o ON o.partner_id = p.id
+                   WHERE o.id = %s LIMIT 1""",
+                (user.organization_id,),
+            )
+            p_row = row(cur)
+        if p_row:
+            partner_slug = p_row["slug"]
         send_invite_email(
             to_email=str(payload.email),
             org_name=meta.get("org_name", "votre organisation"),
             role=payload.role,
             invite_token=token,
             invited_by_name=meta.get("full_name") or user.email or "Un administrateur",
+            partner_slug=partner_slug,
         )
     except Exception:
         pass  # email non-bloquant
+
+    invite_path = f"/inscription?invite={token}"
+    if partner_slug:
+        invite_path += f"&partenaire={partner_slug}"
 
     return {
         "ok":         True,
@@ -213,7 +229,7 @@ def invite_member(
         "email":      str(payload.email),
         "role":       payload.role,
         "expires_at": inv.get("expires_at"),
-        "invite_url": f"?invite={token}",  # relatif — le frontend ajoute l'origine
+        "invite_url": invite_path,
     }
 
 
