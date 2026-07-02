@@ -12,6 +12,7 @@ Administration :
   DELETE /api/mfa/unenroll      → désactiver MFA (admin peut forcer pour un user)
   POST /api/mfa/require-org     → exiger MFA pour toute l'organisation (owner)
 """
+
 from __future__ import annotations
 
 import pyotp
@@ -31,15 +32,18 @@ router = APIRouter(prefix="/api/mfa", tags=["mfa"])
 
 # ── Payloads ──────────────────────────────────────────────────────────────────
 
+
 class VerifyPayload(BaseModel):
     code: str = Field(min_length=6, max_length=8, pattern=r"^\d{6,8}$")
 
+
 class ChallengePayload(BaseModel):
     user_id: str
-    code:    str = Field(min_length=6, max_length=8, pattern=r"^\d{6,8}$")
+    code: str = Field(min_length=6, max_length=8, pattern=r"^\d{6,8}$")
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
+
 
 def _get_factor(user_id: str) -> dict | None:
     with get_db() as cur:
@@ -52,20 +56,21 @@ def _get_factor(user_id: str) -> dict | None:
 
 def _verify_totp(encrypted_secret: str, code: str) -> bool:
     secret = decrypt(encrypted_secret)
-    totp   = pyotp.TOTP(secret)
+    totp = pyotp.TOTP(secret)
     return totp.verify(code, valid_window=1)
 
 
 # ── Endpoints ─────────────────────────────────────────────────────────────────
+
 
 @router.get("/status")
 def mfa_status(user: CurrentUser = Depends(get_current_user)):
     """Vérifie si le MFA est activé pour l'utilisateur courant."""
     factor = _get_factor(str(user.id))
     return {
-        "mfa_enabled":  bool(factor and factor.get("is_verified")),
-        "factor_type":  factor.get("factor_type") if factor else None,
-        "enrolled_at":  str(factor.get("created_at")) if factor else None,
+        "mfa_enabled": bool(factor and factor.get("is_verified")),
+        "factor_type": factor.get("factor_type") if factor else None,
+        "enrolled_at": str(factor.get("created_at")) if factor else None,
         "last_used_at": str(factor.get("last_used_at")) if factor else None,
     }
 
@@ -80,13 +85,12 @@ def enroll_mfa(
     if existing and existing.get("is_verified"):
         raise HTTPException(status_code=409, detail="MFA déjà activé — désactivez d'abord.")
 
-    secret  = pyotp.random_base32()
-    totp    = pyotp.TOTP(secret)
+    secret = pyotp.random_base32()
+    totp = pyotp.TOTP(secret)
     org_name = "NexHire"
     try:
         with get_db() as cur:
-            cur.execute("SELECT name FROM organizations WHERE id = %s LIMIT 1",
-                        (str(user.organization_id),))
+            cur.execute("SELECT name FROM organizations WHERE id = %s LIMIT 1", (str(user.organization_id),))
             org_row = row(cur)
         if org_row:
             org_name = org_row["name"]
@@ -109,14 +113,13 @@ def enroll_mfa(
     else:
         with get_db() as cur:
             cur.execute(
-                "INSERT INTO mfa_factors (user_id, organization_id, encrypted_secret) "
-                "VALUES (%s, %s, %s)",
+                "INSERT INTO mfa_factors (user_id, organization_id, encrypted_secret) " "VALUES (%s, %s, %s)",
                 (str(user.id), str(user.organization_id), enc_secret),
             )
 
     return {
         "otpauth_uri": uri,
-        "secret":      secret,
+        "secret": secret,
         "instructions": "Scannez l'URI avec Microsoft Authenticator, Google Authenticator ou Authy.",
     }
 
@@ -135,15 +138,17 @@ def verify_enroll(
         raise HTTPException(status_code=409, detail="MFA déjà vérifié.")
 
     if not _verify_totp(factor["encrypted_secret"], payload.code):
-        log_audit(AuditEvent(
-            action="mfa_enroll_failed",
-            user_id=str(user.id),
-            organization_id=str(user.organization_id),
-            ip_address=client_ip(request),
-            success=False,
-            http_status=401,
-            error_detail="Code TOTP invalide lors de l'enrôlement",
-        ))
+        log_audit(
+            AuditEvent(
+                action="mfa_enroll_failed",
+                user_id=str(user.id),
+                organization_id=str(user.organization_id),
+                ip_address=client_ip(request),
+                success=False,
+                http_status=401,
+                error_detail="Code TOTP invalide lors de l'enrôlement",
+            )
+        )
         raise HTTPException(status_code=401, detail="Code invalide — vérifiez l'heure de votre appareil.")
 
     with get_db() as cur:
@@ -152,14 +157,16 @@ def verify_enroll(
             (str(user.id),),
         )
 
-    log_audit(AuditEvent(
-        action="mfa_enrolled",
-        user_id=str(user.id),
-        organization_id=str(user.organization_id),
-        ip_address=client_ip(request),
-        success=True,
-        http_status=200,
-    ))
+    log_audit(
+        AuditEvent(
+            action="mfa_enrolled",
+            user_id=str(user.id),
+            organization_id=str(user.organization_id),
+            ip_address=client_ip(request),
+            success=True,
+            http_status=200,
+        )
+    )
     return {"ok": True, "message": "MFA activé avec succès."}
 
 
@@ -179,14 +186,16 @@ def mfa_challenge(
         raise HTTPException(status_code=404, detail="MFA non activé pour cet utilisateur.")
 
     if not _verify_totp(factor["encrypted_secret"], payload.code):
-        log_audit(AuditEvent(
-            action="mfa_challenge_failed",
-            user_id=payload.user_id,
-            ip_address=client_ip(request),
-            success=False,
-            http_status=401,
-            error_detail="Code TOTP invalide lors du challenge login",
-        ))
+        log_audit(
+            AuditEvent(
+                action="mfa_challenge_failed",
+                user_id=payload.user_id,
+                ip_address=client_ip(request),
+                success=False,
+                http_status=401,
+                error_detail="Code TOTP invalide lors du challenge login",
+            )
+        )
         raise HTTPException(status_code=401, detail="Code MFA invalide.")
 
     with get_db() as cur:
@@ -195,13 +204,15 @@ def mfa_challenge(
             (payload.user_id,),
         )
 
-    log_audit(AuditEvent(
-        action="mfa_challenge_success",
-        user_id=payload.user_id,
-        ip_address=client_ip(request),
-        success=True,
-        http_status=200,
-    ))
+    log_audit(
+        AuditEvent(
+            action="mfa_challenge_success",
+            user_id=payload.user_id,
+            ip_address=client_ip(request),
+            success=True,
+            http_status=200,
+        )
+    )
     return {"ok": True, "mfa_verified": True}
 
 
@@ -221,14 +232,16 @@ def unenroll_mfa(
     if not deleted:
         raise HTTPException(status_code=404, detail="Aucun facteur MFA à supprimer.")
 
-    log_audit(AuditEvent(
-        action="mfa_unenrolled",
-        user_id=str(user.id),
-        organization_id=str(user.organization_id),
-        ip_address=client_ip(request),
-        success=True,
-        http_status=200,
-    ))
+    log_audit(
+        AuditEvent(
+            action="mfa_unenrolled",
+            user_id=str(user.id),
+            organization_id=str(user.organization_id),
+            ip_address=client_ip(request),
+            success=True,
+            http_status=200,
+        )
+    )
     return {"ok": True, "message": "MFA désactivé."}
 
 
@@ -245,13 +258,15 @@ def require_mfa_for_org(
             (enable, str(user.organization_id)),
         )
 
-    log_audit(AuditEvent(
-        action="mfa_org_policy_changed",
-        user_id=str(user.id),
-        organization_id=str(user.organization_id),
-        ip_address=client_ip(request),
-        success=True,
-        http_status=200,
-        metadata={"require_mfa": enable},
-    ))
+    log_audit(
+        AuditEvent(
+            action="mfa_org_policy_changed",
+            user_id=str(user.id),
+            organization_id=str(user.organization_id),
+            ip_address=client_ip(request),
+            success=True,
+            http_status=200,
+            metadata={"require_mfa": enable},
+        )
+    )
     return {"ok": True, "require_mfa": enable}

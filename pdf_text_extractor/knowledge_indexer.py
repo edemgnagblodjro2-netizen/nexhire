@@ -1,4 +1,5 @@
 """Knowledge Center — chunking, embeddings, recherche vectorielle, synthèse IA."""
+
 from __future__ import annotations
 
 import hashlib
@@ -8,7 +9,7 @@ import os
 
 logger = logging.getLogger(__name__)
 
-CHUNK_WORDS   = 400
+CHUNK_WORDS = 400
 CHUNK_OVERLAP = 40
 
 # Seul ce dossier est indexé dans chaque site SharePoint.
@@ -30,6 +31,7 @@ def chunk_text(text: str) -> list[str]:
 
 def _openai():
     from openai import OpenAI
+
     return OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
 
@@ -89,15 +91,27 @@ def index_document(
                     content_chunk, chunk_index, embedding, metadata, file_hash, department_id)
                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s::vector, %s::jsonb, %s, %s)""",
                 (
-                    org_id, title, source_type, source_url, connector_id,
-                    chunk, idx, _emb_str(emb),
-                    json.dumps(metadata or {}), file_hash, department_id,
+                    org_id,
+                    title,
+                    source_type,
+                    source_url,
+                    connector_id,
+                    chunk,
+                    idx,
+                    _emb_str(emb),
+                    json.dumps(metadata or {}),
+                    file_hash,
+                    department_id,
                 ),
             )
 
     logger.info(
         "Indexed '%s' (%s) — %d chunks, org=%s, dept=%s",
-        title, source_type, len(chunks), org_id, department_id or "org-wide",
+        title,
+        source_type,
+        len(chunks),
+        org_id,
+        department_id or "org-wide",
     )
     return len(chunks)
 
@@ -149,9 +163,7 @@ def synthesize_answer(query: str, chunks: list[dict]) -> str:
     if not chunks:
         return "Aucun document pertinent trouvé dans votre base de connaissances."
 
-    context = "\n\n---\n\n".join(
-        f"[{c['title']} — {c['source_type']}]\n{c['content_chunk']}" for c in chunks
-    )
+    context = "\n\n---\n\n".join(f"[{c['title']} — {c['source_type']}]\n{c['content_chunk']}" for c in chunks)
 
     model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
     resp = _openai().chat.completions.create(
@@ -178,7 +190,7 @@ def synthesize_answer(query: str, chunks: list[dict]) -> str:
 
 
 _SUPPORTED_EXTS = {".pdf", ".txt", ".md", ".docx"}
-_MAX_FILE_BYTES  = 10 * 1024 * 1024  # 10 Mo
+_MAX_FILE_BYTES = 10 * 1024 * 1024  # 10 Mo
 
 
 def _extract_text(filename: str, raw: bytes) -> str:
@@ -187,6 +199,7 @@ def _extract_text(filename: str, raw: bytes) -> str:
     if ext == ".pdf":
         import io
         from pypdf import PdfReader
+
         try:
             reader = PdfReader(io.BytesIO(raw))
             return "\n".join(p.extract_text() or "" for p in reader.pages)
@@ -194,8 +207,10 @@ def _extract_text(filename: str, raw: bytes) -> str:
             return ""
     if ext == ".docx":
         import io
+
         try:
             from docx import Document
+
             doc = Document(io.BytesIO(raw))
             return "\n".join(p.text for p in doc.paragraphs)
         except Exception:
@@ -207,6 +222,7 @@ def _normalize(name: str) -> str:
     """Normalise un nom pour la comparaison : minuscules, supprime mots génériques."""
     import unicodedata
     import re
+
     n = unicodedata.normalize("NFD", name.lower())
     n = "".join(c for c in n if unicodedata.category(c) != "Mn")
     n = re.sub(r"\b(department|departement|dept|team|equipe|docs|documents|site|sharepoint|group|groupe)\b", "", n)
@@ -234,6 +250,7 @@ def _index_drive_items(
     department_id: str | None = None,
 ) -> None:
     import httpx
+
     GRAPH = "https://graph.microsoft.com/v1.0"
     for item in items:
         if not item.get("file"):
@@ -254,7 +271,9 @@ def _index_drive_items(
         try:
             dl = httpx.get(
                 f"{GRAPH}/drives/{drive_id}/items/{item_id}/content",
-                headers=headers, timeout=60, follow_redirects=True,
+                headers=headers,
+                timeout=60,
+                follow_redirects=True,
             )
             if not dl.is_success:
                 stats["errors"] += 1
@@ -264,8 +283,11 @@ def _index_drive_items(
                 stats["skipped"] += 1
                 continue
             n = index_document(
-                org_id=org_id, title=title, source_type=source_type,
-                content=content, source_url=web_url,
+                org_id=org_id,
+                title=title,
+                source_type=source_type,
+                content=content,
+                source_url=web_url,
                 metadata={"item_id": item_id, "drive_id": drive_id},
                 department_id=department_id,
             )
@@ -279,7 +301,7 @@ def discover_m365_sites(org_id: str) -> list[dict] | dict:
     """Détecte les sites SharePoint disponibles et les upsert dans sharepoint_dept_mappings."""
     try:
         from m365_collector import _auth_headers, _get_all, GRAPH
-    except Exception as exc:
+    except Exception:
         return {"error": "m365_collector non disponible"}
     try:
         headers = _auth_headers(org_id)
@@ -296,9 +318,10 @@ def discover_m365_sites(org_id: str) -> list[dict] | dict:
         return {"error": str(exc)}
 
     from db import get_db
+
     result = []
     for site in sites:
-        site_id   = site.get("id", "")
+        site_id = site.get("id", "")
         site_name = site.get("displayName", "")
         if not site_id or not site_name:
             continue
@@ -318,6 +341,7 @@ def discover_m365_sites(org_id: str) -> list[dict] | dict:
 def _load_site_mappings(org_id: str) -> dict[str, str | None]:
     """Retourne {site_id: dept_id | None} depuis sharepoint_dept_mappings."""
     from db import get_db, rows as db_rows
+
     try:
         with get_db() as cur:
             cur.execute(
@@ -352,6 +376,7 @@ def index_m365_documents(org_id: str) -> dict:
 
     # Charge les départements pour le fallback auto-matching
     from db import get_db, rows as db_rows
+
     with get_db() as cur:
         cur.execute(
             "SELECT id, name FROM departments WHERE organization_id = %s",
@@ -372,7 +397,7 @@ def index_m365_documents(org_id: str) -> dict:
         sites = []
 
     for site in sites:
-        site_id   = site.get("id", "")
+        site_id = site.get("id", "")
         site_name = site.get("displayName", "SharePoint")
 
         # Priorité : mappage manuel → auto-matching → org-wide
@@ -385,7 +410,9 @@ def index_m365_documents(org_id: str) -> dict:
 
         logger.info(
             "Knowledge SharePoint site='%s' → dept=%s (%s)",
-            site_name, dept_id or "org-wide", source,
+            site_name,
+            dept_id or "org-wide",
+            source,
         )
         try:
             drives = _get_all(
@@ -402,6 +429,7 @@ def index_m365_documents(org_id: str) -> dict:
                 folder_url = f"{GRAPH}/drives/{drive_id}/root:/{INDEX_FOLDER}:/children"
                 try:
                     import httpx as _httpx
+
                     r = _httpx.get(
                         folder_url,
                         headers=headers,
@@ -411,7 +439,9 @@ def index_m365_documents(org_id: str) -> dict:
                     if r.status_code == 404:
                         logger.info(
                             "Knowledge SharePoint site='%s' drive='%s' — dossier '%s' absent, site ignoré",
-                            site_name, drive.get("name"), INDEX_FOLDER,
+                            site_name,
+                            drive.get("name"),
+                            INDEX_FOLDER,
                         )
                         stats["no_public_folder"] = stats.get("no_public_folder", 0) + 1
                         continue
@@ -427,13 +457,20 @@ def index_m365_documents(org_id: str) -> dict:
                 except Exception as folder_exc:
                     logger.error(
                         "Knowledge SharePoint site='%s' folder='%s' error: %s",
-                        site_name, INDEX_FOLDER, folder_exc,
+                        site_name,
+                        INDEX_FOLDER,
+                        folder_exc,
                     )
                     stats["errors"] += 1
                     continue
 
                 _index_drive_items(
-                    headers, drive_id, items, org_id, "sharepoint", stats,
+                    headers,
+                    drive_id,
+                    items,
+                    org_id,
+                    "sharepoint",
+                    stats,
                     title_prefix=f"{site_name}/{INDEX_FOLDER}",
                     department_id=dept_id,
                 )
@@ -443,6 +480,9 @@ def index_m365_documents(org_id: str) -> dict:
 
     logger.info(
         "Knowledge M365 sync org=%s — indexed=%d skipped=%d errors=%d",
-        org_id, stats["indexed"], stats["skipped"], stats["errors"],
+        org_id,
+        stats["indexed"],
+        stats["skipped"],
+        stats["errors"],
     )
     return stats

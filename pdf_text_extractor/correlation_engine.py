@@ -6,6 +6,7 @@ Analyse les identity_accounts pour détecter :
 - Licences orphelines : licence active pour une identité terminée
 Met à jour le statut des comptes et crée des risk_findings.
 """
+
 from __future__ import annotations
 
 import json
@@ -62,7 +63,7 @@ def correlate_identities(org_id: str) -> dict:
         unlinked = db_rows(cur)
 
     orphans_found = 0
-    ghosts_found  = 0
+    ghosts_found = 0
 
     # Règle 1 : compte orphelin (employé terminé mais accès non révoqués)
     for acct in accounts:
@@ -81,8 +82,8 @@ def correlate_identities(org_id: str) -> dict:
                     f"est toujours actif."
                 ),
                 entity_ref={
-                    "email":     acct["canonical_email"] or acct["external_email"],
-                    "name":      acct["workday_name"] or acct["display_name"],
+                    "email": acct["canonical_email"] or acct["external_email"],
+                    "name": acct["workday_name"] or acct["display_name"],
                     "connector": acct["source_connector"],
                 },
                 cost_impact_monthly=_license_cost(org_id, acct["id"]),
@@ -106,7 +107,7 @@ def correlate_identities(org_id: str) -> dict:
                 (org_id, email),
             )
             if cur.fetchone():
-                continue   # existe dans Workday, juste non liée → OK
+                continue  # existe dans Workday, juste non liée → OK
 
         _flag_account(org_id, acct["id"], "ghost")
         _create_risk(
@@ -130,8 +131,8 @@ def correlate_identities(org_id: str) -> dict:
 
     return {
         "correlations": len(accounts) + len(unlinked),
-        "orphans":       orphans_found,
-        "ghosts":        ghosts_found,
+        "orphans": orphans_found,
+        "ghosts": ghosts_found,
         "risks_detected": orphans_found + ghosts_found,
     }
 
@@ -189,7 +190,13 @@ def _create_risk(
               is_acknowledged     = false
             """,
             (
-                org_id, finding_type, severity, title, description,
-                json.dumps(entity_ref), cost_impact_monthly, remediation,
+                org_id,
+                finding_type,
+                severity,
+                title,
+                description,
+                json.dumps(entity_ref),
+                cost_impact_monthly,
+                remediation,
             ),
         )

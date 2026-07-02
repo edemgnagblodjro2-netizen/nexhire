@@ -19,6 +19,7 @@ Permissions Graph requises :
   IdentityRiskyUser.Read.All               — risky users Identity Protection (P4, Entra P2)
   AuditLog.Read.All                        — sign-in logs (P4)
 """
+
 from __future__ import annotations
 
 import json
@@ -35,12 +36,12 @@ log = logging.getLogger(__name__)
 # Types MFA reconnus par Graph (tout sauf 'passwordAuthenticationMethod' = MFA)
 _MFA_METHOD_MAP: dict[str, str] = {
     "microsoftAuthenticatorAuthenticationMethod": "authenticator_app",
-    "softwareOathAuthenticationMethod":           "totp",
-    "phoneAuthenticationMethod":                  "sms_voice",
-    "fido2AuthenticationMethod":                  "fido2",
-    "windowsHelloForBusinessAuthenticationMethod":"windows_hello",
-    "emailAuthenticationMethod":                  "email_otp",
-    "temporaryAccessPassAuthenticationMethod":     "tap",
+    "softwareOathAuthenticationMethod": "totp",
+    "phoneAuthenticationMethod": "sms_voice",
+    "fido2AuthenticationMethod": "fido2",
+    "windowsHelloForBusinessAuthenticationMethod": "windows_hello",
+    "emailAuthenticationMethod": "email_otp",
+    "temporaryAccessPassAuthenticationMethod": "tap",
 }
 
 # Rôles Entra ID considérés comme « accès privilégié »
@@ -64,6 +65,7 @@ _PRIVILEGED_ROLES = {
 # Point d'entrée principal
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 def collect_entra_id(org_id: str) -> dict:
     """
     Collecte les données Entra ID et met à jour security_postures + identities.
@@ -72,19 +74,19 @@ def collect_entra_id(org_id: str) -> dict:
     headers = _auth_headers(org_id)  # lève RuntimeError si non connecté
 
     stats: dict = {
-        "users_processed":      0,
-        "mfa_enrolled":         0,
-        "privileged_users":     0,
-        "guest_users_flagged":  0,
-        "service_principals":   0,
-        "groups_synced":        0,
-        "groups_no_owner":      0,
+        "users_processed": 0,
+        "mfa_enrolled": 0,
+        "privileged_users": 0,
+        "guest_users_flagged": 0,
+        "service_principals": 0,
+        "groups_synced": 0,
+        "groups_no_owner": 0,
         "group_members_synced": 0,
-        "ca_policies_synced":   0,
-        "risky_users_synced":   0,
-        "signin_anomalies":     0,
-        "postures_updated":     0,
-        "errors":               [],
+        "ca_policies_synced": 0,
+        "risky_users_synced": 0,
+        "signin_anomalies": 0,
+        "postures_updated": 0,
+        "errors": [],
     }
 
     # 1. Rôles admins → dict user_id → [role_name, ...]
@@ -106,17 +108,17 @@ def collect_entra_id(org_id: str) -> dict:
 
     # 3. MFA par utilisateur + mise à jour security_postures
     for row in db_accounts:
-        user_id     = row["user_id"]
+        user_id = row["user_id"]
         identity_id = row["identity_id"]
-        upn         = row["upn"] or ""
+        upn = row["upn"] or ""
 
         try:
             mfa_enabled, mfa_method = _fetch_mfa_per_user(headers, user_id)
-            roles   = admin_roles.get(user_id, [])
+            roles = admin_roles.get(user_id, [])
             privileged = bool(roles)
 
             risk_factors = []
-            risk_score   = 0
+            risk_score = 0
 
             if not mfa_enabled:
                 risk_factors.append("no_mfa")
@@ -175,6 +177,7 @@ def collect_entra_id(org_id: str) -> dict:
 # MFA per-user (Graph v1.0 — fonctionne sans Entra P1/P2)
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 def _fetch_mfa_per_user(headers: dict, user_id: str) -> tuple[bool, str]:
     """
     Retourne (mfa_enabled, method_label) pour un utilisateur donné.
@@ -207,6 +210,7 @@ def _fetch_mfa_per_user(headers: dict, user_id: str) -> tuple[bool, str]:
 # Rôles admin Entra
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 def _fetch_admin_roles(headers: dict, stats: dict) -> dict[str, list[str]]:
     """
     Retourne dict { user_id: [role_name, ...] } pour tous les rôles actifs.
@@ -226,7 +230,7 @@ def _fetch_admin_roles(headers: dict, stats: dict) -> dict[str, list[str]]:
 
         for role in roles:
             role_name = role.get("displayName", "")
-            role_id   = role.get("id", "")
+            role_id = role.get("id", "")
             if not role_id:
                 continue
 
@@ -259,6 +263,7 @@ def _fetch_admin_roles(headers: dict, stats: dict) -> dict[str, list[str]]:
 # Principals de service → identités de type service_account
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 def _sync_service_principals(headers: dict, org_id: str, stats: dict) -> None:
     """
     Récupère les principals de service (apps d'entreprise, managed identities)
@@ -266,10 +271,9 @@ def _sync_service_principals(headers: dict, org_id: str, stats: dict) -> None:
     """
     url: str | None = f"{GRAPH}/servicePrincipals"
     params = {
-        "$select": "id,displayName,appId,servicePrincipalType,accountEnabled,"
-                   "createdDateTime,appOwnerOrganizationId",
+        "$select": "id,displayName,appId,servicePrincipalType,accountEnabled," "createdDateTime,appOwnerOrganizationId",
         "$filter": "servicePrincipalType eq 'Application' or servicePrincipalType eq 'ManagedIdentity'",
-        "$top":    "200",
+        "$top": "200",
     }
     principals: list[dict] = []
     try:
@@ -278,7 +282,7 @@ def _sync_service_principals(headers: dict, org_id: str, stats: dict) -> None:
             r.raise_for_status()
             body = r.json()
             principals.extend(body.get("value", []))
-            url    = body.get("@odata.nextLink")
+            url = body.get("@odata.nextLink")
             params = {}  # nextLink contient déjà tous les params
     except httpx.HTTPStatusError as exc:
         log.warning("Service principals inaccessibles (%s).", exc)
@@ -290,13 +294,13 @@ def _sync_service_principals(headers: dict, org_id: str, stats: dict) -> None:
 
     for sp in principals:
         try:
-            sp_id      = sp.get("id", "")
-            name       = sp.get("displayName") or sp.get("appId", sp_id)
-            sp_type    = sp.get("servicePrincipalType", "Application")
-            enabled    = sp.get("accountEnabled", True)
-            created    = sp.get("createdDateTime")
+            sp_id = sp.get("id", "")
+            name = sp.get("displayName") or sp.get("appId", sp_id)
+            sp_type = sp.get("servicePrincipalType", "Application")
+            enabled = sp.get("accountEnabled", True)
+            created = sp.get("createdDateTime")
             # Exclure les apps Microsoft internes (appOwnerOrganizationId = MS tenant)
-            owner_org  = sp.get("appOwnerOrganizationId", "")
+            owner_org = sp.get("appOwnerOrganizationId", "")
             if owner_org == "f8cdef31-a31e-4b4a-93e4-5f571e91255a":
                 # Microsoft tenant — apps internes, pas intéressant
                 continue
@@ -319,8 +323,7 @@ def _sync_service_principals(headers: dict, org_id: str, stats: dict) -> None:
                       updated_at      = now()
                     RETURNING id
                     """,
-                    (org_id, fake_email, name,
-                     "active" if enabled else "inactive"),
+                    (org_id, fake_email, name, "active" if enabled else "inactive"),
                 )
                 row = cur.fetchone()
                 if not row:
@@ -349,13 +352,21 @@ def _sync_service_principals(headers: dict, org_id: str, stats: dict) -> None:
                       synced_at    = now(),
                       data         = EXCLUDED.data
                     """,
-                    (org_id, identity_id, sp_id, fake_email, name,
-                     "active" if enabled else "inactive",
-                     json.dumps({
-                         "sp_type": sp_type,
-                         "appId":   sp.get("appId"),
-                         "created": created,
-                     })),
+                    (
+                        org_id,
+                        identity_id,
+                        sp_id,
+                        fake_email,
+                        name,
+                        "active" if enabled else "inactive",
+                        json.dumps(
+                            {
+                                "sp_type": sp_type,
+                                "appId": sp.get("appId"),
+                                "created": created,
+                            }
+                        ),
+                    ),
                 )
             stats["service_principals"] += 1
 
@@ -368,6 +379,7 @@ def _sync_service_principals(headers: dict, org_id: str, stats: dict) -> None:
 # Groupes de sécurité — avec détection des propriétaires
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 def _sync_security_groups(headers: dict, org_id: str, stats: dict) -> None:
     """
     Récupère tous les groupes de sécurité Entra ID (paginé), détecte ceux sans
@@ -377,7 +389,7 @@ def _sync_security_groups(headers: dict, org_id: str, stats: dict) -> None:
     params = {
         "$filter": "securityEnabled eq true",
         "$select": "id,displayName,createdDateTime,groupTypes",
-        "$top":    "200",
+        "$top": "200",
     }
     groups: list[dict] = []
     try:
@@ -386,7 +398,7 @@ def _sync_security_groups(headers: dict, org_id: str, stats: dict) -> None:
             r.raise_for_status()
             body = r.json()
             groups.extend(body.get("value", []))
-            url    = body.get("@odata.nextLink")
+            url = body.get("@odata.nextLink")
             params = {}
     except Exception as exc:
         log.warning("Groupes de sécurité inaccessibles : %s", exc)
@@ -395,9 +407,9 @@ def _sync_security_groups(headers: dict, org_id: str, stats: dict) -> None:
 
     groups_no_owner = 0
     for group in groups:
-        group_id   = group.get("id", "")
+        group_id = group.get("id", "")
         group_name = group.get("displayName") or group_id
-        created    = group.get("createdDateTime")
+        created = group.get("createdDateTime")
 
         if not group_id:
             continue
@@ -445,12 +457,20 @@ def _sync_security_groups(headers: dict, org_id: str, stats: dict) -> None:
                           synced_at    = now(),
                           data         = EXCLUDED.data
                         """,
-                        (org_id, identity_id, group_id, fake_email, group_name,
-                         json.dumps({
-                             "has_owner": has_owner,
-                             "created":   created,
-                             "group_types": group.get("groupTypes", []),
-                         })),
+                        (
+                            org_id,
+                            identity_id,
+                            group_id,
+                            fake_email,
+                            group_name,
+                            json.dumps(
+                                {
+                                    "has_owner": has_owner,
+                                    "created": created,
+                                    "group_types": group.get("groupTypes", []),
+                                }
+                            ),
+                        ),
                     )
                 members_synced = _sync_group_members(headers, org_id, group_id, group_name)
                 stats["group_members_synced"] += members_synced
@@ -461,8 +481,8 @@ def _sync_security_groups(headers: dict, org_id: str, stats: dict) -> None:
         except Exception as exc:
             log.warning("Erreur groupe %s : %s", group_name, exc)
 
-    stats["groups_synced"]    = len(groups)
-    stats["groups_no_owner"]  = groups_no_owner
+    stats["groups_synced"] = len(groups)
+    stats["groups_no_owner"] = groups_no_owner
     log.info("Groupes Entra : %d total, %d sans propriétaire", len(groups), groups_no_owner)
 
 
@@ -483,10 +503,10 @@ def _sync_group_members(headers: dict, org_id: str, group_id: str, group_name: s
 
     count = 0
     for m in members:
-        member_id   = m.get("id", "")
-        member_upn  = m.get("userPrincipalName") or ""
+        member_id = m.get("id", "")
+        member_upn = m.get("userPrincipalName") or ""
         member_name = m.get("displayName") or member_upn
-        odata_type  = m.get("@odata.type", "")
+        odata_type = m.get("@odata.type", "")
         if "servicePrincipal" in odata_type:
             member_type = "servicePrincipal"
         elif "group" in odata_type.lower():
@@ -508,8 +528,7 @@ def _sync_group_members(headers: dict, org_id: str, group_id: str, group_name: s
                       member_upn  = EXCLUDED.member_upn,
                       synced_at   = now()
                     """,
-                    (org_id, group_id, group_name, member_id,
-                     member_upn, member_name, member_type),
+                    (org_id, group_id, group_name, member_id, member_upn, member_name, member_type),
                 )
             count += 1
         except Exception as exc:
@@ -530,7 +549,7 @@ def _sync_risky_users(headers: dict, org_id: str, stats: dict) -> None:
             params={
                 "$filter": "riskState eq 'atRisk' or riskState eq 'confirmedCompromised'",
                 "$select": "id,userPrincipalName,userDisplayName,riskState,"
-                           "riskLevel,riskDetail,riskLastUpdatedDateTime",
+                "riskLevel,riskDetail,riskLastUpdatedDateTime",
                 "$top": "200",
             },
             timeout=25,
@@ -540,7 +559,9 @@ def _sync_risky_users(headers: dict, org_id: str, stats: dict) -> None:
     except httpx.HTTPStatusError as exc:
         code = exc.response.status_code
         if code in (403, 404):
-            log.info("Risky users inaccessibles (code %d) — IdentityRiskyUser.Read.All ou licence Entra P2 manquante.", code)
+            log.info(
+                "Risky users inaccessibles (code %d) — IdentityRiskyUser.Read.All ou licence Entra P2 manquante.", code
+            )
             return
         log.warning("Risky users erreur HTTP %d.", code)
         return
@@ -550,13 +571,13 @@ def _sync_risky_users(headers: dict, org_id: str, stats: dict) -> None:
         return
 
     for u in users:
-        user_id   = u.get("id", "")
-        upn       = u.get("userPrincipalName", "")
-        name      = u.get("userDisplayName", upn)
-        state     = u.get("riskState", "atRisk")
-        level     = u.get("riskLevel", "medium")
-        detail    = u.get("riskDetail")
-        updated   = u.get("riskLastUpdatedDateTime")
+        user_id = u.get("id", "")
+        upn = u.get("userPrincipalName", "")
+        name = u.get("userDisplayName", upn)
+        state = u.get("riskState", "atRisk")
+        level = u.get("riskLevel", "medium")
+        detail = u.get("riskDetail")
+        updated = u.get("riskLastUpdatedDateTime")
 
         if not user_id:
             continue
@@ -618,6 +639,7 @@ def _sync_signin_anomalies(headers: dict, org_id: str, stats: dict) -> None:
     Requiert AuditLog.Read.All.
     """
     from datetime import timezone, timedelta
+
     since = (datetime.now(timezone.utc) - timedelta(hours=24)).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     try:
@@ -627,7 +649,7 @@ def _sync_signin_anomalies(headers: dict, org_id: str, stats: dict) -> None:
             params={
                 "$filter": f"createdDateTime ge {since} and status/errorCode ne 0",
                 "$select": "userId,userPrincipalName,userDisplayName,status,createdDateTime",
-                "$top":    "500",
+                "$top": "500",
             },
             timeout=30,
         )
@@ -647,14 +669,15 @@ def _sync_signin_anomalies(headers: dict, org_id: str, stats: dict) -> None:
 
     # Agrège les échecs par utilisateur
     from collections import defaultdict
+
     failures: dict[str, dict] = defaultdict(lambda: {"count": 0, "upn": "", "name": ""})
     for s in signins:
         uid = s.get("userId", "")
         if not uid:
             continue
         failures[uid]["count"] += 1
-        failures[uid]["upn"]    = s.get("userPrincipalName", "")
-        failures[uid]["name"]   = s.get("userDisplayName", "")
+        failures[uid]["upn"] = s.get("userPrincipalName", "")
+        failures[uid]["name"] = s.get("userDisplayName", "")
 
     threshold = 10
     for user_id, data in failures.items():
@@ -698,9 +721,7 @@ def _sync_signin_anomalies(headers: dict, org_id: str, stats: dict) -> None:
     log.info("Sign-in anomalies : %d pics détectés (seuil >%d en 24h)", stats["signin_anomalies"], threshold)
 
 
-def _sync_guest_users(
-    headers: dict, org_id: str, admin_roles: dict[str, list[str]], stats: dict
-) -> None:
+def _sync_guest_users(headers: dict, org_id: str, admin_roles: dict[str, list[str]], stats: dict) -> None:
     """
     Récupère les utilisateurs invités (userType=Guest) et marque ceux qui ont
     des rôles admin dans security_postures (privileged_access=true + risk_factor 'guest').
@@ -709,7 +730,7 @@ def _sync_guest_users(
     params = {
         "$filter": "userType eq 'Guest'",
         "$select": "id,displayName,userPrincipalName,mail,accountEnabled",
-        "$top":    "200",
+        "$top": "200",
     }
     guests: list[dict] = []
     try:
@@ -718,7 +739,7 @@ def _sync_guest_users(
             r.raise_for_status()
             body = r.json()
             guests.extend(body.get("value", []))
-            url    = body.get("@odata.nextLink")
+            url = body.get("@odata.nextLink")
             params = {}
     except httpx.HTTPStatusError as exc:
         log.warning("Guests inaccessibles (%s).", exc)
@@ -730,12 +751,12 @@ def _sync_guest_users(
 
     for g in guests:
         user_id = g.get("id", "")
-        roles   = admin_roles.get(user_id, [])
+        roles = admin_roles.get(user_id, [])
         if not roles:
             continue  # guest sans rôle admin — pas de risque immédiat
 
-        upn     = g.get("userPrincipalName") or g.get("mail") or f"guest:{user_id}"
-        name    = g.get("displayName") or upn
+        upn = g.get("userPrincipalName") or g.get("mail") or f"guest:{user_id}"
+        name = g.get("displayName") or upn
         enabled = g.get("accountEnabled", True)
 
         try:
@@ -813,11 +834,11 @@ def _sync_ca_policies(headers: dict, org_id: str, stats: dict) -> None:
         return
 
     for p in policies:
-        policy_id    = p.get("id", "")
+        policy_id = p.get("id", "")
         display_name = p.get("displayName", "")
-        state        = p.get("state", "disabled")
-        conditions   = p.get("conditions") or {}
-        grant        = p.get("grantControls") or {}
+        state = p.get("state", "disabled")
+        conditions = p.get("conditions") or {}
+        grant = p.get("grantControls") or {}
 
         if not policy_id:
             continue
@@ -847,9 +868,16 @@ def _sync_ca_policies(headers: dict, org_id: str, stats: dict) -> None:
                       grant_controls    = EXCLUDED.grant_controls,
                       synced_at         = now()
                     """,
-                    (org_id, policy_id, display_name, state,
-                     targets_all, requires_mfa,
-                     json.dumps(conditions), json.dumps(grant)),
+                    (
+                        org_id,
+                        policy_id,
+                        display_name,
+                        state,
+                        targets_all,
+                        requires_mfa,
+                        json.dumps(conditions),
+                        json.dumps(grant),
+                    ),
                 )
             stats["ca_policies_synced"] += 1
         except Exception as exc:
@@ -877,6 +905,7 @@ def _group_has_owner(headers: dict, group_id: str) -> bool:
 # Persistance security_postures
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 def _upsert_posture(
     org_id: str,
     identity_id: str,
@@ -903,7 +932,13 @@ def _upsert_posture(
               risk_factors      = EXCLUDED.risk_factors,
               updated_at        = now()
             """,
-            (org_id, identity_id, mfa_enabled, mfa_method,
-             privileged, risk_score,
-             json.dumps(risk_factors + ([f"roles:{r}" for r in roles] if roles else []))),
+            (
+                org_id,
+                identity_id,
+                mfa_enabled,
+                mfa_method,
+                privileged,
+                risk_score,
+                json.dumps(risk_factors + ([f"roles:{r}" for r in roles] if roles else [])),
+            ),
         )

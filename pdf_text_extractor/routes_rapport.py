@@ -1,4 +1,5 @@
 """Rapport de maturité IA — page HTML auto-contenue, imprimable en PDF."""
+
 import logging
 import os
 
@@ -12,8 +13,8 @@ from auth import CurrentUser, get_current_user
 from privacy import K_ANON_MIN
 
 logger = logging.getLogger("rapport")
-_GATING_ENFORCED          = os.getenv("RAPPORT_GATING_ENFORCED",  "false").lower() == "true"
-_REGIONAL_AUTH_ENFORCED   = os.getenv("REGIONAL_AUTH_ENFORCED",   "false").lower() == "true"
+_GATING_ENFORCED = os.getenv("RAPPORT_GATING_ENFORCED", "false").lower() == "true"
+_REGIONAL_AUTH_ENFORCED = os.getenv("REGIONAL_AUTH_ENFORCED", "false").lower() == "true"
 
 router = APIRouter(prefix="/rapport", tags=["rapport"])
 
@@ -31,59 +32,70 @@ def _cobrand_right(partner_name: str, logo_url: str) -> str:
         return platform
     partner_el = (
         f'<img class="cobrand-logo" src="{logo_url}" alt="{partner_name}">'
-        if logo_url else
-        f'<strong class="cobrand-partner-name">{partner_name}</strong>'
+        if logo_url
+        else f'<strong class="cobrand-partner-name">{partner_name}</strong>'
     )
     return f'{partner_el}<span class="cobrand-x">|</span>{platform}'
 
 
 _MONTHS_FR = [
-    "", "janvier", "février", "mars", "avril", "mai", "juin",
-    "juillet", "août", "septembre", "octobre", "novembre", "décembre",
+    "",
+    "janvier",
+    "février",
+    "mars",
+    "avril",
+    "mai",
+    "juin",
+    "juillet",
+    "août",
+    "septembre",
+    "octobre",
+    "novembre",
+    "décembre",
 ]
 
 PLAN_ACTIONS: dict[str, dict[str, str]] = {
     "strategie": {
-        "J30":  "Organisez un atelier de 2 h avec votre direction pour cartographier 3 cas d'usage IA à fort potentiel.",
-        "J90":  "Rédigez une feuille de route IA 12 mois : cas d'usage prioritaires, budget, responsable, indicateurs de succès.",
+        "J30": "Organisez un atelier de 2 h avec votre direction pour cartographier 3 cas d'usage IA à fort potentiel.",
+        "J90": "Rédigez une feuille de route IA 12 mois : cas d'usage prioritaires, budget, responsable, indicateurs de succès.",
         "J180": "Réalisez un premier pilote IA sur le cas retenu. Mesurez le ROI et présentez les résultats à votre direction.",
     },
     "personnes": {
-        "J30":  "Identifiez un « champion numérique » dans votre équipe et évaluez les compétences IA actuelles.",
-        "J90":  "Inscrivez votre champion à une formation IA et organisez une sensibilisation pour tous les employés.",
+        "J30": "Identifiez un « champion numérique » dans votre équipe et évaluez les compétences IA actuelles.",
+        "J90": "Inscrivez votre champion à une formation IA et organisez une sensibilisation pour tous les employés.",
         "J180": "Déployez un plan de montée en compétences : objectifs par équipe, budget formation, indicateur d'adoption.",
     },
     "processus": {
-        "J30":  "Documentez vos 3 processus les plus répétitifs — c'est le prérequis de toute automatisation.",
-        "J90":  "Automatisez un premier processus simple (rapports, relances, saisie) avec un outil accessible.",
+        "J30": "Documentez vos 3 processus les plus répétitifs — c'est le prérequis de toute automatisation.",
+        "J90": "Automatisez un premier processus simple (rapports, relances, saisie) avec un outil accessible.",
         "J180": "Mesurez le temps économisé, identifiez le prochain processus et intégrez l'amélioration continue.",
     },
     "technologies": {
-        "J30":  "Faites l'inventaire de vos outils numériques et identifiez les lacunes de centralisation des données.",
-        "J90":  "Testez un outil IA accessible (Copilot, ChatGPT Teams) avec 2–3 utilisateurs pilotes.",
+        "J30": "Faites l'inventaire de vos outils numériques et identifiez les lacunes de centralisation des données.",
+        "J90": "Testez un outil IA accessible (Copilot, ChatGPT Teams) avec 2–3 utilisateurs pilotes.",
         "J180": "Déployez l'outil retenu, formez vos équipes et commencez à centraliser vos données dans un système structuré.",
     },
     "gouvernance": {
-        "J30":  "Prenez connaissance de la Loi 25 et vos obligations concernant la protection des renseignements personnels avec l'IA.",
-        "J90":  "Rédigez une politique d'utilisation responsable de l'IA (1–2 pages) et désignez un responsable IA.",
+        "J30": "Prenez connaissance de la Loi 25 et vos obligations concernant la protection des renseignements personnels avec l'IA.",
+        "J90": "Rédigez une politique d'utilisation responsable de l'IA (1–2 pages) et désignez un responsable IA.",
         "J180": "Mettez en place un audit annuel de vos outils IA et formalisez votre gouvernance en comité dédié.",
     },
 }
 
 DIM_LABELS = {
-    "strategie":    "Stratégie",
-    "personnes":    "Personnes",
-    "processus":    "Processus",
+    "strategie": "Stratégie",
+    "personnes": "Personnes",
+    "processus": "Processus",
     "technologies": "Technologies",
-    "gouvernance":  "Gouvernance",
+    "gouvernance": "Gouvernance",
 }
 
 NIVEAU_LABELS = {"debutant": "Débutant", "intermediaire": "Intermédiaire", "avance": "Avancé"}
 NIVEAU_COLORS = {"debutant": "#ef4444", "intermediaire": "#f59e0b", "avance": "#10b981"}
-NIVEAU_DESC   = {
-    "debutant":      "Votre organisation débute son parcours IA. Des gains rapides sont accessibles dès maintenant.",
+NIVEAU_DESC = {
+    "debutant": "Votre organisation débute son parcours IA. Des gains rapides sont accessibles dès maintenant.",
     "intermediaire": "Vous avez de bonnes bases. Il est temps de structurer et d'accélérer votre démarche.",
-    "avance":        "Votre organisation est en avance sur la maturité IA. Continuez à innover et à partager vos apprentissages.",
+    "avance": "Votre organisation est en avance sur la maturité IA. Continuez à innover et à partager vos apprentissages.",
 }
 
 
@@ -142,6 +154,7 @@ def _build_gate_html(partner_slug: str | None) -> str:
 
 # ── Route ─────────────────────────────────────────────────────────────────────
 
+
 @router.get("/{session_id}", response_class=HTMLResponse)
 @limiter.limit("30/minute")
 def get_rapport(request: Request, session_id: str):
@@ -197,26 +210,26 @@ def get_rapport(request: Request, session_id: str):
         )
         bench = row(cur)
 
-    result        = compute_imai(ans_rows)
+    result = compute_imai(ans_rows)
     recommendations = result["recommendations"]
 
-    score      = float(sess["imai_score"] or 0)
-    niveau     = sess["niveau"] or "debutant"
-    primary    = sess["primary_color"] or "#2563eb"
+    score = float(sess["imai_score"] or 0)
+    niveau = sess["niveau"] or "debutant"
+    primary = sess["primary_color"] or "#2563eb"
     partner_nm = sess["partner_name"] or "AgentHub"
-    logo_url   = sess.get("logo_url") or ""
+    logo_url = sess.get("logo_url") or ""
 
     dim_scores = {
-        "strategie":    float(sess["score_strategie"]    or 0),
-        "personnes":    float(sess["score_personnes"]    or 0),
-        "processus":    float(sess["score_processus"]    or 0),
+        "strategie": float(sess["score_strategie"] or 0),
+        "personnes": float(sess["score_personnes"] or 0),
+        "processus": float(sess["score_processus"] or 0),
         "technologies": float(sess["score_technologies"] or 0),
-        "gouvernance":  float(sess["score_gouvernance"]  or 0),
+        "gouvernance": float(sess["score_gouvernance"] or 0),
     }
 
-    sorted_asc   = sorted(dim_scores.items(), key=lambda x: x[1])
-    weakest_3    = [k for k, _ in sorted_asc[:3]]
-    forces_2     = [k for k, _ in sorted_asc[-2:]]
+    sorted_asc = sorted(dim_scores.items(), key=lambda x: x[1])
+    weakest_3 = [k for k, _ in sorted_asc[:3]]
+    forces_2 = [k for k, _ in sorted_asc[-2:]]
     faiblesses_2 = [k for k, _ in sorted_asc[:2]]
 
     date_str = ""
@@ -228,39 +241,56 @@ def get_rapport(request: Request, session_id: str):
         except Exception:
             date_str = str(sess["completed_at"])[:10]
 
-    return HTMLResponse(content=_build_html(
-        company_name=sess["company_name"],
-        sector=sess["sector"],
-        size_range=sess["size_range"],
-        priority_challenge=sess["priority_challenge"],
-        date_str=date_str,
-        score=score,
-        niveau=niveau,
-        primary=primary,
-        partner_name=partner_nm,
-        logo_url=logo_url,
-        dim_scores=dim_scores,
-        weakest_3=weakest_3,
-        forces_2=forces_2,
-        faiblesses_2=faiblesses_2,
-        recommendations=recommendations,
-        bench=bench,
-    ))
+    return HTMLResponse(
+        content=_build_html(
+            company_name=sess["company_name"],
+            sector=sess["sector"],
+            size_range=sess["size_range"],
+            priority_challenge=sess["priority_challenge"],
+            date_str=date_str,
+            score=score,
+            niveau=niveau,
+            primary=primary,
+            partner_name=partner_nm,
+            logo_url=logo_url,
+            dim_scores=dim_scores,
+            weakest_3=weakest_3,
+            forces_2=forces_2,
+            faiblesses_2=faiblesses_2,
+            recommendations=recommendations,
+            bench=bench,
+        )
+    )
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
+
 def _pct_color(val: float) -> str:
-    if val >= 67: return "#10b981"
-    if val >= 34: return "#f59e0b"
+    if val >= 67:
+        return "#10b981"
+    if val >= 34:
+        return "#f59e0b"
     return "#ef4444"
 
 
 def _build_html(
-    company_name, sector, size_range, priority_challenge,
-    date_str, score, niveau, primary, partner_name, logo_url,
-    dim_scores, weakest_3, forces_2, faiblesses_2,
-    recommendations, bench,
+    company_name,
+    sector,
+    size_range,
+    priority_challenge,
+    date_str,
+    score,
+    niveau,
+    primary,
+    partner_name,
+    logo_url,
+    dim_scores,
+    weakest_3,
+    forces_2,
+    faiblesses_2,
+    recommendations,
+    bench,
 ) -> str:
     nc = NIVEAU_COLORS.get(niveau, "#2563eb")
     nl = NIVEAU_LABELS.get(niveau, niveau)
@@ -276,7 +306,7 @@ def _build_html(
     dim_bars = ""
     for dim in dim_order:
         val = dim_scores.get(dim, 0)
-        c   = _pct_color(val)
+        c = _pct_color(val)
         dim_bars += (
             f'<div class="dim-row">'
             f'<span class="dim-name">{DIM_LABELS[dim]}</span>'
@@ -323,8 +353,8 @@ def _build_html(
         )
 
     plan_html = (
-        _plan_col("J30",  "30 jours",  "#f59e0b")
-        + _plan_col("J90",  "90 jours",  "#3b82f6")
+        _plan_col("J30", "30 jours", "#f59e0b")
+        + _plan_col("J90", "90 jours", "#3b82f6")
         + _plan_col("J180", "180 jours", "#10b981")
     )
 
@@ -341,13 +371,17 @@ def _build_html(
     # ── Benchmark ─────────────────────────────────────────────────────────────
     bench_html = ""
     if bench:
-        avg  = float(bench["imai_avg"] or 0)
-        p25  = float(bench["imai_p25"] or 0)
-        p75  = float(bench["imai_p75"] or 0)
-        n    = bench["sample_size"] or 0
-        pos  = "au-dessus" if score >= avg else "en dessous"
+        avg = float(bench["imai_avg"] or 0)
+        p25 = float(bench["imai_p25"] or 0)
+        p75 = float(bench["imai_p75"] or 0)
+        n = bench["sample_size"] or 0
+        pos = "au-dessus" if score >= avg else "en dessous"
         diff = abs(score - avg)
-        note = '<span class="demo-badge">DÉMO</span>' if bench["is_demo"] else f'<span class="sample">({n} organisations)</span>'
+        note = (
+            '<span class="demo-badge">DÉMO</span>'
+            if bench["is_demo"]
+            else f'<span class="sample">({n} organisations)</span>'
+        )
         bench_html = (
             f'<div class="section">'
             f'<h2 class="section-title">Positionnement sectoriel {note}</h2>'
@@ -611,32 +645,35 @@ _DEMO_REGIONAL = {
     "imai_avg": 58.3,
     "niveaux": {"debutant": 10, "intermediaire": 24, "avance": 8},
     "dimensions": {
-        "strategie": 61.2, "personnes": 54.8, "processus": 58.3,
-        "technologies": 62.7, "gouvernance": 49.1,
+        "strategie": 61.2,
+        "personnes": 54.8,
+        "processus": 58.3,
+        "technologies": 62.7,
+        "gouvernance": 49.1,
     },
     "by_sector": [
-        {"sector": "Industriel manufacturier",                 "count": 9, "imai_avg": 62.1},
-        {"sector": "Professionnels",                           "count": 7, "imai_avg": 66.4},
-        {"sector": "Commercial",                               "count": 6, "imai_avg": 59.5},
-        {"sector": "Construction",                             "count": 6, "imai_avg": 48.7},
+        {"sector": "Industriel manufacturier", "count": 9, "imai_avg": 62.1},
+        {"sector": "Professionnels", "count": 7, "imai_avg": 66.4},
+        {"sector": "Commercial", "count": 6, "imai_avg": 59.5},
+        {"sector": "Construction", "count": 6, "imai_avg": 48.7},
         {"sector": "Alimentation, hôtellerie et restauration", "count": 5, "imai_avg": 47.6},
-        {"sector": "Entreprises de services",                  "count": 5, "imai_avg": 63.8},
+        {"sector": "Entreprises de services", "count": 5, "imai_avg": 63.8},
     ],
     "challenges": [
-        {"label": "Automatiser des tâches répétitives",      "count": 35},
+        {"label": "Automatiser des tâches répétitives", "count": 35},
         {"label": "Analyser mes données pour mieux décider", "count": 28},
-        {"label": "Rester compétitif face à mes concurrents","count": 22},
-        {"label": "Améliorer le service à la clientèle",     "count": 18},
-        {"label": "Réduire mes coûts opérationnels",         "count": 15},
+        {"label": "Rester compétitif face à mes concurrents", "count": 22},
+        {"label": "Améliorer le service à la clientèle", "count": 18},
+        {"label": "Réduire mes coûts opérationnels", "count": 15},
     ],
     "is_demo": True,
 }
 
 _REG_DIM_RECS: dict[str, str] = {
-    "gouvernance":  "Mettre en place un parcours régional « Gouvernance IA responsable » afin d'accompagner les entreprises dont le score est inférieur à 50/100 vers des pratiques d'utilisation responsable de l'IA.",
-    "personnes":    "Développer un programme régional de montée en compétences en IA générative, en mobilisant les partenaires formation de {partner_name} pour couvrir l'ensemble du territoire.",
-    "processus":    "Identifier un premier groupe pilote de PMEs souhaitant automatiser leurs processus afin de documenter les gains obtenus et créer des cas de succès régionaux valorisables auprès des membres.",
-    "strategie":    "Structurer un programme d'accompagnement stratégique pour aider les dirigeants à formaliser leur feuille de route IA sur 12 à 24 mois, avec des indicateurs de succès mesurables.",
+    "gouvernance": "Mettre en place un parcours régional « Gouvernance IA responsable » afin d'accompagner les entreprises dont le score est inférieur à 50/100 vers des pratiques d'utilisation responsable de l'IA.",
+    "personnes": "Développer un programme régional de montée en compétences en IA générative, en mobilisant les partenaires formation de {partner_name} pour couvrir l'ensemble du territoire.",
+    "processus": "Identifier un premier groupe pilote de PMEs souhaitant automatiser leurs processus afin de documenter les gains obtenus et créer des cas de succès régionaux valorisables auprès des membres.",
+    "strategie": "Structurer un programme d'accompagnement stratégique pour aider les dirigeants à formaliser leur feuille de route IA sur 12 à 24 mois, avec des indicateurs de succès mesurables.",
     "technologies": "Négocier un accès groupé aux outils IA pour les membres de {partner_name}, réduisant les barrières à l'entrée et accélérant le déploiement à l'échelle du territoire.",
 }
 
@@ -716,54 +753,62 @@ def get_rapport_regional(
         )
         challenge_rows = rows(cur)
 
-    total    = int(overall["total"] or 0)
+    total = int(overall["total"] or 0)
     use_demo = total < 5
 
     if use_demo:
         d = _DEMO_REGIONAL
     else:
         d = {
-            "total":    total,
+            "total": total,
             "imai_avg": float(overall["imai_avg"] or 0),
             "niveaux": {
-                "debutant":      int(overall["nb_debutant"]      or 0),
+                "debutant": int(overall["nb_debutant"] or 0),
                 "intermediaire": int(overall["nb_intermediaire"] or 0),
-                "avance":        int(overall["nb_avance"]        or 0),
+                "avance": int(overall["nb_avance"] or 0),
             },
             "dimensions": {
-                "strategie":    float(overall["dim_strategie"]    or 0),
-                "personnes":    float(overall["dim_personnes"]    or 0),
-                "processus":    float(overall["dim_processus"]    or 0),
+                "strategie": float(overall["dim_strategie"] or 0),
+                "personnes": float(overall["dim_personnes"] or 0),
+                "processus": float(overall["dim_processus"] or 0),
                 "technologies": float(overall["dim_technologies"] or 0),
-                "gouvernance":  float(overall["dim_gouvernance"]  or 0),
+                "gouvernance": float(overall["dim_gouvernance"] or 0),
             },
-            "by_sector":  [{"sector": s["sector"], "count": int(s["count"]), "imai_avg": float(s["imai_avg"] or 0)} for s in by_sector_rows],
+            "by_sector": [
+                {"sector": s["sector"], "count": int(s["count"]), "imai_avg": float(s["imai_avg"] or 0)}
+                for s in by_sector_rows
+            ],
             "challenges": [{"label": c["label"], "count": int(c["count"])} for c in challenge_rows],
-            "is_demo":    False,
+            "is_demo": False,
         }
 
     from datetime import date as _date
+
     today_str = f"{_date.today().day} {_MONTHS_FR[_date.today().month]} {_date.today().year}"
 
-    return HTMLResponse(content=_build_regional_html(
-        partner_name=partner["name"],
-        primary=partner["primary_color"] or "#2563eb",
-        logo_url=partner.get("logo_url") or "",
-        d=d,
-        use_demo=use_demo,
-        today_str=today_str,
-    ))
+    return HTMLResponse(
+        content=_build_regional_html(
+            partner_name=partner["name"],
+            primary=partner["primary_color"] or "#2563eb",
+            logo_url=partner.get("logo_url") or "",
+            d=d,
+            use_demo=use_demo,
+            today_str=today_str,
+        )
+    )
 
 
-def _build_regional_html(partner_name: str, primary: str, logo_url: str, d: dict, use_demo: bool, today_str: str) -> str:
-    total      = d["total"]
-    imai_avg   = d["imai_avg"]
-    niveaux    = d["niveaux"]
-    dims       = d["dimensions"]
-    sectors    = d["by_sector"]
+def _build_regional_html(
+    partner_name: str, primary: str, logo_url: str, d: dict, use_demo: bool, today_str: str
+) -> str:
+    total = d["total"]
+    imai_avg = d["imai_avg"]
+    niveaux = d["niveaux"]
+    dims = d["dimensions"]
+    sectors = d["by_sector"]
     challenges = d["challenges"]
 
-    roi_h     = round(total * 3.5)
+    roi_h = round(total * 3.5)
     avg_color = _pct_color(imai_avg)
     demo_badge = '<span class="demo-badge">DÉMO</span>' if use_demo else ""
 
@@ -775,9 +820,13 @@ def _build_regional_html(partner_name: str, primary: str, logo_url: str, d: dict
     )
 
     # Répartition niveaux
-    nd = niveaux["debutant"]; ni = niveaux["intermediaire"]; na = niveaux["avance"]
+    nd = niveaux["debutant"]
+    ni = niveaux["intermediaire"]
+    na = niveaux["avance"]
     total_niv = nd + ni + na or 1
-    pct_d = round(nd / total_niv * 100); pct_i = round(ni / total_niv * 100); pct_a = round(na / total_niv * 100)
+    pct_d = round(nd / total_niv * 100)
+    pct_i = round(ni / total_niv * 100)
+    pct_a = round(na / total_niv * 100)
     niv_html = (
         f'<div class="niv-bar">'
         f'<div class="niv-seg" style="width:{pct_d}%;background:#ef4444"></div>'
@@ -795,7 +844,7 @@ def _build_regional_html(partner_name: str, primary: str, logo_url: str, d: dict
     dim_bars = ""
     for dim in list(DIM_LABELS.keys()):
         val = dims.get(dim, 0)
-        c   = _pct_color(val)
+        c = _pct_color(val)
         dim_bars += (
             f'<div class="dim-row">'
             f'<span class="dim-name">{DIM_LABELS[dim]}</span>'
@@ -847,12 +896,12 @@ def _build_regional_html(partner_name: str, primary: str, logo_url: str, d: dict
         )
 
     # Insights IA
-    sorted_dims  = sorted(dims.items(), key=lambda x: x[1])
-    weakest_dim  = sorted_dims[0]
-    best_dim     = sorted_dims[-1]
+    sorted_dims = sorted(dims.items(), key=lambda x: x[1])
+    weakest_dim = sorted_dims[0]
+    best_dim = sorted_dims[-1]
     top_ch_label = challenges[0]["label"] if challenges else "l'automatisation"
-    top_ch_pct   = round(challenges[0]["count"] / total * 100) if challenges and total > 0 else 0
-    best_sector  = max(sectors, key=lambda s: s["imai_avg"]) if sectors else None
+    top_ch_pct = round(challenges[0]["count"] / total * 100) if challenges and total > 0 else 0
+    best_sector = max(sectors, key=lambda s: s["imai_avg"]) if sectors else None
     worst_sector = min(sectors, key=lambda s: s["imai_avg"]) if sectors else None
 
     ins = [
@@ -871,8 +920,7 @@ def _build_regional_html(partner_name: str, primary: str, logo_url: str, d: dict
             "capitaliser dessus pour des cas d'usage à fort ROI immédiat."
         )
     insights_html = "".join(
-        f'<div class="insight-item"><span class="insight-icon">💡</span><p>{txt}</p></div>'
-        for txt in ins
+        f'<div class="insight-item"><span class="insight-icon">💡</span><p>{txt}</p></div>' for txt in ins
     )
 
     # Recommandations Chambre
@@ -889,10 +937,14 @@ def _build_regional_html(partner_name: str, primary: str, logo_url: str, d: dict
             )
 
     demo_notice_html = (
-        '<div class="demo-notice">⚠️ <strong>Données de démonstration</strong> — ces résultats sont simulés '
-        '(moins de 5 participations réelles enregistrées). Les données réelles s\'afficheront automatiquement '
-        'dès le déploiement du programme.</div>'
-    ) if use_demo else ""
+        (
+            '<div class="demo-notice">⚠️ <strong>Données de démonstration</strong> — ces résultats sont simulés '
+            '(moins de 5 participations réelles enregistrées). Les données réelles s\'afficheront automatiquement '
+            'dès le déploiement du programme.</div>'
+        )
+        if use_demo
+        else ""
+    )
 
     css = """
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }

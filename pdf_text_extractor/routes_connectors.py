@@ -11,17 +11,34 @@ from crypto import encrypt
 from db import get_db, rows, row
 from rbac import ROLE_RANK, require_active_subscription, require_min_role
 
-VALID_TYPES = frozenset({
-    # OAuth
-    "microsoft_365", "salesforce", "servicenow", "jira",
-    "zendesk", "hubspot", "google_workspace", "slack", "quickbooks",
-    # API Key / Credentials
-    "sap", "workday", "autotask",
-    "bamboohr", "adp",
-    "asana", "monday", "clickup",
-    "aws", "netsuite", "intune", "crowdstrike",
-    "epicor",
-})
+VALID_TYPES = frozenset(
+    {
+        # OAuth
+        "microsoft_365",
+        "salesforce",
+        "servicenow",
+        "jira",
+        "zendesk",
+        "hubspot",
+        "google_workspace",
+        "slack",
+        "quickbooks",
+        # API Key / Credentials
+        "sap",
+        "workday",
+        "autotask",
+        "bamboohr",
+        "adp",
+        "asana",
+        "monday",
+        "clickup",
+        "aws",
+        "netsuite",
+        "intune",
+        "crowdstrike",
+        "epicor",
+    }
+)
 
 router = APIRouter(prefix="/api/connectors", tags=["connectors"])
 
@@ -30,8 +47,7 @@ def _check_type(connector_type: str) -> None:
     if connector_type not in VALID_TYPES:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail=f"Type de connecteur inconnu : {connector_type}. "
-                   f"Valeurs acceptées : {sorted(VALID_TYPES)}",
+            detail=f"Type de connecteur inconnu : {connector_type}. " f"Valeurs acceptées : {sorted(VALID_TYPES)}",
         )
 
 
@@ -87,9 +103,12 @@ def list_connectors(user: CurrentUser = Depends(require_min_role("user"))):
             ct = r["connector_type"]
             if ct not in result:
                 result[ct] = {
-                    "id": r["id"], "connector_type": ct,
-                    "status": r["status"], "connected_at": r["connected_at"],
-                    "last_error": r["last_error"], "updated_at": r["updated_at"],
+                    "id": r["id"],
+                    "connector_type": ct,
+                    "status": r["status"],
+                    "connected_at": r["connected_at"],
+                    "last_error": r["last_error"],
+                    "updated_at": r["updated_at"],
                     "departments": [],
                 }
             if r["dept_id"]:
@@ -155,6 +174,7 @@ def connector_status(
 
 # ── Maturité / confiance des connecteurs ─────────────────────────────────────
 
+
 @router.get("/trust")
 def connectors_trust(user: CurrentUser = Depends(require_min_role("manager"))):
     """Retourne le niveau de maturité de chaque connecteur (mock vs réel validé)."""
@@ -169,16 +189,18 @@ def connectors_trust(user: CurrentUser = Depends(require_min_role("manager"))):
 
     result = []
     for ctype, trust in CONNECTOR_TRUST.items():
-        result.append({
-            "connector_type": ctype,
-            "trust_level":    trust["trust_level"],
-            "trust_label":    get_trust_label(trust["trust_level"]),
-            "can_sandbox":    trust["can_sandbox"],
-            "validated_at":   trust["validated_at"],
-            "notes":          trust["notes"],
-            "configured":     ctype in configured,
-            "conn_status":    configured.get(ctype),
-        })
+        result.append(
+            {
+                "connector_type": ctype,
+                "trust_level": trust["trust_level"],
+                "trust_label": get_trust_label(trust["trust_level"]),
+                "can_sandbox": trust["can_sandbox"],
+                "validated_at": trust["validated_at"],
+                "notes": trust["notes"],
+                "configured": ctype in configured,
+                "conn_status": configured.get(ctype),
+            }
+        )
 
     result.sort(key=lambda x: (-x["trust_level"], x["connector_type"]))
     return {"connectors": result, "summary": maturity_summary()}
@@ -186,10 +208,12 @@ def connectors_trust(user: CurrentUser = Depends(require_min_role("manager"))):
 
 # ── Santé globale des connecteurs ─────────────────────────────────────────────
 
+
 @router.get("/health")
 def connectors_health(user: CurrentUser = Depends(require_min_role("manager"))):
     """Retourne les connecteurs en erreur ou dont le token OAuth expire dans 7 jours."""
     from datetime import timedelta
+
     soon = (datetime.now(UTC) + timedelta(days=7)).isoformat()
 
     with get_db() as cur:
@@ -213,26 +237,32 @@ def connectors_health(user: CurrentUser = Depends(require_min_role("manager"))):
 
     alerts = []
     for r in raw:
-        is_token_error = r["status"] == "error" and r.get("last_error") and (
-            "Token refresh" in (r["last_error"] or "") or "401" in (r["last_error"] or "")
+        is_token_error = (
+            r["status"] == "error"
+            and r.get("last_error")
+            and ("Token refresh" in (r["last_error"] or "") or "401" in (r["last_error"] or ""))
         )
-        alerts.append({
-            "connector_type":   r["connector_type"],
-            "status":           r["status"],
-            "last_error":       r["last_error"],
-            "token_expires_at": r["token_expires_at"].isoformat() if r["token_expires_at"] else None,
-            "alert_type":       "token_expired" if is_token_error else
-                                "error" if r["status"] == "error" else "expiring_soon",
-        })
+        alerts.append(
+            {
+                "connector_type": r["connector_type"],
+                "status": r["status"],
+                "last_error": r["last_error"],
+                "token_expires_at": r["token_expires_at"].isoformat() if r["token_expires_at"] else None,
+                "alert_type": (
+                    "token_expired" if is_token_error else "error" if r["status"] == "error" else "expiring_soon"
+                ),
+            }
+        )
 
     return {
-        "alerts":         alerts,
-        "error_count":    sum(1 for a in alerts if a["status"] == "error"),
+        "alerts": alerts,
+        "error_count": sum(1 for a in alerts if a["status"] == "error"),
         "expiring_count": sum(1 for a in alerts if a["status"] != "error"),
     }
 
 
 # ── Gestion des accès par département ─────────────────────────────────────────
+
 
 @router.get("/{connector_type}/departments")
 def list_connector_departments(
@@ -329,8 +359,8 @@ def remove_connector_department(
 
 # Champs obligatoires par connecteur (validation minimale)
 _REQUIRED_FIELDS: dict[str, list[str]] = {
-    "sap":      ["api_url", "username", "password"],
-    "workday":  ["tenant_url", "client_id", "client_secret"],
+    "sap": ["api_url", "username", "password"],
+    "workday": ["tenant_url", "client_id", "client_secret"],
     "autotask": ["username", "api_key", "api_integration_code", "zone_url"],
 }
 
@@ -368,6 +398,7 @@ async def save_credentials(
         if not creds.get("tenant") and tenant_url:
             # https://<tenant>.workday.com/... ou https://wd3-impl.workday.com/ccx/service/<tenant>
             import re
+
             m = re.search(r"workday\.com/ccx/service/([^/]+)", tenant_url)
             if m:
                 creds["tenant"] = m.group(1)
@@ -384,6 +415,7 @@ async def save_credentials(
         zone_url = creds.get("zone_url", "")
         if zone_url and not creds.get("zone"):
             import re
+
             m = re.search(r"webservices(\d+)", zone_url)
             creds["zone"] = m.group(1) if m else "4"
 
@@ -419,15 +451,18 @@ async def save_credentials(
                 (user.organization_id, connector_type, encrypted, now, now),
             )
 
-    background.add_task(log_audit, AuditEvent(
-        action="connector_credentials_saved",
-        query=connector_type,
-        organization_id=user.organization_id,
-        user_id=user.id,
-        connector=connector_type,
-        ip_address=client_ip(request),
-        http_status=200,
-    ))
+    background.add_task(
+        log_audit,
+        AuditEvent(
+            action="connector_credentials_saved",
+            query=connector_type,
+            organization_id=user.organization_id,
+            user_id=user.id,
+            connector=connector_type,
+            ip_address=client_ip(request),
+            http_status=200,
+        ),
+    )
     return {"connector_type": connector_type, "status": "connected"}
 
 
@@ -444,6 +479,7 @@ def ping_connector(
         if connector_type == "sap":
             from sap_service import _load_config, _headers
             import httpx
+
             cfg = _load_config(org_id)
             if not cfg:
                 return {"ok": False, "error": "Connecteur non configuré ou credentials manquants."}
@@ -456,18 +492,22 @@ def ping_connector(
                 )
             if resp.status_code in (200, 401, 403):
                 ok = resp.status_code == 200
-                return {"ok": ok, "http_status": resp.status_code,
-                        "error": None if ok else f"HTTP {resp.status_code} — vérifiez vos credentials SAP."}
+                return {
+                    "ok": ok,
+                    "http_status": resp.status_code,
+                    "error": None if ok else f"HTTP {resp.status_code} — vérifiez vos credentials SAP.",
+                }
             resp.raise_for_status()
 
         elif connector_type == "workday":
             from workday_service import _load_config, _get_access_token, _api_base
             import httpx
+
             cfg = _load_config(org_id)
             if not cfg:
                 return {"ok": False, "error": "Connecteur non configuré ou credentials manquants."}
             token = _get_access_token(cfg)
-            base  = _api_base(cfg)
+            base = _api_base(cfg)
             with httpx.Client(timeout=10) as client:
                 resp = client.get(
                     f"{base}/workers",
@@ -475,12 +515,16 @@ def ping_connector(
                     params={"limit": 1},
                 )
             ok = resp.status_code == 200
-            return {"ok": ok, "http_status": resp.status_code,
-                    "error": None if ok else f"HTTP {resp.status_code} — vérifiez vos credentials Workday."}
+            return {
+                "ok": ok,
+                "http_status": resp.status_code,
+                "error": None if ok else f"HTTP {resp.status_code} — vérifiez vos credentials Workday.",
+            }
 
         elif connector_type == "autotask":
             from autotask_service import _load_config, _headers as at_headers, _base_url
             import httpx
+
             cfg = _load_config(org_id)
             if not cfg:
                 return {"ok": False, "error": "Connecteur non configuré ou credentials manquants."}
@@ -492,13 +536,17 @@ def ping_connector(
                     json={"filter": [], "maxRecords": 1},
                 )
             ok = resp.status_code in (200, 204)
-            return {"ok": ok, "http_status": resp.status_code,
-                    "error": None if ok else f"HTTP {resp.status_code} — vérifiez vos credentials Autotask."}
+            return {
+                "ok": ok,
+                "http_status": resp.status_code,
+                "error": None if ok else f"HTTP {resp.status_code} — vérifiez vos credentials Autotask.",
+            }
 
         elif connector_type == "jira":
             from jira_service import _is_api_token, _basic_auth, _get_cloud_info
             from connector_loader import load_creds, bearer
             import httpx
+
             creds, _ = load_creds("jira", org_id)
             if not creds:
                 return {"ok": False, "error": "Connecteur Jira non trouvé en DB."}
@@ -508,15 +556,23 @@ def ping_connector(
                 # Test 1 : authentification
                 r1 = httpx.get(f"{base_url}/rest/api/3/myself", headers=headers, timeout=10)
                 if r1.status_code != 200:
-                    return {"ok": False, "mode": "api_token", "step": "myself",
-                            "http_status": r1.status_code, "error": r1.text[:300]}
+                    return {
+                        "ok": False,
+                        "mode": "api_token",
+                        "step": "myself",
+                        "http_status": r1.status_code,
+                        "error": r1.text[:300],
+                    }
                 account = r1.json().get("displayName")
                 # Test 2 : recherche d'issues
                 r2 = httpx.get(
                     f"{base_url}/rest/api/3/search/jql",
                     headers=headers,
-                    params={"jql": "project is not EMPTY ORDER BY updated DESC", "maxResults": 1,
-                            "fields": "summary,status"},
+                    params={
+                        "jql": "project is not EMPTY ORDER BY updated DESC",
+                        "maxResults": 1,
+                        "fields": "summary,status",
+                    },
                     timeout=12,
                 )
                 search_ok = r2.status_code == 200
@@ -531,6 +587,7 @@ def ping_connector(
                 }
             else:
                 from connector_loader import refresh_oauth
+
                 _TOKEN_URL = "https://auth.atlassian.com/oauth/token"
                 creds = refresh_oauth(creds, _, _TOKEN_URL, "JIRA_CLIENT_ID", "JIRA_CLIENT_SECRET")
                 # Vérifie les scopes réels du token via accessible-resources
@@ -541,18 +598,25 @@ def ping_connector(
                 )
                 resources = r_res.json() if r_res.status_code == 200 else []
                 token_scopes = resources[0].get("scopes", []) if resources else []
-                cloud_id  = resources[0].get("id") if resources else None
+                cloud_id = resources[0].get("id") if resources else None
                 cloud_url = (resources[0].get("url") or "").rstrip("/") if resources else ""
                 if not cloud_url:
-                    return {"ok": False, "mode": "oauth", "token_scopes": token_scopes,
-                            "error": f"accessible-resources HTTP {r_res.status_code}"}
+                    return {
+                        "ok": False,
+                        "mode": "oauth",
+                        "token_scopes": token_scopes,
+                        "error": f"accessible-resources HTTP {r_res.status_code}",
+                    }
                 # Test search via URL directe (évite contrainte audience JWT)
                 search_url = f"{cloud_url}/rest/api/3/search"
                 rs = httpx.get(
                     search_url,
                     headers={**bearer(creds), "Accept": "application/json"},
-                    params={"jql": "project is not EMPTY ORDER BY updated DESC", "maxResults": 1,
-                            "fields": "summary,status"},
+                    params={
+                        "jql": "project is not EMPTY ORDER BY updated DESC",
+                        "maxResults": 1,
+                        "fields": "summary,status",
+                    },
                     timeout=12,
                 )
                 search_ok = rs.status_code == 200
@@ -571,14 +635,19 @@ def ping_connector(
         elif connector_type == "quickbooks":
             from connector_loader import load_creds, refresh_oauth, bearer
             import httpx
+
             _QB_TOKEN_URL = "https://oauth.platform.intuit.com/oauth2/v1/tokens/bearer"
             creds, cid = load_creds("quickbooks", org_id)
             if not creds:
                 return {"ok": False, "error": "Connecteur QuickBooks non trouvé en DB."}
             creds = refresh_oauth(creds, cid, _QB_TOKEN_URL, "QUICKBOOKS_CLIENT_ID", "QUICKBOOKS_CLIENT_SECRET")
             realm_id = creds.get("realm_id", "")
-            sandbox  = creds.get("sandbox", True)
-            base     = "https://sandbox-quickbooks.api.intuit.com/v3/company" if sandbox else "https://quickbooks.api.intuit.com/v3/company"
+            sandbox = creds.get("sandbox", True)
+            base = (
+                "https://sandbox-quickbooks.api.intuit.com/v3/company"
+                if sandbox
+                else "https://quickbooks.api.intuit.com/v3/company"
+            )
             if not realm_id:
                 return {"ok": False, "error": "realm_id manquant — reconnectez QuickBooks via OAuth."}
             # Test : récupère les infos de la company
@@ -609,19 +678,22 @@ def ping_connector(
             from connector_loader import load_creds
             from intune_service import _get_token
             import httpx
+
             creds, _ = load_creds("intune", org_id)
             if not creds:
-                return {"ok": False, "error": "Connecteur Intune non trouvé — sauvegarder tenant_id/client_id/client_secret."}
-            tenant_id     = creds.get("tenant_id", "").strip()
-            client_id     = creds.get("client_id", "").strip()
+                return {
+                    "ok": False,
+                    "error": "Connecteur Intune non trouvé — sauvegarder tenant_id/client_id/client_secret.",
+                }
+            tenant_id = creds.get("tenant_id", "").strip()
+            client_id = creds.get("client_id", "").strip()
             client_secret = creds.get("client_secret", "").strip()
             if not tenant_id or not client_id or not client_secret:
                 return {"ok": False, "error": "Credentials incomplets."}
             token = _get_token(tenant_id, client_id, client_secret)
             headers = {"Authorization": f"Bearer {token}", "Accept": "application/json"}
             # Test 1 : endpoint racine deviceManagement
-            r0 = httpx.get("https://graph.microsoft.com/v1.0/deviceManagement",
-                           headers=headers, timeout=12)
+            r0 = httpx.get("https://graph.microsoft.com/v1.0/deviceManagement", headers=headers, timeout=12)
             # Test 2 : managedDevices
             r = httpx.get(
                 "https://graph.microsoft.com/v1.0/deviceManagement/managedDevices",
@@ -642,85 +714,91 @@ def ping_connector(
 
         elif connector_type == "slack":
             from slack_service import get_workspace_info, list_channels
+
             info = get_workspace_info(org_id)
             if info.get("error"):
                 return {"ok": False, "error": info["error"]}
             channels = list_channels(org_id, limit=5)
             return {
-                "ok":           True,
-                "team":         info.get("team"),
-                "team_id":      info.get("team_id"),
-                "bot_id":       info.get("bot_id"),
-                "url":          info.get("url"),
+                "ok": True,
+                "team": info.get("team"),
+                "team_id": info.get("team_id"),
+                "bot_id": info.get("bot_id"),
+                "url": info.get("url"),
                 "channels_sample": [c["name"] for c in channels[:5]],
-                "channels_total":  len(channels),
+                "channels_total": len(channels),
             }
 
         elif connector_type == "aws":
             from aws_service import get_aws_info
+
             info = get_aws_info(org_id)
             if info.get("error"):
                 return {"ok": False, "error": info["error"]}
             return {
-                "ok":         True,
+                "ok": True,
                 "account_id": info.get("account_id"),
-                "user_arn":   info.get("user_arn"),
-                "region":     info.get("region"),
+                "user_arn": info.get("user_arn"),
+                "region": info.get("region"),
             }
 
         elif connector_type == "hubspot":
             from hubspot_service import get_hubspot_info
+
             info = get_hubspot_info(org_id)
             if info.get("error"):
                 return {"ok": False, "error": info["error"]}
             return {
-                "ok":        True,
+                "ok": True,
                 "portal_id": info.get("portal_id"),
-                "company":   info.get("company"),
-                "timezone":  info.get("timezone"),
-                "currency":  info.get("currency"),
-                "contacts":  info.get("contacts"),
+                "company": info.get("company"),
+                "timezone": info.get("timezone"),
+                "currency": info.get("currency"),
+                "contacts": info.get("contacts"),
                 "companies": info.get("companies"),
-                "deals":     info.get("deals"),
+                "deals": info.get("deals"),
             }
 
         elif connector_type == "servicenow":
             from servicenow_service import get_servicenow_info
+
             info = get_servicenow_info(org_id)
             if info.get("error"):
                 return {"ok": False, "error": info["error"]}
             return {
-                "ok":               True,
-                "instance_url":     info.get("instance_url"),
-                "username":         info.get("username"),
+                "ok": True,
+                "instance_url": info.get("instance_url"),
+                "username": info.get("username"),
                 "incidents_actifs": info.get("incidents_actifs"),
             }
 
         elif connector_type == "salesforce":
             from salesforce_service import get_salesforce_info
+
             info = get_salesforce_info(org_id)
             if info.get("error"):
                 return {"ok": False, "error": info["error"]}
             return {
-                "ok":                  True,
-                "instance_url":        info.get("instance_url"),
-                "api_requests_used":   info.get("api_requests_used"),
-                "api_requests_max":    info.get("api_requests_max"),
-                "api_requests_left":   info.get("api_requests_left"),
+                "ok": True,
+                "instance_url": info.get("instance_url"),
+                "api_requests_used": info.get("api_requests_used"),
+                "api_requests_max": info.get("api_requests_max"),
+                "api_requests_left": info.get("api_requests_left"),
             }
 
         elif connector_type == "google_workspace":
             from google_workspace_service import get_workspace_info as gw_info
+
             info = gw_info(org_id)
             if info.get("error"):
                 return {"ok": False, "error": info["error"]}
             return {
-                "ok":             True,
-                "email":          info.get("email"),
+                "ok": True,
+                "email": info.get("email"),
                 "messages_total": info.get("messages_total"),
-                "threads_total":  info.get("threads_total"),
-                "drive_user":     info.get("drive_user"),
-                "drive_used_gb":  info.get("drive_used_gb"),
+                "threads_total": info.get("threads_total"),
+                "drive_user": info.get("drive_user"),
+                "drive_used_gb": info.get("drive_used_gb"),
                 "drive_limit_gb": info.get("drive_limit_gb"),
             }
 
@@ -776,15 +854,18 @@ def connect(
                 (user.organization_id, connector_type, "connected", creds, now, now),
             )
 
-    background.add_task(log_audit, AuditEvent(
-        action="connector_connect",
-        query=connector_type,
-        organization_id=user.organization_id,
-        user_id=user.id,
-        connector=connector_type,
-        ip_address=client_ip(request),
-        http_status=200,
-    ))
+    background.add_task(
+        log_audit,
+        AuditEvent(
+            action="connector_connect",
+            query=connector_type,
+            organization_id=user.organization_id,
+            user_id=user.id,
+            connector=connector_type,
+            ip_address=client_ip(request),
+            http_status=200,
+        ),
+    )
     return {"connector_type": connector_type, "status": "connected"}
 
 
@@ -812,13 +893,16 @@ def disconnect(
             ("disconnected", _now(), user.organization_id, connector_type),
         )
 
-    background.add_task(log_audit, AuditEvent(
-        action="connector_disconnect",
-        query=connector_type,
-        organization_id=user.organization_id,
-        user_id=user.id,
-        connector=connector_type,
-        ip_address=client_ip(request),
-        http_status=200,
-    ))
+    background.add_task(
+        log_audit,
+        AuditEvent(
+            action="connector_disconnect",
+            query=connector_type,
+            organization_id=user.organization_id,
+            user_id=user.id,
+            connector=connector_type,
+            ip_address=client_ip(request),
+            http_status=200,
+        ),
+    )
     return {"connector_type": connector_type, "status": "disconnected"}

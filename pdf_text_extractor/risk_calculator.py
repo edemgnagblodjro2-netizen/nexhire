@@ -3,6 +3,7 @@ Calculateur de risques organisationnels.
 Applique des règles métier sur les tables existantes (budget_entries, contracts,
 licenses, it_applications) pour générer des risk_findings.
 """
+
 from __future__ import annotations
 
 from db import get_db, rows as db_rows
@@ -11,13 +12,13 @@ from db import get_db, rows as db_rows
 def calculate_all_risks(org_id: str) -> dict:
     """Lance tous les calculateurs et retourne le nombre de risques détectés."""
     return {
-        "budget_overspend":  _risk_budget_overspend(org_id),
-        "contract_expiry":   _risk_contract_expiry(org_id),
-        "unused_licenses":   _risk_unused_licenses(org_id),
-        "duplicate_tools":   _risk_duplicate_tools(org_id),
-        "auto_renew_risk":   _risk_auto_renew(org_id),
-        "commitment_gap":    _risk_commitment_gap(org_id),
-        "shadow_it":         _risk_shadow_it(org_id),
+        "budget_overspend": _risk_budget_overspend(org_id),
+        "contract_expiry": _risk_contract_expiry(org_id),
+        "unused_licenses": _risk_unused_licenses(org_id),
+        "duplicate_tools": _risk_duplicate_tools(org_id),
+        "auto_renew_risk": _risk_auto_renew(org_id),
+        "commitment_gap": _risk_commitment_gap(org_id),
+        "shadow_it": _risk_shadow_it(org_id),
     }
 
 
@@ -46,6 +47,7 @@ def get_risk_summary(org_id: str) -> dict:
 
 # ── Règles métier ─────────────────────────────────────────────────────────────
 
+
 def _risk_budget_overspend(org_id: str) -> int:
     """Dépassement budget : dépenses réelles > 95 % du budget alloué."""
     count = 0
@@ -66,15 +68,15 @@ def _risk_budget_overspend(org_id: str) -> int:
         depts = db_rows(cur)
 
     for d in depts:
-        alloc  = float(d["total_alloc"])
+        alloc = float(d["total_alloc"])
         actual = float(d["total_actual"])
-        pct    = actual / alloc * 100 if alloc > 0 else 0
+        pct = actual / alloc * 100 if alloc > 0 else 0
         if pct < 95:
             continue
 
-        overage  = actual - alloc
+        overage = actual - alloc
         severity = "critical" if pct >= 105 else "high"
-        sign     = "Dépassement" if overage > 0 else "Limite critique"
+        sign = "Dépassement" if overage > 0 else "Limite critique"
         _upsert_risk(
             org_id=org_id,
             dept_id=str(d["dept_id"]),
@@ -114,10 +116,10 @@ def _risk_contract_expiry(org_id: str) -> int:
         contracts = db_rows(cur)
 
     for c in contracts:
-        delta    = c["days_left"]
-        days     = delta.days if hasattr(delta, "days") else int(delta or 0)
+        delta = c["days_left"]
+        days = delta.days if hasattr(delta, "days") else int(delta or 0)
         severity = "critical" if days <= 7 else "high" if days <= 14 else "medium"
-        val      = float(c["annual_value"] or 0)
+        val = float(c["annual_value"] or 0)
         _upsert_risk(
             org_id=org_id,
             dept_id=str(c["department_id"]) if c["department_id"] else None,
@@ -159,18 +161,18 @@ def _risk_unused_licenses(org_id: str) -> int:
         licenses = db_rows(cur)
 
     for lic in licenses:
-        qty     = int(lic["quantity"] or 0)
+        qty = int(lic["quantity"] or 0)
         assigned = int(lic["assigned_count"] or 0)
-        buffer  = int(lic["buffer_target"] or 0)
-        unit    = float(lic["cost_per_unit"] or 0)
-        cycle   = lic.get("billing_cycle", "annual")
+        buffer = int(lic["buffer_target"] or 0)
+        unit = float(lic["cost_per_unit"] or 0)
+        cycle = lic.get("billing_cycle", "annual")
         monthly = unit if cycle == "monthly" else unit / 12 if cycle == "annual" else 0
 
         # ── Catégorie 1 : surplus au-delà du buffer déclaré ──────────────────
         # Stock non assigné = qty - assigned. Portion intentionnelle = buffer.
         # Surplus = stock non assigné - buffer. Si > 0 : à réduire au renouvellement.
         unassigned = qty - assigned
-        surplus    = unassigned - buffer
+        surplus = unassigned - buffer
         if surplus > 0 and monthly > 0:
             waste_monthly = surplus * monthly
             severity = "high" if waste_monthly > 200 else "medium"
@@ -240,7 +242,7 @@ def _risk_duplicate_tools(org_id: str) -> int:
         duplicates = db_rows(cur)
 
     for dup in duplicates:
-        monthly  = float(dup["total_cost"] or 0)
+        monthly = float(dup["total_cost"] or 0)
         tool_list = (dup["tools"] or [])[:5]
         _upsert_risk(
             org_id=org_id,
@@ -291,10 +293,10 @@ def _risk_auto_renew(org_id: str) -> int:
         contracts = db_rows(cur)
 
     for c in contracts:
-        delta    = c["days_to_renewal"]
-        days     = delta.days if hasattr(delta, "days") else int(delta or 0)
-        notice   = int(c["cancellation_notice_days"] or 60)
-        val      = float(c["annual_value"] or 0)
+        delta = c["days_to_renewal"]
+        days = delta.days if hasattr(delta, "days") else int(delta or 0)
+        notice = int(c["cancellation_notice_days"] or 60)
+        val = float(c["annual_value"] or 0)
         deadline = str(c["deadline_date"])[:10] if c["deadline_date"] else "inconnue"
         _upsert_risk(
             org_id=org_id,
@@ -345,10 +347,10 @@ def _risk_commitment_gap(org_id: str) -> int:
         contracts = db_rows(cur)
 
     for c in contracts:
-        min_qty  = int(c["min_commitment_qty"])
-        actual   = int(c["actual_seats_used"])
-        gap      = min_qty - actual
-        val      = float(c["annual_value"] or 0)
+        min_qty = int(c["min_commitment_qty"])
+        actual = int(c["actual_seats_used"])
+        gap = min_qty - actual
+        val = float(c["annual_value"] or 0)
         unit_cost = val / min_qty / 12 if min_qty > 0 else 0
         waste_monthly = gap * unit_cost
         severity = "high" if waste_monthly > 300 else "medium"
@@ -421,7 +423,7 @@ def _risk_shadow_it(org_id: str) -> int:
         shadow_vendors = db_rows(cur)
 
     for sv in shadow_vendors:
-        total  = float(sv["total_amount"] or 0)
+        total = float(sv["total_amount"] or 0)
         monthly_est = total / 12
         severity = "high" if total > 1000 else "medium"
         _upsert_risk(
@@ -447,6 +449,7 @@ def _risk_shadow_it(org_id: str) -> int:
 
 
 # ── Persistance ───────────────────────────────────────────────────────────────
+
 
 def _upsert_risk(
     org_id: str,
@@ -474,7 +477,13 @@ def _upsert_risk(
               resolved_at         = NULL
             """,
             (
-                org_id, dept_id or None, finding_type, severity,
-                title, description, cost_impact_monthly, remediation,
+                org_id,
+                dept_id or None,
+                finding_type,
+                severity,
+                title,
+                description,
+                cost_impact_monthly,
+                remediation,
             ),
         )

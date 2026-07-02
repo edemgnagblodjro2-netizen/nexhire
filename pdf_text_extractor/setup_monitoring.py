@@ -10,6 +10,7 @@ Obtenir la clé :
     2. Section "API Settings" → "Main API Key" → Show/Create
     3. Format : u123456-xxxxxxxxxxxxxxxxxxxxxxxx
 """
+
 import sys
 import json
 import urllib.request
@@ -19,9 +20,9 @@ MONITORS = [
     {
         "friendly_name": "MyPortal — Health Check (API)",
         "url": "https://myportal.nexhire.ca/api/health",
-        "type": 1,           # HTTP(s)
-        "interval": 300,     # 5 minutes
-        "keyword_type": 2,   # keyword must exist
+        "type": 1,  # HTTP(s)
+        "interval": 300,  # 5 minutes
+        "keyword_type": 2,  # keyword must exist
         "keyword_value": '"status":"ok"',
     },
     {
@@ -38,8 +39,8 @@ MONITORS = [
     },
 ]
 
-UPTIMEROBOT_API_V2  = "https://api.uptimerobot.com/v2"
-UPTIMEROBOT_API_V3  = "https://api.uptimerobot.com/v3"
+UPTIMEROBOT_API_V2 = "https://api.uptimerobot.com/v2"
+UPTIMEROBOT_API_V3 = "https://api.uptimerobot.com/v3"
 
 
 def _post_v2(endpoint: str, api_key: str, data: dict) -> dict:
@@ -96,12 +97,12 @@ def get_alert_contact(api_key: str) -> str | None:
 def create_monitor(api_key: str, monitor: dict, alert_contact_id: str | None) -> dict:
     payload = {
         "friendly_name": monitor["friendly_name"],
-        "url":           monitor["url"],
-        "type":          monitor["type"],
-        "interval":      monitor.get("interval", 300),
+        "url": monitor["url"],
+        "type": monitor["type"],
+        "interval": monitor.get("interval", 300),
     }
     if "keyword_type" in monitor:
-        payload["keyword_type"]  = monitor["keyword_type"]
+        payload["keyword_type"] = monitor["keyword_type"]
         payload["keyword_value"] = monitor["keyword_value"]
     if alert_contact_id:
         payload["alert_contacts"] = alert_contact_id

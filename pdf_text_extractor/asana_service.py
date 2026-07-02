@@ -2,6 +2,7 @@
 
 Auth : Personal Access Token (PAT). Aucune variable d'env requise.
 """
+
 from __future__ import annotations
 
 import httpx
@@ -10,9 +11,9 @@ from connector_loader import load_creds
 _BASE = "https://app.asana.com/api/1.0"
 
 
-def search_asana(query: str, org_id: str,
-                 status: str = "all", project: str | None = None,
-                 limit: int = 10) -> list[dict]:
+def search_asana(
+    query: str, org_id: str, status: str = "all", project: str | None = None, limit: int = 10
+) -> list[dict]:
     creds, _ = load_creds("asana", org_id)
     if not creds:
         return [{"error": "Asana non connecté"}]
@@ -36,7 +37,7 @@ def search_asana(query: str, org_id: str,
         # Recherche de tâches
         params: dict = {
             "workspace": workspace_gid,
-            "text":      query,
+            "text": query,
             "opt_fields": "name,completed,due_on,assignee.name,projects.name,notes",
             "limit": limit,
         }
@@ -45,20 +46,19 @@ def search_asana(query: str, org_id: str,
         elif status == "completed":
             params["completed"] = "true"
 
-        r = httpx.get(f"{_BASE}/tasks/search", headers=headers,
-                      params=params, timeout=12)
+        r = httpx.get(f"{_BASE}/tasks/search", headers=headers, params=params, timeout=12)
         r.raise_for_status()
         tasks = r.json().get("data", [])
 
         return [
             {
-                "id":       t.get("gid"),
-                "titre":    t.get("name"),
-                "statut":   "Complétée" if t.get("completed") else "Ouverte",
+                "id": t.get("gid"),
+                "titre": t.get("name"),
+                "statut": "Complétée" if t.get("completed") else "Ouverte",
                 "échéance": t.get("due_on"),
-                "assigné":  (t.get("assignee") or {}).get("name"),
-                "projet":   ((t.get("projects") or [{}])[0]).get("name"),
-                "source":   "asana",
+                "assigné": (t.get("assignee") or {}).get("name"),
+                "projet": ((t.get("projects") or [{}])[0]).get("name"),
+                "source": "asana",
             }
             for t in tasks
         ]

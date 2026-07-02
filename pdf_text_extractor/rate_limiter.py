@@ -2,6 +2,7 @@
 
 Importée dans main.py (enregistrement) et dans les routes (décorateurs).
 """
+
 from slowapi import Limiter
 from starlette.requests import Request
 

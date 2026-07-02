@@ -61,13 +61,7 @@ class DocumentStore:
 
     def get_document(self, document_id: str) -> dict[str, Any] | None:
         if self.supabase is not None:
-            response = (
-                self.supabase.table("documents")
-                .select("*")
-                .eq("id", document_id)
-                .single()
-                .execute()
-            )
+            response = self.supabase.table("documents").select("*").eq("id", document_id).single().execute()
             return response.data
 
         return self.documents.get(document_id)
@@ -90,12 +84,7 @@ class DocumentStore:
 
     def update_document_summary(self, document_id: str, summary: str) -> None:
         if self.supabase is not None:
-            (
-                self.supabase.table("documents")
-                .update({"summary": summary})
-                .eq("id", document_id)
-                .execute()
-            )
+            (self.supabase.table("documents").update({"summary": summary}).eq("id", document_id).execute())
             return
 
         if document_id in self.documents:

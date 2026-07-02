@@ -24,7 +24,7 @@ from supabase_client import service_client
 logger = logging.getLogger(__name__)
 
 _PLAN_LIMITS: dict[str, int] = {
-    "trialing": 100,   # Supabase émet "trialing", pas "trial"
+    "trialing": 100,  # Supabase émet "trialing", pas "trial"
     "active": 1_000,
     "enterprise": -1,  # illimité
 }

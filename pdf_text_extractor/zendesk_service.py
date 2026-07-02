@@ -4,6 +4,7 @@ Les credentials sont saisis par l'admin dans le formulaire connecteur
 et stockés chiffrés en base. Aucune variable d'env, aucune app OAuth à créer.
 Auth : email/token (format Basic — email:token encodé en base64).
 """
+
 from __future__ import annotations
 
 import base64
@@ -17,15 +18,13 @@ def _auth_header(email: str, api_token: str) -> dict:
     return {"Authorization": f"Basic {token}"}
 
 
-def search_zendesk(
-    query: str, org_id: str, status: str = "all", priority: str = "all", limit: int = 5
-) -> list[dict]:
+def search_zendesk(query: str, org_id: str, status: str = "all", priority: str = "all", limit: int = 5) -> list[dict]:
     creds, _ = load_creds("zendesk", org_id)
     if not creds:
         return [{"error": "Zendesk non connecté"}]
 
     subdomain = creds.get("subdomain", "").strip()
-    email     = creds.get("email", "").strip()
+    email = creds.get("email", "").strip()
     api_token = creds.get("api_token", "").strip()
 
     if not subdomain or not email or not api_token:
@@ -41,20 +40,19 @@ def search_zendesk(
         r = httpx.get(
             f"https://{subdomain}.zendesk.com/api/v2/search.json",
             headers=_auth_header(email, api_token),
-            params={"query": search_q, "per_page": limit,
-                    "sort_by": "updated_at", "sort_order": "desc"},
+            params={"query": search_q, "per_page": limit, "sort_by": "updated_at", "sort_order": "desc"},
             timeout=12,
         )
         r.raise_for_status()
         return [
             {
-                "id":       f"ZD-{t.get('id')}",
-                "sujet":    t.get("subject"),
-                "statut":   t.get("status"),
+                "id": f"ZD-{t.get('id')}",
+                "sujet": t.get("subject"),
+                "statut": t.get("status"),
                 "priorité": t.get("priority"),
-                "assigné":  (t.get("assignee") or {}).get("name"),
-                "créé":     t.get("created_at"),
-                "source":   "zendesk",
+                "assigné": (t.get("assignee") or {}).get("name"),
+                "créé": t.get("created_at"),
+                "source": "zendesk",
             }
             for t in r.json().get("results", [])
         ]

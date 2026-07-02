@@ -13,36 +13,38 @@ from rbac import require_min_role
 router = APIRouter(prefix="/api/external-contractors", tags=["external"])
 
 CONTRACTOR_TYPES = Literal["consultant", "vendor", "provider", "contractor"]
-SCOPE_TYPES      = Literal["department", "organization"]
+SCOPE_TYPES = Literal["department", "organization"]
 
 TYPE_LABELS = {
-    "consultant":  "Consultant",
-    "vendor":      "Fournisseur",
-    "provider":    "Prestataire de services",
-    "contractor":  "Sous-traitant",
+    "consultant": "Consultant",
+    "vendor": "Fournisseur",
+    "provider": "Prestataire de services",
+    "contractor": "Sous-traitant",
 }
 
 
 class ContractorPayload(BaseModel):
-    full_name:       str    = Field(..., min_length=1, max_length=120)
-    email:           str | None = None
-    company_name:    str | None = None
-    contractor_type: str    = Field("consultant")
-    job_title:       str | None = None
-    mission:         str | None = None
-    contract_start:  date
-    contract_end:    date
-    contract_value:  float  = Field(0, ge=0)
-    currency:        str    = "CAD"
-    scope:           str    = Field("department")
-    department_ids:  list[str] = Field(default_factory=list)
+    full_name: str = Field(..., min_length=1, max_length=120)
+    email: str | None = None
+    company_name: str | None = None
+    contractor_type: str = Field("consultant")
+    job_title: str | None = None
+    mission: str | None = None
+    contract_start: date
+    contract_end: date
+    contract_value: float = Field(0, ge=0)
+    currency: str = "CAD"
+    scope: str = Field("department")
+    department_ids: list[str] = Field(default_factory=list)
 
 
 def _validate_payload(payload: ContractorPayload) -> None:
     if payload.contract_end <= payload.contract_start:
         raise HTTPException(status_code=400, detail="La date de fin doit être postérieure à la date de début.")
     if payload.scope == "department" and not payload.department_ids:
-        raise HTTPException(status_code=400, detail="Sélectionnez au moins un département ou choisissez 'Toute l’organisation'.")
+        raise HTTPException(
+            status_code=400, detail="Sélectionnez au moins un département ou choisissez 'Toute l’organisation'."
+        )
 
 
 def _computed_status(end_date: date | str | None) -> str:
@@ -65,9 +67,9 @@ def _enrich(c: dict) -> dict:
         end = date.fromisoformat(end)
     elif hasattr(end, 'isoformat'):
         pass  # already a date object
-    c["computed_status"]  = _computed_status(end)
-    c["days_remaining"]   = (end - date.today()).days if end else None
-    c["type_label"]       = TYPE_LABELS.get(c.get("contractor_type", ""), "Externe")
+    c["computed_status"] = _computed_status(end)
+    c["days_remaining"] = (end - date.today()).days if end else None
+    c["type_label"] = TYPE_LABELS.get(c.get("contractor_type", ""), "Externe")
     return c
 
 
@@ -103,13 +105,10 @@ def list_contractors(
 
         # Filter by department if requested
         if dept_id:
-            items = [
-                c for c in items
-                if c.get("scope") == "organization" or dept_id in (c.get("department_ids") or [])
-            ]
+            items = [c for c in items if c.get("scope") == "organization" or dept_id in (c.get("department_ids") or [])]
 
         return [_enrich(c) for c in items]
-    except Exception as exc:
+    except Exception:
         raise HTTPException(status_code=500, detail="Erreur serveur interne.")
 
 
@@ -130,10 +129,21 @@ def create_contractor(
                     currency, scope, created_by)
                    VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
                    RETURNING *""",
-                (org_id, payload.full_name, payload.email, payload.company_name,
-                 payload.contractor_type, payload.job_title, payload.mission,
-                 payload.contract_start, payload.contract_end, payload.contract_value,
-                 payload.currency, payload.scope, user.id),
+                (
+                    org_id,
+                    payload.full_name,
+                    payload.email,
+                    payload.company_name,
+                    payload.contractor_type,
+                    payload.job_title,
+                    payload.mission,
+                    payload.contract_start,
+                    payload.contract_end,
+                    payload.contract_value,
+                    payload.currency,
+                    payload.scope,
+                    user.id,
+                ),
             )
             created = row(cur)
 
@@ -149,7 +159,7 @@ def create_contractor(
         return _enrich({**created, "department_ids": payload.department_ids, "department_names": []})
     except HTTPException:
         raise
-    except Exception as exc:
+    except Exception:
         raise HTTPException(status_code=500, detail="Erreur serveur interne.")
 
 
@@ -178,10 +188,21 @@ def update_contractor(
                    job_title=%s, mission=%s, contract_start=%s, contract_end=%s,
                    contract_value=%s, currency=%s, scope=%s
                    WHERE id=%s AND organization_id=%s RETURNING *""",
-                (payload.full_name, payload.email, payload.company_name,
-                 payload.contractor_type, payload.job_title, payload.mission,
-                 payload.contract_start, payload.contract_end, payload.contract_value,
-                 payload.currency, payload.scope, contractor_id, org_id),
+                (
+                    payload.full_name,
+                    payload.email,
+                    payload.company_name,
+                    payload.contractor_type,
+                    payload.job_title,
+                    payload.mission,
+                    payload.contract_start,
+                    payload.contract_end,
+                    payload.contract_value,
+                    payload.currency,
+                    payload.scope,
+                    contractor_id,
+                    org_id,
+                ),
             )
             updated = row(cur)
 
@@ -203,7 +224,7 @@ def update_contractor(
         return _enrich({**updated, "department_ids": payload.department_ids})
     except HTTPException:
         raise
-    except Exception as exc:
+    except Exception:
         raise HTTPException(status_code=500, detail="Erreur serveur interne.")
 
 

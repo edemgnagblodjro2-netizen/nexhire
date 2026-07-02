@@ -1,4 +1,5 @@
 """Paramètres utilisateur — profil, mot de passe, SSO + formulaire contact public."""
+
 import os
 from html import escape
 
@@ -10,39 +11,45 @@ from rbac import require_min_role
 from db import get_db, rows, row
 import email_service
 
-router        = APIRouter(prefix="/api/settings", tags=["settings"])
+router = APIRouter(prefix="/api/settings", tags=["settings"])
 public_router = APIRouter(tags=["public"])
 
 
 # ── Models ─────────────────────────────────────────────────────────────────
 
+
 class ProfileUpdate(BaseModel):
     full_name: str = Field(..., min_length=1, max_length=255)
 
+
 class OrgUpdate(BaseModel):
-    org_name:    str | None = Field(None, min_length=1, max_length=255)
-    logo_url:    str | None = Field(None, max_length=2048)
+    org_name: str | None = Field(None, min_length=1, max_length=255)
+    logo_url: str | None = Field(None, max_length=2048)
     brand_color: str | None = Field(None, pattern=r"^#[0-9a-fA-F]{6}$")
-    org_type:    str | None = Field(None, pattern=r"^(entreprise|entrepreneur|hopital|municipalite|universite)$")
-    currency:    str | None = Field(None, pattern=r"^[A-Z]{3}$")
+    org_type: str | None = Field(None, pattern=r"^(entreprise|entrepreneur|hopital|municipalite|universite)$")
+    currency: str | None = Field(None, pattern=r"^[A-Z]{3}$")
+
 
 class PasswordChange(BaseModel):
     current_password: str = Field(..., min_length=1)
-    new_password:     str = Field(..., min_length=8)
+    new_password: str = Field(..., min_length=8)
+
 
 class ContactRequest(BaseModel):
-    name:    str = Field(..., min_length=1, max_length=200)
+    name: str = Field(..., min_length=1, max_length=200)
     company: str = Field(..., min_length=1, max_length=200)
-    email:   EmailStr
+    email: EmailStr
     message: str = Field("", max_length=2000)
 
+
 class SupportTicket(BaseModel):
-    category:    str = Field("other", max_length=50)
-    subject:     str = Field(..., min_length=1, max_length=300)
+    category: str = Field("other", max_length=50)
+    subject: str = Field(..., min_length=1, max_length=300)
     description: str = Field("", max_length=5000)
 
 
 # ── Contact public (no auth) ───────────────────────────────────────────────
+
 
 @public_router.post("/api/contact")
 def contact_form(payload: ContactRequest):
@@ -66,16 +73,17 @@ def contact_form(payload: ContactRequest):
 # ── Support ticket (authenticated) ────────────────────────────────────────
 
 _CAT_LABELS = {
-    "bug":       "Problème technique ou bug",
-    "billing":   "Facturation et abonnement",
-    "access":    "Accès, permissions ou authentification",
+    "bug": "Problème technique ou bug",
+    "billing": "Facturation et abonnement",
+    "access": "Accès, permissions ou authentification",
     "integration": "Intégrations et connecteurs",
     "migration": "Migration et import de données",
-    "feature":   "Demande de fonctionnalité",
-    "training":  "Formation et prise en main",
-    "security":  "Sécurité et conformité",
-    "other":     "Autre",
+    "feature": "Demande de fonctionnalité",
+    "training": "Formation et prise en main",
+    "security": "Sécurité et conformité",
+    "other": "Autre",
 }
+
 
 @router.post("/support")
 def submit_support_ticket(
@@ -84,11 +92,12 @@ def submit_support_ticket(
 ):
     """Envoie un ticket de support à support@nexhire.ca via Resend."""
     cat_label = _CAT_LABELS.get(payload.category, payload.category)
-    sender    = user.email or "—"
-    org_name  = "—"
+    sender = user.email or "—"
+    org_name = "—"
     if user.organization_id:
         try:
             from db import get_db as _gdb, row as _row
+
             with _gdb() as _cur:
                 _cur.execute("SELECT name FROM organizations WHERE id = %s LIMIT 1", (str(user.organization_id),))
                 _org = _row(_cur)
@@ -133,11 +142,15 @@ def submit_support_ticket(
         html,
     )
     if not ok:
-        raise HTTPException(status_code=503, detail="Impossible d'envoyer le message. Réessayez ou écrivez directement à support@nexhire.ca.")
+        raise HTTPException(
+            status_code=503,
+            detail="Impossible d'envoyer le message. Réessayez ou écrivez directement à support@nexhire.ca.",
+        )
     return {"status": "ok"}
 
 
 # ── Profile ────────────────────────────────────────────────────────────────
+
 
 @router.get("/profile")
 def get_profile(user: CurrentUser = Depends(require_min_role("user"))):
@@ -176,19 +189,19 @@ def get_profile(user: CurrentUser = Depends(require_min_role("user"))):
         pass
 
     return {
-        "id":                  user.id,
-        "email":               u.get("email") or user.email,
-        "full_name":           u.get("full_name") or "",
-        "role":                u.get("role") or user.role,
-        "member_since":        str(u.get("created_at") or "")[:10],
-        "organization_id":     user.organization_id,
-        "organization_name":   org.get("name") or "",
-        "organization_slug":   org.get("slug") or "",
-        "org_type":            org.get("org_type") or "entreprise",
-        "sso_enabled":         sso_enabled,
+        "id": user.id,
+        "email": u.get("email") or user.email,
+        "full_name": u.get("full_name") or "",
+        "role": u.get("role") or user.role,
+        "member_since": str(u.get("created_at") or "")[:10],
+        "organization_id": user.organization_id,
+        "organization_name": org.get("name") or "",
+        "organization_slug": org.get("slug") or "",
+        "org_type": org.get("org_type") or "entreprise",
+        "sso_enabled": sso_enabled,
         "subscription_status": user.subscription_status,
-        "logo_url":            org.get("logo_url") or "",
-        "brand_color":         org.get("brand_color") or "#818CF8",
+        "logo_url": org.get("logo_url") or "",
+        "brand_color": org.get("brand_color") or "#818CF8",
         "monthly_report_enabled": org.get("monthly_report_enabled", True),
     }
 
@@ -209,6 +222,7 @@ def update_profile(
 
 # ── Org branding (admin/owner only) ───────────────────────────────────────
 
+
 @router.patch("/org")
 def update_org(
     payload: OrgUpdate,
@@ -217,15 +231,20 @@ def update_org(
     """Met à jour le nom, logo et couleur de marque de l'organisation."""
     fields, values = [], []
     if payload.org_name is not None:
-        fields.append("name = %s"); values.append(payload.org_name.strip())
+        fields.append("name = %s")
+        values.append(payload.org_name.strip())
     if payload.logo_url is not None:
-        fields.append("logo_url = %s"); values.append(payload.logo_url or None)
+        fields.append("logo_url = %s")
+        values.append(payload.logo_url or None)
     if payload.brand_color is not None:
-        fields.append("brand_color = %s"); values.append(payload.brand_color)
+        fields.append("brand_color = %s")
+        values.append(payload.brand_color)
     if payload.org_type is not None:
-        fields.append("org_type = %s"); values.append(payload.org_type)
+        fields.append("org_type = %s")
+        values.append(payload.org_type)
     if payload.currency is not None:
-        fields.append("currency = %s"); values.append(payload.currency)
+        fields.append("currency = %s")
+        values.append(payload.currency)
     if not fields:
         return {"ok": True}
     values.append(user.organization_id)
@@ -235,6 +254,7 @@ def update_org(
 
 
 # ── Logo upload (admin/owner only) ────────────────────────────────────────────
+
 
 @router.post("/org/logo")
 async def upload_org_logo(
@@ -254,7 +274,7 @@ async def upload_org_logo(
     if len(data) > 2 * 1024 * 1024:
         raise HTTPException(status_code=413, detail="Le fichier dépasse la limite de 2 Mo.")
 
-    ext  = ALLOWED[mime]
+    ext = ALLOWED[mime]
     path = f"{user.organization_id}/{_uuid.uuid4()}.{ext}"
 
     try:
@@ -275,6 +295,7 @@ async def upload_org_logo(
 
 # ── Rapport mensuel (admin/owner only) ───────────────────────────────────────
 
+
 @router.patch("/monthly-report")
 def toggle_monthly_report(
     payload: dict,
@@ -290,6 +311,7 @@ def toggle_monthly_report(
 
 
 # ── Password ───────────────────────────────────────────────────────────────
+
 
 @router.post("/password")
 def change_password(
@@ -314,6 +336,8 @@ def change_password(
         sb = service_client()
         sb.auth.admin.update_user_by_id(user.id, {"password": payload.new_password})
     except Exception as exc:
-        raise HTTPException(status_code=500, detail="Impossible de changer le mot de passe — réessayez ou contactez le support.") from exc
+        raise HTTPException(
+            status_code=500, detail="Impossible de changer le mot de passe — réessayez ou contactez le support."
+        ) from exc
 
     return {"ok": True}

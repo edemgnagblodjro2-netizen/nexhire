@@ -3,6 +3,7 @@
 Auth : API Key dans l'en-tête Authorization.
 Credentials stockés chiffrés par organisation. Aucune variable d'env requise.
 """
+
 from __future__ import annotations
 
 import httpx
@@ -11,9 +12,9 @@ from connector_loader import load_creds
 _GQL = "https://api.monday.com/v2"
 
 
-def search_monday(query: str, org_id: str,
-                  status: str = "all", board: str | None = None,
-                  limit: int = 10) -> list[dict]:
+def search_monday(
+    query: str, org_id: str, status: str = "all", board: str | None = None, limit: int = 10
+) -> list[dict]:
     creds, _ = load_creds("monday", org_id)
     if not creds:
         return [{"error": "Monday.com non connecté"}]
@@ -24,8 +25,8 @@ def search_monday(query: str, org_id: str,
 
     headers = {
         "Authorization": api_key,
-        "Content-Type":  "application/json",
-        "API-Version":   "2024-01",
+        "Content-Type": "application/json",
+        "API-Version": "2024-01",
     }
 
     try:
@@ -59,9 +60,11 @@ def search_monday(query: str, org_id: str,
         }
         """
 
-        r = httpx.post(_GQL,
-                       headers=headers,
-                       json={"query": """
+        r = httpx.post(
+            _GQL,
+            headers=headers,
+            json={
+                "query": """
                            query ($limit: Int!) {
                              boards(limit: 5) {
                                id name
@@ -73,8 +76,11 @@ def search_monday(query: str, org_id: str,
                                }
                              }
                            }
-                       """, "variables": {"limit": limit}},
-                       timeout=12)
+                       """,
+                "variables": {"limit": limit},
+            },
+            timeout=12,
+        )
         r.raise_for_status()
 
         boards = r.json().get("data", {}).get("boards", [])
@@ -90,14 +96,16 @@ def search_monday(query: str, org_id: str,
                         continue
                     if status == "done" and item_state != "done":
                         continue
-                results.append({
-                    "id":       item.get("id"),
-                    "titre":    item_name,
-                    "statut":   item.get("state"),
-                    "board":    b.get("name"),
-                    "créé":     item.get("created_at"),
-                    "source":   "monday",
-                })
+                results.append(
+                    {
+                        "id": item.get("id"),
+                        "titre": item_name,
+                        "statut": item.get("state"),
+                        "board": b.get("name"),
+                        "créé": item.get("created_at"),
+                        "source": "monday",
+                    }
+                )
         return results[:limit]
 
     except httpx.HTTPStatusError as exc:

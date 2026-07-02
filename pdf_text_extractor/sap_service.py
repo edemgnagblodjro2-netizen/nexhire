@@ -4,6 +4,7 @@ Utilise les credentials stockés chiffrés dans la table connectors.
 Pattern : Basic Auth ou OAuth2 client_credentials selon la config.
 Fallback vers mock si credentials absents ou API indisponible.
 """
+
 from __future__ import annotations
 
 import json
@@ -40,8 +41,9 @@ def _load_config(org_id: str) -> dict | None:
 
 def _headers(cfg: dict) -> dict:
     import base64
+
     user = cfg.get("username", "")
-    pwd  = cfg.get("password", "")
+    pwd = cfg.get("password", "")
     creds = base64.b64encode(f"{user}:{pwd}".encode()).decode()
     return {
         "Authorization": f"Basic {creds}",
@@ -69,6 +71,7 @@ def query_sap(
             pass  # fallback vers mock
 
     from agent_service import _mock_sap
+
     return _mock_sap(category=category, period=period, department=department)
 
 
@@ -93,11 +96,11 @@ def _real_query(cfg: dict, base_url: str, category: str, period: str, department
                 "period": period,
                 "cost_centers": [
                     {
-                        "id":          r.get("CostCenter", ""),
-                        "name":        r.get("CostCenterName", ""),
+                        "id": r.get("CostCenter", ""),
+                        "name": r.get("CostCenterName", ""),
                         "controlling_area": r.get("ControllingArea", ""),
                         "company_code": r.get("CompanyCode", ""),
-                        "currency":    r.get("CostCenterCurrency", "CAD"),
+                        "currency": r.get("CostCenterCurrency", "CAD"),
                     }
                     for r in data
                 ],
@@ -116,9 +119,9 @@ def _real_query(cfg: dict, base_url: str, category: str, period: str, department
                 "total": len(data),
                 "employees": [
                     {
-                        "id":         r.get("BusinessPartner", ""),
-                        "name":       r.get("BusinessPartnerFullName", ""),
-                        "type":       r.get("BusinessPartnerType", ""),
+                        "id": r.get("BusinessPartner", ""),
+                        "name": r.get("BusinessPartnerFullName", ""),
+                        "type": r.get("BusinessPartnerType", ""),
                     }
                     for r in data
                 ],

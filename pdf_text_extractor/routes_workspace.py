@@ -40,6 +40,7 @@ def _substitute_slug(entry_path: str | None, slug: str) -> str | None:
 # ── GET /api/workspace/{slug} ─────────────────────────────────────────────────
 # Informations publiques du partenaire — utilisé par le shell pour initialiser le workspace.
 
+
 @router.get("/{slug}")
 @limiter.limit("60/minute")
 def get_workspace(request: Request, slug: str, user: CurrentUser | None = Depends(get_optional_user)):
@@ -49,30 +50,30 @@ def get_workspace(request: Request, slug: str, user: CurrentUser | None = Depend
     viewer: dict | None = None
     if user and user.partner_id and str(user.partner_id) == str(partner["id"]):
         viewer = {
-            "authenticated":   True,
-            "user_id":         str(user.id),
-            "email":           user.email,
+            "authenticated": True,
+            "user_id": str(user.id),
+            "email": user.email,
             "organization_id": str(user.organization_id) if user.organization_id else None,
         }
 
     return JSONResponse(
         content={
-            "slug":            partner["slug"],
-            "name":            partner["name"],
-            "description":     partner["description"],
-            "logo_url":        partner["logo_url"],
-            "primary_color":   partner["primary_color"],
+            "slug": partner["slug"],
+            "name": partner["name"],
+            "description": partner["description"],
+            "logo_url": partner["logo_url"],
+            "primary_color": partner["primary_color"],
             "secondary_color": partner["secondary_color"],
-            "favicon_url":     partner["favicon_url"],
-            "hero_title":      partner["hero_title"],
-            "hero_subtitle":   partner["hero_subtitle"],
-            "city":            partner["city"],
-            "region":          partner["region"],
-            "country":         partner["country"],
-            "website":         partner["website"],
-            "plan":            partner["plan"],
-            "partner_type":    partner["partner_type"] or "chamber",
-            "viewer":          viewer or {"authenticated": False},
+            "favicon_url": partner["favicon_url"],
+            "hero_title": partner["hero_title"],
+            "hero_subtitle": partner["hero_subtitle"],
+            "city": partner["city"],
+            "region": partner["region"],
+            "country": partner["country"],
+            "website": partner["website"],
+            "plan": partner["plan"],
+            "partner_type": partner["partner_type"] or "chamber",
+            "viewer": viewer or {"authenticated": False},
         },
         headers=_NO_CACHE,
     )
@@ -83,6 +84,7 @@ def get_workspace(request: Request, slug: str, user: CurrentUser | None = Depend
 # Retourne toutes les apps (installed + coming_soon + available).
 # Le shell utilise catalog_status pour afficher les badges et désactiver les liens.
 # Les apps "coming_soon" ont entry_path = null.
+
 
 @router.get("/{slug}/apps")
 @limiter.limit("60/minute")
@@ -108,28 +110,30 @@ def get_workspace_apps(request: Request, slug: str):
     apps = []
     for app in catalog:
         is_coming = app["catalog_status"] in ("coming_soon", "available", "available_beta")
-        apps.append({
-            "slug":         app["app_slug"],
-            "name":         app["app_name"],
-            "description":  app["app_description"],
-            "icon":         app["icon"],
-            "category":     app["category"],
-            "version":      app["version"],
-            "catalog_status": app["catalog_status"],
-            "is_installed": app["catalog_status"] == "installed",
-            "entry_path":   None if is_coming else _substitute_slug(app["entry_path"], slug),
-            "config":       app["app_config"] if app["app_config"] else {},
-            "installed_at": app["installed_at"].isoformat() if app["installed_at"] else None,
-        })
+        apps.append(
+            {
+                "slug": app["app_slug"],
+                "name": app["app_name"],
+                "description": app["app_description"],
+                "icon": app["icon"],
+                "category": app["category"],
+                "version": app["version"],
+                "catalog_status": app["catalog_status"],
+                "is_installed": app["catalog_status"] == "installed",
+                "entry_path": None if is_coming else _substitute_slug(app["entry_path"], slug),
+                "config": app["app_config"] if app["app_config"] else {},
+                "installed_at": app["installed_at"].isoformat() if app["installed_at"] else None,
+            }
+        )
 
     return JSONResponse(
         content={
             "partner": {
-                "slug":          partner["slug"],
-                "name":          partner["name"],
+                "slug": partner["slug"],
+                "name": partner["name"],
                 "primary_color": partner["primary_color"],
-                "logo_url":      partner["logo_url"],
-                "hero_title":    partner["hero_title"],
+                "logo_url": partner["logo_url"],
+                "hero_title": partner["hero_title"],
                 "hero_subtitle": partner["hero_subtitle"],
             },
             "apps": apps,
@@ -142,25 +146,27 @@ def get_workspace_apps(request: Request, slug: str):
 # Configuration de branding uniquement — utilisé pour appliquer le thème visuel.
 # Réponse légère, mise en cache côté client possible (branding stable).
 
+
 @router.get("/{slug}/config")
 @limiter.limit("120/minute")
 def get_workspace_config(request: Request, slug: str):
     with get_db() as cur:
         partner = _get_partner(cur, slug)
     return {
-        "slug":            partner["slug"],
-        "name":            partner["name"],
-        "logo_url":        partner["logo_url"],
-        "primary_color":   partner["primary_color"],
+        "slug": partner["slug"],
+        "name": partner["name"],
+        "logo_url": partner["logo_url"],
+        "primary_color": partner["primary_color"],
         "secondary_color": partner["secondary_color"],
-        "favicon_url":     partner["favicon_url"],
-        "hero_title":      partner["hero_title"],
-        "hero_subtitle":   partner["hero_subtitle"],
+        "favicon_url": partner["favicon_url"],
+        "hero_title": partner["hero_title"],
+        "hero_subtitle": partner["hero_subtitle"],
     }
 
 
 # ── GET /api/workspace/{slug}/admin ──────────────────────────────────────────
 # Statistiques réservées au workspace_admin (owner + partner_id correspondant).
+
 
 @router.get("/{slug}/admin")
 @limiter.limit("30/minute")
@@ -200,13 +206,13 @@ def get_workspace_admin(request: Request, slug: str, user: CurrentUser = Depends
         installed = rows(cur)
 
     return {
-        "partner_id":  str(partner_id),
-        "stats":       dict(stats),
+        "partner_id": str(partner_id),
+        "stats": dict(stats),
         "installed_apps": [
             {
-                "slug":         a["app_slug"],
-                "is_enabled":   a["is_enabled"],
-                "config":       a["config"],
+                "slug": a["app_slug"],
+                "is_enabled": a["is_enabled"],
+                "config": a["config"],
                 "installed_at": a["installed_at"].isoformat() if a["installed_at"] else None,
             }
             for a in installed

@@ -1,4 +1,5 @@
 """Analytics d'utilisation — suivi, satisfaction, tableau de bord."""
+
 from __future__ import annotations
 
 import json
@@ -16,18 +17,20 @@ router = APIRouter(prefix="/api/analytics", tags=["analytics"])
 
 # ── Models ─────────────────────────────────────────────────────────────────
 
+
 class RatingPayload(BaseModel):
-    audit_id:  str
-    score:     int = Field(..., ge=1, le=5)
-    comment:   str | None = Field(None, max_length=300)
+    audit_id: str
+    score: int = Field(..., ge=1, le=5)
+    comment: str | None = Field(None, max_length=300)
 
 
 class UsageEvent(BaseModel):
     event_type: Literal["query", "export", "connector_test", "login", "logout"]
-    meta:       dict = {}
+    meta: dict = {}
 
 
 # ── Rate a response ────────────────────────────────────────────────────────
+
 
 @router.post("/rate")
 def rate_response(payload: RatingPayload, user: CurrentUser = Depends(require_min_role("user"))):
@@ -45,6 +48,7 @@ def rate_response(payload: RatingPayload, user: CurrentUser = Depends(require_mi
 
 
 # ── Log a usage event ──────────────────────────────────────────────────────
+
 
 @router.post("/event")
 def log_event(payload: UsageEvent, user: CurrentUser = Depends(require_min_role("user"))):
@@ -68,9 +72,10 @@ def log_event(payload: UsageEvent, user: CurrentUser = Depends(require_min_role(
 
 # ── Dashboard stats ────────────────────────────────────────────────────────
 
+
 @router.get("/dashboard")
 def analytics_dashboard(
-    days:  int  = 30,
+    days: int = 30,
     user: CurrentUser = Depends(require_min_role("user")),
 ):
     """Retourne les métriques d'utilisation pour le tableau de bord."""
@@ -185,15 +190,17 @@ def analytics_dashboard(
         pass
 
     return {
-        "period_days":      days,
-        "total_queries":    total_queries,
-        "queries_per_day":  queries_per_day,
-        "top_connectors":   [{"name": k, "count": v} for k, v in top_connectors],
-        "connector_daily":  {k: [{"date": d, "count": c} for d, c in sorted(v.items())] for k, v in connector_daily.items()},
+        "period_days": days,
+        "total_queries": total_queries,
+        "queries_per_day": queries_per_day,
+        "top_connectors": [{"name": k, "count": v} for k, v in top_connectors],
+        "connector_daily": {
+            k: [{"date": d, "count": c} for d, c in sorted(v.items())] for k, v in connector_daily.items()
+        },
         "avg_satisfaction": avg_score,
         "satisfaction_dist": score_dist,
-        "rated_count":      rated_count,
-        "top_users":        top_users,
-        "event_counts":     event_counts,
-        "utilization_pct":  utilization_pct,
+        "rated_count": rated_count,
+        "top_users": top_users,
+        "event_counts": event_counts,
+        "utilization_pct": utilization_pct,
     }

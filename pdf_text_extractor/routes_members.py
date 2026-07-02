@@ -1,4 +1,5 @@
 """Gestion des membres d'une organisation — invitations, rôles, activation."""
+
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -24,12 +25,15 @@ HIERARCHY_TITLES = [
 
 # ── Models ─────────────────────────────────────────────────────────────────
 
+
 class InvitePayload(BaseModel):
-    email:    EmailStr
-    role:     str = Field("user", pattern="^(user|manager|admin)$")
+    email: EmailStr
+    role: str = Field("user", pattern="^(user|manager|admin)$")
+
 
 class RoleUpdate(BaseModel):
     role: str = Field(..., pattern="^(user|manager|admin)$")
+
 
 class RoleRequestAction(BaseModel):
     pass
@@ -37,10 +41,11 @@ class RoleRequestAction(BaseModel):
 
 # ── Helpers ────────────────────────────────────────────────────────────────
 
+
 def _require_admin(user: CurrentUser):
     if user.role not in ("admin", "owner"):
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
-                            detail="Action réservée aux administrateurs.")
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Action réservée aux administrateurs.")
+
 
 def _same_org(user: CurrentUser, target_id: str) -> dict:
     """Retourne le target_user ou lève 404 s'il n'appartient pas à la même org."""
@@ -56,6 +61,7 @@ def _same_org(user: CurrentUser, target_id: str) -> dict:
 
 
 # ── Organigramme ───────────────────────────────────────────────────────────
+
 
 @router.get("/orgchart")
 def org_chart(user: CurrentUser = Depends(require_min_role("user"))):
@@ -80,22 +86,24 @@ def org_chart(user: CurrentUser = Depends(require_min_role("user"))):
     for r in raw:
         did = r["dept_id"]
         if did not in depts:
-            depts[did] = {"id": did, "name": r["dept_name"],
-                          "dept_type": r["dept_type"], "members": []}
+            depts[did] = {"id": did, "name": r["dept_name"], "dept_type": r["dept_type"], "members": []}
         if r["user_id"]:
-            depts[did]["members"].append({
-                "id":              r["user_id"],
-                "full_name":       r["full_name"],
-                "email":           r["email"],
-                "title":           r["title"] or HIERARCHY_TITLES[5],
-                "hierarchy_level": r["hierarchy_level"] or 6,
-                "org_role":        r["org_role"],
-                "is_active":       r["is_active"],
-            })
+            depts[did]["members"].append(
+                {
+                    "id": r["user_id"],
+                    "full_name": r["full_name"],
+                    "email": r["email"],
+                    "title": r["title"] or HIERARCHY_TITLES[5],
+                    "hierarchy_level": r["hierarchy_level"] or 6,
+                    "org_role": r["org_role"],
+                    "is_active": r["is_active"],
+                }
+            )
     return list(depts.values())
 
 
 # ── List members ───────────────────────────────────────────────────────────
+
 
 @router.get("")
 def list_members(user: CurrentUser = Depends(require_min_role("user"))):
@@ -127,11 +135,13 @@ def list_members(user: CurrentUser = Depends(require_min_role("user"))):
 
 # ── Pending invitations ────────────────────────────────────────────────────
 
+
 @router.get("/invitations")
 def list_invitations(user: CurrentUser = Depends(require_min_role("user"))):
     """Retourne les invitations en attente pour l'organisation."""
     _require_admin(user)
     from datetime import datetime, timezone
+
     try:
         now_iso = datetime.now(timezone.utc).isoformat()
         with get_db() as cur:
@@ -150,6 +160,7 @@ def list_invitations(user: CurrentUser = Depends(require_min_role("user"))):
 
 
 # ── Invite ─────────────────────────────────────────────────────────────────
+
 
 @router.post("/invite")
 def invite_member(
@@ -191,6 +202,7 @@ def invite_member(
     partner_slug = ""
     try:
         from email_service import send_invite_email
+
         with get_db() as cur:
             cur.execute(
                 "SELECT o.name AS org_name, u.full_name FROM organizations o, users u "
@@ -224,16 +236,17 @@ def invite_member(
         invite_path += f"&partenaire={partner_slug}"
 
     return {
-        "ok":         True,
-        "token":      token,
-        "email":      str(payload.email),
-        "role":       payload.role,
+        "ok": True,
+        "token": token,
+        "email": str(payload.email),
+        "role": payload.role,
         "expires_at": inv.get("expires_at"),
         "invite_url": invite_path,
     }
 
 
 # ── Change role ────────────────────────────────────────────────────────────
+
 
 @router.patch("/{member_id}/role")
 def change_role(
@@ -267,8 +280,11 @@ def change_role(
                    VALUES (%s, %s, %s, %s, %s)""",
                 (user.organization_id, user.id, member_id, target["role"], payload.role),
             )
-        return {"ok": True, "approval_required": True,
-                "message": f"Demande d'élévation vers « {payload.role} » envoyée au owner pour approbation."}
+        return {
+            "ok": True,
+            "approval_required": True,
+            "message": f"Demande d'élévation vers « {payload.role} » envoyée au owner pour approbation.",
+        }
 
     # Rétrogradation vers user : direct même pour admin
     with get_db() as cur:
@@ -277,6 +293,7 @@ def change_role(
 
 
 # ── Role change requests (owner only) ──────────────────────────────────────
+
 
 @router.get("/role-requests")
 def list_role_requests(user: CurrentUser = Depends(require_min_role("user"))):
@@ -344,6 +361,7 @@ def reject_role_request(
 
 # ── Toggle active ──────────────────────────────────────────────────────────
 
+
 @router.patch("/{member_id}/active")
 def toggle_active(
     member_id: str,
@@ -366,6 +384,7 @@ def toggle_active(
 
 
 # ── Remove member ──────────────────────────────────────────────────────────
+
 
 @router.delete("/{member_id}")
 def remove_member(
@@ -412,8 +431,10 @@ def remove_member(
 
 # ── Apply invite — appelé après le premier login d'un utilisateur invité ──
 
+
 class ApplyInvitePayload(BaseModel):
     token: str
+
 
 @router.post("/apply-invite")
 def apply_invite(
@@ -422,6 +443,7 @@ def apply_invite(
 ):
     """Applique l'invitation : met à jour org_id + rôle de l'utilisateur connecté."""
     from datetime import datetime, timezone
+
     now_iso = datetime.now(timezone.utc).isoformat()
 
     with get_db() as cur:
@@ -466,10 +488,12 @@ def apply_invite(
 
 # ── Validate invite token (public) ────────────────────────────────────────
 
+
 @router.get("/invite/validate")
 def validate_invite(token: str):
     """Vérifie qu'un token d'invitation est valide et retourne email + org."""
     from datetime import datetime, timezone
+
     now_iso = datetime.now(timezone.utc).isoformat()
     with get_db() as cur:
         cur.execute(
@@ -492,8 +516,8 @@ def validate_invite(token: str):
         )
         org = row(cur) or {}
     return {
-        "email":  inv["email"],
-        "role":   inv["role"],
+        "email": inv["email"],
+        "role": inv["role"],
         "org_id": inv["org_id"],
         "org_name": org.get("name", ""),
     }

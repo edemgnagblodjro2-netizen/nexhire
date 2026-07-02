@@ -1,4 +1,5 @@
 """Recherche interne en langage naturel sur les documents de l'organisation."""
+
 from __future__ import annotations
 
 import json
@@ -13,7 +14,7 @@ router = APIRouter(prefix="/api/search", tags=["search"])
 
 
 class SearchPayload(BaseModel):
-    query:    str = Field(..., min_length=1, max_length=500)
+    query: str = Field(..., min_length=1, max_length=500)
     language: str = Field(default="fr", pattern="^(fr|en)$")
 
 
@@ -37,7 +38,7 @@ async def search_internal(
 ):
     """Recherche en langage naturel sur les documents accessibles à l'utilisateur."""
     store = request.app.state.storage
-    ai    = request.app.state.assistant
+    ai = request.app.state.assistant
 
     allowed = _allowed_dept_ids(user)
 
@@ -59,19 +60,16 @@ async def search_internal(
         docs = q.execute().data or []
     else:
         docs = [
-            d for d in store.documents.values()
+            d
+            for d in store.documents.values()
             if str(d.get("organization_id") or "") == str(user.organization_id)
-            and (
-                allowed is None
-                or d.get("department_id") is None
-                or d.get("department_id") in allowed
-            )
+            and (allowed is None or d.get("department_id") is None or d.get("department_id") in allowed)
         ]
 
     if not docs:
         return {
             "success": False,
-            "answer":  "Aucun document trouvé dans votre espace. Téléversez des documents dans l'onglet Documents pour activer la recherche interne.",
+            "answer": "Aucun document trouvé dans votre espace. Téléversez des documents dans l'onglet Documents pour activer la recherche interne.",
             "sources": [],
         }
 
@@ -79,7 +77,7 @@ async def search_internal(
     query_words = [w for w in payload.query.lower().split() if len(w) > 2]
     scored: list[tuple[int, dict]] = []
     for doc in docs:
-        text  = (doc.get("content_text") or "").lower()
+        text = (doc.get("content_text") or "").lower()
         score = sum(1 for w in query_words if w in text)
         scored.append((score, doc))
 
@@ -108,7 +106,7 @@ async def search_internal(
     if ai.backend is None:
         return {
             "success": False,
-            "answer":  "Service IA non configuré (OPENAI_API_KEY manquant).",
+            "answer": "Service IA non configuré (OPENAI_API_KEY manquant).",
             "sources": [],
         }
 
@@ -116,9 +114,9 @@ async def search_internal(
         answer = ai.backend.complete(system_prompt, user_prompt)
         sources = [
             {
-                "id":         d["id"],
-                "filename":   d["filename"],
-                "preview":    (d.get("content_text") or "")[:200].strip(),
+                "id": d["id"],
+                "filename": d["filename"],
+                "preview": (d.get("content_text") or "")[:200].strip(),
                 "created_at": str(d.get("created_at", ""))[:10],
             }
             for d in top
@@ -127,7 +125,7 @@ async def search_internal(
     except Exception as exc:
         return {
             "success": False,
-            "answer":  "Service IA temporairement indisponible.",
+            "answer": "Service IA temporairement indisponible.",
             "sources": [],
-            "error":   type(exc).__name__,
+            "error": type(exc).__name__,
         }

@@ -1,11 +1,12 @@
 """HubSpot CRM REST API — vrais appels à partir des tokens OAuth stockés."""
+
 from __future__ import annotations
 
 import httpx
 from connector_loader import bearer, load_creds, refresh_oauth
 
 _TOKEN_URL = "https://api.hubapi.com/oauth/v1/token"
-_BASE       = "https://api.hubapi.com"
+_BASE = "https://api.hubapi.com"
 
 
 def get_hubspot_info(org_id: str) -> dict:
@@ -15,46 +16,42 @@ def get_hubspot_info(org_id: str) -> dict:
         return {"error": "HubSpot non connecté"}
     creds = refresh_oauth(creds, cid, _TOKEN_URL, "HUBSPOT_CLIENT_ID", "HUBSPOT_CLIENT_SECRET")
     try:
-        r = httpx.get(f"{_BASE}/account-info/v3/details",
-                      headers=bearer(creds), timeout=10)
+        r = httpx.get(f"{_BASE}/account-info/v3/details", headers=bearer(creds), timeout=10)
         if r.status_code != 200:
             return {"error": f"HTTP {r.status_code} — {r.text[:200]}"}
         info = r.json()
         counts: dict = {}
         for obj in ("contacts", "companies", "deals"):
             try:
-                rc = httpx.post(f"{_BASE}/crm/v3/objects/{obj}/search",
-                                headers={**bearer(creds), "Content-Type": "application/json"},
-                                json={"limit": 1}, timeout=8)
+                rc = httpx.post(
+                    f"{_BASE}/crm/v3/objects/{obj}/search",
+                    headers={**bearer(creds), "Content-Type": "application/json"},
+                    json={"limit": 1},
+                    timeout=8,
+                )
                 if rc.status_code == 200:
                     counts[obj] = rc.json().get("total", 0)
             except Exception:
                 pass
         return {
-            "portal_id":   info.get("portalId"),
-            "company":     info.get("companyName"),
-            "timezone":    info.get("timeZone"),
-            "currency":    info.get("companyCurrency"),
+            "portal_id": info.get("portalId"),
+            "company": info.get("companyName"),
+            "timezone": info.get("timeZone"),
+            "currency": info.get("companyCurrency"),
             **counts,
         }
     except Exception as exc:
         return {"error": str(exc)}
 
 
-def search_hubspot(
-    query: str, org_id: str, object_type: str = "all", limit: int = 5
-) -> list[dict]:
+def search_hubspot(query: str, org_id: str, object_type: str = "all", limit: int = 5) -> list[dict]:
     creds, cid = load_creds("hubspot", org_id)
     if not creds:
         return [{"error": "HubSpot non connecté"}]
     creds = refresh_oauth(creds, cid, _TOKEN_URL, "HUBSPOT_CLIENT_ID", "HUBSPOT_CLIENT_SECRET")
 
     results: list[dict] = []
-    targets = (
-        ["contact", "company", "deal", "ticket"]
-        if object_type == "all"
-        else [object_type]
-    )
+    targets = ["contact", "company", "deal", "ticket"] if object_type == "all" else [object_type]
 
     for obj in targets:
         if len(results) >= limit:
@@ -86,8 +83,8 @@ def _props(obj: str) -> list[str]:
     return {
         "contact": ["firstname", "lastname", "email", "company", "lifecyclestage", "lastmodifieddate"],
         "company": ["name", "domain", "industry", "annualrevenue", "numberofemployees"],
-        "deal":    ["dealname", "amount", "dealstage", "closedate", "pipeline"],
-        "ticket":  ["subject", "hs_pipeline_stage", "createdate", "hs_ticket_priority"],
+        "deal": ["dealname", "amount", "dealstage", "closedate", "pipeline"],
+        "ticket": ["subject", "hs_pipeline_stage", "createdate", "hs_ticket_priority"],
     }.get(obj, ["name"])
 
 
@@ -95,16 +92,39 @@ def _format(obj: str, item: dict) -> dict:
     p = item.get("properties", {})
     base: dict = {"type": obj, "id": item.get("id"), "source": "hubspot"}
     if obj == "contact":
-        base.update({"nom": f"{p.get('firstname','')} {p.get('lastname','')}".strip(),
-                     "email": p.get("email"), "entreprise": p.get("company"),
-                     "statut": p.get("lifecyclestage")})
+        base.update(
+            {
+                "nom": f"{p.get('firstname','')} {p.get('lastname','')}".strip(),
+                "email": p.get("email"),
+                "entreprise": p.get("company"),
+                "statut": p.get("lifecyclestage"),
+            }
+        )
     elif obj == "company":
-        base.update({"nom": p.get("name"), "domaine": p.get("domain"),
-                     "industrie": p.get("industry"), "revenu": p.get("annualrevenue")})
+        base.update(
+            {
+                "nom": p.get("name"),
+                "domaine": p.get("domain"),
+                "industrie": p.get("industry"),
+                "revenu": p.get("annualrevenue"),
+            }
+        )
     elif obj == "deal":
-        base.update({"nom": p.get("dealname"), "valeur": p.get("amount"),
-                     "étape": p.get("dealstage"), "fermeture": p.get("closedate")})
+        base.update(
+            {
+                "nom": p.get("dealname"),
+                "valeur": p.get("amount"),
+                "étape": p.get("dealstage"),
+                "fermeture": p.get("closedate"),
+            }
+        )
     elif obj == "ticket":
-        base.update({"sujet": p.get("subject"), "statut": p.get("hs_pipeline_stage"),
-                     "priorité": p.get("hs_ticket_priority"), "créé": p.get("createdate")})
+        base.update(
+            {
+                "sujet": p.get("subject"),
+                "statut": p.get("hs_pipeline_stage"),
+                "priorité": p.get("hs_ticket_priority"),
+                "créé": p.get("createdate"),
+            }
+        )
     return base

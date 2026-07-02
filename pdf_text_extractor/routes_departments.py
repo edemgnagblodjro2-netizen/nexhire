@@ -12,252 +12,381 @@ router = APIRouter(prefix="/api/departments", tags=["departments"])
 # ── Département templates par type d'organisation ────────────────────────────
 DEPT_TEMPLATES: dict[str, list[dict]] = {
     "entreprise": [
-        {"name": "Direction Générale",          "description": "PDG, planification stratégique, gouvernance, gestion du changement"},
-        {"name": "Finances",                    "description": "Comptabilité, trésorerie, budgétisation, audit interne, gestion des risques"},
-        {"name": "Ressources Humaines",         "description": "Recrutement, intégration, formation, performance, rémunération"},
-        {"name": "Technologies de l'information", "description": "Support TI, infrastructure, cybersécurité, cloud, gestion des licences"},
-        {"name": "Opérations",                  "description": "Gestion opérationnelle, qualité, amélioration continue, gestion documentaire"},
-        {"name": "Approvisionnement",           "description": "Achats, contrats, gestion des fournisseurs, appels d'offres"},
-        {"name": "Ventes",                      "description": "Développement des affaires, gestion des comptes, prévisions"},
-        {"name": "Marketing",                   "description": "Marketing numérique, publicité, communication, réseaux sociaux"},
-        {"name": "Service à la clientèle",      "description": "Centre d'appels, support client, gestion des plaintes"},
-        {"name": "Juridique",                   "description": "Affaires juridiques, conformité, protection des données"},
-        {"name": "Gestion de projet",           "description": "PMO, gestion de portefeuille, Agile"},
-        {"name": "Logistique",                  "description": "Transport, distribution, chaîne d'approvisionnement"},
+        {
+            "name": "Direction Générale",
+            "description": "PDG, planification stratégique, gouvernance, gestion du changement",
+        },
+        {
+            "name": "Finances",
+            "description": "Comptabilité, trésorerie, budgétisation, audit interne, gestion des risques",
+        },
+        {
+            "name": "Ressources Humaines",
+            "description": "Recrutement, intégration, formation, performance, rémunération",
+        },
+        {
+            "name": "Technologies de l'information",
+            "description": "Support TI, infrastructure, cybersécurité, cloud, gestion des licences",
+        },
+        {
+            "name": "Opérations",
+            "description": "Gestion opérationnelle, qualité, amélioration continue, gestion documentaire",
+        },
+        {"name": "Approvisionnement", "description": "Achats, contrats, gestion des fournisseurs, appels d'offres"},
+        {"name": "Ventes", "description": "Développement des affaires, gestion des comptes, prévisions"},
+        {"name": "Marketing", "description": "Marketing numérique, publicité, communication, réseaux sociaux"},
+        {"name": "Service à la clientèle", "description": "Centre d'appels, support client, gestion des plaintes"},
+        {"name": "Juridique", "description": "Affaires juridiques, conformité, protection des données"},
+        {"name": "Gestion de projet", "description": "PMO, gestion de portefeuille, Agile"},
+        {"name": "Logistique", "description": "Transport, distribution, chaîne d'approvisionnement"},
     ],
     "hopital": [
-        {"name": "Administration hospitalière", "description": "Direction générale, gouvernance, planification stratégique"},
-        {"name": "Direction médicale",          "description": "Médecine, gestion des actes, protocoles cliniques"},
-        {"name": "Soins infirmiers",            "description": "Soins aux patients, gestion des équipes infirmières"},
-        {"name": "Pharmacie",                   "description": "Gestion des médicaments, pharmacovigilance"},
-        {"name": "Laboratoires",                "description": "Analyses biologiques, microbiologie, hématologie"},
-        {"name": "Imagerie médicale",           "description": "Radiologie, scanner, IRM, échographie"},
-        {"name": "Archives médicales",          "description": "Dossiers patients, gestion documentaire"},
+        {
+            "name": "Administration hospitalière",
+            "description": "Direction générale, gouvernance, planification stratégique",
+        },
+        {"name": "Direction médicale", "description": "Médecine, gestion des actes, protocoles cliniques"},
+        {"name": "Soins infirmiers", "description": "Soins aux patients, gestion des équipes infirmières"},
+        {"name": "Pharmacie", "description": "Gestion des médicaments, pharmacovigilance"},
+        {"name": "Laboratoires", "description": "Analyses biologiques, microbiologie, hématologie"},
+        {"name": "Imagerie médicale", "description": "Radiologie, scanner, IRM, échographie"},
+        {"name": "Archives médicales", "description": "Dossiers patients, gestion documentaire"},
         {"name": "Technologies de l'information", "description": "Systèmes cliniques, cybersécurité, infrastructure"},
-        {"name": "Ressources Humaines",         "description": "Recrutement médical, formation, gestion des horaires"},
-        {"name": "Finances",                    "description": "Budget hospitalier, facturation, approvisionnement"},
-        {"name": "Approvisionnement médical",   "description": "Équipements, fournitures médicales, contrats"},
-        {"name": "Service aux patients",        "description": "Accueil, admission, gestion des rendez-vous"},
+        {"name": "Ressources Humaines", "description": "Recrutement médical, formation, gestion des horaires"},
+        {"name": "Finances", "description": "Budget hospitalier, facturation, approvisionnement"},
+        {"name": "Approvisionnement médical", "description": "Équipements, fournitures médicales, contrats"},
+        {"name": "Service aux patients", "description": "Accueil, admission, gestion des rendez-vous"},
     ],
     "municipalite": [
-        {"name": "Direction générale",          "description": "Bureau du directeur général, gouvernance, gestion du changement"},
-        {"name": "Finances municipales",        "description": "Budget municipal, taxes, comptes fournisseurs, trésorerie"},
-        {"name": "Ressources Humaines",         "description": "Recrutement, rémunération, formation, relations de travail"},
-        {"name": "Technologies de l'information", "description": "Infrastructure, cybersécurité, services numériques aux citoyens"},
-        {"name": "Urbanisme et développement",  "description": "Permis, zonage, planification territoriale"},
-        {"name": "Travaux publics",             "description": "Voirie, eau, égouts, parcs, gestion des actifs"},
-        {"name": "Sécurité publique",           "description": "Police, pompiers, urgences, prévention"},
-        {"name": "Service aux citoyens",        "description": "Guichet unique, communications, plaintes"},
-        {"name": "Greffe municipal",            "description": "Conseil municipal, règlements, archives"},
-        {"name": "Gestion des actifs",          "description": "Immobilier, flottes, équipements, maintenance"},
-        {"name": "Environnement",               "description": "Collecte des déchets, développement durable, énergie"},
-        {"name": "Culture et loisirs",          "description": "Bibliothèques, sports, événements, arts"},
+        {
+            "name": "Direction générale",
+            "description": "Bureau du directeur général, gouvernance, gestion du changement",
+        },
+        {"name": "Finances municipales", "description": "Budget municipal, taxes, comptes fournisseurs, trésorerie"},
+        {"name": "Ressources Humaines", "description": "Recrutement, rémunération, formation, relations de travail"},
+        {
+            "name": "Technologies de l'information",
+            "description": "Infrastructure, cybersécurité, services numériques aux citoyens",
+        },
+        {"name": "Urbanisme et développement", "description": "Permis, zonage, planification territoriale"},
+        {"name": "Travaux publics", "description": "Voirie, eau, égouts, parcs, gestion des actifs"},
+        {"name": "Sécurité publique", "description": "Police, pompiers, urgences, prévention"},
+        {"name": "Service aux citoyens", "description": "Guichet unique, communications, plaintes"},
+        {"name": "Greffe municipal", "description": "Conseil municipal, règlements, archives"},
+        {"name": "Gestion des actifs", "description": "Immobilier, flottes, équipements, maintenance"},
+        {"name": "Environnement", "description": "Collecte des déchets, développement durable, énergie"},
+        {"name": "Culture et loisirs", "description": "Bibliothèques, sports, événements, arts"},
     ],
     "universite": [
-        {"name": "Rectorat",                    "description": "Recteur, vice-recteurs, planification institutionnelle"},
-        {"name": "Affaires académiques",        "description": "Doyens, programmes, qualité académique"},
-        {"name": "Admission et registraire",    "description": "Admissions, gestion des dossiers étudiants, diplomation"},
-        {"name": "Finances",                    "description": "Budget, comptabilité, subventions, bourses"},
-        {"name": "Ressources Humaines",         "description": "Recrutement professoral, conventions collectives"},
-        {"name": "Technologies de l'information", "description": "Infrastructure, LMS, cybersécurité, licences logicielles"},
-        {"name": "Bibliothèques et archives",   "description": "Collections, accès aux ressources, archives institutionnelles"},
-        {"name": "Recherche et innovation",     "description": "Subventions, partenariats, propriété intellectuelle"},
-        {"name": "Relations internationales",   "description": "Échanges étudiants, partenariats étrangers"},
-        {"name": "Services aux étudiants",      "description": "Aide financière, counseling, vie étudiante"},
-        {"name": "Développement institutionnel","description": "Philanthropie, relations avec les diplômés"},
-        {"name": "Approvisionnement",           "description": "Achats, contrats, gestion des fournisseurs"},
+        {"name": "Rectorat", "description": "Recteur, vice-recteurs, planification institutionnelle"},
+        {"name": "Affaires académiques", "description": "Doyens, programmes, qualité académique"},
+        {"name": "Admission et registraire", "description": "Admissions, gestion des dossiers étudiants, diplomation"},
+        {"name": "Finances", "description": "Budget, comptabilité, subventions, bourses"},
+        {"name": "Ressources Humaines", "description": "Recrutement professoral, conventions collectives"},
+        {
+            "name": "Technologies de l'information",
+            "description": "Infrastructure, LMS, cybersécurité, licences logicielles",
+        },
+        {
+            "name": "Bibliothèques et archives",
+            "description": "Collections, accès aux ressources, archives institutionnelles",
+        },
+        {"name": "Recherche et innovation", "description": "Subventions, partenariats, propriété intellectuelle"},
+        {"name": "Relations internationales", "description": "Échanges étudiants, partenariats étrangers"},
+        {"name": "Services aux étudiants", "description": "Aide financière, counseling, vie étudiante"},
+        {"name": "Développement institutionnel", "description": "Philanthropie, relations avec les diplômés"},
+        {"name": "Approvisionnement", "description": "Achats, contrats, gestion des fournisseurs"},
     ],
     "entrepreneur": [
-        {"name": "Direction & Stratégie",       "description": "Vision, développement d'affaires, partenariats, gouvernance"},
-        {"name": "Finances",                    "description": "Comptabilité, facturation, gestion de trésorerie, fiscalité"},
-        {"name": "Ventes",                      "description": "Acquisition clients, pipeline, propositions commerciales"},
-        {"name": "Marketing & Communications",  "description": "Présence en ligne, contenu, réseaux sociaux, réputation"},
-        {"name": "Opérations",                  "description": "Livraison de services, gestion des mandats, qualité"},
-        {"name": "Service client",              "description": "Satisfaction, fidélisation, suivi clients, renouvellements"},
+        {"name": "Direction & Stratégie", "description": "Vision, développement d'affaires, partenariats, gouvernance"},
+        {"name": "Finances", "description": "Comptabilité, facturation, gestion de trésorerie, fiscalité"},
+        {"name": "Ventes", "description": "Acquisition clients, pipeline, propositions commerciales"},
+        {
+            "name": "Marketing & Communications",
+            "description": "Présence en ligne, contenu, réseaux sociaux, réputation",
+        },
+        {"name": "Opérations", "description": "Livraison de services, gestion des mandats, qualité"},
+        {"name": "Service client", "description": "Satisfaction, fidélisation, suivi clients, renouvellements"},
     ],
     "pme": [
-        {"name": "Direction Générale",          "description": "Stratégie, gouvernance, planification, gestion du changement"},
-        {"name": "Finances & Comptabilité",     "description": "Comptabilité, trésorerie, paie, rapports financiers"},
-        {"name": "Ressources Humaines",         "description": "Recrutement, formation, avantages sociaux, relations travail"},
-        {"name": "Technologies de l'information", "description": "Support TI, cybersécurité, outils numériques, licences"},
-        {"name": "Ventes & Développement",      "description": "Prospection, devis, comptes clients, prévisions"},
-        {"name": "Marketing & Communications",  "description": "Publicité, réseaux sociaux, image de marque, campagnes"},
-        {"name": "Service à la clientèle",      "description": "Support, satisfaction client, gestion des plaintes"},
-        {"name": "Approvisionnement",           "description": "Fournisseurs, achats, contrats, appels d'offres"},
-        {"name": "Juridique & Conformité",      "description": "Contrats, protection des données, conformité réglementaire"},
-        {"name": "Gestion de projet",           "description": "Coordination des mandats, livrables, PMO"},
-        {"name": "Logistique",                  "description": "Distribution, chaîne d'approvisionnement, expédition"},
-        {"name": "Administration",              "description": "Gestion administrative, secrétariat, archivage"},
+        {"name": "Direction Générale", "description": "Stratégie, gouvernance, planification, gestion du changement"},
+        {"name": "Finances & Comptabilité", "description": "Comptabilité, trésorerie, paie, rapports financiers"},
+        {"name": "Ressources Humaines", "description": "Recrutement, formation, avantages sociaux, relations travail"},
+        {
+            "name": "Technologies de l'information",
+            "description": "Support TI, cybersécurité, outils numériques, licences",
+        },
+        {"name": "Ventes & Développement", "description": "Prospection, devis, comptes clients, prévisions"},
+        {"name": "Marketing & Communications", "description": "Publicité, réseaux sociaux, image de marque, campagnes"},
+        {"name": "Service à la clientèle", "description": "Support, satisfaction client, gestion des plaintes"},
+        {"name": "Approvisionnement", "description": "Fournisseurs, achats, contrats, appels d'offres"},
+        {"name": "Juridique & Conformité", "description": "Contrats, protection des données, conformité réglementaire"},
+        {"name": "Gestion de projet", "description": "Coordination des mandats, livrables, PMO"},
+        {"name": "Logistique", "description": "Distribution, chaîne d'approvisionnement, expédition"},
+        {"name": "Administration", "description": "Gestion administrative, secrétariat, archivage"},
     ],
     "pmi": [
-        {"name": "Direction Générale",          "description": "Stratégie industrielle, gouvernance, performance globale"},
-        {"name": "Production",                  "description": "Planification, ordonnancement, rendement, capacité"},
-        {"name": "Contrôle qualité",            "description": "Normes ISO, inspections, non-conformités, certifications"},
-        {"name": "Maintenance",                 "description": "Équipements, entretien préventif, sécurité industrielle"},
-        {"name": "Approvisionnement",           "description": "Matières premières, fournisseurs, gestion des stocks"},
-        {"name": "Logistique & Distribution",   "description": "Expédition, transport, entrepôts, gestion des stocks finis"},
-        {"name": "Ressources Humaines",         "description": "Main-d'œuvre, formation, conventions collectives"},
-        {"name": "Finances",                    "description": "Coûts de production, budget, rentabilité, trésorerie"},
-        {"name": "Technologies de l'information", "description": "Automatisation, ERP, systèmes industriels, cybersécurité"},
-        {"name": "Ventes & Commerce",           "description": "Clients industriels, devis, contrats de fourniture"},
-        {"name": "Recherche & Développement",   "description": "Innovation produit, prototypes, amélioration process"},
-        {"name": "Environnement & Conformité",  "description": "Normes environnementales, sécurité, certifications réglementaires"},
+        {"name": "Direction Générale", "description": "Stratégie industrielle, gouvernance, performance globale"},
+        {"name": "Production", "description": "Planification, ordonnancement, rendement, capacité"},
+        {"name": "Contrôle qualité", "description": "Normes ISO, inspections, non-conformités, certifications"},
+        {"name": "Maintenance", "description": "Équipements, entretien préventif, sécurité industrielle"},
+        {"name": "Approvisionnement", "description": "Matières premières, fournisseurs, gestion des stocks"},
+        {
+            "name": "Logistique & Distribution",
+            "description": "Expédition, transport, entrepôts, gestion des stocks finis",
+        },
+        {"name": "Ressources Humaines", "description": "Main-d'œuvre, formation, conventions collectives"},
+        {"name": "Finances", "description": "Coûts de production, budget, rentabilité, trésorerie"},
+        {
+            "name": "Technologies de l'information",
+            "description": "Automatisation, ERP, systèmes industriels, cybersécurité",
+        },
+        {"name": "Ventes & Commerce", "description": "Clients industriels, devis, contrats de fourniture"},
+        {"name": "Recherche & Développement", "description": "Innovation produit, prototypes, amélioration process"},
+        {
+            "name": "Environnement & Conformité",
+            "description": "Normes environnementales, sécurité, certifications réglementaires",
+        },
     ],
 }
 
 ORG_TYPE_LABELS = {
-    "entreprise":    "Entreprise privée",
-    "hopital":       "Hôpital / Centre de santé",
-    "municipalite":  "Municipalité",
-    "universite":    "Université / Établissement d'enseignement",
-    "entrepreneur":  "Entrepreneur / Micro-entreprise",
-    "pme":           "PME — Petite et Moyenne Entreprise",
-    "pmi":           "PMI — Petite et Moyenne Industrie",
+    "entreprise": "Entreprise privée",
+    "hopital": "Hôpital / Centre de santé",
+    "municipalite": "Municipalité",
+    "universite": "Université / Établissement d'enseignement",
+    "entrepreneur": "Entrepreneur / Micro-entreprise",
+    "pme": "PME — Petite et Moyenne Entreprise",
+    "pmi": "PMI — Petite et Moyenne Industrie",
 }
 
 # ── Configuration des tableaux de bord par type de département ───────────────
 DEPT_TYPE_CONFIG: dict[str, dict] = {
     "finance": {
-        "label": "Finance / Comptabilité", "icon": "💰", "color": "#16a34a",
+        "label": "Finance / Comptabilité",
+        "icon": "💰",
+        "color": "#16a34a",
         "kpis": ["budget_used", "budget_forecast_gap", "contracts_expiring_60", "contracts_savings"],
-        "primary_tab": "optim", "primary_subtab": "licenses",
+        "primary_tab": "optim",
+        "primary_subtab": "licenses",
     },
     "hr": {
-        "label": "Ressources Humaines", "icon": "👥", "color": "#7c3aed",
+        "label": "Ressources Humaines",
+        "icon": "👥",
+        "color": "#7c3aed",
         "kpis": ["manual_hours", "automation_potential", "hr_savings", "processes_count"],
-        "primary_tab": "optim", "primary_subtab": "processes",
+        "primary_tab": "optim",
+        "primary_subtab": "processes",
     },
     "it": {
-        "label": "Technologies de l'information", "icon": "💻", "color": "#2563eb",
+        "label": "Technologies de l'information",
+        "icon": "💻",
+        "color": "#2563eb",
         "kpis": ["unused_licenses_count", "idle_servers", "unused_apps", "license_savings"],
-        "primary_tab": "parc-it", "primary_subtab": "licenses",
+        "primary_tab": "parc-it",
+        "primary_subtab": "licenses",
     },
     "legal": {
-        "label": "Juridique / Conformité", "icon": "⚖️", "color": "#dc2626",
+        "label": "Juridique / Conformité",
+        "icon": "⚖️",
+        "color": "#dc2626",
         "kpis": ["contracts_active", "contracts_expiring_30", "contracts_expiring_90", "negotiation_savings"],
-        "primary_tab": "optim", "primary_subtab": "contracts",
+        "primary_tab": "optim",
+        "primary_subtab": "contracts",
     },
     "operations": {
-        "label": "Opérations", "icon": "⚙️", "color": "#d97706",
+        "label": "Opérations",
+        "icon": "⚙️",
+        "color": "#d97706",
         "kpis": ["processes_count", "automatable_hours", "operations_savings", "efficiency_score"],
-        "primary_tab": "optim", "primary_subtab": "processes",
+        "primary_tab": "optim",
+        "primary_subtab": "processes",
     },
     "approvisionnement": {
-        "label": "Approvisionnement / Achats", "icon": "🛒", "color": "#0891b2",
+        "label": "Approvisionnement / Achats",
+        "icon": "🛒",
+        "color": "#0891b2",
         "kpis": ["contracts_active", "contracts_expiring_60", "negotiation_savings", "contracts_savings"],
-        "primary_tab": "optim", "primary_subtab": "contracts",
+        "primary_tab": "optim",
+        "primary_subtab": "contracts",
     },
     "direction": {
-        "label": "Direction Générale", "icon": "🏛️", "color": "#1e293b",
+        "label": "Direction Générale",
+        "icon": "🏛️",
+        "color": "#1e293b",
         "kpis": ["efficiency_score", "total_savings", "top_opportunity_savings", "monthly_spend"],
-        "primary_tab": "optim", "primary_subtab": "dashboard",
+        "primary_tab": "optim",
+        "primary_subtab": "dashboard",
     },
     "general": {
-        "label": "Général", "icon": "📊", "color": "#64748b",
+        "label": "Général",
+        "icon": "📊",
+        "color": "#64748b",
         "kpis": ["efficiency_score", "total_savings", "unused_licenses_count", "contracts_expiring_60"],
-        "primary_tab": "optim", "primary_subtab": "dashboard",
+        "primary_tab": "optim",
+        "primary_subtab": "dashboard",
     },
     # ── Types supplémentaires ────────────────────────────────────────────────
     "comptabilite": {
-        "label": "Comptabilité", "icon": "🧾", "color": "#0f766e",
+        "label": "Comptabilité",
+        "icon": "🧾",
+        "color": "#0f766e",
         "kpis": ["budget_used", "budget_forecast_gap", "contracts_expiring_60", "contracts_savings"],
-        "primary_tab": "optim", "primary_subtab": "licenses",
+        "primary_tab": "optim",
+        "primary_subtab": "licenses",
     },
     "sales": {
-        "label": "Ventes / Commerciaux", "icon": "💼", "color": "#ea580c",
+        "label": "Ventes / Commerciaux",
+        "icon": "💼",
+        "color": "#ea580c",
         "kpis": ["contracts_active", "negotiation_savings", "contracts_expiring_90", "efficiency_score"],
-        "primary_tab": "optim", "primary_subtab": "contracts",
+        "primary_tab": "optim",
+        "primary_subtab": "contracts",
     },
     "support": {
-        "label": "Support client", "icon": "🎧", "color": "#0891b2",
+        "label": "Support client",
+        "icon": "🎧",
+        "color": "#0891b2",
         "kpis": ["processes_count", "automatable_hours", "efficiency_score", "unused_apps"],
-        "primary_tab": "optim", "primary_subtab": "processes",
+        "primary_tab": "optim",
+        "primary_subtab": "processes",
     },
     "rd": {
-        "label": "R&D", "icon": "🔬", "color": "#7c3aed",
+        "label": "R&D",
+        "icon": "🔬",
+        "color": "#7c3aed",
         "kpis": ["apps_count", "monthly_app_cost", "unused_licenses_count", "contracts_active"],
-        "primary_tab": "optim", "primary_subtab": "licenses",
+        "primary_tab": "optim",
+        "primary_subtab": "licenses",
     },
     "qualite": {
-        "label": "Assurance qualité", "icon": "✅", "color": "#16a34a",
+        "label": "Assurance qualité",
+        "icon": "✅",
+        "color": "#16a34a",
         "kpis": ["processes_count", "automatable_hours", "contracts_active", "efficiency_score"],
-        "primary_tab": "optim", "primary_subtab": "processes",
+        "primary_tab": "optim",
+        "primary_subtab": "processes",
     },
     "digitalisation": {
-        "label": "Digitalisation", "icon": "⚡", "color": "#818CF8",
+        "label": "Digitalisation",
+        "icon": "⚡",
+        "color": "#818CF8",
         "kpis": ["apps_count", "unused_apps", "monthly_app_cost", "license_savings"],
-        "primary_tab": "optim", "primary_subtab": "licenses",
+        "primary_tab": "optim",
+        "primary_subtab": "licenses",
     },
     "logistique": {
-        "label": "Logistique", "icon": "🚚", "color": "#92400e",
+        "label": "Logistique",
+        "icon": "🚚",
+        "color": "#92400e",
         "kpis": ["contracts_active", "contracts_expiring_60", "negotiation_savings", "efficiency_score"],
-        "primary_tab": "optim", "primary_subtab": "contracts",
+        "primary_tab": "optim",
+        "primary_subtab": "contracts",
     },
     "audit": {
-        "label": "Audit & Forensique TI", "icon": "🔍", "color": "#1e293b",
+        "label": "Audit & Forensique TI",
+        "icon": "🔍",
+        "color": "#1e293b",
         "kpis": ["contracts_active", "contracts_expiring_90", "efficiency_score", "unused_licenses_count"],
-        "primary_tab": "optim", "primary_subtab": "dashboard",
+        "primary_tab": "optim",
+        "primary_subtab": "dashboard",
     },
     "compliance": {
-        "label": "Conformité", "icon": "🛡️", "color": "#0369a1",
+        "label": "Conformité",
+        "icon": "🛡️",
+        "color": "#0369a1",
         "kpis": ["contracts_active", "contracts_expiring_30", "contracts_expiring_60", "contracts_savings"],
-        "primary_tab": "optim", "primary_subtab": "contracts",
+        "primary_tab": "optim",
+        "primary_subtab": "contracts",
     },
     "communication": {
-        "label": "Communication", "icon": "📢", "color": "#db2777",
+        "label": "Communication",
+        "icon": "📢",
+        "color": "#db2777",
         "kpis": ["apps_count", "monthly_app_cost", "duplicate_categories", "unused_apps"],
-        "primary_tab": "optim", "primary_subtab": "licenses",
+        "primary_tab": "optim",
+        "primary_subtab": "licenses",
     },
     "manufacturing": {
-        "label": "Fabrication / Production", "icon": "🏭", "color": "#c8102e",
+        "label": "Fabrication / Production",
+        "icon": "🏭",
+        "color": "#c8102e",
         "kpis": ["processes_count", "automatable_hours", "contracts_active", "efficiency_score"],
-        "primary_tab": "optim", "primary_subtab": "processes",
+        "primary_tab": "optim",
+        "primary_subtab": "processes",
     },
     # ── Santé ────────────────────────────────────────────────────────────────
     "admin_hospitalier": {
-        "label": "Administration hospitalière", "icon": "🏥", "color": "#9333ea",
+        "label": "Administration hospitalière",
+        "icon": "🏥",
+        "color": "#9333ea",
         "kpis": ["budget_used", "budget_forecast_gap", "contracts_active", "contracts_expiring_60"],
-        "primary_tab": "optim", "primary_subtab": "dashboard",
+        "primary_tab": "optim",
+        "primary_subtab": "dashboard",
     },
     "direction_medicale": {
-        "label": "Direction médicale", "icon": "🩺", "color": "#0891b2",
+        "label": "Direction médicale",
+        "icon": "🩺",
+        "color": "#0891b2",
         "kpis": ["processes_count", "automatable_hours", "efficiency_score", "budget_used"],
-        "primary_tab": "optim", "primary_subtab": "processes",
+        "primary_tab": "optim",
+        "primary_subtab": "processes",
     },
     "soins_infirmiers": {
-        "label": "Soins infirmiers", "icon": "💊", "color": "#16a34a",
+        "label": "Soins infirmiers",
+        "icon": "💊",
+        "color": "#16a34a",
         "kpis": ["processes_count", "automatable_hours", "hr_savings", "efficiency_score"],
-        "primary_tab": "optim", "primary_subtab": "processes",
+        "primary_tab": "optim",
+        "primary_subtab": "processes",
     },
     "pharmacie": {
-        "label": "Pharmacie", "icon": "💉", "color": "#7c3aed",
+        "label": "Pharmacie",
+        "icon": "💉",
+        "color": "#7c3aed",
         "kpis": ["apps_count", "contracts_active", "contracts_expiring_60", "budget_used"],
-        "primary_tab": "optim", "primary_subtab": "licenses",
+        "primary_tab": "optim",
+        "primary_subtab": "licenses",
     },
     "laboratoires": {
-        "label": "Laboratoires", "icon": "🔬", "color": "#2563eb",
+        "label": "Laboratoires",
+        "icon": "🔬",
+        "color": "#2563eb",
         "kpis": ["apps_count", "unused_licenses_count", "contracts_active", "budget_used"],
-        "primary_tab": "optim", "primary_subtab": "licenses",
+        "primary_tab": "optim",
+        "primary_subtab": "licenses",
     },
     "imagerie": {
-        "label": "Imagerie médicale", "icon": "🖥️", "color": "#d97706",
+        "label": "Imagerie médicale",
+        "icon": "🖥️",
+        "color": "#d97706",
         "kpis": ["apps_count", "monthly_app_cost", "contracts_active", "budget_used"],
-        "primary_tab": "optim", "primary_subtab": "licenses",
+        "primary_tab": "optim",
+        "primary_subtab": "licenses",
     },
     "service_patients": {
-        "label": "Service aux patients", "icon": "🛏️", "color": "#0891b2",
+        "label": "Service aux patients",
+        "icon": "🛏️",
+        "color": "#0891b2",
         "kpis": ["processes_count", "automatable_hours", "efficiency_score", "contracts_active"],
-        "primary_tab": "optim", "primary_subtab": "processes",
+        "primary_tab": "optim",
+        "primary_subtab": "processes",
     },
     "appro_medical": {
-        "label": "Approvisionnement médical", "icon": "📦", "color": "#dc2626",
+        "label": "Approvisionnement médical",
+        "icon": "📦",
+        "color": "#dc2626",
         "kpis": ["contracts_active", "contracts_expiring_60", "negotiation_savings", "contracts_savings"],
-        "primary_tab": "optim", "primary_subtab": "contracts",
+        "primary_tab": "optim",
+        "primary_subtab": "contracts",
     },
     "archives_medicales": {
-        "label": "Archives médicales", "icon": "📁", "color": "#92400e",
+        "label": "Archives médicales",
+        "icon": "📁",
+        "color": "#92400e",
         "kpis": ["processes_count", "automatable_hours", "contracts_active", "efficiency_score"],
-        "primary_tab": "optim", "primary_subtab": "processes",
+        "primary_tab": "optim",
+        "primary_subtab": "processes",
     },
 }
 
@@ -271,11 +400,20 @@ DEPT_TYPE_CONFIG: dict[str, dict] = {
 # Niveau 6 : Employé → opérationnel uniquement
 
 # KPIs masqués pour niveau 4 (Gestionnaire) : pas de projections ni savings $
-_LEVEL4_HIDDEN: frozenset[str] = frozenset({
-    "contracts_savings", "negotiation_savings", "license_savings",
-    "total_savings", "top_opportunity_savings", "hr_savings",
-    "operations_savings", "budget_forecast_gap", "monthly_spend", "monthly_app_cost",
-})
+_LEVEL4_HIDDEN: frozenset[str] = frozenset(
+    {
+        "contracts_savings",
+        "negotiation_savings",
+        "license_savings",
+        "total_savings",
+        "top_opportunity_savings",
+        "hr_savings",
+        "operations_savings",
+        "budget_forecast_gap",
+        "monthly_spend",
+        "monthly_app_cost",
+    }
+)
 
 # KPIs masqués pour niveaux 5-6 : tout ce qui contient des montants $
 _LEVEL56_HIDDEN: frozenset[str] = _LEVEL4_HIDDEN | frozenset({"budget_used"})
@@ -324,9 +462,9 @@ def _cross_org_level(user_id: str, org_id: str) -> int | None:
 def _visible_kpis(kpi_keys: list[str], access_level: int) -> list[str]:
     """Filtre les KPIs selon le niveau hiérarchique effectif."""
     if access_level <= 3:
-        return kpi_keys          # Direction / VP / Directeur : tout
+        return kpi_keys  # Direction / VP / Directeur : tout
     elif access_level == 4:
-        return [k for k in kpi_keys if k not in _LEVEL4_HIDDEN]   # Gestionnaire
+        return [k for k in kpi_keys if k not in _LEVEL4_HIDDEN]  # Gestionnaire
     else:
         return [k for k in kpi_keys if k not in _LEVEL56_HIDDEN]  # Superviseur / Employé
 
@@ -384,9 +522,9 @@ def dept_aggregate(user: CurrentUser = Depends(require_min_role("user"))):
 
     result = []
     for dept in depts:
-        dept_id   = dept["id"]
+        dept_id = dept["id"]
         dept_type = dept.get("dept_type") or "general"
-        cfg       = DEPT_TYPE_CONFIG.get(dept_type, DEPT_TYPE_CONFIG["general"])
+        cfg = DEPT_TYPE_CONFIG.get(dept_type, DEPT_TYPE_CONFIG["general"])
 
         # Limite à 3 KPIs visibles selon le niveau
         summary_keys = _visible_kpis(cfg["kpis"][:5], access_level)[:3]
@@ -404,16 +542,18 @@ def dept_aggregate(user: CurrentUser = Depends(require_min_role("user"))):
         except Exception:
             member_count = 0
 
-        result.append({
-            "dept_id":      dept_id,
-            "dept_type":    dept_type,
-            "dept_name":    dept.get("name"),
-            "icon":         cfg["icon"],
-            "color":        cfg["color"],
-            "label":        cfg["label"],
-            "kpis":         kpis,
-            "member_count": member_count,
-        })
+        result.append(
+            {
+                "dept_id": dept_id,
+                "dept_type": dept_type,
+                "dept_name": dept.get("name"),
+                "icon": cfg["icon"],
+                "color": cfg["color"],
+                "label": cfg["label"],
+                "kpis": kpis,
+                "member_count": member_count,
+            }
+        )
 
     return result
 
@@ -444,9 +584,16 @@ def dept_dashboard(
                 )
                 dept_row = row(cur)
             if not dept_row:
-                return {"dept_type": "general", "dept_name": None, "icon": "📊",
-                        "label": "Tableau de bord", "color": "#818CF8",
-                        "primary_tab": "optim", "primary_subtab": "dashboard", "kpis": []}
+                return {
+                    "dept_type": "general",
+                    "dept_name": None,
+                    "icon": "📊",
+                    "label": "Tableau de bord",
+                    "color": "#818CF8",
+                    "primary_tab": "optim",
+                    "primary_subtab": "dashboard",
+                    "kpis": [],
+                }
             resolved_type = dept_row.get("dept_type") or "general"
             cfg = DEPT_TYPE_CONFIG.get(resolved_type, DEPT_TYPE_CONFIG["general"])
             # Niveau effectif : admin/owner=1 | membre direct=son niveau | cross-org (Direction/RH/IT)=niveau dans leur dept | sinon=6
@@ -455,7 +602,7 @@ def dept_dashboard(
             else:
                 direct_level = _member_level(user.id, dept_id)
                 if direct_level < 6:
-                    access_level = direct_level          # membre direct de ce dept
+                    access_level = direct_level  # membre direct de ce dept
                 else:
                     cross = _cross_org_level(user.id, org_id)
                     access_level = cross if cross is not None else 6
@@ -464,16 +611,16 @@ def dept_dashboard(
             kpi_scope = None if resolved_type == "direction" else dept_id
             kpis = _build_kpis(org_id, kpi_scope, kpi_keys)
             return {
-                "dept_id":        dept_id,
-                "dept_type":      resolved_type,
-                "dept_name":      dept_row.get("name"),
-                "icon":           cfg["icon"],
-                "label":          cfg["label"],
-                "color":          cfg["color"],
-                "primary_tab":    cfg["primary_tab"],
+                "dept_id": dept_id,
+                "dept_type": resolved_type,
+                "dept_name": dept_row.get("name"),
+                "icon": cfg["icon"],
+                "label": cfg["label"],
+                "color": cfg["color"],
+                "primary_tab": cfg["primary_tab"],
                 "primary_subtab": cfg["primary_subtab"],
-                "kpis":           kpis,
-                "access_level":   access_level,
+                "kpis": kpis,
+                "access_level": access_level,
             }
 
         # Vue par défaut — département de l'utilisateur connecté
@@ -519,22 +666,29 @@ def dept_dashboard(
         kpis = _build_kpis(org_id, user_dept_id, kpi_keys)
 
         return {
-            "dept_id":        user_dept_id,
-            "dept_type":      resolved_type,
-            "dept_name":      dept_name,
-            "icon":           cfg["icon"],
-            "label":          cfg["label"],
-            "color":          cfg["color"],
-            "primary_tab":    cfg["primary_tab"],
+            "dept_id": user_dept_id,
+            "dept_type": resolved_type,
+            "dept_name": dept_name,
+            "icon": cfg["icon"],
+            "label": cfg["label"],
+            "color": cfg["color"],
+            "primary_tab": cfg["primary_tab"],
             "primary_subtab": cfg["primary_subtab"],
-            "kpis":           kpis,
-            "access_level":   access_level,
+            "kpis": kpis,
+            "access_level": access_level,
         }
     except Exception:
         # Si les tables n'existent pas encore, retourner un dashboard vide
-        return {"dept_type": "general", "dept_name": None, "icon": "📊",
-                "label": "Tableau de bord", "color": "#818CF8",
-                "primary_tab": "optim", "primary_subtab": "dashboard", "kpis": []}
+        return {
+            "dept_type": "general",
+            "dept_name": None,
+            "icon": "📊",
+            "label": "Tableau de bord",
+            "color": "#818CF8",
+            "primary_tab": "optim",
+            "primary_subtab": "dashboard",
+            "kpis": [],
+        }
 
 
 def _q_fetch(table: str, org_id: str, dept_id: str | None) -> list[dict]:
@@ -556,8 +710,8 @@ def _q_fetch(table: str, org_id: str, dept_id: str | None) -> list[dict]:
 def _build_kpis(org_id: str, dept_id: str | None, kpi_keys: list[str]) -> list[dict]:
     from datetime import date, timedelta
 
-    today   = date.today()
-    result  = []
+    today = date.today()
+    result = []
     cache: dict = {}
 
     def _apps():
@@ -626,136 +780,336 @@ def _build_kpis(org_id: str, dept_id: str | None, kpi_keys: list[str]) -> list[d
                 alloc = sum(float(x.get("allocated") or 0) for x in b)
                 actual = sum(float(x.get("actual") or 0) for x in b)
                 pct = round(actual / alloc * 100) if alloc > 0 else 0
-                result.append({"key": key, "label": "Budget utilisé", "value": f"{pct}%",
-                    "sub": f"{actual:,.0f} / {alloc:,.0f} $", "icon": "📊", "color": "#16a34a" if pct < 85 else "#dc2626"})
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Budget utilisé",
+                        "value": f"{pct}%",
+                        "sub": f"{actual:,.0f} / {alloc:,.0f} $",
+                        "icon": "📊",
+                        "color": "#16a34a" if pct < 85 else "#dc2626",
+                    }
+                )
 
             elif key == "budget_forecast_gap":
                 b = _budget()
                 alloc = sum(float(x.get("allocated") or 0) for x in b)
                 actual = sum(float(x.get("actual") or 0) for x in b)
                 gap = alloc - actual
-                result.append({"key": key, "label": "Marge budgétaire", "value": f"{gap:,.0f} $",
-                    "sub": "restant sur l'année", "icon": "📈", "color": "#16a34a" if gap >= 0 else "#dc2626"})
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Marge budgétaire",
+                        "value": f"{gap:,.0f} $",
+                        "sub": "restant sur l'année",
+                        "icon": "📈",
+                        "color": "#16a34a" if gap >= 0 else "#dc2626",
+                    }
+                )
 
             elif key == "contracts_expiring_60":
-                c60 = [c for c in _contracts() if c.get("renewal_date") and
-                       today <= date.fromisoformat(c["renewal_date"]) <= today + timedelta(days=60)]
-                result.append({"key": key, "label": "Contrats (<60j)", "value": str(len(c60)),
-                    "sub": "à renouveler bientôt", "icon": "📄", "color": "#dc2626" if c60 else "#16a34a"})
+                c60 = [
+                    c
+                    for c in _contracts()
+                    if c.get("renewal_date")
+                    and today <= date.fromisoformat(c["renewal_date"]) <= today + timedelta(days=60)
+                ]
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Contrats (<60j)",
+                        "value": str(len(c60)),
+                        "sub": "à renouveler bientôt",
+                        "icon": "📄",
+                        "color": "#dc2626" if c60 else "#16a34a",
+                    }
+                )
 
             elif key == "contracts_expiring_30":
-                c30 = [c for c in _contracts() if c.get("renewal_date") and
-                       today <= date.fromisoformat(c["renewal_date"]) <= today + timedelta(days=30)]
-                result.append({"key": key, "label": "Contrats critiques (<30j)", "value": str(len(c30)),
-                    "sub": "renouvellement urgent", "icon": "⚠️", "color": "#dc2626" if c30 else "#16a34a"})
+                c30 = [
+                    c
+                    for c in _contracts()
+                    if c.get("renewal_date")
+                    and today <= date.fromisoformat(c["renewal_date"]) <= today + timedelta(days=30)
+                ]
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Contrats critiques (<30j)",
+                        "value": str(len(c30)),
+                        "sub": "renouvellement urgent",
+                        "icon": "⚠️",
+                        "color": "#dc2626" if c30 else "#16a34a",
+                    }
+                )
 
             elif key == "contracts_expiring_90":
-                c90 = [c for c in _contracts() if c.get("renewal_date") and
-                       today <= date.fromisoformat(c["renewal_date"]) <= today + timedelta(days=90)]
-                result.append({"key": key, "label": "Contrats (<90j)", "value": str(len(c90)),
-                    "sub": "à planifier", "icon": "📋", "color": "#d97706" if c90 else "#16a34a"})
+                c90 = [
+                    c
+                    for c in _contracts()
+                    if c.get("renewal_date")
+                    and today <= date.fromisoformat(c["renewal_date"]) <= today + timedelta(days=90)
+                ]
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Contrats (<90j)",
+                        "value": str(len(c90)),
+                        "sub": "à planifier",
+                        "icon": "📋",
+                        "color": "#d97706" if c90 else "#16a34a",
+                    }
+                )
 
             elif key == "contracts_active":
                 active = [c for c in _contracts() if c.get("status") == "active"]
-                result.append({"key": key, "label": "Contrats actifs", "value": str(len(active)),
-                    "sub": "en cours", "icon": "✅", "color": "#2563eb"})
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Contrats actifs",
+                        "value": str(len(active)),
+                        "sub": "en cours",
+                        "icon": "✅",
+                        "color": "#2563eb",
+                    }
+                )
 
             elif key == "contracts_savings":
-                savings = sum(float(c.get("annual_value") or 0) * float(c.get("negotiation_potential") or 0) / 100
-                              for c in _contracts())
-                result.append({"key": key, "label": "Économies contrats", "value": f"{savings:,.0f} $",
-                    "sub": "potentiel / an", "icon": "💡", "color": "#16a34a"})
+                savings = sum(
+                    float(c.get("annual_value") or 0) * float(c.get("negotiation_potential") or 0) / 100
+                    for c in _contracts()
+                )
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Économies contrats",
+                        "value": f"{savings:,.0f} $",
+                        "sub": "potentiel / an",
+                        "icon": "💡",
+                        "color": "#16a34a",
+                    }
+                )
 
             elif key == "negotiation_savings":
-                savings = sum(float(c.get("annual_value") or 0) * float(c.get("negotiation_potential") or 0) / 100
-                              for c in _contracts() if c.get("status") == "active")
-                result.append({"key": key, "label": "Potentiel négociation", "value": f"{savings:,.0f} $",
-                    "sub": "sur contrats actifs", "icon": "🤝", "color": "#16a34a"})
+                savings = sum(
+                    float(c.get("annual_value") or 0) * float(c.get("negotiation_potential") or 0) / 100
+                    for c in _contracts()
+                    if c.get("status") == "active"
+                )
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Potentiel négociation",
+                        "value": f"{savings:,.0f} $",
+                        "sub": "sur contrats actifs",
+                        "icon": "🤝",
+                        "color": "#16a34a",
+                    }
+                )
 
             elif key == "unused_licenses_count":
-                under = [l for l in _lics()
-                         if (int(l.get("quantity") or 0)) > 0 and
-                            (int(l.get("assigned_count") or 0) / int(l.get("quantity") or 1)) < 0.8]
-                result.append({"key": key, "label": "Licences sous-utilisées", "value": str(len(under)),
-                    "sub": "< 80% utilisation", "icon": "🔑", "color": "#dc2626" if under else "#16a34a"})
+                under = [
+                    l
+                    for l in _lics()
+                    if (int(l.get("quantity") or 0)) > 0
+                    and (int(l.get("assigned_count") or 0) / int(l.get("quantity") or 1)) < 0.8
+                ]
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Licences sous-utilisées",
+                        "value": str(len(under)),
+                        "sub": "< 80% utilisation",
+                        "icon": "🔑",
+                        "color": "#dc2626" if under else "#16a34a",
+                    }
+                )
 
             elif key == "license_savings":
                 savings = 0.0
                 for l in _lics():
-                    qty = int(l.get("quantity") or 0); asgn = int(l.get("assigned_count") or 0)
+                    qty = int(l.get("quantity") or 0)
+                    asgn = int(l.get("assigned_count") or 0)
                     cost = float(l.get("cost_per_unit") or 0)
                     if qty > 0 and cost > 0 and asgn / qty < 0.8:
                         mul = 12 if l.get("billing_cycle") == "monthly" else 1
                         savings += (qty - asgn) * cost * mul
-                result.append({"key": key, "label": "Économies licences", "value": f"{savings:,.0f} $",
-                    "sub": "potentiel annuel", "icon": "💰", "color": "#16a34a"})
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Économies licences",
+                        "value": f"{savings:,.0f} $",
+                        "sub": "potentiel annuel",
+                        "icon": "💰",
+                        "color": "#16a34a",
+                    }
+                )
 
             elif key == "idle_servers":
                 idle = [s for s in _srvs() if s.get("status") in ("idle", "to_decommission")]
-                result.append({"key": key, "label": "Serveurs inactifs", "value": str(len(idle)),
-                    "sub": "à décommissionner", "icon": "🖥️", "color": "#dc2626" if idle else "#16a34a"})
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Serveurs inactifs",
+                        "value": str(len(idle)),
+                        "sub": "à décommissionner",
+                        "icon": "🖥️",
+                        "color": "#dc2626" if idle else "#16a34a",
+                    }
+                )
 
             elif key == "unused_apps":
                 unused = [a for a in _apps() if a.get("status") == "unused"]
-                result.append({"key": key, "label": "Applications inutilisées", "value": str(len(unused)),
-                    "sub": "à analyser", "icon": "📱", "color": "#d97706" if unused else "#16a34a"})
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Applications inutilisées",
+                        "value": str(len(unused)),
+                        "sub": "à analyser",
+                        "icon": "📱",
+                        "color": "#d97706" if unused else "#16a34a",
+                    }
+                )
 
             elif key == "apps_count":
                 active = [a for a in _apps() if a.get("status") != "decommissioned"]
-                result.append({"key": key, "label": "Applications actives", "value": str(len(active)),
-                    "sub": "en production", "icon": "🖥️", "color": "#2563eb"})
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Applications actives",
+                        "value": str(len(active)),
+                        "sub": "en production",
+                        "icon": "🖥️",
+                        "color": "#2563eb",
+                    }
+                )
 
             elif key == "monthly_app_cost":
                 cost = sum(float(a.get("monthly_cost") or 0) for a in _apps() if a.get("status") != "decommissioned")
-                result.append({"key": key, "label": "Coût apps/mois", "value": f"{cost:,.0f} $",
-                    "sub": "coût mensuel total", "icon": "💳", "color": "#2563eb"})
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Coût apps/mois",
+                        "value": f"{cost:,.0f} $",
+                        "sub": "coût mensuel total",
+                        "icon": "💳",
+                        "color": "#2563eb",
+                    }
+                )
 
             elif key == "duplicate_categories":
                 from collections import Counter
-                cats = Counter((a.get("category") or "autre").lower()
-                                for a in _apps() if a.get("status") != "decommissioned")
+
+                cats = Counter(
+                    (a.get("category") or "autre").lower() for a in _apps() if a.get("status") != "decommissioned"
+                )
                 dups = sum(1 for c in cats.values() if c >= 2)
-                result.append({"key": key, "label": "Catégories en doublon", "value": str(dups),
-                    "sub": "outils redondants", "icon": "🔄", "color": "#dc2626" if dups else "#16a34a"})
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Catégories en doublon",
+                        "value": str(dups),
+                        "sub": "outils redondants",
+                        "icon": "🔄",
+                        "color": "#dc2626" if dups else "#16a34a",
+                    }
+                )
 
             elif key == "manual_hours":
                 hours = sum(float(p.get("manual_hours_per_month") or 0) for p in _procs())
-                result.append({"key": key, "label": "Heures manuelles/mois", "value": f"{hours:,.0f}h",
-                    "sub": "travail répétitif", "icon": "⏱️", "color": "#d97706" if hours > 100 else "#16a34a"})
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Heures manuelles/mois",
+                        "value": f"{hours:,.0f}h",
+                        "sub": "travail répétitif",
+                        "icon": "⏱️",
+                        "color": "#d97706" if hours > 100 else "#16a34a",
+                    }
+                )
 
             elif key == "automation_potential":
                 procs = _procs()
                 avg = (sum(float(p.get("automation_potential") or 0) for p in procs) / len(procs)) if procs else 0
-                result.append({"key": key, "label": "Potentiel automation", "value": f"{avg:.0f}%",
-                    "sub": "des processus RH", "icon": "🤖", "color": "#16a34a" if avg >= 50 else "#d97706"})
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Potentiel automation",
+                        "value": f"{avg:.0f}%",
+                        "sub": "des processus RH",
+                        "icon": "🤖",
+                        "color": "#16a34a" if avg >= 50 else "#d97706",
+                    }
+                )
 
             elif key == "hr_savings":
-                savings = sum(float(p.get("manual_hours_per_month") or 0) *
-                              float(p.get("automation_potential") or 0) / 100 *
-                              float(p.get("hourly_cost") or 50) * 12
-                              for p in _procs())
-                result.append({"key": key, "label": "Économies RH/an", "value": f"{savings:,.0f} $",
-                    "sub": "via automatisation", "icon": "💰", "color": "#16a34a"})
+                savings = sum(
+                    float(p.get("manual_hours_per_month") or 0)
+                    * float(p.get("automation_potential") or 0)
+                    / 100
+                    * float(p.get("hourly_cost") or 50)
+                    * 12
+                    for p in _procs()
+                )
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Économies RH/an",
+                        "value": f"{savings:,.0f} $",
+                        "sub": "via automatisation",
+                        "icon": "💰",
+                        "color": "#16a34a",
+                    }
+                )
 
             elif key == "operations_savings":
-                savings = sum(float(p.get("manual_hours_per_month") or 0) *
-                              float(p.get("automation_potential") or 0) / 100 *
-                              float(p.get("hourly_cost") or 50) * 12
-                              for p in _procs())
-                result.append({"key": key, "label": "Économies opérations", "value": f"{savings:,.0f} $",
-                    "sub": "potentiel annuel", "icon": "⚡", "color": "#16a34a"})
+                savings = sum(
+                    float(p.get("manual_hours_per_month") or 0)
+                    * float(p.get("automation_potential") or 0)
+                    / 100
+                    * float(p.get("hourly_cost") or 50)
+                    * 12
+                    for p in _procs()
+                )
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Économies opérations",
+                        "value": f"{savings:,.0f} $",
+                        "sub": "potentiel annuel",
+                        "icon": "⚡",
+                        "color": "#16a34a",
+                    }
+                )
 
             elif key == "processes_count":
                 manual = [p for p in _procs() if p.get("status") != "automated"]
-                result.append({"key": key, "label": "Processus manuels", "value": str(len(manual)),
-                    "sub": "à optimiser", "icon": "📋", "color": "#d97706" if manual else "#16a34a"})
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Processus manuels",
+                        "value": str(len(manual)),
+                        "sub": "à optimiser",
+                        "icon": "📋",
+                        "color": "#d97706" if manual else "#16a34a",
+                    }
+                )
 
             elif key == "automatable_hours":
-                hours = sum(float(p.get("manual_hours_per_month") or 0) *
-                            float(p.get("automation_potential") or 0) / 100
-                            for p in _procs())
-                result.append({"key": key, "label": "H. automatisables/mois", "value": f"{hours:.0f}h",
-                    "sub": "libérables", "icon": "🔓", "color": "#16a34a"})
+                hours = sum(
+                    float(p.get("manual_hours_per_month") or 0) * float(p.get("automation_potential") or 0) / 100
+                    for p in _procs()
+                )
+                result.append(
+                    {
+                        "key": key,
+                        "label": "H. automatisables/mois",
+                        "value": f"{hours:.0f}h",
+                        "sub": "libérables",
+                        "icon": "🔓",
+                        "color": "#16a34a",
+                    }
+                )
 
             elif key == "efficiency_score":
                 with get_db() as cur:
@@ -778,23 +1132,33 @@ def _build_kpis(org_id: str, dept_id: str | None, kpi_keys: list[str]) -> list[d
                 lic = (usd_s / tot_s * 100) if tot_s > 0 else 80
                 score = round((sw * 0.5 + lic * 0.5), 1)
                 color = "#16a34a" if score >= 80 else "#d97706" if score >= 60 else "#dc2626"
-                result.append({"key": key, "label": "Score d'efficacité", "value": f"{score:.0f}%",
-                    "sub": "santé organisationnelle", "icon": "🎯", "color": color})
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Score d'efficacité",
+                        "value": f"{score:.0f}%",
+                        "sub": "santé organisationnelle",
+                        "icon": "🎯",
+                        "color": color,
+                    }
+                )
 
             elif key == "total_savings":
                 # Somme rapide de toutes les opportunités
                 lic_s = sum(
-                    (int(l.get("quantity") or 0) - int(l.get("assigned_count") or 0)) *
-                    float(l.get("cost_per_unit") or 0) *
-                    (12 if l.get("billing_cycle") == "monthly" else 1)
+                    (int(l.get("quantity") or 0) - int(l.get("assigned_count") or 0))
+                    * float(l.get("cost_per_unit") or 0)
+                    * (12 if l.get("billing_cycle") == "monthly" else 1)
                     for l in _lics()
-                    if int(l.get("quantity") or 0) > 0 and
-                       int(l.get("assigned_count") or 0) / int(l.get("quantity") or 1) < 0.8
+                    if int(l.get("quantity") or 0) > 0
+                    and int(l.get("assigned_count") or 0) / int(l.get("quantity") or 1) < 0.8
                 )
                 proc_s = sum(
-                    float(p.get("manual_hours_per_month") or 0) *
-                    float(p.get("automation_potential") or 0) / 100 *
-                    float(p.get("hourly_cost") or 50) * 12
+                    float(p.get("manual_hours_per_month") or 0)
+                    * float(p.get("automation_potential") or 0)
+                    / 100
+                    * float(p.get("hourly_cost") or 50)
+                    * 12
                     for p in _procs()
                 )
                 cont_s = sum(
@@ -802,39 +1166,78 @@ def _build_kpis(org_id: str, dept_id: str | None, kpi_keys: list[str]) -> list[d
                     for c in _contracts()
                 )
                 total = lic_s + proc_s + cont_s
-                result.append({"key": key, "label": "Économies totales", "value": f"{total:,.0f} $",
-                    "sub": "potentiel identifié / an", "icon": "💎", "color": "#16a34a"})
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Économies totales",
+                        "value": f"{total:,.0f} $",
+                        "sub": "potentiel identifié / an",
+                        "icon": "💎",
+                        "color": "#16a34a",
+                    }
+                )
 
             elif key == "top_opportunity_savings":
                 opps = []
                 for l in _lics():
-                    qty = int(l.get("quantity") or 0); asgn = int(l.get("assigned_count") or 0)
+                    qty = int(l.get("quantity") or 0)
+                    asgn = int(l.get("assigned_count") or 0)
                     cost = float(l.get("cost_per_unit") or 0)
                     if qty > 0 and cost > 0 and asgn / qty < 0.8:
                         mul = 12 if l.get("billing_cycle") == "monthly" else 1
                         opps.append((qty - asgn) * cost * mul)
                 for p in _procs():
-                    opps.append(float(p.get("manual_hours_per_month") or 0) *
-                                float(p.get("automation_potential") or 0) / 100 *
-                                float(p.get("hourly_cost") or 50) * 12)
+                    opps.append(
+                        float(p.get("manual_hours_per_month") or 0)
+                        * float(p.get("automation_potential") or 0)
+                        / 100
+                        * float(p.get("hourly_cost") or 50)
+                        * 12
+                    )
                 for c in _contracts():
                     pot = float(c.get("annual_value") or 0) * float(c.get("negotiation_potential") or 0) / 100
                     if pot > 0:
                         opps.append(pot)
                 top = max(opps, default=0)
-                result.append({"key": key, "label": "Meilleure opportunité", "value": f"{top:,.0f} $",
-                    "sub": "économie unitaire max / an", "icon": "🏆", "color": "#16a34a"})
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Meilleure opportunité",
+                        "value": f"{top:,.0f} $",
+                        "sub": "économie unitaire max / an",
+                        "icon": "🏆",
+                        "color": "#16a34a",
+                    }
+                )
 
             elif key == "monthly_spend":
                 apps = _apps()
                 spend = sum(float(a.get("monthly_cost") or 0) for a in apps if a.get("status") != "decommissioned")
-                _IT_CATS = {"software","logiciels","licences","telecom","internet","securite","cloud","hardware","maintenance"}
+                _IT_CATS = {
+                    "software",
+                    "logiciels",
+                    "licences",
+                    "telecom",
+                    "internet",
+                    "securite",
+                    "cloud",
+                    "hardware",
+                    "maintenance",
+                }
                 for c in _contracts():
                     cat = (c.get("category") or "").lower()
                     if c.get("status") == "active" and cat in _IT_CATS:
                         spend += float(c.get("annual_value") or 0) / 12
-                result.append({"key": key, "label": "Dépenses IT/mois", "value": f"{spend:,.0f} $",
-                    "sub": "coût applicatif mensuel", "icon": "📉", "color": "#2563eb"})
+                result.append(
+                    {
+                        "key": key,
+                        "label": "Dépenses IT/mois",
+                        "value": f"{spend:,.0f} $",
+                        "sub": "coût applicatif mensuel",
+                        "icon": "📉",
+                        "color": "#2563eb",
+                    }
+                )
 
         except Exception:
             pass  # KPI individuel indisponible — on continue
@@ -968,7 +1371,10 @@ def create_department(
             )
             existing = row(cur)
             if existing:
-                raise HTTPException(409, f"Un département de type « {payload.dept_type} » existe déjà : « {existing['name']} ». Chaque type est unique par organisation.")
+                raise HTTPException(
+                    409,
+                    f"Un département de type « {payload.dept_type} » existe déjà : « {existing['name']} ». Chaque type est unique par organisation.",
+                )
 
     try:
         with get_db() as cur:
@@ -1138,6 +1544,7 @@ def remove_dept_member(
 
 # ── KPI Snapshots ─────────────────────────────────────────────────────────────
 
+
 class KpiSnapshotPayload(BaseModel):
     kpis: list[dict] = Field(default_factory=list)
     health_score: int | None = None
@@ -1152,8 +1559,9 @@ def save_kpi_snapshot(
     user: CurrentUser = Depends(require_min_role("user")),
 ):
     with get_db() as cur:
-        cur.execute("SELECT id FROM departments WHERE id = %s AND organization_id = %s LIMIT 1",
-                    (dept_id, user.organization_id))
+        cur.execute(
+            "SELECT id FROM departments WHERE id = %s AND organization_id = %s LIMIT 1", (dept_id, user.organization_id)
+        )
         if not row(cur):
             raise HTTPException(404, "Département introuvable.")
         cur.execute(
@@ -1161,8 +1569,14 @@ def save_kpi_snapshot(
                VALUES (%s, %s, %s, %s, CURRENT_DATE, %s, %s)
                ON CONFLICT (dept_id, snapshot_date) DO UPDATE
                SET kpis = EXCLUDED.kpis, health_score = EXCLUDED.health_score""",
-            (user.organization_id, dept_id, payload.dept_type, payload.dept_name,
-             _json.dumps(payload.kpis), payload.health_score),
+            (
+                user.organization_id,
+                dept_id,
+                payload.dept_type,
+                payload.dept_name,
+                _json.dumps(payload.kpis),
+                payload.health_score,
+            ),
         )
     return {"ok": True}
 
@@ -1174,8 +1588,9 @@ def get_kpi_history(
     user: CurrentUser = Depends(require_min_role("user")),
 ):
     with get_db() as cur:
-        cur.execute("SELECT id FROM departments WHERE id = %s AND organization_id = %s LIMIT 1",
-                    (dept_id, user.organization_id))
+        cur.execute(
+            "SELECT id FROM departments WHERE id = %s AND organization_id = %s LIMIT 1", (dept_id, user.organization_id)
+        )
         if not row(cur):
             raise HTTPException(404, "Département introuvable.")
         cur.execute(
@@ -1185,8 +1600,7 @@ def get_kpi_history(
                ORDER BY snapshot_date ASC""",
             (dept_id, days),
         )
-        return [{"date": r["date"], "health_score": r["health_score"], "kpis": r["kpis"]}
-                for r in rows(cur)]
+        return [{"date": r["date"], "health_score": r["health_score"], "kpis": r["kpis"]} for r in rows(cur)]
 
 
 def _dept_or_404(dept_id: str, organization_id: str) -> dict:

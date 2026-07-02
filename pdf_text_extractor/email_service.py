@@ -1,12 +1,13 @@
 """Service d'envoi d'emails via Resend API (https://resend.com)."""
+
 from __future__ import annotations
 
 import os
 import httpx
 
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
-FROM_EMAIL     = os.environ.get("EMAIL_FROM", "NexHire <noreply@nexhire.ca>")
-APP_URL        = os.environ.get("APP_URL", "https://myportal.nexhire.ca")
+FROM_EMAIL = os.environ.get("EMAIL_FROM", "NexHire <noreply@nexhire.ca>")
+APP_URL = os.environ.get("APP_URL", "https://myportal.nexhire.ca")
 
 
 def _send(to: str, subject: str, html: str) -> bool:
@@ -40,9 +41,9 @@ def send_invite_email(
     if partner_slug:
         invite_url += f"&partenaire={partner_slug}"
     role_labels = {
-        "user":    "Utilisateur",
+        "user": "Utilisateur",
         "manager": "Manager",
-        "admin":   "Administrateur",
+        "admin": "Administrateur",
     }
     role_label = role_labels.get(role, role)
 
@@ -134,14 +135,11 @@ def send_license_expiry_alert(
     if not licenses:
         return False
     subject = f"⚠️ {len(licenses)} licence(s) expirent bientôt — {org_name}"
-    rows_html = "".join(
-        f"""<tr>
+    rows_html = "".join(f"""<tr>
           <td style="padding:8px;border-top:1px solid #e2e8f0">{lic.get('software_name','')}</td>
           <td style="padding:8px;border-top:1px solid #e2e8f0;text-align:center">{lic.get('seats', '—')}</td>
           <td style="padding:8px;border-top:1px solid #e2e8f0;color:#dc2626;font-weight:600">{lic.get('expires_at','')[:10] if lic.get('expires_at') else '—'}</td>
-        </tr>"""
-        for lic in licenses
-    )
+        </tr>""" for lic in licenses)
     html = f"""
 <!doctype html>
 <html lang="fr">
@@ -188,6 +186,7 @@ def send_monthly_report(
     expiring_licenses: int,
 ) -> bool:
     from datetime import datetime
+
     month_label = datetime.now().strftime("%B %Y")
     rating_stars = "★" * round(avg_rating) + "☆" * (5 - round(avg_rating))
     subject = f"📊 Rapport mensuel NexHire — {org_name} ({month_label})"
@@ -251,6 +250,7 @@ def send_monthly_report_rich(
     top_depts: list[dict] | None = None,
 ) -> bool:
     from datetime import datetime
+
     month_label = datetime.now().strftime("%B %Y")
     rating_stars = "★" * round(avg_rating) + "☆" * (5 - round(avg_rating)) if avg_rating else "—"
     subject = f"📊 Rapport mensuel NexHire — {org_name} ({month_label})"
@@ -258,12 +258,16 @@ def send_monthly_report_rich(
     health_color = "#16a34a" if avg_health >= 80 else "#f59e0b" if avg_health >= 60 else "#dc2626"
 
     savings_html = (
-        f'<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;'
-        f'padding:18px;text-align:center;flex:1;min-width:120px">'
-        f'<div style="font-size:1.6rem;font-weight:800;color:#16a34a">{total_savings:,} $</div>'
-        f'<div style="font-size:.8rem;color:#64748b;margin-top:4px">Économies identifiées</div>'
-        f'</div>'
-    ) if total_savings > 0 else ""
+        (
+            f'<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;'
+            f'padding:18px;text-align:center;flex:1;min-width:120px">'
+            f'<div style="font-size:1.6rem;font-weight:800;color:#16a34a">{total_savings:,} $</div>'
+            f'<div style="font-size:.8rem;color:#64748b;margin-top:4px">Économies identifiées</div>'
+            f'</div>'
+        )
+        if total_savings > 0
+        else ""
+    )
 
     top_depts_html = ""
     if top_depts:
@@ -281,11 +285,15 @@ def send_monthly_report_rich(
       </table>"""
 
     expiry_html = (
-        f'<div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;'
-        f'padding:12px 16px;margin:20px 0">'
-        f'<p style="margin:0;color:#c2410c;font-weight:600">⚠️ {expiring_licenses} licence(s) expirent dans les 30 prochains jours</p>'
-        f'</div>'
-    ) if expiring_licenses > 0 else ""
+        (
+            f'<div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;'
+            f'padding:12px 16px;margin:20px 0">'
+            f'<p style="margin:0;color:#c2410c;font-weight:600">⚠️ {expiring_licenses} licence(s) expirent dans les 30 prochains jours</p>'
+            f'</div>'
+        )
+        if expiring_licenses > 0
+        else ""
+    )
 
     html = f"""<!doctype html>
 <html lang="fr">
@@ -506,14 +514,11 @@ def send_connector_alert(
     count = len(failed_connectors)
     subject = f"🔴 {count} connecteur{'s' if count > 1 else ''} déconnecté{'s' if count > 1 else ''} — {org_name}"
 
-    rows_html = "".join(
-        f"""<tr>
+    rows_html = "".join(f"""<tr>
           <td style="padding:10px 12px;border-top:1px solid #e2e8f0;font-weight:600;color:#1e293b">{c.get('connector_type','').upper()}</td>
           <td style="padding:10px 12px;border-top:1px solid #e2e8f0;color:#dc2626;font-size:.82rem">{c.get('last_error','Erreur inconnue')[:120]}</td>
           <td style="padding:10px 12px;border-top:1px solid #e2e8f0;color:#94a3b8;font-size:.8rem">{str(c.get('updated_at',''))[:16].replace('T',' ')}</td>
-        </tr>"""
-        for c in failed_connectors
-    )
+        </tr>""" for c in failed_connectors)
 
     html = f"""<!doctype html>
 <html lang="fr">
@@ -592,18 +597,21 @@ def send_executive_briefing(
 ) -> bool:
     """Briefing exécutif hebdomadaire — envoyé chaque lundi matin."""
     from datetime import date as _date
+
     if not date_str:
         date_str = _date.today().strftime("%d %B %Y")
 
     score_colors = {"green": "#22c55e", "yellow": "#f59e0b", "red": "#ef4444"}
-    score_bgs    = {"green": "#f0fdf4", "yellow": "#fffbeb", "red": "#fef2f2"}
-    score_color  = score_colors.get(badge, "#ef4444")
-    score_bg     = score_bgs.get(badge, "#fef2f2")
-    score_label  = "Excellente" if score >= 70 else ("À surveiller" if score >= 40 else "Critique")
+    score_bgs = {"green": "#f0fdf4", "yellow": "#fffbeb", "red": "#fef2f2"}
+    score_color = score_colors.get(badge, "#ef4444")
+    score_bg = score_bgs.get(badge, "#fef2f2")
+    score_label = "Excellente" if score >= 70 else ("À surveiller" if score >= 40 else "Critique")
 
     budget_status = "critique" if budget_pct >= 95 else ("attention" if budget_pct >= 80 else "normal")
-    budget_color  = "#ef4444" if budget_status == "critique" else ("#f59e0b" if budget_status == "attention" else "#22c55e")
-    budget_bg     = "#fef2f2" if budget_status == "critique" else ("#fffbeb" if budget_status == "attention" else "#f0fdf4")
+    budget_color = (
+        "#ef4444" if budget_status == "critique" else ("#f59e0b" if budget_status == "attention" else "#22c55e")
+    )
+    budget_bg = "#fef2f2" if budget_status == "critique" else ("#fffbeb" if budget_status == "attention" else "#f0fdf4")
 
     def fmt_cad(v: float) -> str:
         return f"{int(v):,} $".replace(",", " ")
@@ -633,9 +641,13 @@ def send_executive_briefing(
     if savings_potential > 0:
         actions.append("Examiner les licences sous-utilisées pour récupérer les coûts identifiés")
     if contracts_due > 0:
-        actions.append(f"Traiter les <strong>{contracts_due} contrat{'s' if contracts_due != 1 else ''}</strong> à renouveler avant expiration")
+        actions.append(
+            f"Traiter les <strong>{contracts_due} contrat{'s' if contracts_due != 1 else ''}</strong> à renouveler avant expiration"
+        )
     if depts_at_risk > 0:
-        actions.append(f"Revoir les <strong>{depts_at_risk} département{'s' if depts_at_risk != 1 else ''}</strong> en score rouge")
+        actions.append(
+            f"Revoir les <strong>{depts_at_risk} département{'s' if depts_at_risk != 1 else ''}</strong> en score rouge"
+        )
     if budget_pct >= 80:
         actions.append(f"Surveiller la consommation budgétaire — {budget_pct:.0f} % consommé")
     actions.append("Consulter le tableau de bord complet pour les détails")
@@ -703,17 +715,17 @@ def send_account_deletion_warning(
     """Email d'avertissement de suppression de compte — 4 envois (23, 16, 9, 2 jours restants)."""
     if days_until_deletion <= 2:
         urgency_color = "#b91c1c"
-        urgency_bg    = "#fef2f2"
+        urgency_bg = "#fef2f2"
         urgency_border = "#fecaca"
         prefix = "FINAL —"
     elif days_until_deletion <= 9:
         urgency_color = "#c2410c"
-        urgency_bg    = "#fff7ed"
+        urgency_bg = "#fff7ed"
         urgency_border = "#fed7aa"
         prefix = "URGENT —"
     else:
         urgency_color = "#b45309"
-        urgency_bg    = "#fffbeb"
+        urgency_bg = "#fffbeb"
         urgency_border = "#fde68a"
         prefix = "Avertissement —"
 
@@ -835,7 +847,7 @@ def send_diagnostic_rapport_email(
     rapport_url: str,
 ) -> bool:
     niveau_labels = {"debutant": "Débutant", "intermediaire": "Intermédiaire", "avance": "Avancé"}
-    niveau_colors = {"debutant": "#ef4444",  "intermediaire": "#f59e0b",       "avance": "#10b981"}
+    niveau_colors = {"debutant": "#ef4444", "intermediaire": "#f59e0b", "avance": "#10b981"}
     niveau_label = niveau_labels.get(niveau, niveau)
     nc = niveau_colors.get(niveau, "#6366f1")
     subject = f"Votre rapport de maturité IA — {company_name}"
@@ -897,8 +909,8 @@ def send_m365_token_expiry_alert(
 ) -> bool:
     """Alerte l'admin/owner que le refresh token du compte de service M365 expire bientôt."""
     is_expired = days_left <= 0
-    urgency_color  = "#dc2626" if days_left <= 7 else "#d97706"
-    urgency_bg     = "#fef2f2" if days_left <= 7 else "#fffbeb"
+    urgency_color = "#dc2626" if days_left <= 7 else "#d97706"
+    urgency_bg = "#fef2f2" if days_left <= 7 else "#fffbeb"
     urgency_border = "#fecaca" if days_left <= 7 else "#fde68a"
 
     if is_expired:
@@ -910,7 +922,11 @@ def send_m365_token_expiry_alert(
         headline = f"Connexion M365 — expiration dans {days_left} jour{'s' if days_left > 1 else ''}"
         body_msg = f"Le token OAuth du compte de service Microsoft 365 expirera dans <strong>{days_left} jour{'s' if days_left > 1 else ''}</strong>. Reconnectez-le avant l'expiration pour éviter toute interruption."
 
-    account_row = f'<p style="margin:6px 0 0;font-size:.85rem;color:#475569">Compte : <strong>{service_account_email}</strong></p>' if service_account_email else ""
+    account_row = (
+        f'<p style="margin:6px 0 0;font-size:.85rem;color:#475569">Compte : <strong>{service_account_email}</strong></p>'
+        if service_account_email
+        else ""
+    )
 
     html = f"""<!doctype html>
 <html lang="fr">

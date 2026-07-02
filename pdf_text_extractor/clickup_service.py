@@ -3,6 +3,7 @@
 Auth : API Token (Bearer). Aucune variable d'env requise.
 Credentials stockés chiffrés par organisation.
 """
+
 from __future__ import annotations
 
 import httpx
@@ -11,9 +12,9 @@ from connector_loader import load_creds
 _BASE = "https://api.clickup.com/api/v2"
 
 
-def search_clickup(query: str, org_id: str,
-                   status: str = "all", space: str | None = None,
-                   limit: int = 10) -> list[dict]:
+def search_clickup(
+    query: str, org_id: str, status: str = "all", space: str | None = None, limit: int = 10
+) -> list[dict]:
     creds, _ = load_creds("clickup", org_id)
     if not creds:
         return [{"error": "ClickUp non connecté"}]
@@ -36,31 +37,28 @@ def search_clickup(query: str, org_id: str,
 
         # Recherche de tâches
         params: dict = {
-            "query":          query,
+            "query": query,
             "include_closed": "true" if status in ("all", "closed") else "false",
-            "page":           0,
+            "page": 0,
         }
         if status == "open":
             params["include_closed"] = "false"
 
-        r = httpx.get(f"{_BASE}/team/{team_id}/task",
-                      headers=headers,
-                      params=params,
-                      timeout=12)
+        r = httpx.get(f"{_BASE}/team/{team_id}/task", headers=headers, params=params, timeout=12)
         r.raise_for_status()
         tasks = r.json().get("tasks", [])
 
         return [
             {
-                "id":       t.get("id"),
-                "titre":    t.get("name"),
-                "statut":   (t.get("status") or {}).get("status"),
+                "id": t.get("id"),
+                "titre": t.get("name"),
+                "statut": (t.get("status") or {}).get("status"),
                 "priorité": (t.get("priority") or {}).get("priority"),
                 "assignés": [a.get("username") for a in (t.get("assignees") or [])],
-                "liste":    (t.get("list") or {}).get("name"),
-                "espace":   (t.get("space") or {}).get("name"),
+                "liste": (t.get("list") or {}).get("name"),
+                "espace": (t.get("space") or {}).get("name"),
                 "échéance": t.get("due_date"),
-                "source":   "clickup",
+                "source": "clickup",
             }
             for t in tasks[:limit]
         ]

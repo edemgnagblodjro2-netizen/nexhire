@@ -3,6 +3,7 @@
 Autotask REST API v1.0 — auth : ApiIntegrationCode + UserName + Secret en headers.
 Docs : https://ww1.autotask.net/help/DeveloperHelp/Content/AdminSetup/2ExtensionsIntegrations/APIs/REST/General_Topics/AT_REST_API_Getting_Started.htm
 """
+
 from __future__ import annotations
 
 import json
@@ -15,7 +16,7 @@ from db import get_db, row as db_row
 
 # Autotask zone-aware base URL (zone 4 = default North America)
 AUTOTASK_BASE = "https://webservices{zone}.autotask.net/ATServicesRest/v1.0"
-DEFAULT_ZONE  = "4"
+DEFAULT_ZONE = "4"
 
 
 def _load_config(org_id: str) -> dict | None:
@@ -42,9 +43,9 @@ def _load_config(org_id: str) -> dict | None:
 def _headers(cfg: dict) -> dict:
     return {
         "ApiIntegrationCode": cfg.get("api_integration_code", ""),
-        "UserName":           cfg.get("username", ""),
-        "Secret":             cfg.get("secret") or cfg.get("api_key", ""),
-        "Content-Type":       "application/json",
+        "UserName": cfg.get("username", ""),
+        "Secret": cfg.get("secret") or cfg.get("api_key", ""),
+        "Content-Type": "application/json",
     }
 
 
@@ -77,11 +78,12 @@ def search_autotask(
             pass
 
     from agent_service import _mock_autotask
+
     return _mock_autotask(query=query, type=type, status=status, limit=limit)
 
 
 def _real_search(cfg: dict, query: str, type: str, status: str, limit: int) -> list[dict]:
-    base    = _base_url(cfg)
+    base = _base_url(cfg)
     headers = _headers(cfg)
     results: list[dict] = []
 
@@ -98,20 +100,24 @@ def _real_search(cfg: dict, query: str, type: str, status: str, limit: int) -> l
                 "filter": filter_items,
                 "maxRecords": limit,
             }
-            resp = client.post(f"{base}/Tickets/query", headers=headers, json={"filter": filter_items, "maxRecords": limit})
+            resp = client.post(
+                f"{base}/Tickets/query", headers=headers, json={"filter": filter_items, "maxRecords": limit}
+            )
             if resp.status_code == 200:
                 tickets = resp.json().get("items", [])
                 for t in tickets:
-                    results.append({
-                        "id":        f"AT-{t.get('id', '')}",
-                        "type":      "ticket",
-                        "titre":     t.get("title", ""),
-                        "statut":    _status_label(t.get("status")),
-                        "priorité":  _priority_label(t.get("priority")),
-                        "assigné_à": t.get("assignedResourceRoleID", ""),
-                        "créé":      (t.get("createDate", "")[:10] if t.get("createDate") else ""),
-                        "due":       (t.get("dueDateTime", "")[:10] if t.get("dueDateTime") else ""),
-                    })
+                    results.append(
+                        {
+                            "id": f"AT-{t.get('id', '')}",
+                            "type": "ticket",
+                            "titre": t.get("title", ""),
+                            "statut": _status_label(t.get("status")),
+                            "priorité": _priority_label(t.get("priority")),
+                            "assigné_à": t.get("assignedResourceRoleID", ""),
+                            "créé": (t.get("createDate", "")[:10] if t.get("createDate") else ""),
+                            "due": (t.get("dueDateTime", "")[:10] if t.get("dueDateTime") else ""),
+                        }
+                    )
 
         if type in ("project", "all"):
             resp = client.post(
@@ -122,14 +128,16 @@ def _real_search(cfg: dict, query: str, type: str, status: str, limit: int) -> l
             if resp.status_code == 200:
                 projects = resp.json().get("items", [])
                 for p in projects:
-                    results.append({
-                        "id":     f"PRJ-{p.get('id', '')}",
-                        "type":   "project",
-                        "titre":  p.get("projectName", ""),
-                        "statut": p.get("status", ""),
-                        "début":  (p.get("startDateTime", "")[:10] if p.get("startDateTime") else ""),
-                        "fin":    (p.get("endDateTime", "")[:10] if p.get("endDateTime") else ""),
-                    })
+                    results.append(
+                        {
+                            "id": f"PRJ-{p.get('id', '')}",
+                            "type": "project",
+                            "titre": p.get("projectName", ""),
+                            "statut": p.get("status", ""),
+                            "début": (p.get("startDateTime", "")[:10] if p.get("startDateTime") else ""),
+                            "fin": (p.get("endDateTime", "")[:10] if p.get("endDateTime") else ""),
+                        }
+                    )
 
     return results[:limit] if results else []
 

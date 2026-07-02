@@ -14,6 +14,7 @@ Règles :
   9. risky_user_detected   — Utilisateur signalé par Identity Protection → CRITIQUE/ÉLEVÉ
  10. signin_anomaly        — Pic d'échecs de connexion sur 24h (>10) → ÉLEVÉ
 """
+
 from __future__ import annotations
 
 import json
@@ -41,6 +42,7 @@ _ENTRA_FINDING_TYPES = (
 # Point d'entrée
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 def run_entra_risk_analyzer(org_id: str) -> dict:
     """Analyse la posture Entra ID et génère/met à jour les risk_findings."""
     _reset_entra_findings(org_id)
@@ -64,8 +66,8 @@ def run_entra_risk_analyzer(org_id: str) -> dict:
     return {
         "findings_count": len(findings),
         "critical": by_severity["critical"],
-        "high":     by_severity["high"],
-        "medium":   by_severity["medium"],
+        "high": by_severity["high"],
+        "medium": by_severity["medium"],
         "findings": findings[:20],
     }
 
@@ -73,6 +75,7 @@ def run_entra_risk_analyzer(org_id: str) -> dict:
 # ─────────────────────────────────────────────────────────────────────────────
 # Règle 1 — Administrateurs sans MFA (CRITIQUE)
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def _rule_admin_no_mfa(org_id: str) -> list[dict]:
     """Tout compte avec privileged_access=true et mfa_enabled=false."""
@@ -100,9 +103,9 @@ def _rule_admin_no_mfa(org_id: str) -> list[dict]:
     findings = []
     for r in rows:
         factors = r.get("risk_factors") or []
-        roles   = [f.replace("role:", "") for f in factors if f.startswith("role:")]
+        roles = [f.replace("role:", "") for f in factors if f.startswith("role:")]
         role_lbl = ", ".join(roles) if roles else "Administrateur"
-        name     = r["full_name"] or r["canonical_email"]
+        name = r["full_name"] or r["canonical_email"]
 
         _upsert_entra_finding(
             org_id=org_id,
@@ -121,19 +124,22 @@ def _rule_admin_no_mfa(org_id: str) -> list[dict]:
             ),
             cost_impact_monthly=0,
         )
-        findings.append({
-            "finding_type": "admin_no_mfa",
-            "severity":     "critical",
-            "email":        r["canonical_email"],
-            "display_name": r["full_name"],
-            "roles":        roles,
-        })
+        findings.append(
+            {
+                "finding_type": "admin_no_mfa",
+                "severity": "critical",
+                "email": r["canonical_email"],
+                "display_name": r["full_name"],
+                "roles": roles,
+            }
+        )
     return findings
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Règle 2 — Comptes à privilèges inactifs (ÉLEVÉ)
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def _rule_privileged_inactive(org_id: str) -> list[dict]:
     """Admin avec days_inactive > 30 jours (données confirmées)."""
@@ -166,11 +172,11 @@ def _rule_privileged_inactive(org_id: str) -> list[dict]:
 
     findings = []
     for r in rows:
-        days  = int(r.get("days_inactive") or 0)
+        days = int(r.get("days_inactive") or 0)
         factors = r.get("risk_factors") or []
-        roles   = [f.replace("role:", "") for f in factors if f.startswith("role:")]
+        roles = [f.replace("role:", "") for f in factors if f.startswith("role:")]
         role_lbl = ", ".join(roles) if roles else "Administrateur"
-        name     = r["full_name"] or r["canonical_email"]
+        name = r["full_name"] or r["canonical_email"]
 
         _upsert_entra_finding(
             org_id=org_id,
@@ -189,20 +195,23 @@ def _rule_privileged_inactive(org_id: str) -> list[dict]:
             ),
             cost_impact_monthly=0,
         )
-        findings.append({
-            "finding_type": "privileged_inactive",
-            "severity":     "high",
-            "email":        r["canonical_email"],
-            "display_name": r["full_name"],
-            "days_inactive": days,
-            "roles":         roles,
-        })
+        findings.append(
+            {
+                "finding_type": "privileged_inactive",
+                "severity": "high",
+                "email": r["canonical_email"],
+                "display_name": r["full_name"],
+                "days_inactive": days,
+                "roles": roles,
+            }
+        )
     return findings
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Règle 3 — Utilisateurs sans MFA (MOYEN)
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def _rule_user_no_mfa(org_id: str) -> list[dict]:
     """Utilisateurs actifs (non-admin) sans MFA configuré."""
@@ -244,8 +253,14 @@ def _rule_user_no_mfa(org_id: str) -> list[dict]:
                 remediation=f"Demander à {r['canonical_email']} de configurer MFA sur https://aka.ms/mfasetup",
                 cost_impact_monthly=0,
             )
-            findings.append({"finding_type": "user_no_mfa", "severity": "medium",
-                             "email": r["canonical_email"], "display_name": r["full_name"]})
+            findings.append(
+                {
+                    "finding_type": "user_no_mfa",
+                    "severity": "medium",
+                    "email": r["canonical_email"],
+                    "display_name": r["full_name"],
+                }
+            )
     else:
         # Finding groupé
         emails = ", ".join(r["canonical_email"] for r in rows[:5])
@@ -255,24 +270,21 @@ def _rule_user_no_mfa(org_id: str) -> list[dict]:
             finding_type="user_no_mfa",
             severity="medium",
             title=f"{len(rows)} utilisateurs sans MFA configuré",
-            description=(
-                f"{len(rows)} comptes actifs n'ont pas de méthode MFA : "
-                f"{emails}{suffix}."
-            ),
+            description=(f"{len(rows)} comptes actifs n'ont pas de méthode MFA : " f"{emails}{suffix}."),
             remediation=(
-                f"Créer une stratégie d'accès conditionnel Entra ID qui exige le MFA "
-                f"pour tous les utilisateurs. Ou activer les Security Defaults Microsoft."
+                "Créer une stratégie d'accès conditionnel Entra ID qui exige le MFA "
+                "pour tous les utilisateurs. Ou activer les Security Defaults Microsoft."
             ),
             cost_impact_monthly=0,
         )
-        findings.append({"finding_type": "user_no_mfa", "severity": "medium",
-                         "count": len(rows)})
+        findings.append({"finding_type": "user_no_mfa", "severity": "medium", "count": len(rows)})
     return findings
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Règle 4 — Groupes de sécurité sans propriétaire (MOYEN)
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def _rule_group_no_owner(org_id: str) -> list[dict]:
     """Groupes Entra ID stockés sans has_owner = true."""
@@ -317,14 +329,14 @@ def _rule_group_no_owner(org_id: str) -> list[dict]:
             ),
             cost_impact_monthly=0,
         )
-        findings.append({"finding_type": "group_no_owner", "severity": "medium",
-                         "group_name": name})
+        findings.append({"finding_type": "group_no_owner", "severity": "medium", "group_name": name})
     return findings
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Règle 5 — Comptes de service à privilèges élevés (ÉLEVÉ)
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def _rule_service_account_risk(org_id: str) -> list[dict]:
     """Service accounts avec privileged_access=true — risque de mouvement latéral."""
@@ -355,14 +367,12 @@ def _rule_service_account_risk(org_id: str) -> list[dict]:
 
     findings = []
     for r in rows:
-        name     = r["full_name"] or r["canonical_email"]
-        factors  = r.get("risk_factors") or []
-        roles    = [f.replace("role:", "") for f in factors if f.startswith("role:")]
+        name = r["full_name"] or r["canonical_email"]
+        factors = r.get("risk_factors") or []
+        roles = [f.replace("role:", "") for f in factors if f.startswith("role:")]
         role_lbl = ", ".join(roles) if roles else "rôle privilégié"
-        days     = r.get("days_inactive")
-        inactive_note = (
-            f" Il est inactif depuis {days} jours." if days and days > 30 else ""
-        )
+        days = r.get("days_inactive")
+        inactive_note = f" Il est inactif depuis {days} jours." if days and days > 30 else ""
 
         _upsert_entra_finding(
             org_id=org_id,
@@ -383,20 +393,23 @@ def _rule_service_account_risk(org_id: str) -> list[dict]:
             ),
             cost_impact_monthly=0,
         )
-        findings.append({
-            "finding_type":  "service_account_risk",
-            "severity":      "high",
-            "email":         r["canonical_email"],
-            "display_name":  r["full_name"],
-            "roles":         roles,
-            "days_inactive": days,
-        })
+        findings.append(
+            {
+                "finding_type": "service_account_risk",
+                "severity": "high",
+                "email": r["canonical_email"],
+                "display_name": r["full_name"],
+                "roles": roles,
+                "days_inactive": days,
+            }
+        )
     return findings
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Règle 6 — Utilisateurs invités avec rôle admin (CRITIQUE)
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def _rule_guest_privileged(org_id: str) -> list[dict]:
     """Comptes guests (invités externes) qui ont privileged_access=true."""
@@ -425,10 +438,10 @@ def _rule_guest_privileged(org_id: str) -> list[dict]:
 
     findings = []
     for r in rows:
-        factors  = r.get("risk_factors") or []
-        roles    = [f.replace("role:", "") for f in factors if f.startswith("role:")]
+        factors = r.get("risk_factors") or []
+        roles = [f.replace("role:", "") for f in factors if f.startswith("role:")]
         role_lbl = ", ".join(roles) if roles else "rôle admin"
-        name     = r["full_name"] or r["canonical_email"]
+        name = r["full_name"] or r["canonical_email"]
 
         _upsert_entra_finding(
             org_id=org_id,
@@ -447,19 +460,22 @@ def _rule_guest_privileged(org_id: str) -> list[dict]:
             ),
             cost_impact_monthly=0,
         )
-        findings.append({
-            "finding_type": "guest_privileged",
-            "severity":     "critical",
-            "email":        r["canonical_email"],
-            "display_name": r["full_name"],
-            "roles":        roles,
-        })
+        findings.append(
+            {
+                "finding_type": "guest_privileged",
+                "severity": "critical",
+                "email": r["canonical_email"],
+                "display_name": r["full_name"],
+                "roles": roles,
+            }
+        )
     return findings
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Règle 7 — Couverture Conditional Access (CRITIQUE / ÉLEVÉ)
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def _rule_ca_policy_coverage(org_id: str) -> list[dict]:
     """
@@ -490,16 +506,11 @@ def _rule_ca_policy_coverage(org_id: str) -> list[dict]:
         return []
 
     # Cherche une policy active qui force le MFA pour tous
-    has_global_mfa_enforced    = any(
-        p["state"] == "enabled"
-        and p["requires_mfa"]
-        and p["targets_all_users"]
-        for p in policies
+    has_global_mfa_enforced = any(
+        p["state"] == "enabled" and p["requires_mfa"] and p["targets_all_users"] for p in policies
     )
     has_global_mfa_report_only = any(
-        p["state"] == "enabledForReportingButNotEnforced"
-        and p["requires_mfa"]
-        and p["targets_all_users"]
+        p["state"] == "enabledForReportingButNotEnforced" and p["requires_mfa"] and p["targets_all_users"]
         for p in policies
     )
 
@@ -528,9 +539,9 @@ def _rule_ca_policy_coverage(org_id: str) -> list[dict]:
 
     elif has_global_mfa_report_only and not has_global_mfa_enforced:
         report_names = [
-            p["display_name"] for p in policies
-            if p["state"] == "enabledForReportingButNotEnforced"
-            and p["requires_mfa"] and p["targets_all_users"]
+            p["display_name"]
+            for p in policies
+            if p["state"] == "enabledForReportingButNotEnforced" and p["requires_mfa"] and p["targets_all_users"]
         ]
         names_str = ", ".join(report_names[:3])
         _upsert_entra_finding(
@@ -559,6 +570,7 @@ def _rule_ca_policy_coverage(org_id: str) -> list[dict]:
 # Règle 9 — Utilisateurs signalés par Identity Protection (CRITIQUE / ÉLEVÉ)
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 def _rule_risky_user(org_id: str) -> list[dict]:
     """
     Utilisateurs dans entra_risky_users avec risk_state actif (atRisk / confirmedCompromised).
@@ -586,16 +598,16 @@ def _rule_risky_user(org_id: str) -> list[dict]:
 
     findings = []
     for r in rows:
-        upn    = r["user_principal_name"] or ""
-        name   = r["display_name"] or upn
-        level  = r["risk_level"]
-        state  = r["risk_state"]
+        upn = r["user_principal_name"] or ""
+        name = r["display_name"] or upn
+        level = r["risk_level"]
+        state = r["risk_state"]
         detail = r.get("risk_detail") or "risque détecté automatiquement"
 
         severity = "critical" if level == "high" or state == "confirmedCompromised" else "high"
 
         state_fr = {
-            "atRisk":               "À risque",
+            "atRisk": "À risque",
             "confirmedCompromised": "Compromis confirmé",
         }.get(state, state)
 
@@ -619,20 +631,23 @@ def _rule_risky_user(org_id: str) -> list[dict]:
             ),
             cost_impact_monthly=0,
         )
-        findings.append({
-            "finding_type": "risky_user_detected",
-            "severity":     severity,
-            "email":        upn,
-            "display_name": name,
-            "risk_level":   level,
-            "risk_state":   state,
-        })
+        findings.append(
+            {
+                "finding_type": "risky_user_detected",
+                "severity": severity,
+                "email": upn,
+                "display_name": name,
+                "risk_level": level,
+                "risk_state": state,
+            }
+        )
     return findings
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Règle 10 — Pics d'échecs de connexion (ÉLEVÉ)
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def _rule_signin_anomaly(org_id: str) -> list[dict]:
     """
@@ -660,9 +675,9 @@ def _rule_signin_anomaly(org_id: str) -> list[dict]:
 
     findings = []
     for r in rows:
-        upn    = r["user_principal_name"] or ""
-        name   = r["display_name"] or upn
-        count  = int(r["failure_count"])
+        upn = r["user_principal_name"] or ""
+        name = r["display_name"] or upn
+        count = int(r["failure_count"])
 
         _upsert_entra_finding(
             org_id=org_id,
@@ -682,19 +697,22 @@ def _rule_signin_anomaly(org_id: str) -> list[dict]:
             ),
             cost_impact_monthly=0,
         )
-        findings.append({
-            "finding_type":  "signin_anomaly",
-            "severity":      "high",
-            "email":         upn,
-            "display_name":  name,
-            "failure_count": count,
-        })
+        findings.append(
+            {
+                "finding_type": "signin_anomaly",
+                "severity": "high",
+                "email": upn,
+                "display_name": name,
+                "failure_count": count,
+            }
+        )
     return findings
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Helpers
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def _reset_entra_findings(org_id: str) -> None:
     """Résout les findings Entra calculés (non acknowledgés) avant recalcul."""
@@ -736,6 +754,5 @@ def _upsert_entra_finding(
               detected_at         = now(),
               resolved_at         = NULL
             """,
-            (org_id, finding_type, severity, title, description,
-             cost_impact_monthly, remediation),
+            (org_id, finding_type, severity, title, description, cost_impact_monthly, remediation),
         )

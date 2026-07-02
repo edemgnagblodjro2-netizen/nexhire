@@ -1,4 +1,5 @@
 """Route d'onboarding — statut d'avancement pour le wizard initial."""
+
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends
@@ -41,10 +42,10 @@ def onboarding_status(user: CurrentUser = Depends(require_min_role("manager"))):
         org_row = db_row(cur)
 
     return {
-        "has_departments":  has_departments,
-        "has_connector":    has_connector,
-        "has_team_member":  has_team_member,
-        "org_type":         org_row["org_type"] if org_row else "entreprise",
-        "org_name":         org_row["name"] if org_row else "",
-        "should_show":      not has_departments and not has_connector and user.role == "owner",
+        "has_departments": has_departments,
+        "has_connector": has_connector,
+        "has_team_member": has_team_member,
+        "org_type": org_row["org_type"] if org_row else "entreprise",
+        "org_name": org_row["name"] if org_row else "",
+        "should_show": not has_departments and not has_connector and user.role == "owner",
     }

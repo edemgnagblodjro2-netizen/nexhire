@@ -13,22 +13,22 @@ router = APIRouter(prefix="/api/contracts", tags=["contracts"])
 
 
 class ContractPayload(BaseModel):
-    department_id:             str | None = None
-    vendor:                    str = Field(..., min_length=1)
-    description:               str | None = None
-    category:                  str = "other"
-    annual_value:              float = 0
-    currency:                  str = "CAD"
-    start_date:                str | None = None
-    end_date:                  str | None = None
-    renewal_date:              str | None = None
-    auto_renew:                bool = False
-    cancellation_notice_days:  int = Field(60, ge=0, le=365)
-    min_commitment_qty:        int | None = Field(None, ge=0)
-    actual_seats_used:         int | None = Field(None, ge=0)
-    negotiation_potential:     float = Field(0, ge=0, le=100)
-    status:                    str = "active"
-    notes:                     str | None = None
+    department_id: str | None = None
+    vendor: str = Field(..., min_length=1)
+    description: str | None = None
+    category: str = "other"
+    annual_value: float = 0
+    currency: str = "CAD"
+    start_date: str | None = None
+    end_date: str | None = None
+    renewal_date: str | None = None
+    auto_renew: bool = False
+    cancellation_notice_days: int = Field(60, ge=0, le=365)
+    min_commitment_qty: int | None = Field(None, ge=0)
+    actual_seats_used: int | None = Field(None, ge=0)
+    negotiation_potential: float = Field(0, ge=0, le=100)
+    status: str = "active"
+    notes: str | None = None
 
 
 def _allowed_dept_ids(user: CurrentUser) -> list[str] | None:
@@ -63,10 +63,10 @@ def _enrich(c: dict) -> dict:
 
 @router.get("")
 def list_contracts(
-    dept_id:  str | None = Query(None),
-    status:   str | None = Query(None),
+    dept_id: str | None = Query(None),
+    status: str | None = Query(None),
     renewing: int | None = Query(None, description="Filtre : renouvellement dans N jours"),
-    user:     CurrentUser = Depends(require_min_role("user")),
+    user: CurrentUser = Depends(require_min_role("user")),
 ):
     allowed = _allowed_dept_ids(user)
     if allowed is not None and not allowed:

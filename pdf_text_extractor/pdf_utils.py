@@ -6,7 +6,6 @@ from pathlib import Path
 from pypdf import PdfReader
 from pypdf.errors import PdfReadError
 
-
 ALLOWED_EXTENSIONS = {".pdf"}
 MAX_UPLOAD_BYTES = 16 * 1024 * 1024
 

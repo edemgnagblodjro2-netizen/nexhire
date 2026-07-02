@@ -8,6 +8,7 @@ Routes :
   GET    /api/atlas/suggestions Suggestions contextuelles
   POST   /api/atlas/execute     Exécuter le plan confirmé
 """
+
 import json
 import re
 
@@ -24,9 +25,9 @@ router = APIRouter(prefix="/api/atlas", tags=["atlas-v3"])
 
 INTENT_PATTERNS = [
     {
-        "id":      "onboard_employee",
+        "id": "onboard_employee",
         "pattern": r"(onboard|nouvel? employ|ajoute|crée.*(employ|utilisateur|compte))",
-        "label":   "Onboarding Employé",
+        "label": "Onboarding Employé",
         "playbook_name": "Onboarding Employé",
         "steps_preview": [
             "Créer le compte Entra ID",
@@ -41,9 +42,9 @@ INTENT_PATTERNS = [
         "est_minutes": 3,
     },
     {
-        "id":      "offboard_employee",
+        "id": "offboard_employee",
         "pattern": r"(offboard|départ|quitte|désactiv|supprim.*(employ|utilisateur|compte))",
-        "label":   "Offboarding Sécurisé",
+        "label": "Offboarding Sécurisé",
         "playbook_name": "Offboarding Sécurisé",
         "steps_preview": [
             "Désactiver le compte Entra ID",
@@ -56,9 +57,9 @@ INTENT_PATTERNS = [
         "est_minutes": 2,
     },
     {
-        "id":      "fix_mfa",
+        "id": "fix_mfa",
         "pattern": r"(mfa|facteur|authentif.*(multi|deux|2)|comptes.*(sans|activ|manqu))",
-        "label":   "Activer MFA sur les comptes",
+        "label": "Activer MFA sur les comptes",
         "steps_preview": [
             "Identifier les comptes sans MFA (Microsoft Graph)",
             "Activer l'Authenticator App pour chaque compte",
@@ -67,9 +68,9 @@ INTENT_PATTERNS = [
         "est_minutes": 1,
     },
     {
-        "id":      "disable_licenses",
+        "id": "disable_licenses",
         "pattern": r"(licences?|inutilisé|inactif|désactiv.*(licences?|comptes?))",
-        "label":   "Désactiver licences inactives",
+        "label": "Désactiver licences inactives",
         "steps_preview": [
             "Scanner les licences sans connexion depuis 90 jours",
             "Désactiver les 14 comptes inactifs identifiés",
@@ -78,9 +79,9 @@ INTENT_PATTERNS = [
         "est_minutes": 2,
     },
     {
-        "id":      "iso27001_initiative",
+        "id": "iso27001_initiative",
         "pattern": r"(iso.?2700|certif.*(iso|27001))",
-        "label":   "Préparer la certification ISO 27001",
+        "label": "Préparer la certification ISO 27001",
         "is_initiative": True,
         "steps_preview": [
             "Analyser les 370 contrôles ISO 27001",
@@ -93,17 +94,17 @@ INTENT_PATTERNS = [
         "est_weeks": 6,
     },
     {
-        "id":      "score_drop_explain",
+        "id": "score_drop_explain",
         "pattern": r"(score|pourquoi|baiss|chut|tomb|redui|diminué|déclin)",
-        "label":   "Analyser la baisse de score",
+        "label": "Analyser la baisse de score",
         "is_analysis": True,
         "steps_preview": [],
         "est_minutes": 1,
     },
     {
-        "id":      "compliance_loi25",
+        "id": "compliance_loi25",
         "pattern": r"(loi.?25|renseignements? personnels?|privac|prp|confor.*loi)",
-        "label":   "Plan d\'action Loi 25",
+        "label": "Plan d\'action Loi 25",
         "is_initiative": True,
         "steps_preview": [
             "Évaluer les 12 exigences Loi 25",
@@ -114,9 +115,9 @@ INTENT_PATTERNS = [
         "est_weeks": 3,
     },
     {
-        "id":      "security_incident",
+        "id": "security_incident",
         "pattern": r"(incident|sécurité|compromis|attaque|intrusion|alerte|menace)",
-        "label":   "Réponse Incident Sécurité",
+        "label": "Réponse Incident Sécurité",
         "playbook_name": "Réponse Incident Sécurité",
         "steps_preview": [
             "Alerter RSSI et Direction (Teams)",
@@ -130,16 +131,16 @@ INTENT_PATTERNS = [
 ]
 
 FALLBACK_RESPONSE = {
-    "intent_id":   "general_query",
+    "intent_id": "general_query",
     "intent_label": "Question générale",
     "message": "Je n'ai pas trouvé d'action automatisable pour cette demande. "
-               "Voici ce que je peux faire pour vous :\n"
-               "• **Onboarding / Offboarding** d'un employé\n"
-               "• **Activer MFA** sur les comptes administrateurs\n"
-               "• **Désactiver** les licences inutilisées\n"
-               "• **Préparer** une certification ISO 27001 ou la conformité Loi 25\n"
-               "• **Répondre** à un incident de sécurité\n"
-               "• **Expliquer** la baisse d'un score de conformité",
+    "Voici ce que je peux faire pour vous :\n"
+    "• **Onboarding / Offboarding** d'un employé\n"
+    "• **Activer MFA** sur les comptes administrateurs\n"
+    "• **Désactiver** les licences inutilisées\n"
+    "• **Préparer** une certification ISO 27001 ou la conformité Loi 25\n"
+    "• **Répondre** à un incident de sécurité\n"
+    "• **Expliquer** la baisse d'un score de conformité",
     "actions": [],
     "requires_confirmation": False,
 }
@@ -158,40 +159,44 @@ def _build_plan(intent: dict, org_id: str, user_input: str) -> dict:
 
     if intent.get("is_analysis"):
         return {
-            "intent_id":    intent["id"],
+            "intent_id": intent["id"],
             "intent_label": intent["label"],
-            "message":      "Analyse en cours… J'examine votre score de conformité et les causes probables.",
+            "message": "Analyse en cours… J'examine votre score de conformité et les causes probables.",
             "analysis": {
                 "score_before": 82,
-                "score_after":  76,
+                "score_after": 76,
                 "delta": -6,
                 "causes": [
-                    {"label": "8 comptes admin sans MFA",        "impact_pts": -4, "action": "fix_mfa"},
-                    {"label": "2 politiques expirées",            "impact_pts": -1, "action": "renew_policies"},
-                    {"label": "1 audit de conformité en retard",  "impact_pts": -1, "action": "schedule_audit"},
+                    {"label": "8 comptes admin sans MFA", "impact_pts": -4, "action": "fix_mfa"},
+                    {"label": "2 politiques expirées", "impact_pts": -1, "action": "renew_policies"},
+                    {"label": "1 audit de conformité en retard", "impact_pts": -1, "action": "schedule_audit"},
                 ],
             },
             "actions": [
-                {"id": "fix_mfa",          "label": "Activer MFA maintenant",        "type": "orchestration"},
-                {"id": "renew_policies",   "label": "Renouveler les politiques",      "type": "policy"},
-                {"id": "schedule_audit",   "label": "Planifier l'audit manquant",     "type": "task"},
+                {"id": "fix_mfa", "label": "Activer MFA maintenant", "type": "orchestration"},
+                {"id": "renew_policies", "label": "Renouveler les politiques", "type": "policy"},
+                {"id": "schedule_audit", "label": "Planifier l'audit manquant", "type": "task"},
             ],
             "requires_confirmation": True,
         }
 
     if intent.get("is_initiative"):
         return {
-            "intent_id":    intent["id"],
+            "intent_id": intent["id"],
             "intent_label": intent["label"],
-            "message":      f"Analyse en cours… J'ai trouvé les éléments nécessaires pour l'initiative « {intent['label']} ».",
+            "message": f"Analyse en cours… J'ai trouvé les éléments nécessaires pour l'initiative « {intent['label']} ».",
             "initiative": {
-                "name":         intent["label"],
-                "est_weeks":    intent.get("est_weeks"),
+                "name": intent["label"],
+                "est_weeks": intent.get("est_weeks"),
                 "steps_preview": intent["steps_preview"],
             },
             "actions": [
-                {"id": "create_initiative", "label": f"Créer l'initiative {intent['label']}", "type": "initiative",
-                 "payload": {"name": intent["label"], "template_id": intent["id"]}},
+                {
+                    "id": "create_initiative",
+                    "label": f"Créer l'initiative {intent['label']}",
+                    "type": "initiative",
+                    "payload": {"name": intent["label"], "template_id": intent["id"]},
+                },
             ],
             "requires_confirmation": True,
         }
@@ -201,17 +206,22 @@ def _build_plan(intent: dict, org_id: str, user_input: str) -> dict:
     est_label = f"{est} minute{'s' if est != 1 else ''}" if est else "quelques minutes"
 
     return {
-        "intent_id":      intent["id"],
-        "intent_label":   intent["label"],
-        "playbook_name":  intent.get("playbook_name"),
-        "message":        f"J'ai trouvé le Playbook « {intent.get('playbook_name', intent['label'])} ».",
-        "steps":          steps,
-        "est_label":      est_label,
+        "intent_id": intent["id"],
+        "intent_label": intent["label"],
+        "playbook_name": intent.get("playbook_name"),
+        "message": f"J'ai trouvé le Playbook « {intent.get('playbook_name', intent['label'])} ».",
+        "steps": steps,
+        "est_label": est_label,
         "actions": [
-            {"id": "run_playbook", "label": "Exécuter",    "type": "playbook", "primary": True,
-             "payload": {"playbook_name": intent.get("playbook_name")}},
-            {"id": "schedule",     "label": "Planifier",   "type": "schedule"},
-            {"id": "delegate",     "label": "Déléguer →",  "type": "delegate"},
+            {
+                "id": "run_playbook",
+                "label": "Exécuter",
+                "type": "playbook",
+                "primary": True,
+                "payload": {"playbook_name": intent.get("playbook_name")},
+            },
+            {"id": "schedule", "label": "Planifier", "type": "schedule"},
+            {"id": "delegate", "label": "Déléguer →", "type": "delegate"},
         ],
         "requires_confirmation": True,
     }
@@ -219,9 +229,11 @@ def _build_plan(intent: dict, org_id: str, user_input: str) -> dict:
 
 # ── Chat ───────────────────────────────────────────────────────────────────────
 
+
 class ChatPayload(BaseModel):
     message: str = Field(..., min_length=1, max_length=2000)
     context: dict = Field(default_factory=dict)
+
 
 @router.post("/chat")
 def atlas_chat(
@@ -240,6 +252,7 @@ def atlas_chat(
 
 
 # ── Suggestions contextuelles ─────────────────────────────────────────────────
+
 
 @router.get("/suggestions")
 def atlas_suggestions(user: CurrentUser = Depends(get_current_user)):
@@ -260,17 +273,23 @@ def atlas_suggestions(user: CurrentUser = Depends(get_current_user)):
 
     if urgent:
         d = urgent[0]
-        suggestions.append({
-            "text": f"Traite la décision urgente : « {d['title']} »",
-            "type": "decision",
-            "priority": d["priority"],
-        })
+        suggestions.append(
+            {
+                "text": f"Traite la décision urgente : « {d['title']} »",
+                "type": "decision",
+                "priority": d["priority"],
+            }
+        )
 
     suggestions += [
-        {"text": "Ajoute un nouvel employé",              "type": "playbook", "intent": "onboard_employee"},
-        {"text": "Désactive les licences inactives",       "type": "orchestration", "intent": "disable_licenses"},
-        {"text": "Prépare-nous pour ISO 27001",            "type": "initiative", "intent": "iso27001_initiative"},
-        {"text": "Pourquoi notre score de conformité a-t-il baissé ?", "type": "analysis", "intent": "score_drop_explain"},
+        {"text": "Ajoute un nouvel employé", "type": "playbook", "intent": "onboard_employee"},
+        {"text": "Désactive les licences inactives", "type": "orchestration", "intent": "disable_licenses"},
+        {"text": "Prépare-nous pour ISO 27001", "type": "initiative", "intent": "iso27001_initiative"},
+        {
+            "text": "Pourquoi notre score de conformité a-t-il baissé ?",
+            "type": "analysis",
+            "intent": "score_drop_explain",
+        },
     ]
 
     return {"suggestions": suggestions[:5]}
@@ -278,10 +297,12 @@ def atlas_suggestions(user: CurrentUser = Depends(get_current_user)):
 
 # ── Exécuter le plan confirmé ─────────────────────────────────────────────────
 
+
 class ExecutePayload(BaseModel):
-    intent_id:  str
-    action_id:  str
+    intent_id: str
+    action_id: str
     action_payload: dict = Field(default_factory=dict)
+
 
 @router.post("/execute")
 def atlas_execute(
@@ -303,6 +324,7 @@ def atlas_execute(
             return {"ok": False, "error": f"Playbook « {playbook_name} » introuvable ou inactif."}
 
         import json as _json
+
         with get_db() as cur:
             cur.execute(
                 """INSERT INTO playbook_runs (playbook_id, org_id, status, trigger_type, triggered_by, context, started_at)
@@ -316,8 +338,12 @@ def atlas_execute(
                 "UPDATE playbooks SET run_count = run_count + 1, last_run_at = now() WHERE id = %s",
                 (str(pb["id"]),),
             )
-        return {"ok": True, "action": "playbook_started", "run_id": str(run["id"]),
-                "message": f"Playbook « {playbook_name} » démarré avec succès."}
+        return {
+            "ok": True,
+            "action": "playbook_started",
+            "run_id": str(run["id"]),
+            "message": f"Playbook « {playbook_name} » démarré avec succès.",
+        }
 
     if payload.action_id == "create_initiative":
         name = payload.action_payload.get("name", "Nouvelle Initiative")
@@ -328,7 +354,11 @@ def atlas_execute(
                 (oid, name, str(user.id)),
             )
             init = row(cur)
-        return {"ok": True, "action": "initiative_created", "initiative_id": str(init["id"]),
-                "message": f"Initiative « {name} » créée. Accédez aux Initiatives pour la compléter."}
+        return {
+            "ok": True,
+            "action": "initiative_created",
+            "initiative_id": str(init["id"]),
+            "message": f"Initiative « {name} » créée. Accédez aux Initiatives pour la compléter.",
+        }
 
     return {"ok": False, "error": "Action non reconnue."}

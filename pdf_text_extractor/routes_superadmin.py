@@ -1,4 +1,5 @@
 """Super-admin panel — accès restreint aux emails dans SUPERADMIN_EMAILS."""
+
 from __future__ import annotations
 
 import os
@@ -13,9 +14,7 @@ from db import get_db, row, rows
 router = APIRouter(prefix="/api/superadmin", tags=["superadmin"])
 
 _SUPERADMIN_EMAILS: set[str] = {
-    e.strip().lower()
-    for e in os.environ.get("SUPERADMIN_EMAILS", "").split(",")
-    if e.strip()
+    e.strip().lower() for e in os.environ.get("SUPERADMIN_EMAILS", "").split(",") if e.strip()
 }
 
 
@@ -26,6 +25,7 @@ def _superadmin(user: CurrentUser = Depends(get_current_user)) -> CurrentUser:
 
 
 # ── GET /api/superadmin/orgs ──────────────────────────────────────────────────
+
 
 @router.get("/orgs")
 def list_all_orgs(user: CurrentUser = Depends(_superadmin)):
@@ -59,6 +59,7 @@ def list_all_orgs(user: CurrentUser = Depends(_superadmin)):
 
 # ── GET /api/superadmin/metrics ───────────────────────────────────────────────
 
+
 @router.get("/metrics")
 def global_metrics(user: CurrentUser = Depends(_superadmin)):
     """Métriques globales NexHire."""
@@ -83,19 +84,20 @@ def global_metrics(user: CurrentUser = Depends(_superadmin)):
         queries_month = (row(cur) or {}).get("n", 0)
 
     return {
-        "total_orgs":    total_orgs,
-        "active":        active,
-        "trialing":      trialing,
-        "total_users":   total_users,
+        "total_orgs": total_orgs,
+        "active": active,
+        "trialing": trialing,
+        "total_users": total_users,
         "queries_month": queries_month,
     }
 
 
 # ── PATCH /api/superadmin/orgs/{org_id}/status ───────────────────────────────
 
+
 class StatusUpdate(BaseModel):
     status: str
-    plan:   str = "monthly"
+    plan: str = "monthly"
 
 
 @router.patch("/orgs/{org_id}/status")

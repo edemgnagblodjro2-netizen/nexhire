@@ -10,6 +10,7 @@ Routes :
   GET    /api/orchestrations/connectors    Liste des connecteurs disponibles
   GET    /api/orchestrations/summary       Stats globales
 """
+
 import json
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request
@@ -23,29 +24,29 @@ from rbac import require_min_role
 router = APIRouter(prefix="/api/orchestrations", tags=["orchestrations"])
 
 CONNECTOR_META = {
-    "microsoft_graph":  {"label": "Microsoft Graph",       "icon": "🔷", "group": "Microsoft"},
-    "exchange":         {"label": "Exchange Online",        "icon": "📧", "group": "Microsoft"},
-    "sharepoint":       {"label": "SharePoint",            "icon": "📂", "group": "Microsoft"},
-    "teams":            {"label": "Microsoft Teams",        "icon": "💬", "group": "Microsoft"},
-    "power_automate":   {"label": "Power Automate",        "icon": "⚡", "group": "Microsoft"},
-    "azure_automation": {"label": "Azure Automation",      "icon": "🔵", "group": "Microsoft"},
-    "entra_id":         {"label": "Microsoft Entra ID",    "icon": "🆔", "group": "Microsoft"},
-    "intune":           {"label": "Microsoft Intune",      "icon": "📱", "group": "Microsoft"},
-    "sentinel":         {"label": "Microsoft Sentinel",    "icon": "🛡️", "group": "Microsoft"},
-    "powershell":       {"label": "PowerShell",            "icon": "🖥️", "group": "Scripts"},
-    "python":           {"label": "Script Python",         "icon": "🐍", "group": "Scripts"},
-    "bash":             {"label": "Script Bash",           "icon": "⚙️", "group": "Scripts"},
-    "servicenow":       {"label": "ServiceNow",            "icon": "🎫", "group": "ITSM"},
-    "jira":             {"label": "Jira",                  "icon": "📌", "group": "ITSM"},
-    "sap":              {"label": "SAP",                   "icon": "🏭", "group": "ERP / SIRH"},
-    "workday":          {"label": "Workday",               "icon": "👤", "group": "ERP / SIRH"},
-    "email":            {"label": "Email (SMTP / Graph)",  "icon": "✉️",  "group": "Communication"},
-    "slack":            {"label": "Slack",                 "icon": "💬", "group": "Communication"},
-    "webhook":          {"label": "Webhook sortant",       "icon": "🔗", "group": "Communication"},
-    "rest_api":         {"label": "REST API générique",   "icon": "🌐", "group": "Générique"},
-    "graphql":          {"label": "GraphQL",               "icon": "◈",  "group": "Générique"},
-    "soap":             {"label": "SOAP / XML",            "icon": "📨", "group": "Générique"},
-    "internal":         {"label": "MyPortal interne",      "icon": "🏠", "group": "Interne"},
+    "microsoft_graph": {"label": "Microsoft Graph", "icon": "🔷", "group": "Microsoft"},
+    "exchange": {"label": "Exchange Online", "icon": "📧", "group": "Microsoft"},
+    "sharepoint": {"label": "SharePoint", "icon": "📂", "group": "Microsoft"},
+    "teams": {"label": "Microsoft Teams", "icon": "💬", "group": "Microsoft"},
+    "power_automate": {"label": "Power Automate", "icon": "⚡", "group": "Microsoft"},
+    "azure_automation": {"label": "Azure Automation", "icon": "🔵", "group": "Microsoft"},
+    "entra_id": {"label": "Microsoft Entra ID", "icon": "🆔", "group": "Microsoft"},
+    "intune": {"label": "Microsoft Intune", "icon": "📱", "group": "Microsoft"},
+    "sentinel": {"label": "Microsoft Sentinel", "icon": "🛡️", "group": "Microsoft"},
+    "powershell": {"label": "PowerShell", "icon": "🖥️", "group": "Scripts"},
+    "python": {"label": "Script Python", "icon": "🐍", "group": "Scripts"},
+    "bash": {"label": "Script Bash", "icon": "⚙️", "group": "Scripts"},
+    "servicenow": {"label": "ServiceNow", "icon": "🎫", "group": "ITSM"},
+    "jira": {"label": "Jira", "icon": "📌", "group": "ITSM"},
+    "sap": {"label": "SAP", "icon": "🏭", "group": "ERP / SIRH"},
+    "workday": {"label": "Workday", "icon": "👤", "group": "ERP / SIRH"},
+    "email": {"label": "Email (SMTP / Graph)", "icon": "✉️", "group": "Communication"},
+    "slack": {"label": "Slack", "icon": "💬", "group": "Communication"},
+    "webhook": {"label": "Webhook sortant", "icon": "🔗", "group": "Communication"},
+    "rest_api": {"label": "REST API générique", "icon": "🌐", "group": "Générique"},
+    "graphql": {"label": "GraphQL", "icon": "◈", "group": "Générique"},
+    "soap": {"label": "SOAP / XML", "icon": "📨", "group": "Générique"},
+    "internal": {"label": "MyPortal interne", "icon": "🏠", "group": "Interne"},
 }
 
 
@@ -58,14 +59,14 @@ def _ser(d: dict) -> dict:
 
 # ── Connecteurs disponibles ────────────────────────────────────────────────────
 
+
 @router.get("/connectors")
 def list_connectors():
-    return {"connectors": [
-        {"type": t, **meta} for t, meta in CONNECTOR_META.items()
-    ]}
+    return {"connectors": [{"type": t, **meta} for t, meta in CONNECTOR_META.items()]}
 
 
 # ── Résumé ─────────────────────────────────────────────────────────────────────
+
 
 @router.get("/summary")
 def orchestrations_summary(user: CurrentUser = Depends(get_current_user)):
@@ -86,6 +87,7 @@ def orchestrations_summary(user: CurrentUser = Depends(get_current_user)):
 
 # ── Liste ──────────────────────────────────────────────────────────────────────
 
+
 @router.get("")
 def list_orchestrations(
     user: CurrentUser = Depends(get_current_user),
@@ -105,13 +107,16 @@ def list_orchestrations(
     params: list = [oid]
 
     if connector_type:
-        sql += " AND o.connector_type = %s"; params.append(connector_type)
+        sql += " AND o.connector_type = %s"
+        params.append(connector_type)
     if category:
-        sql += " AND o.category = %s"; params.append(category)
+        sql += " AND o.category = %s"
+        params.append(category)
     if status:
         statuses = [s.strip() for s in status.split(",")]
         phs = ",".join(["%s"] * len(statuses))
-        sql += f" AND o.status IN ({phs})"; params.extend(statuses)
+        sql += f" AND o.status IN ({phs})"
+        params.extend(statuses)
 
     sql += " ORDER BY o.run_count DESC, o.name LIMIT %s OFFSET %s"
     params.extend([limit, offset])
@@ -125,13 +130,14 @@ def list_orchestrations(
         ct = item.get("connector_type", "")
         meta = CONNECTOR_META.get(ct, {"label": ct, "icon": "⚙️", "group": "Autre"})
         item["connector_label"] = meta["label"]
-        item["connector_icon"]  = meta["icon"]
+        item["connector_icon"] = meta["icon"]
         item["connector_group"] = meta["group"]
 
     return {"orchestrations": items, "total": len(items)}
 
 
 # ── Détail ─────────────────────────────────────────────────────────────────────
+
 
 @router.get("/{orch_id}")
 def get_orchestration(orch_id: str, user: CurrentUser = Depends(get_current_user)):
@@ -156,6 +162,7 @@ def get_orchestration(orch_id: str, user: CurrentUser = Depends(get_current_user
 
 # ── Créer ──────────────────────────────────────────────────────────────────────
 
+
 class OrchCreate(BaseModel):
     name: str = Field(..., min_length=3, max_length=200)
     description: str | None = None
@@ -166,6 +173,7 @@ class OrchCreate(BaseModel):
     timeout_seconds: int = 300
     credential_ref: str | None = None
     responsible_dept: str | None = None
+
 
 @router.post("", status_code=201)
 def create_orchestration(
@@ -183,21 +191,41 @@ def create_orchestration(
                 timeout_seconds, credential_ref, responsible_dept, created_by)
                VALUES (%s,%s,%s,%s,%s,%s::jsonb,%s::jsonb,%s,%s,%s,%s)
                RETURNING id""",
-            (oid, payload.name, payload.description, payload.connector_type, payload.category,
-             json.dumps(payload.steps), json.dumps(payload.input_schema),
-             payload.timeout_seconds, payload.credential_ref, payload.responsible_dept, str(user.id)),
+            (
+                oid,
+                payload.name,
+                payload.description,
+                payload.connector_type,
+                payload.category,
+                json.dumps(payload.steps),
+                json.dumps(payload.input_schema),
+                payload.timeout_seconds,
+                payload.credential_ref,
+                payload.responsible_dept,
+                str(user.id),
+            ),
         )
         created = row(cur)
-    log_audit(AuditEvent(action="orchestration_created", user_id=str(user.id), organization_id=oid,
-                         ip_address=client_ip(request), success=True, http_status=201))
+    log_audit(
+        AuditEvent(
+            action="orchestration_created",
+            user_id=str(user.id),
+            organization_id=oid,
+            ip_address=client_ip(request),
+            success=True,
+            http_status=201,
+        )
+    )
     return {"ok": True, "id": str(created["id"])}
 
 
 # ── Déclencher ────────────────────────────────────────────────────────────────
 
+
 class OrchRunPayload(BaseModel):
     input: dict = Field(default_factory=dict)
     trigger_type: str = "manual"
+
 
 @router.post("/{orch_id}/run", status_code=201)
 def run_orchestration(
@@ -226,13 +254,22 @@ def run_orchestration(
             "UPDATE orchestrations SET run_count = run_count + 1, last_run_at = now() WHERE id = %s",
             (orch_id,),
         )
-    log_audit(AuditEvent(action="orchestration_triggered", user_id=str(user.id), organization_id=oid,
-                         ip_address=client_ip(request), success=True, http_status=201,
-                         resource_ids=[orch_id]))
+    log_audit(
+        AuditEvent(
+            action="orchestration_triggered",
+            user_id=str(user.id),
+            organization_id=oid,
+            ip_address=client_ip(request),
+            success=True,
+            http_status=201,
+            resource_ids=[orch_id],
+        )
+    )
     return {"ok": True, "run_id": str(run["id"])}
 
 
 # ── Historique ─────────────────────────────────────────────────────────────────
+
 
 @router.get("/{orch_id}/runs")
 def list_orch_runs(

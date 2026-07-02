@@ -3,6 +3,7 @@
 Les credentials sont saisis par l'admin dans le formulaire connecteur
 et stockés chiffrés en base. Aucune variable d'env, aucune app OAuth à créer.
 """
+
 from __future__ import annotations
 
 import httpx
@@ -23,8 +24,7 @@ def get_servicenow_info(org_id: str) -> dict:
         r = httpx.get(
             f"{instance}/api/now/table/incident",
             auth=(username, password),
-            params={"sysparm_limit": 1, "sysparm_fields": "number",
-                    "sysparm_query": "active=true"},
+            params={"sysparm_limit": 1, "sysparm_fields": "number", "sysparm_query": "active=true"},
             headers={"Accept": "application/json"},
             timeout=12,
         )
@@ -66,8 +66,8 @@ def search_servicenow(
             f"{instance}/api/now/table/incident",
             auth=(username, password),
             params={
-                "sysparm_query":  sysparm_query,
-                "sysparm_limit":  limit,
+                "sysparm_query": sysparm_query,
+                "sysparm_limit": limit,
                 "sysparm_fields": "number,short_description,priority,state,assigned_to,sys_created_on",
             },
             timeout=12,
@@ -75,13 +75,13 @@ def search_servicenow(
         r.raise_for_status()
         return [
             {
-                "id":       row.get("number"),
-                "titre":    row.get("short_description"),
+                "id": row.get("number"),
+                "titre": row.get("short_description"),
                 "priorité": (row.get("priority") or {}).get("display_value", row.get("priority")),
-                "statut":   (row.get("state") or {}).get("display_value", row.get("state")),
-                "assigné":  (row.get("assigned_to") or {}).get("display_value", row.get("assigned_to")),
-                "créé":     row.get("sys_created_on"),
-                "source":   "servicenow",
+                "statut": (row.get("state") or {}).get("display_value", row.get("state")),
+                "assigné": (row.get("assigned_to") or {}).get("display_value", row.get("assigned_to")),
+                "créé": row.get("sys_created_on"),
+                "source": "servicenow",
             }
             for row in r.json().get("result", [])
         ]

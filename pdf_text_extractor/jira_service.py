@@ -1,4 +1,5 @@
 """Jira Cloud REST API — supporte OAuth 2.0 (3LO) et API Token (Basic Auth)."""
+
 from __future__ import annotations
 
 import base64
@@ -12,14 +13,14 @@ _RESOURCES = "https://api.atlassian.com/oauth/token/accessible-resources"
 
 # ── Auth helpers ──────────────────────────────────────────────────────────────
 
+
 def _is_api_token(creds: dict) -> bool:
     return bool(creds.get("api_token") and creds.get("email") and creds.get("base_url"))
 
 
 def _basic_auth(creds: dict) -> dict[str, str]:
     token = base64.b64encode(f"{creds['email']}:{creds['api_token']}".encode()).decode()
-    return {"Authorization": f"Basic {token}", "Accept": "application/json",
-            "Content-Type": "application/json"}
+    return {"Authorization": f"Basic {token}", "Accept": "application/json", "Content-Type": "application/json"}
 
 
 def _get_cloud_info(creds: dict) -> tuple[str | None, str | None, str | None]:
@@ -47,9 +48,8 @@ def _get_cloud_info(creds: dict) -> tuple[str | None, str | None, str | None]:
 
 # ── Recherche principale ──────────────────────────────────────────────────────
 
-def search_jira(
-    query: str, org_id: str, status: str = "all", project: str | None = None, limit: int = 5
-) -> list[dict]:
+
+def search_jira(query: str, org_id: str, status: str = "all", project: str | None = None, limit: int = 5) -> list[dict]:
     creds, cid = load_creds("jira", org_id)
     if not creds:
         return [{"error": "Jira non connecté"}]
@@ -67,7 +67,7 @@ def search_jira(
         cloud_id, cloud_url, cloud_err = _get_cloud_info(creds)
         if not cloud_url:
             return [{"error": f"Impossible d'accéder au cloud Jira — {cloud_err}"}]
-        creds["cloud_id"]  = cloud_id
+        creds["cloud_id"] = cloud_id
         creds["cloud_url"] = cloud_url
         save_creds(cid, creds)
 
@@ -75,17 +75,14 @@ def search_jira(
     return _search_issues(url, bearer(creds), query, status, project, limit)
 
 
-def _search_issues(
-    url: str, headers: dict, query: str, status: str, project: str | None, limit: int
-) -> list[dict]:
+def _search_issues(url: str, headers: dict, query: str, status: str, project: str | None, limit: int) -> list[dict]:
     jql_parts = ["project is not EMPTY"]
 
     if project:
         jql_parts = [f'project = "{project}"']
 
     if status != "all":
-        status_map = {"todo": "To Do", "in_progress": "In Progress",
-                      "done": "Done", "blocked": "Blocked"}
+        status_map = {"todo": "To Do", "in_progress": "In Progress", "done": "Done", "blocked": "Blocked"}
         if status in status_map:
             jql_parts.append(f'status = "{status_map[status]}"')
 
@@ -95,27 +92,28 @@ def _search_issues(
         r = httpx.get(
             url,
             headers=headers,
-            params={"jql": jql, "maxResults": limit,
-                    "fields": "summary,status,priority,assignee,duedate,project"},
+            params={"jql": jql, "maxResults": limit, "fields": "summary,status,priority,assignee,duedate,project"},
             timeout=12,
         )
         if not r.is_success:
             return [{"error": f"Jira HTTP {r.status_code}: {r.text[:400]}", "source": "jira"}]
-        data   = r.json()
+        data = r.json()
         issues = data.get("issues") or data.get("values", [])
         result = []
         for issue in issues:
             fields = issue.get("fields") or {}
-            result.append({
-                "id":       issue.get("key"),
-                "titre":    fields.get("summary"),
-                "statut":   (fields.get("status") or {}).get("name"),
-                "priorité": (fields.get("priority") or {}).get("name"),
-                "assigné":  (fields.get("assignee") or {}).get("displayName"),
-                "projet":   (fields.get("project") or {}).get("name"),
-                "échéance": fields.get("duedate"),
-                "source":   "jira",
-            })
+            result.append(
+                {
+                    "id": issue.get("key"),
+                    "titre": fields.get("summary"),
+                    "statut": (fields.get("status") or {}).get("name"),
+                    "priorité": (fields.get("priority") or {}).get("name"),
+                    "assigné": (fields.get("assignee") or {}).get("displayName"),
+                    "projet": (fields.get("project") or {}).get("name"),
+                    "échéance": fields.get("duedate"),
+                    "source": "jira",
+                }
+            )
         return result
     except Exception as exc:
         return [{"error": str(exc), "source": "jira"}]

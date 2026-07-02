@@ -35,6 +35,7 @@ def search_knowledge(
     allowed = _get_allowed_dept_ids(user)
     try:
         from knowledge_indexer import search_knowledge as _search, synthesize_answer
+
         chunks = _search(str(user.organization_id), q, k=k, allowed_dept_ids=allowed)
         answer = synthesize_answer(q, chunks)
     except Exception as exc:
@@ -73,6 +74,7 @@ async def upload_document(
 
     try:
         from knowledge_indexer import index_document
+
         n = index_document(
             org_id=str(user.organization_id),
             title=doc_title,
@@ -142,6 +144,7 @@ def discover_sharepoint_sites(user: CurrentUser = Depends(require_min_role("admi
     """Détecte les sites SharePoint disponibles et les enregistre pour le mappage manuel."""
     try:
         from knowledge_indexer import discover_m365_sites
+
         sites = discover_m365_sites(str(user.organization_id))
     except Exception as exc:
         logger.error("SharePoint discover error: %s", exc)
@@ -174,8 +177,8 @@ def get_sharepoint_mappings(user: CurrentUser = Depends(require_min_role("admin"
 
 
 class SiteMappingItem(BaseModel):
-    site_id:  str
-    dept_id:  str | None = None  # None = org-wide
+    site_id: str
+    dept_id: str | None = None  # None = org-wide
 
 
 @router.put("/sharepoint-mappings")
@@ -206,6 +209,7 @@ def sync_m365(user: CurrentUser = Depends(require_min_role("admin"))):
         )
     try:
         from knowledge_indexer import index_m365_documents
+
         result = index_m365_documents(str(user.organization_id))
     except Exception as exc:
         logger.error("M365 knowledge sync error: %s", exc)

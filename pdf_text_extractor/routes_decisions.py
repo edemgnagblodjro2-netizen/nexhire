@@ -11,6 +11,7 @@ Routes :
   POST   /api/decisions/{id}/apply  Marquer comme appliquée
   GET    /api/decisions/summary     Résumé exécutif (KPIs)
 """
+
 from datetime import UTC, datetime
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request
@@ -33,6 +34,7 @@ def _ser(d: dict) -> dict:
 
 # ── Liste ──────────────────────────────────────────────────────────────────────
 
+
 @router.get("")
 def list_decisions(
     user: CurrentUser = Depends(get_current_user),
@@ -54,13 +56,16 @@ def list_decisions(
     params: list = [oid]
 
     if category:
-        sql += " AND d.category = %s"; params.append(category)
+        sql += " AND d.category = %s"
+        params.append(category)
     if priority:
-        sql += " AND d.priority = %s"; params.append(priority)
+        sql += " AND d.priority = %s"
+        params.append(priority)
     if status:
         statuses = [s.strip() for s in status.split(",")]
         placeholders = ",".join(["%s"] * len(statuses))
-        sql += f" AND d.status IN ({placeholders})"; params.extend(statuses)
+        sql += f" AND d.status IN ({placeholders})"
+        params.extend(statuses)
 
     sql += " ORDER BY CASE d.priority WHEN 'critical' THEN 1 WHEN 'high' THEN 2 WHEN 'medium' THEN 3 ELSE 4 END, d.created_at DESC LIMIT %s OFFSET %s"
     params.extend([limit, offset])
@@ -73,6 +78,7 @@ def list_decisions(
 
 
 # ── Résumé exécutif ────────────────────────────────────────────────────────────
+
 
 @router.get("/summary")
 def decisions_summary(user: CurrentUser = Depends(get_current_user)):
@@ -95,6 +101,7 @@ def decisions_summary(user: CurrentUser = Depends(get_current_user)):
 
 # ── Détail ─────────────────────────────────────────────────────────────────────
 
+
 @router.get("/{decision_id}")
 def get_decision(decision_id: str, user: CurrentUser = Depends(get_current_user)):
     oid = str(user.organization_id)
@@ -114,6 +121,7 @@ def get_decision(decision_id: str, user: CurrentUser = Depends(get_current_user)
 
 # ── Créer ──────────────────────────────────────────────────────────────────────
 
+
 class DecisionCreate(BaseModel):
     title: str = Field(..., min_length=3, max_length=300)
     category: str = "general"
@@ -130,6 +138,7 @@ class DecisionCreate(BaseModel):
     responsible_dept: str | None = None
     due_date: str | None = None
 
+
 @router.post("", status_code=201)
 def create_decision(
     request: Request,
@@ -145,22 +154,44 @@ def create_decision(
                 time_label, time_to_apply_min, responsible_dept, due_date)
                VALUES (%s,%s,%s,%s,%s,%s,%s::jsonb,%s,%s,%s,%s,%s,%s,%s,%s)
                RETURNING id""",
-            (oid, payload.title, payload.category, payload.priority,
-             payload.problem_statement, payload.why_now,
-             str(payload.evidence), payload.cost_of_inaction, payload.savings_annual,
-             payload.roi_label, payload.risk_label, payload.time_label,
-             payload.time_to_apply_min, payload.responsible_dept, payload.due_date),
+            (
+                oid,
+                payload.title,
+                payload.category,
+                payload.priority,
+                payload.problem_statement,
+                payload.why_now,
+                str(payload.evidence),
+                payload.cost_of_inaction,
+                payload.savings_annual,
+                payload.roi_label,
+                payload.risk_label,
+                payload.time_label,
+                payload.time_to_apply_min,
+                payload.responsible_dept,
+                payload.due_date,
+            ),
         )
         created = row(cur)
-    log_audit(AuditEvent(action="decision_created", user_id=str(user.id), organization_id=oid,
-                         ip_address=client_ip(request), success=True, http_status=201))
+    log_audit(
+        AuditEvent(
+            action="decision_created",
+            user_id=str(user.id),
+            organization_id=oid,
+            ip_address=client_ip(request),
+            success=True,
+            http_status=201,
+        )
+    )
     return {"ok": True, "id": str(created["id"])}
 
 
 # ── Actions ────────────────────────────────────────────────────────────────────
 
+
 class AcceptPayload(BaseModel):
     trigger_playbook: bool = False
+
 
 @router.post("/{decision_id}/accept")
 def accept_decision(
@@ -197,15 +228,24 @@ def accept_decision(
         if run:
             result["playbook_run_id"] = str(run["id"])
 
-    log_audit(AuditEvent(action="decision_accepted", user_id=str(user.id), organization_id=oid,
-                         ip_address=client_ip(request), success=True, http_status=200,
-                         resource_ids=[decision_id]))
+    log_audit(
+        AuditEvent(
+            action="decision_accepted",
+            user_id=str(user.id),
+            organization_id=oid,
+            ip_address=client_ip(request),
+            success=True,
+            http_status=200,
+            resource_ids=[decision_id],
+        )
+    )
     return result
 
 
 class DelegatePayload(BaseModel):
     delegate_to_id: str
     message: str | None = Field(None, max_length=500)
+
 
 @router.post("/{decision_id}/delegate")
 def delegate_decision(
@@ -230,6 +270,7 @@ def delegate_decision(
 
 class IgnorePayload(BaseModel):
     reason: str | None = Field(None, max_length=500)
+
 
 @router.post("/{decision_id}/ignore")
 def ignore_decision(
@@ -269,7 +310,15 @@ def mark_applied(
         )
         if not row(cur):
             raise HTTPException(status_code=404, detail="Décision introuvable.")
-    log_audit(AuditEvent(action="decision_applied", user_id=str(user.id), organization_id=oid,
-                         ip_address=client_ip(request), success=True, http_status=200,
-                         resource_ids=[decision_id]))
+    log_audit(
+        AuditEvent(
+            action="decision_applied",
+            user_id=str(user.id),
+            organization_id=oid,
+            ip_address=client_ip(request),
+            success=True,
+            http_status=200,
+            resource_ids=[decision_id],
+        )
+    )
     return {"ok": True, "status": "applied"}

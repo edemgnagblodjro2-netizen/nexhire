@@ -1,4 +1,5 @@
 """Webhooks Slack / Teams — notifications d'événements NexHire."""
+
 from __future__ import annotations
 
 import httpx
@@ -15,12 +16,13 @@ _EVENTS = ["member_join", "license_expiry", "budget_alert", "subscription"]
 
 
 class WebhookConfig(BaseModel):
-    slack_url:  str | None = None
-    teams_url:  str | None = None
-    events:     list[str] = ["member_join", "license_expiry", "budget_alert"]
+    slack_url: str | None = None
+    teams_url: str | None = None
+    events: list[str] = ["member_join", "license_expiry", "budget_alert"]
 
 
 # ── GET /api/webhooks/config ──────────────────────────────────────────────────
+
 
 @router.get("/config")
 def get_webhook_config(user: CurrentUser = Depends(require_min_role("admin"))):
@@ -33,11 +35,12 @@ def get_webhook_config(user: CurrentUser = Depends(require_min_role("admin"))):
     return {
         "slack_url": r.get("webhook_slack") or "",
         "teams_url": r.get("webhook_teams") or "",
-        "events":    r.get("webhook_events") or ["member_join", "license_expiry", "budget_alert"],
+        "events": r.get("webhook_events") or ["member_join", "license_expiry", "budget_alert"],
     }
 
 
 # ── POST /api/webhooks/config ─────────────────────────────────────────────────
+
 
 @router.post("/config")
 def save_webhook_config(
@@ -56,6 +59,7 @@ def save_webhook_config(
 
 # ── DELETE /api/webhooks/config ───────────────────────────────────────────────
 
+
 @router.delete("/config")
 def delete_webhook_config(user: CurrentUser = Depends(require_min_role("admin"))):
     with get_db() as cur:
@@ -67,6 +71,7 @@ def delete_webhook_config(user: CurrentUser = Depends(require_min_role("admin"))
 
 
 # ── POST /api/webhooks/test ───────────────────────────────────────────────────
+
 
 @router.post("/test")
 def test_webhook(
@@ -95,6 +100,7 @@ def test_webhook(
 
 
 # ── POST /api/reports/monthly ─────────────────────────────────────────────────
+
 
 @router.post("/reports/monthly")
 def send_monthly_report_endpoint(
@@ -141,6 +147,7 @@ def send_monthly_report_endpoint(
 
 def _do_send_monthly(to_email: str, org_name: str, stats: dict, lic: dict) -> None:
     from email_service import send_monthly_report
+
     send_monthly_report(
         to_email=to_email,
         org_name=org_name,
@@ -153,17 +160,24 @@ def _do_send_monthly(to_email: str, org_name: str, stats: dict, lic: dict) -> No
 
 # ── Helpers internes ──────────────────────────────────────────────────────────
 
+
 def _post_slack(url: str, org_name: str, event: str, data: dict) -> bool:
     try:
-        resp = httpx.post(url, json={
-            "blocks": [{
-                "type": "section",
-                "text": {
-                    "type": "mrkdwn",
-                    "text": f"*[NexHire — {org_name}]*\n{_event_label(event, data)}",
-                },
-            }],
-        }, timeout=8)
+        resp = httpx.post(
+            url,
+            json={
+                "blocks": [
+                    {
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": f"*[NexHire — {org_name}]*\n{_event_label(event, data)}",
+                        },
+                    }
+                ],
+            },
+            timeout=8,
+        )
         return resp.status_code in (200, 201, 204)
     except Exception:
         return False
@@ -171,14 +185,18 @@ def _post_slack(url: str, org_name: str, event: str, data: dict) -> bool:
 
 def _post_teams(url: str, org_name: str, event: str, data: dict) -> bool:
     try:
-        resp = httpx.post(url, json={
-            "@type":    "MessageCard",
-            "@context": "http://schema.org/extensions",
-            "summary":  f"NexHire — {org_name}",
-            "themeColor": "6366f1",
-            "title":    f"NexHire — {org_name}",
-            "text":     _event_label(event, data),
-        }, timeout=8)
+        resp = httpx.post(
+            url,
+            json={
+                "@type": "MessageCard",
+                "@context": "http://schema.org/extensions",
+                "summary": f"NexHire — {org_name}",
+                "themeColor": "6366f1",
+                "title": f"NexHire — {org_name}",
+                "text": _event_label(event, data),
+            },
+            timeout=8,
+        )
         return resp.status_code in (200, 201, 204)
     except Exception:
         return False
@@ -186,11 +204,11 @@ def _post_teams(url: str, org_name: str, event: str, data: dict) -> bool:
 
 def _event_label(event: str, data: dict) -> str:
     labels = {
-        "member_join":    f"👤 Nouveau membre : {data.get('email', '')}",
+        "member_join": f"👤 Nouveau membre : {data.get('email', '')}",
         "license_expiry": f"⚠️ Licence expirant bientôt : {data.get('software_name', '')} ({data.get('days_left', '?')} jours)",
-        "budget_alert":   f"🚨 Alerte budget : {data.get('category', '')} — {data.get('pct', '?')}% consommé",
-        "subscription":   f"💳 Abonnement : {data.get('status', '')}",
-        "test":           data.get("message", "Test NexHire"),
+        "budget_alert": f"🚨 Alerte budget : {data.get('category', '')} — {data.get('pct', '?')}% consommé",
+        "subscription": f"💳 Abonnement : {data.get('status', '')}",
+        "test": data.get("message", "Test NexHire"),
     }
     return labels.get(event, f"Événement : {event}")
 

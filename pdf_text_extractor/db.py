@@ -6,6 +6,7 @@ L'auth JWT reste assurée par Supabase (JWKS) — aucun changement côté login.
 Variable d'env requise :
   DATABASE_URL  postgresql://postgres:[pwd]@db.[ref].supabase.co:5432/postgres
 """
+
 from __future__ import annotations
 
 import os

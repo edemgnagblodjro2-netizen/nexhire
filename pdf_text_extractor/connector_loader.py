@@ -2,6 +2,7 @@
 
 Utilisé par tous les _service.py pour obtenir les tokens/credentials déchiffrés.
 """
+
 from __future__ import annotations
 
 import json
@@ -57,12 +58,16 @@ def refresh_oauth(
         return creds
 
     try:
-        resp = httpx.post(token_url, data={
-            "client_id":     os.environ.get(client_id_env, ""),
-            "client_secret": os.environ.get(client_secret_env, ""),
-            "refresh_token": refresh_token,
-            "grant_type":    "refresh_token",
-        }, timeout=12)
+        resp = httpx.post(
+            token_url,
+            data={
+                "client_id": os.environ.get(client_id_env, ""),
+                "client_secret": os.environ.get(client_secret_env, ""),
+                "refresh_token": refresh_token,
+                "grant_type": "refresh_token",
+            },
+            timeout=12,
+        )
         if resp.status_code != 200:
             _mark_connector_error(
                 connector_id,
@@ -73,15 +78,17 @@ def refresh_oauth(
         new_expires_at = (datetime.now(UTC) + timedelta(seconds=data.get("expires_in", 3600))).isoformat()
         creds = {
             **creds,
-            "access_token":  data.get("access_token", creds["access_token"]),
+            "access_token": data.get("access_token", creds["access_token"]),
             "refresh_token": data.get("refresh_token", refresh_token),
-            "expires_at":    new_expires_at,
+            "expires_at": new_expires_at,
         }
-        service_client().table("connectors").update({
-            "encrypted_credentials": encrypt(json.dumps(creds)),
-            "token_expires_at":      None,
-            "updated_at":            datetime.now(UTC).isoformat(),
-        }).eq("id", connector_id).execute()
+        service_client().table("connectors").update(
+            {
+                "encrypted_credentials": encrypt(json.dumps(creds)),
+                "token_expires_at": None,
+                "updated_at": datetime.now(UTC).isoformat(),
+            }
+        ).eq("id", connector_id).execute()
     except Exception as exc:
         _mark_connector_error(connector_id, f"Token refresh exception: {exc}")
 
@@ -91,10 +98,12 @@ def refresh_oauth(
 def save_creds(connector_id: str, creds: dict) -> None:
     """Met à jour les credentials chiffrés d'un connecteur (ex: ajout de cloud_id dynamique)."""
     try:
-        service_client().table("connectors").update({
-            "encrypted_credentials": encrypt(json.dumps(creds)),
-            "updated_at":            datetime.now(UTC).isoformat(),
-        }).eq("id", connector_id).execute()
+        service_client().table("connectors").update(
+            {
+                "encrypted_credentials": encrypt(json.dumps(creds)),
+                "updated_at": datetime.now(UTC).isoformat(),
+            }
+        ).eq("id", connector_id).execute()
     except Exception:
         pass
 
@@ -102,11 +111,13 @@ def save_creds(connector_id: str, creds: dict) -> None:
 def _mark_connector_error(connector_id: str, error_msg: str) -> None:
     """Passe le connecteur en status=error et persiste le message d'erreur."""
     try:
-        service_client().table("connectors").update({
-            "status":     "error",
-            "last_error": error_msg[:500],
-            "updated_at": datetime.now(UTC).isoformat(),
-        }).eq("id", connector_id).execute()
+        service_client().table("connectors").update(
+            {
+                "status": "error",
+                "last_error": error_msg[:500],
+                "updated_at": datetime.now(UTC).isoformat(),
+            }
+        ).eq("id", connector_id).execute()
     except Exception:
         pass
 

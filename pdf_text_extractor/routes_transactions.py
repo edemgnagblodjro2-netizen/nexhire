@@ -1,4 +1,5 @@
 """Routes API — Transactions financières IT & Fournisseurs."""
+
 from __future__ import annotations
 
 from datetime import date, datetime
@@ -30,41 +31,43 @@ def _allowed_dept_ids(user: CurrentUser) -> list[str] | None:
 # Modèles
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 class TransactionPayload(BaseModel):
     transaction_date: str = Field(..., description="YYYY-MM-DD")
-    amount:           float = Field(..., ge=0)
-    currency:         str = "CAD"
-    description:      str | None = None
+    amount: float = Field(..., ge=0)
+    currency: str = "CAD"
+    description: str | None = None
     reference_number: str | None = None
-    category:         str = "other"
-    status:           str = "paid"
-    vendor_name:      str | None = None
-    vendor_id:        str | None = None
-    department_id:    str | None = None
-    contract_id:      str | None = None
-    source:           str = "manual"
+    category: str = "other"
+    status: str = "paid"
+    vendor_name: str | None = None
+    vendor_id: str | None = None
+    department_id: str | None = None
+    contract_id: str | None = None
+    source: str = "manual"
 
 
 class VendorPayload(BaseModel):
-    name:        str = Field(..., min_length=1)
-    website:     str | None = None
-    category:    str = "other"
+    name: str = Field(..., min_length=1)
+    website: str | None = None
+    category: str = "other"
     contract_id: str | None = None
-    notes:       str | None = None
+    notes: str | None = None
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Transactions — CRUD
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 @router.get("")
 def list_transactions(
-    year:      int | None = Query(None),
-    month:     int | None = Query(None, ge=1, le=12),
+    year: int | None = Query(None),
+    month: int | None = Query(None, ge=1, le=12),
     vendor_id: str | None = None,
-    dept_id:   str | None = None,
-    status:    str | None = None,
-    flagged:   bool | None = None,
+    dept_id: str | None = None,
+    status: str | None = None,
+    flagged: bool | None = None,
     user: CurrentUser = Depends(require_min_role("user")),
 ):
     """Liste les transactions, filtrables. Filtre par département si non-manager."""
@@ -124,23 +127,30 @@ def list_transactions(
 
 @router.get("/summary")
 def transactions_summary(
-    year:    int | None = Query(None),
+    year: int | None = Query(None),
     dept_id: str | None = Query(None),
     user: CurrentUser = Depends(require_min_role("user")),
 ):
     """KPIs financiers : total réel, top fournisseurs, burn rate mensuel, anomalies."""
     allowed = _allowed_dept_ids(user)
     if allowed is not None and not allowed:
-        return {"total_paid": 0, "total_pending": 0, "count_paid": 0,
-                "flagged_count": 0, "vendor_count": 0,
-                "burn_rate": [], "top_vendors": [], "by_category": []}
+        return {
+            "total_paid": 0,
+            "total_pending": 0,
+            "count_paid": 0,
+            "flagged_count": 0,
+            "vendor_count": 0,
+            "burn_rate": [],
+            "top_vendors": [],
+            "by_category": [],
+        }
 
     org = user.organization_id
 
     # Filtres sécurisés — paramètres psycopg2, jamais de f-string sur user input
     # base_* : totaux + catégories (table sans alias)
-    base_conds:  list[str] = ["organization_id = %s"]
-    base_params: list      = [org]
+    base_conds: list[str] = ["organization_id = %s"]
+    base_params: list = [org]
     if year:
         base_conds.append("EXTRACT(YEAR FROM transaction_date) = %s")
         base_params.append(year)
@@ -153,8 +163,8 @@ def transactions_summary(
     base_where = "WHERE " + " AND ".join(base_conds)
 
     # ft_* : top-vendors (table aliasée ft.)
-    ft_conds:  list[str] = ["ft.organization_id = %s"]
-    ft_params: list      = [org]
+    ft_conds: list[str] = ["ft.organization_id = %s"]
+    ft_params: list = [org]
     if year:
         ft_conds.append("EXTRACT(YEAR FROM ft.transaction_date) = %s")
         ft_params.append(year)
@@ -164,9 +174,8 @@ def transactions_summary(
     ft_where = "WHERE " + " AND ".join(ft_conds)
 
     # burn_* : burn-rate 12 mois (pas de filtre year/dept_id)
-    burn_conds:  list[str] = ["organization_id = %s",
-                              "transaction_date >= CURRENT_DATE - INTERVAL '12 months'"]
-    burn_params: list      = [org]
+    burn_conds: list[str] = ["organization_id = %s", "transaction_date >= CURRENT_DATE - INTERVAL '12 months'"]
+    burn_params: list = [org]
     if allowed is not None:
         burn_conds.append("department_id = ANY(%s::uuid[])")
         burn_params.append(allowed)
@@ -241,29 +250,26 @@ def transactions_summary(
     total_paid = float(totals["total_paid"] or 0)
 
     return {
-        "total_paid":     round(total_paid, 2),
-        "total_pending":  round(float(totals["total_pending"] or 0), 2),
-        "count_paid":     int(totals["count_paid"] or 0),
-        "flagged_count":  int(totals["flagged_count"] or 0),
-        "vendor_count":   int(totals["vendor_count"] or 0),
-        "burn_rate": [
-            {"month": r["month"], "paid": round(float(r["paid"] or 0), 2)}
-            for r in burn_rate
-        ],
+        "total_paid": round(total_paid, 2),
+        "total_pending": round(float(totals["total_pending"] or 0), 2),
+        "count_paid": int(totals["count_paid"] or 0),
+        "flagged_count": int(totals["flagged_count"] or 0),
+        "vendor_count": int(totals["vendor_count"] or 0),
+        "burn_rate": [{"month": r["month"], "paid": round(float(r["paid"] or 0), 2)} for r in burn_rate],
         "top_vendors": [
             {
                 "vendor_name": r["vendor_name"],
-                "total":       round(float(r["total"] or 0), 2),
-                "count":       int(r["count"]),
-                "share_pct":   round(float(r["total"] or 0) / total_paid * 100, 1) if total_paid else 0,
+                "total": round(float(r["total"] or 0), 2),
+                "count": int(r["count"]),
+                "share_pct": round(float(r["total"] or 0) / total_paid * 100, 1) if total_paid else 0,
             }
             for r in top_vendors
         ],
         "by_category": [
             {
                 "category": r["category"] or "other",
-                "total":    round(float(r["total"] or 0), 2),
-                "count":    int(r["count"]),
+                "total": round(float(r["total"] or 0), 2),
+                "count": int(r["count"]),
             }
             for r in by_category
         ],
@@ -331,11 +337,19 @@ def update_transaction(
             RETURNING id
             """,
             (
-                payload.transaction_date, payload.amount, payload.currency,
-                payload.description, payload.reference_number, payload.category,
-                payload.status, vendor_id, payload.department_id or None,
-                payload.contract_id or None, payload.source,
-                txn_id, org,
+                payload.transaction_date,
+                payload.amount,
+                payload.currency,
+                payload.description,
+                payload.reference_number,
+                payload.category,
+                payload.status,
+                vendor_id,
+                payload.department_id or None,
+                payload.contract_id or None,
+                payload.source,
+                txn_id,
+                org,
             ),
         )
         if not cur.fetchone():
@@ -387,6 +401,7 @@ def delete_transaction(
 # Fournisseurs
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 @router.get("/vendors")
 def list_vendors(user: CurrentUser = Depends(require_min_role("user"))):
     with get_db() as cur:
@@ -423,8 +438,12 @@ def create_vendor(
             RETURNING id
             """,
             (
-                user.organization_id, payload.name, payload.website,
-                payload.category, payload.contract_id or None, payload.notes,
+                user.organization_id,
+                payload.name,
+                payload.website,
+                payload.category,
+                payload.contract_id or None,
+                payload.notes,
             ),
         )
         return {"id": str(cur.fetchone()["id"]), "ok": True}
@@ -433,6 +452,7 @@ def create_vendor(
 # ─────────────────────────────────────────────────────────────────────────────
 # Import CSV
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 @router.post("/import/csv")
 async def import_csv(
@@ -469,7 +489,7 @@ async def import_csv(
         raise HTTPException(400, "Fichier CSV vide ou sans en-têtes.")
 
     VALID_CATEGORIES = {"software", "hardware", "cloud", "telecom", "services", "maintenance", "other"}
-    VALID_STATUSES   = {"paid", "pending", "cancelled"}
+    VALID_STATUSES = {"paid", "pending", "cancelled"}
     org = user.organization_id
 
     imported, skipped = 0, 0
@@ -500,13 +520,13 @@ async def import_csv(
             continue
 
         vendor_name = row.get("vendor") or row.get("fournisseur") or None
-        currency    = (row.get("currency") or row.get("devise") or "CAD").upper()[:3]
+        currency = (row.get("currency") or row.get("devise") or "CAD").upper()[:3]
         description = row.get("description") or None
-        reference   = row.get("reference") or row.get("reference_number") or None
-        raw_cat     = (row.get("category") or row.get("categorie") or "other").lower()
-        category    = raw_cat if raw_cat in VALID_CATEGORIES else "other"
-        raw_status  = (row.get("status") or row.get("statut") or "paid").lower()
-        txn_status  = raw_status if raw_status in VALID_STATUSES else "paid"
+        reference = row.get("reference") or row.get("reference_number") or None
+        raw_cat = (row.get("category") or row.get("categorie") or "other").lower()
+        category = raw_cat if raw_cat in VALID_CATEGORIES else "other"
+        raw_status = (row.get("status") or row.get("statut") or "paid").lower()
+        txn_status = raw_status if raw_status in VALID_STATUSES else "paid"
 
         try:
             vendor_id = _resolve_vendor(org, vendor_name, None, category)
@@ -519,8 +539,7 @@ async def import_csv(
                     VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,'csv')
                     RETURNING id
                     """,
-                    (org, txn_date, amount, currency,
-                     description, reference, category, txn_status, vendor_id),
+                    (org, txn_date, amount, currency, description, reference, category, txn_status, vendor_id),
                 )
                 result = cur.fetchone()
             if result:
@@ -537,16 +556,17 @@ async def import_csv(
             pass
 
     return {
-        "imported":   imported,
-        "skipped":    skipped,
+        "imported": imported,
+        "skipped": skipped,
         "total_rows": imported + skipped,
-        "errors":     errors[:50],
+        "errors": errors[:50],
     }
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Helpers privés
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def _resolve_vendor(org_id: str, vendor_name: str | None, vendor_id: str | None, category: str) -> str | None:
     """Retourne l'UUID du fournisseur, en le créant si nécessaire."""
@@ -570,14 +590,26 @@ def _resolve_vendor(org_id: str, vendor_name: str | None, vendor_id: str | None,
 
 class CategorizePayload(BaseModel):
     description: str = Field(..., min_length=1)
-    amount:      float = Field(..., ge=0)
+    amount: float = Field(..., ge=0)
     vendor_name: str | None = None
 
 
 _AI_CATEGORIES = [
-    "software", "hardware", "cloud", "telecom", "marketing",
-    "hr", "legal", "finance", "facilities", "travel",
-    "consulting", "training", "utilities", "insurance", "other",
+    "software",
+    "hardware",
+    "cloud",
+    "telecom",
+    "marketing",
+    "hr",
+    "legal",
+    "finance",
+    "facilities",
+    "travel",
+    "consulting",
+    "training",
+    "utilities",
+    "insurance",
+    "other",
 ]
 
 
@@ -591,6 +623,7 @@ async def categorize_transaction_ai(
         import json as _json
         from openai import OpenAI
         import os as _os
+
         client = OpenAI(api_key=_os.environ.get("OPENAI_API_KEY", ""))
         resp = client.chat.completions.create(
             model="gpt-4o-mini",

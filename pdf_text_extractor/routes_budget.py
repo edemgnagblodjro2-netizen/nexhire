@@ -114,10 +114,15 @@ def _maybe_budget_alert(org_id: str, category: str, allocated: float, actual: fl
     if pct >= 80:
         try:
             from routes_webhooks import send_webhook_notification
-            send_webhook_notification(org_id, "budget_alert", {
-                "category": category,
-                "pct": pct,
-            })
+
+            send_webhook_notification(
+                org_id,
+                "budget_alert",
+                {
+                    "category": category,
+                    "pct": pct,
+                },
+            )
         except Exception:
             pass
 
@@ -236,7 +241,7 @@ def budget_summary(
         cur.execute(sql, params)
         entries = rows(cur)
 
-    by_cat:  dict[str, dict] = {}
+    by_cat: dict[str, dict] = {}
     by_dept: dict[str, dict] = {}
     monthly: dict[int, float] = {}
 
@@ -245,14 +250,19 @@ def budget_summary(
         if cat not in by_cat:
             by_cat[cat] = {"category": cat, "allocated": 0.0, "actual": 0.0, "currency": e.get("currency", "CAD")}
         by_cat[cat]["allocated"] += float(e.get("allocated") or 0)
-        by_cat[cat]["actual"]    += float(e.get("actual")    or 0)
+        by_cat[cat]["actual"] += float(e.get("actual") or 0)
 
-        dept_key  = str(e.get("department_id") or "__none__")
+        dept_key = str(e.get("department_id") or "__none__")
         dept_name = e.get("department_name") or "Sans département"
         if dept_key not in by_dept:
-            by_dept[dept_key] = {"department_id": dept_key if dept_key != "__none__" else None, "department_name": dept_name, "allocated": 0.0, "actual": 0.0}
+            by_dept[dept_key] = {
+                "department_id": dept_key if dept_key != "__none__" else None,
+                "department_name": dept_name,
+                "allocated": 0.0,
+                "actual": 0.0,
+            }
         by_dept[dept_key]["allocated"] += float(e.get("allocated") or 0)
-        by_dept[dept_key]["actual"]    += float(e.get("actual")    or 0)
+        by_dept[dept_key]["actual"] += float(e.get("actual") or 0)
 
         m = e.get("month")
         if m:
@@ -260,8 +270,7 @@ def budget_summary(
 
     # Si aucune donnée mensuelle dans budget_entries, utiliser les transactions réelles groupées par mois
     if not any(v > 0 for v in monthly.values()):
-        txn_conditions = ["organization_id = %s", "status = 'paid'",
-                          "EXTRACT(YEAR FROM transaction_date) = %s"]
+        txn_conditions = ["organization_id = %s", "status = 'paid'", "EXTRACT(YEAR FROM transaction_date) = %s"]
         txn_params: list = [user.organization_id, current_year]
         if allowed is not None:
             # transactions liées aux départements autorisés (via department_id s'il existe)
@@ -292,21 +301,21 @@ def budget_summary(
     for i, val in enumerate(forecast_vals):
         m = now_month + i + 1
         yr = current_year + (m - 1) // 12
-        m  = ((m - 1) % 12) + 1
+        m = ((m - 1) % 12) + 1
         forecast.append({"period": f"{yr}-{m:02d}", "predicted": round(val, 2)})
 
-    total_alloc  = sum(v["allocated"] for v in by_cat.values())
-    total_actual = sum(v["actual"]    for v in by_cat.values())
+    total_alloc = sum(v["allocated"] for v in by_cat.values())
+    total_actual = sum(v["actual"] for v in by_cat.values())
 
     return {
         "year": current_year,
-        "by_category":   list(by_cat.values()),
+        "by_category": list(by_cat.values()),
         "by_department": sorted(by_dept.values(), key=lambda d: -(d["allocated"] + d["actual"])),
         "monthly_actual": [monthly.get(m, 0.0) for m in range(1, 13)],
         "total": {
-            "allocated":       total_alloc,
-            "actual":          total_actual,
-            "variance":        total_alloc - total_actual,
+            "allocated": total_alloc,
+            "actual": total_actual,
+            "variance": total_alloc - total_actual,
             "utilization_pct": round(total_actual / total_alloc * 100, 1) if total_alloc > 0 else 0,
         },
         "forecast": forecast,
@@ -330,4 +339,10 @@ def _linear_forecast(values: list[float], periods: int = 3) -> list[float]:
 
 
 def _empty_summary(year: int) -> dict:
-    return {"year": year, "by_category": [], "monthly_actual": [0]*12, "total": {"allocated": 0, "actual": 0, "variance": 0, "utilization_pct": 0}, "forecast": []}
+    return {
+        "year": year,
+        "by_category": [],
+        "monthly_actual": [0] * 12,
+        "total": {"allocated": 0, "actual": 0, "variance": 0, "utilization_pct": 0},
+        "forecast": [],
+    }

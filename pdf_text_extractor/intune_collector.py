@@ -9,6 +9,7 @@ Permission Graph App requise (à ajouter dans Azure App Registration) :
 
 Les tokens OAuth sont partagés avec le connecteur Microsoft 365.
 """
+
 from __future__ import annotations
 
 import logging
@@ -21,54 +22,57 @@ log = logging.getLogger(__name__)
 
 # Mapping type appareil Graph → libellé normalisé
 _DEVICE_TYPE_MAP: dict[str, str] = {
-    "desktop":            "desktop",
-    "windowsRT":          "desktop",
-    "winMO6":             "mobile",
-    "nokia":              "mobile",
-    "windowsPhone":       "mobile",
-    "mac":                "mac",
-    "winCE":              "desktop",
-    "winEmbedded":        "desktop",
-    "iPhone":             "mobile",
-    "iPad":               "tablet",
-    "iPod":               "mobile",
-    "android":            "mobile",
-    "androidForWork":     "mobile",
-    "androidEnterprise":  "mobile",
-    "androidnGMS":        "mobile",
-    "surfaceHub":         "other",
-    "holoLens":           "other",
-    "cloudPC":            "cloudPC",
-    "blackberry":         "mobile",
-    "unknown":            "unknown",
+    "desktop": "desktop",
+    "windowsRT": "desktop",
+    "winMO6": "mobile",
+    "nokia": "mobile",
+    "windowsPhone": "mobile",
+    "mac": "mac",
+    "winCE": "desktop",
+    "winEmbedded": "desktop",
+    "iPhone": "mobile",
+    "iPad": "tablet",
+    "iPod": "mobile",
+    "android": "mobile",
+    "androidForWork": "mobile",
+    "androidEnterprise": "mobile",
+    "androidnGMS": "mobile",
+    "surfaceHub": "other",
+    "holoLens": "other",
+    "cloudPC": "cloudPC",
+    "blackberry": "mobile",
+    "unknown": "unknown",
 }
 
 # Champs $select à demander à l'API pour limiter la réponse
-_SELECT = ",".join([
-    "id",
-    "deviceName",
-    "operatingSystem",
-    "osVersion",
-    "complianceState",
-    "deviceType",
-    "managementAgent",
-    "enrolledDateTime",
-    "lastSyncDateTime",
-    "userPrincipalName",
-    "userId",
-    "model",
-    "manufacturer",
-    "serialNumber",
-    "isEncrypted",
-    "isSupervised",
-    "managedDeviceOwnerType",
-    "azureADDeviceId",
-])
+_SELECT = ",".join(
+    [
+        "id",
+        "deviceName",
+        "operatingSystem",
+        "osVersion",
+        "complianceState",
+        "deviceType",
+        "managementAgent",
+        "enrolledDateTime",
+        "lastSyncDateTime",
+        "userPrincipalName",
+        "userId",
+        "model",
+        "manufacturer",
+        "serialNumber",
+        "isEncrypted",
+        "isSupervised",
+        "managedDeviceOwnerType",
+        "azureADDeviceId",
+    ]
+)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Point d'entrée principal
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def collect_intune(org_id: str) -> dict:
     """
@@ -84,14 +88,14 @@ def collect_intune(org_id: str) -> dict:
     )
 
     stats = {
-        "devices_total":    0,
-        "compliant":        0,
-        "noncompliant":     0,
-        "unknown":          0,
-        "encrypted":        0,
-        "unencrypted":      0,
+        "devices_total": 0,
+        "compliant": 0,
+        "noncompliant": 0,
+        "unknown": 0,
+        "encrypted": 0,
+        "unencrypted": 0,
         "never_synced_30d": 0,
-        "errors":           0,
+        "errors": 0,
     }
 
     now = datetime.now(timezone.utc)
@@ -126,7 +130,10 @@ def collect_intune(org_id: str) -> dict:
 
     log.info(
         "Intune collect done — %d devices (%d compliant, %d noncompliant, %d encrypted)",
-        stats["devices_total"], stats["compliant"], stats["noncompliant"], stats["encrypted"],
+        stats["devices_total"],
+        stats["compliant"],
+        stats["noncompliant"],
+        stats["encrypted"],
     )
     return stats
 
@@ -135,17 +142,18 @@ def collect_intune(org_id: str) -> dict:
 # Upsert
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 def _upsert_asset(org_id: str, d: dict, stats: dict, now: datetime) -> None:
     device_type_raw = d.get("deviceType") or "unknown"
-    device_type     = _DEVICE_TYPE_MAP.get(device_type_raw, "other")
+    device_type = _DEVICE_TYPE_MAP.get(device_type_raw, "other")
 
-    os_name    = (d.get("operatingSystem") or "").strip() or None
+    os_name = (d.get("operatingSystem") or "").strip() or None
     os_version = (d.get("osVersion") or "").strip() or None
 
     compliance = d.get("complianceState") or "unknown"
-    owner_upn  = (d.get("userPrincipalName") or "").lower().strip() or None
+    owner_upn = (d.get("userPrincipalName") or "").lower().strip() or None
 
-    enrolled_at  = _parse_dt(d.get("enrolledDateTime"))
+    enrolled_at = _parse_dt(d.get("enrolledDateTime"))
     last_sync_at = _parse_dt(d.get("lastSyncDateTime"))
 
     # Résoudre l'identité propriétaire
@@ -228,9 +236,11 @@ def _resolve_owner(org_id: str, upn: str) -> str | None:
 # Résumé (pour le dashboard)
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 def get_intune_summary(org_id: str) -> dict:
     """Retourne les KPIs de conformité Intune pour l'organisation."""
     from db import rows as db_rows
+
     with get_db() as cur:
         cur.execute(
             """
@@ -279,23 +289,24 @@ def get_intune_summary(org_id: str) -> dict:
     compliant = int(row["compliant"] or 0)
 
     return {
-        "total":           total,
-        "compliant":       compliant,
-        "noncompliant":    int(row["noncompliant"] or 0),
-        "unknown":         int(row["unknown"] or 0),
-        "encrypted":       int(row["encrypted"] or 0),
-        "unencrypted":     int(row["unencrypted"] or 0),
-        "stale_30d":       int(row["stale_30d"] or 0),
-        "stale_90d":       int(row["stale_90d"] or 0),
+        "total": total,
+        "compliant": compliant,
+        "noncompliant": int(row["noncompliant"] or 0),
+        "unknown": int(row["unknown"] or 0),
+        "encrypted": int(row["encrypted"] or 0),
+        "unencrypted": int(row["unencrypted"] or 0),
+        "stale_30d": int(row["stale_30d"] or 0),
+        "stale_90d": int(row["stale_90d"] or 0),
         "compliance_rate": round(compliant / total * 100, 1) if total else 0,
-        "by_os":           [{"os": r["os"] or "Inconnu", "count": int(r["count"])} for r in by_os],
-        "by_type":         [{"type": r["device_type"] or "other", "count": int(r["count"])} for r in by_type],
+        "by_os": [{"os": r["os"] or "Inconnu", "count": int(r["count"])} for r in by_os],
+        "by_type": [{"type": r["device_type"] or "other", "count": int(r["count"])} for r in by_type],
     }
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Helpers
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def _parse_dt(s: str | None) -> datetime | None:
     if not s:
@@ -308,10 +319,24 @@ def _parse_dt(s: str | None) -> datetime | None:
 
 def _raw(d: dict) -> str:
     import json
+
     keep = {
-        "id", "deviceName", "operatingSystem", "osVersion", "complianceState",
-        "deviceType", "enrolledDateTime", "lastSyncDateTime", "userPrincipalName",
-        "model", "manufacturer", "serialNumber", "isEncrypted", "isSupervised",
-        "managedDeviceOwnerType", "azureADDeviceId", "managementAgent",
+        "id",
+        "deviceName",
+        "operatingSystem",
+        "osVersion",
+        "complianceState",
+        "deviceType",
+        "enrolledDateTime",
+        "lastSyncDateTime",
+        "userPrincipalName",
+        "model",
+        "manufacturer",
+        "serialNumber",
+        "isEncrypted",
+        "isSupervised",
+        "managedDeviceOwnerType",
+        "azureADDeviceId",
+        "managementAgent",
     }
     return json.dumps({k: d[k] for k in keep if k in d})

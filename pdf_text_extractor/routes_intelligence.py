@@ -1,4 +1,5 @@
 """API Intelligence organisationnelle — identités, corrélations, risques, M365."""
+
 from __future__ import annotations
 
 import logging
@@ -17,6 +18,7 @@ router = APIRouter(prefix="/api/intelligence", tags=["intelligence"])
 # ─────────────────────────────────────────────────────────────────────────────
 # Sync — collecte + corrélation + risques
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 @router.post("/sync")
 def sync_intelligence(user: CurrentUser = Depends(require_min_role("admin"))):
@@ -60,15 +62,15 @@ def sync_intelligence(user: CurrentUser = Depends(require_min_role("admin"))):
         errors.append(f"optimizer: {exc}")
 
     return {
-        "ok":    len(errors) == 0,
+        "ok": len(errors) == 0,
         "errors": errors,
-        "collected":    collected,
+        "collected": collected,
         "correlations": correlations,
-        "risks":        risks,
+        "risks": risks,
         "m365_savings": {
             "monthly": m365.get("total_savings_monthly", 0),
-            "annual":  m365.get("total_savings_annual", 0),
-            "count":   m365.get("findings_count", 0),
+            "annual": m365.get("total_savings_annual", 0),
+            "count": m365.get("findings_count", 0),
         },
     }
 
@@ -77,10 +79,12 @@ def sync_intelligence(user: CurrentUser = Depends(require_min_role("admin"))):
 # Risques
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 @router.get("/risks/summary")
 def risks_summary(user: CurrentUser = Depends(require_min_role("manager"))):
     """Résumé des risques actifs et économies potentielles. Manager+."""
     from risk_calculator import get_risk_summary
+
     summary = get_risk_summary(user.organization_id)
 
     # Ajoute les économies M365 déjà calculées dans risk_findings
@@ -110,11 +114,13 @@ def list_risks(
 ):
     """Risques actifs filtrables. Manager+."""
     params = [user.organization_id]
-    where  = "WHERE rf.organization_id = %s AND rf.resolved_at IS NULL"
+    where = "WHERE rf.organization_id = %s AND rf.resolved_at IS NULL"
     if severity:
-        where += " AND rf.severity = %s"; params.append(severity)
+        where += " AND rf.severity = %s"
+        params.append(severity)
     if finding_type:
-        where += " AND rf.finding_type = %s"; params.append(finding_type)
+        where += " AND rf.finding_type = %s"
+        params.append(finding_type)
     if not acknowledged:
         where += " AND rf.is_acknowledged = false"
 
@@ -173,6 +179,7 @@ def resolve_risk(risk_id: str, user: CurrentUser = Depends(require_min_role("adm
 # M365 — sync réel + optimiseur
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 @router.post("/m365/sync")
 def m365_sync(user: CurrentUser = Depends(require_min_role("admin"))):
     """
@@ -191,12 +198,16 @@ def m365_sync(user: CurrentUser = Depends(require_min_role("admin"))):
     except RuntimeError as exc:
         raise HTTPException(400, str(exc))
     except PermissionError as exc:
-        raise HTTPException(403, f"Permission Microsoft Graph insuffisante. Reconnectez le connecteur M365 et accordez le consentement admin. Détail : {exc}")
+        raise HTTPException(
+            403,
+            f"Permission Microsoft Graph insuffisante. Reconnectez le connecteur M365 et accordez le consentement admin. Détail : {exc}",
+        )
 
     # Entra ID — MFA réel + rôles admin + principals de service + groupes
     entra_stats: dict = {}
     try:
         from entra_collector import collect_entra_id
+
         entra_stats = collect_entra_id(org)
     except Exception as exc:
         log.warning("Entra ID sync partiel : %s", exc)
@@ -206,6 +217,7 @@ def m365_sync(user: CurrentUser = Depends(require_min_role("admin"))):
     entra_risks: dict = {}
     try:
         from entra_risk_analyzer import run_entra_risk_analyzer
+
         entra_risks = run_entra_risk_analyzer(org)
     except Exception as exc:
         log.warning("Entra risk analyzer partiel : %s", exc)
@@ -215,6 +227,7 @@ def m365_sync(user: CurrentUser = Depends(require_min_role("admin"))):
     intune_stats: dict = {}
     try:
         from intune_collector import collect_intune
+
         intune_stats = collect_intune(org)
     except PermissionError as exc:
         log.info("Intune sync ignoré (permission manquante) : %s", exc)
@@ -224,46 +237,46 @@ def m365_sync(user: CurrentUser = Depends(require_min_role("admin"))):
         intune_stats = {"warning": str(exc)}
 
     correlations = correlate_identities(org)
-    optimizer    = run_m365_optimizer(org)
+    optimizer = run_m365_optimizer(org)
 
     return {
-        "ok":         True,
-        "collected":  collected,
+        "ok": True,
+        "collected": collected,
         "entra": {
-            "postures_updated":     entra_stats.get("postures_updated", 0),
-            "mfa_enrolled":         entra_stats.get("mfa_enrolled", 0),
-            "privileged_users":     entra_stats.get("privileged_users", 0),
-            "guest_users_flagged":  entra_stats.get("guest_users_flagged", 0),
-            "service_principals":   entra_stats.get("service_principals", 0),
-            "groups_synced":        entra_stats.get("groups_synced", 0),
-            "groups_no_owner":      entra_stats.get("groups_no_owner", 0),
+            "postures_updated": entra_stats.get("postures_updated", 0),
+            "mfa_enrolled": entra_stats.get("mfa_enrolled", 0),
+            "privileged_users": entra_stats.get("privileged_users", 0),
+            "guest_users_flagged": entra_stats.get("guest_users_flagged", 0),
+            "service_principals": entra_stats.get("service_principals", 0),
+            "groups_synced": entra_stats.get("groups_synced", 0),
+            "groups_no_owner": entra_stats.get("groups_no_owner", 0),
             "group_members_synced": entra_stats.get("group_members_synced", 0),
-            "ca_policies_synced":   entra_stats.get("ca_policies_synced", 0),
-            "risky_users_synced":   entra_stats.get("risky_users_synced", 0),
-            "signin_anomalies":     entra_stats.get("signin_anomalies", 0),
-            "warning":              entra_stats.get("warning"),
+            "ca_policies_synced": entra_stats.get("ca_policies_synced", 0),
+            "risky_users_synced": entra_stats.get("risky_users_synced", 0),
+            "signin_anomalies": entra_stats.get("signin_anomalies", 0),
+            "warning": entra_stats.get("warning"),
         },
         "security_posture": {
             "critical": entra_risks.get("critical", 0),
-            "high":     entra_risks.get("high", 0),
-            "medium":   entra_risks.get("medium", 0),
-            "total":    entra_risks.get("findings_count", 0),
+            "high": entra_risks.get("high", 0),
+            "medium": entra_risks.get("medium", 0),
+            "total": entra_risks.get("findings_count", 0),
         },
         "intune": {
-            "total":           intune_stats.get("devices_total", 0),
-            "compliant":       intune_stats.get("compliant", 0),
-            "noncompliant":    intune_stats.get("noncompliant", 0),
-            "encrypted":       intune_stats.get("encrypted", 0),
-            "skipped":         intune_stats.get("skipped", False),
+            "total": intune_stats.get("devices_total", 0),
+            "compliant": intune_stats.get("compliant", 0),
+            "noncompliant": intune_stats.get("noncompliant", 0),
+            "encrypted": intune_stats.get("encrypted", 0),
+            "skipped": intune_stats.get("skipped", False),
         },
         "correlations": {
             "orphans": correlations.get("orphans", 0),
-            "ghosts":  correlations.get("ghosts", 0),
+            "ghosts": correlations.get("ghosts", 0),
         },
         "savings": {
             "monthly": optimizer["total_savings_monthly"],
-            "annual":  optimizer["total_savings_annual"],
-            "count":   optimizer["findings_count"],
+            "annual": optimizer["total_savings_annual"],
+            "count": optimizer["findings_count"],
         },
     }
 
@@ -275,6 +288,7 @@ def entra_sync(user: CurrentUser = Depends(require_min_role("admin"))):
     Requiert le connecteur M365 configuré. Admin+.
     """
     from entra_collector import collect_entra_id
+
     org = user.organization_id
     try:
         stats = collect_entra_id(org)
@@ -284,22 +298,23 @@ def entra_sync(user: CurrentUser = Depends(require_min_role("admin"))):
         raise HTTPException(403, str(exc))
 
     from entra_risk_analyzer import run_entra_risk_analyzer
+
     risks = run_entra_risk_analyzer(org)
     return {
         "ok": True,
         "entra": {
-            "postures_updated":     stats.get("postures_updated", 0),
-            "mfa_enrolled":         stats.get("mfa_enrolled", 0),
-            "privileged_users":     stats.get("privileged_users", 0),
-            "guest_users_flagged":  stats.get("guest_users_flagged", 0),
-            "service_principals":   stats.get("service_principals", 0),
-            "groups_synced":        stats.get("groups_synced", 0),
-            "groups_no_owner":      stats.get("groups_no_owner", 0),
+            "postures_updated": stats.get("postures_updated", 0),
+            "mfa_enrolled": stats.get("mfa_enrolled", 0),
+            "privileged_users": stats.get("privileged_users", 0),
+            "guest_users_flagged": stats.get("guest_users_flagged", 0),
+            "service_principals": stats.get("service_principals", 0),
+            "groups_synced": stats.get("groups_synced", 0),
+            "groups_no_owner": stats.get("groups_no_owner", 0),
             "group_members_synced": stats.get("group_members_synced", 0),
-            "ca_policies_synced":   stats.get("ca_policies_synced", 0),
-            "risky_users_synced":   stats.get("risky_users_synced", 0),
-            "signin_anomalies":     stats.get("signin_anomalies", 0),
-            "warning":              stats.get("warning"),
+            "ca_policies_synced": stats.get("ca_policies_synced", 0),
+            "risky_users_synced": stats.get("risky_users_synced", 0),
+            "signin_anomalies": stats.get("signin_anomalies", 0),
+            "warning": stats.get("warning"),
         },
         "security_posture": risks,
     }
@@ -383,6 +398,7 @@ def entra_group_members(
 # Intune — Assets & conformité appareils
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 @router.post("/intune/sync")
 def intune_sync(user: CurrentUser = Depends(require_min_role("admin"))):
     """
@@ -390,6 +406,7 @@ def intune_sync(user: CurrentUser = Depends(require_min_role("admin"))):
     Requiert DeviceManagementManagedDevices.Read.All sur l'App Registration. Admin+.
     """
     from intune_collector import collect_intune
+
     org = user.organization_id
     try:
         stats = collect_intune(org)
@@ -409,6 +426,7 @@ def intune_sync(user: CurrentUser = Depends(require_min_role("admin"))):
 def intune_summary(user: CurrentUser = Depends(require_min_role("manager"))):
     """KPIs de conformité Intune — taux conformité, chiffrement, appareils obsolètes. Manager+."""
     from intune_collector import get_intune_summary
+
     return get_intune_summary(user.organization_id)
 
 
@@ -419,7 +437,7 @@ def intune_devices(
 ):
     """Liste les appareils Intune avec leur état de conformité. Admin+."""
     params = [user.organization_id]
-    where  = "WHERE a.organization_id = %s AND a.source_connector = 'intune'"
+    where = "WHERE a.organization_id = %s AND a.source_connector = 'intune'"
     if compliance_state:
         where += " AND a.compliance_state = %s"
         params.append(compliance_state)
@@ -457,6 +475,7 @@ def intune_devices(
 def m365_optimize(user: CurrentUser = Depends(require_min_role("admin"))):
     """Lance l'optimiseur M365 et retourne les économies détectées. Admin+."""
     from m365_license_optimizer import run_m365_optimizer
+
     return run_m365_optimizer(user.organization_id)
 
 
@@ -464,6 +483,7 @@ def m365_optimize(user: CurrentUser = Depends(require_min_role("admin"))):
 def m365_licenses(user: CurrentUser = Depends(require_min_role("manager"))):
     """Résumé des pools et utilisation de licences M365. Manager+."""
     from m365_license_optimizer import get_license_summary
+
     return get_license_summary(user.organization_id)
 
 
@@ -513,6 +533,7 @@ def m365_users(user: CurrentUser = Depends(require_min_role("admin"))):
 # Identités
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 @router.get("/identities")
 def list_identities(
     status: str | None = None,
@@ -520,9 +541,10 @@ def list_identities(
 ):
     """Liste les identités maîtres de l'organisation. Admin+."""
     params = [user.organization_id]
-    where  = "WHERE organization_id = %s"
+    where = "WHERE organization_id = %s"
     if status:
-        where += " AND status = %s"; params.append(status)
+        where += " AND status = %s"
+        params.append(status)
 
     with get_db() as cur:
         cur.execute(
@@ -563,6 +585,7 @@ def identity_accounts(
 # Économies globales (pour dashboard)
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 @router.get("/savings")
 def savings_summary(user: CurrentUser = Depends(require_min_role("manager"))):
     """
@@ -590,27 +613,30 @@ def savings_summary(user: CurrentUser = Depends(require_min_role("manager"))):
         by_type = db_rows(cur)
 
     SAVINGS_TYPES = {"unused_license", "duplicate_tool"}
-    ALERT_TYPES   = {"contract_expiry", "budget_overspend"}
+    ALERT_TYPES = {"contract_expiry", "budget_overspend"}
 
     savings_monthly = sum(float(r["monthly"] or 0) for r in by_type if r["finding_type"] in SAVINGS_TYPES)
-    alerts_monthly  = sum(float(r["monthly"] or 0) for r in by_type if r["finding_type"] in ALERT_TYPES)
-    total_monthly   = sum(float(r["monthly"] or 0) for r in by_type)
+    alerts_monthly = sum(float(r["monthly"] or 0) for r in by_type if r["finding_type"] in ALERT_TYPES)
+    total_monthly = sum(float(r["monthly"] or 0) for r in by_type)
 
     return {
-        "total_monthly":   round(total_monthly, 2),
-        "total_annual":    round(total_monthly * 12, 2),
+        "total_monthly": round(total_monthly, 2),
+        "total_annual": round(total_monthly * 12, 2),
         "savings_monthly": round(savings_monthly, 2),
-        "savings_annual":  round(savings_monthly * 12, 2),
-        "alerts_monthly":  round(alerts_monthly, 2),
-        "alerts_annual":   round(alerts_monthly * 12, 2),
+        "savings_annual": round(savings_monthly * 12, 2),
+        "alerts_monthly": round(alerts_monthly, 2),
+        "alerts_annual": round(alerts_monthly * 12, 2),
         "by_type": [
             {
                 "finding_type": r["finding_type"],
-                "count":        int(r["count"]),
-                "monthly":      round(float(r["monthly"] or 0), 2),
-                "annual":       round(float(r["annual"] or 0), 2),
-                "category":     "savings" if r["finding_type"] in SAVINGS_TYPES else
-                                "alert"   if r["finding_type"] in ALERT_TYPES   else "other",
+                "count": int(r["count"]),
+                "monthly": round(float(r["monthly"] or 0), 2),
+                "annual": round(float(r["annual"] or 0), 2),
+                "category": (
+                    "savings"
+                    if r["finding_type"] in SAVINGS_TYPES
+                    else "alert" if r["finding_type"] in ALERT_TYPES else "other"
+                ),
             }
             for r in by_type
         ],

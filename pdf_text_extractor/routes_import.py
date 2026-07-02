@@ -19,37 +19,59 @@ from rbac import require_min_role
 router = APIRouter(prefix="/api/servers/import", tags=["import"])
 
 NEXHIRE_FIELDS: dict[str, str] = {
-    "hostname":          "Nom / Hôte de l'équipement (REQUIS)",
-    "device_type":       "Type : laptop | desktop | server | switch | router | firewall | tablet | phone_mobile | phone_ip | monitor | printer | scanner | ups | other",
-    "ip_address":        "Adresse IP ou numéro de série",
-    "asset_tag":         "Numéro d'étiquette / code inventaire",
-    "os":                "Système d'exploitation",
-    "cpu_cores":         "Nombre de cœurs CPU (entier)",
-    "ram_gb":            "RAM en gigaoctets (entier)",
-    "storage_gb":        "Stockage en gigaoctets (entier)",
-    "location":          "Emplacement physique",
-    "environment":       "Environnement : production | staging | development | test | backup",
-    "status":            "Statut : active | idle | to_decommission | decommissioned",
-    "purchase_price":    "Valeur d'acquisition en dollars (nombre)",
-    "acquisition_date":  "Date d'achat (YYYY-MM-DD ou DD/MM/YYYY)",
+    "hostname": "Nom / Hôte de l'équipement (REQUIS)",
+    "device_type": "Type : laptop | desktop | server | switch | router | firewall | tablet | phone_mobile | phone_ip | monitor | printer | scanner | ups | other",
+    "ip_address": "Adresse IP ou numéro de série",
+    "asset_tag": "Numéro d'étiquette / code inventaire",
+    "os": "Système d'exploitation",
+    "cpu_cores": "Nombre de cœurs CPU (entier)",
+    "ram_gb": "RAM en gigaoctets (entier)",
+    "storage_gb": "Stockage en gigaoctets (entier)",
+    "location": "Emplacement physique",
+    "environment": "Environnement : production | staging | development | test | backup",
+    "status": "Statut : active | idle | to_decommission | decommissioned",
+    "purchase_price": "Valeur d'acquisition en dollars (nombre)",
+    "acquisition_date": "Date d'achat (YYYY-MM-DD ou DD/MM/YYYY)",
     "warranty_end_date": "Date de fin de garantie",
-    "replacement_date":  "Date de remplacement prévue",
-    "department_name":   "Nom du département",
-    "notes":             "Notes libres",
+    "replacement_date": "Date de remplacement prévue",
+    "department_name": "Nom du département",
+    "notes": "Notes libres",
 }
 
 DEVICE_TYPES = {
-    "laptop", "desktop", "server", "switch", "router", "firewall", "tablet",
-    "phone_mobile", "phone_ip", "docking_station", "monitor", "printer",
-    "scanner", "cable_network", "cable_hdmi", "cable_vga", "cable_displayport",
-    "usb_key", "usb_adapter", "charger", "ups", "other",
+    "laptop",
+    "desktop",
+    "server",
+    "switch",
+    "router",
+    "firewall",
+    "tablet",
+    "phone_mobile",
+    "phone_ip",
+    "docking_station",
+    "monitor",
+    "printer",
+    "scanner",
+    "cable_network",
+    "cable_hdmi",
+    "cable_vga",
+    "cable_displayport",
+    "usb_key",
+    "usb_adapter",
+    "charger",
+    "ups",
+    "other",
 }
 
 STATUS_MAP = {
-    "actif": "active", "active": "active",
-    "inactif": "idle", "idle": "idle", "inactif": "idle",
-    "à décommissionner": "to_decommission", "to_decommission": "to_decommission",
-    "décommissionné": "decommissioned", "decommissioned": "decommissioned",
+    "actif": "active",
+    "active": "active",
+    "inactif": "idle",
+    "idle": "idle",
+    "à décommissionner": "to_decommission",
+    "to_decommission": "to_decommission",
+    "décommissionné": "decommissioned",
+    "decommissioned": "decommissioned",
 }
 
 
@@ -136,6 +158,7 @@ async def import_preview(
         all_rows = _parse_file(content, file.filename)
     except Exception as e:
         import logging as _log
+
         _log.getLogger(__name__).error("Import parse error file=%s: %s", file.filename, e)
         raise HTTPException(400, "Impossible de lire le fichier — format non supporté ou fichier corrompu.")
 
@@ -150,17 +173,17 @@ async def import_preview(
             mapping[h] = None
 
     return {
-        "headers":    headers,
-        "mapping":    mapping,
-        "preview":    all_rows[:10],
-        "all_rows":   all_rows[:500],
+        "headers": headers,
+        "mapping": mapping,
+        "preview": all_rows[:10],
+        "all_rows": all_rows[:500],
         "total_rows": len(all_rows),
-        "fields":     list(NEXHIRE_FIELDS.keys()),
+        "fields": list(NEXHIRE_FIELDS.keys()),
     }
 
 
 class ImportConfirmPayload(BaseModel):
-    rows:    list[dict[str, Any]]
+    rows: list[dict[str, Any]]
     mapping: dict[str, str | None]
 
 
@@ -218,7 +241,7 @@ def import_confirm(
             return None
 
     inserted = 0
-    skipped  = 0
+    skipped = 0
     errors: list[str] = []
 
     with get_db() as cur:
@@ -274,6 +297,7 @@ def import_confirm(
                 inserted += 1
             except Exception as e:
                 import logging as _log
+
                 _log.getLogger(__name__).warning("Import row error line=%d hostname=%s: %s", i + 2, hostname, e)
                 errors.append(f"Ligne {i + 2} ({hostname}) : erreur lors de l'insertion — vérifiez les données.")
                 skipped += 1

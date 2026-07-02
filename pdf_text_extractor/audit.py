@@ -8,17 +8,17 @@ from fastapi import Request
 
 @dataclass
 class AuditEvent:
-    action: str                              # document_upload | document_summary | document_chat
-                                             # connector_connect | connector_disconnect | connector_list
-                                             # auth_login | auth_signup
-    query: str = ""                          # texte libre : question, filename, type de connecteur…
+    action: str  # document_upload | document_summary | document_chat
+    # connector_connect | connector_disconnect | connector_list
+    # auth_login | auth_signup
+    query: str = ""  # texte libre : question, filename, type de connecteur…
     organization_id: str | None = None
     user_id: str | None = None
-    connector: str | None = None             # type de connecteur si applicable
+    connector: str | None = None  # type de connecteur si applicable
     success: bool = True
     http_status: int = 200
     ip_address: str | None = None
-    resource_ids: list[str] = field(default_factory=list)   # doc_id, conversation_id, connector_id…
+    resource_ids: list[str] = field(default_factory=list)  # doc_id, conversation_id, connector_id…
     error_detail: str | None = None
     metadata: dict[str, Any] = field(default_factory=dict)  # champs libres pour évolutions futures
 
@@ -54,6 +54,7 @@ def log_audit(event: AuditEvent) -> None:
     N'émet jamais d'exception — une panne d'audit ne doit pas bloquer la requête."""
     try:
         from supabase_client import service_client
+
         sb = service_client()
         row = _build_row(event)
         try:
@@ -70,6 +71,7 @@ def log_audit_sync(event: AuditEvent) -> str | None:
     Utilisé quand l'ID d'audit doit être inclus dans la réponse HTTP (ex: agent query)."""
     try:
         from supabase_client import service_client
+
         sb = service_client()
         row = _build_row(event)
         try:

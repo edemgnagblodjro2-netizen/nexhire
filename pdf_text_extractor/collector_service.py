@@ -7,6 +7,7 @@ Normalise les données de chaque connecteur en :
   - license_assignments (qui a quelle licence)
 Données démo activées automatiquement si le connecteur n'est pas configuré.
 """
+
 from __future__ import annotations
 
 import json
@@ -23,41 +24,151 @@ from db import get_db, rows as db_rows, row as db_row
 # ─────────────────────────────────────────────────────────────────────────────
 
 _DEMO_WORKDAY = [
-    {"id": "WD001", "name": "Marie Tremblay",  "email": "marie.tremblay@corp.com",  "dept": "Ressources Humaines", "status": "active",     "salary_monthly": 5800, "title": "Chef RH"},
-    {"id": "WD002", "name": "Jean Dupont",     "email": "jean.dupont@corp.com",     "dept": "Finances",            "status": "terminated", "salary_monthly": 0,    "title": "Analyste financier"},
-    {"id": "WD003", "name": "Sophie Lavoie",   "email": "sophie.lavoie@corp.com",   "dept": "Technologies",        "status": "active",     "salary_monthly": 7100, "title": "Développeuse senior"},
-    {"id": "WD004", "name": "Marc Bouchard",   "email": "marc.bouchard@corp.com",   "dept": "Finances",            "status": "active",     "salary_monthly": 5500, "title": "Contrôleur"},
-    {"id": "WD005", "name": "Isabelle Roy",    "email": "isabelle.roy@corp.com",    "dept": "Direction",           "status": "active",     "salary_monthly": 9800, "title": "Directrice générale"},
-    {"id": "WD006", "name": "Thomas Gagnon",   "email": "thomas.gagnon@corp.com",   "dept": "Technologies",        "status": "active",     "salary_monthly": 6800, "title": "Architecte cloud"},
-    {"id": "WD007", "name": "Alice Morin",     "email": "alice.morin@corp.com",     "dept": "Ventes",              "status": "active",     "salary_monthly": 5200, "title": "Représentante"},
-    {"id": "WD008", "name": "Bob Carrier",     "email": "bob.carrier@corp.com",     "dept": "Marketing",           "status": "active",     "salary_monthly": 5000, "title": "Coordonnateur"},
+    {
+        "id": "WD001",
+        "name": "Marie Tremblay",
+        "email": "marie.tremblay@corp.com",
+        "dept": "Ressources Humaines",
+        "status": "active",
+        "salary_monthly": 5800,
+        "title": "Chef RH",
+    },
+    {
+        "id": "WD002",
+        "name": "Jean Dupont",
+        "email": "jean.dupont@corp.com",
+        "dept": "Finances",
+        "status": "terminated",
+        "salary_monthly": 0,
+        "title": "Analyste financier",
+    },
+    {
+        "id": "WD003",
+        "name": "Sophie Lavoie",
+        "email": "sophie.lavoie@corp.com",
+        "dept": "Technologies",
+        "status": "active",
+        "salary_monthly": 7100,
+        "title": "Développeuse senior",
+    },
+    {
+        "id": "WD004",
+        "name": "Marc Bouchard",
+        "email": "marc.bouchard@corp.com",
+        "dept": "Finances",
+        "status": "active",
+        "salary_monthly": 5500,
+        "title": "Contrôleur",
+    },
+    {
+        "id": "WD005",
+        "name": "Isabelle Roy",
+        "email": "isabelle.roy@corp.com",
+        "dept": "Direction",
+        "status": "active",
+        "salary_monthly": 9800,
+        "title": "Directrice générale",
+    },
+    {
+        "id": "WD006",
+        "name": "Thomas Gagnon",
+        "email": "thomas.gagnon@corp.com",
+        "dept": "Technologies",
+        "status": "active",
+        "salary_monthly": 6800,
+        "title": "Architecte cloud",
+    },
+    {
+        "id": "WD007",
+        "name": "Alice Morin",
+        "email": "alice.morin@corp.com",
+        "dept": "Ventes",
+        "status": "active",
+        "salary_monthly": 5200,
+        "title": "Représentante",
+    },
+    {
+        "id": "WD008",
+        "name": "Bob Carrier",
+        "email": "bob.carrier@corp.com",
+        "dept": "Marketing",
+        "status": "active",
+        "salary_monthly": 5000,
+        "title": "Coordonnateur",
+    },
 ]
 
 _DEMO_M365 = [
     # email,                      name,               dept,     enabled, sku,     cost,  days_inactive, features_used
-    ("marie.tremblay@corp.com",  "Marie Tremblay",   "RH",     True,  "E3",    22,   5,   ["exchange","teams","sharepoint","word","excel"]),
-    ("jean.dupont@corp.com",     "Jean Dupont",      "Finance",True,  "E3",    22,   45,  ["exchange"]),       # terminé WD → ORPHAN
-    ("sophie.lavoie@corp.com",   "Sophie Lavoie",    "IT",     True,  "E5",    57,   2,   ["exchange","teams","sharepoint","defender","intune"]),
-    ("marc.bouchard@corp.com",   "Marc Bouchard",    "Finance",True,  "E3",    22,   10,  ["exchange","teams","excel"]),
-    ("isabelle.roy@corp.com",    "Isabelle Roy",     "DIR",    True,  "E5",    57,   3,   ["exchange","teams","word","excel","powerpoint"]),
-    ("thomas.gagnon@corp.com",   "Thomas Gagnon",    "IT",     True,  "E5",    57,   1,   ["exchange","teams","azure","defender","powerbi"]),
-    ("alice.morin@corp.com",     "Alice Morin",      "Ventes", True,  "E5",    57,   8,   ["exchange","teams","word"]),   # E5 mais usage basique → OVERSIZED
-    ("bob.carrier@corp.com",     "Bob Carrier",      "Mktg",   True,  "E3",    22,   95,  []),                # inactif 95j → UNUSED
-    ("ancien.employe@corp.com",  "Ancien Employé",   "TI",     True,  "E3",    22,   180, ["exchange"]),      # absent WD → GHOST
+    (
+        "marie.tremblay@corp.com",
+        "Marie Tremblay",
+        "RH",
+        True,
+        "E3",
+        22,
+        5,
+        ["exchange", "teams", "sharepoint", "word", "excel"],
+    ),
+    ("jean.dupont@corp.com", "Jean Dupont", "Finance", True, "E3", 22, 45, ["exchange"]),  # terminé WD → ORPHAN
+    (
+        "sophie.lavoie@corp.com",
+        "Sophie Lavoie",
+        "IT",
+        True,
+        "E5",
+        57,
+        2,
+        ["exchange", "teams", "sharepoint", "defender", "intune"],
+    ),
+    ("marc.bouchard@corp.com", "Marc Bouchard", "Finance", True, "E3", 22, 10, ["exchange", "teams", "excel"]),
+    (
+        "isabelle.roy@corp.com",
+        "Isabelle Roy",
+        "DIR",
+        True,
+        "E5",
+        57,
+        3,
+        ["exchange", "teams", "word", "excel", "powerpoint"],
+    ),
+    (
+        "thomas.gagnon@corp.com",
+        "Thomas Gagnon",
+        "IT",
+        True,
+        "E5",
+        57,
+        1,
+        ["exchange", "teams", "azure", "defender", "powerbi"],
+    ),
+    (
+        "alice.morin@corp.com",
+        "Alice Morin",
+        "Ventes",
+        True,
+        "E5",
+        57,
+        8,
+        ["exchange", "teams", "word"],
+    ),  # E5 mais usage basique → OVERSIZED
+    ("bob.carrier@corp.com", "Bob Carrier", "Mktg", True, "E3", 22, 95, []),  # inactif 95j → UNUSED
+    ("ancien.employe@corp.com", "Ancien Employé", "TI", True, "E3", 22, 180, ["exchange"]),  # absent WD → GHOST
 ]
 
 _DEMO_JIRA = [
-    ("marie.tremblay@corp.com",  "Marie Tremblay",  "JIRA-001"),
-    ("jean.dupont@corp.com",     "Jean Dupont",     "JIRA-002"),  # terminé WD → ORPHAN
-    ("sophie.lavoie@corp.com",   "Sophie Lavoie",   "JIRA-003"),
-    ("marc.bouchard@corp.com",   "Marc Bouchard",   "JIRA-004"),
-    ("thomas.gagnon@corp.com",   "Thomas Gagnon",   "JIRA-005"),
+    ("marie.tremblay@corp.com", "Marie Tremblay", "JIRA-001"),
+    ("jean.dupont@corp.com", "Jean Dupont", "JIRA-002"),  # terminé WD → ORPHAN
+    ("sophie.lavoie@corp.com", "Sophie Lavoie", "JIRA-003"),
+    ("marc.bouchard@corp.com", "Marc Bouchard", "JIRA-004"),
+    ("thomas.gagnon@corp.com", "Thomas Gagnon", "JIRA-005"),
 ]
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Helpers DB
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def _upsert_identity(
     org_id: str,
@@ -90,8 +201,14 @@ def _upsert_identity(
             RETURNING id
             """,
             (
-                org_id, canonical_email, full_name, org_unit_name, job_title,
-                status, source_of_truth, cost_monthly,
+                org_id,
+                canonical_email,
+                full_name,
+                org_unit_name,
+                job_title,
+                status,
+                source_of_truth,
+                cost_monthly,
                 json.dumps(metadata),
             ),
         )
@@ -129,9 +246,15 @@ def _upsert_account(
             RETURNING id
             """,
             (
-                org_id, identity_id, source_connector, external_id,
-                external_email, display_name, status,
-                last_activity_at, json.dumps(data),
+                org_id,
+                identity_id,
+                source_connector,
+                external_id,
+                external_email,
+                display_name,
+                status,
+                last_activity_at,
+                json.dumps(data),
             ),
         )
         r = cur.fetchone()
@@ -164,8 +287,7 @@ def _upsert_license_pool(
               synced_at        = now()
             RETURNING id
             """,
-            (org_id, connector_type, sku_name, sku_id,
-             qty_total, qty_assigned, unit_cost_monthly, json.dumps(data)),
+            (org_id, connector_type, sku_name, sku_id, qty_total, qty_assigned, unit_cost_monthly, json.dumps(data)),
         )
         r = cur.fetchone()
     return str(r["id"]) if r else None
@@ -219,8 +341,7 @@ def _upsert_usage(
               activity_score = EXCLUDED.activity_score,
               tier_needed    = EXCLUDED.tier_needed
             """,
-            (org_id, assignment_id, period_start, period_end,
-             json.dumps(metrics), activity_score, tier_needed),
+            (org_id, assignment_id, period_start, period_end, json.dumps(metrics), activity_score, tier_needed),
         )
 
 
@@ -228,17 +349,16 @@ def _upsert_usage(
 # Workday
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 def collect_workday(org_id: str) -> int:
     # identities accepte 'terminated' ; identity_accounts n'accepte pas ce statut
-    _IDENTITY_STATUS = {"active": "active", "terminated": "terminated",
-                        "inactive": "inactive", "on_leave": "on_leave"}
-    _ACCOUNT_STATUS  = {"active": "active", "terminated": "inactive",
-                        "inactive": "inactive", "on_leave": "active"}
+    _IDENTITY_STATUS = {"active": "active", "terminated": "terminated", "inactive": "inactive", "on_leave": "on_leave"}
+    _ACCOUNT_STATUS = {"active": "active", "terminated": "inactive", "inactive": "inactive", "on_leave": "active"}
 
     workers = _fetch_workday(org_id)
     for w in workers:
         raw = w.get("status", "active")
-        wd_status      = _IDENTITY_STATUS.get(raw, "active")
+        wd_status = _IDENTITY_STATUS.get(raw, "active")
         account_status = _ACCOUNT_STATUS.get(raw, "inactive")
 
         identity_id = _upsert_identity(
@@ -270,25 +390,29 @@ def _fetch_workday(org_id: str) -> list[dict]:
     try:
         from workday_service import _load_config, _get_access_token, _api_base
         import httpx
+
         cfg = _load_config(org_id)
         if not cfg:
             return _DEMO_WORKDAY
         token = _get_access_token(cfg)
-        base  = _api_base(cfg)
-        r = httpx.get(f"{base}/workers", headers={"Authorization": f"Bearer {token}"},
-                      params={"limit": 500}, timeout=15)
+        base = _api_base(cfg)
+        r = httpx.get(
+            f"{base}/workers", headers={"Authorization": f"Bearer {token}"}, params={"limit": 500}, timeout=15
+        )
         r.raise_for_status()
         result = []
         for w in r.json().get("data", []):
-            result.append({
-                "id":             w.get("id", ""),
-                "name":           (w.get("person") or {}).get("legalName", {}).get("fullName"),
-                "email":          (w.get("businessContact") or {}).get("emailAddress"),
-                "dept":           (w.get("position") or {}).get("businessUnit", {}).get("descriptor"),
-                "status":         "active" if (w.get("workerStatus") or {}).get("descriptor") == "Active" else "terminated",
-                "salary_monthly": 0,
-                "title":          (w.get("position") or {}).get("jobProfile", {}).get("descriptor"),
-            })
+            result.append(
+                {
+                    "id": w.get("id", ""),
+                    "name": (w.get("person") or {}).get("legalName", {}).get("fullName"),
+                    "email": (w.get("businessContact") or {}).get("emailAddress"),
+                    "dept": (w.get("position") or {}).get("businessUnit", {}).get("descriptor"),
+                    "status": "active" if (w.get("workerStatus") or {}).get("descriptor") == "Active" else "terminated",
+                    "salary_monthly": 0,
+                    "title": (w.get("position") or {}).get("jobProfile", {}).get("descriptor"),
+                }
+            )
         return result or _DEMO_WORKDAY
     except Exception:
         return _DEMO_WORKDAY
@@ -298,11 +422,12 @@ def _fetch_workday(org_id: str) -> list[dict]:
 # Microsoft 365 — utilisateurs + licences + usage
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 def collect_microsoft_365(org_id: str) -> int:
     data = _fetch_m365(org_id)
     pool_ids: dict[str, str | None] = {}  # sku_name → pool_id
 
-    for (email, name, dept, enabled, sku, cost, days_inactive, features) in data:
+    for email, name, dept, enabled, sku, cost, days_inactive, features in data:
         # Résoudre l'identité existante (créée par Workday si possible)
         identity_id = _resolve_identity_id(org_id, email)
 
@@ -317,8 +442,13 @@ def collect_microsoft_365(org_id: str) -> int:
             display_name=name,
             status=acct_status,
             last_activity_at=None,
-            data={"department": dept, "accountEnabled": enabled, "sku": sku,
-                  "days_inactive": days_inactive, "features": features},
+            data={
+                "department": dept,
+                "accountEnabled": enabled,
+                "sku": sku,
+                "days_inactive": days_inactive,
+                "features": features,
+            },
         )
 
         # Pool de licence (upsert une fois par SKU)
@@ -328,7 +458,7 @@ def collect_microsoft_365(org_id: str) -> int:
                 connector_type="microsoft_365",
                 sku_name=sku,
                 sku_id=f"SKU-{sku}",
-                qty_total=50,     # remplacé par API réelle
+                qty_total=50,  # remplacé par API réelle
                 qty_assigned=len([d for d in data if d[4] == sku]),
                 unit_cost_monthly=cost,
                 data={"sku_friendly": sku},
@@ -348,6 +478,7 @@ def collect_microsoft_365(org_id: str) -> int:
         if assign_id:
             score, tier = _compute_m365_score(features, days_inactive, sku)
             from datetime import date, timedelta
+
             today = date.today()
             _upsert_usage(
                 org_id=org_id,
@@ -355,17 +486,17 @@ def collect_microsoft_365(org_id: str) -> int:
                 period_start=(today - timedelta(days=30)).isoformat(),
                 period_end=today.isoformat(),
                 metrics={
-                    "exchange_active":    "exchange" in features,
-                    "teams_active":       "teams" in features,
-                    "sharepoint_active":  "sharepoint" in features,
-                    "onedrive_active":    "onedrive" in features,
-                    "word_active":        "word" in features,
-                    "excel_active":       "excel" in features,
-                    "powerpoint_active":  "powerpoint" in features,
-                    "defender_active":    "defender" in features,
-                    "intune_active":      "intune" in features,
-                    "powerbi_active":     "powerbi" in features,
-                    "days_inactive":      days_inactive,
+                    "exchange_active": "exchange" in features,
+                    "teams_active": "teams" in features,
+                    "sharepoint_active": "sharepoint" in features,
+                    "onedrive_active": "onedrive" in features,
+                    "word_active": "word" in features,
+                    "excel_active": "excel" in features,
+                    "powerpoint_active": "powerpoint" in features,
+                    "defender_active": "defender" in features,
+                    "intune_active": "intune" in features,
+                    "powerbi_active": "powerbi" in features,
+                    "days_inactive": days_inactive,
                 },
                 activity_score=score,
                 tier_needed=tier,
@@ -379,24 +510,29 @@ def _compute_m365_score(features: list[str], days_inactive: int, sku: str) -> tu
         return 0, "none"
 
     weights = {
-        "exchange": 25, "teams": 25, "sharepoint": 15, "onedrive": 15,
-        "word": 8, "excel": 8, "powerpoint": 4,
+        "exchange": 25,
+        "teams": 25,
+        "sharepoint": 15,
+        "onedrive": 15,
+        "word": 8,
+        "excel": 8,
+        "powerpoint": 4,
     }
     score = min(sum(w for k, w in weights.items() if k in features), 100)
 
     # Tier réellement nécessaire
     advanced_features = {"defender", "intune", "powerbi", "azure", "purview"}
     uses_advanced = bool(advanced_features & set(features))
-    uses_collab   = bool({"sharepoint", "onedrive", "teams"} & set(features))
+    uses_collab = bool({"sharepoint", "onedrive", "teams"} & set(features))
 
     if uses_advanced:
-        tier = "enterprise"   # E5 justifié
+        tier = "enterprise"  # E5 justifié
     elif uses_collab:
-        tier = "advanced"     # E3 justifié
+        tier = "advanced"  # E3 justifié
     elif features:
-        tier = "standard"     # Business Basic suffisant
+        tier = "standard"  # Business Basic suffisant
     else:
-        tier = "none"         # rien du tout
+        tier = "none"  # rien du tout
 
     return score, tier
 
@@ -410,9 +546,10 @@ def _fetch_m365(org_id: str) -> list[tuple]:
 # Jira
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 def collect_jira(org_id: str) -> int:
     users = _fetch_jira(org_id)
-    for (email, name, ext_id) in users:
+    for email, name, ext_id in users:
         identity_id = _resolve_identity_id(org_id, email)
         _upsert_account(
             org_id=org_id,
@@ -432,14 +569,14 @@ def _fetch_jira(org_id: str) -> list[tuple]:
     try:
         from connector_loader import load_creds, bearer, refresh_oauth
         import httpx
+
         creds, cid = load_creds("jira", org_id)
         if not creds:
             return _DEMO_JIRA
-        creds = refresh_oauth(creds, cid,
-            "https://auth.atlassian.com/oauth/token",
-            "JIRA_CLIENT_ID", "JIRA_CLIENT_SECRET")
-        res = httpx.get("https://api.atlassian.com/oauth/token/accessible-resources",
-                        headers=bearer(creds), timeout=10)
+        creds = refresh_oauth(
+            creds, cid, "https://auth.atlassian.com/oauth/token", "JIRA_CLIENT_ID", "JIRA_CLIENT_SECRET"
+        )
+        res = httpx.get("https://api.atlassian.com/oauth/token/accessible-resources", headers=bearer(creds), timeout=10)
         res.raise_for_status()
         cloud_id = (res.json() or [{}])[0].get("id")
         if not cloud_id:
@@ -451,10 +588,7 @@ def _fetch_jira(org_id: str) -> list[tuple]:
             timeout=15,
         )
         r.raise_for_status()
-        return [
-            (u.get("emailAddress"), u.get("displayName"), u.get("accountId", ""))
-            for u in r.json()
-        ] or _DEMO_JIRA
+        return [(u.get("emailAddress"), u.get("displayName"), u.get("accountId", "")) for u in r.json()] or _DEMO_JIRA
     except Exception:
         return _DEMO_JIRA
 
@@ -462,6 +596,7 @@ def _fetch_jira(org_id: str) -> list[tuple]:
 # ─────────────────────────────────────────────────────────────────────────────
 # Helpers
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def _resolve_identity_id(org_id: str, email: str) -> str | None:
     """Recherche l'UUID d'une identité par son email canonique."""
@@ -483,18 +618,20 @@ def _resolve_identity_id(org_id: str, email: str) -> str | None:
 # Point d'entrée principal
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 def collect_all(org_id: str) -> dict:
     """Lance la collecte complète pour tous les connecteurs."""
     # Microsoft 365 : connecteur réel si configuré, sinon démo
     try:
         from m365_collector import collect_all_m365
+
         m365_stats = collect_all_m365(org_id)
         m365_count = m365_stats.get("users", 0)
     except RuntimeError:
         m365_count = collect_microsoft_365(org_id)
 
     return {
-        "workday":       collect_workday(org_id),
+        "workday": collect_workday(org_id),
         "microsoft_365": m365_count,
-        "jira":          collect_jira(org_id),
+        "jira": collect_jira(org_id),
     }

@@ -13,6 +13,7 @@ Routes :
   POST   /api/playbooks/runs/{run_id}/step/{idx}/reject   Rejeter étape
   POST   /api/playbooks/runs/{run_id}/cancel  Annuler
 """
+
 import json
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request
@@ -35,6 +36,7 @@ def _ser(d: dict) -> dict:
 
 # ── Liste ──────────────────────────────────────────────────────────────────────
 
+
 @router.get("")
 def list_playbooks(
     user: CurrentUser = Depends(get_current_user),
@@ -54,11 +56,13 @@ def list_playbooks(
     params: list = [oid]
 
     if category:
-        sql += " AND p.category = %s"; params.append(category)
+        sql += " AND p.category = %s"
+        params.append(category)
     if status:
         statuses = [s.strip() for s in status.split(",")]
         phs = ",".join(["%s"] * len(statuses))
-        sql += f" AND p.status IN ({phs})"; params.extend(statuses)
+        sql += f" AND p.status IN ({phs})"
+        params.extend(statuses)
 
     sql += " ORDER BY p.run_count DESC, p.created_at DESC LIMIT %s OFFSET %s"
     params.extend([limit, offset])
@@ -71,6 +75,7 @@ def list_playbooks(
 
 
 # ── Détail ─────────────────────────────────────────────────────────────────────
+
 
 @router.get("/{playbook_id}")
 def get_playbook(playbook_id: str, user: CurrentUser = Depends(get_current_user)):
@@ -91,6 +96,7 @@ def get_playbook(playbook_id: str, user: CurrentUser = Depends(get_current_user)
 
 # ── Créer ──────────────────────────────────────────────────────────────────────
 
+
 class PlaybookCreate(BaseModel):
     name: str = Field(..., min_length=3, max_length=200)
     description: str | None = None
@@ -100,6 +106,7 @@ class PlaybookCreate(BaseModel):
     responsible_dept: str | None = None
     steps: list = Field(default_factory=list)
     trigger_type: list[str] = Field(default_factory=lambda: ["manual"])
+
 
 @router.post("", status_code=201)
 def create_playbook(
@@ -115,17 +122,35 @@ def create_playbook(
                 responsible_dept, steps, trigger_type, created_by)
                VALUES (%s,%s,%s,%s,%s,%s,%s,%s::jsonb,%s,%s)
                RETURNING id""",
-            (oid, payload.name, payload.description, payload.category, payload.icon,
-             payload.sla_minutes, payload.responsible_dept,
-             json.dumps(payload.steps), payload.trigger_type, str(user.id)),
+            (
+                oid,
+                payload.name,
+                payload.description,
+                payload.category,
+                payload.icon,
+                payload.sla_minutes,
+                payload.responsible_dept,
+                json.dumps(payload.steps),
+                payload.trigger_type,
+                str(user.id),
+            ),
         )
         created = row(cur)
-    log_audit(AuditEvent(action="playbook_created", user_id=str(user.id), organization_id=oid,
-                         ip_address=client_ip(request), success=True, http_status=201))
+    log_audit(
+        AuditEvent(
+            action="playbook_created",
+            user_id=str(user.id),
+            organization_id=oid,
+            ip_address=client_ip(request),
+            success=True,
+            http_status=201,
+        )
+    )
     return {"ok": True, "id": str(created["id"])}
 
 
 # ── Modifier ───────────────────────────────────────────────────────────────────
+
 
 class PlaybookUpdate(BaseModel):
     name: str | None = Field(None, min_length=3, max_length=200)
@@ -136,6 +161,7 @@ class PlaybookUpdate(BaseModel):
     steps: list | None = None
     status: str | None = None
 
+
 @router.put("/{playbook_id}")
 def update_playbook(
     playbook_id: str,
@@ -145,13 +171,27 @@ def update_playbook(
 ):
     oid = str(user.organization_id)
     fields, params = [], []
-    if payload.name is not None:        fields.append("name = %s"); params.append(payload.name)
-    if payload.description is not None: fields.append("description = %s"); params.append(payload.description)
-    if payload.category is not None:    fields.append("category = %s"); params.append(payload.category)
-    if payload.icon is not None:        fields.append("icon = %s"); params.append(payload.icon)
-    if payload.sla_minutes is not None: fields.append("sla_minutes = %s"); params.append(payload.sla_minutes)
-    if payload.steps is not None:       fields.append("steps = %s::jsonb"); params.append(json.dumps(payload.steps))
-    if payload.status is not None:      fields.append("status = %s"); params.append(payload.status)
+    if payload.name is not None:
+        fields.append("name = %s")
+        params.append(payload.name)
+    if payload.description is not None:
+        fields.append("description = %s")
+        params.append(payload.description)
+    if payload.category is not None:
+        fields.append("category = %s")
+        params.append(payload.category)
+    if payload.icon is not None:
+        fields.append("icon = %s")
+        params.append(payload.icon)
+    if payload.sla_minutes is not None:
+        fields.append("sla_minutes = %s")
+        params.append(payload.sla_minutes)
+    if payload.steps is not None:
+        fields.append("steps = %s::jsonb")
+        params.append(json.dumps(payload.steps))
+    if payload.status is not None:
+        fields.append("status = %s")
+        params.append(payload.status)
     if not fields:
         raise HTTPException(status_code=400, detail="Aucun champ à modifier.")
     params.extend([playbook_id, oid])
@@ -167,9 +207,11 @@ def update_playbook(
 
 # ── Déclencher ────────────────────────────────────────────────────────────────
 
+
 class RunPayload(BaseModel):
     context: dict = Field(default_factory=dict)
     trigger_type: str = "manual"
+
 
 @router.post("/{playbook_id}/run", status_code=201)
 def run_playbook(
@@ -192,10 +234,10 @@ def run_playbook(
     total = len(steps)
 
     import datetime
+
     sla_deadline = None
     if pb.get("sla_minutes"):
-        sla_deadline = (datetime.datetime.now(datetime.UTC) +
-                        datetime.timedelta(minutes=pb["sla_minutes"])).isoformat()
+        sla_deadline = (datetime.datetime.now(datetime.UTC) + datetime.timedelta(minutes=pb["sla_minutes"])).isoformat()
 
     with get_db() as cur:
         cur.execute(
@@ -203,8 +245,7 @@ def run_playbook(
                (playbook_id, org_id, status, trigger_type, triggered_by, context, total_steps, sla_deadline, started_at)
                VALUES (%s,%s,'running',%s,%s,%s::jsonb,%s,%s,now())
                RETURNING id""",
-            (playbook_id, oid, payload.trigger_type, str(user.id),
-             json.dumps(payload.context), total, sla_deadline),
+            (playbook_id, oid, payload.trigger_type, str(user.id), json.dumps(payload.context), total, sla_deadline),
         )
         run = row(cur)
         run_id = str(run["id"])
@@ -224,13 +265,22 @@ def run_playbook(
             (playbook_id,),
         )
 
-    log_audit(AuditEvent(action="playbook_triggered", user_id=str(user.id), organization_id=oid,
-                         ip_address=client_ip(request), success=True, http_status=201,
-                         resource_ids=[playbook_id]))
+    log_audit(
+        AuditEvent(
+            action="playbook_triggered",
+            user_id=str(user.id),
+            organization_id=oid,
+            ip_address=client_ip(request),
+            success=True,
+            http_status=201,
+            resource_ids=[playbook_id],
+        )
+    )
     return {"ok": True, "run_id": run_id, "total_steps": total}
 
 
 # ── Historique d'exécutions ───────────────────────────────────────────────────
+
 
 @router.get("/{playbook_id}/runs")
 def list_runs(
@@ -254,6 +304,7 @@ def list_runs(
 
 # ── Détail d'un run ────────────────────────────────────────────────────────────
 
+
 @router.get("/runs/{run_id}")
 def get_run(run_id: str, user: CurrentUser = Depends(get_current_user)):
     oid = str(user.organization_id)
@@ -276,8 +327,10 @@ def get_run(run_id: str, user: CurrentUser = Depends(get_current_user)):
 
 # ── Valider / Rejeter étape humaine ───────────────────────────────────────────
 
+
 class StepActionPayload(BaseModel):
     comment: str | None = Field(None, max_length=500)
+
 
 @router.post("/runs/{run_id}/step/{step_idx}/approve")
 def approve_step(
@@ -337,6 +390,7 @@ def reject_step(
 
 
 # ── Annuler un run ─────────────────────────────────────────────────────────────
+
 
 @router.post("/runs/{run_id}/cancel")
 def cancel_run(

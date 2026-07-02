@@ -16,6 +16,7 @@ Permissions Graph App requises (à configurer dans Azure App Registration) :
   UserAuthenticationMethod.Read.All          — détails MFA (beta)
   AuditLog.Read.All                          — signInActivity (optionnel, Entra P1/P2)
 """
+
 from __future__ import annotations
 
 import csv
@@ -31,7 +32,7 @@ from db import get_db
 
 log = logging.getLogger(__name__)
 
-GRAPH   = "https://graph.microsoft.com/v1.0"
+GRAPH = "https://graph.microsoft.com/v1.0"
 GRAPH_B = "https://graph.microsoft.com/beta"
 
 # ── SKU GUID → Nom lisible ───────────────────────────────────────────────────
@@ -73,81 +74,81 @@ _SKU_MAP: dict[str, str] = {
 
 # partNumber (ex: ENTERPRISEPACK) → nom lisible — fallback si GUID inconnu
 _SKU_PARTNUM: dict[str, str] = {
-    "ENTERPRISEPACK":           "M365 E3",
-    "ENTERPRISEPREMIUM":        "M365 E5",
-    "ENTERPRISEPACKWOW":        "O365 E3",
-    "STANDARDPACK":             "O365 E1",
+    "ENTERPRISEPACK": "M365 E3",
+    "ENTERPRISEPREMIUM": "M365 E5",
+    "ENTERPRISEPACKWOW": "O365 E3",
+    "STANDARDPACK": "O365 E1",
     "O365_BUSINESS_ESSENTIALS": "Business Basic",
-    "O365_BUSINESS_PREMIUM":    "Business Standard",
-    "SPB":                      "Business Premium",
-    "DESKLESSPACK":             "F1",
-    "DESKLESSWOFFPACK":         "F3",
-    "AAD_PREMIUM":              "Entra ID P1",
-    "AAD_PREMIUM_P2":           "Entra ID P2",
-    "INTUNE_A":                 "Intune",
-    "POWER_BI_PRO":             "Power BI Pro",
-    "OFFICESUBSCRIPTION":       "M365 Apps for Enterprise",
-    "O365_BUSINESS":            "M365 Apps for Business",
-    "EXCHANGESTANDARD":         "Exchange Online P1",
-    "EXCHANGEENTERPRISE":       "Exchange Online P2",
-    "TEAMS_ESSENTIALS":         "Teams Essentials",
-    "MCOEV":                    "Teams Phone",
+    "O365_BUSINESS_PREMIUM": "Business Standard",
+    "SPB": "Business Premium",
+    "DESKLESSPACK": "F1",
+    "DESKLESSWOFFPACK": "F3",
+    "AAD_PREMIUM": "Entra ID P1",
+    "AAD_PREMIUM_P2": "Entra ID P2",
+    "INTUNE_A": "Intune",
+    "POWER_BI_PRO": "Power BI Pro",
+    "OFFICESUBSCRIPTION": "M365 Apps for Enterprise",
+    "O365_BUSINESS": "M365 Apps for Business",
+    "EXCHANGESTANDARD": "Exchange Online P1",
+    "EXCHANGEENTERPRISE": "Exchange Online P2",
+    "TEAMS_ESSENTIALS": "Teams Essentials",
+    "MCOEV": "Teams Phone",
 }
 
 # Coûts de référence CAD approximatifs (prix publics Microsoft 2025)
 _SKU_COST: dict[str, float] = {
-    "M365 E1":               12.50,
-    "M365 E3":               28.40,
-    "M365 E5":               57.20,
-    "O365 E1":                9.40,
-    "O365 E3":               22.50,
-    "O365 E5":               38.00,
-    "Business Basic":         7.20,
-    "Business Standard":     15.10,
-    "Business Premium":      26.80,
-    "F1":                     2.70,
-    "F3":                     9.40,
-    "Entra ID P1":            7.40,
-    "Entra ID P2":           11.60,
-    "Intune":                 8.00,
-    "Power BI Pro":          13.70,
+    "M365 E1": 12.50,
+    "M365 E3": 28.40,
+    "M365 E5": 57.20,
+    "O365 E1": 9.40,
+    "O365 E3": 22.50,
+    "O365 E5": 38.00,
+    "Business Basic": 7.20,
+    "Business Standard": 15.10,
+    "Business Premium": 26.80,
+    "F1": 2.70,
+    "F3": 9.40,
+    "Entra ID P1": 7.40,
+    "Entra ID P2": 11.60,
+    "Intune": 8.00,
+    "Power BI Pro": 13.70,
     "Power BI Premium Per User": 21.60,
-    "Defender P1":            3.50,
-    "Defender P2":            7.20,
+    "Defender P1": 3.50,
+    "Defender P2": 7.20,
     "M365 Apps for Enterprise": 14.90,
-    "M365 Apps for Business":   10.60,
-    "Exchange Online P1":     4.70,
-    "Exchange Online P2":     9.40,
-    "Teams Essentials":        4.70,
+    "M365 Apps for Business": 10.60,
+    "Exchange Online P1": 4.70,
+    "Exchange Online P2": 9.40,
+    "Teams Essentials": 4.70,
 }
 
 # Poids score d'activité 0-100
 _ACTIVITY_WEIGHTS = {
-    "exchange":    25,
-    "teams":       25,
-    "sharepoint":  15,
-    "onedrive":    10,
-    "word":         8,
-    "excel":        8,
-    "powerpoint":   5,
-    "onenote":      4,
+    "exchange": 25,
+    "teams": 25,
+    "sharepoint": 15,
+    "onedrive": 10,
+    "word": 8,
+    "excel": 8,
+    "powerpoint": 5,
+    "onenote": 4,
 }
 
 # Colonnes CSV rapport → clés internes
 _CSV_COLS = {
-    "Exchange":        "exchange",
-    "OneDrive":        "onedrive",
-    "SharePoint":      "sharepoint",
-    "Teams":           "teams",
-    "Word":            "word",
-    "Excel":           "excel",
-    "PowerPoint":      "powerpoint",
-    "OneNote":         "onenote",
-    "Yammer":          "yammer",
-    "Outlook Mac":     "outlook_mac",
+    "Exchange": "exchange",
+    "OneDrive": "onedrive",
+    "SharePoint": "sharepoint",
+    "Teams": "teams",
+    "Word": "word",
+    "Excel": "excel",
+    "PowerPoint": "powerpoint",
+    "OneNote": "onenote",
+    "Yammer": "yammer",
+    "Outlook Mac": "outlook_mac",
     "Outlook Windows": "outlook_windows",
-    "Outlook Mobile":  "outlook_mobile",
-    "Outlook Web":     "outlook_web",
+    "Outlook Mobile": "outlook_mobile",
+    "Outlook Web": "outlook_web",
     "Skype For Business": "skype",
 }
 
@@ -156,14 +157,15 @@ _CSV_COLS = {
 # Auth
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 def _auth_headers(org_id: str) -> dict:
     """Charge et rafraîchit les tokens M365, retourne les headers Graph."""
     from m365_service import _load_tokens, _refresh_if_needed
+
     tokens, cid = _load_tokens(org_id)
     if not tokens:
         raise RuntimeError(
-            "Connecteur Microsoft 365 non configuré. "
-            "Allez dans Connecteurs → Microsoft 365 et connectez via OAuth."
+            "Connecteur Microsoft 365 non configuré. " "Allez dans Connecteurs → Microsoft 365 et connectez via OAuth."
         )
     tokens = _refresh_if_needed(tokens, cid)
     return {"Authorization": f"Bearer {tokens['access_token']}"}
@@ -172,6 +174,7 @@ def _auth_headers(org_id: str) -> dict:
 # ─────────────────────────────────────────────────────────────────────────────
 # Graph API helpers
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def _get(headers: dict, url: str, params: dict | None = None) -> dict:
     """GET Graph avec retry sur 429 (rate limit)."""
@@ -205,20 +208,21 @@ def _get_all(headers: dict, url: str, params: dict | None = None) -> list[dict]:
 def _get_csv(headers: dict, url: str) -> list[dict]:
     """GET rapport CSV Graph (usage reports) — retourne liste de dicts."""
     r = httpx.get(url, headers=headers, timeout=60, follow_redirects=True)
-    if r.status_code == 204:   # pas de données disponibles encore
+    if r.status_code == 204:  # pas de données disponibles encore
         return []
     if r.status_code == 403:
         raise PermissionError(f"Reports.Read.All requis pour : {url}")
     r.raise_for_status()
     # BOM UTF-8 possible
     content = r.content.decode("utf-8-sig", errors="replace")
-    reader  = csv.DictReader(io.StringIO(content))
+    reader = csv.DictReader(io.StringIO(content))
     return [dict(row) for row in reader]
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Utilitaires
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def _sku_name(sku_id: str, part_number: str) -> str:
     return _SKU_MAP.get(sku_id) or _SKU_PARTNUM.get(part_number) or part_number
@@ -236,8 +240,8 @@ def _score_and_tier(apps: dict, days_inactive: int, sku_name: str) -> tuple[int,
     score = min(sum(w for k, w in _ACTIVITY_WEIGHTS.items() if apps.get(k)), 100)
 
     uses_advanced = apps.get("sharepoint") or apps.get("onedrive")
-    uses_teams    = apps.get("teams") or apps.get("yammer")
-    uses_email    = apps.get("exchange") or apps.get("outlook_web") or apps.get("outlook_windows")
+    uses_teams = apps.get("teams") or apps.get("yammer")
+    uses_email = apps.get("exchange") or apps.get("outlook_web") or apps.get("outlook_windows")
 
     if "E5" in sku_name and score >= 70:
         tier = "enterprise"
@@ -273,6 +277,7 @@ def _week_start() -> str:
 # ─────────────────────────────────────────────────────────────────────────────
 # Fetcheurs Graph
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def _fetch_users(headers: dict) -> list[dict]:
     """
@@ -333,12 +338,12 @@ def _fetch_usage_report(headers: dict) -> dict[str, dict]:
             val = (row.get(csv_col) or "").strip().lower()
             apps[key] = val in ("true", "yes", "1")
 
-        last_str  = row.get("Last Activity Date", "").strip()
+        last_str = row.get("Last Activity Date", "").strip()
         last_date = _parse_date(last_str)
         days_inactive = (today - last_date).days if last_date else 999
 
         result[upn] = {
-            "apps":          apps,
+            "apps": apps,
             "last_activity": last_str or None,
             "days_inactive": days_inactive,
         }
@@ -379,11 +384,11 @@ def _fetch_mfa_status(headers: dict) -> dict[str, dict]:
             mfa_method = "email"
 
         result[upn] = {
-            "mfa_registered":  r.get("isMfaRegistered", False),
-            "mfa_capable":     r.get("isMfaCapable", False),
-            "mfa_method":      mfa_method if r.get("isMfaRegistered") else "none",
-            "is_privileged":   r.get("isAdmin", False),
-            "methods":         methods,
+            "mfa_registered": r.get("isMfaRegistered", False),
+            "mfa_capable": r.get("isMfaCapable", False),
+            "mfa_method": mfa_method if r.get("isMfaRegistered") else "none",
+            "is_privileged": r.get("isAdmin", False),
+            "methods": methods,
         }
     return result
 
@@ -392,9 +397,17 @@ def _fetch_mfa_status(headers: dict) -> dict[str, dict]:
 # DB writers
 # ─────────────────────────────────────────────────────────────────────────────
 
-def _upsert_identity(org_id: str, canonical_email: str, full_name: str | None,
-                     org_unit_name: str | None, job_title: str | None,
-                     status: str, identity_type: str, metadata: dict) -> str | None:
+
+def _upsert_identity(
+    org_id: str,
+    canonical_email: str,
+    full_name: str | None,
+    org_unit_name: str | None,
+    job_title: str | None,
+    status: str,
+    identity_type: str,
+    metadata: dict,
+) -> str | None:
     with get_db() as cur:
         cur.execute(
             """
@@ -414,16 +427,22 @@ def _upsert_identity(org_id: str, canonical_email: str, full_name: str | None,
               updated_at    = now()
             RETURNING id
             """,
-            (org_id, canonical_email, full_name, org_unit_name, job_title,
-             status, identity_type, json.dumps(metadata)),
+            (org_id, canonical_email, full_name, org_unit_name, job_title, status, identity_type, json.dumps(metadata)),
         )
         r = cur.fetchone()
     return str(r["id"]) if r else None
 
 
-def _upsert_account(org_id: str, identity_id: str | None, external_id: str,
-                    external_email: str | None, display_name: str | None,
-                    status: str, last_activity_at: str | None, data: dict) -> str | None:
+def _upsert_account(
+    org_id: str,
+    identity_id: str | None,
+    external_id: str,
+    external_email: str | None,
+    display_name: str | None,
+    status: str,
+    last_activity_at: str | None,
+    data: dict,
+) -> str | None:
     with get_db() as cur:
         cur.execute(
             """
@@ -441,15 +460,24 @@ def _upsert_account(org_id: str, identity_id: str | None, external_id: str,
               synced_at        = now()
             RETURNING id
             """,
-            (org_id, identity_id, external_id, external_email, display_name,
-             status, last_activity_at, json.dumps(data)),
+            (
+                org_id,
+                identity_id,
+                external_id,
+                external_email,
+                display_name,
+                status,
+                last_activity_at,
+                json.dumps(data),
+            ),
         )
         r = cur.fetchone()
     return str(r["id"]) if r else None
 
 
-def _upsert_pool(org_id: str, sku_id: str, sku_name: str, part_number: str,
-                 qty_total: int, qty_assigned: int, unit_cost: float) -> str | None:
+def _upsert_pool(
+    org_id: str, sku_id: str, sku_name: str, part_number: str, qty_total: int, qty_assigned: int, unit_cost: float
+) -> str | None:
     with get_db() as cur:
         cur.execute(
             """
@@ -465,15 +493,15 @@ def _upsert_pool(org_id: str, sku_id: str, sku_name: str, part_number: str,
               synced_at         = now()
             RETURNING id
             """,
-            (org_id, sku_name, sku_id, qty_total, qty_assigned, unit_cost,
-             json.dumps({"part_number": part_number})),
+            (org_id, sku_name, sku_id, qty_total, qty_assigned, unit_cost, json.dumps({"part_number": part_number})),
         )
         r = cur.fetchone()
     return str(r["id"]) if r else None
 
 
-def _upsert_assignment(org_id: str, identity_id: str | None, account_id: str | None,
-                        pool_id: str | None, sku_name: str) -> str | None:
+def _upsert_assignment(
+    org_id: str, identity_id: str | None, account_id: str | None, pool_id: str | None, sku_name: str
+) -> str | None:
     if not account_id:
         return None
     with get_db() as cur:
@@ -495,10 +523,9 @@ def _upsert_assignment(org_id: str, identity_id: str | None, account_id: str | N
     return str(r["id"]) if r else None
 
 
-def _upsert_usage(org_id: str, assignment_id: str, metrics: dict,
-                  score: int, tier: str) -> None:
+def _upsert_usage(org_id: str, assignment_id: str, metrics: dict, score: int, tier: str) -> None:
     period_start = _week_start()
-    period_end   = date.today().isoformat()
+    period_end = date.today().isoformat()
     with get_db() as cur:
         cur.execute(
             """
@@ -512,13 +539,13 @@ def _upsert_usage(org_id: str, assignment_id: str, metrics: dict,
               activity_score = EXCLUDED.activity_score,
               tier_needed    = EXCLUDED.tier_needed
             """,
-            (org_id, assignment_id, period_start, period_end,
-             json.dumps(metrics), score, tier),
+            (org_id, assignment_id, period_start, period_end, json.dumps(metrics), score, tier),
         )
 
 
-def _upsert_posture(org_id: str, identity_id: str, mfa_enabled: bool,
-                    mfa_method: str, privileged: bool, risk_factors: list) -> None:
+def _upsert_posture(
+    org_id: str, identity_id: str, mfa_enabled: bool, mfa_method: str, privileged: bool, risk_factors: list
+) -> None:
     risk_score = 0
     if not mfa_enabled:
         risk_score += 40
@@ -542,14 +569,14 @@ def _upsert_posture(org_id: str, identity_id: str, mfa_enabled: bool,
               risk_factors     = EXCLUDED.risk_factors,
               updated_at       = now()
             """,
-            (org_id, identity_id, mfa_enabled, mfa_method,
-             privileged, risk_score, json.dumps(risk_factors)),
+            (org_id, identity_id, mfa_enabled, mfa_method, privileged, risk_score, json.dumps(risk_factors)),
         )
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Orchestrateur principal
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def collect_all_m365(org_id: str) -> dict:
     """
@@ -559,29 +586,32 @@ def collect_all_m365(org_id: str) -> dict:
     headers = _auth_headers(org_id)  # lève RuntimeError si non connecté
 
     stats = {
-        "users": 0, "pools": 0, "assignments": 0,
-        "usage": 0, "mfa": 0, "errors": [],
+        "users": 0,
+        "pools": 0,
+        "assignments": 0,
+        "usage": 0,
+        "mfa": 0,
+        "errors": [],
     }
 
     # ── 1. SKUs (license_pools) ───────────────────────────────────────────────
     log.info("M365 sync — fetch SKUs")
     skus = _fetch_skus(headers)
-    pool_map: dict[str, str | None] = {}   # sku_id → pool_id DB
+    pool_map: dict[str, str | None] = {}  # sku_id → pool_id DB
 
     for sku in skus:
-        sku_id   = sku.get("skuId", "")
+        sku_id = sku.get("skuId", "")
         part_num = sku.get("skuPartNumber", "")
-        name     = _sku_name(sku_id, part_num)
-        prepaid  = sku.get("prepaidUnits", {})
-        qty_total    = (prepaid.get("enabled") or 0) + (prepaid.get("suspended") or 0)
+        name = _sku_name(sku_id, part_num)
+        prepaid = sku.get("prepaidUnits", {})
+        qty_total = (prepaid.get("enabled") or 0) + (prepaid.get("suspended") or 0)
         qty_assigned = sku.get("consumedUnits") or 0
-        cost     = _sku_cost(name)
+        cost = _sku_cost(name)
 
         if qty_total == 0:
-            continue   # SKU sans unités (essais expirés, etc.)
+            continue  # SKU sans unités (essais expirés, etc.)
 
-        pool_id = _upsert_pool(org_id, sku_id, name, part_num,
-                               qty_total, qty_assigned, cost)
+        pool_id = _upsert_pool(org_id, sku_id, name, part_num, qty_total, qty_assigned, cost)
         pool_map[sku_id] = pool_id
         stats["pools"] += 1
 
@@ -598,163 +628,165 @@ def collect_all_m365(org_id: str) -> dict:
     users = _fetch_users(headers)
 
     for u in users:
-      try:
-        upn    = (u.get("userPrincipalName") or "").lower().strip()
-        email  = (u.get("mail") or upn).lower().strip()
-        if not email:
-            continue
+        try:
+            upn = (u.get("userPrincipalName") or "").lower().strip()
+            email = (u.get("mail") or upn).lower().strip()
+            if not email:
+                continue
 
-        # Détermine le type d'identité
-        user_type     = u.get("userType", "Member")
-        identity_type = "employee" if user_type == "Member" else "partner"
+            # Détermine le type d'identité
+            user_type = u.get("userType", "Member")
+            identity_type = "employee" if user_type == "Member" else "partner"
 
-        # Statut du compte
-        enabled      = u.get("accountEnabled", True)
-        acct_status  = "active" if enabled else "inactive"
-        ident_status = "active" if enabled else "inactive"
+            # Statut du compte
+            enabled = u.get("accountEnabled", True)
+            acct_status = "active" if enabled else "inactive"
+            ident_status = "active" if enabled else "inactive"
 
-        # Dernière connexion (si signInActivity disponible)
-        sign_in = u.get("signInActivity") or {}
-        last_sign_in_str = sign_in.get("lastSignInDateTime")
-        last_sign_in_date = _parse_date(last_sign_in_str)
-        days_since_signin = (
-            (date.today() - last_sign_in_date).days
-            if last_sign_in_date else None
-        )
+            # Dernière connexion (si signInActivity disponible)
+            sign_in = u.get("signInActivity") or {}
+            last_sign_in_str = sign_in.get("lastSignInDateTime")
+            last_sign_in_date = _parse_date(last_sign_in_str)
+            days_since_signin = (date.today() - last_sign_in_date).days if last_sign_in_date else None
 
-        # 4a. Identité maître
-        identity_id = _upsert_identity(
-            org_id=org_id,
-            canonical_email=email,
-            full_name=u.get("displayName"),
-            org_unit_name=u.get("department"),
-            job_title=u.get("jobTitle"),
-            status=ident_status,
-            identity_type=identity_type,
-            metadata={
-                "m365_id":         u.get("id"),
-                "user_type":       user_type,
-                "on_prem_synced":  u.get("onPremisesSyncEnabled"),
-                "created":         u.get("createdDateTime"),
-            },
-        )
-        stats["users"] += 1
+            # 4a. Identité maître
+            identity_id = _upsert_identity(
+                org_id=org_id,
+                canonical_email=email,
+                full_name=u.get("displayName"),
+                org_unit_name=u.get("department"),
+                job_title=u.get("jobTitle"),
+                status=ident_status,
+                identity_type=identity_type,
+                metadata={
+                    "m365_id": u.get("id"),
+                    "user_type": user_type,
+                    "on_prem_synced": u.get("onPremisesSyncEnabled"),
+                    "created": u.get("createdDateTime"),
+                },
+            )
+            stats["users"] += 1
 
-        # Dernière activité : depuis usage report ou signInActivity
-        usage_row  = usage_data.get(upn) or usage_data.get(email)
-        last_active = None
-        apps: dict[str, bool] = {}
+            # Dernière activité : depuis usage report ou signInActivity
+            usage_row = usage_data.get(upn) or usage_data.get(email)
+            last_active = None
+            apps: dict[str, bool] = {}
 
-        if usage_row:
-            days_inactive = usage_row["days_inactive"]
-            last_active   = usage_row["last_activity"]
-            apps          = usage_row["apps"]
-            data_source   = "report"   # données réelles Graph Reports
-        elif days_since_signin is not None:
-            days_inactive = days_since_signin
-            last_active   = last_sign_in_str
-            data_source   = "signin"   # données réelles signInActivity
-        else:
-            # Compte sans activité connue — utilise la date de création
-            created_str  = u.get("createdDateTime")
-            created_date = _parse_date(created_str) if created_str else None
-            days_inactive = (date.today() - created_date).days if created_date else 0
-            data_source   = "created_date"  # aucune donnée d'activité — ne pas recommander suppression
+            if usage_row:
+                days_inactive = usage_row["days_inactive"]
+                last_active = usage_row["last_activity"]
+                apps = usage_row["apps"]
+                data_source = "report"  # données réelles Graph Reports
+            elif days_since_signin is not None:
+                days_inactive = days_since_signin
+                last_active = last_sign_in_str
+                data_source = "signin"  # données réelles signInActivity
+            else:
+                # Compte sans activité connue — utilise la date de création
+                created_str = u.get("createdDateTime")
+                created_date = _parse_date(created_str) if created_str else None
+                days_inactive = (date.today() - created_date).days if created_date else 0
+                data_source = "created_date"  # aucune donnée d'activité — ne pas recommander suppression
 
-        # 4b. Compte M365
-        account_id = _upsert_account(
-            org_id=org_id,
-            identity_id=identity_id,
-            external_id=u.get("id", upn),
-            external_email=email,
-            display_name=u.get("displayName"),
-            status=acct_status,
-            last_activity_at=last_active,
-            data={
-                "department":      u.get("department"),
-                "jobTitle":        u.get("jobTitle"),
-                "userType":        user_type,
-                "accountEnabled":  enabled,
-                "days_inactive":   days_inactive,
-                "on_prem_synced":  u.get("onPremisesSyncEnabled"),
-            },
-        )
-
-        # 4c. Licences assignées à cet utilisateur
-        assigned_skus = u.get("assignedLicenses") or []
-        for lic in assigned_skus:
-            sku_id   = lic.get("skuId", "")
-            disabled = lic.get("disabledPlans") or []
-            # Récupère le nom depuis pool_map ou SKU_MAP
-            sku_name = _SKU_MAP.get(sku_id)
-            if not sku_name:
-                # Cherche dans la liste de SKUs déjà récupérée
-                sku_name = next(
-                    (_sku_name(s.get("skuId",""), s.get("skuPartNumber",""))
-                     for s in skus if s.get("skuId") == sku_id),
-                    sku_id,  # fallback = GUID brut
-                )
-
-            pool_id    = pool_map.get(sku_id)
-            assign_id  = _upsert_assignment(
+            # 4b. Compte M365
+            account_id = _upsert_account(
                 org_id=org_id,
                 identity_id=identity_id,
-                account_id=account_id,
-                pool_id=pool_id,
-                sku_name=sku_name,
+                external_id=u.get("id", upn),
+                external_email=email,
+                display_name=u.get("displayName"),
+                status=acct_status,
+                last_activity_at=last_active,
+                data={
+                    "department": u.get("department"),
+                    "jobTitle": u.get("jobTitle"),
+                    "userType": user_type,
+                    "accountEnabled": enabled,
+                    "days_inactive": days_inactive,
+                    "on_prem_synced": u.get("onPremisesSyncEnabled"),
+                },
             )
-            stats["assignments"] += 1
 
-            # 4d. Usage (seulement pour les licences M365/O365 principales)
-            if assign_id and any(k in sku_name for k in ("E1","E3","E5","Basic","Standard","Premium","F1","F3")):
-                score, tier = _score_and_tier(apps, days_inactive, sku_name)
-                _upsert_usage(
-                    org_id=org_id,
-                    assignment_id=assign_id,
-                    metrics={
-                        **apps,
-                        "days_inactive":   days_inactive,
-                        "last_activity":   last_active,
-                        "sign_in_days":    days_since_signin,
-                        "account_enabled": enabled,
-                        "sku":             sku_name,
-                        "data_source":     data_source,
-                    },
-                    score=score,
-                    tier=tier,
-                )
-                stats["usage"] += 1
+            # 4c. Licences assignées à cet utilisateur
+            assigned_skus = u.get("assignedLicenses") or []
+            for lic in assigned_skus:
+                sku_id = lic.get("skuId", "")
+                disabled = lic.get("disabledPlans") or []
+                # Récupère le nom depuis pool_map ou SKU_MAP
+                sku_name = _SKU_MAP.get(sku_id)
+                if not sku_name:
+                    # Cherche dans la liste de SKUs déjà récupérée
+                    sku_name = next(
+                        (
+                            _sku_name(s.get("skuId", ""), s.get("skuPartNumber", ""))
+                            for s in skus
+                            if s.get("skuId") == sku_id
+                        ),
+                        sku_id,  # fallback = GUID brut
+                    )
 
-        # 4e. Posture sécurité (MFA)
-        if identity_id:
-            mfa_info   = mfa_data.get(upn) or mfa_data.get(email) or {}
-            mfa_enabled = mfa_info.get("mfa_registered", False)
-            mfa_method  = mfa_info.get("mfa_method", "none")
-            privileged  = mfa_info.get("is_privileged", False)
-            factors     = []
-            if not mfa_enabled:
-                factors.append("no_mfa")
-            if privileged and not mfa_enabled:
-                factors.append("privileged_no_mfa")
-            if days_inactive > 90:
-                factors.append("inactive_90d")
-            if not enabled:
-                factors.append("account_disabled")
-
-            if mfa_data:  # seulement si on a pu récupérer les données MFA
-                _upsert_posture(
+                pool_id = pool_map.get(sku_id)
+                assign_id = _upsert_assignment(
                     org_id=org_id,
                     identity_id=identity_id,
-                    mfa_enabled=mfa_enabled,
-                    mfa_method=mfa_method,
-                    privileged=privileged,
-                    risk_factors=factors,
+                    account_id=account_id,
+                    pool_id=pool_id,
+                    sku_name=sku_name,
                 )
-                stats["mfa"] += 1
+                stats["assignments"] += 1
 
-      except Exception as exc:
-        log.warning("Erreur traitement utilisateur %s : %s", u.get("userPrincipalName"), exc)
-        stats["errors"].append({"upn": u.get("userPrincipalName"), "error": str(exc)})
+                # 4d. Usage (seulement pour les licences M365/O365 principales)
+                if assign_id and any(
+                    k in sku_name for k in ("E1", "E3", "E5", "Basic", "Standard", "Premium", "F1", "F3")
+                ):
+                    score, tier = _score_and_tier(apps, days_inactive, sku_name)
+                    _upsert_usage(
+                        org_id=org_id,
+                        assignment_id=assign_id,
+                        metrics={
+                            **apps,
+                            "days_inactive": days_inactive,
+                            "last_activity": last_active,
+                            "sign_in_days": days_since_signin,
+                            "account_enabled": enabled,
+                            "sku": sku_name,
+                            "data_source": data_source,
+                        },
+                        score=score,
+                        tier=tier,
+                    )
+                    stats["usage"] += 1
+
+            # 4e. Posture sécurité (MFA)
+            if identity_id:
+                mfa_info = mfa_data.get(upn) or mfa_data.get(email) or {}
+                mfa_enabled = mfa_info.get("mfa_registered", False)
+                mfa_method = mfa_info.get("mfa_method", "none")
+                privileged = mfa_info.get("is_privileged", False)
+                factors = []
+                if not mfa_enabled:
+                    factors.append("no_mfa")
+                if privileged and not mfa_enabled:
+                    factors.append("privileged_no_mfa")
+                if days_inactive > 90:
+                    factors.append("inactive_90d")
+                if not enabled:
+                    factors.append("account_disabled")
+
+                if mfa_data:  # seulement si on a pu récupérer les données MFA
+                    _upsert_posture(
+                        org_id=org_id,
+                        identity_id=identity_id,
+                        mfa_enabled=mfa_enabled,
+                        mfa_method=mfa_method,
+                        privileged=privileged,
+                        risk_factors=factors,
+                    )
+                    stats["mfa"] += 1
+
+        except Exception as exc:
+            log.warning("Erreur traitement utilisateur %s : %s", u.get("userPrincipalName"), exc)
+            stats["errors"].append({"upn": u.get("userPrincipalName"), "error": str(exc)})
 
     log.info("M365 sync terminé : %s", stats)
     return stats

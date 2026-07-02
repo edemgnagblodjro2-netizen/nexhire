@@ -10,8 +10,11 @@ from auth import CurrentUser, get_current_user
 from db import get_db, row, rows
 from rate_limiter import limiter
 from diagnostic_questions import (
-    QUESTIONS_BY_CODE, SCORE_MAP, TOTAL_CORE,
-    get_next_question, compute_imai,
+    QUESTIONS_BY_CODE,
+    SCORE_MAP,
+    TOTAL_CORE,
+    get_next_question,
+    compute_imai,
 )
 from privacy import K_ANON_MIN, TEST_SESSION_SECRET
 
@@ -25,18 +28,30 @@ MAX_EMAIL_SENDS_PER_SESSION = 2
 _NO_CACHE = {"Cache-Control": "no-store, no-cache, must-revalidate, max-age=0"}
 
 SECTORS = [
-    "Professionnels", "Commercial", "Communications",
-    "Associations et regroupements", "Alimentation, hôtellerie et restauration",
-    "Industriel manufacturier", "Immobilier", "Événementiel",
-    "Finances", "Construction", "Santé",
-    "Arts et culture", "Éducation", "Environnement",
-    "Entreprises de services", "Administration publique", "Autre",
+    "Professionnels",
+    "Commercial",
+    "Communications",
+    "Associations et regroupements",
+    "Alimentation, hôtellerie et restauration",
+    "Industriel manufacturier",
+    "Immobilier",
+    "Événementiel",
+    "Finances",
+    "Construction",
+    "Santé",
+    "Arts et culture",
+    "Éducation",
+    "Environnement",
+    "Entreprises de services",
+    "Administration publique",
+    "Autre",
 ]
 
 SIZE_RANGES = ["1-9", "10-49", "50-199", "200+"]
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
+
 
 def _get_partner_id(cur, partner_slug: str) -> str:
     cur.execute(
@@ -68,21 +83,22 @@ def _session_answers(cur, session_id: str) -> tuple[list[str], dict[str, str], l
 
 def _fmt_question(q: dict) -> dict:
     return {
-        "code":      q["code"],
+        "code": q["code"],
         "dimension": q["dimension"],
-        "text":      q["text"],
-        "hint":      q.get("hint"),
+        "text": q["text"],
+        "hint": q.get("hint"),
         "is_conditional": q["is_conditional"],
     }
 
 
 # ── POST /api/diagnostic/session — Démarrer une session ──────────────────────
 
+
 class StartPayload(BaseModel):
-    partner_slug:       str       = Field(min_length=1, max_length=80)
-    company_name:       str       = Field(min_length=1, max_length=255)
-    sector:             str       = Field(min_length=1, max_length=100)
-    size_range:         str
+    partner_slug: str = Field(min_length=1, max_length=80)
+    company_name: str = Field(min_length=1, max_length=255)
+    sector: str = Field(min_length=1, max_length=100)
+    size_range: str
     priority_challenge: str | None = Field(None, max_length=255)
 
 
@@ -107,17 +123,16 @@ def start_session(request: Request, payload: StartPayload):
             VALUES (%s, %s, %s, %s, %s, 'in_progress', %s)
             RETURNING id
             """,
-            (partner_id, payload.company_name, payload.sector,
-             payload.size_range, payload.priority_challenge, is_test),
+            (partner_id, payload.company_name, payload.sector, payload.size_range, payload.priority_challenge, is_test),
         )
         session_id = str(row(cur)["id"])
 
     first_q = get_next_question([], {})
     return JSONResponse(
         content={
-            "session_id":     session_id,
+            "session_id": session_id,
             "first_question": _fmt_question(first_q),
-            "total_core":     TOTAL_CORE,
+            "total_core": TOTAL_CORE,
         },
         headers=_NO_CACHE,
     )
@@ -125,9 +140,10 @@ def start_session(request: Request, payload: StartPayload):
 
 # ── POST /api/diagnostic/session/{id}/answer — Soumettre une réponse ─────────
 
+
 class AnswerPayload(BaseModel):
     question_code: str
-    answer:        str  # oui | partiellement | non
+    answer: str  # oui | partiellement | non
 
 
 @router.post("/session/{session_id}/answer")
@@ -143,7 +159,9 @@ def submit_answer(request: Request, session_id: str, payload: AnswerPayload):
     score = SCORE_MAP[payload.answer]
 
     with get_db() as cur:
-        cur.execute("SELECT id FROM diagnostic_sessions WHERE id = %s AND status = 'in_progress' LIMIT 1", (session_id,))
+        cur.execute(
+            "SELECT id FROM diagnostic_sessions WHERE id = %s AND status = 'in_progress' LIMIT 1", (session_id,)
+        )
         if not row(cur):
             raise HTTPException(status_code=404, detail="Session introuvable.")
 
@@ -158,8 +176,7 @@ def submit_answer(request: Request, session_id: str, payload: AnswerPayload):
                   score  = EXCLUDED.score,
                   answered_at = now()
             """,
-            (session_id, payload.question_code, q["dimension"],
-             payload.answer, score, q["is_conditional"]),
+            (session_id, payload.question_code, q["dimension"], payload.answer, score, q["is_conditional"]),
         )
 
         answered_codes, answers_by_code, _ = _session_answers(cur, session_id)
@@ -169,11 +186,11 @@ def submit_answer(request: Request, session_id: str, payload: AnswerPayload):
 
     return JSONResponse(
         content={
-            "next_question":  _fmt_question(next_q) if next_q else None,
-            "completed":      next_q is None,
+            "next_question": _fmt_question(next_q) if next_q else None,
+            "completed": next_q is None,
             "progress": {
                 "answered_core": answered_core,
-                "total_core":    TOTAL_CORE,
+                "total_core": TOTAL_CORE,
             },
         },
         headers=_NO_CACHE,
@@ -181,6 +198,7 @@ def submit_answer(request: Request, session_id: str, payload: AnswerPayload):
 
 
 # ── POST /api/diagnostic/session/{id}/complete — Finaliser ───────────────────
+
 
 class CompletePayload(BaseModel):
     company_email: EmailStr | None = None
@@ -225,9 +243,12 @@ def complete_session(request: Request, session_id: str, payload: CompletePayload
             """,
             (
                 str(payload.company_email) if payload.company_email else None,
-                result["imai_score"], result["niveau"],
-                result["score_strategie"],    result["score_personnes"],
-                result["score_processus"],    result["score_technologies"],
+                result["imai_score"],
+                result["niveau"],
+                result["score_strategie"],
+                result["score_personnes"],
+                result["score_processus"],
+                result["score_technologies"],
                 result["score_gouvernance"],
                 session_id,
             ),
@@ -255,19 +276,24 @@ def complete_session(request: Request, session_id: str, payload: CompletePayload
 
 # ── PATCH /api/diagnostic/session/{id}/email — Enregistrer l'email post-résultats ──
 
+
 class EmailPayload(BaseModel):
     company_email: EmailStr
 
 
-def _send_rapport_async(to_email, company_name, partner_name,
-                        score, niveau, primary_color, rapport_url):
+def _send_rapport_async(to_email, company_name, partner_name, score, niveau, primary_color, rapport_url):
     """Exécuté après la réponse HTTP — n'impacte jamais le temps de réponse."""
     try:
         from email_service import send_diagnostic_rapport_email
+
         send_diagnostic_rapport_email(
-            to_email=to_email, company_name=company_name,
-            partner_name=partner_name, score=score, niveau=niveau,
-            primary_color=primary_color, rapport_url=rapport_url,
+            to_email=to_email,
+            company_name=company_name,
+            partner_name=partner_name,
+            score=score,
+            niveau=niveau,
+            primary_color=primary_color,
+            rapport_url=rapport_url,
         )
     except Exception:
         logger.exception("Échec envoi rapport à %s", to_email)
@@ -313,9 +339,9 @@ def save_email(
                 )
             raise HTTPException(status_code=404, detail="Session introuvable.")
 
-    portal_url   = os.environ.get("PORTAL_URL", "https://myportal.nexhire.ca")
+    portal_url = os.environ.get("PORTAL_URL", "https://myportal.nexhire.ca")
     partner_slug = sess["partner_slug"] or "demo"
-    rapport_url  = f"{portal_url}/workspace/{partner_slug}/diagnostic-ia"
+    rapport_url = f"{portal_url}/workspace/{partner_slug}/diagnostic-ia"
 
     background_tasks.add_task(
         _send_rapport_async,
@@ -335,6 +361,7 @@ def save_email(
 
 
 # ── GET /api/diagnostic/session/{id}/result — Récupérer les résultats ────────
+
 
 @router.get("/session/{session_id}/result")
 @limiter.limit("30/minute")
@@ -371,18 +398,19 @@ def get_result(request: Request, session_id: str):
 
     # Recalculer les recommandations depuis les réponses sauvegardées
     result = compute_imai(ans_rows)
-    result["imai_score"]         = float(sess["imai_score"] or result["imai_score"])
-    result["niveau"]             = sess["niveau"] or result["niveau"]
-    result["score_strategie"]    = float(sess["score_strategie"]    or 0)
-    result["score_personnes"]    = float(sess["score_personnes"]    or 0)
-    result["score_processus"]    = float(sess["score_processus"]    or 0)
+    result["imai_score"] = float(sess["imai_score"] or result["imai_score"])
+    result["niveau"] = sess["niveau"] or result["niveau"]
+    result["score_strategie"] = float(sess["score_strategie"] or 0)
+    result["score_personnes"] = float(sess["score_personnes"] or 0)
+    result["score_processus"] = float(sess["score_processus"] or 0)
     result["score_technologies"] = float(sess["score_technologies"] or 0)
-    result["score_gouvernance"]  = float(sess["score_gouvernance"]  or 0)
+    result["score_gouvernance"] = float(sess["score_gouvernance"] or 0)
 
     return JSONResponse(content=_build_result(session_id, result, bench), headers=_NO_CACHE)
 
 
 # ── GET /api/diagnostic/{partner_slug}/stats ──────────────────────────────────
+
 
 def _get_stats_auth(authorization: str | None = Header(default=None)) -> CurrentUser | None:
     """Auth conditionnelle : appliquée seulement si STATS_AUTH_ENFORCED=true."""
@@ -455,35 +483,32 @@ def get_stats(request: Request, partner_slug: str, user: CurrentUser | None = De
     total = int(overall["total"] or 0)
     return JSONResponse(
         content={
-            "total":    total,
+            "total": total,
             "imai_avg": float(overall["imai_avg"] or 0),
             "niveaux": {
-                "debutant":      int(overall["nb_debutant"]      or 0),
+                "debutant": int(overall["nb_debutant"] or 0),
                 "intermediaire": int(overall["nb_intermediaire"] or 0),
-                "avance":        int(overall["nb_avance"]        or 0),
+                "avance": int(overall["nb_avance"] or 0),
             },
             "dimensions": {
-                "strategie":    float(overall["dim_strategie"]    or 0),
-                "personnes":    float(overall["dim_personnes"]    or 0),
-                "processus":    float(overall["dim_processus"]    or 0),
+                "strategie": float(overall["dim_strategie"] or 0),
+                "personnes": float(overall["dim_personnes"] or 0),
+                "processus": float(overall["dim_processus"] or 0),
                 "technologies": float(overall["dim_technologies"] or 0),
-                "gouvernance":  float(overall["dim_gouvernance"]  or 0),
+                "gouvernance": float(overall["dim_gouvernance"] or 0),
             },
             "by_sector": [
-                {"sector": s["sector"], "count": int(s["count"]),
-                 "imai_avg": float(s["imai_avg"] or 0)}
+                {"sector": s["sector"], "count": int(s["count"]), "imai_avg": float(s["imai_avg"] or 0)}
                 for s in by_sector
             ],
-            "challenges": [
-                {"label": c["label"], "count": int(c["count"])}
-                for c in challenges
-            ],
+            "challenges": [{"label": c["label"], "count": int(c["count"])} for c in challenges],
         },
         headers=_NO_CACHE,
     )
 
 
 # ── GET /api/diagnostic/{partner_slug}/sessions ──────────────────────────────
+
 
 @router.get("/{partner_slug}/sessions")
 @limiter.limit("30/minute")
@@ -511,11 +536,11 @@ def get_sessions(request: Request, partner_slug: str):
         content={
             "sessions": [
                 {
-                    "id":           str(s["id"]),
+                    "id": str(s["id"]),
                     "company_name": s["company_name"],
-                    "sector":       s["sector"],
-                    "imai_score":   float(s["imai_score"] or 0),
-                    "niveau":       s["niveau"],
+                    "sector": s["sector"],
+                    "imai_score": float(s["imai_score"] or 0),
+                    "niveau": s["niveau"],
                     "completed_at": s["completed_at"].isoformat() if s["completed_at"] else None,
                 }
                 for s in session_rows
@@ -526,6 +551,7 @@ def get_sessions(request: Request, partner_slug: str):
 
 
 # ── GET /api/diagnostic/{partner_slug}/benchmark ──────────────────────────────
+
 
 @router.get("/{partner_slug}/benchmark")
 @limiter.limit("30/minute")
@@ -557,19 +583,19 @@ def get_benchmark(request: Request, partner_slug: str, user: CurrentUser = Depen
             "partner_slug": partner_slug,
             "benchmarks": [
                 {
-                    "period_start":        str(b["period_start"]),
-                    "sector":              b["sector"],
-                    "size_range":          b["size_range"],
-                    "sample_size":         b["sample_size"],
-                    "is_demo":             b["is_demo"],
-                    "imai_avg":            float(b["imai_avg"] or 0),
-                    "imai_p25":            float(b["imai_p25"] or 0),
-                    "imai_p75":            float(b["imai_p75"] or 0),
-                    "dim_strategie_avg":    float(b["dim_strategie_avg"]   or 0),
-                    "dim_personnes_avg":    float(b["dim_personnes_avg"]   or 0),
-                    "dim_processus_avg":    float(b["dim_processus_avg"]   or 0),
+                    "period_start": str(b["period_start"]),
+                    "sector": b["sector"],
+                    "size_range": b["size_range"],
+                    "sample_size": b["sample_size"],
+                    "is_demo": b["is_demo"],
+                    "imai_avg": float(b["imai_avg"] or 0),
+                    "imai_p25": float(b["imai_p25"] or 0),
+                    "imai_p75": float(b["imai_p75"] or 0),
+                    "dim_strategie_avg": float(b["dim_strategie_avg"] or 0),
+                    "dim_personnes_avg": float(b["dim_personnes_avg"] or 0),
+                    "dim_processus_avg": float(b["dim_processus_avg"] or 0),
                     "dim_technologies_avg": float(b["dim_technologies_avg"] or 0),
-                    "dim_gouvernance_avg":  float(b["dim_gouvernance_avg"] or 0),
+                    "dim_gouvernance_avg": float(b["dim_gouvernance_avg"] or 0),
                 }
                 for b in bench_rows
             ],
@@ -580,35 +606,36 @@ def get_benchmark(request: Request, partner_slug: str, user: CurrentUser = Depen
 
 # ── Helper de construction de réponse résultats ───────────────────────────────
 
+
 def _build_result(session_id: str, result: dict, bench: dict | None) -> dict:
     benchmark = None
     if bench:
         benchmark = {
-            "imai_avg":    float(bench["imai_avg"] or 0),
-            "imai_p25":    float(bench["imai_p25"] or 0),
-            "imai_p75":    float(bench["imai_p75"] or 0),
+            "imai_avg": float(bench["imai_avg"] or 0),
+            "imai_p25": float(bench["imai_p25"] or 0),
+            "imai_p75": float(bench["imai_p75"] or 0),
             "sample_size": bench["sample_size"],
-            "is_demo":     bench["is_demo"],
+            "is_demo": bench["is_demo"],
             "dimensions": {
-                "strategie":    float(bench["dim_strategie_avg"]   or 0),
-                "personnes":    float(bench["dim_personnes_avg"]   or 0),
-                "processus":    float(bench["dim_processus_avg"]   or 0),
+                "strategie": float(bench["dim_strategie_avg"] or 0),
+                "personnes": float(bench["dim_personnes_avg"] or 0),
+                "processus": float(bench["dim_processus_avg"] or 0),
                 "technologies": float(bench["dim_technologies_avg"] or 0),
-                "gouvernance":  float(bench["dim_gouvernance_avg"] or 0),
+                "gouvernance": float(bench["dim_gouvernance_avg"] or 0),
             },
         }
 
     return {
-        "session_id":   session_id,
-        "imai_score":   result["imai_score"],
-        "niveau":       result["niveau"],
+        "session_id": session_id,
+        "imai_score": result["imai_score"],
+        "niveau": result["niveau"],
         "scores": {
-            "strategie":    result["score_strategie"],
-            "personnes":    result["score_personnes"],
-            "processus":    result["score_processus"],
+            "strategie": result["score_strategie"],
+            "personnes": result["score_personnes"],
+            "processus": result["score_processus"],
             "technologies": result["score_technologies"],
-            "gouvernance":  result["score_gouvernance"],
+            "gouvernance": result["score_gouvernance"],
         },
         "recommendations": result["recommendations"],
-        "benchmark":       benchmark,
+        "benchmark": benchmark,
     }

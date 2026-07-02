@@ -20,7 +20,7 @@ def require_active_subscription(user: CurrentUser = Depends(get_current_user)) -
         raise HTTPException(
             status_code=status.HTTP_402_PAYMENT_REQUIRED,
             detail=f"Accès suspendu — statut d'abonnement : {user.subscription_status}. "
-                   "Contactez le support pour réactiver votre compte.",
+            "Contactez le support pour réactiver votre compte.",
         )
     return user
 

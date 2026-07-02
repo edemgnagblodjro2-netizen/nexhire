@@ -13,15 +13,16 @@ class AIConfigurationError(Exception):
 
 # ── Backend protocol ──────────────────────────────────────────────────────────
 
+
 @runtime_checkable
 class LLMBackend(Protocol):
     model: str
 
-    def complete(self, system: str, user: str) -> str:
-        ...
+    def complete(self, system: str, user: str) -> str: ...
 
 
 # ── OpenAI backend (also covers any OpenAI-compatible endpoint) ───────────────
+
 
 @dataclass
 class OpenAIBackend:
@@ -31,12 +32,14 @@ class OpenAIBackend:
     For private / self-hosted models that expose an OpenAI-compatible API,
     set LLM_PROVIDER=openai_compatible and provide OPENAI_API_BASE.
     """
+
     api_key: str
     model: str
-    base_url: str | None = None   # None → api.openai.com
+    base_url: str | None = None  # None → api.openai.com
 
     def complete(self, system: str, user: str) -> str:
         from openai import OpenAI  # lazy import keeps startup fast when unused
+
         client = OpenAI(api_key=self.api_key, base_url=self.base_url)
         response = client.chat.completions.create(
             model=self.model,
@@ -50,6 +53,7 @@ class OpenAIBackend:
 
 # ── Azure OpenAI backend ──────────────────────────────────────────────────────
 
+
 @dataclass
 class AzureOpenAIBackend:
     """Azure OpenAI Service.
@@ -60,6 +64,7 @@ class AzureOpenAIBackend:
       AZURE_OPENAI_DEPLOYMENT — deployment name (used as model)
       AZURE_OPENAI_API_VERSION (optional, default 2024-02-15-preview)
     """
+
     api_key: str
     endpoint: str
     deployment: str
@@ -71,6 +76,7 @@ class AzureOpenAIBackend:
 
     def complete(self, system: str, user: str) -> str:
         from openai import AzureOpenAI
+
         client = AzureOpenAI(
             api_key=self.api_key,
             azure_endpoint=self.endpoint,
@@ -87,6 +93,7 @@ class AzureOpenAIBackend:
 
 
 # ── Factory ───────────────────────────────────────────────────────────────────
+
 
 def _build_backend() -> LLMBackend | None:
     provider = os.getenv("LLM_PROVIDER", "openai").lower()
@@ -116,6 +123,7 @@ def _build_backend() -> LLMBackend | None:
 
 
 # ── AssistantService ──────────────────────────────────────────────────────────
+
 
 def _is_enabled(value: str | None) -> bool:
     return value is not None and value.lower() in {"1", "true", "yes", "on"}
@@ -149,8 +157,7 @@ class AssistantService:
             return self._local_summary(document_text, language=language)
 
         system = (
-            "Tu es un assistant IA d'entreprise. Tes réponses sont "
-            "concises, vérifiables et utiles pour l'action."
+            "Tu es un assistant IA d'entreprise. Tes réponses sont " "concises, vérifiables et utiles pour l'action."
         )
         user = (
             f"{_mode_instruction(assistant_mode)}\n"
@@ -173,8 +180,7 @@ class AssistantService:
             return self._local_answer(document_text, question, language=language)
 
         system = (
-            "Tu es un assistant IA d'entreprise. Tes réponses sont "
-            "concises, vérifiables et utiles pour l'action."
+            "Tu es un assistant IA d'entreprise. Tes réponses sont " "concises, vérifiables et utiles pour l'action."
         )
         user = (
             f"{_mode_instruction(assistant_mode)}\n"
@@ -196,25 +202,26 @@ class AssistantService:
         terms = {
             term
             for term in re.findall(r"[a-zA-Z0-9_'-]{4,}", _normalize(question))
-            if term not in {"quel", "quelle", "quels", "quelles", "dans", "pour",
-                            "what", "where", "which", "show", "give"}
+            if term
+            not in {"quel", "quelle", "quels", "quelles", "dans", "pour", "what", "where", "which", "show", "give"}
         }
         lines = [line.strip() for line in document_text.splitlines() if line.strip()]
-        matches = [
-            line for line in lines
-            if not terms or any(term in _normalize(line) for term in terms)
-        ]
+        matches = [line for line in lines if not terms or any(term in _normalize(line) for term in terms)]
         evidence = matches[:3] or lines[:3]
 
         if not evidence:
-            return ("Local mode: no extractable text." if language == "en"
-                    else "Mode local : aucun contenu texte disponible.")
+            return (
+                "Local mode: no extractable text."
+                if language == "en"
+                else "Mode local : aucun contenu texte disponible."
+            )
 
         prefix = "Local mode: " if language == "en" else "Mode local : "
         return prefix + " ".join(evidence)
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
+
 
 def _trim(text: str, limit: int = 16000) -> str:
     if len(text) <= limit:

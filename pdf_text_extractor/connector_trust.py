@@ -13,6 +13,7 @@ can_sandbox  : peut être validé sans client réel (sandbox/dev account gratuit
 validated_at : date ISO de la dernière validation (None = jamais)
 notes        : contexte ou prérequis
 """
+
 from __future__ import annotations
 
 CONNECTOR_TRUST: dict[str, dict] = {
@@ -152,7 +153,9 @@ CONNECTOR_TRUST: dict[str, dict] = {
 
 
 def get_trust(connector_type: str) -> dict:
-    return CONNECTOR_TRUST.get(connector_type, {"trust_level": 0, "can_sandbox": False, "validated_at": None, "notes": ""})
+    return CONNECTOR_TRUST.get(
+        connector_type, {"trust_level": 0, "can_sandbox": False, "validated_at": None, "notes": ""}
+    )
 
 
 def get_trust_label(level: int) -> str:

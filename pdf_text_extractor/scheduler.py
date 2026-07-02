@@ -1,4 +1,5 @@
 """Tâches planifiées — rapport mensuel + alertes licences."""
+
 from __future__ import annotations
 
 import logging
@@ -19,14 +20,12 @@ def sync_entra_all_orgs() -> None:
 
     try:
         with get_db() as cur:
-            cur.execute(
-                """
+            cur.execute("""
                 SELECT DISTINCT c.organization_id
                 FROM connectors c
                 WHERE c.connector_type = 'microsoft_365'
                   AND c.status = 'active'
-                """
-            )
+                """)
             orgs = [r["organization_id"] for r in rows(cur)]
     except Exception as exc:
         logger.error("scheduler DB error (entra sync): %s", exc)
@@ -63,16 +62,14 @@ def check_license_expiry_all_orgs() -> None:
 
     try:
         with get_db() as cur:
-            cur.execute(
-                """SELECT l.organization_id, l.software_name, l.seats, l.expires_at,
+            cur.execute("""SELECT l.organization_id, l.software_name, l.seats, l.expires_at,
                           (l.expires_at::date - CURRENT_DATE) AS days_left,
                           o.name AS org_name, o.owner_email
                    FROM licenses l
                    JOIN organizations o ON o.id = l.organization_id
                    WHERE l.expires_at BETWEEN now() AND now() + interval '30 days'
                      AND o.owner_email IS NOT NULL AND o.owner_email <> ''
-                   ORDER BY l.organization_id, l.expires_at"""
-            )
+                   ORDER BY l.organization_id, l.expires_at""")
             licenses = rows(cur)
     except Exception as exc:
         logger.error("scheduler DB error (license expiry): %s", exc)
@@ -84,12 +81,14 @@ def check_license_expiry_all_orgs() -> None:
         oid = lic["organization_id"]
         if oid not in orgs:
             orgs[oid] = {"org_name": lic["org_name"], "owner_email": lic["owner_email"], "licenses": []}
-        orgs[oid]["licenses"].append({
-            "software_name": lic.get("software_name", ""),
-            "seats":         lic.get("seats"),
-            "expires_at":    str(lic.get("expires_at") or ""),
-            "days_left":     int(lic.get("days_left") or 0),
-        })
+        orgs[oid]["licenses"].append(
+            {
+                "software_name": lic.get("software_name", ""),
+                "seats": lic.get("seats"),
+                "expires_at": str(lic.get("expires_at") or ""),
+                "days_left": int(lic.get("days_left") or 0),
+            }
+        )
 
     for oid, data in orgs.items():
         try:
@@ -102,10 +101,14 @@ def check_license_expiry_all_orgs() -> None:
             logger.error("license expiry email org %s : %s", oid, exc)
         try:
             for lic in data["licenses"]:
-                send_webhook_notification(oid, "license_expiry", {
-                    "software_name": lic["software_name"],
-                    "days_left":     lic["days_left"],
-                })
+                send_webhook_notification(
+                    oid,
+                    "license_expiry",
+                    {
+                        "software_name": lic["software_name"],
+                        "days_left": lic["days_left"],
+                    },
+                )
         except Exception as exc:
             logger.error("license expiry webhook org %s : %s", oid, exc)
 
@@ -118,6 +121,7 @@ def check_contract_expiry_all_orgs() -> None:
         from db import get_db, rows
         from email_service import _send
         import os
+
         APP_URL = os.environ.get("APP_URL", "https://myportal.nexhire.ca")
     except Exception as exc:
         logger.error("scheduler import error (contract expiry): %s", exc)
@@ -125,8 +129,7 @@ def check_contract_expiry_all_orgs() -> None:
 
     try:
         with get_db() as cur:
-            cur.execute(
-                """SELECT c.organization_id, c.title, c.vendor_name, c.end_date,
+            cur.execute("""SELECT c.organization_id, c.title, c.vendor_name, c.end_date,
                           (c.end_date::date - CURRENT_DATE) AS days_left,
                           o.name AS org_name, o.owner_email
                    FROM contracts c
@@ -134,8 +137,7 @@ def check_contract_expiry_all_orgs() -> None:
                    WHERE c.end_date BETWEEN CURRENT_DATE AND CURRENT_DATE + interval '30 days'
                      AND c.status = 'active'
                      AND o.owner_email IS NOT NULL AND o.owner_email <> ''
-                   ORDER BY c.organization_id, c.end_date"""
-            )
+                   ORDER BY c.organization_id, c.end_date""")
             contracts = rows(cur)
     except Exception as exc:
         logger.error("scheduler DB error (contract expiry): %s", exc)
@@ -150,25 +152,24 @@ def check_contract_expiry_all_orgs() -> None:
         oid = c["organization_id"]
         if oid not in orgs:
             orgs[oid] = {"org_name": c["org_name"], "owner_email": c["owner_email"], "contracts": []}
-        orgs[oid]["contracts"].append({
-            "title":       c.get("title", "Contrat"),
-            "vendor_name": c.get("vendor_name", ""),
-            "end_date":    str(c.get("end_date", ""))[:10],
-            "days_left":   days,
-        })
+        orgs[oid]["contracts"].append(
+            {
+                "title": c.get("title", "Contrat"),
+                "vendor_name": c.get("vendor_name", ""),
+                "end_date": str(c.get("end_date", ""))[:10],
+                "days_left": days,
+            }
+        )
 
     sent = 0
     for oid, data in orgs.items():
         try:
-            rows_html = "".join(
-                f"""<tr>
+            rows_html = "".join(f"""<tr>
                   <td style="padding:8px;border-top:1px solid #e2e8f0">{c['title']}</td>
                   <td style="padding:8px;border-top:1px solid #e2e8f0">{c['vendor_name']}</td>
                   <td style="padding:8px;border-top:1px solid #e2e8f0;color:#dc2626;font-weight:600">{c['end_date']}</td>
                   <td style="padding:8px;border-top:1px solid #e2e8f0;color:#dc2626">{c['days_left']}j</td>
-                </tr>"""
-                for c in data["contracts"]
-            )
+                </tr>""" for c in data["contracts"])
             count = len(data["contracts"])
             subject = f"⚠️ {count} contrat(s) expirent bientôt — {data['org_name']}"
             html = f"""<!doctype html><html lang="fr"><head><meta charset="utf-8"/></head>
@@ -215,6 +216,7 @@ def check_mfa_admin_loss_all_orgs() -> None:
         from db import get_db, rows
         from email_service import _send
         import os
+
         APP_URL = os.environ.get("APP_URL", "https://myportal.nexhire.ca")
     except Exception as exc:
         logger.error("scheduler import error (mfa admin loss): %s", exc)
@@ -222,16 +224,14 @@ def check_mfa_admin_loss_all_orgs() -> None:
 
     try:
         with get_db() as cur:
-            cur.execute(
-                """SELECT u.full_name, u.email AS user_email,
+            cur.execute("""SELECT u.full_name, u.email AS user_email,
                           o.id AS org_id, o.name AS org_name, o.owner_email
                    FROM users u
                    JOIN organizations o ON o.id = u.organization_id
                    WHERE u.role IN ('admin', 'owner')
                      AND (u.mfa_enabled IS NULL OR u.mfa_enabled = FALSE)
                      AND o.owner_email IS NOT NULL AND o.owner_email <> ''
-                   ORDER BY o.id"""
-            )
+                   ORDER BY o.id""")
             at_risk = rows(cur)
     except Exception as exc:
         logger.error("scheduler DB error (mfa admin loss): %s", exc)
@@ -243,10 +243,12 @@ def check_mfa_admin_loss_all_orgs() -> None:
         oid = u["org_id"]
         if oid not in orgs:
             orgs[oid] = {"org_name": u["org_name"], "owner_email": u["owner_email"], "admins": []}
-        orgs[oid]["admins"].append({
-            "name":  u.get("full_name") or u.get("user_email", ""),
-            "email": u.get("user_email", ""),
-        })
+        orgs[oid]["admins"].append(
+            {
+                "name": u.get("full_name") or u.get("user_email", ""),
+                "email": u.get("user_email", ""),
+            }
+        )
 
     sent = 0
     for oid, data in orgs.items():
@@ -255,7 +257,7 @@ def check_mfa_admin_loss_all_orgs() -> None:
                 f'<li style="margin-bottom:4px"><strong>{a["name"]}</strong> ({a["email"]})</li>'
                 for a in data["admins"]
             )
-            count   = len(data["admins"])
+            count = len(data["admins"])
             subject = f"🔐 {count} admin(s) sans MFA — {data['org_name']}"
             html = f"""<!doctype html><html lang="fr"><head><meta charset="utf-8"/></head>
 <body style="font-family:system-ui,sans-serif;background:#f8fafc;margin:0;padding:40px 20px">
@@ -301,15 +303,13 @@ def check_trial_expiry_all_orgs() -> None:
 
     try:
         with get_db() as cur:
-            cur.execute(
-                """SELECT name, owner_email,
+            cur.execute("""SELECT name, owner_email,
                           (trial_ends_at::date - CURRENT_DATE) AS days_left
                    FROM organizations
                    WHERE subscription_status = 'trialing'
                      AND trial_ends_at IS NOT NULL
                      AND owner_email IS NOT NULL
-                     AND (trial_ends_at::date - CURRENT_DATE) IN (7, 3, 1)"""
-            )
+                     AND (trial_ends_at::date - CURRENT_DATE) IN (7, 3, 1)""")
             orgs = rows(cur)
     except Exception as exc:
         logger.error("scheduler DB error (trial expiry): %s", exc)
@@ -339,8 +339,7 @@ def check_connector_health_all_orgs() -> None:
 
     try:
         with get_db() as cur:
-            cur.execute(
-                """
+            cur.execute("""
                 SELECT c.connector_type, c.last_error, c.updated_at,
                        o.id AS org_id, o.name AS org_name, o.owner_email
                 FROM connectors c
@@ -349,8 +348,7 @@ def check_connector_health_all_orgs() -> None:
                   AND o.owner_email IS NOT NULL
                   AND o.owner_email <> ''
                 ORDER BY o.id, c.updated_at DESC
-                """
-            )
+                """)
             failed = rows(cur)
     except Exception as exc:
         logger.error("scheduler DB error (connector health): %s", exc)
@@ -362,15 +360,17 @@ def check_connector_health_all_orgs() -> None:
         oid = c["org_id"]
         if oid not in orgs:
             orgs[oid] = {
-                "org_name":   c["org_name"],
+                "org_name": c["org_name"],
                 "owner_email": c["owner_email"],
                 "connectors": [],
             }
-        orgs[oid]["connectors"].append({
-            "connector_type": c["connector_type"],
-            "last_error":     c["last_error"] or "Erreur inconnue",
-            "updated_at":     str(c["updated_at"] or ""),
-        })
+        orgs[oid]["connectors"].append(
+            {
+                "connector_type": c["connector_type"],
+                "last_error": c["last_error"] or "Erreur inconnue",
+                "updated_at": str(c["updated_at"] or ""),
+            }
+        )
 
     sent = 0
     for org in orgs.values():
@@ -387,7 +387,8 @@ def check_connector_health_all_orgs() -> None:
 
     logger.info(
         "Connector health check — %d orgs affectées, %d alertes envoyées",
-        len(orgs), sent,
+        len(orgs),
+        sent,
     )
 
 
@@ -403,8 +404,7 @@ def check_m365_token_expiry_all_orgs() -> None:
 
     try:
         with get_db() as cur:
-            cur.execute(
-                """
+            cur.execute("""
                 SELECT c.id, c.refresh_token_issued_at, c.encrypted_credentials,
                        o.id AS org_id, o.name AS org_name, o.owner_email
                 FROM connectors c
@@ -414,8 +414,7 @@ def check_m365_token_expiry_all_orgs() -> None:
                   AND o.owner_email IS NOT NULL
                   AND o.owner_email <> ''
                   AND c.refresh_token_issued_at IS NOT NULL
-                """
-            )
+                """)
             connectors = rows(cur)
     except Exception as exc:
         logger.error("scheduler DB error (m365 token expiry): %s", exc)
@@ -443,6 +442,7 @@ def check_m365_token_expiry_all_orgs() -> None:
             try:
                 from crypto import decrypt
                 import json
+
                 creds = json.loads(decrypt(c["encrypted_credentials"]))
                 service_email = creds.get("user_email") or creds.get("preferred_username") or ""
             except Exception:
@@ -476,13 +476,11 @@ def send_monthly_reports_all_orgs() -> None:
 
     try:
         with get_db() as cur:
-            cur.execute(
-                """SELECT o.id, o.name, o.owner_email
+            cur.execute("""SELECT o.id, o.name, o.owner_email
                    FROM organizations o
                    WHERE o.monthly_report_enabled = TRUE
                      AND o.owner_email IS NOT NULL
-                     AND o.owner_email <> ''"""
-            )
+                     AND o.owner_email <> ''""")
             orgs = rows(cur)
     except Exception as exc:
         logger.error("scheduler DB error: %s", exc)
@@ -510,11 +508,9 @@ def send_weekly_briefing_all_orgs() -> None:
 
     try:
         with get_db() as cur:
-            cur.execute(
-                """SELECT o.id, o.name, o.owner_email
+            cur.execute("""SELECT o.id, o.name, o.owner_email
                    FROM organizations o
-                   WHERE o.owner_email IS NOT NULL AND o.owner_email <> ''"""
-            )
+                   WHERE o.owner_email IS NOT NULL AND o.owner_email <> ''""")
             orgs = rows(cur)
     except Exception as exc:
         logger.error("scheduler DB error (weekly briefing): %s", exc)
@@ -537,10 +533,10 @@ def _send_briefing_for_org(org: dict) -> None:
     from routes_dashboard import _dept_health, _health_badge
     from datetime import date, timedelta
 
-    org_id   = org["id"]
+    org_id = org["id"]
     org_name = org["name"]
     to_email = org["owner_email"]
-    today    = date.today()
+    today = date.today()
 
     # Départements
     try:
@@ -558,8 +554,8 @@ def _send_briefing_for_org(org: dict) -> None:
 
     org_score = round(sum(ds["score"] for ds in dept_scores) / len(dept_scores), 1) if dept_scores else 0.0
     org_badge = _health_badge(org_score)
-    top_risks = sorted([ds for ds in dept_scores if ds["badge"] in ("red","yellow")], key=lambda x: x["score"])[:5]
-    depts_at_risk = sum(1 for ds in dept_scores if ds["badge"] in ("red","yellow"))
+    top_risks = sorted([ds for ds in dept_scores if ds["badge"] in ("red", "yellow")], key=lambda x: x["score"])[:5]
+    depts_at_risk = sum(1 for ds in dept_scores if ds["badge"] in ("red", "yellow"))
 
     # Budget
     budget_total = budget_spent = 0.0
@@ -595,9 +591,13 @@ def _send_briefing_for_org(org: dict) -> None:
     savings = 0.0
     try:
         with get_db() as cur:
-            cur.execute("SELECT quantity, assigned_count, cost_per_unit, billing_cycle FROM licenses WHERE organization_id = %s", (org_id,))
-            for l in (cur.fetchall() or []):
-                qty = int(l.get("quantity") or 0); asgn = int(l.get("assigned_count") or 0)
+            cur.execute(
+                "SELECT quantity, assigned_count, cost_per_unit, billing_cycle FROM licenses WHERE organization_id = %s",
+                (org_id,),
+            )
+            for l in cur.fetchall() or []:
+                qty = int(l.get("quantity") or 0)
+                asgn = int(l.get("assigned_count") or 0)
                 cost = float(l.get("cost_per_unit") or 0)
                 if qty > 0 and asgn / qty < 0.8:
                     mul = 12 if l.get("billing_cycle") == "monthly" else 1
@@ -629,14 +629,12 @@ def schedule_deletion_for_expired_orgs() -> None:
 
     try:
         with get_db() as cur:
-            cur.execute(
-                """UPDATE organizations
+            cur.execute("""UPDATE organizations
                    SET deletion_scheduled_at = NOW() + INTERVAL '30 days'
                    WHERE subscription_status IN ('trial_expired', 'canceled')
                      AND deletion_scheduled_at IS NULL
                      AND stripe_customer_id IS NULL
-                   RETURNING id, name, owner_email"""
-            )
+                   RETURNING id, name, owner_email""")
             newly_scheduled = cur.fetchall() or []
     except Exception as exc:
         logger.error("scheduler DB error (schedule deletion): %s", exc)
@@ -660,15 +658,13 @@ def process_account_deletions() -> None:
     # ── 1. Emails d'avertissement (J-23, J-16, J-9, J-2) ──────────────────────
     try:
         with get_db() as cur:
-            cur.execute(
-                """SELECT name, owner_email,
+            cur.execute("""SELECT name, owner_email,
                           (deletion_scheduled_at::date - CURRENT_DATE) AS days_remaining
                    FROM organizations
                    WHERE deletion_scheduled_at IS NOT NULL
                      AND subscription_status NOT IN ('active', 'trialing')
                      AND owner_email IS NOT NULL
-                     AND (deletion_scheduled_at::date - CURRENT_DATE) IN (23, 16, 9, 2)"""
-            )
+                     AND (deletion_scheduled_at::date - CURRENT_DATE) IN (23, 16, 9, 2)""")
             orgs_warn = rows(cur)
     except Exception as exc:
         logger.error("scheduler DB error (deletion warnings): %s", exc)
@@ -692,13 +688,11 @@ def process_account_deletions() -> None:
     # ── 2. Suppression définitive des comptes arrivés à échéance ───────────────
     try:
         with get_db() as cur:
-            cur.execute(
-                """SELECT id, name
+            cur.execute("""SELECT id, name
                    FROM organizations
                    WHERE deletion_scheduled_at IS NOT NULL
                      AND deletion_scheduled_at <= NOW()
-                     AND subscription_status NOT IN ('active', 'trialing')"""
-            )
+                     AND subscription_status NOT IN ('active', 'trialing')""")
             orgs_delete = rows(cur)
     except Exception as exc:
         logger.error("scheduler DB error (fetch deletions): %s", exc)
@@ -716,7 +710,8 @@ def process_account_deletions() -> None:
 
     logger.info(
         "Suppressions — %d comptes supprimés, %d erreurs",
-        deleted, errors,
+        deleted,
+        errors,
     )
 
 
@@ -731,11 +726,9 @@ def index_knowledge_m365_all_orgs() -> None:
 
     try:
         with get_db() as cur:
-            cur.execute(
-                """SELECT id, organization_id
+            cur.execute("""SELECT id, organization_id
                    FROM connectors
-                   WHERE connector_type = 'microsoft_365' AND status = 'active'"""
-            )
+                   WHERE connector_type = 'microsoft_365' AND status = 'active'""")
             connectors = rows(cur)
     except Exception as exc:
         logger.error("scheduler DB error (knowledge index): %s", exc)
@@ -751,20 +744,22 @@ def index_knowledge_m365_all_orgs() -> None:
         try:
             result = index_m365_documents(org_id)
             total_indexed += result.get("indexed", 0)
-            total_errors  += result.get("errors", 0)
+            total_errors += result.get("errors", 0)
         except Exception as exc:
             logger.error("knowledge index org=%s : %s", org_id, exc)
             total_errors += 1
 
     logger.info(
         "Knowledge M365 index — %d documents indexés, %d erreurs",
-        total_indexed, total_errors,
+        total_indexed,
+        total_errors,
     )
 
 
 def _hard_delete_org(org_id: str) -> None:
     """Supprime toutes les données d'une organisation de façon irréversible."""
     from db import get_db
+
     with get_db() as cur:
         # Suppression des données sensibles en premier
         cur.execute("DELETE FROM connectors   WHERE organization_id = %s", (org_id,))

@@ -1,11 +1,12 @@
 """Salesforce REST API — vrais appels à partir des tokens OAuth stockés."""
+
 from __future__ import annotations
 
 import httpx
 from connector_loader import bearer, load_creds, refresh_oauth
 
 _TOKEN_URL = "https://login.salesforce.com/services/oauth2/token"
-_API_VER   = "v59.0"
+_API_VER = "v59.0"
 
 
 def _get(path: str, creds: dict, params: dict | None = None) -> dict:
@@ -26,10 +27,10 @@ def get_salesforce_info(org_id: str) -> dict:
         limits = _get("limits/", creds)
         daily = limits.get("DailyApiRequests", {})
         return {
-            "instance_url":        creds.get("instance_url"),
-            "api_requests_used":   daily.get("Max", 0) - daily.get("Remaining", 0),
-            "api_requests_max":    daily.get("Max"),
-            "api_requests_left":   daily.get("Remaining"),
+            "instance_url": creds.get("instance_url"),
+            "api_requests_used": daily.get("Max", 0) - daily.get("Remaining", 0),
+            "api_requests_max": daily.get("Max"),
+            "api_requests_left": daily.get("Remaining"),
         }
     except Exception as exc:
         return {"error": str(exc)}

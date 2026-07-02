@@ -11,6 +11,7 @@ POST /api/politiques/{id}/verify   → déclencher vérification auto → policy
 GET  /api/politiques/{id}/rules    → lister les règles
 POST /api/politiques/{id}/rules    → ajouter une règle
 """
+
 import uuid
 from datetime import UTC, datetime
 
@@ -25,6 +26,7 @@ router = APIRouter(prefix="/api/politiques", tags=["politiques-vivantes"])
 
 
 # ── Schemas ───────────────────────────────────────────────────────────────────
+
 
 class PolicyCreate(BaseModel):
     title: str = Field(..., min_length=2, max_length=200)
@@ -57,6 +59,7 @@ class RuleCreate(BaseModel):
 
 # ── Helper ────────────────────────────────────────────────────────────────────
 
+
 def _policy_dict(r) -> dict:
     d = dict(r)
     for k in ("id", "org_id", "responsible_id", "playbook_id"):
@@ -80,11 +83,13 @@ def _rule_dict(r) -> dict:
 
 # ── Routes ───────────────────────────────────────────────────────────────────
 
+
 @router.get("/summary")
 def get_summary(user: CurrentUser = Depends(get_current_user)):
     oid = str(user.organization_id)
     with get_db() as cur:
-        cur.execute("""
+        cur.execute(
+            """
             SELECT
               COUNT(*) FILTER (WHERE status = 'active')  AS active,
               COUNT(*) FILTER (WHERE status = 'draft')   AS draft,
@@ -92,18 +97,23 @@ def get_summary(user: CurrentUser = Depends(get_current_user)):
               COUNT(*) FILTER (WHERE status = 'expired') AS expired,
               COUNT(*) AS total
             FROM policies WHERE org_id = %s
-        """, (oid,))
+        """,
+            (oid,),
+        )
         counts = dict(row(cur) or {})
 
     with get_db() as cur:
-        cur.execute("""
+        cur.execute(
+            """
             SELECT COUNT(DISTINCT pr.policy_id)
             FROM policy_rules pr
             WHERE pr.connector_type != 'manual'
             AND EXISTS (
                 SELECT 1 FROM policies p WHERE p.id = pr.policy_id AND p.org_id = %s
             )
-        """, (oid,))
+        """,
+            (oid,),
+        )
         auto_row = row(cur)
         counts["auto_verifiable"] = auto_row["count"] if auto_row else 0
 
@@ -128,7 +138,8 @@ def list_policies(
 
     where = " AND ".join(filters)
     with get_db() as cur:
-        cur.execute(f"""
+        cur.execute(
+            f"""
             SELECT p.*,
               COUNT(pr.id) AS rule_count,
               COUNT(pr.id) FILTER (WHERE pr.last_status = 'violated') AS violated_rules,
@@ -140,7 +151,9 @@ def list_policies(
             ORDER BY
               CASE p.status WHEN 'violated' THEN 0 WHEN 'active' THEN 1 WHEN 'draft' THEN 2 ELSE 3 END,
               p.updated_at DESC
-        """, params)
+        """,
+            params,
+        )
         policies = [_policy_dict(r) for r in rows(cur)]
 
     return {"policies": policies}
@@ -206,16 +219,27 @@ def create_policy(
     now = datetime.now(UTC)
 
     with get_db() as cur:
-        cur.execute("""
+        cur.execute(
+            """
             INSERT INTO policies
               (id, org_id, title, category, description, owner, status,
                review_cycle_days, framework_ref, playbook_id, created_at, updated_at)
             VALUES (%s,%s,%s,%s,%s,%s,'draft',%s,%s,%s,%s,%s)
-        """, (
-            pid, oid, body.title, body.category, body.description,
-            body.owner, body.review_cycle_days, body.framework_ref,
-            body.playbook_id, now, now,
-        ))
+        """,
+            (
+                pid,
+                oid,
+                body.title,
+                body.category,
+                body.description,
+                body.owner,
+                body.review_cycle_days,
+                body.framework_ref,
+                body.playbook_id,
+                now,
+                now,
+            ),
+        )
 
     return {"id": pid, "status": "draft"}
 
@@ -264,15 +288,24 @@ def add_rule(
     rid = str(uuid.uuid4())
     now = datetime.now(UTC)
     with get_db() as cur:
-        cur.execute("""
+        cur.execute(
+            """
             INSERT INTO policy_rules
               (id, policy_id, connector_type, connector_action,
                condition_description, expected_value, severity, last_status, created_at)
             VALUES (%s,%s,%s,%s,%s,%s,%s,'pending',%s)
-        """, (
-            rid, policy_id, body.connector_type, body.connector_action,
-            body.condition_description, body.expected_value, body.severity, now,
-        ))
+        """,
+            (
+                rid,
+                policy_id,
+                body.connector_type,
+                body.connector_action,
+                body.condition_description,
+                body.expected_value,
+                body.severity,
+                now,
+            ),
+        )
     return {"id": rid}
 
 
@@ -306,12 +339,15 @@ def verify_policy(
         run_id = str(uuid.uuid4())
         # Simulation: statut "running" → résultat réel à brancher sur le connecteur
         with get_db() as cur:
-            cur.execute("""
+            cur.execute(
+                """
                 INSERT INTO policy_rule_runs
                   (id, rule_id, policy_id, status, started_at)
                 VALUES (%s,%s,%s,'running',%s)
                 ON CONFLICT DO NOTHING
-            """, (run_id, str(rule["id"]), policy_id, now))
+            """,
+                (run_id, str(rule["id"]), policy_id, now),
+            )
         run_ids.append(run_id)
 
     with get_db() as cur:

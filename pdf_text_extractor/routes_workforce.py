@@ -11,15 +11,15 @@ router = APIRouter(prefix="/api/workforce", tags=["workforce"])
 
 
 class ProcessPayload(BaseModel):
-    department_id:          str | None = None
-    name:                   str = Field(..., min_length=1)
-    description:            str | None = None
-    team_size:              int = Field(1, ge=1)
+    department_id: str | None = None
+    name: str = Field(..., min_length=1)
+    description: str | None = None
+    team_size: int = Field(1, ge=1)
     manual_hours_per_month: float = Field(0, ge=0)
-    automation_potential:   float = Field(0, ge=0, le=100)
-    hourly_cost:            float = Field(50, ge=0)
-    status:                 str = "manual"
-    notes:                  str | None = None
+    automation_potential: float = Field(0, ge=0, le=100)
+    hourly_cost: float = Field(50, ge=0)
+    status: str = "manual"
+    notes: str | None = None
 
 
 def _allowed_dept_ids(user: CurrentUser) -> list[str] | None:
@@ -34,20 +34,20 @@ def _allowed_dept_ids(user: CurrentUser) -> list[str] | None:
 
 
 def _enrich(p: dict) -> dict:
-    hours   = float(p.get("manual_hours_per_month") or 0)
-    auto    = float(p.get("automation_potential") or 0) / 100
-    hourly  = float(p.get("hourly_cost") or 50)
-    p["automatable_hours_monthly"]  = round(hours * auto, 1)
-    p["annual_savings_potential"]   = round(hours * auto * hourly * 12, 2)
-    p["manual_time_pct"]            = round(auto * 100, 1)
+    hours = float(p.get("manual_hours_per_month") or 0)
+    auto = float(p.get("automation_potential") or 0) / 100
+    hourly = float(p.get("hourly_cost") or 50)
+    p["automatable_hours_monthly"] = round(hours * auto, 1)
+    p["annual_savings_potential"] = round(hours * auto * hourly * 12, 2)
+    p["manual_time_pct"] = round(auto * 100, 1)
     return p
 
 
 @router.get("")
 def list_processes(
     dept_id: str | None = Query(None),
-    status:  str | None = Query(None),
-    user:    CurrentUser = Depends(require_min_role("user")),
+    status: str | None = Query(None),
+    user: CurrentUser = Depends(require_min_role("user")),
 ):
     allowed = _allowed_dept_ids(user)
     if allowed is not None and not allowed:
@@ -83,6 +83,7 @@ def list_processes(
             result = rows(cur)
     except Exception as exc:
         from fastapi import HTTPException
+
         raise HTTPException(status_code=500, detail="Erreur serveur interne.") from exc
 
     return [_enrich(p) for p in result]

@@ -165,7 +165,7 @@ def get_current_user(authorization: str | None = Header(default=None)) -> Curren
             detail="Compte désactivé. Contactez votre administrateur.",
         )
 
-    org_status   = None
+    org_status = None
     org_currency = "CAD"
     if profile.get("organization_id"):
         try:
@@ -184,7 +184,7 @@ def get_current_user(authorization: str | None = Header(default=None)) -> Curren
                 )
                 cur_row = db_row(cur)
                 org_currency = (cur_row or {}).get("currency") or "CAD"
-                org_plan     = (cur_row or {}).get("subscription_plan")
+                org_plan = (cur_row or {}).get("subscription_plan")
         except Exception:
             pass
 

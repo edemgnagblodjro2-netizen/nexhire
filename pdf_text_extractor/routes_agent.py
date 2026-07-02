@@ -22,14 +22,16 @@ router = APIRouter(prefix="/api/agent", tags=["agent"])
 def agent_health(user: CurrentUser = Depends(require_min_role("admin"))):
     """Vérifie la connectivité OpenAI et la validité de la clé API."""
     import os
+
     api_key = os.getenv("OPENAI_API_KEY", "")
-    model   = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+    model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 
     key_present = bool(api_key)
-    key_prefix  = api_key[:8] + "..." if len(api_key) > 8 else "(trop courte)"
+    key_prefix = api_key[:8] + "..." if len(api_key) > 8 else "(trop courte)"
 
     try:
         from openai import OpenAI
+
         client = OpenAI(api_key=api_key)
         test = client.chat.completions.create(
             model=model,
@@ -44,10 +46,10 @@ def agent_health(user: CurrentUser = Depends(require_min_role("admin"))):
 
     return {
         "openai_key_present": key_present,
-        "openai_key_prefix":  key_prefix,
-        "openai_model":       model,
-        "openai_reachable":   ok,
-        "error":              error,
+        "openai_key_prefix": key_prefix,
+        "openai_model": model,
+        "openai_reachable": ok,
+        "error": error,
     }
 
 
@@ -59,8 +61,8 @@ def get_quota(user: CurrentUser = Depends(require_min_role("user"))):
         r = row(cur)
     data = r["result"] if r and isinstance(r.get("result"), dict) else {}
     return {
-        "used":   data.get("used", 0),
-        "limit":  data.get("limit", 1000),
+        "used": data.get("used", 0),
+        "limit": data.get("limit", 1000),
         "period": data.get("period", ""),
     }
 
@@ -69,7 +71,7 @@ class AgentQuery(BaseModel):
     question: str = Field(..., min_length=1, max_length=2000)
     assistant_mode: str = Field("enterprise", pattern="^(enterprise|municipal|recruiting)$")
     language: str = Field("fr", pattern="^(fr|en|es)$")
-    dept_type: str | None = None   # workspace actif côté frontend — prioritaire sur le dept DB
+    dept_type: str | None = None  # workspace actif côté frontend — prioritaire sur le dept DB
 
 
 class AgentQueryResponse(BaseModel):
@@ -152,9 +154,12 @@ def _connected_connectors_for_user(user: CurrentUser) -> list[str]:
             return [r["connector_type"] for r in rows(cur)]
     except Exception as exc:
         import psycopg2
+
         # Dégradation gracieuse UNIQUEMENT si la table connector_departments n'existe pas encore
         if isinstance(exc, psycopg2.errors.UndefinedTable):
-            logger.warning("connector_departments table manquante — fallback sans filtre dept. Exécutez la migration SQL.")
+            logger.warning(
+                "connector_departments table manquante — fallback sans filtre dept. Exécutez la migration SQL."
+            )
             try:
                 with get_db() as cur:
                     cur.execute(
@@ -219,7 +224,9 @@ def agent_query(
                 dept_type=dept_type,
             )
         except RuntimeError as exc:
-            raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Service IA temporairement indisponible.") from exc
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Service IA temporairement indisponible."
+            ) from exc
         except Exception as exc:
             exc_type = type(exc).__name__
             exc_module = type(exc).__module__ or ""
@@ -246,45 +253,50 @@ def agent_query(
                 user_msg = f"Erreur interne ({exc_type}) : {str(exc)[:300]}"
                 http_code = 500
 
-            log_audit_sync(AuditEvent(
+            log_audit_sync(
+                AuditEvent(
+                    action="agent_query",
+                    query=payload.question,
+                    organization_id=user.organization_id,
+                    user_id=user.id,
+                    ip_address=client_ip(request),
+                    success=False,
+                    http_status=http_code,
+                    error_detail=f"{exc_type}: {str(exc)[:500]}",
+                    metadata={"assistant_mode": payload.assistant_mode, "language": payload.language},
+                )
+            )
+            raise HTTPException(status_code=http_code, detail=user_msg) from exc
+
+        audit_id = log_audit_sync(
+            AuditEvent(
                 action="agent_query",
                 query=payload.question,
                 organization_id=user.organization_id,
                 user_id=user.id,
                 ip_address=client_ip(request),
-                success=False,
-                http_status=http_code,
-                error_detail=f"{exc_type}: {str(exc)[:500]}",
-                metadata={"assistant_mode": payload.assistant_mode, "language": payload.language},
-            ))
-            raise HTTPException(status_code=http_code, detail=user_msg) from exc
-
-        audit_id = log_audit_sync(AuditEvent(
-            action="agent_query",
-            query=payload.question,
-            organization_id=user.organization_id,
-            user_id=user.id,
-            ip_address=client_ip(request),
-            success=True,
-            http_status=200,
-            metadata={
-                "assistant_mode": payload.assistant_mode,
-                "language": payload.language,
-                "sources": result.sources,
-                "tools_count": len(result.tools_called),
-            },
-        ))
+                success=True,
+                http_status=200,
+                metadata={
+                    "assistant_mode": payload.assistant_mode,
+                    "language": payload.language,
+                    "sources": result.sources,
+                    "tools_count": len(result.tools_called),
+                },
+            )
+        )
 
         import json as _json
         from agent_service import _json_default
+
         raw = {
-            "answer":            result.answer,
-            "sources":           result.sources,
-            "tools_called":      result.tools_called,
-            "audit_id":          audit_id,
+            "answer": result.answer,
+            "sources": result.sources,
+            "tools_called": result.tools_called,
+            "audit_id": audit_id,
             "connector_warnings": error_connectors,
             "has_simulated_data": result.has_simulated_data,
-            "simulated_tools":   result.simulated_tools,
+            "simulated_tools": result.simulated_tools,
         }
         # Sérialiser via notre encoder robuste puis retourner JSONResponse
         # pour contourner la validation Pydantic du response_model
@@ -305,11 +317,12 @@ def agent_query(
 
 # ── Vision endpoint ────────────────────────────────────────────────────────────
 
+
 class VisionQuery(BaseModel):
     image_b64: str = Field(..., description="Image encodée en base64 (PNG/JPEG/WEBP)")
     mime_type: str = Field("image/png", pattern="^image/(png|jpeg|webp|gif)$")
-    question:  str = Field("Analyse cette capture d'écran.", min_length=1, max_length=1000)
-    language:  str = Field("fr", pattern="^(fr|en|es)$")
+    question: str = Field("Analyse cette capture d'écran.", min_length=1, max_length=1000)
+    language: str = Field("fr", pattern="^(fr|en|es)$")
 
 
 @router.post("/vision")
@@ -321,7 +334,8 @@ def agent_vision(
     _active: CurrentUser = Depends(require_active_subscription),
 ):
     """Analyse une capture d'écran avec gpt-4o vision + contexte organisationnel."""
-    import base64, os
+    import base64
+    import os
     from openai import OpenAI
 
     check_and_consume_query(user.organization_id, user.subscription_status)
@@ -371,16 +385,18 @@ def agent_vision(
         logger.error("[agent_vision] OpenAI error: %s", exc)
         raise HTTPException(503, "Service vision temporairement indisponible.") from exc
 
-    log_audit_sync(AuditEvent(
-        action="agent_vision",
-        query=payload.question,
-        organization_id=user.organization_id,
-        user_id=user.id,
-        ip_address=client_ip(request),
-        success=True,
-        http_status=200,
-        metadata={"language": payload.language},
-    ))
+    log_audit_sync(
+        AuditEvent(
+            action="agent_vision",
+            query=payload.question,
+            organization_id=user.organization_id,
+            user_id=user.id,
+            ip_address=client_ip(request),
+            success=True,
+            http_status=200,
+            metadata={"language": payload.language},
+        )
+    )
 
     return {"answer": answer}
 
