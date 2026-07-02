@@ -1,9 +1,17 @@
 /**
  * AgentHub Platform — App: Paramètres
- * Profil partenaire · Apparence · Apps installées
+ * Profil partenaire · Apparence · Apps installées · Notifications
  */
 
 let _st = null;
+
+function _token() { return localStorage.getItem('nexhire_token') || ''; }
+function _h() { const t = _token(); return t ? { Authorization: `Bearer ${t}` } : {}; }
+async function _api(path, opts = {}) {
+  const r = await fetch(path, { headers: { ..._h(), 'Content-Type': 'application/json' }, credentials: 'include', ...opts });
+  if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.detail || r.status); }
+  return r.json();
+}
 
 function _render(el) {
   const p = _st.partner || {};
@@ -20,18 +28,21 @@ function _render(el) {
     <button class="set-tab${_st.tab==='profil'?' set-tab-a':''}" data-tab="profil">🏢 Profil</button>
     <button class="set-tab${_st.tab==='apparence'?' set-tab-a':''}" data-tab="apparence">🎨 Apparence</button>
     <button class="set-tab${_st.tab==='apps'?' set-tab-a':''}" data-tab="apps">📦 Apps installées</button>
+    <button class="set-tab${_st.tab==='notifications'?' set-tab-a':''}" data-tab="notifications">📧 Notifications</button>
     <button class="set-tab${_st.tab==='securite'?' set-tab-a':''}" data-tab="securite">🔒 Sécurité & Accès</button>
   </div>
 
   <div class="set-panel">
-    ${_st.tab === 'profil'    ? _renderProfil(p)    : ''}
-    ${_st.tab === 'apparence' ? _renderApparence(p) : ''}
-    ${_st.tab === 'apps'      ? _renderApps(apps)   : ''}
-    ${_st.tab === 'securite'  ? _renderSecurite(p)  : ''}
+    ${_st.tab === 'profil'        ? _renderProfil(p)        : ''}
+    ${_st.tab === 'apparence'     ? _renderApparence(p)     : ''}
+    ${_st.tab === 'apps'          ? _renderApps(apps)        : ''}
+    ${_st.tab === 'notifications' ? _renderNotifications()   : ''}
+    ${_st.tab === 'securite'      ? _renderSecurite(p)       : ''}
   </div>
 </div>`;
 
   el.querySelectorAll('.set-tab').forEach(b => b.addEventListener('click', () => { _st.tab = b.dataset.tab; _render(el); }));
+  if (_st.tab === 'notifications') _bindNotifications(el);
 }
 
 function _renderProfil(p) {
@@ -146,6 +157,77 @@ function _renderSecurite(p) {
 </div>`;
 }
 
+function _renderNotifications() {
+  const enabled = _st.monthlyReport !== false;
+  return `
+<div class="set-section">
+  <h2 class="set-section-title">Rapports automatiques par email</h2>
+  <div class="set-notif-list">
+
+    <div class="set-notif-row">
+      <div class="set-notif-info">
+        <div class="set-notif-title">📊 Rapport mensuel de performance</div>
+        <div class="set-notif-desc">Synthèse IA mensuelle : score IMAI, indicateurs clés, recommandations prioritaires. Envoyé le 1er de chaque mois à l'admin principal.</div>
+      </div>
+      <label class="set-toggle">
+        <input type="checkbox" id="set-monthly-toggle" ${enabled ? 'checked' : ''} />
+        <span class="set-toggle-slider"></span>
+      </label>
+    </div>
+
+    <div class="set-notif-row">
+      <div class="set-notif-info">
+        <div class="set-notif-title">📋 Briefing exécutif hebdomadaire</div>
+        <div class="set-notif-desc">Résumé du lundi matin : alertes actives, contrats à renouveler, indicateurs de sécurité. Envoyé chaque lundi à 7h.</div>
+      </div>
+      <span class="set-badge-ok" style="font-size:11px">Toujours actif</span>
+    </div>
+
+    <div class="set-notif-row">
+      <div class="set-notif-info">
+        <div class="set-notif-title">⚠️ Alertes contrats et licences</div>
+        <div class="set-notif-desc">Notification automatique 30 jours avant l'expiration d'un contrat ou d'une licence.</div>
+      </div>
+      <span class="set-badge-ok" style="font-size:11px">Toujours actif</span>
+    </div>
+
+  </div>
+  <div id="set-notif-msg" style="font-size:12px;margin-top:12px;display:none"></div>
+</div>
+
+<div class="set-section">
+  <h2 class="set-section-title">Rapports à la demande</h2>
+  <div class="set-info-grid">
+    ${_row('Export Budget', '<span class="set-badge-ok">✓ CSV + PDF disponibles</span> dans le module Budget')}
+    ${_row('Export Contrats', '<span class="set-badge-ok">✓ CSV + PDF disponibles</span> dans le module Contrats')}
+    ${_row('Rapport régional', `<a href="/rapport/regional/${(_st.partner||{}).slug||''}" target="_blank" class="set-link">Voir le rapport →</a>`)}
+  </div>
+</div>`;
+}
+
+function _bindNotifications(el) {
+  const toggle = el.querySelector('#set-monthly-toggle');
+  const msg = el.querySelector('#set-notif-msg');
+  if (!toggle) return;
+  toggle.addEventListener('change', async () => {
+    const enabled = toggle.checked;
+    msg.style.display = 'none';
+    try {
+      await _api('/api/settings/monthly-report', { method: 'PATCH', body: JSON.stringify({ enabled }) });
+      _st.monthlyReport = enabled;
+      msg.style.display = 'block';
+      msg.style.color = '#16a34a';
+      msg.textContent = enabled ? '✅ Rapport mensuel activé.' : '✅ Rapport mensuel désactivé.';
+      setTimeout(() => { msg.style.display = 'none'; }, 3000);
+    } catch (err) {
+      toggle.checked = !enabled;
+      msg.style.display = 'block';
+      msg.style.color = '#dc2626';
+      msg.textContent = `Erreur : ${err.message}`;
+    }
+  });
+}
+
 function _row(label, value, mono = false) {
   return `
 <div class="set-info-row">
@@ -196,18 +278,37 @@ function _css() {
 .set-coming-item div{flex:1}
 .set-coming-item strong{font-size:13px;font-weight:600;color:var(--text)}
 .set-coming-item p{font-size:12px;color:var(--muted);margin:2px 0 0;line-height:1.4}
+/* Notification rows */
+.set-notif-list{border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;margin-bottom:16px}
+.set-notif-row{display:flex;align-items:center;gap:16px;padding:16px;border-bottom:1px solid var(--border-2)}
+.set-notif-row:last-child{border-bottom:none}
+.set-notif-info{flex:1}
+.set-notif-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px}
+.set-notif-desc{font-size:12px;color:var(--muted);line-height:1.4}
+
+/* Toggle switch */
+.set-toggle{position:relative;display:inline-block;width:40px;height:22px;flex-shrink:0}
+.set-toggle input{opacity:0;width:0;height:0}
+.set-toggle-slider{position:absolute;cursor:pointer;inset:0;background:#cbd5e1;border-radius:99px;transition:.2s}
+.set-toggle-slider::before{content:'';position:absolute;width:16px;height:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.set-toggle input:checked + .set-toggle-slider{background:var(--primary)}
+.set-toggle input:checked + .set-toggle-slider::before{transform:translateX(18px)}
+
 @media(max-width:600px){.set-wrap{padding:var(--sp-4)}.set-info-label{min-width:130px}}
 `;
   document.head.appendChild(s);
 }
 
 export default {
-  mount(container, ctx) {
+  async mount(container, ctx) {
     _css();
-    _st = { slug: ctx.partnerSlug, partner: ctx.partner, tab: 'profil', apps: ctx.partner?.apps || [] };
+    _st = { slug: ctx.partnerSlug, partner: ctx.partner, tab: 'profil', apps: ctx.partner?.apps || [], monthlyReport: true };
 
-    // Load installed apps from workspace context
     if (ctx.appConfig?.installedApps) _st.apps = ctx.appConfig.installedApps;
+
+    _api('/api/settings/profile').then(profile => {
+      _st.monthlyReport = profile.monthly_report_enabled !== false;
+    }).catch(() => {});
 
     _render(container);
   },
