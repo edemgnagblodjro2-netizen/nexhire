@@ -233,6 +233,28 @@ async function boot() {
       if (navItem) { _navigateTo(navItem); return; }
     }
 
+    // ── Onboarding wizard (première connexion owner sans données) ──────────────
+    if (_state.user?.authenticated) {
+      try {
+        const _token2 = localStorage.getItem('nexhire_token');
+        const obRes = await fetch('/api/onboarding/status', {
+          headers: _token2 ? { Authorization: `Bearer ${_token2}` } : {},
+          credentials: 'include',
+        });
+        if (obRes.ok) {
+          const obData = await obRes.json();
+          if (obData.should_show) {
+            const { mount } = await import('/static/workspace/onboarding/main.js');
+            const ctx = { partnerSlug: slug, partner: _state.partner };
+            await mount(document.body, ctx, () => {
+              _navigateTo({ id: 'dashboard', label: 'Tableau de bord', route: '__dashboard__' });
+            });
+            return;
+          }
+        }
+      } catch {}
+    }
+
     _navigateTo({ id: 'dashboard', label: 'Tableau de bord', route: '__dashboard__' });
 
   } catch (err) {
