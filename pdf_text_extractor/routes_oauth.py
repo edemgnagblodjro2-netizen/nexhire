@@ -28,6 +28,8 @@ router = APIRouter(prefix="/api/connectors", tags=["connectors-oauth"])
 
 _STATE_TTL = 10  # minutes
 APP_URL = os.environ.get("APP_URL", "https://myportal.nexhire.ca")
+# URL de callback unique pour tous les connecteurs OAuth
+OAUTH_CALLBACK_URL = os.environ.get("BASE_URL", APP_URL) + "/api/connectors/oauth/callback"
 
 # ── Config des connecteurs OAuth ──────────────────────────────────────────────
 
@@ -276,7 +278,7 @@ def _resolve_cfg(connector_type: str, state_extra: dict | None = None) -> dict:
     return {
         "client_id":     client_id,
         "client_secret": os.environ.get(cfg["client_secret_env"], ""),
-        "redirect_uri":  os.environ.get(cfg["redirect_uri_env"], ""),
+        "redirect_uri":  os.environ.get(cfg.get("redirect_uri_env", ""), "") or OAUTH_CALLBACK_URL,
         "auth_url":      auth_url,
         "token_url":     token_url,
         "scopes":        cfg["scopes"],
