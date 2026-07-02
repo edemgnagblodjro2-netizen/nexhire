@@ -87,6 +87,42 @@ function _css() {
 function _token() { return localStorage.getItem('nexhire_token') || ''; }
 function _h() { const t = _token(); return t ? { Authorization: `Bearer ${t}` } : {}; }
 
+function _exportCSV(contracts) {
+  const header = ['Fournisseur','Catégorie','Statut','Valeur annuelle (CAD)','Économies potentielles (CAD)','Début','Fin','Renouvellement','Avis annulation (j)'];
+  const rows = contracts.map(c => [
+    c.vendor||'', _catFr(c.category), _statusFr(c.status),
+    c.annual_value||0, c.potential_savings||0,
+    c.start_date||'', c.end_date||'', c.renewal_date||'',
+    c.cancellation_notice_days||60,
+  ]);
+  const csv = [header, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['﻿'+csv], { type: 'text/csv;charset=utf-8' }));
+  a.download = `contrats_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+
+async function _exportPDF(contracts) {
+  const total = contracts.reduce((s,c)=>s+(parseFloat(c.annual_value)||0),0);
+  const savings = contracts.reduce((s,c)=>s+(parseFloat(c.potential_savings)||0),0);
+  const urgent = contracts.filter(c=>c.urgency==='critical').length;
+  const lines = contracts.slice(0,20).map(c =>
+    `- **${c.vendor}** (${_catFr(c.category)}) — ${_fmt(c.annual_value, c.currency)}/an — Renouvellement : ${_fmtDate(c.renewal_date)}`
+  ).join('\n');
+  const question = 'Rapport des contrats fournisseurs';
+  const answer = `## Synthèse des contrats\n\nNombre de contrats : ${contracts.length}\nValeur annuelle totale : ${_fmt(total)}\nÉconomies potentielles : ${_fmt(savings)}\nRenouvellements urgents (≤30j) : ${urgent}\n\n### Contrats actifs\n${lines}`;
+  const btn = document.querySelector('#ct-export-pdf');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Génération…'; }
+  try {
+    const r = await fetch('/api/agent/export', { method:'POST', headers:{..._h(),'Content-Type':'application/json'}, credentials:'include',
+      body: JSON.stringify({ question, answer, format:'pdf', title:'Rapport Contrats Fournisseurs' }) });
+    if (!r.ok) throw new Error(r.status);
+    const blob = await r.blob();
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `contrats_${new Date().toISOString().slice(0,10)}.pdf`; a.click();
+  } catch (err) { alert(`Erreur PDF : ${err.message}`); }
+  finally { if (btn) { btn.disabled = false; btn.textContent = '⬇ PDF'; } }
+}
+
 async function _api(path, opts = {}) {
   const r = await fetch(path, { headers: { ..._h(), 'Content-Type': 'application/json' }, credentials: 'include', ...opts });
   if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.detail || r.status); }
@@ -250,7 +286,11 @@ async function _load(container) {
       </div>
       <div class="ct-card">
         <div class="ct-card-hd"><h3>📄 Contrats fournisseurs</h3>
-          <button class="ct-btn ct-btn-primary" id="ct-new-btn">+ Nouveau contrat</button>
+          <div style="display:flex;gap:6px;margin-left:auto">
+            <button class="ct-btn ct-btn-ghost" id="ct-export-csv">⬇ CSV</button>
+            <button class="ct-btn ct-btn-ghost" id="ct-export-pdf">⬇ PDF</button>
+            <button class="ct-btn ct-btn-primary" id="ct-new-btn">+ Nouveau contrat</button>
+          </div>
         </div>
         <div style="padding:0 0">
           ${_renderTable(_contracts)}
@@ -261,6 +301,8 @@ async function _load(container) {
       btn.addEventListener('click', () => { _filter = btn.dataset.filter; _refresh(); });
     });
     main.querySelector('#ct-new-btn')?.addEventListener('click', () => _openModal(null, _refresh));
+    main.querySelector('#ct-export-csv')?.addEventListener('click', () => _exportCSV(_contracts));
+    main.querySelector('#ct-export-pdf')?.addEventListener('click', () => _exportPDF(_contracts));
     main.querySelectorAll('.ct-edit-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const c = _contracts.find(x => x.id === btn.dataset.id);

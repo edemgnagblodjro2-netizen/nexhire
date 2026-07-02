@@ -90,6 +90,42 @@ function _css() {
 function _token() { return localStorage.getItem('nexhire_token') || ''; }
 function _h() { const t = _token(); return t ? { Authorization: `Bearer ${t}` } : {}; }
 
+function _exportCSV(entries, year) {
+  const header = ['Catégorie','Libellé','Année','Mois','Alloué (CAD)','Réel (CAD)','Écart (CAD)'];
+  const rows = entries.map(e => [
+    _catFr(e.category), e.label||'', e.year, e.month ? MONTHS[e.month-1] : 'Annuel',
+    e.allocated||0, e.actual||0, ((e.allocated||0)-(e.actual||0)).toFixed(2),
+  ]);
+  const csv = [header, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['﻿'+csv], { type: 'text/csv;charset=utf-8' }));
+  a.download = `budget_${year}.csv`;
+  a.click();
+}
+
+async function _exportPDF(summary, entries, year) {
+  const cats = (summary?.by_category||[]).map(c => `- ${_catFr(c.category)}: ${_fmt(c.actual)} / ${_fmt(c.allocated)} alloué`).join('\n') || 'Aucune donnée';
+  const totalAlloc = (summary?.by_category||[]).reduce((s,c)=>s+(c.allocated||0),0);
+  const totalActual = (summary?.by_category||[]).reduce((s,c)=>s+(c.actual||0),0);
+  const question = `Rapport budgétaire ${year}`;
+  const answer = `## Résumé ${year}\n\nBudget alloué total : ${_fmt(totalAlloc)}\nDépenses réelles : ${_fmt(totalActual)}\nÉcart : ${_fmt(totalAlloc-totalActual)}\n\n### Par catégorie\n${cats}`;
+  const charts = (summary?.by_category||[]).length ? [{
+    type: 'bar', title: `Budget vs Réel ${year}`,
+    labels: (summary.by_category||[]).map(c => _catFr(c.category)),
+    values: (summary.by_category||[]).map(c => c.actual||0),
+  }] : [];
+  const btn = document.querySelector('#bg-export-pdf');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Génération…'; }
+  try {
+    const r = await fetch('/api/agent/export', { method:'POST', headers:{..._h(),'Content-Type':'application/json'}, credentials:'include',
+      body: JSON.stringify({ question, answer, format:'pdf', title:`Rapport budgétaire ${year}`, period_label: String(year), charts }) });
+    if (!r.ok) throw new Error(r.status);
+    const blob = await r.blob();
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `budget_${year}.pdf`; a.click();
+  } catch (err) { alert(`Erreur PDF : ${err.message}`); }
+  finally { if (btn) { btn.disabled = false; btn.textContent = '⬇ PDF'; } }
+}
+
 async function _api(path, opts = {}) {
   const r = await fetch(path, { headers: { ..._h(), 'Content-Type': 'application/json' }, credentials: 'include', ...opts });
   if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.detail || r.status); }
@@ -245,12 +281,15 @@ async function _load(container) {
   _css();
   const currentYear = new Date().getFullYear();
   let _year = currentYear;
+  let _lastSummary = { by_category: [], by_department: [] };
+  let _lastEntries = [];
 
   async function _refresh() {
     const [summary, entries] = await Promise.all([
       _api(`/api/budget/summary?year=${_year}`).catch(() => ({ by_category: [], by_department: [] })),
       _api(`/api/budget?year=${_year}`).catch(() => []),
     ]);
+    _lastSummary = summary; _lastEntries = entries;
     _render(summary, entries);
   }
 
@@ -265,6 +304,10 @@ async function _load(container) {
         <select id="bg-year-sel">
           ${years.map(y => `<option value="${y}" ${y===_year?'selected':''}>${y}</option>`).join('')}
         </select>
+        <div style="margin-left:auto;display:flex;gap:6px">
+          <button class="bg-btn bg-btn-ghost" id="bg-export-csv">⬇ CSV</button>
+          <button class="bg-btn bg-btn-ghost" id="bg-export-pdf">⬇ PDF</button>
+        </div>
       </div>
       <div class="bg-grid">
         <div class="bg-card">
@@ -284,6 +327,8 @@ async function _load(container) {
       </div>`;
 
     main.querySelector('#bg-year-sel').addEventListener('change', e => { _year = parseInt(e.target.value); _refresh(); });
+    main.querySelector('#bg-export-csv')?.addEventListener('click', () => _exportCSV(_lastEntries, _year));
+    main.querySelector('#bg-export-pdf')?.addEventListener('click', () => _exportPDF(_lastSummary, _lastEntries, _year));
     main.querySelector('#bg-new-btn')?.addEventListener('click', () => _openModal(_year, _refresh));
     main.querySelectorAll('.bg-del-btn').forEach(btn => {
       btn.addEventListener('click', async () => {
