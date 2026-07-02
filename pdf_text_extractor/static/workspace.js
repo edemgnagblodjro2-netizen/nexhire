@@ -89,7 +89,15 @@ const NAV = [
   {
     section: 'Organisation',
     items: [
-      { id: 'departments', label: 'Départements', iconKey: 'grid', appSlug: 'departments' },
+      { id: 'departments', label: 'Départements', iconKey: 'grid',     appSlug: 'departments' },
+      { id: 'assets',      label: 'Parc TI',      iconKey: 'building', appSlug: 'assets' },
+    ],
+  },
+  {
+    section: 'Finance & Contrats',
+    items: [
+      { id: 'budget',    label: 'Budget & Finances', iconKey: 'chart',  appSlug: 'budget' },
+      { id: 'contracts', label: 'Contrats',           iconKey: 'file',   appSlug: 'contracts' },
     ],
   },
   {
