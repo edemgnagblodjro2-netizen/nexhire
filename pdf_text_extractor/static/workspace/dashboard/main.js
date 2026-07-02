@@ -479,7 +479,7 @@ function _render(container, ctx) {
 
   // Diagnostic localStorage
   let diag = null;
-  try { const raw = localStorage.getItem(`nh_last_diag_${partnerSlug}`); if (raw) diag = JSON.parse(raw); } catch {}
+  try { const _uid = ctx?.userProfile?.id || ctx?.user?.user_id || 'anon'; const raw = localStorage.getItem(`nh_last_diag_${partnerSlug}_${_uid}`); if (raw) diag = JSON.parse(raw); } catch {}
   const hasDiag = !!diag;
 
   const SCORE_COLOR = { debutant: 'var(--color-err)', intermediaire: 'var(--color-warn)', avance: 'var(--color-ok)' };

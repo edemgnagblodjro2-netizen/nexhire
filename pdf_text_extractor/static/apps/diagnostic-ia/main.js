@@ -449,7 +449,8 @@ async function _finalize(container) {
     _state.results = results;
     // Persist summary for Dashboard dynamic update
     try {
-      localStorage.setItem(`nh_last_diag_${_state.partnerSlug}`, JSON.stringify({
+      const _uid = _state.context?.userProfile?.id || _state.context?.user?.user_id || 'anon';
+      localStorage.setItem(`nh_last_diag_${_state.partnerSlug}_${_uid}`, JSON.stringify({
         score:     Math.round(results.imai_score),
         niveau:    results.niveau,
         company:   results.company_name || '',
