@@ -1,0 +1,69 @@
+[tool.black]
+line-length = 120
+skip-string-normalization = true   # respecte les guillemets existants (simple/double)
+target-version = ["py312"]
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | venv
+  | __pycache__
+  | \.pytest_cache
+  | static
+)/
+'''
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+exclude = [
+    ".git", ".venv", "venv", "__pycache__", ".pytest_cache",
+    "static",
+]
+
+[tool.ruff.lint]
+# E/W = pycodestyle, F = pyflakes, I = isort, UP = pyupgrade
+select = ["E", "W", "F"]
+# "I" (isort) désactivé — sera activé après la passe de normalisation des imports (Sprint 4)
+ignore = [
+    "E501",   # line too long — géré par black
+    "E402",   # module import not at top — intentionnel dans main.py (logging avant imports)
+    "E741",   # ambiguous variable name (l, O…) — présent dans code legacy
+    "W291",   # trailing whitespace — black le corrige
+    "F401",   # unused import — trop de faux positifs sur les re-exports
+    "F811",   # redefinition — pattern intentionnel dans certains modules
+    "F841",   # unused variable — dette technique, à nettoyer en Sprint 5
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["auth", "db", "rbac", "observability", "main"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.coverage.run]
+source = ["."]
+omit = [
+    "tests/*",
+    "static/*",
+    "*.sql",
+    "venv/*",
+    ".venv/*",
+    "__pycache__/*",
+    "setup_monitoring.py",
+    "smoke_tests.py",
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+fail_under = 60
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError",
+]

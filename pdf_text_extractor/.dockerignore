@@ -1,0 +1,47 @@
+# Contrôle de version
+.git
+.gitignore
+.github
+
+# Environnements virtuels et cache Python
+.venv
+venv
+__pycache__
+*.pyc
+*.pyo
+.pytest_cache
+.mypy_cache
+.ruff_cache
+
+# Outils de développement
+.env
+.env.*
+!.env.example
+
+# Tests et couverture
+tests/
+.coverage
+htmlcov/
+coverage.xml
+
+# Documentation et fichiers projets
+*.md
+*.sql
+DEMO_*
+GUIDE_*
+PRD_*
+RUNBOOK_*
+SLA_*
+DESIGN_*
+DONNEES_*
+ARCHITECTURE_*
+
+# IDE
+.vscode
+.idea
+*.code-workspace
+
+# Fichiers temporaires
+*.tmp
+*.log
+*.bak

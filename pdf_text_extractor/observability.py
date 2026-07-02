@@ -8,6 +8,7 @@ Fournit :
   - set_request_user()            : injecter user_id/org_id depuis un Depends FastAPI
   - Compteurs Prometheus          : http_requests_total, http_request_duration_ms
 """
+
 from __future__ import annotations
 
 import json
@@ -24,10 +25,14 @@ from starlette.types import ASGIApp, Receive, Scope, Send
 # ── Prometheus (optionnel — graceful si non installé) ─────────────────────────
 try:
     from prometheus_client import (
-        Counter, Histogram, Gauge,
-        generate_latest, CONTENT_TYPE_LATEST,
+        Counter,
+        Histogram,
+        Gauge,
+        generate_latest,
+        CONTENT_TYPE_LATEST,
         REGISTRY,
     )
+
     _PROM_OK = True
     _REQ_COUNTER = Counter(
         "http_requests_total",
@@ -48,6 +53,7 @@ except ImportError:
 # ── Sentry (optionnel) ────────────────────────────────────────────────────────
 try:
     import sentry_sdk as _sentry
+
     _SENTRY_OK = True
 except ImportError:
     _SENTRY_OK = False
@@ -55,18 +61,37 @@ except ImportError:
 # ── Logger JSON ───────────────────────────────────────────────────────────────
 _logger = logging.getLogger("agenthub.access")
 
+# Enrichissement global de chaque log (injecté une fois au démarrage)
+_APP_VERSION: str = "1.0.0"
+_ENVIRONMENT: str = "production"
+_SERVICE_NAME: str = "agenthub-platform"
+
 
 class _JsonFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:  # noqa: A003
         payload = record.getMessage()
         try:
-            return json.dumps(json.loads(payload), ensure_ascii=False, separators=(",", ":"))
+            data = json.loads(payload)
         except (json.JSONDecodeError, TypeError):
-            return payload
+            data = {"message": payload}
+        # Enrichissement systématique
+        data.setdefault("service", _SERVICE_NAME)
+        data.setdefault("version", _APP_VERSION)
+        data.setdefault("environment", _ENVIRONMENT)
+        data.setdefault("level", record.levelname)
+        return json.dumps(data, ensure_ascii=False, separators=(",", ":"))
 
 
-def configure_logging(level: int = logging.INFO) -> None:
-    """Configure le logger racine en JSON structuré."""
+def configure_logging(
+    level: int = logging.INFO,
+    version: str = "1.0.0",
+    environment: str = "production",
+) -> None:
+    """Configure le logger racine en JSON structuré et injecte version/env."""
+    global _APP_VERSION, _ENVIRONMENT
+    _APP_VERSION = version
+    _ENVIRONMENT = environment
+
     handler = logging.StreamHandler()
     handler.setFormatter(_JsonFormatter())
     root = logging.getLogger()
@@ -77,20 +102,20 @@ def configure_logging(level: int = logging.INFO) -> None:
 
 
 # ── Context vars ──────────────────────────────────────────────────────────────
-_request_id_cv:     ContextVar[str] = ContextVar("request_id",     default="")
+_request_id_cv: ContextVar[str] = ContextVar("request_id", default="")
 _correlation_id_cv: ContextVar[str] = ContextVar("correlation_id", default="")
-_trace_id_cv:       ContextVar[str] = ContextVar("trace_id",       default="")
-_user_id_cv:        ContextVar[str] = ContextVar("user_id",        default="")
-_org_id_cv:         ContextVar[str] = ContextVar("org_id",         default="")
+_trace_id_cv: ContextVar[str] = ContextVar("trace_id", default="")
+_user_id_cv: ContextVar[str] = ContextVar("user_id", default="")
+_org_id_cv: ContextVar[str] = ContextVar("org_id", default="")
 
 
 def get_request_ctx() -> dict:
     """Retourne le contexte de la requête courante pour enrichir les logs applicatifs."""
     return {
-        "request_id":     _request_id_cv.get(),
+        "request_id": _request_id_cv.get(),
         "correlation_id": _correlation_id_cv.get(),
-        "trace_id":       _trace_id_cv.get(),
-        "user_id":        _user_id_cv.get() or None,
+        "trace_id": _trace_id_cv.get(),
+        "user_id": _user_id_cv.get() or None,
         "organization_id": _org_id_cv.get() or None,
     }
 
@@ -110,18 +135,14 @@ def _peek_jwt(authorization: str) -> tuple[str, str]:
         return "", ""
     try:
         import base64
+
         parts = authorization[7:].split(".")
         if len(parts) < 2:
             return "", ""
         padded = parts[1] + "=" * (4 - len(parts[1]) % 4)
         data = json.loads(base64.urlsafe_b64decode(padded).decode("utf-8", errors="ignore"))
         user_id = data.get("sub", "")
-        org_id = (
-            data.get("organization_id")
-            or data.get("org_id")
-            or data.get("org")
-            or ""
-        )
+        org_id = data.get("organization_id") or data.get("org_id") or data.get("org") or ""
         return user_id, org_id
     except Exception:
         return "", ""
@@ -150,9 +171,9 @@ class StructuredLoggingMiddleware:
 
         # ── IDs de corrélation ────────────────────────────────────────────────
         headers: dict[bytes, bytes] = dict(scope.get("headers", []))
-        request_id     = headers.get(b"x-request-id",     b"").decode() or str(uuid.uuid4())
+        request_id = headers.get(b"x-request-id", b"").decode() or str(uuid.uuid4())
         correlation_id = headers.get(b"x-correlation-id", b"").decode() or request_id
-        trace_id       = headers.get(b"x-trace-id",       b"").decode() or uuid.uuid4().hex
+        trace_id = headers.get(b"x-trace-id", b"").decode() or uuid.uuid4().hex
 
         tok_r = _request_id_cv.set(request_id)
         tok_c = _correlation_id_cv.set(correlation_id)
@@ -163,6 +184,18 @@ class StructuredLoggingMiddleware:
         user_id, org_id = _peek_jwt(auth)
         tok_u = _user_id_cv.set(user_id)
         tok_o = _org_id_cv.set(org_id)
+
+        # ── Enrichissement Sentry scope ───────────────────────────────────────
+        if _SENTRY_OK and user_id:
+            try:
+                _sentry.set_user({"id": user_id})
+                with _sentry.new_scope() as scope:
+                    scope.set_tag("request_id", request_id)
+                    scope.set_tag("correlation_id", correlation_id)
+                    if org_id:
+                        scope.set_tag("organization_id", org_id)
+            except Exception:
+                pass
 
         method = scope.get("method", "")
         status_code = 0
@@ -177,7 +210,7 @@ class StructuredLoggingMiddleware:
                 status_code = message["status"]
                 # Injecter X-Request-ID et X-Correlation-ID dans la réponse
                 resp_headers = list(message.get("headers", []))
-                resp_headers.append((b"x-request-id",     request_id.encode()))
+                resp_headers.append((b"x-request-id", request_id.encode()))
                 resp_headers.append((b"x-correlation-id", correlation_id.encode()))
                 message = {**message, "headers": resp_headers}
             await send(message)
@@ -190,19 +223,19 @@ class StructuredLoggingMiddleware:
                 _ACTIVE_REQ.dec()
 
             final_user_id = _user_id_cv.get()
-            final_org_id  = _org_id_cv.get()
+            final_org_id = _org_id_cv.get()
 
             endpoint = f"{method} {path}"
 
             log_record = {
-                "request_id":     request_id,
+                "request_id": request_id,
                 "correlation_id": correlation_id,
-                "trace_id":       trace_id,
-                "user_id":        final_user_id or None,
+                "trace_id": trace_id,
+                "user_id": final_user_id or None,
                 "organization_id": final_org_id or None,
-                "endpoint":       endpoint,
-                "duration_ms":    duration_ms,
-                "status_code":    status_code,
+                "endpoint": endpoint,
+                "duration_ms": duration_ms,
+                "status_code": status_code,
             }
 
             level = logging.WARNING if status_code >= 400 else logging.INFO
@@ -260,15 +293,17 @@ class GlobalRateLimitMiddleware:
             {"detail": "Trop de requêtes. Réessayez dans 60 secondes."},
             ensure_ascii=False,
         ).encode()
-        await send({
-            "type": "http.response.start",
-            "status": 429,
-            "headers": [
-                (b"content-type", b"application/json"),
-                (b"retry-after", b"60"),
-                (b"x-ratelimit-limit", str(self.limit).encode()),
-            ],
-        })
+        await send(
+            {
+                "type": "http.response.start",
+                "status": 429,
+                "headers": [
+                    (b"content-type", b"application/json"),
+                    (b"retry-after", b"60"),
+                    (b"x-ratelimit-limit", str(self.limit).encode()),
+                ],
+            }
+        )
         await send({"type": "http.response.body", "body": body, "more_body": False})
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
@@ -306,7 +341,7 @@ def init_sentry(dsn: str, environment: str = "production", release: str = "1.0.0
         dsn=dsn,
         environment=environment,
         release=f"agenthub@{release}",
-        traces_sample_rate=0.1,      # 10 % des transactions tracées
+        traces_sample_rate=0.1,  # 10 % des transactions tracées
         profiles_sample_rate=0.05,
         send_default_pii=False,
     )
@@ -318,6 +353,7 @@ def check_db() -> tuple[bool, float]:
     """Vérifie la connectivité DB. Retourne (ok, latency_ms)."""
     try:
         from db import get_db
+
         t0 = time.perf_counter()
         with get_db() as cur:
             cur.execute("SELECT 1")

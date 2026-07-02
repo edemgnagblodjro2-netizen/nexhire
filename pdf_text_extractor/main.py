@@ -20,7 +20,11 @@ from observability import (
     prometheus_response,
 )
 
-configure_logging(level=logging.DEBUG if os.getenv("DEBUG") else logging.INFO)
+configure_logging(
+    level=logging.DEBUG if os.getenv("DEBUG") else logging.INFO,
+    version=os.getenv("APP_VERSION", "1.0.0"),
+    environment=os.getenv("ENVIRONMENT", "production"),
+)
 
 init_sentry(
     dsn=os.getenv("SENTRY_DSN", ""),
@@ -32,6 +36,7 @@ init_sentry(
 _logfire_token = os.getenv("LOGFIRE_TOKEN")
 if _logfire_token:
     import logfire
+
     logfire.configure(
         token=_logfire_token,
         environment=os.getenv("ENVIRONMENT", "production"),
@@ -51,26 +56,28 @@ from slowapi.errors import RateLimitExceeded
 from rate_limiter import limiter
 from pydantic import BaseModel, Field
 from starlette import status
+
 _NO_CACHE_EXTS = (".js", ".css")
 _NO_CACHE_HEADERS = [
     (b"cache-control", b"no-store, no-cache, must-revalidate, max-age=0"),
-    (b"pragma",        b"no-cache"),
-    (b"expires",       b"0"),
+    (b"pragma", b"no-cache"),
+    (b"expires", b"0"),
 ]
 _STRIP_CACHE_KEYS = {b"cache-control", b"pragma", b"etag", b"last-modified", b"expires"}
 
 
 _SECURITY_HEADERS = [
-    (b"x-frame-options",           b"DENY"),
-    (b"x-content-type-options",    b"nosniff"),
-    (b"referrer-policy",           b"strict-origin-when-cross-origin"),
-    (b"permissions-policy",        b"geolocation=(), microphone=(), camera=()"),
+    (b"x-frame-options", b"DENY"),
+    (b"x-content-type-options", b"nosniff"),
+    (b"referrer-policy", b"strict-origin-when-cross-origin"),
+    (b"permissions-policy", b"geolocation=(), microphone=(), camera=()"),
     (b"strict-transport-security", b"max-age=31536000; includeSubDomains"),
 ]
 
 
 class SecurityHeadersMiddleware:
     """Injecte les headers de sécurité HTTP sur toutes les réponses."""
+
     def __init__(self, app):
         self.app = app
 
@@ -94,19 +101,20 @@ class SecurityHeadersMiddleware:
 
 class NoCacheStaticMiddleware:
     """Middleware ASGI pur — modifie les headers avant envoi (fonctionne avec StaticFiles streaming)."""
+
     def __init__(self, app):
         self.app = app
 
     async def __call__(self, scope, receive, send):
-        if scope["type"] == "http" and scope.get("path", "").startswith("/static/") \
-                and any(scope["path"].endswith(e) for e in _NO_CACHE_EXTS):
+        if (
+            scope["type"] == "http"
+            and scope.get("path", "").startswith("/static/")
+            and any(scope["path"].endswith(e) for e in _NO_CACHE_EXTS)
+        ):
 
             async def send_no_cache(message):
                 if message["type"] == "http.response.start":
-                    headers = [
-                        (k, v) for k, v in message.get("headers", [])
-                        if k.lower() not in _STRIP_CACHE_KEYS
-                    ]
+                    headers = [(k, v) for k, v in message.get("headers", []) if k.lower() not in _STRIP_CACHE_KEYS]
                     headers.extend(_NO_CACHE_HEADERS)
                     message = {**message, "headers": headers}
                 await send(message)
@@ -114,6 +122,7 @@ class NoCacheStaticMiddleware:
             await self.app(scope, receive, send_no_cache)
         else:
             await self.app(scope, receive, send)
+
 
 from ai_service import AIConfigurationError, AssistantService
 from audit import AuditEvent, client_ip, log_audit
@@ -125,44 +134,44 @@ from routes_auth import router as auth_router
 from routes_connectors import router as connectors_router
 from routes_oauth import router as oauth_router
 from routes_reports import router as reports_router
-from routes_analytics        import router as analytics_router
-from routes_settings         import router as settings_router, public_router as public_router
-from routes_members          import router as members_router
+from routes_analytics import router as analytics_router
+from routes_settings import router as settings_router, public_router as public_router
+from routes_members import router as members_router
 from routes_service_accounts import router as sa_router
-from routes_departments      import router as departments_router
-from routes_budget           import router as budget_router
-from routes_licenses         import router as licenses_router
-from routes_servers          import router as servers_router
-from routes_apps             import router as apps_router
-from routes_optimization     import router as optimization_router
-from routes_contracts        import router as contracts_router
-from routes_transactions     import router as transactions_router
-from routes_workforce        import router as workforce_router
-from routes_dashboard        import router as dashboard_router
-from routes_billing          import router as billing_router
-from routes_sso              import router as sso_router
-from routes_webhooks         import router as webhooks_router
-from routes_superadmin       import router as superadmin_router
-from routes_external         import router as external_router
-from routes_mfa                    import router as mfa_router
-from routes_compliance             import router as compliance_router
-from routes_security_dashboard     import router as security_dashboard_router
-from routes_intelligence           import router as intelligence_router
-from routes_onboarding             import router as onboarding_router
-from routes_search                 import router as search_router
-from routes_import                 import router as import_router
-from routes_knowledge              import router as knowledge_router
-from routes_workspace              import router as workspace_router
-from routes_diagnostic             import router as diagnostic_router
-from routes_rapport                import router as rapport_router
-from routes_org                    import router as org_router
-from routes_decisions              import router as decisions_router
-from routes_playbooks              import router as playbooks_router
-from routes_orchestrations         import router as orchestrations_router
-from routes_initiatives            import router as initiatives_router
-from routes_atlas_v3               import router as atlas_v3_router
-from routes_politiques             import router as politiques_router
-from routes_conformite_causale     import router as conformite_causale_router
+from routes_departments import router as departments_router
+from routes_budget import router as budget_router
+from routes_licenses import router as licenses_router
+from routes_servers import router as servers_router
+from routes_apps import router as apps_router
+from routes_optimization import router as optimization_router
+from routes_contracts import router as contracts_router
+from routes_transactions import router as transactions_router
+from routes_workforce import router as workforce_router
+from routes_dashboard import router as dashboard_router
+from routes_billing import router as billing_router
+from routes_sso import router as sso_router
+from routes_webhooks import router as webhooks_router
+from routes_superadmin import router as superadmin_router
+from routes_external import router as external_router
+from routes_mfa import router as mfa_router
+from routes_compliance import router as compliance_router
+from routes_security_dashboard import router as security_dashboard_router
+from routes_intelligence import router as intelligence_router
+from routes_onboarding import router as onboarding_router
+from routes_search import router as search_router
+from routes_import import router as import_router
+from routes_knowledge import router as knowledge_router
+from routes_workspace import router as workspace_router
+from routes_diagnostic import router as diagnostic_router
+from routes_rapport import router as rapport_router
+from routes_org import router as org_router
+from routes_decisions import router as decisions_router
+from routes_playbooks import router as playbooks_router
+from routes_orchestrations import router as orchestrations_router
+from routes_initiatives import router as initiatives_router
+from routes_atlas_v3 import router as atlas_v3_router
+from routes_politiques import router as politiques_router
+from routes_conformite_causale import router as conformite_causale_router
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -277,7 +286,7 @@ def create_app(
 
     # ── Observabilité middlewares ─────────────────────────────────────────────
     app.add_middleware(StructuredLoggingMiddleware)
-    app.add_middleware(GlobalRateLimitMiddleware)   # 100 req/min par IP sur /api/*
+    app.add_middleware(GlobalRateLimitMiddleware)  # 100 req/min par IP sur /api/*
 
     # ── Health / Ready / Metrics ──────────────────────────────────────────────
     import time as _time
@@ -304,6 +313,7 @@ def create_app(
         }
         if not db_ok:
             from fastapi.responses import JSONResponse
+
             return JSONResponse(status_code=503, content=payload)
         return payload
 
@@ -314,10 +324,14 @@ def create_app(
         if data is None:
             return {"error": "prometheus_client non disponible"}
         from fastapi.responses import Response
+
         return Response(content=data, media_type=content_type)
 
     # CORS — origines explicites uniquement
-    _raw = os.environ.get("ALLOWED_ORIGINS", "https://agenthub.nexhire.ca,https://nexhire.ca,https://myportal.nexhire.ca,https://civicai-myportal.onrender.com,https://mynexra.nexhire.ca")
+    _raw = os.environ.get(
+        "ALLOWED_ORIGINS",
+        "https://agenthub.nexhire.ca,https://nexhire.ca,https://myportal.nexhire.ca,https://civicai-myportal.onrender.com,https://mynexra.nexhire.ca",
+    )
     _origins = [o.strip() for o in _raw.split(",") if o.strip()]
     app.add_middleware(SecurityHeadersMiddleware)
     app.add_middleware(NoCacheStaticMiddleware)
@@ -352,6 +366,7 @@ def create_app(
     @app.head("/")
     def root_head():
         from fastapi.responses import Response
+
         return Response(status_code=200)
 
     @app.get("/")
@@ -466,6 +481,7 @@ def create_app(
         try:
             import time
             from db import get_db, row as _row
+
             t0 = time.monotonic()
             with get_db() as _cur:
                 _cur.execute("SELECT 1")
@@ -492,11 +508,11 @@ def create_app(
     def readiness(user: CurrentUser = Depends(require_min_role("admin"))):
         """Vérifie les variables d'env et la connexion DB. Réservé aux admins."""
         checks: dict = {}
-        for var in ["SUPABASE_URL", "SUPABASE_ANON_KEY", "SUPABASE_SERVICE_ROLE_KEY",
-                    "FERNET_KEYS", "OPENAI_API_KEY"]:
+        for var in ["SUPABASE_URL", "SUPABASE_ANON_KEY", "SUPABASE_SERVICE_ROLE_KEY", "FERNET_KEYS", "OPENAI_API_KEY"]:
             checks[var] = "set" if os.environ.get(var) else "MISSING"
         try:
             from db import get_db, row as db_row
+
             with get_db() as cur:
                 cur.execute("SELECT id FROM organizations LIMIT 1")
                 db_row(cur)
@@ -504,7 +520,7 @@ def create_app(
         except Exception as exc:
             checks["db"] = f"error: {type(exc).__name__}"
         env_ok = all(v == "set" for k, v in checks.items() if k != "db")
-        db_ok  = checks.get("db", "").startswith("ok")
+        db_ok = checks.get("db", "").startswith("ok")
         return {"ready": env_ok and db_ok, "checks": checks}
 
     @app.post(
@@ -544,10 +560,7 @@ def create_app(
 
         warning = None
         if not text.strip():
-            warning = (
-                "Aucun texte extractible n'a ete trouve. "
-                "Un OCR sera necessaire pour les PDF scannes."
-            )
+            warning = "Aucun texte extractible n'a ete trouve. " "Un OCR sera necessaire pour les PDF scannes."
 
         document = store.create_document(
             filename=file.filename,
@@ -556,16 +569,19 @@ def create_app(
             user_id=user_id,
             department_id=department_id or None,
         )
-        background.add_task(log_audit, AuditEvent(
-            action="document_upload",
-            query=file.filename,
-            organization_id=organization_id,
-            user_id=user_id,
-            resource_ids=[document["id"]],
-            ip_address=client_ip(request),
-            http_status=201,
-            metadata={"char_count": len(text), "has_warning": bool(warning)},
-        ))
+        background.add_task(
+            log_audit,
+            AuditEvent(
+                action="document_upload",
+                query=file.filename,
+                organization_id=organization_id,
+                user_id=user_id,
+                resource_ids=[document["id"]],
+                ip_address=client_ip(request),
+                http_status=201,
+                metadata={"char_count": len(text), "has_warning": bool(warning)},
+            ),
+        )
         return DocumentResponse(
             id=document["id"],
             filename=document["filename"],
@@ -592,33 +608,39 @@ def create_app(
                 language=payload.language,
             )
         except AIConfigurationError as exc:
-            background.add_task(log_audit, AuditEvent(
-                action="document_summary",
-                query=document_id,
-                organization_id=document.get("organization_id"),
-                user_id=document.get("user_id"),
-                resource_ids=[document_id],
-                ip_address=client_ip(request),
-                success=False,
-                http_status=503,
-                error_detail=str(exc),
-            ))
+            background.add_task(
+                log_audit,
+                AuditEvent(
+                    action="document_summary",
+                    query=document_id,
+                    organization_id=document.get("organization_id"),
+                    user_id=document.get("user_id"),
+                    resource_ids=[document_id],
+                    ip_address=client_ip(request),
+                    success=False,
+                    http_status=503,
+                    error_detail=str(exc),
+                ),
+            )
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                 detail="Service IA temporairement indisponible.",
             ) from exc
 
         store.update_document_summary(document_id, summary)
-        background.add_task(log_audit, AuditEvent(
-            action="document_summary",
-            query=document_id,
-            organization_id=document.get("organization_id"),
-            user_id=document.get("user_id"),
-            resource_ids=[document_id],
-            ip_address=client_ip(request),
-            http_status=200,
-            metadata={"assistant_mode": payload.assistant_mode, "language": payload.language},
-        ))
+        background.add_task(
+            log_audit,
+            AuditEvent(
+                action="document_summary",
+                query=document_id,
+                organization_id=document.get("organization_id"),
+                user_id=document.get("user_id"),
+                resource_ids=[document_id],
+                ip_address=client_ip(request),
+                http_status=200,
+                metadata={"assistant_mode": payload.assistant_mode, "language": payload.language},
+            ),
+        )
         return SummaryResponse(document_id=document_id, summary=summary)
 
     @app.post("/api/documents/{document_id}/chat", response_model=ChatResponse)
@@ -642,17 +664,20 @@ def create_app(
                 language=payload.language,
             )
         except AIConfigurationError as exc:
-            background.add_task(log_audit, AuditEvent(
-                action="document_chat",
-                query=payload.question,
-                organization_id=org_id,
-                user_id=usr_id,
-                resource_ids=[document_id],
-                ip_address=client_ip(request),
-                success=False,
-                http_status=503,
-                error_detail=str(exc),
-            ))
+            background.add_task(
+                log_audit,
+                AuditEvent(
+                    action="document_chat",
+                    query=payload.question,
+                    organization_id=org_id,
+                    user_id=usr_id,
+                    resource_ids=[document_id],
+                    ip_address=client_ip(request),
+                    success=False,
+                    http_status=503,
+                    error_detail=str(exc),
+                ),
+            )
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                 detail="Service IA temporairement indisponible.",
@@ -669,16 +694,19 @@ def create_app(
             language=payload.language,
         )
 
-        background.add_task(log_audit, AuditEvent(
-            action="document_chat",
-            query=payload.question,
-            organization_id=org_id,
-            user_id=usr_id,
-            resource_ids=[document_id, conversation["id"]],
-            ip_address=client_ip(request),
-            http_status=200,
-            metadata={"assistant_mode": payload.assistant_mode, "language": payload.language},
-        ))
+        background.add_task(
+            log_audit,
+            AuditEvent(
+                action="document_chat",
+                query=payload.question,
+                organization_id=org_id,
+                user_id=usr_id,
+                resource_ids=[document_id, conversation["id"]],
+                ip_address=client_ip(request),
+                http_status=200,
+                metadata={"assistant_mode": payload.assistant_mode, "language": payload.language},
+            ),
+        )
         return ChatResponse(
             document_id=document_id,
             question=payload.question,
@@ -729,9 +757,7 @@ def create_app(
             for d in store.documents.values()
             if str(d.get("organization_id") or "") == str(user.organization_id)
             and (
-                allowed_dept_ids is None
-                or d.get("department_id") is None
-                or d.get("department_id") in allowed_dept_ids
+                allowed_dept_ids is None or d.get("department_id") is None or d.get("department_id") in allowed_dept_ids
             )
         ]
         return {"documents": docs}
@@ -746,8 +772,9 @@ def create_app(
     ):
         """Extraction structurée des champs clés d'un document (facture, contrat, etc.)."""
         import json as _json
+
         document = _document_or_404(store, document_id)
-        doc_org  = str(document.get("organization_id") or "")
+        doc_org = str(document.get("organization_id") or "")
         if doc_org and doc_org != str(user.organization_id):
             raise HTTPException(status_code=403, detail="Accès refusé.")
 
@@ -756,18 +783,18 @@ def create_app(
             return {"success": False, "error": "Aucun texte extractible.", "extracted": {}, "doc_type": doc_type}
 
         type_prompts = {
-            "facture":          "Extract: vendor_name, invoice_number, date, due_date, total_amount, currency, subtotal, tax_amount, line_items (array of {description, qty, unit_price, total}), payment_status",
-            "contrat":          "Extract: parties (array of names), contract_type, start_date, end_date, total_value, currency, key_obligations (array), renewal_type, governing_law, notice_period",
-            "formulaire":       "Extract: form_title, submitter_name, submission_date, fields (object of key:value pairs from the form)",
-            "rapport":          "Extract: title, author, date, period_covered, executive_summary (1-2 sentences), key_metrics (object), recommendations (array of strings)",
-            "cv":               "Extract: candidate_name, email, phone, location, current_title, years_of_experience, education (array of {degree, institution, year}), work_experience (array of {title, company, start_year, end_year, highlights}), skills (array), languages (array), certifications (array)",
-            "clause_contrat":   "Extract: document_title, parties (array), key_clauses (array of {clause_title, summary}), termination_conditions, confidentiality_terms, liability_caps, dispute_resolution, jurisdiction",
-            "bon_commande":     "Extract: po_number, issuer, vendor_name, issue_date, delivery_date, line_items (array of {description, qty, unit_price, total}), total_amount, currency, payment_terms, approved_by",
+            "facture": "Extract: vendor_name, invoice_number, date, due_date, total_amount, currency, subtotal, tax_amount, line_items (array of {description, qty, unit_price, total}), payment_status",
+            "contrat": "Extract: parties (array of names), contract_type, start_date, end_date, total_value, currency, key_obligations (array), renewal_type, governing_law, notice_period",
+            "formulaire": "Extract: form_title, submitter_name, submission_date, fields (object of key:value pairs from the form)",
+            "rapport": "Extract: title, author, date, period_covered, executive_summary (1-2 sentences), key_metrics (object), recommendations (array of strings)",
+            "cv": "Extract: candidate_name, email, phone, location, current_title, years_of_experience, education (array of {degree, institution, year}), work_experience (array of {title, company, start_year, end_year, highlights}), skills (array), languages (array), certifications (array)",
+            "clause_contrat": "Extract: document_title, parties (array), key_clauses (array of {clause_title, summary}), termination_conditions, confidentiality_terms, liability_caps, dispute_resolution, jurisdiction",
+            "bon_commande": "Extract: po_number, issuer, vendor_name, issue_date, delivery_date, line_items (array of {description, qty, unit_price, total}), total_amount, currency, payment_terms, approved_by",
             "rapport_incident": "Extract: incident_title, incident_date, reported_by, location, description, impact_summary, root_cause, actions_taken (array), follow_up_actions (array of {task, responsible, deadline}), status",
-            "note_reunion":     "Extract: meeting_title, date, location, attendees (array), facilitator, agenda_items (array), decisions_made (array of {item, decision, responsible}), action_items (array of {task, responsible, deadline}), next_meeting_date",
-            "politique_rh":     "Extract: policy_title, effective_date, version, scope, key_rules (array of {rule_title, summary}), eligibility, procedures (array), exceptions, contact_person",
-            "appel_offres":     "Extract: rfp_title, issuing_organization, issue_date, deadline, project_description, requirements (array), evaluation_criteria (array of {criterion, weight_pct}), budget_estimate, contact_info, submission_instructions",
-            "auto":             "Detect the document type (facture/contrat/cv/bon_commande/note_reunion/rapport_incident/politique_rh/appel_offres/formulaire/rapport/autre) and set it in 'doc_type', then extract the most relevant structured fields for that type.",
+            "note_reunion": "Extract: meeting_title, date, location, attendees (array), facilitator, agenda_items (array), decisions_made (array of {item, decision, responsible}), action_items (array of {task, responsible, deadline}), next_meeting_date",
+            "politique_rh": "Extract: policy_title, effective_date, version, scope, key_rules (array of {rule_title, summary}), eligibility, procedures (array), exceptions, contact_person",
+            "appel_offres": "Extract: rfp_title, issuing_organization, issue_date, deadline, project_description, requirements (array), evaluation_criteria (array of {criterion, weight_pct}), budget_estimate, contact_info, submission_instructions",
+            "auto": "Detect the document type (facture/contrat/cv/bon_commande/note_reunion/rapport_incident/politique_rh/appel_offres/formulaire/rapport/autre) and set it in 'doc_type', then extract the most relevant structured fields for that type.",
         }
         prompt = type_prompts.get(doc_type, type_prompts["auto"])
 
@@ -784,9 +811,9 @@ def create_app(
             raw = ai.backend.complete(system, f"Extract structured data from this document:\n\n{text}")
             # Extrait le JSON même si le modèle ajoute du texte autour
             start = raw.find("{")
-            end   = raw.rfind("}") + 1
+            end = raw.rfind("}") + 1
             extracted = _json.loads(raw[start:end]) if start >= 0 else {}
-            detected  = extracted.pop("doc_type", doc_type)
+            detected = extracted.pop("doc_type", doc_type)
             return {"success": True, "doc_type": detected, "extracted": extracted}
         except Exception as exc:
             return {"success": False, "error": type(exc).__name__, "extracted": {}, "doc_type": doc_type}
@@ -805,16 +832,19 @@ def create_app(
         if doc_org and doc_org != str(user.organization_id):
             raise HTTPException(status_code=403, detail="Accès refusé.")
         store.delete_document(document_id, str(user.organization_id))
-        background.add_task(log_audit, AuditEvent(
-            action="document_delete",
-            query=document.get("filename", document_id),
-            organization_id=str(user.organization_id),
-            user_id=str(user.id),
-            resource_ids=[document_id],
-            ip_address=client_ip(request),
-            http_status=204,
-            metadata={"filename": document.get("filename", "")},
-        ))
+        background.add_task(
+            log_audit,
+            AuditEvent(
+                action="document_delete",
+                query=document.get("filename", document_id),
+                organization_id=str(user.organization_id),
+                user_id=str(user.id),
+                resource_ids=[document_id],
+                ip_address=client_ip(request),
+                http_status=204,
+                metadata={"filename": document.get("filename", "")},
+            ),
+        )
 
     return app
 
@@ -948,7 +978,9 @@ try:
     _scheduler.start()
 
     import atexit
+
     atexit.register(lambda: _scheduler.shutdown(wait=False))
 except Exception as _sched_err:
     import logging
+
     logging.getLogger(__name__).warning("Scheduler non démarré : %s", _sched_err)

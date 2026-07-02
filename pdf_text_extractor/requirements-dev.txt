@@ -1,4 +1,7 @@
 -r requirements.txt
 httpx
 pytest
+pytest-cov
 reportlab
+ruff
+black
