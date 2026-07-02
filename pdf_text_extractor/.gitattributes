@@ -1,0 +1,32 @@
+# Normalise les fins de ligne — LF en dépôt, conversion auto selon l'OS au checkout
+* text=auto eol=lf
+
+# Binaires explicites — pas de conversion
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+
+# Fichiers Python, JS, JSON, YAML — toujours LF
+*.py text eol=lf
+*.js text eol=lf
+*.ts text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.toml text eol=lf
+*.ini text eol=lf
+*.cfg text eol=lf
+*.txt text eol=lf
+*.md text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.sql text eol=lf
+Dockerfile text eol=lf
+.dockerignore text eol=lf
