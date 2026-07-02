@@ -10,6 +10,24 @@ from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).parent / ".env")
 
+# ── Observabilité — logs structurés, rate limiting, Sentry, Prometheus ───────
+from observability import (
+    StructuredLoggingMiddleware,
+    GlobalRateLimitMiddleware,
+    configure_logging,
+    init_sentry,
+    check_db,
+    prometheus_response,
+)
+
+configure_logging(level=logging.DEBUG if os.getenv("DEBUG") else logging.INFO)
+
+init_sentry(
+    dsn=os.getenv("SENTRY_DSN", ""),
+    environment=os.getenv("ENVIRONMENT", "production"),
+    release=os.getenv("APP_VERSION", "1.0.0"),
+)
+
 # ── Logfire — monitoring erreurs en production (LOGFIRE_TOKEN requis) ────────
 _logfire_token = os.getenv("LOGFIRE_TOKEN")
 if _logfire_token:
@@ -253,9 +271,50 @@ def create_app(
     app.state.storage = storage or DocumentStore.from_env()
     app.state.assistant = assistant or AssistantService.from_env()
 
-    # Rate limiter
+    # Rate limiter (slowapi — limites par route)
     app.state.limiter = limiter
     app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+    # ── Observabilité middlewares ─────────────────────────────────────────────
+    app.add_middleware(StructuredLoggingMiddleware)
+    app.add_middleware(GlobalRateLimitMiddleware)   # 100 req/min par IP sur /api/*
+
+    # ── Health / Ready / Metrics ──────────────────────────────────────────────
+    import time as _time
+
+    @app.get("/health", tags=["ops"], include_in_schema=False)
+    def health():
+        """Liveness probe — répond immédiatement si le process tourne."""
+        return {
+            "status": "ok",
+            "service": "agenthub-platform",
+            "version": os.getenv("APP_VERSION", "1.0.0"),
+            "environment": os.getenv("ENVIRONMENT", "production"),
+        }
+
+    @app.get("/ready", tags=["ops"], include_in_schema=False)
+    def ready():
+        """Readiness probe — vérifie la connectivité DB avant d'accepter du trafic."""
+        db_ok, db_latency_ms = check_db()
+        payload = {
+            "status": "ready" if db_ok else "not_ready",
+            "checks": {
+                "database": {"ok": db_ok, "latency_ms": db_latency_ms},
+            },
+        }
+        if not db_ok:
+            from fastapi.responses import JSONResponse
+            return JSONResponse(status_code=503, content=payload)
+        return payload
+
+    @app.get("/metrics", tags=["ops"], include_in_schema=False)
+    def metrics():
+        """Endpoint Prometheus — expose les métriques HTTP et process."""
+        data, content_type = prometheus_response()
+        if data is None:
+            return {"error": "prometheus_client non disponible"}
+        from fastapi.responses import Response
+        return Response(content=data, media_type=content_type)
 
     # CORS — origines explicites uniquement
     _raw = os.environ.get("ALLOWED_ORIGINS", "https://agenthub.nexhire.ca,https://nexhire.ca,https://myportal.nexhire.ca,https://civicai-myportal.onrender.com,https://mynexra.nexhire.ca")

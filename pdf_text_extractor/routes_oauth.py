@@ -16,6 +16,7 @@ from urllib.parse import urlencode
 
 import httpx
 from fastapi import APIRouter, BackgroundTasks, Body, Depends, HTTPException, Query, Request, status
+from rate_limiter import limiter
 from fastapi.responses import RedirectResponse
 
 from audit import AuditEvent, client_ip, log_audit
@@ -287,7 +288,9 @@ def _resolve_cfg(connector_type: str, state_extra: dict | None = None) -> dict:
 
 
 @router.post("/{connector_type}/oauth/start")
+@limiter.limit("10/minute")
 def oauth_start(
+    request: Request,
     connector_type: str,
     body: dict = Body(default={}),
     user: CurrentUser = Depends(require_min_role("admin")),

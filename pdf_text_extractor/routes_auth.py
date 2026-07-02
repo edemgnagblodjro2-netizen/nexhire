@@ -249,7 +249,7 @@ class LoginPayload(BaseModel):
 
 
 @router.post("/login")
-@limiter.limit("10/minute")
+@limiter.limit("5/minute")
 def login(request: Request, payload: LoginPayload, background: BackgroundTasks):
     """Connexion. Retourne le JWT Supabase à passer en Authorization: Bearer."""
     ip = client_ip(request)
