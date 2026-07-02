@@ -87,6 +87,12 @@ const NAV = [
     ],
   },
   {
+    section: 'Organisation',
+    items: [
+      { id: 'departments', label: 'Départements', iconKey: 'grid', appSlug: 'departments' },
+    ],
+  },
+  {
     section: 'Identity & Access',
     items: [
       { id: 'identity',    label: 'Utilisateurs & Accès', iconKey: 'users',  appSlug: 'identity' },

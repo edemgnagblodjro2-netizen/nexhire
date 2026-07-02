@@ -100,6 +100,19 @@ function _css() {
 @keyframes idspin{to{transform:rotate(360deg)}}
 .id-empty{text-align:center;padding:40px;color:var(--muted);font-size:13px}
 
+/* Invite modal */
+.id-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;display:flex;align-items:center;justify-content:center}
+.id-modal{background:#fff;border-radius:var(--r-lg);padding:28px;width:min(420px,90vw);box-shadow:0 16px 40px rgba(0,0,0,.18)}
+.id-modal h4{font-size:16px;font-weight:700;color:var(--text);margin:0 0 4px}
+.id-modal p{font-size:12px;color:var(--muted);margin:0 0 20px}
+.id-field{margin-bottom:14px}
+.id-field label{display:block;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+.id-field input,.id-field select{width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:var(--r);font-size:13px;font-family:inherit;box-sizing:border-box;outline:none;transition:border-color .15s}
+.id-field input:focus,.id-field select:focus{border-color:var(--primary)}
+.id-modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:20px}
+.id-toast-ok{font-size:12px;color:var(--color-ok-text);font-weight:600;padding:6px 10px;background:var(--color-ok-soft);border-radius:var(--r);display:none}
+.id-toast-ok.show{display:block}
+
 @media(max-width:900px){.id-kpis{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:540px){.id-kpis{grid-template-columns:1fr}}
 `;
@@ -212,7 +225,9 @@ function _renderInvites(invitations, roleRequests) {
 
   return `
     <div class="id-card">
-      <div class="id-card-hd"><span>✉️</span><h3>Invitations en attente</h3><span style="font-size:13px;color:var(--muted);font-weight:500">${invites.length}</span></div>
+      <div class="id-card-hd"><span>✉️</span><h3>Invitations en attente</h3><span style="font-size:13px;color:var(--muted);font-weight:500">${invites.length}</span>
+        <button class="id-btn id-btn-primary" id="id-invite-open-btn" style="margin-left:auto;padding:6px 14px">✉️ Inviter un utilisateur</button>
+      </div>
       <div class="id-card-body" style="padding:0 18px">
         ${invites.length === 0 ? _empty('Aucune invitation en attente') : `
         <table class="id-table">
@@ -387,6 +402,60 @@ function _renderSSO(ssoConfig, entraGroups, entraIdentities) {
     ${!configured ? `<div class="id-card"><div class="id-card-body"><div class="id-empty">🔗 Configurez votre connexion SSO dans le Centre d'intégrations → Microsoft 365 pour synchroniser les groupes et identités Entra ID.</div></div></div>` : ''}`;
 }
 
+// ── Invite modal ──────────────────────────────────────────────────────────────
+
+function _setupInviteBtn(panel, cache) {
+  const btn = panel.querySelector('#id-invite-open-btn');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const overlay = document.createElement('div');
+    overlay.className = 'id-modal-overlay';
+    overlay.innerHTML = `
+      <div class="id-modal" role="dialog" aria-modal="true">
+        <h4>✉️ Inviter un utilisateur</h4>
+        <p>Un email d'invitation sera envoyé à l'adresse indiquée.</p>
+        <div class="id-field">
+          <label>Adresse email</label>
+          <input type="email" id="id-inv-email" placeholder="prenom.nom@organisation.ca" autocomplete="off" />
+        </div>
+        <div class="id-field">
+          <label>Rôle</label>
+          <select id="id-inv-role">
+            <option value="user">Utilisateur</option>
+            <option value="manager">Gestionnaire</option>
+            <option value="admin">Administrateur</option>
+          </select>
+        </div>
+        <div class="id-toast-ok" id="id-inv-ok">✅ Invitation envoyée avec succès.</div>
+        <div class="id-modal-actions">
+          <button class="id-btn id-btn-ghost" id="id-inv-cancel">Annuler</button>
+          <button class="id-btn id-btn-primary" id="id-inv-send">Envoyer l'invitation</button>
+        </div>
+      </div>`;
+    document.body.appendChild(overlay);
+    overlay.querySelector('#id-inv-cancel').addEventListener('click', () => overlay.remove());
+    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+    const sendBtn = overlay.querySelector('#id-inv-send');
+    sendBtn.addEventListener('click', async () => {
+      const email = overlay.querySelector('#id-inv-email').value.trim();
+      const role  = overlay.querySelector('#id-inv-role').value;
+      if (!email) { overlay.querySelector('#id-inv-email').focus(); return; }
+      sendBtn.disabled = true;
+      sendBtn.textContent = '⏳ Envoi…';
+      try {
+        await _post('/api/members/invite', { email, role });
+        overlay.querySelector('#id-inv-ok').classList.add('show');
+        delete cache.invites;
+        setTimeout(() => overlay.remove(), 1800);
+      } catch (err) {
+        sendBtn.disabled = false;
+        sendBtn.textContent = "Envoyer l'invitation";
+        alert(`Erreur : ${err.message}`);
+      }
+    });
+  });
+}
+
 // ── Panel render ──────────────────────────────────────────────────────────────
 
 async function _renderTab(panel, container, tabId, cache) {
@@ -401,6 +470,7 @@ async function _renderTab(panel, container, tabId, cache) {
         cache.roleReqs  || (cache.roleReqs  = _get('/api/role-requests').catch(() => [])),
       ]);
       panel.innerHTML = _renderInvites(invites, roleReqs);
+      _setupInviteBtn(panel, cache);
     } else if (tabId === 'mfa') {
       const mfa = cache.mfa || (cache.mfa = await _get('/api/mfa/status').catch(() => ({})));
       panel.innerHTML = _renderMFA(mfa, container);
