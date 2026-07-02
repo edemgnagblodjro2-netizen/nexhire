@@ -7,7 +7,12 @@ support@nexhire.ca · myportal.nexhire.ca
 ---
 
 > **AgentHub Platform** n'est pas un autre logiciel à apprendre.  
-> C'est la première plateforme qui transforme vos données existantes en décisions IA — et qui prouve, chiffres à l'appui, ce que vous gagnez.
+> C'est la première plateforme qui transforme vos données existantes en décisions IA — et qui illustre, exemples à l'appui, ce que vous pouvez gagner.
+
+---
+
+> ⚠️ **Avis important — Chiffres à titre indicatif uniquement**  
+> Tous les montants, économies, amendes et retours sur investissement mentionnés dans ce guide sont des **estimations fictives et illustratives**. Ils sont fournis uniquement à titre d'exemple pour illustrer les types de bénéfices possibles. Les résultats réels varient en fonction de la taille de votre organisation, de votre secteur d'activité, de votre situation spécifique et de nombreux autres facteurs. CivicAI Inc. ne garantit aucun résultat financier. Consultez vos conseillers juridiques, comptables et TI pour une évaluation adaptée à votre contexte.
 
 ---
 
