@@ -162,15 +162,138 @@ const SEARCH_ITEMS = [
 
 // ── State ─────────────────────────────────────────────────────────────────────
 const _state = {
-  partner:     null,
-  dbApps:      [],
-  activeId:    null,
-  activeApp:   null,
-  module:      null,
-  vocab:       VOCAB.chamber,
-  user:        null,
-  userProfile: null,
+  partner:       null,
+  dbApps:        [],
+  activeId:      null,
+  activeApp:     null,
+  activeNavItem: null,
+  module:        null,
+  vocab:         VOCAB.chamber,
+  user:          null,
+  userProfile:   null,
 };
+
+// ── Idle session management ────────────────────────────────────────────────────
+const _IDLE_WARN_MS      = 15 * 60 * 1000; // 15 min → avertissement
+const _IDLE_WARN_SECS    = 120;             // 2 min de grâce avant déconnexion
+
+let _idleWarnTimer  = null;
+let _idleKillTimer  = null;
+let _idleWarnEl     = null;
+let _idleTickTimer  = null;
+
+function _idleRouteKey() { return `nh_restore_${_slug()}`; }
+
+function _saveLastRoute(navItem) {
+  if (!navItem || !_slug()) return;
+  try { localStorage.setItem(_idleRouteKey(), JSON.stringify({ id: navItem.id, label: navItem.label, route: navItem.route, appSlug: navItem.appSlug })); } catch {}
+}
+function _clearLastRoute() {
+  try { localStorage.removeItem(_idleRouteKey()); } catch {}
+}
+
+function _doAutoLogout() {
+  clearTimeout(_idleWarnTimer); clearTimeout(_idleKillTimer); clearInterval(_idleTickTimer);
+  const slug = _slug();
+  localStorage.removeItem('nexhire_token');
+  localStorage.removeItem('nexhire_refresh_token');
+  window.location.href = slug ? `/inscription?partenaire=${slug}` : '/inscription';
+}
+
+function _dismissIdleWarning() {
+  clearInterval(_idleTickTimer); _idleTickTimer = null;
+  _idleWarnEl?.remove(); _idleWarnEl = null;
+}
+
+function _showIdleWarning() {
+  if (_idleWarnEl) return;
+  let secs = _IDLE_WARN_SECS;
+
+  _idleWarnEl = document.createElement('div');
+  _idleWarnEl.id = 'ws-idle-overlay';
+  _idleWarnEl.innerHTML = `
+<style>
+#ws-idle-overlay {
+  position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;
+  background:rgba(15,23,42,.65);backdrop-filter:blur(4px);
+  animation:wsio-in .3s ease both;
+}
+@keyframes wsio-in { from{opacity:0} to{opacity:1} }
+.wsio-card {
+  background:#fff;border-radius:16px;padding:36px 40px;width:100%;max-width:420px;
+  text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.28);
+  animation:wsio-up .3s ease both;
+}
+@keyframes wsio-up { from{transform:translateY(16px);opacity:0} to{transform:none;opacity:1} }
+.wsio-icon { font-size:40px; margin-bottom:12px; }
+.wsio-title { font-size:18px;font-weight:800;color:#0f172a;margin-bottom:6px; }
+.wsio-sub   { font-size:13.5px;color:#64748b;margin-bottom:24px;line-height:1.55; }
+.wsio-timer {
+  font-size:48px;font-weight:800;font-variant-numeric:tabular-nums;
+  color:#dc2626;letter-spacing:-.02em;margin-bottom:12px;line-height:1;
+}
+.wsio-bar-wrap { background:#fee2e2;border-radius:4px;height:6px;margin-bottom:28px;overflow:hidden; }
+.wsio-bar { height:100%;background:#dc2626;border-radius:4px;transition:width 1s linear; }
+.wsio-actions { display:flex;gap:10px;justify-content:center; }
+.wsio-stay {
+  flex:1;background:#6366f1;color:#fff;border:none;border-radius:10px;padding:12px 20px;
+  font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s;
+}
+.wsio-stay:hover { background:#4f46e5; }
+.wsio-logout {
+  background:#fff;border:1px solid #e2e8f0;color:#64748b;border-radius:10px;padding:12px 20px;
+  font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .2s;
+}
+.wsio-logout:hover { background:#f1f5f9; }
+</style>
+<div class="wsio-card">
+  <div class="wsio-icon">⏱️</div>
+  <div class="wsio-title">Session inactive</div>
+  <div class="wsio-sub">Vous semblez absent. Votre session sera fermée automatiquement pour protéger vos données.</div>
+  <div class="wsio-timer" id="wsio-timer">2:00</div>
+  <div class="wsio-bar-wrap"><div class="wsio-bar" id="wsio-bar" style="width:100%"></div></div>
+  <div class="wsio-actions">
+    <button class="wsio-stay"   id="wsio-stay">Rester connecté</button>
+    <button class="wsio-logout" id="wsio-logout">Se déconnecter</button>
+  </div>
+</div>`;
+  document.body.appendChild(_idleWarnEl);
+
+  const timerEl = _idleWarnEl.querySelector('#wsio-timer');
+  const barEl   = _idleWarnEl.querySelector('#wsio-bar');
+
+  _idleTickTimer = setInterval(() => {
+    secs--;
+    if (secs <= 0) { clearInterval(_idleTickTimer); _doAutoLogout(); return; }
+    const m = Math.floor(secs / 60), s = secs % 60;
+    if (timerEl) timerEl.textContent = `${m}:${String(s).padStart(2, '0')}`;
+    if (barEl)   barEl.style.width   = `${(secs / _IDLE_WARN_SECS) * 100}%`;
+  }, 1000);
+
+  _idleWarnEl.querySelector('#wsio-stay')?.addEventListener('click', () => {
+    _dismissIdleWarning();
+    _resetIdleTimers();
+  });
+  _idleWarnEl.querySelector('#wsio-logout')?.addEventListener('click', () => {
+    _clearLastRoute();
+    _doAutoLogout();
+  });
+}
+
+function _resetIdleTimers() {
+  clearTimeout(_idleWarnTimer);
+  clearTimeout(_idleKillTimer);
+  _dismissIdleWarning();
+  _idleWarnTimer = setTimeout(_showIdleWarning, _IDLE_WARN_MS);
+  _idleKillTimer = setTimeout(_doAutoLogout,    _IDLE_WARN_MS + _IDLE_WARN_SECS * 1000);
+}
+
+function _initIdleDetection() {
+  ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll', 'click'].forEach(ev =>
+    window.addEventListener(ev, _resetIdleTimers, { passive: true })
+  );
+  _resetIdleTimers();
+}
 
 const $ = (id) => document.getElementById(id);
 const _slug    = () => location.pathname.split('/').filter(Boolean)[1] || null;
@@ -233,6 +356,9 @@ async function boot() {
       if (navItem) { _navigateTo(navItem); return; }
     }
 
+    // ── Idle session detection ─────────────────────────────────────────────────
+    if (_state.userProfile) _initIdleDetection();
+
     // ── Welcome screen (une fois par session, utilisateurs authentifiés) ────────
     const _welcomeKey = `nh_welcomed_${slug}`;
     if (_state.userProfile && !sessionStorage.getItem(_welcomeKey)) {
@@ -259,6 +385,18 @@ async function boot() {
             return;
           }
         }
+      } catch {}
+    }
+
+    // ── Restauration de session après déconnexion automatique ────────────────
+    const savedRoute = localStorage.getItem(_idleRouteKey());
+    if (savedRoute) {
+      try {
+        const item = JSON.parse(savedRoute);
+        localStorage.removeItem(_idleRouteKey());
+        const resolved = _resolveNavItems();
+        const navItem  = resolved.find(n => n.id === item.id && n.enabled !== false);
+        if (navItem) { _navigateTo(navItem); return; }
       } catch {}
     }
 
@@ -566,6 +704,9 @@ async function _navigateTo(navItem) {
   if (_state.module?.unmount) _state.module.unmount($('ws-app-container'));
   _state.module = null; _state.activeApp = null;
 
+  _state.activeNavItem = navItem;
+  _saveLastRoute(navItem);
+
   _setActiveNav(navItem.id);
   _setBreadcrumb(navItem.label);
   _showLoading();
@@ -726,6 +867,7 @@ function _initTopbar() {
 
   // Logout
   $('ws-logout-btn')?.addEventListener('click', () => {
+    _clearLastRoute(); // déconnexion volontaire → pas de restauration
     localStorage.removeItem('nexhire_token');
     localStorage.removeItem('nexhire_refresh_token');
     const slug = _slug();
