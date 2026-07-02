@@ -404,9 +404,19 @@ function _renderSSO(ssoConfig, entraGroups, entraIdentities) {
 
 // ── Invite modal ──────────────────────────────────────────────────────────────
 
-function _setupInviteBtn(panel, cache) {
+async function _setupInviteBtn(panel, cache) {
   const btn = panel.querySelector('#id-invite-open-btn');
   if (!btn) return;
+  // Cacher le bouton pour les non-admins (vérification lazy, résultat mis en cache)
+  if (cache.canInvite === undefined) {
+    try {
+      const tok = localStorage.getItem('nexhire_token');
+      const r = await fetch('/api/auth/me', tok ? { headers: { Authorization: `Bearer ${tok}` } } : { credentials: 'include' });
+      const me = r.ok ? await r.json() : null;
+      cache.canInvite = me && ['owner', 'admin'].includes(me.role);
+    } catch { cache.canInvite = false; }
+  }
+  if (!cache.canInvite) { btn.style.display = 'none'; return; }
   btn.addEventListener('click', () => {
     const overlay = document.createElement('div');
     overlay.className = 'id-modal-overlay';
