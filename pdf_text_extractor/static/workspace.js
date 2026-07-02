@@ -233,6 +233,13 @@ async function boot() {
       if (navItem) { _navigateTo(navItem); return; }
     }
 
+    // ── Welcome screen (une fois par session, utilisateurs authentifiés) ────────
+    const _welcomeKey = `nh_welcomed_${slug}`;
+    if (_state.userProfile && !sessionStorage.getItem(_welcomeKey)) {
+      sessionStorage.setItem(_welcomeKey, '1');
+      await _showWelcomeScreen(_state.userProfile, _state.partner);
+    }
+
     // ── Onboarding wizard (première connexion owner sans données) ──────────────
     if (_state.user?.authenticated) {
       try {
@@ -293,6 +300,162 @@ function _applyBranding(p) {
     let link = document.querySelector("link[rel='icon']") || document.createElement('link');
     link.rel = 'icon'; link.href = p.favicon_url; document.head.appendChild(link);
   }
+}
+
+// ── Welcome screen ────────────────────────────────────────────────────────────
+function _showWelcomeScreen(profile, partner) {
+  return new Promise(resolve => {
+    const DURATION = 7000;
+    const firstName = (profile?.full_name || profile?.email || '').split(' ')[0] || 'Bienvenue';
+    const orgName   = profile?.organization_name || partner?.name || 'votre organisation';
+    const roleMap   = { owner: 'Administrateur', admin: 'Administrateur', manager: 'Manager', user: 'Utilisateur' };
+    const roleLabel = roleMap[profile?.role] || 'Collaborateur';
+    const primary   = partner?.primary_color || '#6366f1';
+    const timeLabel = (ms) => Math.ceil(ms / 1000) + 's';
+
+    const overlay = document.createElement('div');
+    overlay.id = 'ws-welcome-overlay';
+    overlay.innerHTML = `
+<style>
+#ws-welcome-overlay {
+  position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(155deg,#1e1b4b 0%,#312e81 48%,#4c1d95 100%);
+  font-family:var(--font,'Segoe UI',system-ui,sans-serif);
+  opacity:0;transition:opacity .5s ease;
+}
+#ws-welcome-overlay.in { opacity:1; }
+#ws-welcome-overlay.out { opacity:0;pointer-events:none; }
+.wc-grid {
+  position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.04)1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04)1px,transparent 1px);
+  background-size:48px 48px;
+}
+.wc-glow1 {
+  position:absolute;top:-100px;right:-100px;width:480px;height:480px;border-radius:50%;
+  background:radial-gradient(circle,rgba(139,92,246,.25)0%,transparent 70%);pointer-events:none;
+}
+.wc-glow2 {
+  position:absolute;bottom:-80px;left:-60px;width:320px;height:320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(99,102,241,.2)0%,transparent 70%);pointer-events:none;
+}
+.wc-card {
+  position:relative;z-index:2;width:100%;max-width:480px;padding:0 24px;text-align:center;
+}
+.wc-badge {
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  border-radius:99px;padding:6px 16px;font-size:12px;font-weight:700;
+  color:rgba(255,255,255,.85);letter-spacing:.05em;text-transform:uppercase;margin-bottom:32px;
+  backdrop-filter:blur(8px);
+}
+.wc-badge-dot { width:8px;height:8px;border-radius:50%;background:#4ade80;box-shadow:0 0 6px #4ade80;animation:wc-pulse 1.6s infinite; }
+@keyframes wc-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.7;transform:scale(1.2)} }
+.wc-greeting {
+  font-size:clamp(28px,5vw,42px);font-weight:800;color:#fff;
+  line-height:1.15;letter-spacing:-.02em;margin-bottom:10px;
+}
+.wc-greeting em { font-style:normal;background:linear-gradient(90deg,#a5b4fc,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.wc-org { font-size:15px;color:rgba(255,255,255,.6);margin-bottom:8px; }
+.wc-role {
+  display:inline-block;background:rgba(99,102,241,.25);border:1px solid rgba(129,140,248,.4);
+  border-radius:6px;padding:4px 12px;font-size:12px;font-weight:700;color:#a5b4fc;
+  letter-spacing:.04em;text-transform:uppercase;margin-bottom:36px;
+}
+.wc-features {
+  display:flex;flex-direction:column;gap:10px;margin-bottom:40px;text-align:left;
+}
+.wc-feat {
+  display:flex;align-items:center;gap:12px;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
+  border-radius:10px;padding:12px 16px;backdrop-filter:blur(8px);
+  opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;
+}
+.wc-feat.vis { opacity:1;transform:none; }
+.wc-feat-icon { font-size:20px;flex-shrink:0; }
+.wc-feat-text { font-size:13.5px;font-weight:600;color:#e2e8f0; }
+.wc-feat-sub  { font-size:11.5px;color:rgba(255,255,255,.45);margin-top:1px; }
+.wc-progress-wrap { margin-bottom:28px; }
+.wc-progress-bar {
+  width:100%;height:4px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden;margin-bottom:10px;
+}
+.wc-progress-fill {
+  height:100%;background:linear-gradient(90deg,#818cf8,#a78bfa);border-radius:2px;
+  width:0%;transition:width linear;
+}
+.wc-progress-lbl { font-size:12px;color:rgba(255,255,255,.4); }
+.wc-skip {
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);
+  color:rgba(255,255,255,.85);padding:11px 32px;border-radius:10px;font-size:14px;
+  font-weight:600;cursor:pointer;backdrop-filter:blur(8px);letter-spacing:.01em;
+  transition:background .2s;font-family:inherit;
+}
+.wc-skip:hover { background:rgba(255,255,255,.22); }
+</style>
+<div class="wc-grid"></div>
+<div class="wc-glow1"></div>
+<div class="wc-glow2"></div>
+<div class="wc-card">
+  <div class="wc-badge"><div class="wc-badge-dot"></div>AgentHub Platform</div>
+  <div class="wc-greeting">Bonjour,<br><em>${firstName}&nbsp;!</em></div>
+  <div class="wc-org">${orgName}</div>
+  <div class="wc-role">${roleLabel}</div>
+  <div class="wc-features">
+    <div class="wc-feat" id="wf1">
+      <div class="wc-feat-icon">🤖</div>
+      <div><div class="wc-feat-text">ATLAS — Copilote IA</div><div class="wc-feat-sub">Votre assistant disponible 24h/24</div></div>
+    </div>
+    <div class="wc-feat" id="wf2">
+      <div class="wc-feat-icon">📊</div>
+      <div><div class="wc-feat-text">Tableau de bord personnalisé</div><div class="wc-feat-sub">Score IMAI, actions prioritaires, connecteurs</div></div>
+    </div>
+    <div class="wc-feat" id="wf3">
+      <div class="wc-feat-icon">🔒</div>
+      <div><div class="wc-feat-text">Gouvernance & conformité Loi 25</div><div class="wc-feat-sub">Données hébergées au Canada</div></div>
+    </div>
+  </div>
+  <div class="wc-progress-wrap">
+    <div class="wc-progress-bar"><div class="wc-progress-fill" id="wc-fill"></div></div>
+    <div class="wc-progress-lbl" id="wc-lbl">Préparation de votre espace…</div>
+  </div>
+  <button class="wc-skip" id="wc-skip">Accéder au tableau de bord →</button>
+</div>`;
+
+    document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add('in'));
+
+    // Staggered feature cards
+    [['wf1', 400], ['wf2', 700], ['wf3', 1000]].forEach(([id, delay]) => {
+      setTimeout(() => document.getElementById(id)?.classList.add('vis'), delay);
+    });
+
+    // Progress bar
+    const fill = document.getElementById('wc-fill');
+    const lbl  = document.getElementById('wc-lbl');
+    if (fill) {
+      requestAnimationFrame(() => {
+        fill.style.transition = `width ${DURATION}ms linear`;
+        fill.style.width = '100%';
+      });
+    }
+
+    // Countdown label
+    let remaining = DURATION;
+    const tick = setInterval(() => {
+      remaining -= 1000;
+      if (lbl && remaining > 0) lbl.textContent = `Accès dans ${timeLabel(remaining)}…`;
+    }, 1000);
+
+    const dismiss = () => {
+      clearInterval(tick);
+      clearTimeout(timer);
+      overlay.classList.remove('in');
+      overlay.classList.add('out');
+      setTimeout(() => { overlay.remove(); resolve(); }, 500);
+    };
+
+    const timer = setTimeout(dismiss, DURATION);
+    document.getElementById('wc-skip')?.addEventListener('click', dismiss);
+  });
 }
 
 // ── User info ─────────────────────────────────────────────────────────────────
