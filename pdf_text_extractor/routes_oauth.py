@@ -310,6 +310,11 @@ def oauth_start(
         for k in ("zendesk_subdomain", "zendesk_client_id", "zendesk_client_secret"):
             if body.get(k): extra[k] = body[k]
 
+    # Stocker le slug workspace pour la redirect post-callback
+    partner_slug = (body.get("partner_slug") or "").strip()
+    if partner_slug:
+        extra["partner_slug"] = partner_slug
+
     c = _resolve_cfg(connector_type, state_extra=extra)
 
     # PKCE — génère verifier/challenge si le connecteur l'exige (ex: Salesforce)
@@ -444,7 +449,10 @@ def oauth_callback(
         http_status=200,
         metadata={"oauth": True, "scope": credentials["scope"][:120]},
     ))
-    return RedirectResponse(url=f"/?connected={connector_type}&tab=connectors", status_code=302)
+    _slug = state_data.get("partner_slug", "")
+    _dest = (f"/workspace/{_slug}/integrations?connected={connector_type}"
+             if _slug else f"/?connected={connector_type}&tab=connectors")
+    return RedirectResponse(url=_dest, status_code=302)
 
 
 # ── API-key credential endpoint (SAP, Workday, Autotask, …) ──────────────────

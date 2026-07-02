@@ -309,7 +309,8 @@ function _renderCards(container, allConnectors, filter, connected) {
       if (action === 'oauth') {
         try {
           btn.disabled = true; btn.textContent = '⏳ Connexion…';
-          const res = await _api(`/api/connectors/${type}/oauth/start`, { method: 'POST', body: '{}' });
+          const slug = location.pathname.split('/')[2] || '';
+          const res = await _api(`/api/connectors/${type}/oauth/start`, { method: 'POST', body: JSON.stringify({ partner_slug: slug }) });
           if (res?.authorization_url) {
             window.location.href = res.authorization_url;
           } else {
