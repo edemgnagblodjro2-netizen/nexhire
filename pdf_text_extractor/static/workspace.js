@@ -709,6 +709,217 @@ function _setBreadcrumb(label) {
 }
 
 // ── Navigation ────────────────────────────────────────────────────────────────
+// ── ATLAS First-Visit Onboarding ──────────────────────────────────────────────
+const ATLAS_ONBOARD = {
+  'sales-intelligence': {
+    icon: '🎯', color: '#6d28d9',
+    title: 'Sales Intelligence',
+    desc: 'Votre centre de commande IA pour automatiser la prospection, piloter les campagnes et fermer plus de deals.',
+    benefits: [
+      'ATLAS identifie vos meilleurs leads et les classe automatiquement par potentiel',
+      'Vos agents IA prospectent et qualifient 24h/24 pendant que vous dormez',
+      'Pipeline commercial en temps réel avec prédictions de closing par IA',
+    ],
+    actions: [
+      { label: 'Configurer', sub: 'Connecter votre CRM', icon: '⚙️', tab: 'settings' },
+      { label: 'Importer', sub: 'Charger vos prospects', icon: '📥', tab: 'prospects' },
+      { label: 'Commencer', sub: 'Voir le tableau de bord', icon: '🚀', tab: null },
+    ],
+  },
+  'recommandations': {
+    icon: '⚡', color: '#7c3aed',
+    title: 'Recommandations IA',
+    desc: 'ATLAS analyse votre score IMAI et vous propose un plan d\'adoption IA prioritisé sur 12 semaines.',
+    benefits: [
+      'Score IMAI calculé sur 8 dimensions avec comparaison sectorielle',
+      'Plan d\'adoption en 3 phases avec jalons clairs et actions concrètes',
+      'Suivi de progression et recalcul automatique à chaque action complétée',
+    ],
+    actions: [
+      { label: 'Voir mon score', sub: 'Score IMAI actuel', icon: '📊', tab: null },
+      { label: 'Mon plan', sub: 'Plan 12 semaines', icon: '📅', tab: null },
+      { label: 'Commencer', sub: 'Première recommandation', icon: '🚀', tab: null },
+    ],
+  },
+  'automation': {
+    icon: '⚡', color: '#6d28d9',
+    title: 'Automatisation',
+    desc: 'Connectez vos processus métier à vos outils et laissez vos agents IA travailler à votre place.',
+    benefits: [
+      'Déclenchez des workflows automatiques à partir d\'événements AgentHub ou planifiés',
+      '9 modèles prêts à l\'emploi pour les cas d\'usage les plus fréquents',
+      'Connecteurs natifs Teams, Outlook, HubSpot, ServiceNow et 50+ autres',
+    ],
+    actions: [
+      { label: 'Explorer', sub: 'Bibliothèque de modèles', icon: '📚', tab: 'templates' },
+      { label: 'Configurer', sub: 'Activer les déclencheurs', icon: '⚙️', tab: 'triggers' },
+      { label: 'Créer', sub: 'Nouveau workflow', icon: '✨', tab: 'new' },
+    ],
+  },
+  'marketplace': {
+    icon: '🏪', color: '#0ea5e9',
+    title: 'Workspace Marketplace',
+    desc: 'Découvrez et installez des espaces de travail préconfigurés, des agents IA et des connecteurs pour votre secteur.',
+    benefits: [
+      'Plus de 30 workspaces préconfigurés par secteur : entreprise, santé, éducation',
+      '9 agents IA spécialisés déployables en un clic',
+      '12 connecteurs certifiés pour vos outils existants',
+    ],
+    actions: [
+      { label: 'Workspaces', sub: 'Catalogue par secteur', icon: '🏪', tab: null },
+      { label: 'Agents IA', sub: 'Explorer les agents', icon: '🤖', tab: 'agents' },
+      { label: 'Connecteurs', sub: 'Intégrations disponibles', icon: '🔌', tab: 'connecteurs' },
+    ],
+  },
+  'assets': {
+    icon: '🖥', color: '#7c3aed',
+    title: 'Parc TI',
+    desc: 'Inventaire centralisé de tous vos équipements informatiques avec suivi des garanties et des coûts.',
+    benefits: [
+      'Vue unifiée de tous vos actifs : serveurs, postes, réseau et imprimantes',
+      'Alertes automatiques avant l\'expiration des garanties pour éviter les surprises',
+      'Coûts mensuels par actif et département pour optimiser votre budget TI',
+    ],
+    actions: [
+      { label: 'Inventaire', sub: 'Voir tous les actifs', icon: '📋', tab: null },
+      { label: 'Ajouter', sub: 'Enregistrer un actif', icon: '➕', tab: null },
+      { label: 'Commencer', sub: 'Importer depuis CSV', icon: '📥', tab: null },
+    ],
+  },
+  'budget': {
+    icon: '💰', color: '#059669',
+    title: 'Budget & Finances',
+    desc: 'Pilotez votre budget par catégorie et département avec un suivi alloué vs réel en temps réel.',
+    benefits: [
+      'Tableau de bord financier avec alertes de dépassement budgétaire automatiques',
+      'Prévisions IA basées sur les tendances historiques pour anticiper les besoins',
+      'Module Coûts IA pour quantifier et optimiser votre investissement en intelligence artificielle',
+    ],
+    actions: [
+      { label: 'Dashboard', sub: 'Vue consolidée', icon: '📊', tab: null },
+      { label: 'Saisir', sub: 'Ajouter une entrée', icon: '✏️', tab: null },
+      { label: 'Prévisions', sub: 'Projections N+1', icon: '📈', tab: 'previsions' },
+    ],
+  },
+  'contracts': {
+    icon: '📄', color: '#0284c7',
+    title: 'Gestion des contrats',
+    desc: 'Centralisez vos contrats fournisseurs et ne manquez plus aucun renouvellement critique.',
+    benefits: [
+      'Alertes proactives 90j, 30j et 7j avant chaque renouvellement important',
+      'ATLAS identifie les opportunités de négociation et les économies potentielles',
+      'Vue Fournisseurs consolidée pour maximiser votre levier de négociation',
+    ],
+    actions: [
+      { label: 'Mes contrats', sub: 'Voir la liste', icon: '📋', tab: null },
+      { label: 'Ajouter', sub: 'Nouveau contrat', icon: '➕', tab: null },
+      { label: 'Alertes', sub: 'Renouvellements urgents', icon: '⚠️', tab: 'alertes' },
+    ],
+  },
+  'sso-mfa': {
+    icon: '🔐', color: '#1d4ed8',
+    title: 'SSO & MFA',
+    desc: 'Sécurisez l\'accès à votre organisation avec la connexion unique et l\'authentification multifacteur.',
+    benefits: [
+      'Connectez Microsoft Entra ID, Google Workspace, Okta ou Auth0 en 3 minutes',
+      'Activez le MFA pour toute l\'organisation d\'un seul clic — réduit les risques de 99,9%',
+      'Surveillance complète : sessions actives, journal des connexions, alertes en temps réel',
+    ],
+    actions: [
+      { label: 'Configurer SSO', sub: 'Choisir un fournisseur', icon: '🔐', tab: 'providers' },
+      { label: 'Activer MFA', sub: 'Protéger les comptes', icon: '📱', tab: 'mfa' },
+      { label: 'Sessions', sub: 'Voir les connexions', icon: '👥', tab: 'sessions' },
+    ],
+  },
+};
+
+function _atlasOnboardCSS() {
+  if (document.getElementById('ws-ob-css')) return;
+  const s = document.createElement('style');
+  s.id = 'ws-ob-css';
+  s.textContent = `
+.ws-ob{display:flex;align-items:center;justify-content:center;min-height:100%;padding:40px 20px;background:var(--bg-2,#f8fafc);animation:ws-ob-in .35s cubic-bezier(.16,1,.3,1)}
+@keyframes ws-ob-in{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.ws-ob-card{background:#fff;border-radius:20px;padding:40px 44px;max-width:580px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,.10),0 0 0 1px rgba(0,0,0,.05);position:relative}
+.ws-ob-header{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+.ws-ob-atlas{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#1e1b4b,#4c1d95);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.ws-ob-atlas-label{font-size:12px;font-weight:700;color:#6d28d9;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1px}
+.ws-ob-atlas-sub{font-size:11px;color:#94a3b8}
+.ws-ob-module{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.ws-ob-mod-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.ws-ob-mod-name{font-size:22px;font-weight:800;color:#0f172a;line-height:1.1}
+.ws-ob-mod-tag{font-size:11px;font-weight:600;padding:2px 10px;border-radius:99px;margin-top:4px;display:inline-block}
+.ws-ob-desc{font-size:14px;color:#475569;line-height:1.65;margin-bottom:22px}
+.ws-ob-benefits{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;padding:18px 20px;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0}
+.ws-ob-benefit{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#334155;line-height:1.5}
+.ws-ob-check{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;margin-top:1px;color:#fff}
+.ws-ob-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.ws-ob-action{border:1.5px solid #e2e8f0;border-radius:12px;padding:14px 12px;background:#fff;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:6px;font-family:inherit}
+.ws-ob-action:hover{border-color:currentColor;box-shadow:0 2px 12px rgba(0,0,0,.08);transform:translateY(-2px)}
+.ws-ob-action-icon{font-size:22px}
+.ws-ob-action-label{font-size:13px;font-weight:700;color:#0f172a}
+.ws-ob-action-sub{font-size:11px;color:#94a3b8;text-align:center}
+.ws-ob-skip{display:block;text-align:center;font-size:12px;color:#94a3b8;cursor:pointer;text-decoration:none;background:none;border:none;font-family:inherit;width:100%;padding:4px}
+.ws-ob-skip:hover{color:#64748b;text-decoration:underline}
+@media(max-width:540px){.ws-ob-card{padding:28px 20px}.ws-ob-actions{grid-template-columns:1fr}}
+`;
+  document.head.appendChild(s);
+}
+
+function _showAtlasOnboard(container, navItem, ctx, onDismiss) {
+  _atlasOnboardCSS();
+  const cfg = ATLAS_ONBOARD[navItem.appSlug];
+  if (!cfg) { onDismiss(null); return; }
+
+  container.innerHTML = `
+<div class="ws-ob">
+  <div class="ws-ob-card">
+    <div class="ws-ob-header">
+      <div class="ws-ob-atlas">🤖</div>
+      <div>
+        <div class="ws-ob-atlas-label">ATLAS vous accueille</div>
+        <div class="ws-ob-atlas-sub">Votre assistant IA personnel</div>
+      </div>
+    </div>
+
+    <div class="ws-ob-module">
+      <div class="ws-ob-mod-icon" style="background:${cfg.color}18;color:${cfg.color}">${cfg.icon}</div>
+      <div>
+        <div class="ws-ob-mod-name">Bienvenue dans<br>${cfg.title}</div>
+      </div>
+    </div>
+
+    <div class="ws-ob-desc">${cfg.desc}</div>
+
+    <div class="ws-ob-benefits">
+      ${cfg.benefits.map(b => `
+      <div class="ws-ob-benefit">
+        <div class="ws-ob-check" style="background:${cfg.color}">✓</div>
+        <span>${b}</span>
+      </div>`).join('')}
+    </div>
+
+    <div class="ws-ob-actions">
+      ${cfg.actions.map(a => `
+      <button class="ws-ob-action" data-tab="${a.tab || ''}" style="color:${cfg.color}">
+        <div class="ws-ob-action-icon">${a.icon}</div>
+        <div class="ws-ob-action-label">${a.label}</div>
+        <div class="ws-ob-action-sub">${a.sub}</div>
+      </button>`).join('')}
+    </div>
+
+    <button class="ws-ob-skip" data-tab="">Je connais déjà ce module →</button>
+  </div>
+</div>`;
+
+  container.querySelectorAll('[data-tab]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = btn.dataset.tab || null;
+      onDismiss(tab);
+    });
+  });
+}
+
 async function _navigateTo(navItem) {
   if (_state.module?.unmount) _state.module.unmount($('ws-app-container'));
   _state.module = null; _state.activeApp = null;
@@ -789,8 +1000,33 @@ async function _navigateTo(navItem) {
       userProfile: _state.userProfile || null,
     };
 
-    $('ws-app-container').innerHTML = '';
-    _state.module.mount($('ws-app-container'), ctx);
+    const _doMount = (tab) => {
+      $('ws-app-container').innerHTML = '';
+      _state.module.mount($('ws-app-container'), ctx);
+      if (tab) {
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            const btn = $('ws-app-container').querySelector(`[data-tab="${tab}"]`) ||
+                        $('ws-app-container').querySelector(`[data-ct-tab="${tab}"]`) ||
+                        $('ws-app-container').querySelector(`[data-bg-tab="${tab}"]`) ||
+                        $('ws-app-container').querySelector(`[data-as-tab="${tab}"]`) ||
+                        $('ws-app-container').querySelector(`[data-mkt-tab="${tab}"]`);
+            btn?.click();
+          }, 80);
+        });
+      }
+    };
+
+    const _visitKey = `agenthub_onboard_${navItem.appSlug}`;
+    if (navItem.appSlug && ATLAS_ONBOARD[navItem.appSlug] && !localStorage.getItem(_visitKey)) {
+      $('ws-app-container').innerHTML = '';
+      _showAtlasOnboard($('ws-app-container'), navItem, ctx, (tab) => {
+        localStorage.setItem(_visitKey, new Date().toISOString());
+        _doMount(tab);
+      });
+    } else {
+      _doMount(null);
+    }
 
   } catch (err) {
     const isNotFound = err?.name === 'TypeError' || err?.message?.includes('Failed to fetch') || err?.message?.includes('404') || err?.message?.includes('NetworkError');
