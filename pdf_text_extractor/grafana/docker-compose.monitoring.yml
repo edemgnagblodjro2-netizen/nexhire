@@ -1,0 +1,49 @@
+version: "3.8"
+
+# Stack monitoring autonome — Prometheus + Grafana + Alloy
+# Déployer sur un VPS (~4-6$/mois) pour rétention illimitée.
+#
+# Usage :
+#   1. Copier ce fichier sur le VPS
+#   2. Créer .env avec les variables ci-dessous
+#   3. docker compose -f docker-compose.monitoring.yml up -d
+#
+# Variables requises dans .env :
+#   AGENTHUB_HOST     = myapp.onrender.com
+#   METRICS_TOKEN     = <token Bearer /metrics>
+#   GRAFANA_ADMIN_PASSWORD = <mot de passe Grafana UI>
+
+services:
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.retention.time=90d"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.enable-lifecycle"
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana-provisioning:/etc/grafana/provisioning:ro
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_SERVER_ROOT_URL: "http://localhost:3000"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+
+volumes:
+  prometheus_data:
+  grafana_data:
