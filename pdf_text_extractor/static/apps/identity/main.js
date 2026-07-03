@@ -138,6 +138,16 @@ async function _post(path, body = {}) {
   if (!r.ok) throw new Error(r.status);
   return r.json();
 }
+async function _patch(path, body = {}) {
+  const r = await fetch(path, { method: 'PATCH', headers: { ..._h(), 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify(body) });
+  if (!r.ok) throw new Error(r.status);
+  return r.json();
+}
+async function _del(path) {
+  const r = await fetch(path, { method: 'DELETE', headers: _h(), credentials: 'include' });
+  if (!r.ok) throw new Error(r.status);
+  return r.json().catch(() => ({}));
+}
 
 function _fmtDate(iso) {
   if (!iso) return '—';
@@ -197,9 +207,12 @@ function _renderUsers(data) {
       <div class="id-card-body" style="padding:0 18px">
         ${members.length === 0 ? _empty('Aucun membre') : `
         <table class="id-table">
-          <thead><tr><th>Membre</th><th>Rôle</th><th>Statut</th><th>Membre depuis</th></tr></thead>
+          <thead><tr><th>Membre</th><th>Rôle</th><th>Statut</th><th>Membre depuis</th><th>Actions</th></tr></thead>
           <tbody>
-            ${members.map(m => `<tr>
+            ${members.map(m => {
+              const isOwner  = m.role === 'owner';
+              const isActive = m.is_active !== false;
+              return `<tr data-mid="${m.id}">
               <td>
                 <div style="display:flex;align-items:center;gap:10px">
                   <div class="id-avatar">${_initial(m.full_name || m.email)}</div>
@@ -209,10 +222,21 @@ function _renderUsers(data) {
                   </div>
                 </div>
               </td>
-              <td><span class="id-pill ${m.role || 'user'}">${_roleFr(m.role)}</span></td>
-              <td><span class="id-pill ${m.is_active !== false ? 'active' : 'inactive'}">${m.is_active !== false ? 'Actif' : 'Inactif'}</span>${m.conflicted ? ' <span class="id-pill inactive">⚠️ Conflit</span>' : ''}</td>
+              <td>${isOwner
+                ? `<span class="id-pill owner">${_roleFr(m.role)}</span>`
+                : `<select class="id-role-select" data-member="${m.id}" data-current="${m.role}" style="padding:3px 6px;border:1px solid var(--border);border-radius:6px;font-size:11px;font-family:inherit">
+                    <option value="admin"${m.role === 'admin' ? ' selected' : ''}>Admin</option>
+                    <option value="manager"${m.role === 'manager' ? ' selected' : ''}>Gestionnaire</option>
+                    <option value="user"${m.role === 'user' ? ' selected' : ''}>Utilisateur</option>
+                   </select>`}</td>
+              <td><span class="id-pill ${isActive ? 'active' : 'inactive'}">${isActive ? 'Actif' : 'Inactif'}</span>${m.conflicted ? ' <span class="id-pill inactive">&#x26A0;&#xFE0F; Conflit</span>' : ''}</td>
               <td style="color:var(--muted)">${_fmtDate(m.created_at)}</td>
-            </tr>`).join('')}
+              <td>${isOwner ? '&#x2014;' : `<span style="display:inline-flex;gap:4px">
+                <button class="id-btn id-btn-ghost id-m-toggle" data-member="${m.id}" style="padding:3px 7px;font-size:11px" title="${isActive ? 'D&#xE9;sactiver' : 'R&#xE9;activer'}">${isActive ? '&#x23F8;&#xFE0F;' : '&#x25B6;&#xFE0F;'}</button>
+                <button class="id-btn id-btn-danger id-m-delete" data-member="${m.id}" style="padding:3px 7px;font-size:11px" title="Supprimer">&#x1F5D1;&#xFE0F;</button>
+              </span>`}</td>
+            </tr>`;
+            }).join('')}
           </tbody>
         </table>`}
       </div>
@@ -402,6 +426,60 @@ function _renderSSO(ssoConfig, entraGroups, entraIdentities) {
     ${!configured ? `<div class="id-card"><div class="id-card-body"><div class="id-empty">🔗 Configurez votre connexion SSO dans le Centre d'intégrations → Microsoft 365 pour synchroniser les groupes et identités Entra ID.</div></div></div>` : ''}`;
 }
 
+// ── User action bindings ─────────────────────────────────────────────────────
+
+function _setupUserActions(panel, cache) {
+  panel.querySelectorAll('.id-role-select').forEach(sel => {
+    sel.addEventListener('change', async () => {
+      const id   = sel.dataset.member;
+      const role = sel.value;
+      const prev = sel.dataset.current;
+      try {
+        await _patch(`/api/members/${id}/role`, { role });
+        sel.dataset.current = role;
+        if (cache.members) {
+          const list = cache.members.members || cache.members.items || [];
+          const m = list.find(x => x.id === id);
+          if (m) m.role = role;
+        }
+      } catch(e) { alert(`Erreur : ${e.message}`); sel.value = prev; }
+    });
+  });
+
+  panel.querySelectorAll('.id-m-toggle').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const id = btn.dataset.member;
+      try {
+        const res = await _patch(`/api/members/${id}/active`);
+        delete cache.members;
+        const row = panel.querySelector(`tr[data-mid="${id}"]`);
+        if (row) {
+          const pill = row.querySelector('.id-pill.active, .id-pill.inactive');
+          if (pill) {
+            pill.className = `id-pill ${res.is_active ? 'active' : 'inactive'}`;
+            pill.textContent = res.is_active ? 'Actif' : 'Inactif';
+          }
+          btn.title = res.is_active ? 'Désactiver' : 'Réactiver';
+          btn.innerHTML = res.is_active ? '&#x23F8;&#xFE0F;' : '&#x25B6;&#xFE0F;';
+        }
+      } catch(e) { alert(`Erreur : ${e.message}`); }
+    });
+  });
+
+  panel.querySelectorAll('.id-m-delete').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const id = btn.dataset.member;
+      if (!confirm('Supprimer définitivement ce membre ? Cette action est irréversible.')) return;
+      try {
+        await _del(`/api/members/${id}`);
+        delete cache.members;
+        const row = panel.querySelector(`tr[data-mid="${id}"]`);
+        if (row) row.remove();
+      } catch(e) { alert(`Erreur : ${e.message}`); }
+    });
+  });
+}
+
 // ── Invite modal ──────────────────────────────────────────────────────────────
 
 async function _setupInviteBtn(panel, cache) {
@@ -474,6 +552,7 @@ async function _renderTab(panel, container, tabId, cache) {
     if (tabId === 'users') {
       const data = cache.members || (cache.members = await _get('/api/members'));
       panel.innerHTML = _renderUsers(data);
+      _setupUserActions(panel, cache);
     } else if (tabId === 'invites') {
       const [invites, roleReqs] = await Promise.all([
         cache.invites   || (cache.invites   = _get('/api/invitations').catch(() => [])),

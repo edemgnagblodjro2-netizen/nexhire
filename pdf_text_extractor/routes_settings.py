@@ -28,6 +28,8 @@ class OrgUpdate(BaseModel):
     brand_color: str | None = Field(None, pattern=r"^#[0-9a-fA-F]{6}$")
     org_type: str | None = Field(None, pattern=r"^(entreprise|entrepreneur|hopital|municipalite|universite)$")
     currency: str | None = Field(None, pattern=r"^[A-Z]{3}$")
+    language: str | None = Field(None, pattern=r"^(fr|en)$")
+    timezone: str | None = Field(None, max_length=60)
 
 
 class PasswordChange(BaseModel):
@@ -169,7 +171,7 @@ def get_profile(user: CurrentUser = Depends(require_min_role("user"))):
     if user.organization_id:
         with get_db() as cur:
             cur.execute(
-                "SELECT name, slug, created_at, org_type, logo_url, brand_color, monthly_report_enabled FROM organizations WHERE id = %s LIMIT 1",
+                "SELECT name, slug, created_at, org_type, logo_url, brand_color, monthly_report_enabled, language, timezone FROM organizations WHERE id = %s LIMIT 1",
                 (user.organization_id,),
             )
             org = row(cur) or {}
@@ -203,6 +205,8 @@ def get_profile(user: CurrentUser = Depends(require_min_role("user"))):
         "logo_url": org.get("logo_url") or "",
         "brand_color": org.get("brand_color") or "#818CF8",
         "monthly_report_enabled": org.get("monthly_report_enabled", True),
+        "language": org.get("language") or "fr",
+        "timezone": org.get("timezone") or "America/Toronto",
     }
 
 
@@ -245,6 +249,12 @@ def update_org(
     if payload.currency is not None:
         fields.append("currency = %s")
         values.append(payload.currency)
+    if payload.language is not None:
+        fields.append("language = %s")
+        values.append(payload.language)
+    if payload.timezone is not None:
+        fields.append("timezone = %s")
+        values.append(payload.timezone)
     if not fields:
         return {"ok": True}
     values.append(user.organization_id)
