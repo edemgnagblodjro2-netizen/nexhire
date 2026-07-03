@@ -317,9 +317,21 @@ def create_app(
             return JSONResponse(status_code=503, content=payload)
         return payload
 
+    _METRICS_TOKEN: str = os.environ.get("METRICS_TOKEN", "")
+
     @app.get("/metrics", tags=["ops"], include_in_schema=False)
-    def metrics():
-        """Endpoint Prometheus — expose les métriques HTTP et process."""
+    def metrics(request: Request):
+        """Endpoint Prometheus — protégé par Bearer token (METRICS_TOKEN)."""
+        if _METRICS_TOKEN:
+            auth = request.headers.get("Authorization", "")
+            if not auth or auth != f"Bearer {_METRICS_TOKEN}":
+                from fastapi.responses import JSONResponse
+
+                return JSONResponse(
+                    status_code=401,
+                    content={"detail": "Unauthorized"},
+                    headers={"WWW-Authenticate": "Bearer"},
+                )
         data, content_type = prometheus_response()
         if data is None:
             return {"error": "prometheus_client non disponible"}
