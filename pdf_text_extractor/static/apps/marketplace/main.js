@@ -51,6 +51,31 @@ function _css() {
 .mkt-empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted)}
 .mkt-empty-icon{font-size:48px;margin-bottom:12px}
 .mkt-empty-title{font-size:16px;font-weight:700;color:var(--text);margin:0 0 6px}
+
+/* Tabs */
+.mkt-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:24px}
+.mkt-tab{background:none;border:none;border-bottom:2px solid transparent;padding:10px 18px;font-size:13px;font-weight:600;color:var(--text-sub);cursor:pointer;font-family:inherit;transition:color .15s;margin-bottom:-1px;white-space:nowrap}
+.mkt-tab.active{color:var(--primary);border-bottom-color:var(--primary)}
+.mkt-tab:hover:not(.active){color:var(--text-2)}
+
+/* Agent catalogue */
+.mkt-agent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.mkt-agent-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;display:flex;flex-direction:column;gap:10px;transition:box-shadow .15s,border-color .15s}
+.mkt-agent-card:hover{box-shadow:var(--shadow);border-color:var(--primary)}
+.mkt-agent-icon{font-size:28px}
+.mkt-agent-name{font-size:13px;font-weight:700;color:var(--text)}
+.mkt-agent-desc{font-size:12px;color:var(--muted);line-height:1.45;flex:1}
+.mkt-agent-tags{display:flex;gap:6px;flex-wrap:wrap}
+.mkt-agent-tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--bg-2);color:var(--muted)}
+.mkt-conn-row{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 20px;display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.mkt-conn-icon{font-size:24px;flex-shrink:0}
+.mkt-conn-body{flex:1;min-width:0}
+.mkt-conn-name{font-size:13px;font-weight:700;color:var(--text)}
+.mkt-conn-desc{font-size:12px;color:var(--muted)}
+.mkt-search-wrap{display:flex;gap:10px;margin-bottom:20px}
+.mkt-search-input{flex:1;padding:9px 14px;border:1px solid var(--border);border-radius:var(--r);font-size:13px;font-family:inherit;outline:none;background:var(--card);color:var(--text)}
+.mkt-search-input:focus{border-color:var(--primary)}
+@media(max-width:768px){.mkt-agent-grid{grid-template-columns:1fr}}
 `;
   document.head.appendChild(s);
 }
@@ -106,10 +131,155 @@ const SECTOR_LABELS = {
   education:   'Éducation',
 };
 
+// ── Agents & Connecteurs data ─────────────────────────────────────────────────
+const AGENTS_IA = [
+  { icon: '🔍', name: 'ATLAS Research Agent', desc: 'Analyse automatique des données organisationnelles pour générer des recommandations IA actionnables.', tags: ['Diagnostic','IA','IMAI'] },
+  { icon: '📊', name: 'Analytics Agent', desc: 'Détecte les anomalies dans vos données financières, RH et opérationnelles. Alertes proactives en temps réel.', tags: ['Analytique','Finance','IA'] },
+  { icon: '📧', name: 'Communication Agent', desc: 'Rédige et envoie des communications personnalisées aux membres de la cohorte selon des déclencheurs configurables.', tags: ['Email','Automatisation'] },
+  { icon: '🤝', name: 'CRM Sync Agent', desc: 'Synchronise automatiquement les données membres avec HubSpot, Salesforce ou votre CRM en temps réel.', tags: ['CRM','Intégration'] },
+  { icon: '⚖️', name: 'Compliance Agent', desc: 'Surveille les exigences LPRPDE, ISO 27001 et politiques internes. Génère des rapports de conformité automatiques.', tags: ['Conformité','Gouvernance'] },
+  { icon: '💰', name: 'Budget Optimizer', desc: 'Analyse les dépenses IA et suggère des optimisations de coûts basées sur l\'utilisation réelle et les benchmarks sectoriels.', tags: ['Finance','IA','Optimisation'] },
+  { icon: '🛡️', name: 'Security Agent', desc: 'Surveille les accès, détecte les comportements suspects et génère des rapports de sécurité quotidiens.', tags: ['Sécurité','SIEM'] },
+  { icon: '📝', name: 'Policy Generator', desc: 'Génère des politiques d\'usage IA adaptées à votre secteur, conformes aux réglementations québécoises et canadiennes.', tags: ['Gouvernance','IA','Document'] },
+  { icon: '📅', name: 'Scheduler Agent', desc: 'Planifie automatiquement les séances de formation, suivis de cohorte et rappels d\'échéances importantes.', tags: ['Planification','Automatisation'] },
+];
+
+const CONNECTORS = [
+  { icon: '🔷', name: 'Microsoft 365', desc: 'Teams, Outlook, SharePoint, OneDrive. Authentification SSO via Entra ID.', cat: 'Collaboration', status: 'active' },
+  { icon: '🔶', name: 'HubSpot CRM', desc: 'Synchronisation contacts, deals et activités CRM bidirectionnelle.', cat: 'CRM', status: 'active' },
+  { icon: '🟩', name: 'Salesforce', desc: 'Leads, opportunités, comptes et rapports Salesforce synchronisés.', cat: 'CRM', status: 'active' },
+  { icon: '🟦', name: 'Jira / Confluence', desc: 'Tickets, projets et documentation Atlassian liés aux workflows AgentHub.', cat: 'Productivité', status: 'active' },
+  { icon: '🟣', name: 'Asana', desc: 'Tâches et projets Asana déclenchés automatiquement depuis les workflows.', cat: 'Productivité', status: 'active' },
+  { icon: '🔴', name: 'ServiceNow', desc: 'Création d\'incidents, change requests et CMDB depuis AgentHub.', cat: 'ITSM', status: 'active' },
+  { icon: '🔵', name: 'Slack', desc: 'Notifications, alertes et résumés IA directement dans vos canaux Slack.', cat: 'Messagerie', status: 'active' },
+  { icon: '⚫', name: 'AWS (Cloud)', desc: 'Métriques EC2, S3, Lambda et alertes CloudWatch intégrées.', cat: 'Cloud', status: 'active' },
+  { icon: '🟤', name: 'BambooHR', desc: 'Données RH, organigramme et gestion des absences synchronisés.', cat: 'RH', status: 'active' },
+  { icon: '🔷', name: 'Microsoft Intune', desc: 'Inventaire des appareils managés et conformité des postes de travail.', cat: 'ITSM', status: 'beta' },
+  { icon: '🟡', name: 'QuickBooks Online', desc: 'Données comptables, factures et dépenses synchronisées pour les rapports financiers.', cat: 'Finance', status: 'beta' },
+  { icon: '🟠', name: 'NetSuite ERP', desc: 'ERP NetSuite complet : finance, inventaire, ordres et projets.', cat: 'ERP', status: 'beta' },
+];
+
+const TEMPLATES_MKT = [
+  { icon: '📋', name: 'Rapport mensuel de cohorte', desc: 'Rapport automatique avec KPIs, scores IMAI, progression et recommandations. Envoyé le 1er du mois.', cat: 'Rapport' },
+  { icon: '🎯', name: 'Onboarding membres CCI', desc: 'Séquence d\'accueil en 5 étapes : inscription → diagnostic → plan → coaching → certification.', cat: 'Onboarding' },
+  { icon: '🚨', name: 'Alerte intervention urgente', desc: 'Notification immédiate à l\'équipe quand un score IMAI passe sous 20. Inclut le contexte et les actions suggérées.', cat: 'Alerte' },
+  { icon: '📊', name: 'Tableau de bord executive', desc: 'Vue consolidée hebdomadaire pour la direction : cohorte, ROI IA, risques et tendances.', cat: 'Rapport' },
+  { icon: '🔄', name: 'Cycle de renouvellement', desc: 'Rappels automatiques 90j, 30j et 7j avant l\'expiration des contrats ou des licences.', cat: 'Automatisation' },
+  { icon: '✅', name: 'Revue de gouvernance', desc: 'Collecte automatique des politiques IA, envoi aux approbateurs et archivage après validation.', cat: 'Gouvernance' },
+];
+
 // ── State ─────────────────────────────────────────────────────────────────────
 
 let _container = null;
 let _activeSector = 'tous';
+let _activeTab = 'catalogue';
+
+// ── Tab renders ───────────────────────────────────────────────────────────────
+
+function _tabsHtml(active) {
+  return `<div class="mkt-tabs">
+    ${[['catalogue','Catalogue Workspaces'],['agents','Agents IA'],['connecteurs','Connecteurs'],['templates','Templates'],['extensions','Extensions'],['recherche','Recherche']].map(
+      ([id, label]) => `<button class="mkt-tab${active===id?' active':''}" data-mkt-tab="${id}">${label}</button>`
+    ).join('')}
+  </div>`;
+}
+
+function _bindTabs() {
+  _container.querySelectorAll('[data-mkt-tab]').forEach(btn => {
+    btn.addEventListener('click', () => { _activeTab = btn.dataset.mktTab; _render(); });
+  });
+}
+
+function _renderAgents() {
+  _container.innerHTML = `<div class="mkt">${_tabsHtml('agents')}
+    <div class="mkt-hd"><h1>🤖 Agents IA</h1><p>Déployez des agents intelligents pour automatiser vos processus et augmenter la productivité de votre équipe.</p></div>
+    <div class="mkt-agent-grid">
+      ${AGENTS_IA.map(a=>`<div class="mkt-agent-card">
+        <div class="mkt-agent-icon">${a.icon}</div>
+        <div class="mkt-agent-name">${a.name}</div>
+        <div class="mkt-agent-desc">${a.desc}</div>
+        <div class="mkt-agent-tags">${a.tags.map(t=>`<span class="mkt-agent-tag">${t}</span>`).join('')}</div>
+        <button class="mkt-btn request" style="margin-top:4px;align-self:flex-start">Activer →</button>
+      </div>`).join('')}
+    </div></div>`;
+  _bindTabs();
+}
+
+function _renderConnecteurs() {
+  _container.innerHTML = `<div class="mkt">${_tabsHtml('connecteurs')}
+    <div class="mkt-hd"><h1>🔌 Connecteurs</h1><p>Intégrez AgentHub avec vos outils existants. Toutes les connexions sont sécurisées et chiffrées.</p></div>
+    ${CONNECTORS.map(c=>`<div class="mkt-conn-row">
+      <div class="mkt-conn-icon">${c.icon}</div>
+      <div class="mkt-conn-body">
+        <div class="mkt-conn-name">${c.name}</div>
+        <div class="mkt-conn-desc">${c.desc}</div>
+      </div>
+      <span style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:99px;background:${c.status==='active'?'#dcfce7':'#fef9c3'};color:${c.status==='active'?'#16a34a':'#a16207'}">${c.status==='active'?'Disponible':'Bêta'}</span>
+      <span style="font-size:11px;padding:3px 10px;border-radius:99px;background:var(--bg-2);color:var(--muted);font-weight:600">${c.cat}</span>
+      <button class="mkt-btn request" style="padding:5px 14px;font-size:11px">Configurer →</button>
+    </div>`).join('')}
+  </div>`;
+  _bindTabs();
+}
+
+function _renderTemplates() {
+  _container.innerHTML = `<div class="mkt">${_tabsHtml('templates')}
+    <div class="mkt-hd"><h1>📋 Templates</h1><p>Démarrez rapidement avec des modèles de workflows préconfigurés pour votre secteur.</p></div>
+    <div class="mkt-agent-grid">
+      ${TEMPLATES_MKT.map(t=>`<div class="mkt-agent-card">
+        <div class="mkt-agent-icon">${t.icon}</div>
+        <div class="mkt-agent-name">${t.name}</div>
+        <div class="mkt-agent-desc">${t.desc}</div>
+        <div class="mkt-agent-tags"><span class="mkt-agent-tag">${t.cat}</span></div>
+        <button class="mkt-btn request" style="margin-top:4px;align-self:flex-start">Utiliser ce modèle →</button>
+      </div>`).join('')}
+    </div></div>`;
+  _bindTabs();
+}
+
+function _renderExtensions() {
+  _container.innerHTML = `<div class="mkt">${_tabsHtml('extensions')}
+    <div class="mkt-hd"><h1>🧩 Extensions</h1><p>Étendez les capacités d'AgentHub avec des modules complémentaires certifiés.</p></div>
+    <div class="mkt-empty" style="grid-column:auto;padding:80px 20px">
+      <div class="mkt-empty-icon">🧩</div>
+      <div class="mkt-empty-title">Marketplace d'extensions</div>
+      <div style="font-size:13px;color:var(--muted);max-width:380px;margin:8px auto 20px;line-height:1.6">La galerie d'extensions tierces sera disponible dans la prochaine version. En attendant, contactez-nous pour des intégrations personnalisées.</div>
+      <a href="mailto:contact@civicainc.ca?subject=Extension AgentHub" style="display:inline-block;background:var(--primary);color:#fff;padding:8px 20px;border-radius:var(--r);font-size:13px;font-weight:600;text-decoration:none">Demander une extension →</a>
+    </div></div>`;
+  _bindTabs();
+}
+
+function _renderRecherche() {
+  _container.innerHTML = `<div class="mkt">${_tabsHtml('recherche')}
+    <div class="mkt-hd"><h1>🔍 Recherche globale</h1><p>Trouvez rapidement tout ce dont vous avez besoin dans le Marketplace.</p></div>
+    <div class="mkt-search-wrap">
+      <input class="mkt-search-input" id="mkt-search" placeholder="Rechercher un workspace, agent, connecteur ou template…" type="text" autofocus>
+      <select class="mkt-filter-btn" style="padding:8px 12px;border-radius:var(--r);border:1.5px solid var(--border);font-size:13px;font-family:inherit;background:transparent;cursor:pointer">
+        <option>Tous types</option>
+        <option>Workspaces</option>
+        <option>Agents IA</option>
+        <option>Connecteurs</option>
+        <option>Templates</option>
+      </select>
+    </div>
+    <div id="mkt-search-results" style="color:var(--muted);font-size:13px;padding:20px 0">Commencez à taper pour rechercher…</div>
+  </div>`;
+  _bindTabs();
+  const allItems = [
+    ...WORKSPACES.map(w=>({...w,type:'Workspace'})),
+    ...AGENTS_IA.map(a=>({...a,type:'Agent IA',sector:''})),
+    ...CONNECTORS.map(c=>({...c,type:'Connecteur',sector:''})),
+    ...TEMPLATES_MKT.map(t=>({...t,type:'Template',sector:''})),
+  ];
+  _container.querySelector('#mkt-search').addEventListener('input', e => {
+    const q = e.target.value.trim().toLowerCase();
+    const res = _container.querySelector('#mkt-search-results');
+    if (!q) { res.innerHTML = '<span>Commencez à taper pour rechercher…</span>'; return; }
+    const found = allItems.filter(i => (i.name+' '+(i.desc||'')).toLowerCase().includes(q)).slice(0, 12);
+    if (!found.length) { res.innerHTML = `<div class="mkt-empty" style="padding:40px"><div class="mkt-empty-icon">🔍</div><div class="mkt-empty-title">Aucun résultat pour "${q}"</div></div>`; return; }
+    res.innerHTML = found.map(i=>`<div class="mkt-conn-row"><div class="mkt-conn-body"><div class="mkt-conn-name">${i.name}</div><div class="mkt-conn-desc">${i.desc||'—'}</div></div><span style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--bg-2);color:var(--muted)">${i.type}</span></div>`).join('');
+  });
+}
 
 // ── Render ────────────────────────────────────────────────────────────────────
 
@@ -128,11 +298,18 @@ function _requestAccess(ws) {
 
 function _render() {
   if (!_container) return;
+  if (_activeTab === 'agents') { _renderAgents(); return; }
+  if (_activeTab === 'connecteurs') { _renderConnecteurs(); return; }
+  if (_activeTab === 'templates') { _renderTemplates(); return; }
+  if (_activeTab === 'extensions') { _renderExtensions(); return; }
+  if (_activeTab === 'recherche') { _renderRecherche(); return; }
+
   const list = _filtered();
   const installed = list.filter(w => w.installed).length;
 
   _container.innerHTML = `
     <div class="mkt">
+      ${_tabsHtml('catalogue')}
       <div class="mkt-hd">
         <h1>🏪 Workspace Marketplace</h1>
         <p>Installez des espaces de travail préconfigurés adaptés à votre secteur et vos départements.</p>
@@ -175,7 +352,10 @@ function _render() {
       </div>
     </div>`;
 
+  _bindTabs();
+
   _container.querySelectorAll('.mkt-filter-btn').forEach(btn => {
+    if (!btn.dataset.sector) return;
     btn.addEventListener('click', () => {
       _activeSector = btn.dataset.sector;
       _render();
@@ -197,6 +377,7 @@ export default {
     _css();
     _container = container;
     _activeSector = 'tous';
+    _activeTab = 'catalogue';
     _render();
   },
   unmount() {

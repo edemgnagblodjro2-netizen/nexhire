@@ -104,6 +104,10 @@ function _css() {
 
 @media(max-width:900px){.as-kpis{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:540px){.as-kpis{grid-template-columns:1fr};.as-form-grid{grid-template-columns:1fr}}
+.as-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:24px}
+.as-tab{background:none;border:none;border-bottom:2px solid transparent;padding:10px 18px;font-size:13px;font-weight:600;color:var(--text-sub);cursor:pointer;font-family:inherit;transition:color .15s;margin-bottom:-1px;white-space:nowrap}
+.as-tab.active{color:var(--primary);border-bottom-color:var(--primary)}
+.as-tab:hover:not(.active){color:var(--text-2)}
 `;
   document.head.appendChild(s);
 }
@@ -279,6 +283,7 @@ function _openModal(existing = null, onSave) {
 async function _load(container) {
   _css();
   let _filter = 'all';
+  let _tab = 'inventaire';
   let _assets = [];
 
   async function _refresh() {
@@ -288,9 +293,48 @@ async function _load(container) {
     _render();
   }
 
+  function _renderTabFiltered(types, label, icon) {
+    const filtered = _assets.filter(a => types.includes(a.device_type));
+    const main = container.querySelector('#as-main');
+    if (!main) return;
+    main.innerHTML = _renderKPIs(filtered) + `
+      <div class="as-card">
+        <div class="as-card-hd">
+          <h3>${icon} ${label} (${filtered.length})</h3>
+          <button class="as-btn as-btn-primary" id="as-new-btn">+ Ajouter un actif</button>
+        </div>
+        <div>${filtered.length ? _renderTable(filtered) : `<div class="as-empty">Aucun actif de ce type enregistré.</div>`}</div>
+      </div>`;
+    main.querySelector('#as-new-btn')?.addEventListener('click', () => _openModal(null, _refresh));
+    main.querySelectorAll('.as-edit-btn').forEach(btn => { btn.addEventListener('click', () => { const a = _assets.find(x => x.id === btn.dataset.id); if (a) _openModal(a, _refresh); }); });
+    main.querySelectorAll('.as-del-btn').forEach(btn => { btn.addEventListener('click', async () => { if (!confirm('Retirer cet actif ?')) return; try { await _api(`/api/servers/${btn.dataset.id}`, { method: 'DELETE' }); _refresh(); } catch (err) { alert(err.message); } }); });
+  }
+
+  function _renderLicences() {
+    const main = container.querySelector('#as-main');
+    if (!main) return;
+    main.innerHTML = `<div style="background:linear-gradient(135deg,var(--primary-lt),#fff);border:1px solid var(--primary-a20);border-radius:var(--r-xl);padding:18px 22px;margin-bottom:20px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span style="font-size:22px">🤖</span><strong style="font-size:14px;color:var(--text)">ATLAS recommande</strong></div>
+      <div style="font-size:12px;color:var(--text-body);line-height:1.45">Les licences logicielles sont gérées dans le module <strong>Contrats</strong> (catégorie : Logiciel / SaaS). Utilisez-le pour suivre les renouvellements et coûts par siège.</div>
+    </div>
+    <div class="as-card"><div class="as-empty" style="padding:60px">
+      <div style="font-size:52px;margin-bottom:14px">🔑</div>
+      <div style="font-size:17px;font-weight:700;color:var(--text);margin:0 0 8px">Gestion des licences</div>
+      <div style="font-size:13px;color:var(--muted);max-width:380px;margin:0 auto 20px;line-height:1.6">Vos licences logicielles (Microsoft 365, Adobe, etc.) sont centralisées dans le module Contrats pour un suivi unifié avec les renouvellements.</div>
+      <button class="as-btn as-btn-primary" onclick="window.location.href='/workspace/'+window.__agentCtx?.partnerSlug+'/contrats'">Aller aux Contrats →</button>
+    </div></div>`;
+  }
+
   function _render() {
     const main = container.querySelector('#as-main');
     if (!main) return;
+
+    if (_tab === 'ordinateurs') { _renderTabFiltered(['laptop','desktop','tablet','phone_mobile'], 'Ordinateurs & Postes', '💻'); return; }
+    if (_tab === 'serveurs') { _renderTabFiltered(['server'], 'Serveurs', '🖥'); return; }
+    if (_tab === 'reseau') { _renderTabFiltered(['switch','router','firewall'], 'Équipements réseau', '📡'); return; }
+    if (_tab === 'licences') { _renderLicences(); return; }
+    if (_tab === 'imprimantes') { _renderTabFiltered(['printer','scanner'], 'Imprimantes & Scanners', '🖨'); return; }
+
     main.innerHTML = _renderKPIs(_assets) + `
       <div class="as-filters">
         ${[['all','Tous'],['active','Actifs'],['maintenance','En maintenance'],['inactive','Inactifs'],['decommissioned','Retraités']].map(([k,l]) =>
@@ -331,8 +375,24 @@ async function _load(container) {
           <div><h1 class="as-title">Parc TI</h1><p class="as-sub">Serveurs · Postes · Équipements réseau · Garanties</p></div>
         </div>
       </div>
+      <div class="as-tabs">
+        <button class="as-tab active" data-as-tab="inventaire">Inventaire</button>
+        <button class="as-tab" data-as-tab="ordinateurs">Ordinateurs</button>
+        <button class="as-tab" data-as-tab="serveurs">Serveurs</button>
+        <button class="as-tab" data-as-tab="reseau">Réseau</button>
+        <button class="as-tab" data-as-tab="licences">Licences</button>
+        <button class="as-tab" data-as-tab="imprimantes">Imprimantes</button>
+      </div>
       <div id="as-main"><div class="as-loader"><div class="as-spinner"></div><span>Chargement…</span></div></div>
     </div>`;
+
+  container.querySelectorAll('.as-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      _tab = tab.dataset.asTab;
+      container.querySelectorAll('.as-tab').forEach(t => t.classList.toggle('active', t === tab));
+      _render();
+    });
+  });
 
   await _refresh();
 }

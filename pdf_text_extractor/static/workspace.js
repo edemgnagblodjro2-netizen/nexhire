@@ -42,7 +42,7 @@ const NAV = [
     items: [
       { id: 'diagnostic',      label: 'Diagnostic IA IMAI', iconKey: 'chart',    appSlug: 'diagnostic-ia' },
       { id: 'atlas',           label: 'ATLAS AI',           iconKey: 'sparkles', route: '__atlas__' },
-      { id: 'recommandations', label: 'Recommandations',    iconKey: 'zap',      appSlug: 'recommandations', defaultSoon: true },
+      { id: 'recommandations', label: 'Recommandations',    iconKey: 'zap',      appSlug: 'recommandations' },
     ],
   },
   {
@@ -113,7 +113,7 @@ const NAV = [
     section: 'Identity & Access',
     items: [
       { id: 'identity',    label: 'Utilisateurs & Accès', iconKey: 'users',  appSlug: 'identity' },
-      { id: 'sso-mfa',     label: 'SSO & MFA',             iconKey: 'shield', appSlug: 'sso-mfa', defaultSoon: true },
+      { id: 'sso-mfa',     label: 'SSO & MFA',             iconKey: 'shield', appSlug: 'sso-mfa' },
     ],
   },
   {
@@ -127,7 +127,7 @@ const NAV = [
     section: 'Productivité',
     items: [
       { id: 'knowledge',  label: 'Knowledge Hub', iconKey: 'book', appSlug: 'knowledge' },
-      { id: 'automation', label: 'Automatisation', iconKey: 'zap',  appSlug: 'automation', defaultSoon: true },
+      { id: 'automation', label: 'Automatisation', iconKey: 'zap',  appSlug: 'automation' },
     ],
   },
   {

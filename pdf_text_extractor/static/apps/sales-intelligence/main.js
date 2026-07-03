@@ -213,6 +213,7 @@ const TABS = [
   { id: 'campaigns',      label: 'Campagnes' },
   { id: 'agents',         label: 'Agents IA' },
   { id: 'conversations',  label: 'Conversations' },
+  { id: 'pipeline',       label: 'Pipeline commercial' },
   { id: 'meetings',       label: 'Réunions' },
   { id: 'crm',            label: 'CRM' },
   { id: 'analytics',      label: 'Analytics' },
@@ -257,6 +258,7 @@ function _renderView() {
     campaigns:     _viewCampaigns,
     agents:        _viewAgents,
     conversations: _viewConversations,
+    pipeline:      _viewPipeline,
     meetings:      _viewMeetings,
     crm:           _viewCRM,
     analytics:     _viewAnalytics,
@@ -892,6 +894,101 @@ async function _showConversation(id) {
       } catch(e) { document.getElementById('si-cv-msg').innerHTML = _err(e.message); btn.disabled=false; btn.textContent='Envoyer'; }
     });
   } catch(e) { m.innerHTML = _err(e.message); }
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// VIEW: PIPELINE COMMERCIAL
+// ──────────────────────────────────────────────────────────────────────────────
+async function _viewPipeline() {
+  const m = _main();
+  m.innerHTML = _loading('Chargement du pipeline…');
+
+  const STAGES = [
+    { id: 'prospect',      label: 'Prospection',       color: '#6366f1', pct: 100 },
+    { id: 'qualification', label: 'Qualification',     color: '#3b82f6', pct: 60 },
+    { id: 'proposal',      label: 'Proposition',       color: '#f59e0b', pct: 35 },
+    { id: 'negotiation',   label: 'Négociation',       color: '#ef4444', pct: 18 },
+    { id: 'closed_won',    label: 'Fermé — Gagné',     color: '#22c55e', pct: 8 },
+    { id: 'closed_lost',   label: 'Fermé — Perdu',     color: '#94a3b8', pct: 6 },
+  ];
+
+  let prospects = [];
+  try { const d = await _api('/api/si/prospects?page=1&per_page=50'); prospects = Array.isArray(d) ? d : (d?.items || []); } catch {}
+
+  const byStage = {};
+  STAGES.forEach(s => { byStage[s.id] = prospects.filter(p => (p.stage || 'prospect') === s.id); });
+  const totalValue = prospects.reduce((s, p) => s + (parseFloat(p.deal_value) || 0), 0);
+  const wonValue = (byStage.closed_won || []).reduce((s, p) => s + (parseFloat(p.deal_value) || 0), 0);
+
+  m.innerHTML = `
+<div class="si-ph">
+  <div class="si-ph-left">
+    <div class="si-ph-title">Pipeline commercial</div>
+    <div class="si-ph-sub">Visualisez et gérez votre entonnoir de vente IA en temps réel</div>
+  </div>
+  <div class="si-ph-actions">
+    <button class="si-btn si-btn-secondary" onclick="document.querySelector('[data-tab=prospects]').click()">Voir les prospects →</button>
+    <button class="si-btn si-btn-primary" onclick="document.querySelector('[data-tab=campaigns]').click()">+ Nouvelle campagne</button>
+  </div>
+</div>
+
+<div class="si-kpis" style="grid-template-columns:repeat(4,1fr);margin-bottom:24px">
+  <div class="si-kpi"><div class="si-kpi-label">Valeur totale pipeline</div><div class="si-kpi-value" style="font-size:17px">${totalValue > 0 ? '$' + _num(totalValue) : '—'}</div><div class="si-kpi-trend si-kpi-up">Tous stages</div></div>
+  <div class="si-kpi"><div class="si-kpi-label">Prospects actifs</div><div class="si-kpi-value">${prospects.filter(p=>!['closed_won','closed_lost'].includes(p.stage||'prospect')).length}</div><div class="si-kpi-trend si-kpi-up">En cours</div></div>
+  <div class="si-kpi"><div class="si-kpi-label">Valeur gagnée</div><div class="si-kpi-value" style="font-size:17px;color:#22c55e">${wonValue > 0 ? '$' + _num(wonValue) : '—'}</div><div class="si-kpi-trend si-kpi-up">Fermé gagné</div></div>
+  <div class="si-kpi"><div class="si-kpi-label">Taux de conversion</div><div class="si-kpi-value">${prospects.length > 0 ? ((byStage.closed_won?.length||0)/prospects.length*100).toFixed(1) : 0}%</div><div class="si-kpi-trend ${(byStage.closed_won?.length||0) > 0 ? 'si-kpi-up' : ''}">Prospect → Gagné</div></div>
+</div>
+
+<div style="background:var(--si-card);border:1px solid var(--si-border);border-radius:12px;padding:20px;margin-bottom:24px">
+  <div style="font-size:13px;font-weight:700;color:var(--si-text);margin-bottom:16px">Entonnoir de vente</div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    ${STAGES.filter(s=>!['closed_lost'].includes(s.id)).map(s => {
+      const count = (byStage[s.id]||[]).length;
+      const val = (byStage[s.id]||[]).reduce((sum,p)=>sum+(parseFloat(p.deal_value)||0),0);
+      return `<div style="display:flex;align-items:center;gap:12px">
+        <div style="width:130px;font-size:12px;font-weight:600;color:var(--si-text-sub);flex-shrink:0">${s.label}</div>
+        <div style="flex:1;height:24px;background:var(--si-bg);border-radius:6px;overflow:hidden;position:relative">
+          <div style="height:100%;width:${s.pct}%;background:${s.color};border-radius:6px;opacity:.85;transition:width .4s ease"></div>
+        </div>
+        <div style="width:60px;text-align:right;font-size:13px;font-weight:700;color:var(--si-text)">${count}</div>
+        <div style="width:90px;text-align:right;font-size:12px;color:var(--si-text-sub)">${val > 0 ? '$'+_num(val) : '—'}</div>
+      </div>`;
+    }).join('')}
+  </div>
+</div>
+
+<div style="background:var(--si-card);border:1px solid var(--si-border);border-radius:12px;overflow:hidden">
+  <div style="padding:14px 18px;border-bottom:1px solid var(--si-border);display:flex;align-items:center;gap:8px">
+    <span style="font-size:13px;font-weight:700;color:var(--si-text);flex:1">Opportunités en cours</span>
+    <button class="si-btn si-btn-secondary" style="font-size:11px;padding:5px 12px">Exporter CSV</button>
+  </div>
+  ${prospects.filter(p=>!['closed_won','closed_lost'].includes(p.stage||'prospect')).length === 0
+    ? `<div style="text-align:center;padding:48px;color:var(--si-text-sub)">
+         <div style="font-size:40px;margin-bottom:12px">🎯</div>
+         <div style="font-size:16px;font-weight:700;color:var(--si-text);margin:0 0 8px">Aucune opportunité active</div>
+         <div style="font-size:13px;max-width:320px;margin:0 auto 16px;line-height:1.6">Lancez une campagne de prospection IA pour alimenter votre pipeline automatiquement.</div>
+         <button class="si-btn si-btn-primary" onclick="document.querySelector('[data-tab=campaigns]').click()">Lancer une campagne →</button>
+       </div>`
+    : `<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:12px">
+        <thead><tr style="border-bottom:1px solid var(--si-border)">
+          ${['Prospect','Entreprise','Stage','Valeur','Prochaine action','Agent IA','Statut'].map(h=>`<th style="text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--si-text-sub);padding:0 14px 10px">${h}</th>`).join('')}
+        </tr></thead>
+        <tbody>
+          ${prospects.filter(p=>!['closed_won','closed_lost'].includes(p.stage||'prospect')).slice(0,15).map(p => {
+            const stg = STAGES.find(s=>s.id===(p.stage||'prospect'));
+            return `<tr style="border-bottom:1px solid var(--si-border)">
+              <td style="padding:11px 14px;font-weight:700;color:var(--si-text)">${p.first_name||''} ${p.last_name||''}</td>
+              <td style="padding:11px 14px;color:var(--si-text-sub)">${p.company||'—'}</td>
+              <td style="padding:11px 14px"><span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;background:${stg?.color||'#6366f1'}22;color:${stg?.color||'#6366f1'}">${stg?.label||p.stage||'—'}</span></td>
+              <td style="padding:11px 14px;font-weight:600;color:var(--si-text)">${p.deal_value ? '$'+_num(p.deal_value) : '—'}</td>
+              <td style="padding:11px 14px;color:var(--si-text-sub);font-size:11px">${p.next_action||'À définir'}</td>
+              <td style="padding:11px 14px;color:var(--si-text-sub)">${AGENT_NAMES[p.assigned_agent]||p.assigned_agent||'—'}</td>
+              <td style="padding:11px 14px"><span class="si-status-${p.status||'new'}">${p.status||'new'}</span></td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table></div>`}
+</div>`;
 }
 
 // ──────────────────────────────────────────────────────────────────────────────

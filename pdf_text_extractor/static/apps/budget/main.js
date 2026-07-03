@@ -83,6 +83,17 @@ function _css() {
 
 @media(max-width:900px){.bg-kpis,.bg-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:540px){.bg-kpis,.bg-grid{grid-template-columns:1fr};.bg-form-grid{grid-template-columns:1fr}}
+.bg-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:24px}
+.bg-tab{background:none;border:none;border-bottom:2px solid transparent;padding:10px 18px;font-size:13px;font-weight:600;color:var(--text-sub);cursor:pointer;font-family:inherit;transition:color .15s;margin-bottom:-1px;white-space:nowrap}
+.bg-tab.active{color:var(--primary);border-bottom-color:var(--primary)}
+.bg-tab:hover:not(.active){color:var(--text-2)}
+.bg-atlas{background:linear-gradient(135deg,var(--primary-lt),#fff);border:1px solid var(--primary-a20);border-radius:var(--r-xl);padding:18px 22px;margin-bottom:20px}
+.bg-atlas-hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.bg-atlas-item{display:flex;align-items:flex-start;gap:10px;font-size:12px;color:var(--text-body);line-height:1.45}
+.bg-atlas-dot{width:6px;height:6px;border-radius:50%;background:var(--primary);margin-top:4px;flex-shrink:0}
+.bg-ai-cost-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:16px}
+.bg-ai-cost-hd{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.bg-ai-cost-hd h3{font-size:13px;font-weight:700;color:var(--text);margin:0;flex:1}
 `;
   document.head.appendChild(s);
 }
@@ -281,6 +292,7 @@ async function _load(container) {
   _css();
   const currentYear = new Date().getFullYear();
   let _year = currentYear;
+  let _tab = 'dashboard';
   let _lastSummary = { by_category: [], by_department: [] };
   let _lastEntries = [];
 
@@ -293,9 +305,80 @@ async function _load(container) {
     _render(summary, entries);
   }
 
+  function _renderDepenses(entries) {
+    const main = container.querySelector('#bg-main');
+    if (!main) return;
+    const actual = [...entries].filter(e => (e.actual||0) > 0).sort((a,b)=>(b.actual||0)-(a.actual||0));
+    main.innerHTML = `<div class="bg-atlas"><div class="bg-atlas-hd"><span style="font-size:20px">🤖</span><strong style="font-size:13px;color:var(--text)">ATLAS recommande</strong></div><div class="bg-atlas-item"><span class="bg-atlas-dot"></span>Comparez les dépenses réelles avec les allocations pour identifier les dépassements et ajuster les prévisions du prochain trimestre.</div></div>
+    <div class="bg-table-card"><div class="bg-table-card-hd"><h3>💸 Dépenses réelles ${_year}</h3><button class="bg-btn bg-btn-ghost" onclick="window._bgExportCSV()">⬇ CSV</button></div>
+    <div>${!actual.length ? `<div class="bg-empty">Aucune dépense enregistrée pour ${_year}.</div>` : `<table class="bg-table"><thead><tr><th>Catégorie</th><th>Libellé</th><th>Période</th><th>Alloué</th><th>Réel</th><th>Écart</th></tr></thead><tbody>
+    ${actual.map(e=>{const ecart=(e.allocated||0)-(e.actual||0);return`<tr><td><strong>${_catFr(e.category)}</strong></td><td style="color:var(--muted)">${e.label||'—'}</td><td style="color:var(--muted)">${e.month?`${MONTHS[e.month-1]} ${e.year}`:e.year}</td><td>${_fmt(e.allocated,e.currency)}</td><td style="font-weight:600">${_fmt(e.actual,e.currency)}</td><td style="font-weight:700;color:${ecart>=0?'#16a34a':'#dc2626'}">${ecart>=0?'+':''}${_fmt(ecart,e.currency)}</td></tr>`;}).join('')}
+    </tbody></table>`}</div></div>`;
+    window._bgExportCSV = () => _exportCSV(actual, _year);
+  }
+
+  function _renderPrevisions(summary) {
+    const main = container.querySelector('#bg-main');
+    if (!main) return;
+    const cats = summary?.by_category || [];
+    main.innerHTML = `<div class="bg-atlas"><div class="bg-atlas-hd"><span style="font-size:20px">🤖</span><strong style="font-size:13px;color:var(--text)">ATLAS recommande</strong></div><div class="bg-atlas-item"><span class="bg-atlas-dot"></span>Projetez vos dépenses sur les 12 prochains mois en basant les prévisions sur les tendances des 3 derniers trimestres pour plus de précision.</div></div>
+    <div class="bg-table-card"><div class="bg-table-card-hd"><h3>📈 Prévisions ${_year + 1}</h3></div>
+    <div>${!cats.length ? `<div class="bg-empty">Aucune donnée historique disponible pour générer des prévisions.</div>` : `<table class="bg-table"><thead><tr><th>Catégorie</th><th>Réel ${_year}</th><th>Prévision ${_year+1} (+5%)</th><th>Tendance</th></tr></thead><tbody>
+    ${cats.map(c=>{const prev=(c.actual||0)*1.05;return`<tr><td><strong>${_catFr(c.category)}</strong></td><td>${_fmt(c.actual)}</td><td style="font-weight:700;color:var(--primary)">${_fmt(prev)}</td><td style="color:${c.actual>(c.allocated||0)?'#dc2626':'#16a34a'}">${c.actual>(c.allocated||0)?'↑ Dépassement':'↓ Sous budget'}</td></tr>`;}).join('')}
+    </tbody></table>`}</div></div>`;
+  }
+
+  function _renderCoutsIA(entries) {
+    const main = container.querySelector('#bg-main');
+    if (!main) return;
+    const aiEntries = entries.filter(e => ['logiciel','cloud','it'].includes(e.category));
+    const total = aiEntries.reduce((s,e)=>s+(e.actual||0),0);
+    main.innerHTML = `<div class="bg-atlas"><div class="bg-atlas-hd"><span style="font-size:20px">🤖</span><strong style="font-size:13px;color:var(--text)">ATLAS recommande</strong></div><div class="bg-atlas-item"><span class="bg-atlas-dot"></span>Ciblez un ratio coût IA / valeur générée ≤ 15% du budget total. Les outils IA sous-utilisés (< 60% d'adoption) sont les premiers à optimiser.</div></div>
+    <div class="bg-kpis" style="margin-bottom:20px">
+      <div class="bg-kpi"><div class="bg-kpi-icon">🤖</div><div class="bg-kpi-val" style="font-size:16px">${_fmt(total)}</div><div class="bg-kpi-lbl">Coûts IA estimés</div><div class="bg-kpi-sub ok">IT + Cloud + Logiciel</div></div>
+      <div class="bg-kpi"><div class="bg-kpi-icon">📊</div><div class="bg-kpi-val">${aiEntries.length}</div><div class="bg-kpi-lbl">Lignes budgétaires</div><div class="bg-kpi-sub ok">concernées</div></div>
+    </div>
+    <div class="bg-ai-cost-card"><div class="bg-ai-cost-hd"><h3>💡 Coûts par outil IA (estimatif)</h3></div>
+    <div style="padding:18px">
+      ${[['Microsoft 365 Copilot','Abonnement IA Microsoft','logiciel',850],['OpenAI API','Appels API GPT-4','cloud',320],['AgentHub Platform','Licence AgentHub','logiciel',480],['AWS Bedrock','Inférence IA','cloud',210]].map(([name,desc,cat,cost])=>`
+      <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">
+        <div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--text)">${name}</div><div style="font-size:11px;color:var(--muted)">${desc}</div></div>
+        <div style="font-size:13px;font-weight:700;color:var(--text)">${_fmt(cost)}/mois</div>
+        <span style="font-size:10px;padding:2px 8px;border-radius:99px;background:#dbeafe;color:#1d4ed8;font-weight:700">${_catFr(cat)}</span>
+      </div>`).join('')}
+    </div></div>`;
+  }
+
+  function _renderRapports(summary, entries) {
+    const main = container.querySelector('#bg-main');
+    if (!main) return;
+    const total = (summary?.by_category||[]).reduce((s,c)=>s+(c.actual||0),0);
+    const alloc = (summary?.by_category||[]).reduce((s,c)=>s+(c.allocated||0),0);
+    main.innerHTML = `<div class="bg-atlas"><div class="bg-atlas-hd"><span style="font-size:20px">🤖</span><strong style="font-size:13px;color:var(--text)">ATLAS recommande</strong></div><div class="bg-atlas-item"><span class="bg-atlas-dot"></span>Partagez le rapport mensuel avec la direction chaque 1er du mois. Incluez les écarts majeurs et les actions correctives prévues.</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+      <div class="bg-card"><div class="bg-card-hd"><h3>📊 Résumé exécutif ${_year}</h3></div><div class="bg-card-body">
+        <div style="margin-bottom:10px"><div style="font-size:12px;color:var(--muted);margin-bottom:4px">Budget alloué</div><div style="font-size:20px;font-weight:800;color:var(--text)">${_fmt(alloc)}</div></div>
+        <div style="margin-bottom:10px"><div style="font-size:12px;color:var(--muted);margin-bottom:4px">Dépenses réelles</div><div style="font-size:20px;font-weight:800;color:${total>alloc?'#dc2626':'#16a34a'}">${_fmt(total)}</div></div>
+        <div><div style="font-size:12px;color:var(--muted);margin-bottom:4px">Taux d'utilisation</div><div style="font-size:20px;font-weight:800;color:var(--primary)">${alloc>0?Math.round(total/alloc*100):0}%</div></div>
+      </div></div>
+      <div class="bg-card"><div class="bg-card-hd"><h3>⬇ Exporter les rapports</h3></div><div class="bg-card-body" style="display:flex;flex-direction:column;gap:10px">
+        <button class="bg-btn bg-btn-ghost" onclick="window._bgExpCSV()">📄 Export CSV — Toutes les entrées</button>
+        <button class="bg-btn bg-btn-ghost" onclick="window._bgExpPDF()">📑 Rapport PDF exécutif</button>
+        <button class="bg-btn bg-btn-ghost">📧 Envoyer par courriel</button>
+      </div></div>
+    </div>`;
+    window._bgExpCSV = () => _exportCSV(entries, _year);
+    window._bgExpPDF = () => _exportPDF(summary, entries, _year);
+  }
+
   function _render(summary, entries) {
     const main = container.querySelector('#bg-main');
     if (!main) return;
+
+    if (_tab === 'depenses') { _renderDepenses(entries); return; }
+    if (_tab === 'previsions') { _renderPrevisions(summary); return; }
+    if (_tab === 'couts-ia') { _renderCoutsIA(entries); return; }
+    if (_tab === 'rapports') { _renderRapports(summary, entries); return; }
     const years = [currentYear - 1, currentYear, currentYear + 1];
     main.innerHTML = `
       ${_renderKPIs(summary)}
@@ -347,8 +430,23 @@ async function _load(container) {
           <div><h1 class="bg-title">Budget & Finances</h1><p class="bg-sub">Alloué vs Réel · Catégories · Départements</p></div>
         </div>
       </div>
+      <div class="bg-tabs">
+        <button class="bg-tab active" data-bg-tab="dashboard">Tableau de bord</button>
+        <button class="bg-tab" data-bg-tab="depenses">Dépenses</button>
+        <button class="bg-tab" data-bg-tab="previsions">Prévisions</button>
+        <button class="bg-tab" data-bg-tab="couts-ia">Coûts IA</button>
+        <button class="bg-tab" data-bg-tab="rapports">Rapports</button>
+      </div>
       <div id="bg-main"><div class="bg-loader"><div class="bg-spinner"></div><span>Chargement…</span></div></div>
     </div>`;
+
+  container.querySelectorAll('.bg-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      _tab = tab.dataset.bgTab;
+      container.querySelectorAll('.bg-tab').forEach(t => t.classList.toggle('active', t === tab));
+      _render(_lastSummary, _lastEntries);
+    });
+  });
 
   await _refresh();
 }

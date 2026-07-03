@@ -80,6 +80,20 @@ function _css() {
 
 @media(max-width:900px){.ct-kpis{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:540px){.ct-kpis{grid-template-columns:1fr};.ct-form-grid{grid-template-columns:1fr}}
+
+.ct-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:24px}
+.ct-tab{background:none;border:none;border-bottom:2px solid transparent;padding:10px 18px;font-size:13px;font-weight:600;color:var(--text-sub);cursor:pointer;font-family:inherit;transition:color .15s;margin-bottom:-1px;white-space:nowrap}
+.ct-tab.active{color:var(--primary);border-bottom-color:var(--primary)}
+.ct-tab:hover:not(.active){color:var(--text-2)}
+.ct-atlas{background:linear-gradient(135deg,var(--primary-lt),#fff);border:1px solid var(--primary-a20);border-radius:var(--r-xl);padding:18px 22px;margin-bottom:20px}
+.ct-atlas-hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ct-atlas-list{display:flex;flex-direction:column;gap:6px}
+.ct-atlas-item{display:flex;align-items:flex-start;gap:10px;font-size:12px;color:var(--text-body);line-height:1.45}
+.ct-atlas-dot{width:6px;height:6px;border-radius:50%;background:var(--primary);margin-top:4px;flex-shrink:0}
+.ct-vendor-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 20px;display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.ct-vendor-icon{width:40px;height:40px;border-radius:var(--r-lg);background:var(--bg-2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ct-vendor-name{font-size:14px;font-weight:700;color:var(--text)}
+.ct-vendor-meta{font-size:12px;color:var(--muted)}
 `;
   document.head.appendChild(s);
 }
@@ -266,6 +280,7 @@ function _openModal(existing = null, onSave) {
 async function _load(container) {
   _css();
   let _filter = 'all';
+  let _tab = 'liste';
   let _contracts = [];
 
   async function _refresh() {
@@ -276,9 +291,76 @@ async function _load(container) {
     _render();
   }
 
+  function _renderFournisseurs() {
+    const byVendor = {};
+    _contracts.forEach(c => { if (!byVendor[c.vendor]) byVendor[c.vendor] = []; byVendor[c.vendor].push(c); });
+    const vendors = Object.entries(byVendor).sort((a,b)=>b[1].reduce((s,c)=>s+(parseFloat(c.annual_value)||0),0)-a[1].reduce((s,c)=>s+(parseFloat(c.annual_value)||0),0));
+    return `<div class="ct-atlas"><div class="ct-atlas-hd"><span style="font-size:22px">🤖</span><strong style="font-size:14px;color:var(--text)">ATLAS recommande</strong></div><div class="ct-atlas-list"><div class="ct-atlas-item"><span class="ct-atlas-dot"></span>Regroupez vos contrats par fournisseur pour identifier les opportunités de consolidation et maximiser votre levier de négociation.</div></div></div>
+    <div style="margin-bottom:8px;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)">${vendors.length} Fournisseurs</div>
+    ${vendors.length === 0 ? `<div class="ct-empty">Aucun fournisseur. Créez votre premier contrat.</div>` :
+      vendors.map(([vendor, cts]) => {
+        const total = cts.reduce((s,c)=>s+(parseFloat(c.annual_value)||0),0);
+        return `<div class="ct-vendor-card">
+          <div class="ct-vendor-icon">🏢</div>
+          <div style="flex:1;min-width:0">
+            <div class="ct-vendor-name">${vendor}</div>
+            <div class="ct-vendor-meta">${cts.length} contrat${cts.length>1?'s':''} · ${_fmt(total)}/an · ${cts.map(c=>`<span class="ct-badge ${c.status||'active'}" style="margin-right:3px">${_catFr(c.category)}</span>`).join('')}</div>
+          </div>
+          <button class="ct-btn ct-btn-ghost">Voir les contrats →</button>
+        </div>`;
+      }).join('')}`;
+  }
+
+  function _renderEcheances() {
+    const sorted = [..._contracts].filter(c=>c.renewal_date).sort((a,b)=>new Date(a.renewal_date)-new Date(b.renewal_date));
+    return `<div class="ct-atlas"><div class="ct-atlas-hd"><span style="font-size:22px">🤖</span><strong style="font-size:14px;color:var(--text)">ATLAS recommande</strong></div><div class="ct-atlas-list"><div class="ct-atlas-item"><span class="ct-atlas-dot"></span>Les contrats en rouge expirent dans moins de 30 jours. Déclenchez les négociations au moins 60 jours avant pour avoir du levier.</div></div></div>
+    <div class="ct-card"><div class="ct-card-hd"><h3>📅 Échéances par ordre chronologique</h3></div>
+    <div style="overflow-x:auto"><table class="ct-table"><thead><tr><th>Fournisseur</th><th>Catégorie</th><th>Valeur / an</th><th>Renouvellement</th><th>Urgence</th><th>Préavis</th></tr></thead>
+    <tbody>${sorted.length === 0 ? `<tr><td colspan="6" class="ct-empty">Aucun contrat avec date de renouvellement.</td></tr>` :
+      sorted.map(c=>`<tr><td><strong>${c.vendor||'—'}</strong></td><td>${_catFr(c.category)}</td><td>${_fmt(c.annual_value,c.currency)}</td><td style="white-space:nowrap">${_fmtDate(c.renewal_date)}</td><td>${_urgencyBadge(c)}</td><td style="color:var(--muted)">${c.cancellation_notice_days||60}j</td></tr>`).join('')}
+    </tbody></table></div></div>`;
+  }
+
+  function _renderRenouvellements() {
+    const renewing = _contracts.filter(c=>c.urgency==='critical'||c.urgency==='warning').sort((a,b)=>a.days_to_renewal-b.days_to_renewal);
+    return `<div class="ct-atlas"><div class="ct-atlas-hd"><span style="font-size:22px">🤖</span><strong style="font-size:14px;color:var(--text)">ATLAS recommande</strong></div><div class="ct-atlas-list"><div class="ct-atlas-item"><span class="ct-atlas-dot"></span>Priorisez les renouvellements critiques (≤30j). Vérifiez si des alternatives existent avant de vous engager automatiquement.</div></div></div>
+    ${renewing.length===0 ? `<div class="ct-card"><div class="ct-empty" style="padding:48px">✅ Aucun renouvellement urgent dans les 90 prochains jours.</div></div>` :
+    `<div class="ct-card"><div class="ct-card-hd"><h3>⏰ Renouvellements à traiter (${renewing.length})</h3></div>
+    <div style="overflow-x:auto"><table class="ct-table"><thead><tr><th>Fournisseur</th><th>Catégorie</th><th>Valeur / an</th><th>Dans</th><th>Urgence</th><th>Actions</th></tr></thead>
+    <tbody>${renewing.map(c=>`<tr><td><strong>${c.vendor}</strong></td><td>${_catFr(c.category)}</td><td>${_fmt(c.annual_value,c.currency)}</td><td style="font-weight:700;color:${c.urgency==='critical'?'#dc2626':'#d97706'}">${c.days_to_renewal}j</td><td>${_urgencyBadge(c)}</td><td><div class="ct-actions"><button class="ct-btn ct-btn-primary ct-edit-btn" data-id="${c.id}">Renouveler</button></div></td></tr>`).join('')}
+    </tbody></table></div></div>`}`;
+  }
+
+  function _renderDocuments() {
+    return `<div class="ct-atlas"><div class="ct-atlas-hd"><span style="font-size:22px">🤖</span><strong style="font-size:14px;color:var(--text)">ATLAS recommande</strong></div><div class="ct-atlas-list"><div class="ct-atlas-item"><span class="ct-atlas-dot"></span>Centralisez vos contrats signés ici pour un accès rapide lors des audits, négociations et renouvellements.</div></div></div>
+    <div class="ct-card"><div class="ct-empty" style="padding:60px">
+      <div style="font-size:52px;margin-bottom:14px">📁</div>
+      <div style="font-size:17px;font-weight:700;color:var(--text);margin:0 0 8px">Aucun document</div>
+      <div style="font-size:13px;color:var(--muted);max-width:360px;margin:0 auto 20px;line-height:1.6">Glissez-déposez vos contrats signés (PDF, DOCX) pour les centraliser et les retrouver facilement.</div>
+      <button class="ct-btn ct-btn-primary">📎 Joindre un document</button>
+    </div></div>`;
+  }
+
+  function _renderAlertes() {
+    const critical = _contracts.filter(c=>c.urgency==='critical');
+    return `<div class="ct-atlas"><div class="ct-atlas-hd"><span style="font-size:22px">🤖</span><strong style="font-size:14px;color:var(--text)">ATLAS recommande</strong></div><div class="ct-atlas-list"><div class="ct-atlas-item"><span class="ct-atlas-dot"></span>Traitez les contrats critiques en priorité. Un renouvellement automatique non souhaité peut engager votre organisation pour 1 an de plus.</div></div></div>
+    ${critical.length===0 ? `<div class="ct-card"><div class="ct-empty" style="padding:48px">✅ Aucune alerte critique. Tous vos contrats sont sous contrôle.</div></div>` :
+    `<div class="ct-card"><div class="ct-card-hd"><h3>🚨 Alertes critiques (${critical.length})</h3></div>
+    <div style="overflow-x:auto"><table class="ct-table"><thead><tr><th>Fournisseur</th><th>Catégorie</th><th>Valeur / an</th><th>Renouvellement</th><th>Urgence</th><th>Action</th></tr></thead>
+    <tbody>${critical.map(c=>`<tr style="background:#fff5f5"><td><strong style="color:#dc2626">${c.vendor}</strong></td><td>${_catFr(c.category)}</td><td>${_fmt(c.annual_value,c.currency)}</td><td style="color:#dc2626;font-weight:700">${_fmtDate(c.renewal_date)}</td><td>${_urgencyBadge(c)}</td><td><button class="ct-btn ct-btn-danger ct-edit-btn" data-id="${c.id}">Agir</button></td></tr>`).join('')}
+    </tbody></table></div></div>`}`;
+  }
+
   function _render() {
     const main = container.querySelector('#ct-main');
     if (!main) return;
+
+    if (_tab === 'fournisseurs') { main.innerHTML = _renderFournisseurs(); return; }
+    if (_tab === 'echeances') { main.innerHTML = _renderEcheances(); return; }
+    if (_tab === 'renouvellements') { main.innerHTML = _renderRenouvellements(); return; }
+    if (_tab === 'documents') { main.innerHTML = _renderDocuments(); return; }
+    if (_tab === 'alertes') { main.innerHTML = _renderAlertes(); main.querySelectorAll('.ct-edit-btn').forEach(btn => { btn.addEventListener('click', () => { const c = _contracts.find(x => x.id === btn.dataset.id); if (c) _openModal(c, _refresh); }); }); return; }
+
     main.innerHTML = _renderKPIs(_contracts) + `
       <div class="ct-filters">
         ${[['all','Tous'],['active','Actifs'],['renewing','Renouvellement prochain'],['expired','Expirés'],['draft','Brouillons']].map(([k,l]) =>
@@ -326,8 +408,24 @@ async function _load(container) {
           <div><h1 class="ct-title">Gestion des contrats</h1><p class="ct-sub">Fournisseurs · Renouvellements · Économies potentielles</p></div>
         </div>
       </div>
+      <div class="ct-tabs">
+        <button class="ct-tab active" data-ct-tab="liste">Liste</button>
+        <button class="ct-tab" data-ct-tab="fournisseurs">Fournisseurs</button>
+        <button class="ct-tab" data-ct-tab="echeances">Échéances</button>
+        <button class="ct-tab" data-ct-tab="renouvellements">Renouvellements</button>
+        <button class="ct-tab" data-ct-tab="documents">Documents</button>
+        <button class="ct-tab" data-ct-tab="alertes">Alertes</button>
+      </div>
       <div id="ct-main"><div class="ct-loader"><div class="ct-spinner"></div><span>Chargement…</span></div></div>
     </div>`;
+
+  container.querySelectorAll('.ct-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      _tab = tab.dataset.ctTab;
+      container.querySelectorAll('.ct-tab').forEach(t => t.classList.toggle('active', t === tab));
+      _render();
+    });
+  });
 
   await _refresh();
 }
