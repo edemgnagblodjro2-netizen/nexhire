@@ -18,6 +18,15 @@ import psycopg2
 import psycopg2.extras
 from psycopg2.pool import ThreadedConnectionPool
 
+try:
+    from observability import track_sql as _track_sql
+except ImportError:
+    from contextlib import contextmanager as _cm
+
+    @_cm
+    def _track_sql():  # noop fallback si observability n'est pas disponible
+        yield
+
 
 @lru_cache(maxsize=1)
 def _pool() -> ThreadedConnectionPool:
@@ -35,7 +44,8 @@ def get_db() -> Generator:
     conn = pool.getconn()
     try:
         with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
-            yield cur
+            with _track_sql():
+                yield cur
         conn.commit()
     except Exception:
         conn.rollback()

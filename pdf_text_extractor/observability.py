@@ -16,6 +16,7 @@ import logging
 import time
 import uuid
 from collections import defaultdict
+from contextlib import contextmanager
 from contextvars import ContextVar
 from typing import Callable
 
@@ -46,9 +47,32 @@ try:
         buckets=[5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000],
     )
     _ACTIVE_REQ = Gauge("http_active_requests", "Number of active HTTP requests")
+    # ── SQL metrics ───────────────────────────────────────────────────────────
+    _SQL_LATENCY = Histogram(
+        "sql_query_duration_ms",
+        "SQL query block duration in milliseconds",
+        ["endpoint"],
+        buckets=[1, 2, 5, 10, 25, 50, 100, 250, 500, 1000, 2500],
+    )
+    _SQL_TOTAL = Counter(
+        "sql_query_total",
+        "Total SQL query blocks executed",
+        ["endpoint"],
+    )
+    _SQL_ERRORS = Counter(
+        "sql_query_errors_total",
+        "Total SQL query blocks that raised an error",
+        ["endpoint"],
+    )
+    _SQL_ACTIVE = Gauge("sql_active_queries", "Number of SQL query blocks currently in flight")
+    # ── Cache metrics (pré-câblé pour Redis Sprint 3D) ───────────────────────
+    _CACHE_HITS = Counter("cache_hits_total", "Cache hits", ["endpoint"])
+    _CACHE_MISSES = Counter("cache_misses_total", "Cache misses", ["endpoint"])
 except ImportError:
     _PROM_OK = False
     _REQ_COUNTER = _REQ_LATENCY = _ACTIVE_REQ = None  # type: ignore
+    _SQL_LATENCY = _SQL_TOTAL = _SQL_ERRORS = _SQL_ACTIVE = None  # type: ignore
+    _CACHE_HITS = _CACHE_MISSES = None  # type: ignore
 
 # ── Sentry (optionnel) ────────────────────────────────────────────────────────
 try:
@@ -107,6 +131,7 @@ _correlation_id_cv: ContextVar[str] = ContextVar("correlation_id", default="")
 _trace_id_cv: ContextVar[str] = ContextVar("trace_id", default="")
 _user_id_cv: ContextVar[str] = ContextVar("user_id", default="")
 _org_id_cv: ContextVar[str] = ContextVar("org_id", default="")
+_endpoint_cv: ContextVar[str] = ContextVar("endpoint", default="")
 
 
 def get_request_ctx() -> dict:
@@ -198,6 +223,7 @@ class StructuredLoggingMiddleware:
                 pass
 
         method = scope.get("method", "")
+        tok_e = _endpoint_cv.set(f"{method} {path}")
         status_code = 0
         start = time.perf_counter()
 
@@ -254,6 +280,7 @@ class StructuredLoggingMiddleware:
             _request_id_cv.reset(tok_r)
             _correlation_id_cv.reset(tok_c)
             _trace_id_cv.reset(tok_t)
+            _endpoint_cv.reset(tok_e)
             _user_id_cv.reset(tok_u)
             _org_id_cv.reset(tok_o)
 
@@ -331,6 +358,43 @@ class GlobalRateLimitMiddleware:
 
         bucket.append(now)
         await self.app(scope, receive, send)
+
+
+# ── SQL instrumentation ───────────────────────────────────────────────────────
+@contextmanager
+def track_sql():
+    """Instrumente un bloc SQL : durée (histogramme), compteur, erreurs, jauge active.
+
+    Usage dans db.get_db() — toutes les routes sont couvertes automatiquement.
+    Le label `endpoint` est lu depuis le ContextVar posé par le middleware.
+    """
+    if not _PROM_OK:
+        yield
+        return
+    endpoint = _endpoint_cv.get() or "unknown"
+    _SQL_ACTIVE.inc()
+    _SQL_TOTAL.labels(endpoint=endpoint).inc()
+    t0 = time.perf_counter()
+    try:
+        yield
+    except Exception:
+        _SQL_ERRORS.labels(endpoint=endpoint).inc()
+        raise
+    finally:
+        _SQL_LATENCY.labels(endpoint=endpoint).observe(round((time.perf_counter() - t0) * 1000, 2))
+        _SQL_ACTIVE.dec()
+
+
+def record_cache_hit(endpoint: str = "") -> None:
+    """Incrémente cache_hits_total (appelé depuis le module Redis Sprint 3D)."""
+    if _PROM_OK and _CACHE_HITS:
+        _CACHE_HITS.labels(endpoint=endpoint or _endpoint_cv.get() or "unknown").inc()
+
+
+def record_cache_miss(endpoint: str = "") -> None:
+    """Incrémente cache_misses_total (appelé depuis le module Redis Sprint 3D)."""
+    if _PROM_OK and _CACHE_MISSES:
+        _CACHE_MISSES.labels(endpoint=endpoint or _endpoint_cv.get() or "unknown").inc()
 
 
 # ── Sentry init ───────────────────────────────────────────────────────────────
