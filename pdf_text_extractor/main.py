@@ -172,6 +172,7 @@ from routes_initiatives import router as initiatives_router
 from routes_atlas_v3 import router as atlas_v3_router
 from routes_politiques import router as politiques_router
 from routes_conformite_causale import router as conformite_causale_router
+from routes_sales_intelligence import router as sales_intelligence_router
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -277,6 +278,7 @@ def create_app(
     app.include_router(atlas_v3_router)
     app.include_router(politiques_router)
     app.include_router(conformite_causale_router)
+    app.include_router(sales_intelligence_router)
     app.state.storage = storage or DocumentStore.from_env()
     app.state.assistant = assistant or AssistantService.from_env()
 

@@ -6,7 +6,7 @@
    RÈGLE : aucune valeur de couleur hardcodée en dehors de ce fichier.
    ═══════════════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&display=swap');
+/* Segoe UI est une police système Microsoft — pas besoin d'import externe */
 
 :root {
 
