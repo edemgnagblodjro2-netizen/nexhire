@@ -522,9 +522,9 @@ function _showWelcomeScreen(profile, partner) {
   display:flex;align-items:center;gap:8px;
   transform:translateX(-4px);transition:color .4s ease,transform .35s ease;
 }
-.wc-step::before { content:'\25CB';font-size:10px;flex-shrink:0; }
+.wc-step::before { content:'○';font-size:10px;flex-shrink:0; }
 .wc-step.done { color:#4ade80;transform:translateX(0); }
-.wc-step.done::before { content:'\2713'; }
+.wc-step.done::before { content:'✓'; }
 .wc-final {
   font-size:14px;font-weight:600;color:transparent;
   margin-bottom:22px;letter-spacing:.01em;text-align:left;
