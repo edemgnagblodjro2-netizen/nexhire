@@ -6,8 +6,9 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, EmailStr, Field
 
 from auth import CurrentUser
+from db import get_db, row, rows
+from pagination import PageParams, paginated_union
 from rbac import require_min_role
-from db import get_db, rows, row
 
 router = APIRouter(prefix="/api/members", tags=["members"])
 
@@ -106,31 +107,36 @@ def org_chart(user: CurrentUser = Depends(require_min_role("user"))):
 
 
 @router.get("")
-def list_members(user: CurrentUser = Depends(require_min_role("user"))):
-    """Retourne tous les membres de l'organisation + invités mal rattachés (org incorrecte)."""
+def list_members(
+    page: PageParams = Depends(),
+    user: CurrentUser = Depends(require_min_role("user")),
+):
+    """Retourne les membres de l'organisation + invités mal rattachés.
+    Pagination : ?limit=50&offset=0 (max 200 par page)."""
+    # UNION unique pour cohérence snapshot — évite la race condition entre membres
+    # et invités mal rattachés (trigger Supabase peut être asynchrone).
+    inner = """
+        SELECT id, email, full_name, role, is_active, created_at, FALSE AS conflicted
+        FROM users
+        WHERE organization_id = %s
+
+        UNION
+
+        SELECT u.id, u.email, u.full_name, u.role, u.is_active, u.created_at, TRUE AS conflicted
+        FROM users u
+        JOIN pending_invitations pi ON pi.email = u.email AND pi.org_id = %s
+        WHERE (u.organization_id IS NULL OR u.organization_id != %s)
+    """
     with get_db() as cur:
-        # Requête unique (UNION) pour cohérence snapshot — évite race condition
-        # entre membres org et invités mal rattachés (trigger Supabase)
         cur.execute(
-            """
-            SELECT id, email, full_name, role, is_active, created_at, FALSE AS conflicted
-            FROM users
-            WHERE organization_id = %s
-
-            UNION
-
-            SELECT u.id, u.email, u.full_name, u.role, u.is_active, u.created_at, TRUE AS conflicted
-            FROM users u
-            JOIN pending_invitations pi ON pi.email = u.email AND pi.org_id = %s
-            WHERE (u.organization_id IS NULL OR u.organization_id != %s)
-
-            ORDER BY created_at
-            """,
-            (user.organization_id, user.organization_id, user.organization_id),
+            paginated_union(inner, order_by="created_at"),
+            (user.organization_id, user.organization_id, user.organization_id, page.limit, page.offset),
         )
-        members = rows(cur)
+        result = page.response(rows(cur))
 
-    return {"members": members, "total": len(members)}
+    # Rétrocompatibilité : expose aussi "members"
+    result["members"] = result["items"]
+    return result
 
 
 # ── Pending invitations ────────────────────────────────────────────────────

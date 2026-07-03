@@ -10,6 +10,7 @@ from pydantic import BaseModel, Field
 
 from auth import CurrentUser
 from db import get_db, row, rows
+from pagination import PageParams, paginated
 from rbac import ROLE_RANK, require_min_role
 
 router = APIRouter(prefix="/api/transactions", tags=["transactions"])
@@ -68,12 +69,14 @@ def list_transactions(
     dept_id: str | None = None,
     status: str | None = None,
     flagged: bool | None = None,
+    page: PageParams = Depends(),
     user: CurrentUser = Depends(require_min_role("user")),
 ):
-    """Liste les transactions, filtrables. Filtre par département si non-manager."""
+    """Liste les transactions filtrables. Filtre par département si non-manager.
+    Pagination : ?limit=50&offset=0 (max 200 par page)."""
     allowed = _allowed_dept_ids(user)
     if allowed is not None and not allowed:
-        return []
+        return {"items": [], "total": 0, "limit": page.limit, "offset": page.offset, "has_more": False}
 
     params: list[Any] = [user.organization_id]
     where = "WHERE ft.organization_id = %s"
@@ -100,29 +103,27 @@ def list_transactions(
         where += " AND ft.is_flagged = %s"
         params.append(flagged)
 
+    base = f"""
+        SELECT
+          ft.id, ft.transaction_date, ft.amount, ft.currency,
+          ft.description, ft.reference_number, ft.category, ft.status,
+          ft.source, ft.is_flagged, ft.flag_reason,
+          ft.created_at,
+          v.name   AS vendor_name,
+          v.id     AS vendor_id,
+          d.name   AS department_name,
+          c.vendor AS contract_vendor
+        FROM public.financial_transactions ft
+        LEFT JOIN public.vendors     v ON v.id = ft.vendor_id
+        LEFT JOIN public.departments d ON d.id = ft.department_id
+        LEFT JOIN public.contracts   c ON c.id = ft.contract_id
+        {where}
+    """
+    params.extend([page.limit, page.offset])
+
     with get_db() as cur:
-        cur.execute(
-            f"""
-            SELECT
-              ft.id, ft.transaction_date, ft.amount, ft.currency,
-              ft.description, ft.reference_number, ft.category, ft.status,
-              ft.source, ft.is_flagged, ft.flag_reason,
-              ft.created_at,
-              v.name   AS vendor_name,
-              v.id     AS vendor_id,
-              d.name   AS department_name,
-              c.vendor AS contract_vendor
-            FROM public.financial_transactions ft
-            LEFT JOIN public.vendors     v ON v.id = ft.vendor_id
-            LEFT JOIN public.departments d ON d.id = ft.department_id
-            LEFT JOIN public.contracts   c ON c.id = ft.contract_id
-            {where}
-            ORDER BY ft.transaction_date DESC, ft.created_at DESC
-            LIMIT 500
-            """,
-            params,
-        )
-        return rows(cur)
+        cur.execute(paginated(base, order_by="ft.transaction_date DESC, ft.created_at DESC"), params)
+        return page.response(rows(cur))
 
 
 @router.get("/summary")

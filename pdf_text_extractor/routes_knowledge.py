@@ -7,7 +7,8 @@ from pypdf import PdfReader
 
 from auth import CurrentUser
 from db import get_db, rows
-from rbac import require_min_role, ROLE_RANK
+from pagination import PageParams, paginated
+from rbac import ROLE_RANK, require_min_role
 
 router = APIRouter(prefix="/api/knowledge", tags=["knowledge"])
 logger = logging.getLogger(__name__)
@@ -91,9 +92,11 @@ async def upload_document(
 
 @router.get("/documents")
 def list_documents(
+    page: PageParams = Depends(),
     user: CurrentUser = Depends(require_min_role("user")),
 ):
-    """Liste les documents indexés filtrés par département (admin/owner voient tout)."""
+    """Liste les documents indexés filtrés par département (admin/owner voient tout).
+    Pagination : ?limit=50&offset=0 (max 200 par page)."""
     allowed = _get_allowed_dept_ids(user)
     org_id = str(user.organization_id)
 
@@ -107,7 +110,7 @@ def list_documents(
         dept_clause = "AND (department_id IS NULL OR department_id = ANY(%s::uuid[]))"
         params = [org_id, allowed]
 
-    sql = f"""
+    base = f"""
         SELECT title, source_type, source_url, department_id,
                COUNT(*) AS chunk_count,
                MAX(synced_at) AS synced_at
@@ -115,12 +118,12 @@ def list_documents(
         WHERE organization_id = %s
           {dept_clause}
         GROUP BY title, source_type, source_url, department_id
-        ORDER BY MAX(synced_at) DESC
-        LIMIT 500
     """
+    params.extend([page.limit, page.offset])
+
     with get_db() as cur:
-        cur.execute(sql, params)
-        return rows(cur)
+        cur.execute(paginated(base, order_by="MAX(synced_at) DESC"), params)
+        return page.response(rows(cur))
 
 
 @router.delete("/documents")

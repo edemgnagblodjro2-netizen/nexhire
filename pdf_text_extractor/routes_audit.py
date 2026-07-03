@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, Query
 
 from auth import CurrentUser
 from db import get_db, rows
+from pagination import PageParams, paginated
 from rbac import require_min_role
 
 router = APIRouter(prefix="/api/audit", tags=["audit"])
@@ -14,14 +15,13 @@ def list_audit_logs(
     action: str | None = Query(default=None, description="Filtrer par action"),
     connector: str | None = Query(default=None, description="Filtrer par connecteur"),
     success: bool | None = Query(default=None, description="true = succès, false = échecs"),
-    limit: int = Query(default=50, ge=1, le=500),
-    offset: int = Query(default=0, ge=0),
+    page: PageParams = Depends(),
     user: CurrentUser = Depends(require_min_role("admin")),
 ):
     """Logs d'audit de l'organisation — lecture seule, admin+.
-    Retourne les entrées de la plus récente à la plus ancienne."""
+    Retourne les entrées de la plus récente à la plus ancienne.
+    Pagination : ?limit=50&offset=0 (max 200 par page)."""
 
-    # Build dynamic WHERE clauses
     conditions = ["organization_id = %s"]
     params: list = [user.organization_id]
 
@@ -36,25 +36,18 @@ def list_audit_logs(
         params.append(success)
 
     where = " AND ".join(conditions)
-    params.extend([limit, offset])
+    params.extend([page.limit, page.offset])
 
+    base = f"""
+        SELECT id, action, query, connector, success, ip_address,
+               http_status, resource_ids, error_detail, user_id, created_at
+        FROM audit_logs
+        WHERE {where}
+    """
     with get_db() as cur:
-        cur.execute(
-            f"""
-            SELECT id, action, query, connector, success, ip_address,
-                   http_status, resource_ids, error_detail, user_id, created_at
-            FROM audit_logs
-            WHERE {where}
-            ORDER BY created_at DESC
-            LIMIT %s OFFSET %s
-            """,
-            params,
-        )
-        logs = rows(cur)
+        cur.execute(paginated(base, order_by="created_at DESC"), params)
+        result = page.response(rows(cur))
 
-    return {
-        "total": len(logs),
-        "offset": offset,
-        "limit": limit,
-        "logs": logs,
-    }
+    # Rétrocompatibilité : expose aussi "logs" en plus de "items"
+    result["logs"] = result["items"]
+    return result
