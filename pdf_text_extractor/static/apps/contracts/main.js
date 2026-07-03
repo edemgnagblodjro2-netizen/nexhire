@@ -427,7 +427,6 @@ async function _load(container) {
         <button class="ct-tab" data-ct-tab="fournisseurs">Fournisseurs</button>
         <button class="ct-tab" data-ct-tab="echeances">Échéances</button>
         <button class="ct-tab" data-ct-tab="renouvellements">Renouvellements</button>
-        <button class="ct-tab" data-ct-tab="documents">Documents</button>
         <button class="ct-tab" data-ct-tab="alertes">Alertes</button>
       </div>
       <div id="ct-main"><div class="ct-loader"><div class="ct-spinner"></div><span>Chargement…</span></div></div>

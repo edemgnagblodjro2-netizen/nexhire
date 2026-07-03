@@ -145,7 +145,44 @@ const _DEMO_NC = {
 
 function _render() {
   if (!_container) return;
-  const s = _state.summary || _DEMO_SUMMARY;
+
+  // ── Aucune donnée réelle : ne jamais afficher de valeurs fictives ──────────
+  if (_state.is_demo) {
+    _container.innerHTML = `
+      <div style="padding:32px;max-width:720px;margin:0 auto">
+        <div role="alert" style="background:#FFF8E1;border:1px solid #F9A825;border-radius:8px;padding:14px 18px;margin-bottom:24px;display:flex;align-items:flex-start;gap:14px">
+          <div style="font-size:20px;flex-shrink:0;margin-top:1px">🔬</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:13px;font-weight:700;color:#7B4F00;margin-bottom:4px">Mode démonstration</div>
+            <div style="font-size:12px;color:#8B6000;line-height:1.55;max-width:64ch">Aucune donnée de conformité réelle n'a été trouvée pour votre organisation. Configurez vos connecteurs ou importez un référentiel pour commencer l'évaluation.</div>
+          </div>
+          <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;padding:3px 8px;background:#F9A825;color:#fff;border-radius:4px;flex-shrink:0;white-space:nowrap">DÉMO</div>
+        </div>
+        <div style="text-align:center;padding:52px 24px;background:#fff;border:1px solid #EDEBE9;border-radius:8px">
+          <div style="font-size:52px;margin-bottom:16px">📋</div>
+          <div style="font-size:18px;font-weight:700;color:#201F1E;margin-bottom:8px">Aucune donnée de conformité</div>
+          <div style="font-size:13px;color:#605E5C;line-height:1.6;margin-bottom:8px;max-width:480px;margin-left:auto;margin-right:auto">
+            Importez un référentiel (ISO 27001, Loi 25, SOC 2, ISO 42001) et configurez vos connecteurs pour calculer votre score de conformité réel.
+          </div>
+          <div style="font-size:12px;color:#A19F9D;margin-bottom:28px;max-width:420px;margin-left:auto;margin-right:auto">
+            Votre score, vos non-conformités et votre coût de l'inaction seront calculés uniquement à partir de données vérifiées.
+          </div>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+            <button onclick="document.dispatchEvent(new CustomEvent('ws:navigate',{detail:{appSlug:'help'},bubbles:true}))"
+              style="padding:9px 18px;font-size:13px;font-weight:600;background:transparent;color:#0078D4;border:1.5px solid #0078D4;border-radius:4px;cursor:pointer;font-family:inherit">
+              📋 Comment importer un référentiel
+            </button>
+            <button onclick="document.dispatchEvent(new CustomEvent('ws:navigate',{detail:{appSlug:'integrations'},bubbles:true}))"
+              style="padding:9px 18px;font-size:13px;font-weight:700;background:#0078D4;color:#fff;border:none;border-radius:4px;cursor:pointer;font-family:inherit">
+              🔌 Configurer les connecteurs →
+            </button>
+          </div>
+        </div>
+      </div>`;
+    return;
+  }
+
+  const s = _state.summary || {};
   const trend = s.score_trend >= 0 ? `+${s.score_trend}` : `${s.score_trend}`;
   const trendColor = s.score_trend >= 0 ? '#107C10' : '#D83B01';
   const scoreColor = s.overall_score >= 80 ? '#107C10' : s.overall_score >= 60 ? '#986F0B' : '#D83B01';

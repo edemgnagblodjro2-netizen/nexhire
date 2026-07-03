@@ -468,7 +468,6 @@ function _renderShell(container) {
 
   <div class="aut-tabs">
     <button class="aut-tab active" data-tab="workflows">Workflows</button>
-    <button class="aut-tab" data-tab="triggers">Déclencheurs</button>
     <button class="aut-tab" data-tab="runs">Exécutions</button>
     <button class="aut-tab" data-tab="templates">Bibliothèque de modèles</button>
     <button class="aut-tab" data-tab="new">+ Nouveau workflow</button>
