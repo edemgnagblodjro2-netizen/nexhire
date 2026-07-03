@@ -141,13 +141,7 @@ const TEMPLATES = [
   { icon: '🛡️', name: 'Alerte sécurité', desc: 'Notifie l\'administrateur et ouvre un ticket ServiceNow lors de la détection d\'un incident de sécurité.', tag: 'Sécurité', trigger: 'security.incident' },
 ];
 
-const MOCK_RUNS = [
-  { wf: 'Notification après diagnostic', trigger: 'diagnostic.completed', start: '2026-07-03T09:02:00Z', dur: '2.3s', status: 'ok' },
-  { wf: 'Export hebdomadaire cohorte', trigger: 'schedule.weekly', start: '2026-06-30T07:00:00Z', dur: '14.1s', status: 'ok' },
-  { wf: 'Alerte anomalie score IMAI', trigger: 'score.threshold', start: '2026-06-28T16:45:00Z', dur: '1.8s', status: 'ok' },
-  { wf: 'Synchronisation CRM', trigger: 'diagnostic.completed', start: '2026-06-25T11:20:00Z', dur: '8.4s', status: 'err' },
-  { wf: 'Rappel relance cohorte', trigger: 'schedule.weekly', start: '2026-06-23T07:00:00Z', dur: '5.7s', status: 'ok' },
-];
+// Pas de données fictives — les exécutions viennent de /api/orchestrations/{id}/runs
 
 const TRIGGERS = [
   { id: 'diagnostic.completed', label: 'Diagnostic complété', icon: '📋', category: 'AgentHub', active: false },
@@ -255,34 +249,77 @@ function _renderTriggers(container) {
 </div>`;
 }
 
-function _renderRuns(container) {
-  container.innerHTML = `<div class="aut-toolbar" style="margin-bottom:18px">
-  <input class="aut-search" placeholder="Rechercher un workflow..." type="text" style="flex:1;min-width:200px">
-  <select class="aut-select">
-    <option value="">Tous les résultats</option>
-    <option value="ok">Succès</option>
-    <option value="err">Erreur</option>
+async function _renderRuns(container) {
+  container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)"><div class="ds-spinner"></div><div style="margin-top:10px;font-size:13px">Chargement des workflows…</div></div>';
+
+  let workflows = _st._wfCache;
+  if (!workflows) { workflows = await _loadWorkflows(); _st._wfCache = workflows; }
+
+  if (!workflows.length) {
+    container.innerHTML = `<div class="aut-empty">
+      <div class="aut-empty-icon">⚡</div>
+      <div class="aut-empty-title">Aucun workflow à afficher</div>
+      <div class="aut-empty-desc">Créez un workflow pour commencer à voir son historique d'exécutions ici.</div>
+      <div class="aut-empty-btns"><button class="aut-btn aut-btn-primary" onclick="document.querySelector('[data-tab=new]')?.click()">+ Nouveau workflow</button></div>
+    </div>`;
+    return;
+  }
+
+  const firstId = workflows[0].id;
+  const firstName = workflows[0].name || workflows[0].title || 'Workflow';
+
+  const _loadRuns = async (wfId, wfName) => {
+    const tbody = document.getElementById('aut-runs-tbody');
+    const title = document.getElementById('aut-runs-title');
+    if (!tbody) return;
+    tbody.innerHTML = '<tr><td colspan="5" style="padding:24px;text-align:center;color:var(--muted)">Chargement…</td></tr>';
+    try {
+      const data = await _api(`/api/orchestrations/${wfId}/runs`);
+      const runs = data.runs || [];
+      if (title) title.textContent = `Exécutions — ${wfName} (${runs.length})`;
+      if (!runs.length) {
+        tbody.innerHTML = '<tr><td colspan="5" style="padding:24px;text-align:center;color:var(--muted)">Aucune exécution enregistrée pour ce workflow.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = runs.map(r => {
+        const isOk = r.status === 'success' || r.status === 'ok';
+        const dur = (r.duration_ms != null) ? (r.duration_ms / 1000).toFixed(1) + 's' : '—';
+        return `<tr>
+          <td style="color:var(--muted);white-space:nowrap">${_fmtDate(r.created_at || r.started_at)}</td>
+          <td style="color:var(--muted);font-family:monospace;font-size:11px">${r.trigger_type || '—'}</td>
+          <td style="color:var(--muted)">${dur}</td>
+          <td><span style="display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;background:${isOk ? '#dcfce7' : '#fee2e2'};color:${isOk ? '#16a34a' : '#dc2626'}">${isOk ? '✓ Succès' : '✕ Erreur'}</span></td>
+          <td style="color:var(--muted);font-size:11px">${r.error_message ? r.error_message.slice(0,60) : '—'}</td>
+        </tr>`;
+      }).join('');
+    } catch (e) {
+      if (tbody) tbody.innerHTML = `<tr><td colspan="5" style="padding:16px;color:#dc2626">${e.message}</td></tr>`;
+    }
+  };
+
+  container.innerHTML = `
+<div class="aut-toolbar" style="margin-bottom:18px">
+  <select class="aut-select" id="aut-runs-wf-select" style="flex:1;max-width:340px">
+    ${workflows.map(w => `<option value="${w.id}">${w.name || w.title || 'Workflow'}</option>`).join('')}
   </select>
-  <button class="aut-btn aut-btn-outline">Exporter CSV</button>
 </div>
 <div class="aut-table-card">
-  <div class="aut-table-card-hd"><h3>Exécutions récentes (${MOCK_RUNS.length})</h3></div>
+  <div class="aut-table-card-hd"><h3 id="aut-runs-title">Exécutions</h3></div>
   <div style="overflow-x:auto">
     <table class="aut-table">
-      <thead><tr><th>Workflow</th><th>Déclencheur</th><th>Début</th><th>Durée</th><th>Résultat</th><th>Actions</th></tr></thead>
-      <tbody>
-        ${MOCK_RUNS.map(r => `<tr>
-          <td><strong>${r.wf}</strong></td>
-          <td style="color:var(--muted);font-family:monospace;font-size:11px">${r.trigger}</td>
-          <td style="color:var(--muted);white-space:nowrap">${_fmtDate(r.start)}</td>
-          <td style="color:var(--muted)">${r.dur}</td>
-          <td><span style="display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;background:${r.status === 'ok' ? '#dcfce7' : '#fee2e2'};color:${r.status === 'ok' ? '#16a34a' : '#dc2626'}">${r.status === 'ok' ? '✓ Succès' : '✕ Erreur'}</span></td>
-          <td><button class="aut-btn aut-btn-ghost" style="font-size:11px;padding:4px 8px">Logs</button></td>
-        </tr>`).join('')}
-      </tbody>
+      <thead><tr><th>Date</th><th>Déclencheur</th><th>Durée</th><th>Résultat</th><th>Détail</th></tr></thead>
+      <tbody id="aut-runs-tbody"><tr><td colspan="5" style="padding:24px;text-align:center;color:var(--muted)">Chargement…</td></tr></tbody>
     </table>
   </div>
 </div>`;
+
+  const sel = document.getElementById('aut-runs-wf-select');
+  sel?.addEventListener('change', () => {
+    const wf = workflows.find(w => w.id === sel.value);
+    _loadRuns(sel.value, wf?.name || sel.value);
+  });
+
+  _loadRuns(firstId, firstName);
 }
 
 function _renderTemplates(container) {
@@ -397,7 +434,7 @@ async function _renderView() {
   } else if (view === 'triggers') {
     _renderTriggers(area);
   } else if (view === 'runs') {
-    _renderRuns(area);
+    await _renderRuns(area);
   } else if (view === 'templates') {
     _renderTemplates(area);
   } else if (view === 'new') {
@@ -423,10 +460,10 @@ function _renderShell(container) {
   </div>
 
   <div class="aut-kpis">
-    <div class="aut-kpi"><div class="aut-kpi-icon">⚡</div><div class="aut-kpi-val" id="aut-wf-count">—</div><div class="aut-kpi-lbl">Workflows</div><div class="aut-kpi-sub warn">Chargement…</div></div>
-    <div class="aut-kpi"><div class="aut-kpi-icon">✅</div><div class="aut-kpi-val">${MOCK_RUNS.filter(r=>r.status==='ok').length}</div><div class="aut-kpi-lbl">Exécutions réussies</div><div class="aut-kpi-sub ok">Ce mois-ci</div></div>
-    <div class="aut-kpi"><div class="aut-kpi-icon">⏱️</div><div class="aut-kpi-val">6.1s</div><div class="aut-kpi-lbl">Durée moyenne</div><div class="aut-kpi-sub ok">Optimal</div></div>
-    <div class="aut-kpi"><div class="aut-kpi-icon">🕐</div><div class="aut-kpi-val" id="aut-last-run">—</div><div class="aut-kpi-lbl">Dernière exécution</div><div class="aut-kpi-sub ok">Aujourd'hui</div></div>
+    <div class="aut-kpi"><div class="aut-kpi-icon">⚡</div><div class="aut-kpi-val" id="aut-kpi-total">—</div><div class="aut-kpi-lbl">Workflows</div><div class="aut-kpi-sub" id="aut-kpi-active-sub">Chargement…</div></div>
+    <div class="aut-kpi"><div class="aut-kpi-icon">✅</div><div class="aut-kpi-val" id="aut-kpi-success">—</div><div class="aut-kpi-lbl">Exécutions réussies</div><div class="aut-kpi-sub ok" id="aut-kpi-runs-sub">Total</div></div>
+    <div class="aut-kpi"><div class="aut-kpi-icon">🔄</div><div class="aut-kpi-val" id="aut-kpi-total-runs">—</div><div class="aut-kpi-lbl">Total exécutions</div><div class="aut-kpi-sub ok">Depuis l'activation</div></div>
+    <div class="aut-kpi"><div class="aut-kpi-icon">🕐</div><div class="aut-kpi-val" id="aut-last-run">—</div><div class="aut-kpi-lbl">Dernière exécution</div><div class="aut-kpi-sub ok">Workflow actif</div></div>
   </div>
 
   <div class="aut-tabs">
@@ -447,10 +484,18 @@ function _renderShell(container) {
     _renderView();
   });
 
-  _loadWorkflows().then(wfs => {
-    const el = document.getElementById('aut-wf-count');
-    if (el) el.textContent = wfs.length;
+  Promise.all([
+    _api('/api/orchestrations/summary').catch(() => null),
+    _loadWorkflows(),
+  ]).then(([summary, wfs]) => {
     if (wfs.length) _st._wfCache = wfs;
+    const s = summary || {};
+    const _set = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+    _set('aut-kpi-total', s.total ?? wfs.length);
+    _set('aut-kpi-success', s.total_success ?? '—');
+    _set('aut-kpi-total-runs', s.total_runs ?? '—');
+    const activeSub = document.getElementById('aut-kpi-active-sub');
+    if (activeSub) { activeSub.textContent = `${s.active ?? 0} actif${(s.active ?? 0) > 1 ? 's' : ''}`; activeSub.className = 'aut-kpi-sub ok'; }
     const lastEl = document.getElementById('aut-last-run');
     if (lastEl) { const last = wfs.find(w => w.last_run_at); lastEl.textContent = last ? _fmtDate(last.last_run_at) : 'Aucune'; }
   });

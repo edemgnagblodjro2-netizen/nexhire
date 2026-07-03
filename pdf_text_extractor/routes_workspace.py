@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException, Request
+import json
+
+from fastapi import APIRouter, Body, Depends, HTTPException, Request
 from fastapi.responses import JSONResponse
 
 from auth import CurrentUser, get_current_user, get_optional_user
@@ -166,6 +168,36 @@ def get_workspace_config(request: Request, slug: str):
 
 # ── GET /api/workspace/{slug}/admin ──────────────────────────────────────────
 # Statistiques réservées au workspace_admin (owner + partner_id correspondant).
+
+
+@router.patch("/{slug}/apps/{app_slug}/config", status_code=200)
+@limiter.limit("60/minute")
+def update_app_config(
+    request: Request,
+    slug: str,
+    app_slug: str,
+    payload: dict = Body(...),
+    user: CurrentUser = Depends(get_current_user),
+):
+    """Sauvegarde la config JSONB d'une app installée pour ce workspace.
+    Utilisé notamment par le module Gouvernance pour persister l'état des checklists.
+    """
+    with get_db() as cur:
+        partner = _get_partner(cur, slug)
+        partner_id = partner["id"]
+        cur.execute(
+            """
+            UPDATE installed_apps
+            SET config = %s::jsonb
+            WHERE partner_id = %s AND app_slug = %s
+            RETURNING app_slug
+            """,
+            (json.dumps(payload), partner_id, app_slug),
+        )
+        updated = row(cur)
+    if not updated:
+        raise HTTPException(status_code=404, detail="Application non trouvée dans ce workspace.")
+    return {"app_slug": app_slug, "updated": True}
 
 
 @router.get("/{slug}/admin")

@@ -338,15 +338,21 @@ async function _load(container) {
       <div class="bg-kpi"><div class="bg-kpi-icon">🤖</div><div class="bg-kpi-val" style="font-size:16px">${_fmt(total)}</div><div class="bg-kpi-lbl">Coûts IA estimés</div><div class="bg-kpi-sub ok">IT + Cloud + Logiciel</div></div>
       <div class="bg-kpi"><div class="bg-kpi-icon">📊</div><div class="bg-kpi-val">${aiEntries.length}</div><div class="bg-kpi-lbl">Lignes budgétaires</div><div class="bg-kpi-sub ok">concernées</div></div>
     </div>
-    <div class="bg-ai-cost-card"><div class="bg-ai-cost-hd"><h3>💡 Coûts par outil IA (estimatif)</h3></div>
+    ${aiEntries.length === 0
+      ? `<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:28px 24px;text-align:center;color:var(--muted)">
+          <div style="font-size:13px">Aucune ligne budgétaire de catégorie IT, Cloud ou Logiciel enregistrée.<br>Ajoutez des entrées budgétaires pour voir vos coûts IA ici.</div>
+          <button class="bg-btn bg-btn-primary" style="margin-top:12px" onclick="document.querySelector('[data-tab=depenses]')?.click()">Ajouter une dépense</button>
+        </div>`
+      : `<div class="bg-ai-cost-card"><div class="bg-ai-cost-hd"><h3>💡 Coûts par ligne budgétaire (IT / Cloud / Logiciel)</h3></div>
     <div style="padding:18px">
-      ${[['Microsoft 365 Copilot','Abonnement IA Microsoft','logiciel',850],['OpenAI API','Appels API GPT-4','cloud',320],['AgentHub Platform','Licence AgentHub','logiciel',480],['AWS Bedrock','Inférence IA','cloud',210]].map(([name,desc,cat,cost])=>`
+      ${aiEntries.map(e=>`
       <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">
-        <div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--text)">${name}</div><div style="font-size:11px;color:var(--muted)">${desc}</div></div>
-        <div style="font-size:13px;font-weight:700;color:var(--text)">${_fmt(cost)}/mois</div>
-        <span style="font-size:10px;padding:2px 8px;border-radius:99px;background:#dbeafe;color:#1d4ed8;font-weight:700">${_catFr(cat)}</span>
+        <div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--text)">${e.label||'—'}</div><div style="font-size:11px;color:var(--muted)">${e.month?`${MONTHS[e.month-1]} ${e.year}`:e.year}</div></div>
+        <div style="font-size:13px;font-weight:700;color:var(--text)">${_fmt(e.actual||e.allocated,e.currency)}</div>
+        <span style="font-size:10px;padding:2px 8px;border-radius:99px;background:#dbeafe;color:#1d4ed8;font-weight:700">${_catFr(e.category)}</span>
       </div>`).join('')}
-    </div></div>`;
+    </div></div>`}
+`;
   }
 
   function _renderRapports(summary, entries) {

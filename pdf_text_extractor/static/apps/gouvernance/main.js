@@ -75,22 +75,47 @@ const S_ICON  = { done: '✓', partial: '◐', todo: '' };
 
 let _st = null;
 
-const _key  = (slug, fw) => `aghub_gov_${slug}_${fw}`;
+const _tok  = () => localStorage.getItem('nexhire_token') || '';
+const _hdr  = () => ({ Authorization: `Bearer ${_tok()}`, 'Content-Type': 'application/json' });
 
-function _load(slug, fw) {
-  try {
-    const s = JSON.parse(localStorage.getItem(_key(slug, fw)) || '{}');
-    return { tab: 'conformite', framework: fw, checklist: s.checklist || {}, registre: s.registre || [], pol: s.pol || {} };
-  } catch { return { tab: 'conformite', framework: fw, checklist: {}, registre: [], pol: {} }; }
+async function _apiGet(path) {
+  const r = await fetch(path, { headers: _hdr(), credentials: 'include' });
+  if (!r.ok) throw new Error(`Erreur ${r.status}`);
+  return r.json();
 }
 
-function _save() {
+async function _apiPatch(path, body) {
+  const r = await fetch(path, { method: 'PATCH', headers: _hdr(), credentials: 'include', body: JSON.stringify(body) });
+  if (!r.ok) throw new Error(`Erreur ${r.status}`);
+  return r.json();
+}
+
+async function _loadFromApi(slug) {
   try {
-    localStorage.setItem(
-      _key(_st.slug, _st.framework),
-      JSON.stringify({ checklist: _st.checklist, registre: _st.registre, pol: _st.pol })
-    );
-  } catch {}
+    const data = await _apiGet(`/api/workspace/${slug}/apps`);
+    const apps = data.apps || [];
+    const govApp = apps.find(a => a.slug === 'gouvernance');
+    const cfg = govApp?.config || {};
+    return {
+      checklist: cfg.checklist || {},
+      registre:  cfg.registre  || [],
+      pol:       cfg.pol       || {},
+    };
+  } catch {
+    return { checklist: {}, registre: [], pol: {} };
+  }
+}
+
+async function _save() {
+  try {
+    await _apiPatch(`/api/workspace/${_st.slug}/apps/gouvernance/config`, {
+      checklist: _st.checklist,
+      registre:  _st.registre,
+      pol:       _st.pol,
+    });
+  } catch {
+    // Fallback silencieux — les données ne sont pas perdues en mémoire dans _st
+  }
 }
 
 function _items() { return (FRAMEWORKS[_st.framework] || FRAMEWORKS.loi25).items; }
@@ -359,9 +384,8 @@ function _bind(el) {
   el.querySelectorAll('.gov-fw-btn').forEach(b => b.addEventListener('click', () => {
     if (_st.framework === b.dataset.fw) return;
     _save();
-    const loaded = _load(_st.slug, b.dataset.fw);
     _st.framework = b.dataset.fw;
-    _st.checklist = loaded.checklist;
+    _st.checklist = {};
     _st.tab = 'conformite';
     _render(el);
   }));
@@ -489,10 +513,12 @@ function _css() {
 }
 
 export default {
-  mount(container, ctx) {
+  async mount(container, ctx) {
     _css();
-    const fw = ctx.appConfig?.compliance_framework || 'loi25';
-    _st = { ..._load(ctx.partnerSlug, fw), slug: ctx.partnerSlug };
+    const fw   = ctx.appConfig?.compliance_framework || 'loi25';
+    const slug = ctx.partnerSlug || ctx.partner_slug || '';
+    const saved = await _loadFromApi(slug);
+    _st = { ...saved, slug, tab: 'conformite', framework: fw };
     _render(container);
   },
   unmount(container) {

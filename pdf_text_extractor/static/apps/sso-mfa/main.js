@@ -152,19 +152,7 @@ const MFA_METHODS = [
   { id: 'email', icon: '📧', title: 'Code par courriel', desc: 'Code temporaire envoyé à l\'adresse courriel de l\'utilisateur. Option de récupération recommandée.', enabled: false },
 ];
 
-const MOCK_SESSIONS = [
-  { user: 'Ayaovi Edem', email: 'admin@org.ca', device: 'Chrome / Windows 11', location: 'Montréal, QC', last: '2026-07-03T09:14:00Z', status: 'active' },
-  { user: 'Marie Tremblay', email: 'marie.t@org.ca', device: 'Safari / iPhone 15', location: 'Québec, QC', last: '2026-07-03T08:51:00Z', status: 'active' },
-  { user: 'Jean Bergeron', email: 'j.bergeron@org.ca', device: 'Firefox / macOS', location: 'Ottawa, ON', last: '2026-07-02T17:30:00Z', status: 'idle' },
-];
-
-const MOCK_LOG = [
-  { user: 'Ayaowi Edem', event: 'Connexion réussie', method: 'Email/MDP', ip: '104.20.x.x', date: '2026-07-03T09:14:00Z', result: 'ok' },
-  { user: 'Marie Tremblay', event: 'Connexion réussie', method: 'Email/MDP', ip: '65.45.x.x', date: '2026-07-03T08:51:00Z', result: 'ok' },
-  { user: 'Inconnu', event: 'Tentative de connexion échouée', method: 'Email/MDP', ip: '185.220.x.x', date: '2026-07-03T07:22:00Z', result: 'warn' },
-  { user: 'Jean Bergeron', event: 'Déconnexion automatique (inactivité)', method: '—', ip: '24.35.x.x', date: '2026-07-02T19:30:00Z', result: 'info' },
-  { user: 'Ayaowi Edem', event: 'Mot de passe modifié', method: 'Profil', ip: '104.20.x.x', date: '2026-07-01T14:12:00Z', result: 'ok' },
-];
+// Pas de sessions ni journal fictifs — données réelles via API uniquement
 
 function _renderOverview(container) {
   const hasSso = PROVIDERS.some(p => p.configured);
@@ -228,27 +216,9 @@ function _renderOverview(container) {
   </div>
 </div>
 
-<div class="sso-section-label" style="margin-bottom:14px">Connexions récentes</div>
-<div class="sso-table-card">
-  <div class="sso-table-card-hd">
-    <h3>Journal des 5 dernières connexions</h3>
-    <button class="sso-btn sso-btn-outline" style="font-size:11px;padding:4px 10px" onclick="document.querySelector('[data-tab=journal]')?.click()">Voir tout →</button>
-  </div>
-  <div style="overflow-x:auto">
-    <table class="sso-table">
-      <thead><tr><th>Utilisateur</th><th>Événement</th><th>Méthode</th><th>Date</th><th>Résultat</th></tr></thead>
-      <tbody>
-        ${MOCK_LOG.slice(0,5).map(l => `
-        <tr>
-          <td><strong>${l.user}</strong></td>
-          <td style="color:var(--text-2)">${l.event}</td>
-          <td style="color:var(--muted)">${l.method}</td>
-          <td style="color:var(--muted);white-space:nowrap">${_fmt(l.date)}</td>
-          <td><span class="sso-badge sso-badge-${l.result === 'ok' ? 'ok' : l.result === 'warn' ? 'warn' : 'info'}">${l.result === 'ok' ? 'Succès' : l.result === 'warn' ? 'Échec' : 'Info'}</span></td>
-        </tr>`).join('')}
-      </tbody>
-    </table>
-  </div>
+<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px 24px;text-align:center;color:var(--muted)">
+  <div style="font-size:13px">Le journal des connexions sera visible ici dès que des utilisateurs se connecteront.</div>
+  <button class="sso-btn sso-btn-outline" style="margin-top:12px;font-size:11px;padding:4px 10px" onclick="document.querySelector('[data-tab=journal]')?.click()">Ouvrir le journal →</button>
 </div>`;
 }
 
@@ -423,61 +393,75 @@ function _renderMfa(container) {
 
 function _renderSessions(container) {
   container.innerHTML = `
-<div class="sso-section-label" style="margin-bottom:16px">Sessions actives (${MOCK_SESSIONS.length})</div>
-<div class="sso-table-card">
-  <div class="sso-table-card-hd">
-    <h3>Connexions en cours</h3>
-    <button class="sso-btn sso-btn-danger" style="font-size:11px;padding:4px 10px">Déconnecter tout le monde</button>
+<div class="sso-section-label" style="margin-bottom:16px">Sessions actives</div>
+<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:48px 24px;text-align:center">
+  <div style="font-size:40px;margin-bottom:14px;opacity:.35">🔒</div>
+  <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px">Aucune session à afficher</div>
+  <div style="font-size:13px;color:var(--muted);max-width:460px;margin:0 auto 20px;line-height:1.6">
+    La gestion des sessions actives est disponible une fois qu'un fournisseur d'identité SSO est configuré.
+    Activez Microsoft Entra ID ou Google Workspace pour voir et révoquer les sessions en temps réel.
   </div>
-  <div style="overflow-x:auto">
-    <table class="sso-table">
-      <thead><tr><th>Utilisateur</th><th>Appareil</th><th>Localisation</th><th>Dernière activité</th><th>État</th><th>Action</th></tr></thead>
-      <tbody>
-        ${MOCK_SESSIONS.map(s => `
-        <tr>
-          <td>
-            <strong>${s.user}</strong>
-            <div style="font-size:11px;color:var(--muted)">${s.email}</div>
-          </td>
-          <td style="color:var(--text-2)">${s.device}</td>
-          <td style="color:var(--muted)">${s.location}</td>
-          <td style="color:var(--muted);white-space:nowrap">${_fmt(s.last)}</td>
-          <td><span class="sso-badge sso-badge-${s.status === 'active' ? 'ok' : 'warn'}">${s.status === 'active' ? 'Actif' : 'Inactif'}</span></td>
-          <td><button class="sso-btn sso-btn-outline" style="font-size:11px;padding:4px 10px;color:var(--color-err);border-color:var(--color-err)">Révoquer</button></td>
-        </tr>`).join('')}
-      </tbody>
-    </table>
-  </div>
+  <button class="sso-btn sso-btn-primary" onclick="document.querySelector('[data-tab=providers]')?.click()">
+    Configurer un fournisseur d'identité
+  </button>
 </div>`;
 }
 
-function _renderJournal(container) {
-  container.innerHTML = `
+async function _renderJournal(container) {
+  container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)"><div class="ds-spinner"></div><div style="margin-top:10px;font-size:13px">Chargement du journal…</div></div>';
+  try {
+    const data = await _api('/api/security/audit-log?limit=50');
+    const logs = data.logs || data.items || [];
+    if (!logs.length) {
+      container.innerHTML = `
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
   <div class="sso-section-label" style="margin:0">Journal des connexions</div>
-  <div style="display:flex;gap:8px">
-    <input class="sso-form-input" type="text" placeholder="Rechercher un utilisateur..." style="width:220px">
-    <button class="sso-btn sso-btn-outline">Exporter CSV</button>
+</div>
+<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:48px 24px;text-align:center">
+  <div style="font-size:40px;margin-bottom:14px;opacity:.35">📋</div>
+  <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px">Aucune entrée dans le journal</div>
+  <div style="font-size:13px;color:var(--muted);max-width:460px;margin:0 auto;line-height:1.6">
+    Le journal des connexions enregistre automatiquement les connexions, déconnexions et tentatives échouées dès que des utilisateurs se connectent à la plateforme.
   </div>
+</div>`;
+      return;
+    }
+    container.innerHTML = `
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+  <div class="sso-section-label" style="margin:0">Journal des connexions (${logs.length})</div>
+  <button class="sso-btn sso-btn-outline" onclick="window.open('/api/security/audit-log?format=csv')">Exporter CSV</button>
 </div>
 <div class="sso-table-card">
   <div style="overflow-x:auto">
     <table class="sso-table">
-      <thead><tr><th>Utilisateur</th><th>Événement</th><th>Méthode</th><th>Adresse IP</th><th>Date</th><th>Résultat</th></tr></thead>
+      <thead><tr><th>Utilisateur</th><th>Événement</th><th>Méthode</th><th>IP</th><th>Date</th><th>Résultat</th></tr></thead>
       <tbody>
-        ${MOCK_LOG.map(l => `
-        <tr>
-          <td><strong>${l.user}</strong></td>
-          <td style="color:var(--text-2)">${l.event}</td>
-          <td style="color:var(--muted)">${l.method}</td>
-          <td style="color:var(--muted);font-family:monospace;font-size:11px">${l.ip}</td>
-          <td style="color:var(--muted);white-space:nowrap">${_fmt(l.date)}</td>
-          <td><span class="sso-badge sso-badge-${l.result === 'ok' ? 'ok' : l.result === 'warn' ? 'warn' : 'info'}">${l.result === 'ok' ? 'Succès' : l.result === 'warn' ? 'Échec' : 'Info'}</span></td>
-        </tr>`).join('')}
+        ${logs.map(l => {
+          const ok = l.success !== false && l.result !== 'warn' && l.result !== 'error';
+          return `<tr>
+            <td><strong>${l.user_email || l.user || '—'}</strong></td>
+            <td style="color:var(--text-2)">${l.action || l.event || '—'}</td>
+            <td style="color:var(--muted)">${l.method || l.auth_method || '—'}</td>
+            <td style="color:var(--muted);font-family:monospace;font-size:11px">${l.ip_address || l.ip || '—'}</td>
+            <td style="color:var(--muted);white-space:nowrap">${_fmt(l.created_at || l.date)}</td>
+            <td><span class="sso-badge sso-badge-${ok ? 'ok' : 'warn'}">${ok ? 'Succès' : 'Échec'}</span></td>
+          </tr>`;
+        }).join('')}
       </tbody>
     </table>
   </div>
 </div>`;
+  } catch {
+    container.innerHTML = `
+<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:48px 24px;text-align:center">
+  <div style="font-size:40px;margin-bottom:14px;opacity:.35">📋</div>
+  <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px">Journal des connexions</div>
+  <div style="font-size:13px;color:var(--muted);max-width:460px;margin:0 auto;line-height:1.6">
+    Le journal des connexions sera disponible dans une prochaine mise à jour.
+    Les événements de sécurité sont enregistrés en arrière-plan.
+  </div>
+</div>`;
+  }
 }
 
 function _renderView() {
@@ -506,7 +490,7 @@ function _renderShell(container) {
     <div class="sso-stat"><div class="sso-stat-icon">👤</div><div class="sso-stat-val" id="sso-users-count">—</div><div class="sso-stat-lbl">Utilisateurs</div><div class="sso-stat-sub warn">MFA non activé</div></div>
     <div class="sso-stat"><div class="sso-stat-icon">🔐</div><div class="sso-stat-val">0</div><div class="sso-stat-lbl">Fournisseurs SSO</div><div class="sso-stat-sub warn">Non configuré</div></div>
     <div class="sso-stat"><div class="sso-stat-icon">📱</div><div class="sso-stat-val">0%</div><div class="sso-stat-lbl">Adoption MFA</div><div class="sso-stat-sub err">Risque élevé</div></div>
-    <div class="sso-stat"><div class="sso-stat-icon">⚡</div><div class="sso-stat-val">${MOCK_SESSIONS.length}</div><div class="sso-stat-lbl">Sessions actives</div><div class="sso-stat-sub ok">Tout est normal</div></div>
+    <div class="sso-stat"><div class="sso-stat-icon">⚡</div><div class="sso-stat-val" id="sso-sessions-count">—</div><div class="sso-stat-lbl">Sessions actives</div><div class="sso-stat-sub ok">Temps réel</div></div>
   </div>
 
   <div class="sso-tabs">
