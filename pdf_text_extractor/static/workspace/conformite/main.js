@@ -25,6 +25,7 @@ let _state = {
   nonconformites: [],
   expandedNc: null,
   loading: false,
+  is_demo: false,
 };
 
 async function _fetch(path, opts = {}) {
@@ -44,6 +45,7 @@ async function _load() {
     ]);
     _state.summary = sum;
     _state.frameworks = fwList.frameworks || [];
+    _state.is_demo = !!(sum.is_demo || fwList.is_demo);
     if (!_state.activeFw && _state.frameworks.length > 0) {
       _state.activeFw = _state.frameworks[0].id;
     }
@@ -51,6 +53,7 @@ async function _load() {
     _state.summary = _DEMO_SUMMARY;
     _state.frameworks = _DEMO_FRAMEWORKS;
     _state.activeFw = _state.frameworks[0]?.id || null;
+    _state.is_demo = true;
   }
   await _loadNc();
 }
@@ -158,6 +161,26 @@ function _render() {
 
       <!-- Main content -->
       <div style="flex:1;overflow-y:auto;padding:24px">
+
+        ${_state.is_demo ? `
+        <div role="alert" style="background:#FFF8E1;border:1px solid #F9A825;border-radius:8px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:flex-start;gap:14px">
+          <div style="font-size:20px;flex-shrink:0;margin-top:1px">🔬</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:13px;font-weight:700;color:#7B4F00;margin-bottom:4px">Mode démonstration</div>
+            <div style="font-size:12px;color:#8B6000;line-height:1.55;max-width:64ch">Les résultats affichés sont générés à des fins de démonstration et ne reflètent pas les données réelles de votre organisation.</div>
+            <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+              <button onclick="document.dispatchEvent(new CustomEvent('ws:navigate',{detail:{appSlug:'help'},bubbles:true}))"
+                style="padding:5px 12px;font-size:11px;font-weight:600;background:transparent;color:#7B4F00;border:1.5px solid #F9A825;border-radius:4px;cursor:pointer;font-family:inherit">
+                Comprendre pourquoi
+              </button>
+              <button onclick="document.dispatchEvent(new CustomEvent('ws:navigate',{detail:{appSlug:'integrations'},bubbles:true}))"
+                style="padding:5px 12px;font-size:11px;font-weight:700;background:#0078D4;color:#fff;border:none;border-radius:4px;cursor:pointer;font-family:inherit">
+                Configurer les connecteurs →
+              </button>
+            </div>
+          </div>
+          <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;padding:3px 8px;background:#F9A825;color:#fff;border-radius:4px;flex-shrink:0;white-space:nowrap">DÉMO</div>
+        </div>` : ''}
 
         <!-- Header KPIs -->
         <div style="display:grid;grid-template-columns:140px 1fr;gap:20px;margin-bottom:28px;align-items:center">

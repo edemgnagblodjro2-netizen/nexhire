@@ -972,7 +972,7 @@ def _mock_salesforce(query: str, object_type: str = "all", limit: int = 5) -> li
     data = [
         {
             "type": "contract",
-            "nom": "Ville de Laval — Contrat services TI",
+            "nom": "Organisation F — Contrat services TI",
             "valeur": "240 000 $",
             "échéance": "2026-08-31",
             "jours_restants": 87,
@@ -980,7 +980,7 @@ def _mock_salesforce(query: str, object_type: str = "all", limit: int = 5) -> li
         },
         {
             "type": "contract",
-            "nom": "CHU Sainte-Justine — Licences SaaS",
+            "nom": "Organisation E — Licences SaaS",
             "valeur": "185 000 $",
             "échéance": "2026-09-15",
             "jours_restants": 102,
@@ -988,12 +988,12 @@ def _mock_salesforce(query: str, object_type: str = "all", limit: int = 5) -> li
         },
         {
             "type": "opportunity",
-            "nom": "Commission scolaire CSDM",
+            "nom": "Organisation H",
             "valeur": "320 000 $",
             "probabilité": "65 %",
             "étape": "Proposition envoyée",
         },
-        {"type": "account", "nom": "Desjardins Groupe", "statut": "Client actif", "arr": "1 200 000 $"},
+        {"type": "account", "nom": "Entreprise A", "statut": "Client actif", "arr": "1 200 000 $"},
     ]
     if object_type != "all":
         data = [d for d in data if d["type"] == object_type]
@@ -1016,7 +1016,7 @@ def _mock_zendesk(query: str, status: str = "all", priority: str = "all", limit:
             "sujet": "Impossible de se connecter au portail client",
             "priorité": "urgent",
             "statut": "open",
-            "client": "CIBC",
+            "client": "Institution C",
             "créé": "2026-06-05T09:10:00Z",
             "assigné": "Sophie Bilodeau",
         },
@@ -1025,7 +1025,7 @@ def _mock_zendesk(query: str, status: str = "all", priority: str = "all", limit:
             "sujet": "Lenteurs sur l'application mobile — version iOS 17",
             "priorité": "high",
             "statut": "pending",
-            "client": "Desjardins",
+            "client": "Entreprise A",
             "créé": "2026-06-04T14:30:00Z",
             "assigné": "Marc Ouellet",
         },
@@ -1034,7 +1034,7 @@ def _mock_zendesk(query: str, status: str = "all", priority: str = "all", limit:
             "sujet": "Erreur 500 sur la page de facturation",
             "priorité": "urgent",
             "statut": "open",
-            "client": "Banque Nationale",
+            "client": "Institution I",
             "créé": "2026-06-03T11:00:00Z",
             "assigné": "Non assigné",
         },
@@ -1052,7 +1052,7 @@ def _mock_zendesk(query: str, status: str = "all", priority: str = "all", limit:
             "sujet": "Intégration Slack — notifications manquantes",
             "priorité": "low",
             "statut": "open",
-            "client": "TechMontréal Inc.",
+            "client": "Entreprise K",
             "créé": "2026-06-01T08:20:00Z",
             "assigné": "Support L2",
         },
@@ -1074,7 +1074,7 @@ def _mock_autotask(query: str, type: str = "all", status: str = "all", limit: in
             "sla": "4h",
             "temps_restant": "1h30",
             "technicien": "Jean-François Roy",
-            "client": "Ville de Laval",
+            "client": "Organisation F",
         },
         {
             "id": "AT-12039",
@@ -1083,7 +1083,7 @@ def _mock_autotask(query: str, type: str = "all", status: str = "all", limit: in
             "statut": "new",
             "sla": "8h",
             "priorité": "high",
-            "client": "CHU Sainte-Justine",
+            "client": "Organisation E",
         },
         {
             "id": "AT-P-087",
@@ -1092,7 +1092,7 @@ def _mock_autotask(query: str, type: str = "all", status: str = "all", limit: in
             "statut": "in_progress",
             "avancement": "67 %",
             "échéance": "2026-07-15",
-            "client": "Commission scolaire CSDM",
+            "client": "Organisation H",
         },
         {
             "id": "AT-C-023",
@@ -1101,7 +1101,7 @@ def _mock_autotask(query: str, type: str = "all", status: str = "all", limit: in
             "statut": "active",
             "renouvellement": "2026-12-31",
             "valeur": "48 000 $",
-            "client": "Desjardins",
+            "client": "Entreprise A",
         },
         {
             "id": "AT-12031",
@@ -1441,7 +1441,7 @@ def _mock_epicor(category: str = "production_orders", period: str = "current_mon
             "commandes_ouvertes": 28,
             "en_attente_livraison": 14,
             "total_engagé": "890 000 CAD",
-            "fournisseurs_en_retard": [{"fournisseur": "Métal Plus Inc.", "commandes_retard": 3}],
+            "fournisseurs_en_retard": [{"fournisseur": "Fournisseur L", "commandes_retard": 3}],
         },
         "financials": {
             "revenus": "2 100 000 CAD",
@@ -1457,7 +1457,7 @@ def _mock_hubspot(query: str, object_type: str = "all", limit: int = 5) -> list[
     data = [
         {
             "type": "deal",
-            "nom": "Ville de Québec — Expansion licences",
+            "nom": "Organisation G — Expansion licences",
             "valeur": "180 000 $",
             "étape": "Proposition envoyée",
             "probabilité": "70 %",
@@ -1466,7 +1466,7 @@ def _mock_hubspot(query: str, object_type: str = "all", limit: int = 5) -> list[
         },
         {
             "type": "deal",
-            "nom": "CSSDM — Renouvellement annuel",
+            "nom": "Organisation H — Renouvellement annuel",
             "valeur": "95 000 $",
             "étape": "Négociation",
             "probabilité": "85 %",
@@ -1475,15 +1475,15 @@ def _mock_hubspot(query: str, object_type: str = "all", limit: int = 5) -> list[
         },
         {
             "type": "contact",
-            "nom": "André Bergeron",
-            "entreprise": "Intact Assurances",
-            "email": "a.bergeron@intact.net",
+            "nom": "Alex B.",
+            "entreprise": "Entreprise J",
+            "email": "contact@entreprise-j.example",
             "dernier_contact": "2026-05-28",
             "statut": "Lead qualifié",
         },
         {
             "type": "company",
-            "nom": "Bell Canada",
+            "nom": "Entreprise B",
             "statut": "Prospect",
             "industrie": "Télécommunications",
             "taille": "50 000+ employés",
@@ -1491,7 +1491,7 @@ def _mock_hubspot(query: str, object_type: str = "all", limit: int = 5) -> list[
         },
         {
             "type": "deal",
-            "nom": "CGI Montréal — Pilote IA",
+            "nom": "Entreprise D — Pilote IA",
             "valeur": "45 000 $",
             "étape": "Démo planifiée",
             "probabilité": "45 %",
