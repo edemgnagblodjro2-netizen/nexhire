@@ -148,46 +148,9 @@ function _css() {
 
 let _st = null;
 
-const RECO_DATA = [
-  { id: 1, icon: '🛡️', title: 'Activer MFA pour tous les utilisateurs', desc: 'Réduisez le risque de compromission de comptes de 99% en activant l'authentification multifacteur.', priority: 'high', effort: '15 min', domain: 'Sécurité', done: false },
-  { id: 2, icon: '🔌', title: 'Connecter Microsoft 365', desc: 'Synchronisez vos utilisateurs, licences et activités pour une vue consolidée de votre organisation.', priority: 'high', effort: '30 min', domain: 'Intégration', done: false },
-  { id: 3, icon: '📊', title: 'Compléter le Diagnostic IMAI', desc: 'Évaluez la maturité IA de votre organisation pour obtenir un plan d\'action personnalisé.', priority: 'high', effort: '20 min', domain: 'IA', done: false },
-  { id: 4, icon: '👥', title: 'Inviter votre équipe de direction', desc: 'Les décisions IA sont plus efficaces quand toute l\'équipe de direction est alignée sur les données.', priority: 'medium', effort: '10 min', domain: 'Collaboration', done: false },
-  { id: 5, icon: '📋', title: 'Définir une politique d\'utilisation de l\'IA', desc: 'Encadrez l\'usage de l\'IA par vos employés avec une politique claire et des lignes directrices.', priority: 'medium', effort: '2 h', domain: 'Gouvernance', done: false },
-  { id: 6, icon: '💼', title: 'Identifier vos cas d\'usage prioritaires', desc: 'Cartographiez les processus à automatiser en premier pour maximiser le ROI de votre adoption IA.', priority: 'medium', effort: '1 h', domain: 'Stratégie', done: false },
-  { id: 7, icon: '🔒', title: 'Configurer le SSO avec votre fournisseur d\'identité', desc: 'Centralisez l\'accès à AgentHub avec votre Active Directory ou Google Workspace existant.', priority: 'low', effort: '45 min', domain: 'Sécurité', done: false },
-  { id: 8, icon: '📈', title: 'Configurer les alertes de coûts IA', desc: 'Définissez des seuils budgétaires pour vos abonnements IA et évitez les dépassements.', priority: 'low', effort: '10 min', domain: 'Finance', done: false },
-];
-
-const PLAN_PHASES = [
-  {
-    icon: '⚡', colorClass: 'a', title: 'Phase 1 — Fondations', sub: 'Jours 1-7',
-    items: [
-      { text: 'Compléter le Diagnostic IMAI', done: false },
-      { text: 'Activer MFA pour votre compte', done: false },
-      { text: 'Inviter l'équipe de direction', done: false },
-      { text: 'Connecter Microsoft 365', done: false },
-    ],
-  },
-  {
-    icon: '🚀', colorClass: 'b', title: 'Phase 2 — Gouvernance', sub: 'Semaines 2-4',
-    items: [
-      { text: 'Rédiger la politique d\'utilisation IA', done: false },
-      { text: 'Configurer le SSO', done: false },
-      { text: 'Identifier 3 cas d\'usage prioritaires', done: false },
-      { text: 'Former votre équipe aux outils IA', done: false },
-    ],
-  },
-  {
-    icon: '🏆', colorClass: 'c', title: 'Phase 3 — Déploiement', sub: 'Mois 2-3',
-    items: [
-      { text: 'Lancer le premier workflow automatisé', done: false },
-      { text: 'Mesurer le ROI de l\'adoption IA', done: false },
-      { text: 'Étendre à tous les départements', done: false },
-      { text: 'Préparer le rapport direction', done: false },
-    ],
-  },
-];
+// Données chargées depuis l'API — plus aucune donnée statique
+let _apiRecs  = null; // /api/optimization/recommendations
+let _apiScore = null; // /api/optimization/efficiency-score
 
 function _priorityChip(p) {
   const map = { high: ['reco-chip-high', 'Priorité haute'], medium: ['reco-chip-med', 'Priorité moyenne'], low: ['reco-chip-low', 'Priorité faible'] };
@@ -195,107 +158,171 @@ function _priorityChip(p) {
   return `<span class="reco-chip ${cls}">${label}</span>`;
 }
 
+function _impactToPriority(impact) {
+  return impact === 'high' ? 'high' : impact === 'medium' ? 'medium' : 'low';
+}
+
+function _impactIcon(impact) {
+  return impact === 'high' ? '⚡' : impact === 'medium' ? '📊' : '💡';
+}
+
 function _renderRecos(container, filter) {
-  const items = filter === 'all' ? RECO_DATA : RECO_DATA.filter(r => r.priority === filter);
-  const high = RECO_DATA.filter(r => r.priority === 'high').length;
-  const med  = RECO_DATA.filter(r => r.priority === 'medium').length;
-  const low  = RECO_DATA.filter(r => r.priority === 'low').length;
+  if (!_apiRecs) {
+    container.innerHTML = '<div style="text-align:center;padding:32px;color:var(--muted)">Chargement des recommandations…</div>';
+    return;
+  }
+
+  const all = _apiRecs.recommendations || [];
+  if (all.length === 0) {
+    container.innerHTML = `
+<div class="reco-empty">
+  <div class="reco-empty-icon">✅</div>
+  <div class="reco-empty-title">Aucune recommandation</div>
+  <div class="reco-empty-desc">Votre organisation ne présente pas de lacune détectable avec les données actuelles. Connectez vos outils et actifs pour obtenir des recommandations personnalisées.</div>
+</div>`;
+    return;
+  }
+
+  const high = all.filter(r => r.impact === 'high').length;
+  const med  = all.filter(r => r.impact === 'medium').length;
+  const low  = all.filter(r => r.impact === 'low').length;
+  const items = filter === 'all' ? all : all.filter(r => r.impact === filter);
+  const totalSavings = _apiRecs.total_savings || 0;
+
   container.innerHTML = `
+${totalSavings > 0 ? `
 <div class="reco-atlas" style="margin-bottom:24px">
   <div class="reco-atlas-hd">
     <span class="reco-atlas-icon">🤖</span>
     <div>
-      <div class="reco-atlas-title">ATLAS recommande</div>
-      <div class="reco-atlas-sub">Plan personnalisé basé sur votre niveau de maturité IA</div>
+      <div class="reco-atlas-title">ATLAS a détecté ${all.length} opportunités</div>
+      <div class="reco-atlas-sub">Économies potentielles identifiées : <strong>${Number(totalSavings).toLocaleString('fr-CA')} $/an</strong></div>
     </div>
   </div>
-  <div class="reco-atlas-list">
-    <div class="reco-atlas-item"><span class="reco-atlas-dot"></span>Activez MFA immédiatement — c'est l'action de sécurité la plus impactante (5 minutes).</div>
-    <div class="reco-atlas-item"><span class="reco-atlas-dot"></span>Connectez Microsoft 365 pour débloquer 8 modules supplémentaires d'analyse.</div>
-    <div class="reco-atlas-item"><span class="reco-atlas-dot"></span>Complétez le Diagnostic IMAI pour obtenir votre score de maturité et un plan personnalisé.</div>
-  </div>
-</div>
+</div>` : ''}
 
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
-  <div class="reco-section-label">Plan d'action personnalisé — ${items.length} recommandations</div>
+  <div class="reco-section-label">${items.length} recommandation(s)</div>
   <div style="display:flex;gap:6px">
-    ${['all','high','medium','low'].map(f => `<button class="reco-tab" style="border-bottom:2px solid ${f===filter?'var(--primary)':'transparent'};color:${f===filter?'var(--primary)':'var(--muted)'};padding:6px 12px;font-size:12px" onclick="window._recoFilter('${f}')">${f==='all'?`Toutes (${RECO_DATA.length})`:f==='high'?`Haute (${high})`:f==='medium'?`Moyenne (${med})`:`Faible (${low})`}</button>`).join('')}
+    ${[['all',`Toutes (${all.length})`],['high',`Haute (${high})`],['medium',`Moyenne (${med})`],['low',`Faible (${low})`]].map(([f,lbl]) =>
+      `<button class="reco-tab" style="border-bottom:2px solid ${f===filter?'var(--primary)':'transparent'};color:${f===filter?'var(--primary)':'var(--muted)'};padding:6px 12px;font-size:12px" onclick="window._recoFilter('${f}')">${lbl}</button>`
+    ).join('')}
   </div>
 </div>
 <div class="reco-list">
-  ${items.map(r => `
-  <div class="reco-item reco-item-${r.priority === 'high' ? 'pri' : r.priority === 'medium' ? 'warn' : 'ok'}">
-    <div class="reco-item-icon">${r.icon}</div>
+  ${items.length === 0
+    ? '<div style="text-align:center;padding:24px;color:var(--muted);font-size:13px">Aucune recommandation dans cette catégorie.</div>'
+    : items.map(r => `
+  <div class="reco-item reco-item-${r.impact === 'high' ? 'pri' : r.impact === 'medium' ? 'warn' : 'ok'}">
+    <div class="reco-item-icon">${_impactIcon(r.impact)}</div>
     <div class="reco-item-body">
-      <div class="reco-item-title">${r.title}</div>
-      <div class="reco-item-desc">${r.desc}</div>
+      <div class="reco-item-title">${r.action}</div>
+      ${r.savings > 0 ? `<div class="reco-item-desc">Économies estimées : <strong>${Number(r.savings).toLocaleString('fr-CA')} $/an</strong></div>` : ''}
       <div class="reco-item-meta">
-        ${_priorityChip(r.priority)}
-        <span class="reco-chip reco-chip-effort">⏱ ${r.effort}</span>
-        <span class="reco-chip reco-chip-effort">${r.domain}</span>
+        ${_priorityChip(_impactToPriority(r.impact))}
+        ${r.timeline ? `<span class="reco-chip reco-chip-effort">⏱ ${r.timeline}</span>` : ''}
       </div>
     </div>
     <div class="reco-item-action">
-      <button class="reco-item-btn">Commencer</button>
+      <button class="reco-item-btn" onclick="window._recoNav('${r.nav_tab||''}')">Voir →</button>
     </div>
   </div>`).join('')}
 </div>`;
+
   window._recoFilter = (f) => { _st.filter = f; _renderRecos(container, f); };
+  window._recoNav = (tab) => {
+    if (!tab) return;
+    const navMap = { licenses: 'assets', duplicates: 'assets', contracts: 'contracts', processes: 'automation', dashboard: 'executive' };
+    const slug = navMap[tab] || tab;
+    document.dispatchEvent(new CustomEvent('ws:navigate', { detail: { appSlug: slug } }));
+  };
 }
 
 function _renderPlan(container) {
+  if (!_apiScore) {
+    container.innerHTML = '<div style="text-align:center;padding:32px;color:var(--muted)">Chargement…</div>';
+    return;
+  }
+
+  const s = _apiScore;
+  const cats = [
+    ['Logiciels',       s.software,        '#7c3aed'],
+    ['Licences',        s.licenses,        '#0ea5e9'],
+    ['Infrastructure',  s.infrastructure,  '#10b981'],
+    ['Processus',       s.process,         '#f59e0b'],
+  ];
+
   container.innerHTML = `
 <div class="reco-progress-wrap">
   <div class="reco-progress-card">
     <div class="reco-progress-hd">
-      <div class="reco-progress-title">Progression du plan d'adoption IA</div>
-      <div class="reco-progress-pct">0%</div>
+      <div class="reco-progress-title">Score d'efficacité organisationnelle</div>
+      <div class="reco-progress-pct">${Math.round(s.overall)}%</div>
     </div>
-    <div class="reco-progress-bar-track"><div class="reco-progress-bar-fill" style="width:0%"></div></div>
+    <div class="reco-progress-bar-track"><div class="reco-progress-bar-fill" style="width:${Math.round(s.overall)}%"></div></div>
     <div class="reco-progress-cats">
-      ${[['Sécurité', 0, '#7c3aed'], ['Intégrations', 0, '#0ea5e9'], ['Gouvernance', 0, '#10b981']].map(([l, v, c]) => `
+      ${cats.map(([l, v, c]) => `
       <div class="reco-progress-cat">
         <div class="reco-progress-cat-lbl">${l}</div>
-        <div class="reco-progress-cat-bar"><div class="reco-progress-cat-fill" style="width:${v}%;background:${c}"></div></div>
-        <div class="reco-progress-cat-val">${v}%</div>
+        <div class="reco-progress-cat-bar"><div class="reco-progress-cat-fill" style="width:${Math.round(v)}%;background:${c}"></div></div>
+        <div class="reco-progress-cat-val">${Math.round(v)}%</div>
       </div>`).join('')}
     </div>
   </div>
 </div>
-<div class="reco-section-label" style="margin-bottom:14px">Phases d'adoption — 12 semaines</div>
+
+${_apiRecs && (_apiRecs.recommendations||[]).length > 0 ? `
+<div class="reco-section-label" style="margin-bottom:14px">Plan d'action prioritaire</div>
 <div class="reco-plan-grid">
-  ${PLAN_PHASES.map(ph => `
   <div class="reco-plan-card">
     <div class="reco-plan-card-hd">
-      <div class="reco-plan-card-icon reco-plan-card-icon-${ph.colorClass}">${ph.icon}</div>
+      <div class="reco-plan-card-icon reco-plan-card-icon-a">⚡</div>
       <div>
-        <div class="reco-plan-card-title">${ph.title}</div>
-        <div class="reco-plan-card-sub">${ph.sub}</div>
+        <div class="reco-plan-card-title">Actions immédiates</div>
+        <div class="reco-plan-card-sub">Impact élevé</div>
       </div>
     </div>
     <ul class="reco-plan-items">
-      ${ph.items.map(it => `
+      ${(_apiRecs.recommendations||[]).filter(r=>r.impact==='high').slice(0,4).map(r=>`
       <li class="reco-plan-item">
-        <div class="reco-plan-check ${it.done ? 'done' : ''}">${it.done ? '✓' : ''}</div>
-        <span style="${it.done ? 'text-decoration:line-through;color:var(--muted)' : ''}">${it.text}</span>
-      </li>`).join('')}
+        <div class="reco-plan-check"></div>
+        <span>${r.action}</span>
+      </li>`).join('') || '<li class="reco-plan-item"><div class="reco-plan-check done">✓</div><span style="color:var(--muted)">Aucune action urgente</span></li>'}
     </ul>
-  </div>`).join('')}
-</div>
-<div class="reco-atlas">
-  <div class="reco-atlas-hd">
-    <span class="reco-atlas-icon">💡</span>
-    <div>
-      <div class="reco-atlas-title">Conseil d'ATLAS</div>
-      <div class="reco-atlas-sub">Basé sur les organisations similaires à la vôtre</div>
+  </div>
+  <div class="reco-plan-card">
+    <div class="reco-plan-card-hd">
+      <div class="reco-plan-card-icon reco-plan-card-icon-b">🚀</div>
+      <div>
+        <div class="reco-plan-card-title">Optimisations</div>
+        <div class="reco-plan-card-sub">Impact moyen</div>
+      </div>
     </div>
+    <ul class="reco-plan-items">
+      ${(_apiRecs.recommendations||[]).filter(r=>r.impact==='medium').slice(0,4).map(r=>`
+      <li class="reco-plan-item">
+        <div class="reco-plan-check"></div>
+        <span>${r.action}</span>
+      </li>`).join('') || '<li class="reco-plan-item"><div class="reco-plan-check done">✓</div><span style="color:var(--muted)">Aucune action requise</span></li>'}
+    </ul>
   </div>
-  <div class="reco-atlas-list">
-    <div class="reco-atlas-item"><span class="reco-atlas-dot"></span>Les organisations qui complètent les fondations en moins de 7 jours ont 3× plus de chances d'atteindre un ROI positif dans les 90 premiers jours.</div>
-    <div class="reco-atlas-item"><span class="reco-atlas-dot"></span>Priorisez la sécurité (MFA + SSO) avant d'étendre l'accès à vos équipes.</div>
-    <div class="reco-atlas-item"><span class="reco-atlas-dot"></span>Commencez par un seul cas d'usage IA maîtrisé plutôt que de déployer plusieurs projets simultanément.</div>
+  <div class="reco-plan-card">
+    <div class="reco-plan-card-hd">
+      <div class="reco-plan-card-icon reco-plan-card-icon-c">🏆</div>
+      <div>
+        <div class="reco-plan-card-title">Améliorations</div>
+        <div class="reco-plan-card-sub">Impact faible</div>
+      </div>
+    </div>
+    <ul class="reco-plan-items">
+      ${(_apiRecs.recommendations||[]).filter(r=>r.impact==='low').slice(0,4).map(r=>`
+      <li class="reco-plan-item">
+        <div class="reco-plan-check"></div>
+        <span>${r.action}</span>
+      </li>`).join('') || '<li class="reco-plan-item"><div class="reco-plan-check done">✓</div><span style="color:var(--muted)">Aucune action requise</span></li>'}
+    </ul>
   </div>
-</div>`;
+</div>` : '<div style="text-align:center;padding:24px;color:var(--muted);font-size:13px">Connectez vos actifs, licences et processus pour obtenir un plan d\'action personnalisé.</div>'}`;
 }
 
 function _renderHistorique(container) {
@@ -322,10 +349,16 @@ function _renderView() {
 }
 
 function _renderShell(container) {
-  const imai = 58;
+  const score  = _apiScore ? Math.round(_apiScore.overall) : null;
+  const recs   = _apiRecs ? (_apiRecs.recommendations || []) : [];
+  const high   = recs.filter(r => r.impact === 'high').length;
+  const total  = recs.length;
+  const savings = _apiRecs ? (_apiRecs.total_savings || 0) : 0;
+
   const r = 32;
   const circumf = 2 * Math.PI * r;
-  const dash = (imai / 100) * circumf;
+  const dash = score != null ? (score / 100) * circumf : 0;
+  const level = score == null ? '—' : score >= 80 ? 'Avancé' : score >= 60 ? 'Intermédiaire' : score >= 40 ? 'Débutant' : 'Démarrage';
 
   container.innerHTML = `
 <div class="reco">
@@ -334,10 +367,11 @@ function _renderShell(container) {
       <div class="reco-logo">💡</div>
       <div>
         <div class="reco-title">Recommandations IA</div>
-        <div class="reco-sub">Plan d'action personnalisé pour votre organisation</div>
+        <div class="reco-sub">Analyse de votre organisation — données en temps réel</div>
       </div>
     </div>
-    <button class="reco-score-btn-primary" style="padding:8px 18px;border-radius:var(--r);font-size:13px;font-weight:600;border:1px solid var(--border);cursor:pointer;font-family:inherit;background:var(--primary);color:#fff" onclick="window.location.hash='diagnostic'">
+    <button class="reco-score-btn-primary" style="padding:8px 18px;border-radius:var(--r);font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:inherit;background:var(--primary);color:#fff"
+      onclick="document.dispatchEvent(new CustomEvent('ws:navigate',{detail:{appSlug:'diagnostic-ia'}}))">
       Refaire le diagnostic →
     </button>
   </div>
@@ -346,35 +380,38 @@ function _renderShell(container) {
     <div class="reco-score-ring">
       <svg width="90" height="90" viewBox="0 0 90 90">
         <circle cx="45" cy="45" r="${r}" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="8"/>
-        <circle cx="45" cy="45" r="${r}" fill="none" stroke="#a78bfa" stroke-width="8"
-          stroke-dasharray="${dash} ${circumf - dash}" stroke-linecap="round"/>
+        ${score != null ? `<circle cx="45" cy="45" r="${r}" fill="none" stroke="#a78bfa" stroke-width="8"
+          stroke-dasharray="${dash.toFixed(2)} ${(circumf - dash).toFixed(2)}" stroke-linecap="round"/>` : ''}
       </svg>
       <div class="reco-score-val">
-        <span class="reco-score-num">${imai}</span>
+        <span class="reco-score-num">${score != null ? score : '?'}</span>
         <span class="reco-score-max">/100</span>
       </div>
     </div>
     <div class="reco-score-body">
-      <div class="reco-score-label">Score IMAI</div>
-      <div class="reco-score-title">Niveau Intermédiaire</div>
-      <div class="reco-score-desc">Votre organisation a une bonne base. ${RECO_DATA.length} actions sont recommandées pour passer au niveau Avancé et débloquer les capacités d'IA enterprise.</div>
+      <div class="reco-score-label">Score d'efficacité</div>
+      <div class="reco-score-title">${level}</div>
+      <div class="reco-score-desc">
+        ${total === 0
+          ? 'Aucune lacune détectée avec les données actuelles. Connectez davantage de sources pour enrichir l\'analyse.'
+          : `${total} action${total > 1 ? 's' : ''} identifiée${total > 1 ? 's' : ''} pour améliorer l'efficacité de votre organisation.${savings > 0 ? ` Économies potentielles : ${Number(savings).toLocaleString('fr-CA')} $/an.` : ''}`}
+      </div>
       <div class="reco-score-actions">
-        <button class="reco-score-btn reco-score-btn-primary" onclick="document.querySelector('[data-tab=plan]')?.click()">Voir mon plan →</button>
-        <button class="reco-score-btn reco-score-btn-ghost">Partager avec la direction</button>
+        <button class="reco-score-btn reco-score-btn-primary" onclick="document.querySelector('[data-tab=plan]')?.click()">Voir le plan →</button>
       </div>
     </div>
   </div>
 
   <div class="reco-kpis">
-    <div class="reco-kpi"><div class="reco-kpi-icon">⚡</div><div class="reco-kpi-val">${RECO_DATA.filter(r=>r.priority==='high').length}</div><div class="reco-kpi-lbl">Priorité haute</div></div>
-    <div class="reco-kpi"><div class="reco-kpi-icon">⏱</div><div class="reco-kpi-val">0/${RECO_DATA.length}</div><div class="reco-kpi-lbl">Complétées</div></div>
-    <div class="reco-kpi"><div class="reco-kpi-icon">📅</div><div class="reco-kpi-val">12 sem.</div><div class="reco-kpi-lbl">Plan d'adoption</div></div>
-    <div class="reco-kpi"><div class="reco-kpi-icon">🎯</div><div class="reco-kpi-val">+42 pts</div><div class="reco-kpi-lbl">Potentiel IMAI</div></div>
+    <div class="reco-kpi"><div class="reco-kpi-icon">⚡</div><div class="reco-kpi-val">${high}</div><div class="reco-kpi-lbl">Impact élevé</div></div>
+    <div class="reco-kpi"><div class="reco-kpi-icon">📋</div><div class="reco-kpi-val">${total}</div><div class="reco-kpi-lbl">Total recommandations</div></div>
+    <div class="reco-kpi"><div class="reco-kpi-icon">💰</div><div class="reco-kpi-val">${savings > 0 ? Number(savings).toLocaleString('fr-CA') + '$' : '—'}</div><div class="reco-kpi-lbl">Économies /an</div></div>
+    <div class="reco-kpi"><div class="reco-kpi-icon">📊</div><div class="reco-kpi-val">${score != null ? score + '%' : '—'}</div><div class="reco-kpi-lbl">Score efficacité</div></div>
   </div>
 
   <div class="reco-tabs">
     <button class="reco-tab active" data-tab="recommandations">Recommandations</button>
-    <button class="reco-tab" data-tab="plan">Plan d'adoption</button>
+    <button class="reco-tab" data-tab="plan">Analyse détaillée</button>
     <button class="reco-tab" data-tab="historique">Historique</button>
   </div>
 
@@ -390,15 +427,41 @@ function _renderShell(container) {
 }
 
 export default {
-  mount(container, ctx) {
+  async mount(container, ctx) {
     _css();
+    _apiRecs  = null;
+    _apiScore = null;
     _st = { ctx, view: 'recommandations', filter: 'all' };
+
+    // Affichage loading initial
+    container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;padding:60px;gap:12px;color:#757575"><div style="width:24px;height:24px;border:2px solid #E0E0E0;border-top-color:#0078D4;border-radius:50%;animation:reco-spin .7s linear infinite"></div>Chargement des recommandations…</div>';
+    if (!document.getElementById('reco-spin-kf')) {
+      const ks = document.createElement('style');
+      ks.id = 'reco-spin-kf';
+      ks.textContent = '@keyframes reco-spin{to{transform:rotate(360deg)}}';
+      document.head.appendChild(ks);
+    }
+
+    try {
+      [_apiRecs, _apiScore] = await Promise.all([
+        _api('/api/optimization/recommendations'),
+        _api('/api/optimization/efficiency-score'),
+      ]);
+    } catch (_) {
+      // Dégradation gracieuse — module fonctionne avec état vide
+      _apiRecs  = { recommendations: [], total_savings: 0 };
+      _apiScore = { overall: 0, software: 0, licenses: 0, infrastructure: 0, process: 0 };
+    }
+
     _renderShell(container);
     _renderView();
   },
   unmount(container) {
     _st = null;
+    _apiRecs = null;
+    _apiScore = null;
     container.innerHTML = '';
     delete window._recoFilter;
+    delete window._recoNav;
   },
 };
