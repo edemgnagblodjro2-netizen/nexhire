@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex, nofollow">
   <title>AgentHub Platform</title>
   <link rel="icon" href="/static/logo.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/static/design-system-dark.css">
+  <link rel="stylesheet" href="/static/design-system.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
@@ -21,18 +21,18 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Subtle dark gradient on main content */
+    /* Mica-style background gradient */
     #ws-main {
-      background: linear-gradient(160deg, rgba(37,99,235,.04) 0%, var(--bg) 25%);
+      background: linear-gradient(160deg, rgba(0,120,212,.02) 0%, var(--bg) 25%);
     }
 
-    /* ── Topbar — dark Acrylic ───────────────────────────────────── */
+    /* ── Topbar — Acrylic Fluent ─────────────────────────────────── */
     #ws-topbar {
       height: var(--topbar-h);
-      background: rgba(17,24,39,.96);
+      background: rgba(255,255,255,.9);
       backdrop-filter: blur(20px) saturate(180%);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(0,0,0,.07);
       display: flex;
       align-items: center;
       padding: 0 12px 0 0;
@@ -50,16 +50,16 @@
       align-items: center;
       gap: 8px;
       padding: 0 8px 0 4px;
-      border-right: 1px solid var(--border);
+      border-right: 1px solid rgba(0,0,0,.10);
       height: 100%;
       transition: width .2s ease;
       overflow: hidden;
-      background: var(--sidebar);
+      background: #fff;
     }
 
     /* ── Brand section icon/text overrides ─────────────────────────── */
     #ws-topbar-brand .ws-icon-btn { color: var(--text-sub); }
-    #ws-topbar-brand .ws-icon-btn:hover { background: rgba(255,255,255,.06); color: var(--text); }
+    #ws-topbar-brand .ws-icon-btn:hover { background: rgba(0,0,0,.05); color: var(--text); }
     #ws-program-name { color: var(--text); }
     #ws-powered-by   { color: var(--muted); }
 
@@ -126,7 +126,7 @@
       opacity: 0; transition: opacity .2s; pointer-events: none;
     }
     .ws-icon-btn:hover::before { opacity: 1; }
-    .ws-icon-btn:hover { background: rgba(255,255,255,.06); color: var(--text); }
+    .ws-icon-btn:hover { background: rgba(0,0,0,.04); color: var(--text); }
     .ws-icon-btn svg { width: 18px; height: 18px; }
 
     .ws-tb-sep { width: 1px; height: 22px; background: var(--border); margin: 0 6px; flex-shrink: 0; }
@@ -332,7 +332,7 @@
       opacity: 0; transition: opacity .2s; pointer-events: none;
     }
     .ws-nav-item:hover:not(:disabled)::before { opacity: 1; }
-    .ws-nav-item:hover:not(:disabled) { color: var(--text); background: rgba(255,255,255,.05); }
+    .ws-nav-item:hover:not(:disabled) { color: var(--text); background: rgba(0,0,0,.03); }
     .ws-nav-item.active {
       background: var(--primary-a10); color: var(--primary);
       font-weight: 600;

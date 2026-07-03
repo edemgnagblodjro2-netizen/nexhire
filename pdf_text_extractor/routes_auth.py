@@ -37,9 +37,7 @@ class SignupPayload(BaseModel):
     phone: str = Field(min_length=7, max_length=30)
     invite_token: str | None = None
     partner_slug: str | None = Field(default=None, pattern=r"^[a-z0-9-]{1,80}$")
-    org_type: str = Field(
-        default="entreprise", pattern="^(entreprise|pme|entrepreneur|hopital|municipalite|universite)$"
-    )
+    org_type: str = Field(default="entreprise", pattern="^(entreprise|pme|entrepreneur|hopital|municipalite|universite)$")
     currency: str = Field(default="CAD", pattern="^[A-Z]{3}$")
 
     @field_validator("password")
@@ -57,15 +55,12 @@ def signup(request: Request, payload: SignupPayload, background: BackgroundTasks
 
     # partner_slug et invite_token sont mutuellement exclusifs en Phase 1
     if payload.partner_slug and payload.invite_token:
-        raise HTTPException(
-            status_code=400, detail="Impossible de combiner un lien partenaire et un jeton d'invitation."
-        )
+        raise HTTPException(status_code=400, detail="Impossible de combiner un lien partenaire et un jeton d'invitation.")
 
     # Valider le partenaire côté serveur avant d'appeler Supabase
     if payload.partner_slug:
         try:
             from db import get_db, row as _row
-
             with get_db() as cur:
                 cur.execute(
                     "SELECT id FROM partners WHERE slug = %s AND is_active = true LIMIT 1",
@@ -82,7 +77,6 @@ def signup(request: Request, payload: SignupPayload, background: BackgroundTasks
     if not payload.invite_token:
         try:
             from db import get_db, row as _row
-
             with get_db() as cur:
                 cur.execute(
                     "SELECT 1 FROM pending_invitations WHERE email = %s AND used_at IS NULL LIMIT 1",
@@ -101,10 +95,10 @@ def signup(request: Request, payload: SignupPayload, background: BackgroundTasks
     try:
         sb = anon_client()
         meta: dict = {
-            "org_name": payload.organization_name,
+            "org_name":  payload.organization_name,
             "full_name": payload.full_name,
-            "org_type": payload.org_type,
-            "currency": payload.currency,
+            "org_type":  payload.org_type,
+            "currency":  payload.currency,
         }
         meta["phone"] = payload.phone
         if payload.invite_token:
@@ -112,7 +106,7 @@ def signup(request: Request, payload: SignupPayload, background: BackgroundTasks
         if payload.partner_slug:
             meta["partner_slug"] = payload.partner_slug
 
-        portal_url = os.environ.get("APP_URL", "https://myportal.nexhire.ca")
+        portal_url    = os.environ.get("APP_URL", "https://myportal.nexhire.ca")
         redirect_path = f"/inscription?partenaire={payload.partner_slug}" if payload.partner_slug else "/inscription"
         email_redirect_to = f"{portal_url}{redirect_path}"
 
@@ -128,18 +122,12 @@ def signup(request: Request, payload: SignupPayload, background: BackgroundTasks
         )
     except Exception as exc:
         import sys
-
         raw = str(exc).lower()
         print(f"[auth] signup error ({type(exc).__name__}): {exc}", file=sys.stderr)
         if "already registered" in raw or "already exists" in raw or "user_already_exists" in raw:
-            raise HTTPException(
-                status_code=400,
-                detail="Un compte existe déjà avec cette adresse courriel. Utilisez la connexion ou réinitialisez votre mot de passe.",
-            )
+            raise HTTPException(status_code=400, detail="Un compte existe déjà avec cette adresse courriel. Utilisez la connexion ou réinitialisez votre mot de passe.")
         if "password" in raw and ("weak" in raw or "short" in raw or "characters" in raw):
-            raise HTTPException(
-                status_code=400, detail="Le mot de passe ne respecte pas les exigences de sécurité Supabase."
-            )
+            raise HTTPException(status_code=400, detail="Le mot de passe ne respecte pas les exigences de sécurité Supabase.")
         if "rate" in raw or "too many" in raw:
             raise HTTPException(status_code=429, detail="Trop de tentatives — réessayez dans quelques minutes.")
         if "invalid" in raw and "email" in raw:
@@ -149,30 +137,27 @@ def signup(request: Request, payload: SignupPayload, background: BackgroundTasks
     if payload.invite_token:
         background.add_task(_notify_member_join, payload.invite_token, payload.email)
     else:
-        background.add_task(
-            _send_welcome, payload.email, payload.full_name, payload.organization_name, payload.partner_slug
-        )
+        background.add_task(_send_welcome, payload.email, payload.full_name, payload.organization_name, payload.partner_slug)
 
     # Si Supabase a retourné une session, la confirmation email est désactivée
     # → on peut connecter l'utilisateur immédiatement sans vérification.
     # Si session est None → confirmation requise, le compte est en attente.
     session = res.session
-    access_token = getattr(session, "access_token", None) if session else None
+    access_token  = getattr(session, "access_token",  None) if session else None
     refresh_token = getattr(session, "refresh_token", None) if session else None
 
     return {
-        "status": "ok",
-        "user_id": getattr(res.user, "id", None),
+        "status":                "ok",
+        "user_id":               getattr(res.user, "id", None),
         "confirmation_required": access_token is None,
-        "access_token": access_token,
-        "refresh_token": refresh_token,
+        "access_token":          access_token,
+        "refresh_token":         refresh_token,
     }
 
 
 def _send_welcome(email: str, full_name: str, org_name: str, partner_slug: str | None = None) -> None:
     try:
         from email_service import send_welcome_email
-
         send_welcome_email(to_email=email, full_name=full_name, org_name=org_name, partner_slug=partner_slug)
     except Exception:
         pass
@@ -182,7 +167,6 @@ def _notify_member_join(invite_token: str, email: str) -> None:
     try:
         from db import get_db, row
         from routes_webhooks import send_webhook_notification
-
         with get_db() as cur:
             cur.execute(
                 "SELECT org_id FROM pending_invitations WHERE token = %s LIMIT 1",
@@ -248,7 +232,6 @@ def update_password(request: Request, payload: UpdatePasswordPayload):
         if not user_resp or not user_resp.user:
             raise ValueError("token invalide")
         from supabase_client import service_client
-
         service_client().auth.admin.update_user_by_id(
             str(user_resp.user.id),
             {"password": payload.new_password},
@@ -274,72 +257,59 @@ def login(request: Request, payload: LoginPayload, background: BackgroundTasks):
         sb = anon_client()
         res = sb.auth.sign_in_with_password({"email": payload.email, "password": payload.password})
     except Exception as exc:
-        background.add_task(
-            log_audit,
-            AuditEvent(
-                action="auth_login",
-                query=payload.email,
-                success=False,
-                ip_address=ip,
-                http_status=401,
-                error_detail=str(exc),
-            ),
-        )
+        background.add_task(log_audit, AuditEvent(
+            action="auth_login",
+            query=payload.email,
+            success=False,
+            ip_address=ip,
+            http_status=401,
+            error_detail=str(exc),
+        ))
         raise HTTPException(status_code=401, detail="Identifiants invalides.") from exc
 
     if not res.session:
-        background.add_task(
-            log_audit,
-            AuditEvent(
-                action="auth_login",
-                query=payload.email,
-                success=False,
-                ip_address=ip,
-                http_status=401,
-                error_detail="session nulle",
-            ),
-        )
+        background.add_task(log_audit, AuditEvent(
+            action="auth_login",
+            query=payload.email,
+            success=False,
+            ip_address=ip,
+            http_status=401,
+            error_detail="session nulle",
+        ))
         raise HTTPException(status_code=401, detail="Authentification échouée.")
 
     uid = str(res.user.id)
-    background.add_task(
-        log_audit,
-        AuditEvent(
-            action="auth_login",
-            query=payload.email,
-            user_id=uid,
-            success=True,
-            ip_address=ip,
-            http_status=200,
-        ),
-    )
+    background.add_task(log_audit, AuditEvent(
+        action="auth_login",
+        query=payload.email,
+        user_id=uid,
+        success=True,
+        ip_address=ip,
+        http_status=200,
+    ))
 
     # Détection impossible travel en arrière-plan
     try:
         org_id = str(res.user.user_metadata.get("organization_id") or "")
         if ip and org_id:
             background.add_task(
-                _run_travel_check,
-                uid,
-                ip,
-                org_id,
+                _run_travel_check, uid, ip, org_id,
             )
     except Exception:
         pass
 
     return {
-        "access_token": res.session.access_token,
+        "access_token":  res.session.access_token,
         "refresh_token": res.session.refresh_token,
-        "token_type": "bearer",
-        "user_id": uid,
-        "expires_in": res.session.expires_in,
+        "token_type":    "bearer",
+        "user_id":       uid,
+        "expires_in":    res.session.expires_in,
     }
 
 
 def _run_travel_check(user_id: str, ip: str, org_id: str) -> None:
     try:
         from anomaly_detection import check_impossible_travel
-
         check_impossible_travel(user_id, ip, org_id)
     except Exception:
         pass
@@ -347,7 +317,6 @@ def _run_travel_check(user_id: str, ip: str, org_id: str) -> None:
 
 class RefreshPayload(BaseModel):
     refresh_token: str
-
 
 @router.post("/refresh")
 def refresh_token(payload: RefreshPayload):
@@ -360,32 +329,30 @@ def refresh_token(payload: RefreshPayload):
     if not res.session:
         raise HTTPException(status_code=401, detail="Session expirée — reconnectez-vous.")
     return {
-        "access_token": res.session.access_token,
+        "access_token":  res.session.access_token,
         "refresh_token": res.session.refresh_token,
-        "expires_in": res.session.expires_in,
+        "expires_in":    res.session.expires_in,
     }
 
 
 @router.get("/me")
 def me(user: CurrentUser = Depends(get_current_user)):
     import logging as _logging
-
     _log = _logging.getLogger(__name__)
     superadmin_emails = {e.strip().lower() for e in os.environ.get("SUPERADMIN_EMAILS", "").split(",") if e.strip()}
     if not superadmin_emails:
         _log.warning("SUPERADMIN_EMAILS non configuré — aucun super-administrateur actif.")
 
-    dept_types: list[str] = []
-    logo_url: str | None = None
-    brand_color: str | None = None
-    org_name: str | None = None
+    dept_types:   list[str] = []
+    logo_url:     str | None = None
+    brand_color:  str | None = None
+    org_name:     str | None = None
     partner_slug: str | None = None
 
     # Résoudre le slug du partenaire si l'utilisateur en est membre
     if user.partner_id:
         try:
             from db import get_db, row as _row
-
             with get_db() as cur:
                 cur.execute(
                     "SELECT slug FROM partners WHERE id = %s LIMIT 1",
@@ -399,7 +366,6 @@ def me(user: CurrentUser = Depends(get_current_user)):
     if user.organization_id:
         try:
             from db import get_db, row as _row, rows
-
             with get_db() as cur:
                 cur.execute(
                     """SELECT DISTINCT d.dept_type
@@ -415,8 +381,8 @@ def me(user: CurrentUser = Depends(get_current_user)):
                     (user.organization_id,),
                 )
                 org = _row(cur) or {}
-            org_name = org.get("name") or None
-            logo_url = org.get("logo_url") or None
+            org_name    = org.get("name")       or None
+            logo_url    = org.get("logo_url")   or None
             brand_color = org.get("brand_color") or None
         except Exception:
             pass
@@ -424,16 +390,16 @@ def me(user: CurrentUser = Depends(get_current_user)):
     return {
         "id": user.id,
         "email": user.email,
-        "organization_id": user.organization_id,
+        "organization_id":   user.organization_id,
         "organization_name": org_name,
         "role": user.role,
         "subscription_status": user.subscription_status,
-        "subscription_plan": user.subscription_plan,
+        "subscription_plan":   user.subscription_plan,
         "is_superadmin": bool(user.email and user.email.lower() in superadmin_emails),
-        "dept_types": dept_types,
-        "currency": user.currency,
-        "logo_url": logo_url,
+        "dept_types":  dept_types,
+        "currency":    user.currency,
+        "logo_url":    logo_url,
         "brand_color": brand_color,
-        "partner_id": user.partner_id,
+        "partner_id":   user.partner_id,
         "partner_slug": partner_slug,
     }
