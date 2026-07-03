@@ -131,6 +131,26 @@
 
     .ws-tb-sep { width: 1px; height: 22px; background: var(--border); margin: 0 6px; flex-shrink: 0; }
 
+    /* ── Sélecteur de langue — topbar ───────────────────────────────────── */
+    .nh-lang-toggle {
+      display: flex; gap: 2px; align-items: center;
+      margin: 0 4px;
+    }
+    .nh-lang-btn {
+      padding: 3px 8px; font-size: 11px; font-weight: 700;
+      border: 1px solid var(--border); border-radius: 4px;
+      background: none; color: var(--text-sub);
+      cursor: pointer; letter-spacing: .04em;
+      font-family: var(--font); transition: all var(--transition);
+      line-height: 1.4;
+    }
+    .nh-lang-btn.active,
+    .nh-lang-btn[aria-pressed="true"] {
+      background: var(--primary); color: white; border-color: var(--primary);
+    }
+    .nh-lang-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    .nh-lang-btn:hover:not([aria-pressed="true"]) { border-color: var(--primary); color: var(--primary); }
+
     /* ── Dropdown wraps ──────────────────────────────────────────── */
     .ws-tb-wrap { position: relative; display: inline-flex; }
 
@@ -593,6 +613,14 @@
         </div>
       </div>
 
+      <!-- Language toggle -->
+      <div class="nh-lang-toggle" role="group" aria-label="Language / Langue">
+        <button class="nh-lang-btn active" data-lang="fr" aria-pressed="true"
+                onclick="NH_I18N.setLang('fr')" title="Français">FR</button>
+        <button class="nh-lang-btn" data-lang="en" aria-pressed="false"
+                onclick="NH_I18N.setLang('en')" title="English">EN</button>
+      </div>
+
       <div class="ws-tb-sep"></div>
 
       <!-- User menu -->
@@ -683,6 +711,7 @@
     </div>
   </div>
 
+  <script src="/static/i18n.js"></script>
   <script type="module" src="/static/workspace.js"></script>
   <script>
     /* ── Fluent Reveal — halo lumineux sur tous les boutons ─────── */

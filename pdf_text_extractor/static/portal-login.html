@@ -26,7 +26,7 @@
     }
 
     /* ═══════════════════════════════════════════════════════════════════════
-       COLONNE GAUCHE — Branding Fluent / Microsoft 365 style
+       COLONNE GAUCHE — Branding Fluent
        ═══════════════════════════════════════════════════════════════════════ */
     .pl-brand {
       background: linear-gradient(155deg, #1e1b4b 0%, #312e81 45%, #4c1d95 100%);
@@ -37,8 +37,6 @@
       position: relative;
       overflow: hidden;
     }
-
-    /* Mica-style ambient layers */
     .pl-brand::before {
       content: '';
       position: absolute;
@@ -55,8 +53,6 @@
       background: radial-gradient(circle, rgba(99,102,241,.22) 0%, transparent 70%);
       pointer-events: none;
     }
-
-    /* Subtle grid overlay */
     .pl-brand-grid {
       position: absolute; inset: 0; pointer-events: none; z-index: 0;
       background-image:
@@ -64,15 +60,11 @@
         linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
       background-size: 40px 40px;
     }
-
     .pl-brand-top  { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; }
     .pl-brand-foot { position: relative; z-index: 1; }
 
     /* Logo */
-    .pl-logo-row {
-      display: flex; align-items: center; gap: 10px;
-      margin-bottom: 56px;
-    }
+    .pl-logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 56px; }
     .pl-logo-mark {
       width: 36px; height: 36px; border-radius: 8px;
       background: rgba(255,255,255,.18); display: flex; align-items: center; justify-content: center;
@@ -109,31 +101,22 @@
       background: rgba(255,255,255,.1);
       backdrop-filter: blur(20px) saturate(180%);
       border: 1px solid rgba(255,255,255,.18);
-      border-radius: 12px;
-      padding: 18px 20px;
-      margin-bottom: 32px;
-      max-width: 360px;
+      border-radius: 12px; padding: 18px 20px;
+      margin-bottom: 32px; max-width: 360px;
     }
-    .pl-product-card-hd {
-      display: flex; align-items: center; gap: 8px; margin-bottom: 14px;
-    }
-    .pl-product-card-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-    }
+    .pl-product-card-hd { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+    .pl-product-card-dot { width: 8px; height: 8px; border-radius: 50%; }
     .pl-product-card-title { font-size: 11px; font-weight: 700; color: rgba(255,255,255,.9); text-transform: uppercase; letter-spacing: .06em; }
     .pl-metrics-row { display: flex; gap: 16px; }
     .pl-metric { flex: 1; }
-    .pl-metric-val  { font-size: 22px; font-weight: 700; color: white; line-height: 1; }
+    .pl-metric-val   { font-size: 22px; font-weight: 700; color: white; line-height: 1; }
     .pl-metric-label { font-size: 10px; color: rgba(255,255,255,.55); margin-top: 2px; }
     .pl-mini-bar { height: 3px; background: rgba(255,255,255,.15); border-radius: 2px; margin-top: 8px; overflow: hidden; }
     .pl-mini-bar-fill { height: 100%; border-radius: 2px; background: rgba(133,212,255,.8); transition: width .6s ease; }
 
     /* Features */
     .pl-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
-    .pl-features li {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 13.5px; font-weight: 400; color: rgba(255,255,255,.82);
-    }
+    .pl-features li { display: flex; align-items: center; gap: 10px; font-size: 13.5px; font-weight: 400; color: rgba(255,255,255,.82); }
     .pl-feat-check {
       width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
       background: rgba(133,212,255,.25); border: 1px solid rgba(133,212,255,.4);
@@ -146,10 +129,7 @@
       display: flex; align-items: center; gap: 16px;
       padding-top: 20px; border-top: 1px solid rgba(255,255,255,.1);
     }
-    .pl-trust-item {
-      display: flex; align-items: center; gap: 5px;
-      font-size: 11px; color: rgba(255,255,255,.5);
-    }
+    .pl-trust-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: rgba(255,255,255,.5); }
     .pl-trust-item svg { width: 13px; height: 13px; flex-shrink: 0; opacity: .7; }
 
     /* Partner badge */
@@ -165,10 +145,7 @@
     .pl-partner-badge-name { font-weight: 700; color: white; font-size: 13px; display: block; }
 
     /* Brand footer */
-    .pl-brand-footer {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 11px; color: rgba(255,255,255,.28);
-    }
+    .pl-brand-footer { display: flex; align-items: center; gap: 8px; font-size: 11px; color: rgba(255,255,255,.28); }
 
     /* ═══════════════════════════════════════════════════════════════════════
        COLONNE DROITE — Formulaire Fluent
@@ -181,14 +158,30 @@
       min-height: 100dvh;
       overflow-y: auto;
     }
-
     .pl-form-wrap { width: 100%; max-width: 380px; }
 
-    /* Onglets */
-    .pl-tabs {
-      display: flex; gap: 0; margin-bottom: 28px;
-      border-bottom: 1px solid var(--border);
+    /* ── Sélecteur de langue ───────────────────────────────────────────── */
+    .nh-lang-toggle {
+      display: flex; gap: 3px; justify-content: flex-end;
+      margin-bottom: 20px;
     }
+    .nh-lang-btn {
+      padding: 4px 10px; font-size: 11px; font-weight: 700;
+      border: 1px solid var(--border); border-radius: 4px;
+      background: none; color: var(--text-sub);
+      cursor: pointer; letter-spacing: .04em;
+      font-family: var(--font); transition: all var(--transition);
+      line-height: 1.4;
+    }
+    .nh-lang-btn.active,
+    .nh-lang-btn[aria-pressed="true"] {
+      background: var(--primary); color: white; border-color: var(--primary);
+    }
+    .nh-lang-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    .nh-lang-btn:hover:not([aria-pressed="true"]) { border-color: var(--primary); color: var(--primary); }
+
+    /* Onglets */
+    .pl-tabs { display: flex; gap: 0; margin-bottom: 28px; border-bottom: 1px solid var(--border); }
     .pl-tab {
       flex: 1; padding: 10px 0;
       font-size: 14px; font-weight: 400; color: var(--text-sub);
@@ -198,30 +191,25 @@
     }
     .pl-tab.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 600; }
     .pl-tab:hover:not(.active) { color: var(--text-2); }
+    .pl-tab:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 
     /* Sections */
     .pl-section { display: none; animation: ds-fade-in .2s ease; }
     .pl-section.active { display: block; }
 
     /* Titre form */
-    .pl-form-title {
-      font-size: 22px; font-weight: 600; color: var(--text);
-      margin-bottom: 6px; letter-spacing: -.02em;
-    }
-    .pl-form-sub { font-size: 13px; color: var(--text-sub); margin-bottom: 24px; line-height: 1.5; }
+    .pl-form-title { font-size: 22px; font-weight: 600; color: var(--text); margin-bottom: 6px; letter-spacing: -.02em; }
+    .pl-form-sub   { font-size: 13px; color: var(--text-sub); margin-bottom: 24px; line-height: 1.5; }
 
     /* Fields */
     .pl-field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
     .pl-label { font-size: 13px; font-weight: 600; color: var(--text-2); }
     .pl-input { width: 100%; }
-
     .pl-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
     /* Remember me / checkbox row */
     .pl-check-row { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
-    .pl-check-row input[type="checkbox"] {
-      accent-color: var(--primary); width: 15px; height: 15px; cursor: pointer;
-    }
+    .pl-check-row input[type="checkbox"] { accent-color: var(--primary); width: 15px; height: 15px; cursor: pointer; }
     .pl-check-row label { font-size: 13px; color: var(--text-sub); cursor: pointer; }
 
     /* Org type cards */
@@ -230,19 +218,15 @@
     .pl-org-type input[type="radio"] { display: none; }
     .pl-org-type-card {
       display: flex; flex-direction: column; align-items: center; gap: 6px;
-      padding: 14px 6px 10px;
-      border: 1px solid var(--border); border-radius: 8px;
-      background: var(--card);
-      transition: all var(--transition); min-height: 76px; justify-content: center;
+      padding: 14px 6px 10px; border: 1px solid var(--border); border-radius: 8px;
+      background: var(--card); transition: all var(--transition); min-height: 76px; justify-content: center;
     }
-    .pl-org-type:hover .pl-org-type-card {
-      border-color: var(--primary); background: var(--primary-lt);
-    }
+    .pl-org-type:hover .pl-org-type-card { border-color: var(--primary); background: var(--primary-lt); }
     .pl-org-type input[type="radio"]:checked + .pl-org-type-card {
       border-color: var(--primary); background: var(--primary-lt);
       box-shadow: 0 0 0 1px var(--primary);
     }
-    .pl-org-type-icon { font-size: 24px; line-height: 1; }
+    .pl-org-type-icon  { font-size: 24px; line-height: 1; }
     .pl-org-type-label { font-size: 11px; font-weight: 600; color: var(--text-sub); text-align: center; line-height: 1.3; }
     .pl-org-type input[type="radio"]:checked + .pl-org-type-card .pl-org-type-label { color: var(--primary-dk); }
 
@@ -273,14 +257,35 @@
     /* Divider */
     .pl-divider {
       text-align: center; font-size: 12px; color: var(--muted);
-      margin: 16px 0; position: relative;
+      margin: 20px 0 16px; position: relative;
     }
     .pl-divider::before, .pl-divider::after {
       content: ''; position: absolute; top: 50%;
-      width: calc(50% - 22px); height: 1px; background: var(--border);
+      width: calc(50% - 60px); height: 1px; background: var(--border);
     }
     .pl-divider::before { left: 0; }
     .pl-divider::after  { right: 0; }
+
+    /* ── SSO block ───────────────────────────────────────────────────────── */
+    .pl-sso-block { margin-top: 4px; }
+    .pl-sso-title {
+      font-size: 13px; font-weight: 600; color: var(--text);
+      margin-bottom: 12px; text-align: center;
+    }
+    .pl-sso-org {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px 14px; margin-bottom: 12px;
+      animation: ds-fade-in .2s ease;
+    }
+    .pl-sso-org-logo {
+      width: 36px; height: 36px; border-radius: 6px;
+      background: var(--primary-lt); border: 1px solid var(--primary-a20);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .pl-sso-org-name { font-size: 13px; font-weight: 600; color: var(--text); }
+    .pl-sso-org-sub  { font-size: 11px; color: var(--text-sub); margin-top: 1px; }
 
     /* Invite wall */
     .pl-invite-wall { display: none; text-align: center; padding: 28px 0; }
@@ -364,35 +369,38 @@
       <div class="pl-partner-badge" id="pl-partner-badge">
         <span class="pl-partner-badge-icon">🏛️</span>
         <div>
-          <span class="pl-partner-badge-text">Vous rejoignez</span>
+          <span class="pl-partner-badge-text" data-i18n="brand.partner.joining">Vous rejoignez</span>
           <span class="pl-partner-badge-name" id="pl-partner-name">—</span>
         </div>
       </div>
 
       <!-- Tagline -->
-      <div class="pl-tagline">La plateforme IA pour <em>organisations modernes</em></div>
-      <p class="pl-sub-text">Évaluez votre maturité IA, gouvernez vos données et accélérez votre transformation numérique — en une seule plateforme.</p>
+      <div class="pl-tagline">
+        <span data-i18n="brand.tagline">La plateforme IA pour</span>
+        <em data-i18n="brand.tagline.em">organisations modernes</em>
+      </div>
+      <p class="pl-sub-text" data-i18n="brand.sub">Évaluez votre maturité IA, gouvernez vos données et accélérez votre transformation numérique — en une seule plateforme.</p>
 
       <!-- Floating product card -->
       <div class="pl-product-card">
         <div class="pl-product-card-hd">
           <div class="pl-product-card-dot" style="background:#85D4FF"></div>
-          <span class="pl-product-card-title">Score de maturité IA — Tableau de bord</span>
+          <span class="pl-product-card-title" data-i18n="brand.card.title">Score de maturité IA — Tableau de bord</span>
         </div>
         <div class="pl-metrics-row">
           <div class="pl-metric">
             <div class="pl-metric-val">74</div>
-            <div class="pl-metric-label">Score IMAI / 100</div>
+            <div class="pl-metric-label" data-i18n="brand.kpi.score">Score IMAI / 100</div>
             <div class="pl-mini-bar"><div class="pl-mini-bar-fill" style="width:74%"></div></div>
           </div>
           <div class="pl-metric">
             <div class="pl-metric-val">12</div>
-            <div class="pl-metric-label">Actions en cours</div>
+            <div class="pl-metric-label" data-i18n="brand.kpi.actions">Actions en cours</div>
             <div class="pl-mini-bar"><div class="pl-mini-bar-fill" style="width:48%"></div></div>
           </div>
           <div class="pl-metric">
             <div class="pl-metric-val">3</div>
-            <div class="pl-metric-label">Connecteurs actifs</div>
+            <div class="pl-metric-label" data-i18n="brand.kpi.connectors">Connecteurs actifs</div>
             <div class="pl-mini-bar"><div class="pl-mini-bar-fill" style="width:30%"></div></div>
           </div>
         </div>
@@ -404,25 +412,25 @@
           <span class="pl-feat-check">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </span>
-          Diagnostic de maturité IA en 10 minutes
+          <span data-i18n="brand.feat.1">Diagnostic de maturité IA en 10 minutes</span>
         </li>
         <li>
           <span class="pl-feat-check">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </span>
-          ATLAS — copilote IA disponible 24h/24
+          <span data-i18n="brand.feat.2">ATLAS — copilote IA disponible 24h/24</span>
         </li>
         <li>
           <span class="pl-feat-check">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </span>
-          Gouvernance &amp; conformité Loi 25
+          <span data-i18n="brand.feat.3">Gouvernance &amp; conformité Loi 25</span>
         </li>
         <li>
           <span class="pl-feat-check">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </span>
-          Connecteurs Microsoft 365, SAP, Jira et +20
+          <span data-i18n="brand.feat.4">Connecteurs Microsoft 365, SAP, Jira et +20</span>
         </li>
       </ul>
 
@@ -433,19 +441,19 @@
       <div class="pl-trust-row">
         <div class="pl-trust-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          Hébergement Canada
+          <span data-i18n="brand.trust.hosting">Hébergement Canada</span>
         </div>
         <div class="pl-trust-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          Conforme Loi 25
+          <span data-i18n="brand.trust.law25">Conforme Loi 25</span>
         </div>
         <div class="pl-trust-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="20 6 9 17 4 12"/></svg>
-          SOC 2 Type II
+          <span data-i18n="brand.trust.soc2">SOC 2 Type II</span>
         </div>
       </div>
       <div class="pl-brand-footer" style="margin-top:12px">
-        <span>© 2026 CivicAI Inc.</span><span>·</span><span>Propulsé par ATLAS AI</span>
+        <span data-i18n="brand.footer">© 2026 CivicAI Inc. · Propulsé par ATLAS AI</span>
       </div>
     </div>
   </div>
@@ -454,204 +462,253 @@
   <div class="pl-form-col">
     <div class="pl-form-wrap">
 
-      <div class="pl-tabs">
-        <button class="pl-tab active" id="tab-login" onclick="switchTab('login')">Connexion</button>
-        <button class="pl-tab" id="tab-signup" onclick="switchTab('signup')">Créer un compte</button>
+      <!-- Sélecteur de langue -->
+      <div class="nh-lang-toggle" role="group" aria-label="Language / Langue">
+        <button class="nh-lang-btn active" data-lang="fr" aria-pressed="true"
+                onclick="NH_I18N.setLang('fr')" tabindex="0">FR</button>
+        <button class="nh-lang-btn" data-lang="en" aria-pressed="false"
+                onclick="NH_I18N.setLang('en')" tabindex="0">EN</button>
       </div>
 
-      <!-- ── Connexion ── -->
-      <div class="pl-section active" id="section-login">
-        <div class="pl-form-title">Bon retour 👋</div>
-        <p class="pl-form-sub">Connectez-vous à votre espace AgentHub.</p>
+      <!-- Onglets -->
+      <div class="pl-tabs" role="tablist">
+        <button class="pl-tab active" id="tab-login" role="tab" aria-selected="true"
+                onclick="switchTab('login')" data-i18n="tab.login">Connexion</button>
+        <button class="pl-tab" id="tab-signup" role="tab" aria-selected="false"
+                onclick="switchTab('signup')" data-i18n="tab.signup">Créer un compte</button>
+      </div>
+
+      <!-- ── Connexion ─────────────────────────────────────────────────── -->
+      <div class="pl-section active" id="section-login" role="tabpanel">
+        <div class="pl-form-title" data-i18n="login.title">Bon retour 👋</div>
+        <p class="pl-form-sub" data-i18n="login.sub">Connectez-vous à votre espace AgentHub.</p>
 
         <div id="login-error" class="ds-alert ds-alert-err" style="margin-bottom:16px;display:none"></div>
 
-        <form id="login-form" onsubmit="handleLogin(event)">
+        <form id="login-form" onsubmit="handleLogin(event)" novalidate>
           <div class="pl-field">
-            <label class="pl-label" for="login-email">Adresse courriel</label>
+            <label class="pl-label" for="login-email" data-i18n="login.email.label">Adresse courriel</label>
             <input class="ds-input pl-input" id="login-email" type="email"
+                   data-i18n-ph="login.email.ph"
                    placeholder="vous@organisation.ca" required autocomplete="email">
           </div>
           <div class="pl-field">
-            <label class="pl-label" for="login-password">Mot de passe</label>
+            <label class="pl-label" for="login-password" data-i18n="login.password.label">Mot de passe</label>
             <input class="ds-input pl-input" id="login-password" type="password"
+                   data-i18n-ph="login.password.ph"
                    placeholder="••••••••" required autocomplete="current-password">
           </div>
 
           <div class="pl-check-row">
             <input type="checkbox" id="login-remember">
-            <label for="login-remember">Se souvenir de moi</label>
+            <label for="login-remember" data-i18n="login.remember">Se souvenir de moi</label>
           </div>
 
           <button type="submit" class="ds-btn ds-btn-primary ds-btn-lg pl-submit" id="login-btn">
-            Connexion
+            <span data-i18n="login.btn">Connexion</span>
           </button>
         </form>
 
         <p class="pl-secondary" style="margin-bottom:8px">
-          <a href="#" onclick="switchTab('forgot');return false">Mot de passe oublié ?</a>
+          <a href="#" onclick="switchTab('forgot');return false" data-i18n="login.forgot">Mot de passe oublié ?</a>
         </p>
         <p class="pl-secondary">
-          Pas encore de compte ?
-          <a href="#" onclick="switchTab('signup');return false">Créer un compte</a>
+          <span data-i18n="login.no_account">Pas encore de compte ?</span>
+          <a href="#" onclick="switchTab('signup');return false" data-i18n="login.free_trial">Essai gratuit de 14 jours →</a>
         </p>
+
+        <!-- SSO block -->
+        <div class="pl-divider"><span data-i18n="sso.divider">ou connexion via SSO</span></div>
+        <div class="pl-sso-block">
+          <p class="pl-sso-title" data-i18n="sso.section.title">Connexion via votre organisation</p>
+
+          <!-- Org branding — affiché quand un slug valide est trouvé -->
+          <div class="pl-sso-org" id="pl-sso-org" style="display:none" aria-live="polite">
+            <div class="pl-sso-org-logo" id="pl-sso-org-logo">🏢</div>
+            <div>
+              <div class="pl-sso-org-name" id="pl-sso-org-name"></div>
+              <div class="pl-sso-org-sub" id="pl-sso-org-sub"></div>
+            </div>
+          </div>
+
+          <div class="pl-field">
+            <label class="pl-label" for="sso-slug" data-i18n="sso.slug.label">Identifiant de votre organisation</label>
+            <input class="ds-input pl-input" id="sso-slug" type="text"
+                   data-i18n-ph="sso.slug.ph"
+                   placeholder="ex. : ville-trois-rivieres"
+                   autocomplete="off" autocorrect="off" spellcheck="false"
+                   inputmode="url">
+          </div>
+          <div id="sso-error" class="ds-alert ds-alert-err" style="display:none;margin-bottom:12px" role="alert"></div>
+          <button type="button" id="sso-btn" class="ds-btn ds-btn-outline ds-btn-lg pl-submit" onclick="handleSSO()">
+            <span data-i18n="sso.btn">Se connecter avec SSO →</span>
+          </button>
+        </div>
       </div>
 
-      <!-- ── Mot de passe oublié ── -->
-      <div class="pl-section" id="section-forgot">
-        <div class="pl-form-title">Mot de passe oublié</div>
-        <p class="pl-form-sub">Entrez votre courriel — nous vous enverrons un lien de réinitialisation.</p>
+      <!-- ── Mot de passe oublié ─────────────────────────────────────── -->
+      <div class="pl-section" id="section-forgot" role="tabpanel">
+        <div class="pl-form-title" data-i18n="forgot.title">Mot de passe oublié</div>
+        <p class="pl-form-sub" data-i18n="forgot.sub">Entrez votre courriel — nous vous enverrons un lien de réinitialisation.</p>
 
-        <div id="forgot-error"   class="ds-alert ds-alert-err"  style="margin-bottom:16px;display:none"></div>
-        <div id="forgot-success" class="ds-alert ds-alert-ok"   style="margin-bottom:16px;display:none"></div>
+        <div id="forgot-error"   class="ds-alert ds-alert-err" style="margin-bottom:16px;display:none"></div>
+        <div id="forgot-success" class="ds-alert ds-alert-ok"  style="margin-bottom:16px;display:none"></div>
 
-        <form id="forgot-form" onsubmit="handleForgot(event)">
+        <form id="forgot-form" onsubmit="handleForgot(event)" novalidate>
           <div class="pl-field">
-            <label class="pl-label" for="forgot-email">Adresse courriel</label>
+            <label class="pl-label" for="forgot-email" data-i18n="forgot.email.label">Adresse courriel</label>
             <input class="ds-input pl-input" id="forgot-email" type="email"
+                   data-i18n-ph="forgot.email.ph"
                    placeholder="vous@organisation.ca" required autocomplete="email">
           </div>
           <button type="submit" class="ds-btn ds-btn-primary ds-btn-lg pl-submit" id="forgot-btn">
-            Envoyer le lien
+            <span data-i18n="forgot.btn">Envoyer le lien</span>
           </button>
         </form>
 
         <p class="pl-secondary">
-          <a href="#" onclick="switchTab('login');return false">← Retour à la connexion</a>
+          <a href="#" onclick="switchTab('login');return false" data-i18n="forgot.back">← Retour à la connexion</a>
         </p>
       </div>
 
-      <!-- ── Réinitialisation mot de passe ── -->
-      <div class="pl-section" id="section-reset">
-        <div class="pl-form-title">Nouveau mot de passe</div>
-        <p class="pl-form-sub">Choisissez un mot de passe sécurisé pour votre compte.</p>
+      <!-- ── Réinitialisation mot de passe ───────────────────────────── -->
+      <div class="pl-section" id="section-reset" role="tabpanel">
+        <div class="pl-form-title" data-i18n="reset.title">Nouveau mot de passe</div>
+        <p class="pl-form-sub" data-i18n="reset.sub">Choisissez un mot de passe sécurisé pour votre compte.</p>
 
         <div id="reset-error"   class="ds-alert ds-alert-err" style="margin-bottom:16px;display:none"></div>
         <div id="reset-success" class="ds-alert ds-alert-ok"  style="margin-bottom:16px;display:none"></div>
 
-        <form id="reset-form" onsubmit="handleResetPassword(event)">
+        <form id="reset-form" onsubmit="handleResetPassword(event)" novalidate>
           <div class="pl-field">
-            <label class="pl-label" for="reset-password">Nouveau mot de passe</label>
+            <label class="pl-label" for="reset-password" data-i18n="reset.pw.label">Nouveau mot de passe</label>
             <input class="ds-input pl-input" id="reset-password" type="password"
+                   data-i18n-ph="reset.pw.ph"
                    placeholder="Minimum 12 caractères" required autocomplete="new-password">
           </div>
           <div class="pl-field">
-            <label class="pl-label" for="reset-confirm">Confirmer le mot de passe</label>
+            <label class="pl-label" for="reset-confirm" data-i18n="reset.confirm.label">Confirmer le mot de passe</label>
             <input class="ds-input pl-input" id="reset-confirm" type="password"
+                   data-i18n-ph="reset.confirm.ph"
                    placeholder="Répétez le mot de passe" required autocomplete="new-password">
           </div>
           <button type="submit" class="ds-btn ds-btn-primary ds-btn-lg pl-submit" id="reset-btn">
-            Enregistrer le nouveau mot de passe
+            <span data-i18n="reset.btn">Enregistrer le nouveau mot de passe</span>
           </button>
         </form>
 
         <p class="pl-secondary">
-          <a href="#" onclick="switchTab('login');return false">← Retour à la connexion</a>
+          <a href="#" onclick="switchTab('login');return false" data-i18n="reset.back">← Retour à la connexion</a>
         </p>
       </div>
 
-      <!-- ── Inscription ── -->
-      <div class="pl-section" id="section-signup">
+      <!-- ── Inscription ──────────────────────────────────────────────── -->
+      <div class="pl-section" id="section-signup" role="tabpanel">
 
-        <!-- Mur d'invitation — affiché si pas de lien partenaire valide -->
+        <!-- Mur d'invitation -->
         <div class="pl-invite-wall" id="pl-invite-wall">
           <div class="pl-invite-icon">🔒</div>
-          <div class="pl-invite-title">Invitation requise</div>
-          <p class="pl-invite-desc">
-            Pour créer un compte, vous avez besoin d'un lien d'invitation de votre
-            chambre ou organisation partenaire.<br><br>
-            Contactez votre coordinateur ou administrateur pour obtenir votre lien.
-          </p>
+          <div class="pl-invite-title" data-i18n="invite.title">Invitation requise</div>
+          <p class="pl-invite-desc" data-i18n="invite.desc">Pour créer un compte, vous avez besoin d'un lien d'invitation de votre chambre ou organisation partenaire. Contactez votre coordinateur ou administrateur pour obtenir votre lien.</p>
         </div>
 
-        <!-- Formulaire d'inscription — affiché uniquement avec un partenaire valide -->
+        <!-- Formulaire d'inscription -->
         <div id="signup-form-wrap" style="display:none">
-          <div class="pl-form-title">Créer votre compte</div>
-          <p class="pl-form-sub" id="signup-sub">Remplissez les informations ci-dessous pour rejoindre votre espace.</p>
+          <div class="pl-form-title" data-i18n="signup.title">Créer votre compte</div>
+          <p class="pl-form-sub" id="signup-sub" data-i18n="signup.sub.partner">Rejoignez votre espace AgentHub Platform.</p>
 
-          <div id="signup-error"   class="ds-alert ds-alert-err" style="margin-bottom:16px;display:none"></div>
+          <div id="signup-error" class="ds-alert ds-alert-err" style="margin-bottom:16px;display:none"></div>
 
           <div id="signup-success" class="pl-success">
             <div class="pl-success-icon">📧</div>
-            <div class="pl-success-badge">✓ Compte créé avec succès</div>
-            <div class="pl-success-title">Vérifiez votre courriel</div>
-            <p class="pl-success-desc">Nous avons envoyé un lien de confirmation à :</p>
+            <div class="pl-success-badge" data-i18n="success.badge">✓ Compte créé avec succès</div>
+            <div class="pl-success-title" data-i18n="success.title">Vérifiez votre courriel</div>
+            <p class="pl-success-desc" data-i18n="success.desc1">Nous avons envoyé un lien de confirmation à :</p>
             <div class="pl-success-email">
               <span>✉️</span>
               <span id="signup-email-sent"></span>
             </div>
-            <p class="pl-success-desc">Cliquez sur le lien reçu pour activer votre compte.</p>
+            <p class="pl-success-desc" data-i18n="success.desc2">Cliquez sur le lien reçu pour activer votre compte.</p>
             <div class="pl-success-actions">
               <a class="pl-gmail-btn" id="btn-open-gmail" href="https://mail.google.com" target="_blank">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6ZM20 6L12 13L4 6H20ZM20 18H4V8L12 15L20 8V18Z" fill="white"/></svg>
-                Ouvrir Gmail
+                <span data-i18n="success.gmail">Ouvrir Gmail</span>
               </a>
               <button class="ds-btn ds-btn-outline" onclick="switchTab('login')">
-                Retour à la connexion →
+                <span data-i18n="success.back">Retour à la connexion →</span>
               </button>
             </div>
           </div>
 
           <div class="pl-trial-badge">
-            <strong>14 jours d'essai gratuit</strong> — aucune carte de crédit requise
+            <strong data-i18n="signup.trial">14 jours d'essai gratuit</strong>
+            <span> — </span>
+            <span data-i18n="signup.trial.sub">aucune carte de crédit requise</span>
           </div>
 
-          <form id="signup-form" onsubmit="handleSignup(event)">
+          <form id="signup-form" onsubmit="handleSignup(event)" novalidate>
             <div class="pl-field">
-              <label class="pl-label" for="signup-org-name">Nom de l'organisation <span style="color:#dc2626">*</span></label>
+              <label class="pl-label" for="signup-org-name">
+                <span data-i18n="signup.org_name.label">Nom de l'organisation</span>
+                <span style="color:#dc2626"> *</span>
+              </label>
               <input class="ds-input pl-input" id="signup-org-name" type="text"
+                     data-i18n-ph="signup.org_name.ph"
                      placeholder="Ex. : Ville de Laval, Hôpital Saint-Luc, Entreprise XYZ…"
                      required maxlength="255" autocomplete="organization">
             </div>
             <div class="pl-field">
-              <label class="pl-label">Type d'organisation <span style="color:#dc2626">*</span></label>
+              <label class="pl-label">
+                <span data-i18n="signup.org_type.label">Type d'organisation</span>
+                <span style="color:#dc2626"> *</span>
+              </label>
               <div class="pl-org-types">
                 <label class="pl-org-type">
                   <input type="radio" name="org_type" value="entreprise" required>
                   <span class="pl-org-type-card">
                     <span class="pl-org-type-icon">🏢</span>
-                    <span class="pl-org-type-label">Entreprise privée</span>
+                    <span class="pl-org-type-label" data-i18n="org.entreprise">Entreprise privée</span>
                   </span>
                 </label>
                 <label class="pl-org-type">
                   <input type="radio" name="org_type" value="pme">
                   <span class="pl-org-type-card">
                     <span class="pl-org-type-icon">🏭</span>
-                    <span class="pl-org-type-label">PME / PMI</span>
+                    <span class="pl-org-type-label" data-i18n="org.pme">PME / PMI</span>
                   </span>
                 </label>
                 <label class="pl-org-type">
                   <input type="radio" name="org_type" value="hopital">
                   <span class="pl-org-type-card">
                     <span class="pl-org-type-icon">🏥</span>
-                    <span class="pl-org-type-label">Hôpital / Santé</span>
+                    <span class="pl-org-type-label" data-i18n="org.hopital">Hôpital / Santé</span>
                   </span>
                 </label>
                 <label class="pl-org-type">
                   <input type="radio" name="org_type" value="municipalite">
                   <span class="pl-org-type-card">
                     <span class="pl-org-type-icon">🏛️</span>
-                    <span class="pl-org-type-label">Municipalité</span>
+                    <span class="pl-org-type-label" data-i18n="org.municipalite">Municipalité</span>
                   </span>
                 </label>
                 <label class="pl-org-type">
                   <input type="radio" name="org_type" value="universite">
                   <span class="pl-org-type-card">
                     <span class="pl-org-type-icon">🎓</span>
-                    <span class="pl-org-type-label">Université / École</span>
+                    <span class="pl-org-type-label" data-i18n="org.universite">Université / École</span>
                   </span>
                 </label>
                 <label class="pl-org-type">
                   <input type="radio" name="org_type" value="entrepreneur">
                   <span class="pl-org-type-card">
                     <span class="pl-org-type-icon">🚀</span>
-                    <span class="pl-org-type-label">Startup / Entrepreneur</span>
+                    <span class="pl-org-type-label" data-i18n="org.entrepreneur">Startup / Entrepreneur</span>
                   </span>
                 </label>
               </div>
             </div>
             <div class="pl-field">
-              <label class="pl-label" for="signup-currency">Devise de l'organisation</label>
+              <label class="pl-label" for="signup-currency" data-i18n="signup.currency.label">Devise de l'organisation</label>
               <select class="ds-input pl-input" id="signup-currency">
                 <option value="CAD" selected>🇨🇦 Dollar canadien (CAD)</option>
                 <option value="USD">🇺🇸 Dollar américain (USD)</option>
@@ -660,47 +717,71 @@
             </div>
             <div class="pl-row">
               <div class="pl-field">
-                <label class="pl-label" for="signup-fname">Prénom <span style="color:#dc2626">*</span></label>
+                <label class="pl-label" for="signup-fname">
+                  <span data-i18n="signup.fname.label">Prénom</span>
+                  <span style="color:#dc2626"> *</span>
+                </label>
                 <input class="ds-input pl-input" id="signup-fname" type="text"
+                       data-i18n-ph="signup.fname.ph"
                        placeholder="Marie" required autocomplete="given-name">
               </div>
               <div class="pl-field">
-                <label class="pl-label" for="signup-lname">Nom <span style="color:#dc2626">*</span></label>
+                <label class="pl-label" for="signup-lname">
+                  <span data-i18n="signup.lname.label">Nom</span>
+                  <span style="color:#dc2626"> *</span>
+                </label>
                 <input class="ds-input pl-input" id="signup-lname" type="text"
+                       data-i18n-ph="signup.lname.ph"
                        placeholder="Tremblay" required autocomplete="family-name">
               </div>
             </div>
             <div class="pl-field">
-              <label class="pl-label" for="signup-email">Adresse courriel <span style="color:#dc2626">*</span></label>
+              <label class="pl-label" for="signup-email">
+                <span data-i18n="signup.email.label">Adresse courriel</span>
+                <span style="color:#dc2626"> *</span>
+              </label>
               <input class="ds-input pl-input" id="signup-email" type="email"
+                     data-i18n-ph="signup.email.ph"
                      placeholder="marie.tremblay@organisation.ca" required autocomplete="email">
             </div>
             <div class="pl-field">
-              <label class="pl-label" for="signup-phone">Numéro de téléphone <span style="color:#dc2626">*</span></label>
+              <label class="pl-label" for="signup-phone">
+                <span data-i18n="signup.phone.label">Numéro de téléphone</span>
+                <span style="color:#dc2626"> *</span>
+              </label>
               <input class="ds-input pl-input" id="signup-phone" type="tel"
+                     data-i18n-ph="signup.phone.ph"
                      placeholder="+1 514 555-0000" required autocomplete="tel">
             </div>
             <div class="pl-field">
-              <label class="pl-label" for="signup-password">Mot de passe (min. 12 caractères) <span style="color:#dc2626">*</span></label>
+              <label class="pl-label" for="signup-password">
+                <span data-i18n="signup.pw.label">Mot de passe (min. 12 caractères)</span>
+                <span style="color:#dc2626"> *</span>
+              </label>
               <input class="ds-input pl-input" id="signup-password" type="password"
+                     data-i18n-ph="signup.pw.ph"
                      placeholder="••••••••••••" required minlength="12" autocomplete="new-password">
             </div>
 
             <div class="pl-cgu">
               <input type="checkbox" id="signup-cgu" required>
               <span class="pl-cgu-text">
-                J'accepte les <a href="/legal/tos" target="_blank">Conditions d'utilisation</a>
-                et la <a href="/legal/privacy" target="_blank">Politique de confidentialité</a> d'AgentHub Platform.
+                <span data-i18n="signup.cgu.pre">J'accepte les</span>
+                <a href="/legal/tos" target="_blank" data-i18n="signup.cgu.tos">Conditions d'utilisation</a>
+                <span data-i18n="signup.cgu.and">et la</span>
+                <a href="/legal/privacy" target="_blank" data-i18n="signup.cgu.privacy">Politique de confidentialité</a>
+                <span data-i18n="signup.cgu.of">d'AgentHub Platform.</span>
               </span>
             </div>
 
             <button type="submit" class="ds-btn ds-btn-primary ds-btn-lg pl-submit" id="signup-btn">
-              Créer mon compte →
+              <span data-i18n="signup.btn">Créer mon compte →</span>
             </button>
           </form>
 
           <p class="pl-secondary" style="margin-top:14px">
-            Déjà un compte ? <a href="#" onclick="switchTab('login');return false">Se connecter</a>
+            <span data-i18n="signup.already">Déjà un compte ?</span>
+            <a href="#" onclick="switchTab('login');return false" data-i18n="signup.signin_link">Se connecter</a>
           </p>
         </div>
 
@@ -711,9 +792,10 @@
 
 </div>
 
+<script src="/static/i18n.js"></script>
 <script src="/static/portal-login.js"></script>
 <script>
-  /* ── Fluent Reveal highlight sur les boutons ────────────────── */
+  /* ── Fluent Reveal highlight ────────────────────────────────── */
   document.querySelectorAll('.ds-btn').forEach(btn => {
     btn.addEventListener('mousemove', e => {
       const r = btn.getBoundingClientRect();
@@ -730,9 +812,7 @@
       const y = ((e.clientY - r.top)  / r.height * 100).toFixed(1);
       card.style.background = `radial-gradient(circle at ${x}% ${y}%, var(--primary-a20) 0%, var(--primary-lt) 80%)`;
     });
-    card.addEventListener('mouseleave', () => {
-      card.style.background = '';
-    });
+    card.addEventListener('mouseleave', () => { card.style.background = ''; });
   });
 </script>
 </body>

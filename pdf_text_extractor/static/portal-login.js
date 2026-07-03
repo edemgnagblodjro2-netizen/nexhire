@@ -1,14 +1,17 @@
 /**
  * AgentHub Platform — portal-login.js
- * Gestion connexion / inscription via lien d'invitation partenaire.
- * Stocke les tokens sous les mêmes clés que app.js (nexhire_token / nexhire_refresh_token)
- * pour que workspace.js puisse les lire sur le même origin.
+ * Gestion connexion / inscription via lien d'invitation partenaire ou accès B2B direct.
+ * Stocke les tokens sous les mêmes clés que app.js (nexhire_token / nexhire_refresh_token).
  */
 
 const _params      = new URLSearchParams(location.search);
 const _partnerSlug = _params.get('partenaire') || null;
 const _inviteToken = _params.get('invite')     || null;
+const _ssoError    = _params.get('sso_error')  || null;
 if (_inviteToken) sessionStorage.setItem('nh_pending_invite', _inviteToken);
+
+// Alias court vers le module i18n (chargé avant ce script via i18n.js)
+const _t = key => (typeof NH_I18N !== 'undefined' ? NH_I18N.t(key) : key);
 
 // ── Onglets ──────────────────────────────────────────────────────────────────
 
@@ -38,7 +41,10 @@ async function _initPartner() {
     // B2B direct — inscription autonome sans partenaire
     _showSignupForm();
     const sub = document.getElementById('signup-sub');
-    if (sub) sub.textContent = 'Créez votre espace de travail IA. 14 jours d\'essai gratuit — aucune carte requise.';
+    if (sub) {
+      sub.dataset.i18n = 'signup.sub.direct';
+      sub.textContent = _t('signup.sub.direct');
+    }
     return;
   }
 
@@ -63,6 +69,7 @@ async function _initPartner() {
     // Sous-titre du formulaire d'inscription
     const sub = document.getElementById('signup-sub');
     if (sub && config.name) {
+      sub.removeAttribute('data-i18n');
       sub.textContent = `Rejoignez l'espace ${config.name} sur AgentHub Platform.`;
     }
 
@@ -70,7 +77,6 @@ async function _initPartner() {
     _showSignupForm();
 
   } catch {
-    // Slug invalide ou partenaire inactif → bloquer l'inscription
     const errAlert = document.createElement('div');
     errAlert.className = 'ds-alert ds-alert-err';
     errAlert.style.cssText = 'margin-bottom:20px';
@@ -144,7 +150,7 @@ function _setBtnLoading(btnId, loading) {
   btn.disabled = loading;
   btn._orig = btn._orig || btn.innerHTML;
   btn.innerHTML = loading
-    ? `<span class="pl-btn-spinner"></span>Chargement…`
+    ? `<span class="pl-btn-spinner"></span>${_t('common.btn.loading')}`
     : btn._orig;
 }
 
@@ -167,9 +173,10 @@ async function handleLogin(e) {
     const data = await res.json();
 
     if (!res.ok) {
-      const msg = data.detail === 'INVALID_CREDENTIALS'
-        ? 'Courriel ou mot de passe incorrect.'
-        : (data.detail || 'Connexion échouée. Veuillez réessayer.');
+      const isEn  = typeof NH_I18N !== 'undefined' && NH_I18N.lang === 'en';
+      const msg   = data.detail === 'INVALID_CREDENTIALS'
+        ? (isEn ? 'Incorrect email or password.' : 'Courriel ou mot de passe incorrect.')
+        : (data.detail || (isEn ? 'Sign in failed. Please try again.' : 'Connexion échouée. Veuillez réessayer.'));
       _setHTML('login-error', msg);
       _showEl('login-error');
       return;
@@ -460,6 +467,97 @@ async function _handleConfirmationRedirect() {
   return true;
 }
 
+// ── SSO ───────────────────────────────────────────────────────────────────────
+
+let _ssoChecked = { slug: null, ok: false };
+let _ssoDebounce;
+
+async function _ssoCheckSlug(slug) {
+  if (!slug || slug.length < 2) {
+    _hideEl('sso-error');
+    document.getElementById('pl-sso-org').style.display = 'none';
+    _ssoChecked = { slug: null, ok: false };
+    return;
+  }
+  try {
+    const res  = await fetch(`/api/sso/check?org_slug=${encodeURIComponent(slug)}`);
+    if (!res.ok) {
+      const data   = await res.json().catch(() => ({}));
+      const detail = data.detail || '';
+      const msg    = detail === 'SSO_NOT_CONFIGURED'
+        ? _t('sso.err.not_configured')
+        : _t('sso.err.not_found');
+      _setHTML('sso-error', msg);
+      _showEl('sso-error');
+      document.getElementById('pl-sso-org').style.display = 'none';
+      _ssoChecked = { slug, ok: false };
+      return;
+    }
+    const data = await res.json();
+    _ssoChecked = { slug, ok: true };
+    _hideEl('sso-error');
+    document.getElementById('pl-sso-org-name').textContent = data.org?.name || slug;
+    document.getElementById('pl-sso-org-sub').textContent =
+      `${_t('sso.joining')} ${data.provider_name || data.provider}`;
+    if (data.org?.primary_color) {
+      document.documentElement.style.setProperty('--primary', data.org.primary_color);
+    }
+    document.getElementById('pl-sso-org').style.display = 'flex';
+  } catch {
+    _setHTML('sso-error', _t('sso.err.generic'));
+    _showEl('sso-error');
+    _ssoChecked = { slug, ok: false };
+  }
+}
+
+async function handleSSO() {
+  const input = document.getElementById('sso-slug');
+  const slug  = (input?.value || '').trim().toLowerCase();
+
+  if (!slug) {
+    _setHTML('sso-error', _t('sso.slug.hint'));
+    _showEl('sso-error');
+    return;
+  }
+
+  const btn = document.getElementById('sso-btn');
+  if (btn) { btn.disabled = true; btn.innerHTML = `<span class="pl-btn-spinner"></span>${_t('sso.loading')}`; }
+
+  if (_ssoChecked.slug !== slug) {
+    await _ssoCheckSlug(slug);
+  }
+
+  if (!_ssoChecked.ok) {
+    if (btn) { btn.disabled = false; btn.innerHTML = `<span data-i18n="sso.btn">${_t('sso.btn')}</span>`; }
+    return;
+  }
+
+  if (btn) { btn.innerHTML = `<span class="pl-btn-spinner"></span>${_t('sso.redirecting')}`; }
+  window.location.href = `/api/sso/authorize?org_slug=${encodeURIComponent(slug)}`;
+}
+
+function _initSSOInput() {
+  const input = document.getElementById('sso-slug');
+  if (!input) return;
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); handleSSO(); } });
+  input.addEventListener('input', () => {
+    clearTimeout(_ssoDebounce);
+    const v = input.value.trim().toLowerCase();
+    _ssoDebounce = setTimeout(() => _ssoCheckSlug(v), 600);
+  });
+}
+
+function _initSSOError() {
+  if (!_ssoError) return;
+  const msg = _ssoError === 'sso_not_configured'
+    ? _t('sso.err.not_configured')
+    : (_ssoError === 'user_not_found'
+        ? _t('sso.err.not_found')
+        : _t('sso.err.generic'));
+  _setHTML('sso-error', msg);
+  _showEl('sso-error');
+}
+
 // ── Init ──────────────────────────────────────────────────────────────────────
 
 (async () => {
@@ -468,5 +566,7 @@ async function _handleConfirmationRedirect() {
   if (!handled) {
     await _initPartner();
     await _initInvite();
+    _initSSOInput();
+    _initSSOError();
   }
 })();

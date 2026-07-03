@@ -19,6 +19,7 @@ from pydantic import BaseModel, Field
 from auth import CurrentUser
 from crypto import encrypt, decrypt
 from db import get_db, row, rows
+from rate_limiter import limiter
 from rbac import require_min_role
 
 router = APIRouter(prefix="/api/sso", tags=["sso"])
@@ -144,6 +145,38 @@ def _build_auth_url(provider_key: str, cfg: dict, state: str) -> str:
         "response_mode": "query",
     }
     return f"{auth_url}?{urllib.parse.urlencode(params)}"
+
+
+# ── Public : vérification SSO ─────────────────────────────────────────────────
+
+
+@router.get("/check")
+@limiter.limit("20/minute")
+def check_sso(request: Request, org_slug: str):
+    """Vérifie si le SSO est configuré pour une organisation (endpoint public, sans auth).
+    Retourne le nom / branding de l'org et le provider SSO si configuré.
+    """
+    with get_db() as cur:
+        cur.execute(
+            "SELECT id, name, logo_url, brand_color FROM organizations WHERE slug = %s LIMIT 1",
+            (org_slug,),
+        )
+        org = row(cur)
+    if not org:
+        raise HTTPException(status_code=404, detail="ORG_NOT_FOUND")
+    cfg = _get_sso_config(str(org["id"]))
+    if not cfg:
+        raise HTTPException(status_code=404, detail="SSO_NOT_CONFIGURED")
+    provider_key = cfg.get("provider", "")
+    return {
+        "org": {
+            "name": org["name"],
+            "logo_url": org.get("logo_url") or "",
+            "primary_color": org.get("brand_color") or "#6366f1",
+        },
+        "provider": provider_key,
+        "provider_name": PROVIDERS.get(provider_key, {}).get("name", provider_key),
+    }
 
 
 # ── Admin : configurer le SSO ─────────────────────────────────────────────────
