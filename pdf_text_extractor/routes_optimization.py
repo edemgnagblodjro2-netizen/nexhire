@@ -504,9 +504,13 @@ def _efficiency_score(org_id: str) -> dict:
         avg_auto = sum(float(p.get("automation_potential") or 0) for p in procs) / len(procs)
         proc_score = (automated / len(procs) * 100 + avg_auto) / 2
     else:
-        proc_score = 75.0
+        proc_score = 0.0  # Aucune donnée de processus — ne pas gonfler le score
 
-    overall = sw_score * 0.25 + lic_score * 0.30 + infra_score * 0.20 + proc_score * 0.25
+    if procs:
+        overall = sw_score * 0.25 + lic_score * 0.30 + infra_score * 0.20 + proc_score * 0.25
+    else:
+        # Redistribution des poids sans la composante processus
+        overall = sw_score * 0.33 + lic_score * 0.40 + infra_score * 0.27
     return {
         "overall": round(overall, 1),
         "software": round(sw_score, 1),

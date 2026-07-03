@@ -652,12 +652,12 @@ _DEMO_REGIONAL = {
         "gouvernance": 49.1,
     },
     "by_sector": [
-        {"sector": "Industriel manufacturier", "count": 9, "imai_avg": 62.1},
-        {"sector": "Professionnels", "count": 7, "imai_avg": 66.4},
-        {"sector": "Commercial", "count": 6, "imai_avg": 59.5},
-        {"sector": "Construction", "count": 6, "imai_avg": 48.7},
-        {"sector": "Alimentation, hôtellerie et restauration", "count": 5, "imai_avg": 47.6},
-        {"sector": "Entreprises de services", "count": 5, "imai_avg": 63.8},
+        {"sector": "Secteur A", "count": 9, "imai_avg": 62.1},
+        {"sector": "Secteur B", "count": 7, "imai_avg": 66.4},
+        {"sector": "Secteur C", "count": 6, "imai_avg": 59.5},
+        {"sector": "Secteur D", "count": 6, "imai_avg": 48.7},
+        {"sector": "Secteur E", "count": 5, "imai_avg": 47.6},
+        {"sector": "Secteur F", "count": 5, "imai_avg": 63.8},
     ],
     "challenges": [
         {"label": "Automatiser des tâches répétitives", "count": 35},
@@ -816,7 +816,7 @@ def _build_regional_html(
     kpi_html = (
         f'<div class="kpi-card"><div class="kpi-val">{total}</div><div class="kpi-label">Entreprises participantes</div></div>'
         f'<div class="kpi-card"><div class="kpi-val" style="color:{avg_color}">{imai_avg:.1f}<span>/100</span></div><div class="kpi-label">IMAI moyen du programme</div></div>'
-        f'<div class="kpi-card"><div class="kpi-val" style="color:#10b981">{roi_h} h</div><div class="kpi-label">Potentiel d\'optimisation / mois</div></div>'
+        f'<div class="kpi-card"><div class="kpi-val" style="color:#10b981">{roi_h} h</div><div class="kpi-label">Estimation indicative · 3,5 h/org</div></div>'
     )
 
     # Répartition niveaux

@@ -213,7 +213,7 @@ def get_summary(user: CurrentUser = Depends(get_current_user)):
         fw_count = fw_row["count"] if fw_row else 0
 
     if fw_count == 0:
-        return _DEMO_SUMMARY
+        return {**_DEMO_SUMMARY, "is_demo": True}
 
     with get_db() as cur:
         cur.execute(
@@ -266,7 +266,7 @@ def list_frameworks(user: CurrentUser = Depends(get_current_user)):
         cur.execute("SELECT COUNT(*) FROM compliance_frameworks WHERE org_id = %s", (oid,))
         count_row = row(cur)
         if not count_row or count_row["count"] == 0:
-            return {"frameworks": _DEMO_FRAMEWORKS}
+            return {"frameworks": _DEMO_FRAMEWORKS, "is_demo": True}
 
     with get_db() as cur:
         cur.execute(

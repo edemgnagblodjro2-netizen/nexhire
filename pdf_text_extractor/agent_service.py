@@ -14,6 +14,10 @@ import uuid as _uuid_mod
 from dataclasses import dataclass, field
 from typing import Any
 
+# Mocks désactivés par défaut en production.
+# Mettre ENABLE_CONNECTOR_MOCKS=true uniquement en environnement de démonstration isolé.
+_MOCKS_ENABLED = os.getenv("ENABLE_CONNECTOR_MOCKS", "false").lower() == "true"
+
 
 def _json_default(obj: Any) -> Any:
     """Encoder JSON pour les types PostgreSQL non-sérialisables par défaut."""
@@ -1752,7 +1756,16 @@ def _call_tool(name: str, arguments: dict[str, Any], org_id: str | None = None) 
             return _real_result, False
         # _real_result is None → connecteur non configuré → fallback mock
 
-    # Mocks (démo / connecteur non configuré) — is_simulated=True
+    # Mocks désactivés en production — retourner un état vide structuré
+    if not _MOCKS_ENABLED:
+        _logfire_track(name, False, False, _time.perf_counter() - _t0, "connector_not_configured")
+        return {
+            "connector_not_configured": True,
+            "tool": name,
+            "message": f"Le connecteur '{name}' n'est pas configuré pour cette organisation. Rendez-vous dans Intégrations pour l'activer.",
+        }, False
+
+    # Mocks (démo / env de démonstration explicitement activé) — is_simulated=True
     handlers = {
         "search_servicenow": lambda a: _mock_servicenow(**a),
         "search_jira": lambda a: _mock_jira(**a),

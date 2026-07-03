@@ -304,8 +304,8 @@ function _render(container, d) {
         <div class="obs-kpi-card obs-kpi-sm">
           <div class="obs-kpi-sm-icon">⏱</div>
           <div>
-            <div class="obs-kpi-sm-label">ROI estimé</div>
-            <div class="obs-kpi-sm-value">${roi} h <span class="obs-kpi-sm-sub">/ mois</span></div>
+            <div class="obs-kpi-sm-label">Estimation indicative</div>
+            <div class="obs-kpi-sm-value">${roi} h <span class="obs-kpi-sm-sub">· 3,5 h/org</span></div>
           </div>
         </div>
       </div>

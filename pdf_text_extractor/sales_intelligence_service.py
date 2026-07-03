@@ -45,7 +45,7 @@ def _log_run(org_id: str, agent_type: str, status: str, input_data: dict,
 
 async def _call_llm(system: str, user: str, json_mode: bool = True) -> tuple[str, int]:
     if not _OAI_OK:
-        return json.dumps({"mock": True, "message": "OpenAI non disponible en dev"}), 0
+        raise RuntimeError("Service IA indisponible — clé OPENAI_API_KEY manquante ou bibliothèque openai non installée.")
     kwargs: dict[str, Any] = {
         "model": _OPENAI_MODEL,
         "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
