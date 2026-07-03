@@ -214,11 +214,11 @@ class StructuredLoggingMiddleware:
         if _SENTRY_OK and user_id:
             try:
                 _sentry.set_user({"id": user_id})
-                with _sentry.new_scope() as scope:
-                    scope.set_tag("request_id", request_id)
-                    scope.set_tag("correlation_id", correlation_id)
+                with _sentry.new_scope() as _sentry_scope:
+                    _sentry_scope.set_tag("request_id", request_id)
+                    _sentry_scope.set_tag("correlation_id", correlation_id)
                     if org_id:
-                        scope.set_tag("organization_id", org_id)
+                        _sentry_scope.set_tag("organization_id", org_id)
             except Exception:
                 pass
 

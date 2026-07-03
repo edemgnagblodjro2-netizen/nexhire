@@ -333,8 +333,8 @@ async function boot() {
       window.location.href = `/inscription?partenaire=${slug}`;
       return;
     }
-    if (!pRes.ok) throw new Error((await pRes.json()).detail || 'Workspace introuvable.');
-    if (!aRes.ok) throw new Error((await aRes.json()).detail || 'Erreur chargement apps.');
+    if (!pRes.ok) { let d = 'Workspace introuvable.'; try { d = (await pRes.json()).detail || d; } catch {} throw new Error(d); }
+    if (!aRes.ok) { let d = 'Erreur chargement apps.'; try { d = (await aRes.json()).detail || d; } catch {} throw new Error(d); }
 
     const pData    = await pRes.json();
     _state.partner = pData;
