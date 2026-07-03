@@ -564,16 +564,28 @@ def refresh_token_if_needed(connector_type: str, org_id: str) -> dict | None:
             return creds  # no refresh token, return as-is
 
         c = _resolve_cfg(connector_type)
-        resp = httpx.post(
-            c["token_url"],
-            data={
-                "client_id": c["client_id"],
-                "client_secret": c["client_secret"],
-                "refresh_token": refresh_token,
-                "grant_type": "refresh_token",
-            },
-            timeout=15,
-        )
+        # QuickBooks requires Basic Auth for token refresh (client creds in header, not body)
+        _BASIC_AUTH_CONNECTORS = {"quickbooks"}
+        if connector_type in _BASIC_AUTH_CONNECTORS:
+            import base64 as _b64
+            _tok = _b64.b64encode(f"{c['client_id']}:{c['client_secret']}".encode()).decode()
+            resp = httpx.post(
+                c["token_url"],
+                headers={"Authorization": f"Basic {_tok}"},
+                data={"refresh_token": refresh_token, "grant_type": "refresh_token"},
+                timeout=15,
+            )
+        else:
+            resp = httpx.post(
+                c["token_url"],
+                data={
+                    "client_id": c["client_id"],
+                    "client_secret": c["client_secret"],
+                    "refresh_token": refresh_token,
+                    "grant_type": "refresh_token",
+                },
+                timeout=15,
+            )
         if resp.status_code != 200:
             return creds
         tokens = resp.json()

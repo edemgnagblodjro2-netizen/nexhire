@@ -43,8 +43,13 @@ def refresh_oauth(
     token_url: str,
     client_id_env: str,
     client_secret_env: str,
+    use_basic_auth: bool = False,
 ) -> dict:
-    """Rafraîchit l'access_token si expiré (< 5 min restantes)."""
+    """Rafraîchit l'access_token si expiré (< 5 min restantes).
+
+    use_basic_auth=True : envoie client_id/secret via Authorization: Basic
+    (requis par QuickBooks/Intuit et certains IdP).
+    """
     try:
         expires_at = datetime.fromisoformat(creds.get("expires_at", "2000-01-01T00:00:00+00:00"))
     except ValueError:
@@ -57,17 +62,30 @@ def refresh_oauth(
     if not refresh_token:
         return creds
 
+    client_id = os.environ.get(client_id_env, "")
+    client_secret = os.environ.get(client_secret_env, "")
+
     try:
-        resp = httpx.post(
-            token_url,
-            data={
-                "client_id": os.environ.get(client_id_env, ""),
-                "client_secret": os.environ.get(client_secret_env, ""),
-                "refresh_token": refresh_token,
-                "grant_type": "refresh_token",
-            },
-            timeout=12,
-        )
+        if use_basic_auth:
+            import base64 as _b64
+            _tok = _b64.b64encode(f"{client_id}:{client_secret}".encode()).decode()
+            resp = httpx.post(
+                token_url,
+                headers={"Authorization": f"Basic {_tok}"},
+                data={"refresh_token": refresh_token, "grant_type": "refresh_token"},
+                timeout=12,
+            )
+        else:
+            resp = httpx.post(
+                token_url,
+                data={
+                    "client_id": client_id,
+                    "client_secret": client_secret,
+                    "refresh_token": refresh_token,
+                    "grant_type": "refresh_token",
+                },
+                timeout=12,
+            )
         if resp.status_code != 200:
             _mark_connector_error(
                 connector_id,

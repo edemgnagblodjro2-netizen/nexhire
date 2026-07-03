@@ -110,13 +110,39 @@ function _showLoading(container) {
 }
 
 // ── Screen: History ───────────────────────────────────────────────────────────
+
+/** Retourne les session IDs que CE navigateur/utilisateur a complétés pour ce partenaire. */
+function _mySessionIds() {
+  const prefix = `nh_last_diag_${_state.partnerSlug}_`;
+  const ids = new Set();
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith(prefix)) {
+        const stored = JSON.parse(localStorage.getItem(key) || '{}');
+        if (stored.sessionId) ids.add(stored.sessionId);
+      }
+    }
+  } catch {}
+  return ids;
+}
+
 async function _loadHistory(container) {
   try {
+    const myIds = _mySessionIds();
+    // Si aucune session locale connue → aller directement à l'accueil (pas de fuite inter-org)
+    if (myIds.size === 0) {
+      _state.step = "welcome";
+      if (_state) _render(container);
+      return;
+    }
     const res = await fetch(`${API}/${_state.partnerSlug}/sessions`);
     if (!res.ok) throw new Error();
     const data = await res.json();
-    if (data.sessions?.length > 0) {
-      _state.historySessions = data.sessions;
+    // Filtrer : ne montrer que les sessions complétées dans ce navigateur
+    const filtered = (data.sessions || []).filter(s => myIds.has(s.id));
+    if (filtered.length > 0) {
+      _state.historySessions = filtered;
       _state.step = "history";
     } else {
       _state.step = "welcome";
