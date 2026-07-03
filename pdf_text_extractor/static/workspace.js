@@ -630,7 +630,13 @@ function _applyUserInfo(profile) {
 }
 
 // Apps core livrées avec la plateforme — toujours disponibles sans besoin d'activation DB
-const CORE_APPS = new Set(['diagnostic-ia', 'gouvernance', 'observatoire', 'reports', 'settings', 'security', 'ms365', 'integrations', 'enterprise-intel', 'identity', 'executive', 'departments', 'knowledge', 'billing', 'service-accounts', 'help']);
+const CORE_APPS = new Set([
+  'diagnostic-ia', 'gouvernance', 'observatoire', 'reports', 'settings', 'security',
+  'ms365', 'integrations', 'enterprise-intel', 'identity', 'executive', 'departments',
+  'knowledge', 'billing', 'service-accounts', 'help',
+  'sales-intelligence', 'marketplace', 'assets', 'budget', 'contracts',
+  'sso-mfa', 'automation', 'recommandations',
+]);
 
 // ── Nav resolution ────────────────────────────────────────────────────────────
 function _resolveNavItems() {
