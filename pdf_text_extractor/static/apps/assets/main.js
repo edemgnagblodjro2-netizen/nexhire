@@ -139,6 +139,22 @@ function _warrantyBadge(srv) {
   return '';
 }
 
+function _exportCSV(assets) {
+  const headers = ['Hostname','Type','IP','Emplacement','Env','OS','CPU','RAM (GB)','Stockage (GB)','Coût/mois (CAD)','Statut','Fin de garantie','Étiquette actif'];
+  const rows = assets.map(a => [
+    a.hostname||'', (DEVICE_TYPES[a.device_type]||DEVICE_TYPES.other).label, a.ip_address||'',
+    a.location||'', ENVS[a.environment]||a.environment||'', a.os||'',
+    a.cpu_cores||'', a.ram_gb||'', a.storage_gb||'',
+    a.monthly_cost||0, STATUSES[a.status]||a.status||'',
+    a.warranty_end_date||'', a.asset_tag||'',
+  ]);
+  const csv = [headers, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['﻿'+csv], { type: 'text/csv;charset=utf-8' }));
+  a.download = `parc_ti_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+
 function _renderKPIs(assets) {
   const total = assets.length;
   const cost = assets.reduce((s, a) => s + (parseFloat(a.monthly_cost) || 0), 0);
@@ -285,6 +301,7 @@ async function _load(container) {
   let _filter = 'all';
   let _tab = 'inventaire';
   let _assets = [];
+  let _search = '';
 
   async function _refresh() {
     const params = _filter !== 'all' ? `?status=${_filter}` : '';
@@ -335,6 +352,15 @@ async function _load(container) {
     if (_tab === 'licences') { _renderLicences(); return; }
     if (_tab === 'imprimantes') { _renderTabFiltered(['printer','scanner'], 'Imprimantes & Scanners', '🖨'); return; }
 
+    const _q = _search.toLowerCase();
+    const displayed = _q ? _assets.filter(a =>
+      (a.hostname||'').toLowerCase().includes(_q) ||
+      (a.ip_address||'').toLowerCase().includes(_q) ||
+      (a.location||'').toLowerCase().includes(_q) ||
+      (a.os||'').toLowerCase().includes(_q) ||
+      (a.asset_tag||'').toLowerCase().includes(_q)
+    ) : _assets;
+
     main.innerHTML = _renderKPIs(_assets) + `
       <div class="as-filters">
         ${[['all','Tous'],['active','Actifs'],['maintenance','En maintenance'],['inactive','Inactifs'],['decommissioned','Retraités']].map(([k,l]) =>
@@ -342,15 +368,24 @@ async function _load(container) {
       </div>
       <div class="as-card">
         <div class="as-card-hd">
-          <h3>🖥 Inventaire du parc TI</h3>
-          <button class="as-btn as-btn-primary" id="as-new-btn">+ Ajouter un actif</button>
+          <h3>🖥 Parc TI <span style="font-size:12px;font-weight:500;color:var(--muted);margin-left:4px">${displayed.length} actif${displayed.length!==1?'s':''}</span></h3>
+          <div style="display:flex;gap:6px;margin-left:auto;align-items:center">
+            <input id="as-search" type="search" placeholder="Rechercher…" value="${_search.replace(/"/g,'&quot;')}"
+              style="padding:6px 10px;border:1.5px solid var(--border);border-radius:var(--r);font-size:12px;font-family:inherit;outline:none;width:180px" />
+            <button class="as-btn as-btn-ghost" id="as-export-csv">⬇ CSV</button>
+            <button class="as-btn as-btn-primary" id="as-new-btn">+ Ajouter un actif</button>
+          </div>
         </div>
-        <div>${_renderTable(_assets)}</div>
+        <div>${_renderTable(displayed)}</div>
       </div>`;
 
     main.querySelectorAll('.as-filter-btn').forEach(btn => {
       btn.addEventListener('click', () => { _filter = btn.dataset.filter; _refresh(); });
     });
+    main.querySelector('#as-search')?.addEventListener('input', e => { _search = e.target.value; _render(); });
+    main.querySelector('#as-search')?.addEventListener('focus', e => e.target.style.borderColor = 'var(--primary)');
+    main.querySelector('#as-search')?.addEventListener('blur', e => e.target.style.borderColor = 'var(--border)');
+    main.querySelector('#as-export-csv')?.addEventListener('click', () => _exportCSV(displayed));
     main.querySelector('#as-new-btn')?.addEventListener('click', () => _openModal(null, _refresh));
     main.querySelectorAll('.as-edit-btn').forEach(btn => {
       btn.addEventListener('click', () => {

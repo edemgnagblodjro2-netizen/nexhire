@@ -4,7 +4,7 @@ from datetime import date, timedelta
 
 from fastapi import APIRouter, Depends
 
-from auth import CurrentUser
+from auth import CurrentUser, get_current_user
 from rbac import require_min_role
 from db import get_db, rows, row
 
@@ -420,6 +420,117 @@ def executive_dashboard(user: CurrentUser = Depends(require_min_role("admin"))):
         "assets": assets_summary,
         "finance": fin_summary,
     }
+
+
+@router.get("/summary")
+def platform_summary(user: CurrentUser = Depends(get_current_user)):
+    """Résumé plateforme — KPIs agrégés pour le Dashboard central."""
+    oid = str(user.organization_id)
+    today = date.today()
+    month_start = today.replace(day=1).isoformat()
+
+    summary = {}
+    with get_db() as cur:
+        # Utilisateurs
+        cur.execute("SELECT COUNT(*) AS n FROM users WHERE organization_id = %s AND is_active = true", (oid,))
+        summary["users_active"] = (row(cur) or {}).get("n", 0)
+
+        # Connecteurs actifs
+        cur.execute(
+            "SELECT COUNT(*) AS n FROM connectors WHERE organization_id = %s AND status = 'connected'", (oid,)
+        )
+        summary["connectors_active"] = (row(cur) or {}).get("n", 0)
+
+        # Connecteurs totaux
+        cur.execute("SELECT COUNT(*) AS n FROM connectors WHERE organization_id = %s", (oid,))
+        summary["connectors_total"] = (row(cur) or {}).get("n", 0)
+
+        # Workflows actifs
+        cur.execute(
+            "SELECT COUNT(*) AS n FROM orchestrations WHERE org_id = %s AND status = 'active'", (oid,)
+        )
+        summary["workflows_active"] = (row(cur) or {}).get("n", 0)
+
+        # Exécutions workflows ce mois
+        cur.execute(
+            "SELECT COALESCE(SUM(run_count), 0) AS n FROM orchestrations WHERE org_id = %s", (oid,)
+        )
+        summary["workflow_runs_total"] = (row(cur) or {}).get("n", 0)
+
+        # Budget consommé ce mois
+        cur.execute(
+            """SELECT COALESCE(SUM(actual), 0) AS spent, COALESCE(SUM(allocated), 0) AS alloc
+               FROM budget_entries WHERE organization_id = %s AND year = %s AND month = %s""",
+            (oid, today.year, today.month),
+        )
+        br = row(cur) or {}
+        summary["budget_spent_month"] = float(br.get("spent") or 0)
+        summary["budget_alloc_month"] = float(br.get("alloc") or 0)
+
+        # Contrats à renouveler dans 90 jours
+        cur.execute(
+            """SELECT COUNT(*) AS n FROM contracts
+               WHERE organization_id = %s AND status = 'active'
+                 AND renewal_date BETWEEN %s AND %s""",
+            (oid, today.isoformat(), (today + timedelta(days=90)).isoformat()),
+        )
+        summary["contracts_renewing"] = (row(cur) or {}).get("n", 0)
+
+        # Alertes sécurité non résolues
+        try:
+            cur.execute(
+                """SELECT COUNT(*) AS n FROM compliance_alerts
+                   WHERE organization_id = %s AND resolved_at IS NULL""",
+                (oid,),
+            )
+            summary["alerts_open"] = (row(cur) or {}).get("n", 0)
+        except Exception:
+            summary["alerts_open"] = 0
+
+        # Actifs TI enregistrés
+        cur.execute(
+            "SELECT COUNT(*) AS n FROM servers WHERE organization_id = %s AND status != 'decommissioned'", (oid,)
+        )
+        summary["assets_active"] = (row(cur) or {}).get("n", 0)
+
+        # Agents IA — runs Sales Intelligence ce mois
+        try:
+            cur.execute(
+                """SELECT COUNT(*) AS n FROM si_agent_runs
+                   WHERE org_id = %s AND created_at >= %s""",
+                (oid, month_start),
+            )
+            summary["ai_agent_runs_month"] = (row(cur) or {}).get("n", 0)
+        except Exception:
+            summary["ai_agent_runs_month"] = 0
+
+        # Recommandations haute priorité
+        try:
+            cur.execute(
+                """SELECT COUNT(*) AS n FROM it_applications
+                   WHERE organization_id = %s AND status = 'active'""",
+                (oid,),
+            )
+            summary["apps_monitored"] = (row(cur) or {}).get("n", 0)
+        except Exception:
+            summary["apps_monitored"] = 0
+
+    # Score santé plateforme = moyenne de 4 indicateurs normalisés
+    health_score = 0
+    checks = 0
+    if summary["workflows_active"] > 0:
+        health_score += 25; checks += 1
+    if summary["connectors_active"] > 0:
+        health_score += 25; checks += 1
+    if summary["alerts_open"] == 0:
+        health_score += 25; checks += 1
+    if summary["budget_alloc_month"] > 0:
+        pct = summary["budget_spent_month"] / summary["budget_alloc_month"]
+        health_score += 25 if pct <= 1 else 0
+        checks += 1
+    summary["platform_health"] = health_score if checks > 0 else None
+
+    return summary
 
 
 @router.get("/department/{dept_id}")

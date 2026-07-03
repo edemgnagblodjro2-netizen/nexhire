@@ -64,6 +64,15 @@ VALUES
     '{"min_role": "user", "min_plan": "starter"}',
     '/static/apps/automation/main.js',
     75
+  ),
+  (
+    'dashboard',
+    'Dashboard',
+    'Centre de pilotage — KPIs agrégés, santé plateforme, alertes et navigation rapide.',
+    '📊', 'platform', 'app', '1.0.0', 'available',
+    '{"min_role": "user", "min_plan": "starter"}',
+    '/static/apps/dashboard/main.js',
+    1
   )
 ON CONFLICT (slug) DO UPDATE SET
   name       = EXCLUDED.name,
@@ -86,7 +95,8 @@ CROSS JOIN (
     ('contracts'),
     ('automation'),
     ('sso-mfa'),
-    ('recommandations')
+    ('recommandations'),
+    ('dashboard')
 ) AS a(slug)
 WHERE p.is_active = true
 ON CONFLICT DO NOTHING;

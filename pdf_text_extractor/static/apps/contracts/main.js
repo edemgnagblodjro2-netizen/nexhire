@@ -282,6 +282,7 @@ async function _load(container) {
   let _filter = 'all';
   let _tab = 'liste';
   let _contracts = [];
+  let _search = '';
 
   async function _refresh() {
     const params = _filter === 'renewing' ? '?renewing=90' : _filter !== 'all' ? `?status=${_filter}` : '';
@@ -361,30 +362,43 @@ async function _load(container) {
     if (_tab === 'documents') { main.innerHTML = _renderDocuments(); return; }
     if (_tab === 'alertes') { main.innerHTML = _renderAlertes(); main.querySelectorAll('.ct-edit-btn').forEach(btn => { btn.addEventListener('click', () => { const c = _contracts.find(x => x.id === btn.dataset.id); if (c) _openModal(c, _refresh); }); }); return; }
 
+    const _q = _search.toLowerCase();
+    const displayed = _q ? _contracts.filter(c =>
+      (c.vendor||'').toLowerCase().includes(_q) ||
+      (c.description||'').toLowerCase().includes(_q) ||
+      _catFr(c.category).toLowerCase().includes(_q)
+    ) : _contracts;
+
     main.innerHTML = _renderKPIs(_contracts) + `
       <div class="ct-filters">
         ${[['all','Tous'],['active','Actifs'],['renewing','Renouvellement prochain'],['expired','Expirés'],['draft','Brouillons']].map(([k,l]) =>
           `<button class="ct-filter-btn ${_filter===k?'active':''}" data-filter="${k}">${l}</button>`).join('')}
       </div>
       <div class="ct-card">
-        <div class="ct-card-hd"><h3>📄 Contrats fournisseurs</h3>
-          <div style="display:flex;gap:6px;margin-left:auto">
+        <div class="ct-card-hd">
+          <h3>📄 Contrats <span style="font-size:12px;font-weight:500;color:var(--muted);margin-left:4px">${displayed.length} résultat${displayed.length!==1?'s':''}</span></h3>
+          <div style="display:flex;gap:6px;margin-left:auto;align-items:center">
+            <input id="ct-search" type="search" placeholder="Rechercher…" value="${_search.replace(/"/g,'&quot;')}"
+              style="padding:6px 10px;border:1.5px solid var(--border);border-radius:var(--r);font-size:12px;font-family:inherit;outline:none;width:180px" />
             <button class="ct-btn ct-btn-ghost" id="ct-export-csv">⬇ CSV</button>
             <button class="ct-btn ct-btn-ghost" id="ct-export-pdf">⬇ PDF</button>
             <button class="ct-btn ct-btn-primary" id="ct-new-btn">+ Nouveau contrat</button>
           </div>
         </div>
-        <div style="padding:0 0">
-          ${_renderTable(_contracts)}
+        <div>
+          ${_renderTable(displayed)}
         </div>
       </div>`;
 
     main.querySelectorAll('.ct-filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => { _filter = btn.dataset.filter; _refresh(); });
+      btn.addEventListener('click', () => { _filter = btn.dataset.filter; _search = ''; _refresh(); });
     });
+    main.querySelector('#ct-search')?.addEventListener('input', e => { _search = e.target.value; _render(); });
+    main.querySelector('#ct-search')?.addEventListener('focus', e => e.target.style.borderColor = 'var(--primary)');
+    main.querySelector('#ct-search')?.addEventListener('blur', e => e.target.style.borderColor = 'var(--border)');
     main.querySelector('#ct-new-btn')?.addEventListener('click', () => _openModal(null, _refresh));
-    main.querySelector('#ct-export-csv')?.addEventListener('click', () => _exportCSV(_contracts));
-    main.querySelector('#ct-export-pdf')?.addEventListener('click', () => _exportPDF(_contracts));
+    main.querySelector('#ct-export-csv')?.addEventListener('click', () => _exportCSV(displayed));
+    main.querySelector('#ct-export-pdf')?.addEventListener('click', () => _exportPDF(displayed));
     main.querySelectorAll('.ct-edit-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const c = _contracts.find(x => x.id === btn.dataset.id);

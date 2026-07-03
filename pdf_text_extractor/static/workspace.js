@@ -635,7 +635,7 @@ const CORE_APPS = new Set([
   'ms365', 'integrations', 'enterprise-intel', 'identity', 'executive', 'departments',
   'knowledge', 'billing', 'service-accounts', 'help',
   'sales-intelligence', 'marketplace', 'assets', 'budget', 'contracts',
-  'sso-mfa', 'automation', 'recommandations',
+  'sso-mfa', 'automation', 'recommandations', 'dashboard',
 ]);
 
 // ── Nav resolution ────────────────────────────────────────────────────────────
