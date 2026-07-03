@@ -1,0 +1,40 @@
+// Grafana Alloy — config River
+// Scrape AgentHub /metrics → push vers Grafana Cloud Mimir
+//
+// Variables d'env requises (Render → Environment) :
+//   AGENTHUB_HOST          ex: myapp.onrender.com
+//   METRICS_TOKEN          même valeur que dans le service AgentHub
+//   GRAFANA_PROM_URL       ex: https://prometheus-prod-XX.grafana.net/api/prom/push
+//   GRAFANA_PROM_USER      username numérique Grafana Cloud
+//   GRAFANA_PROM_TOKEN     API key MetricsPublisher
+
+prometheus.scrape "agenthub" {
+  targets = [{
+    __address__ = env("AGENTHUB_HOST"),
+  }]
+
+  scheme          = "https"
+  metrics_path    = "/metrics"
+  scrape_interval = "30s"
+  scrape_timeout  = "10s"
+
+  bearer_token = env("METRICS_TOKEN")
+
+  forward_to = [prometheus.remote_write.grafana_cloud.receiver]
+}
+
+prometheus.remote_write "grafana_cloud" {
+  endpoint {
+    url = env("GRAFANA_PROM_URL")
+
+    basic_auth {
+      username = env("GRAFANA_PROM_USER")
+      password = env("GRAFANA_PROM_TOKEN")
+    }
+  }
+
+  external_labels = {
+    env     = "production",
+    service = "agenthub-platform",
+  }
+}
