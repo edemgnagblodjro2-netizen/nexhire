@@ -139,18 +139,22 @@ function _css() {
 
 let _st = null;
 
+// Catalogue des fournisseurs SSO disponibles (métadonnées produit)
 const PROVIDERS = [
-  { id: 'azure', name: 'Microsoft Entra ID', icon: '🔷', desc: 'Authentification SSO avec Azure Active Directory / Microsoft 365. Recommandé pour les organisations Microsoft.', configured: false },
-  { id: 'google', name: 'Google Workspace', icon: '🟢', desc: 'Connexion SSO via Google Workspace (anciennement G Suite). Idéal pour les équipes utilisant Gmail et Google Drive.', configured: false },
-  { id: 'okta', name: 'Okta', icon: '🔵', desc: 'Leader de la gestion des identités d\'entreprise. Supporte MFA avancé, SCIM et des centaines d\'intégrations.', configured: false },
-  { id: 'auth0', name: 'Auth0 / Okta CIC', icon: '⚫', desc: 'Plateforme d\'identité hautement personnalisable pour les applications modernes. Idéal pour une expérience white-label.', configured: false },
+  { id: 'azure',  name: 'Microsoft Entra ID',   icon: '🔷', desc: 'Authentification SSO avec Azure Active Directory / Microsoft 365. Recommandé pour les organisations Microsoft.' },
+  { id: 'google', name: 'Google Workspace',      icon: '🟢', desc: 'Connexion SSO via Google Workspace (anciennement G Suite). Idéal pour les équipes utilisant Gmail et Google Drive.' },
+  { id: 'okta',   name: 'Okta',                 icon: '🔵', desc: 'Leader de la gestion des identités d\'entreprise. Supporte MFA avancé, SCIM et des centaines d\'intégrations.' },
+  { id: 'auth0',  name: 'Auth0 / Okta CIC',     icon: '⚫', desc: 'Plateforme d\'identité hautement personnalisable pour les applications modernes. Idéal pour une expérience white-label.' },
 ];
+// État réel chargé depuis /api/sso/config — enrichi dans mount()
 
+// Catalogue des méthodes MFA disponibles (métadonnées produit)
 const MFA_METHODS = [
-  { id: 'totp', icon: '📱', title: 'Application d\'authentification', desc: 'Google Authenticator, Microsoft Authenticator, Authy. La méthode la plus sécurisée et recommandée.', enabled: false },
-  { id: 'sms', icon: '💬', title: 'SMS / Téléphone', desc: 'Code à usage unique envoyé par SMS. Moins sécurisé que TOTP, mais plus facile à adopter.', enabled: false },
-  { id: 'email', icon: '📧', title: 'Code par courriel', desc: 'Code temporaire envoyé à l\'adresse courriel de l\'utilisateur. Option de récupération recommandée.', enabled: false },
+  { id: 'totp',  icon: '📱', title: 'Application d\'authentification', desc: 'Google Authenticator, Microsoft Authenticator, Authy. La méthode la plus sécurisée et recommandée.' },
+  { id: 'sms',   icon: '💬', title: 'SMS / Téléphone',                desc: 'Code à usage unique envoyé par SMS. Moins sécurisé que TOTP, mais plus facile à adopter.' },
+  { id: 'email', icon: '📧', title: 'Code par courriel',              desc: 'Code temporaire envoyé à l\'adresse courriel de l\'utilisateur. Option de récupération recommandée.' },
 ];
+// État réel chargé depuis /api/mfa/status — enrichi dans mount()
 
 // Pas de sessions ni journal fictifs — données réelles via API uniquement
 
@@ -487,9 +491,9 @@ function _renderShell(container) {
   </div>
 
   <div class="sso-status-bar">
-    <div class="sso-stat"><div class="sso-stat-icon">👤</div><div class="sso-stat-val" id="sso-users-count">—</div><div class="sso-stat-lbl">Utilisateurs</div><div class="sso-stat-sub warn">MFA non activé</div></div>
-    <div class="sso-stat"><div class="sso-stat-icon">🔐</div><div class="sso-stat-val">0</div><div class="sso-stat-lbl">Fournisseurs SSO</div><div class="sso-stat-sub warn">Non configuré</div></div>
-    <div class="sso-stat"><div class="sso-stat-icon">📱</div><div class="sso-stat-val">0%</div><div class="sso-stat-lbl">Adoption MFA</div><div class="sso-stat-sub err">Risque élevé</div></div>
+    <div class="sso-stat"><div class="sso-stat-icon">👤</div><div class="sso-stat-val" id="sso-users-count">—</div><div class="sso-stat-lbl">Utilisateurs</div><div class="sso-stat-sub" id="sso-mfa-sub">Chargement…</div></div>
+    <div class="sso-stat"><div class="sso-stat-icon">🔐</div><div class="sso-stat-val" id="sso-sso-count">—</div><div class="sso-stat-lbl">Fournisseurs SSO</div><div class="sso-stat-sub" id="sso-sso-sub">Chargement…</div></div>
+    <div class="sso-stat"><div class="sso-stat-icon">📱</div><div class="sso-stat-val" id="sso-mfa-count">—</div><div class="sso-stat-lbl">Adoption MFA</div><div class="sso-stat-sub" id="sso-mfa-pct-sub">Chargement…</div></div>
     <div class="sso-stat"><div class="sso-stat-icon">⚡</div><div class="sso-stat-val" id="sso-sessions-count">—</div><div class="sso-stat-lbl">Sessions actives</div><div class="sso-stat-sub ok">Temps réel</div></div>
   </div>
 
@@ -511,16 +515,54 @@ function _renderShell(container) {
     _renderView();
   });
 
-  _api('/api/mfa/status').then(d => {
-    const el = document.getElementById('sso-users-count');
-    if (el) el.textContent = d?.total_users ?? '—';
-  }).catch(() => {});
+  // Mettre à jour les KPIs avec l'état déjà chargé dans _st
+  requestAnimationFrame(() => {
+    const sc = _st?.ssoConfig  || {};
+    const ms = _st?.mfaStatus  || {};
+
+    const _set = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+    const _cls = (id, cls) => { const e = document.getElementById(id); if (e) { e.className = 'sso-stat-sub ' + cls; } };
+
+    _set('sso-users-count', ms.total_users ?? '—');
+    _cls('sso-mfa-sub', ms.mfa_enabled ? 'ok' : 'warn');
+    document.getElementById('sso-mfa-sub')?.textContent !== undefined &&
+      (_set('sso-mfa-sub', ms.mfa_enabled ? 'MFA activé' : 'MFA non activé'));
+
+    const nSso = sc.configured ? 1 : 0;
+    _set('sso-sso-count', nSso);
+    _cls('sso-sso-sub', nSso > 0 ? 'ok' : 'warn');
+    _set('sso-sso-sub', nSso > 0 ? sc.provider || 'Configuré' : 'Non configuré');
+
+    const mfaPct = ms.mfa_enabled ? '100%' : '0%';
+    _set('sso-mfa-count', mfaPct);
+    _cls('sso-mfa-pct-sub', ms.mfa_enabled ? 'ok' : 'err');
+    _set('sso-mfa-pct-sub', ms.mfa_enabled ? 'Activé' : 'Risque élevé');
+  });
 }
 
 export default {
-  mount(container, ctx) {
+  async mount(container, ctx) {
     _css();
     _st = { ctx, view: 'overview' };
+
+    // Charger l'état réel SSO + MFA depuis l'API avant de rendre
+    const [ssoConfig, mfaStatus] = await Promise.all([
+      _api('/api/sso/config').catch(() => ({ configured: false })),
+      _api('/api/mfa/status').catch(() => ({ mfa_enabled: false })),
+    ]);
+
+    // Enrichir le catalogue statique avec l'état réel
+    const configuredProvider = ssoConfig?.provider;
+    PROVIDERS.forEach(p => {
+      p.configured = ssoConfig?.configured && configuredProvider === p.id;
+    });
+    MFA_METHODS.forEach(m => {
+      m.enabled = mfaStatus?.mfa_enabled && (mfaStatus?.factor_type === m.id || m.id === 'totp');
+    });
+
+    _st.ssoConfig  = ssoConfig;
+    _st.mfaStatus  = mfaStatus;
+
     _renderShell(container);
     _renderView();
   },

@@ -31,46 +31,21 @@ const CHALLENGE_SHORT = {
   "Rester compétitif face à mes concurrents":    "Compétitivité",
 };
 
-// ── Données démo — affichées si moins de 5 sessions réelles ──────────────────
-function _demoData() {
-  return {
-    total:    42,
-    imai_avg: 58.3,
-    is_demo:  true,
-    niveaux:  { debutant: 16, intermediaire: 21, avance: 5 },
-    by_sector: [
-      { sector: "Professionnels",                            count: 5, imai_avg: 66.4 },
-      { sector: "Commercial",                                count: 4, imai_avg: 59.5 },
-      { sector: "Communications",                            count: 4, imai_avg: 70.2 },
-      { sector: "Associations et regroupements",             count: 4, imai_avg: 49.8 },
-      { sector: "Alimentation, hôtellerie et restauration",  count: 4, imai_avg: 47.6 },
-      { sector: "Industriel manufacturier",                  count: 3, imai_avg: 67.5 },
-      { sector: "Immobilier",                                count: 3, imai_avg: 57.8 },
-      { sector: "Événementiel",                              count: 3, imai_avg: 61.4 },
-      { sector: "Finances",                                  count: 2, imai_avg: 70.5 },
-      { sector: "Construction",                              count: 2, imai_avg: 52.7 },
-      { sector: "Santé",                                     count: 2, imai_avg: 56.9 },
-      { sector: "Arts et culture",                           count: 2, imai_avg: 45.9 },
-      { sector: "Éducation",                                 count: 1, imai_avg: 55.2 },
-      { sector: "Environnement",                             count: 1, imai_avg: 50.3 },
-      { sector: "Entreprises de services",                   count: 1, imai_avg: 63.8 },
-      { sector: "Administration publique",                   count: 1, imai_avg: 48.4 },
-    ],
-    dimensions: {
-      strategie:    62.1,
-      processus:    55.8,
-      technologies: 50.2,
-      personnes:    46.3,
-      gouvernance:  38.7,
-    },
-    challenges: [
-      { label: "Automatiser des tâches répétitives",     count: 16 },
-      { label: "Analyser mes données pour mieux décider", count: 11 },
-      { label: "Améliorer le service à la clientèle",    count:  8 },
-      { label: "Réduire mes coûts opérationnels",        count:  5 },
-      { label: "Rester compétitif face à mes concurrents", count: 2 },
-    ],
-  };
+function _renderEmpty(container) {
+  container.innerHTML = `
+    <div class="obs-wrap">
+      <div class="obs-state">
+        <div class="obs-state-icon">📊</div>
+        <h2 class="obs-state-title">L'Observatoire attend ses premières données</h2>
+        <p class="obs-state-text">
+          Les statistiques de cohorte s'afficheront ici dès que vos membres complèteront leur diagnostic IA.
+          Un minimum de 5 sessions est requis pour protéger l'anonymat des répondants.
+        </p>
+        <p class="obs-state-text" style="margin-top:8px;font-size:13px;color:var(--muted)">
+          Partagez le lien de diagnostic à vos membres pour démarrer la collecte.
+        </p>
+      </div>
+    </div>`;
 }
 
 // ── State ─────────────────────────────────────────────────────────────────────
@@ -103,7 +78,8 @@ async function _loadAndRender(container) {
     if (res.status === 401 || res.status === 403) return _renderAccessDenied(container);
     if (!res.ok) return _renderError(container);
     const data = await res.json();
-    _render(container, data.total >= 5 ? data : _demoData());
+    if (data.total < 5) return _renderEmpty(container);
+    _render(container, data);
   } catch {
     _renderError(container);
   }
