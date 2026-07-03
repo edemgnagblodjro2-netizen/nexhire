@@ -35,8 +35,10 @@ function _clearErrors() {
 
 async function _initPartner() {
   if (!_partnerSlug) {
-    // Pas de lien partenaire → bloquer l'inscription, autoriser la connexion
-    _showInviteWall();
+    // B2B direct — inscription autonome sans partenaire
+    _showSignupForm();
+    const sub = document.getElementById('signup-sub');
+    if (sub) sub.textContent = 'Créez votre espace de travail IA. 14 jours d\'essai gratuit — aucune carte requise.';
     return;
   }
 
@@ -195,7 +197,10 @@ async function handleLogin(e) {
     }
     const meRes = await fetch('/api/auth/me', { headers: { Authorization: `Bearer ${data.access_token}` } });
     const me    = meRes.ok ? await meRes.json() : null;
-    window.location.href = (me && me.partner_slug) ? `/workspace/${me.partner_slug}` : '/inscription';
+    const dest  = me && (me.partner_slug || me.org_slug)
+      ? `/workspace/${me.partner_slug || me.org_slug}`
+      : '/inscription';
+    window.location.href = dest;
 
   } catch {
     _setHTML('login-error', 'Erreur réseau. Vérifiez votre connexion et réessayez.');
@@ -444,9 +449,10 @@ async function _handleConfirmationRedirect() {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
     const me = meRes.ok ? await meRes.json() : null;
-    window.location.href = (me && me.partner_slug)
-      ? `/workspace/${me.partner_slug}`
+    const dest = me && (me.partner_slug || me.org_slug)
+      ? `/workspace/${me.partner_slug || me.org_slug}`
       : '/inscription';
+    window.location.href = dest;
   } catch {
     window.location.href = '/inscription';
   }

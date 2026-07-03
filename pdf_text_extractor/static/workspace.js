@@ -206,7 +206,9 @@ function _doAutoLogout() {
   const slug = _slug();
   localStorage.removeItem('nexhire_token');
   localStorage.removeItem('nexhire_refresh_token');
-  window.location.href = slug ? `/inscription?partenaire=${slug}` : '/inscription';
+  // B2B2B (chambre) → préserver le slug partenaire ; B2B direct → login générique
+  const isPartner = _state.partner && _state.partner.partner_type !== 'direct';
+  window.location.href = (slug && isPartner) ? `/inscription?partenaire=${slug}` : '/inscription';
 }
 
 function _dismissIdleWarning() {
@@ -330,7 +332,11 @@ async function boot() {
     if (pRes.status === 401 || aRes.status === 401) {
       localStorage.removeItem('nexhire_token');
       localStorage.removeItem('nexhire_refresh_token');
-      window.location.href = `/inscription?partenaire=${slug}`;
+      // 401 sur workspace partenaire = token expiré → reprendre le contexte partenaire
+      // 401 sur workspace org directe = accès non authentifié → login générique
+      // On ne connaît pas encore le type (boot pas terminé), donc on tente de garder le slug
+      // puis le /me post-login redirigera correctement vers le bon workspace
+      window.location.href = '/inscription';
       return;
     }
     if (!pRes.ok) { let d = 'Workspace introuvable.'; try { d = (await pRes.json()).detail || d; } catch {} throw new Error(d); }
@@ -1103,7 +1109,8 @@ function _initTopbar() {
     localStorage.removeItem('nexhire_token');
     localStorage.removeItem('nexhire_refresh_token');
     const slug = _slug();
-    window.location.href = slug ? `/inscription?partenaire=${slug}` : '/inscription';
+    const isPartner = _state.partner && _state.partner.partner_type !== 'direct';
+    window.location.href = (slug && isPartner) ? `/inscription?partenaire=${slug}` : '/inscription';
   });
 
   // User menu — navigation items

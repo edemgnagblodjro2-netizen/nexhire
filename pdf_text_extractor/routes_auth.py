@@ -347,6 +347,7 @@ def me(user: CurrentUser = Depends(get_current_user)):
     logo_url:     str | None = None
     brand_color:  str | None = None
     org_name:     str | None = None
+    org_slug:     str | None = None
     partner_slug: str | None = None
 
     # Résoudre le slug du partenaire si l'utilisateur en est membre
@@ -377,13 +378,14 @@ def me(user: CurrentUser = Depends(get_current_user)):
                 dept_types = [r["dept_type"] for r in rows(cur)]
             with get_db() as cur:
                 cur.execute(
-                    "SELECT name, logo_url, brand_color FROM organizations WHERE id = %s LIMIT 1",
+                    "SELECT name, logo_url, brand_color, slug FROM organizations WHERE id = %s LIMIT 1",
                     (user.organization_id,),
                 )
                 org = _row(cur) or {}
             org_name    = org.get("name")       or None
             logo_url    = org.get("logo_url")   or None
             brand_color = org.get("brand_color") or None
+            org_slug    = org.get("slug")       or None
         except Exception:
             pass
 
@@ -402,4 +404,5 @@ def me(user: CurrentUser = Depends(get_current_user)):
         "brand_color": brand_color,
         "partner_id":   user.partner_id,
         "partner_slug": partner_slug,
+        "org_slug":     org_slug,
     }

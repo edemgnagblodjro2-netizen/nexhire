@@ -33,6 +33,81 @@ def _get_partner(cur, slug: str) -> dict:
     return partner
 
 
+def _get_partner_optional(cur, slug: str) -> dict | None:
+    """Retourne le partenaire si le slug correspond, None sinon.
+    Lève 403 si le partenaire existe mais est désactivé.
+    """
+    cur.execute(
+        """
+        SELECT id, slug, name, description, logo_url,
+               primary_color, secondary_color, favicon_url,
+               hero_title, hero_subtitle,
+               city, region, country, website, plan, partner_type, is_active
+        FROM partners
+        WHERE slug = %s
+        LIMIT 1
+        """,
+        (slug,),
+    )
+    p = row(cur)
+    if not p:
+        return None
+    if not p["is_active"]:
+        raise HTTPException(status_code=403, detail="Ce workspace est actuellement désactivé.")
+    return p
+
+
+def _get_org_by_slug(cur, slug: str) -> dict | None:
+    """Retourne l'organisation dont le slug correspond, None sinon."""
+    cur.execute(
+        """
+        SELECT id, slug, name, logo_url, brand_color,
+               subscription_plan, org_type
+        FROM organizations
+        WHERE slug = %s
+        LIMIT 1
+        """,
+        (slug,),
+    )
+    return row(cur)
+
+
+def _require_org_member(user, org: dict):
+    """Vérifie l'authentification et l'appartenance à l'organisation."""
+    if not user:
+        raise HTTPException(status_code=401, detail="Authentification requise pour accéder à cet espace.")
+    if not user.organization_id or str(user.organization_id) != str(org["id"]):
+        raise HTTPException(status_code=403, detail="Accès refusé — vous n'êtes pas membre de cette organisation.")
+    return user
+
+
+def _org_workspace_body(org: dict, user) -> dict:
+    """Réponse workspace standard pour une organisation directe (B2B sans partenaire)."""
+    return {
+        "slug": org["slug"],
+        "name": org["name"],
+        "description": None,
+        "logo_url": org.get("logo_url") or "",
+        "primary_color": org.get("brand_color") or "#6366f1",
+        "secondary_color": None,
+        "favicon_url": None,
+        "hero_title": org["name"],
+        "hero_subtitle": "Votre espace AgentHub Platform",
+        "city": None,
+        "region": None,
+        "country": "CA",
+        "website": None,
+        "plan": org.get("subscription_plan") or "trial",
+        "partner_type": "direct",
+        "viewer": {
+            "authenticated": True,
+            "user_id": str(user.id),
+            "email": user.email,
+            "organization_id": str(user.organization_id),
+        },
+    }
+
+
 def _substitute_slug(entry_path: str | None, slug: str) -> str | None:
     if not entry_path:
         return None
@@ -47,38 +122,46 @@ def _substitute_slug(entry_path: str | None, slug: str) -> str | None:
 @limiter.limit("60/minute")
 def get_workspace(request: Request, slug: str, user: CurrentUser | None = Depends(get_optional_user)):
     with get_db() as cur:
-        partner = _get_partner(cur, slug)
+        partner = _get_partner_optional(cur, slug)
 
-    viewer: dict | None = None
-    if user and user.partner_id and str(user.partner_id) == str(partner["id"]):
-        viewer = {
-            "authenticated": True,
-            "user_id": str(user.id),
-            "email": user.email,
-            "organization_id": str(user.organization_id) if user.organization_id else None,
-        }
+        if partner:
+            # B2B2B — workspace partenaire (chambre, incubateur…) — public
+            viewer: dict | None = None
+            if user and user.partner_id and str(user.partner_id) == str(partner["id"]):
+                viewer = {
+                    "authenticated": True,
+                    "user_id": str(user.id),
+                    "email": user.email,
+                    "organization_id": str(user.organization_id) if user.organization_id else None,
+                }
+            return JSONResponse(
+                content={
+                    "slug": partner["slug"],
+                    "name": partner["name"],
+                    "description": partner["description"],
+                    "logo_url": partner["logo_url"],
+                    "primary_color": partner["primary_color"],
+                    "secondary_color": partner["secondary_color"],
+                    "favicon_url": partner["favicon_url"],
+                    "hero_title": partner["hero_title"],
+                    "hero_subtitle": partner["hero_subtitle"],
+                    "city": partner["city"],
+                    "region": partner["region"],
+                    "country": partner["country"],
+                    "website": partner["website"],
+                    "plan": partner["plan"],
+                    "partner_type": partner["partner_type"] or "chamber",
+                    "viewer": viewer or {"authenticated": False},
+                },
+                headers=_NO_CACHE,
+            )
 
-    return JSONResponse(
-        content={
-            "slug": partner["slug"],
-            "name": partner["name"],
-            "description": partner["description"],
-            "logo_url": partner["logo_url"],
-            "primary_color": partner["primary_color"],
-            "secondary_color": partner["secondary_color"],
-            "favicon_url": partner["favicon_url"],
-            "hero_title": partner["hero_title"],
-            "hero_subtitle": partner["hero_subtitle"],
-            "city": partner["city"],
-            "region": partner["region"],
-            "country": partner["country"],
-            "website": partner["website"],
-            "plan": partner["plan"],
-            "partner_type": partner["partner_type"] or "chamber",
-            "viewer": viewer or {"authenticated": False},
-        },
-        headers=_NO_CACHE,
-    )
+        # B2B direct — workspace propre de l'organisation (auth requise)
+        org = _get_org_by_slug(cur, slug)
+        if not org:
+            raise HTTPException(status_code=404, detail="Workspace introuvable.")
+        auth_user = _require_org_member(user, org)
+        return JSONResponse(content=_org_workspace_body(org, auth_user), headers=_NO_CACHE)
 
 
 # ── GET /api/workspace/{slug}/apps ────────────────────────────────────────────
@@ -90,58 +173,106 @@ def get_workspace(request: Request, slug: str, user: CurrentUser | None = Depend
 
 @router.get("/{slug}/apps")
 @limiter.limit("60/minute")
-def get_workspace_apps(request: Request, slug: str):
+def get_workspace_apps(request: Request, slug: str, user: CurrentUser | None = Depends(get_optional_user)):
     with get_db() as cur:
-        partner = _get_partner(cur, slug)
+        partner = _get_partner_optional(cur, slug)
+
+        if partner:
+            # B2B2B — catalog depuis workspace_catalog
+            cur.execute(
+                """
+                SELECT
+                  app_slug, app_name, app_description, icon,
+                  category, version, default_permissions, dependencies,
+                  entry_path, sort_order,
+                  is_enabled, app_config, installed_at,
+                  catalog_status
+                FROM workspace_catalog
+                WHERE partner_slug = %s
+                ORDER BY sort_order, app_slug
+                """,
+                (slug,),
+            )
+            catalog = rows(cur)
+            apps = []
+            for app in catalog:
+                is_coming = app["catalog_status"] in ("coming_soon", "available", "available_beta")
+                apps.append(
+                    {
+                        "slug": app["app_slug"],
+                        "name": app["app_name"],
+                        "description": app["app_description"],
+                        "icon": app["icon"],
+                        "category": app["category"],
+                        "version": app["version"],
+                        "catalog_status": app["catalog_status"],
+                        "is_installed": app["catalog_status"] == "installed",
+                        "entry_path": None if is_coming else _substitute_slug(app["entry_path"], slug),
+                        "config": app["app_config"] if app["app_config"] else {},
+                        "installed_at": app["installed_at"].isoformat() if app["installed_at"] else None,
+                    }
+                )
+            return JSONResponse(
+                content={
+                    "partner": {
+                        "slug": partner["slug"],
+                        "name": partner["name"],
+                        "primary_color": partner["primary_color"],
+                        "logo_url": partner["logo_url"],
+                        "hero_title": partner["hero_title"],
+                        "hero_subtitle": partner["hero_subtitle"],
+                    },
+                    "apps": apps,
+                },
+                headers=_NO_CACHE,
+            )
+
+        # B2B direct — toutes les apps actives du registre
+        org = _get_org_by_slug(cur, slug)
+        if not org:
+            raise HTTPException(status_code=404, detail="Workspace introuvable.")
+        _require_org_member(user, org)
+
         cur.execute(
             """
-            SELECT
-              app_slug, app_name, app_description, icon,
-              category, version, default_permissions, dependencies,
-              entry_path, sort_order,
-              is_enabled, app_config, installed_at,
-              catalog_status
-            FROM workspace_catalog
-            WHERE partner_slug = %s
-            ORDER BY sort_order, app_slug
+            SELECT slug, name, description, icon, category, version,
+                   entry_path, sort_order
+            FROM app_registry
+            WHERE status = 'active'
+            ORDER BY sort_order, slug
             """,
-            (slug,),
         )
-        catalog = rows(cur)
-
-    apps = []
-    for app in catalog:
-        is_coming = app["catalog_status"] in ("coming_soon", "available", "available_beta")
-        apps.append(
+        registry = rows(cur)
+        apps = [
             {
-                "slug": app["app_slug"],
-                "name": app["app_name"],
-                "description": app["app_description"],
+                "slug": app["slug"],
+                "name": app["name"],
+                "description": app["description"],
                 "icon": app["icon"],
                 "category": app["category"],
                 "version": app["version"],
-                "catalog_status": app["catalog_status"],
-                "is_installed": app["catalog_status"] == "installed",
-                "entry_path": None if is_coming else _substitute_slug(app["entry_path"], slug),
-                "config": app["app_config"] if app["app_config"] else {},
-                "installed_at": app["installed_at"].isoformat() if app["installed_at"] else None,
+                "catalog_status": "installed",
+                "is_installed": True,
+                "entry_path": _substitute_slug(app["entry_path"], slug),
+                "config": {},
+                "installed_at": None,
             }
-        )
-
-    return JSONResponse(
-        content={
-            "partner": {
-                "slug": partner["slug"],
-                "name": partner["name"],
-                "primary_color": partner["primary_color"],
-                "logo_url": partner["logo_url"],
-                "hero_title": partner["hero_title"],
-                "hero_subtitle": partner["hero_subtitle"],
+            for app in registry
+        ]
+        return JSONResponse(
+            content={
+                "partner": {
+                    "slug": org["slug"],
+                    "name": org["name"],
+                    "primary_color": org.get("brand_color") or "#6366f1",
+                    "logo_url": org.get("logo_url") or "",
+                    "hero_title": org["name"],
+                    "hero_subtitle": "Votre espace AgentHub Platform",
+                },
+                "apps": apps,
             },
-            "apps": apps,
-        },
-        headers=_NO_CACHE,
-    )
+            headers=_NO_CACHE,
+        )
 
 
 # ── GET /api/workspace/{slug}/config ─────────────────────────────────────────
@@ -153,17 +284,31 @@ def get_workspace_apps(request: Request, slug: str):
 @limiter.limit("120/minute")
 def get_workspace_config(request: Request, slug: str):
     with get_db() as cur:
-        partner = _get_partner(cur, slug)
-    return {
-        "slug": partner["slug"],
-        "name": partner["name"],
-        "logo_url": partner["logo_url"],
-        "primary_color": partner["primary_color"],
-        "secondary_color": partner["secondary_color"],
-        "favicon_url": partner["favicon_url"],
-        "hero_title": partner["hero_title"],
-        "hero_subtitle": partner["hero_subtitle"],
-    }
+        partner = _get_partner_optional(cur, slug)
+        if partner:
+            return {
+                "slug": partner["slug"],
+                "name": partner["name"],
+                "logo_url": partner["logo_url"],
+                "primary_color": partner["primary_color"],
+                "secondary_color": partner["secondary_color"],
+                "favicon_url": partner["favicon_url"],
+                "hero_title": partner["hero_title"],
+                "hero_subtitle": partner["hero_subtitle"],
+            }
+        org = _get_org_by_slug(cur, slug)
+        if not org:
+            raise HTTPException(status_code=404, detail="Workspace introuvable.")
+        return {
+            "slug": org["slug"],
+            "name": org["name"],
+            "logo_url": org.get("logo_url") or "",
+            "primary_color": org.get("brand_color") or "#6366f1",
+            "secondary_color": None,
+            "favicon_url": None,
+            "hero_title": org["name"],
+            "hero_subtitle": "Votre espace AgentHub Platform",
+        }
 
 
 # ── GET /api/workspace/{slug}/admin ──────────────────────────────────────────
@@ -183,7 +328,9 @@ def update_app_config(
     Utilisé notamment par le module Gouvernance pour persister l'état des checklists.
     """
     with get_db() as cur:
-        partner = _get_partner(cur, slug)
+        partner = _get_partner_optional(cur, slug)
+        if not partner:
+            raise HTTPException(status_code=404, detail="Workspace partenaire introuvable.")
         partner_id = partner["id"]
         cur.execute(
             """
@@ -204,7 +351,9 @@ def update_app_config(
 @limiter.limit("30/minute")
 def get_workspace_admin(request: Request, slug: str, user: CurrentUser = Depends(get_current_user)):
     with get_db() as cur:
-        partner = _get_partner(cur, slug)
+        partner = _get_partner_optional(cur, slug)
+        if not partner:
+            raise HTTPException(status_code=404, detail="Workspace partenaire introuvable.")
         partner_id = partner["id"]
 
         # Vérifier que l'utilisateur est bien workspace_admin de ce partenaire
