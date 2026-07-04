@@ -70,7 +70,7 @@ async function _initPartner() {
     const sub = document.getElementById('signup-sub');
     if (sub && config.name) {
       sub.removeAttribute('data-i18n');
-      sub.textContent = `Rejoignez l'espace ${config.name} sur AgentHub Platform.`;
+      sub.textContent = _t('pl.partner.sub').replace('{name}', config.name);
     }
 
     // Activer le formulaire d'inscription
@@ -80,7 +80,7 @@ async function _initPartner() {
     const errAlert = document.createElement('div');
     errAlert.className = 'ds-alert ds-alert-err';
     errAlert.style.cssText = 'margin-bottom:20px';
-    errAlert.textContent = 'Ce lien d\'invitation n\'est plus valide. Contactez votre organisation partenaire.';
+    errAlert.textContent = _t('pl.partner.invalid');
     document.getElementById('section-signup').prepend(errAlert);
     _showInviteWall();
   }
@@ -116,10 +116,11 @@ async function _initInvite() {
     if (loginEmail  && inv.email) loginEmail.value  = inv.email;
     if (signupEmail && inv.email) signupEmail.value = inv.email;
     // Bannière d'invitation dans les deux sections
-    const orgName   = inv.org_name || 'votre organisation';
-    const roleLabel = { user: 'Utilisateur', manager: 'Manager', admin: 'Administrateur' }[inv.role] || inv.role;
+    const orgName   = inv.org_name || _t('pl.invite.org');
+    const roleMap   = { user: _t('pl.invite.role.user'), manager: _t('pl.invite.role.manager'), admin: _t('pl.invite.role.admin') };
+    const roleLabel = roleMap[inv.role] || inv.role;
     const bannerHtml = `<div style="background:#eef2ff;border:1px solid #c7d2fe;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:.88rem;color:#3730a3">
-      <strong>Invitation reçue</strong> — Rejoignez <strong>${orgName}</strong> en tant que <em>${roleLabel}</em>. Connectez-vous ou créez un compte pour accepter.
+      <strong>${_t('pl.invite.banner.pre')}</strong> — ${_t('pl.invite.banner.join')} <strong>${orgName}</strong> ${_t('pl.invite.banner.as')} <em>${roleLabel}</em>. ${_t('pl.invite.banner.cta')}
     </div>`;
     ['section-login', 'section-signup'].forEach(sId => {
       const sec = document.getElementById(sId);
@@ -173,10 +174,9 @@ async function handleLogin(e) {
     const data = await res.json();
 
     if (!res.ok) {
-      const isEn  = typeof NH_I18N !== 'undefined' && NH_I18N.lang === 'en';
-      const msg   = data.detail === 'INVALID_CREDENTIALS'
-        ? (isEn ? 'Incorrect email or password.' : 'Courriel ou mot de passe incorrect.')
-        : (data.detail || (isEn ? 'Sign in failed. Please try again.' : 'Connexion échouée. Veuillez réessayer.'));
+      const msg = data.detail === 'INVALID_CREDENTIALS'
+        ? _t('pl.login.err.creds')
+        : (data.detail || _t('pl.login.err.fail'));
       _setHTML('login-error', msg);
       _showEl('login-error');
       return;
@@ -210,7 +210,7 @@ async function handleLogin(e) {
     window.location.href = dest;
 
   } catch {
-    _setHTML('login-error', 'Erreur réseau. Vérifiez votre connexion et réessayez.');
+    _setHTML('login-error', _t('pl.network.error'));
     _showEl('login-error');
   } finally {
     _setBtnLoading('login-btn', false);
@@ -235,15 +235,15 @@ async function handleForgot(e) {
     });
 
     if (res.ok) {
-      _setHTML('forgot-success', `Un lien de réinitialisation a été envoyé à <strong>${email}</strong> si ce compte existe.`);
+      _setHTML('forgot-success', _t('pl.forgot.success').replace('{email}', email));
       _showEl('forgot-success');
       document.getElementById('forgot-form').reset();
     } else {
-      _setHTML('forgot-error', 'Erreur lors de l\'envoi. Vérifiez l\'adresse et réessayez.');
+      _setHTML('forgot-error', _t('pl.forgot.error'));
       _showEl('forgot-error');
     }
   } catch {
-    _setHTML('forgot-error', 'Erreur réseau. Vérifiez votre connexion.');
+    _setHTML('forgot-error', _t('pl.network.short'));
     _showEl('forgot-error');
   } finally {
     _setBtnLoading('forgot-btn', false);
@@ -270,14 +270,14 @@ async function handleSignup(e) {
   const full_name = `${fname} ${lname}`.trim();
 
   if (!org_type) {
-    _setHTML('signup-error', 'Veuillez sélectionner le type de votre organisation.');
+    _setHTML('signup-error', _t('pl.signup.err.orgtype'));
     _showEl('signup-error');
     _setBtnLoading('signup-btn', false);
     return;
   }
 
   if (cgu && !cgu.checked) {
-    _setHTML('signup-error', 'Vous devez accepter les conditions d\'utilisation pour continuer.');
+    _setHTML('signup-error', _t('pl.signup.err.cgu'));
     _showEl('signup-error');
     _setBtnLoading('signup-btn', false);
     return;
@@ -289,7 +289,7 @@ async function handleSignup(e) {
       email,
       phone,
       password,
-      organization_name: org_name || 'Mon organisation',
+      organization_name: org_name || _t('pl.org.default'),
       org_type,
       currency,
       partner_slug: _partnerSlug || undefined,
@@ -304,10 +304,10 @@ async function handleSignup(e) {
 
     if (!res.ok) {
       let msg;
-      if      (data.detail === 'PARTNER_INVALID')  msg = 'Ce lien d\'invitation n\'est plus valide.';
-      else if (data.detail === 'INVITE_PENDING')    msg = 'Un lien d\'invitation est déjà en attente pour ce courriel.';
+      if      (data.detail === 'PARTNER_INVALID')  msg = _t('pl.signup.err.partner');
+      else if (data.detail === 'INVITE_PENDING')    msg = _t('pl.signup.err.invite');
       else if (typeof data.detail === 'string')     msg = data.detail;
-      else                                          msg = 'Inscription échouée. Vérifiez les informations saisies.';
+      else                                          msg = _t('pl.signup.err.fail');
       _setHTML('signup-error', msg);
       _showEl('signup-error');
       return;
@@ -321,7 +321,7 @@ async function handleSignup(e) {
       // Supabase a créé la session sans confirmation email.
       // On NE sauvegarde PAS le token — l'utilisateur doit se connecter explicitement.
       const titleEl = document.querySelector('#signup-success .pl-success-title');
-      if (titleEl) titleEl.textContent = 'Connectez-vous pour accéder à votre espace';
+      if (titleEl) titleEl.textContent = _t('pl.signup.confirm.title');
       document.querySelectorAll('#signup-success .pl-success-desc').forEach(el => el.style.display = 'none');
       const emailBox = document.querySelector('#signup-success .pl-success-email');
       if (emailBox) emailBox.style.display = 'none';
@@ -334,11 +334,13 @@ async function handleSignup(e) {
         const domain = email.split('@')[1] || '';
         if (domain.includes('outlook') || domain.includes('hotmail') || domain.includes('live')) {
           gmailBtn.href = 'https://outlook.live.com/mail/inbox';
-          gmailBtn.innerHTML = gmailBtn.innerHTML.replace('Ouvrir Gmail', 'Ouvrir Outlook');
+          const span = gmailBtn.querySelector('[data-i18n]');
+          if (span) { span.removeAttribute('data-i18n'); span.textContent = _t('pl.mail.outlook'); }
           gmailBtn.style.background = '#0078D4';
         } else if (domain.includes('yahoo')) {
           gmailBtn.href = 'https://mail.yahoo.com';
-          gmailBtn.innerHTML = gmailBtn.innerHTML.replace('Ouvrir Gmail', 'Ouvrir Yahoo Mail');
+          const span = gmailBtn.querySelector('[data-i18n]');
+          if (span) { span.removeAttribute('data-i18n'); span.textContent = _t('pl.mail.yahoo'); }
           gmailBtn.style.background = '#6001D2';
         }
       }
@@ -348,7 +350,7 @@ async function handleSignup(e) {
     if (successEl) successEl.classList.add('visible');
 
   } catch {
-    _setHTML('signup-error', 'Erreur réseau. Vérifiez votre connexion et réessayez.');
+    _setHTML('signup-error', _t('pl.network.error'));
     _showEl('signup-error');
   } finally {
     _setBtnLoading('signup-btn', false);
@@ -369,13 +371,13 @@ async function handleResetPassword(e) {
   const confirm  = document.getElementById('reset-confirm').value;
 
   if (password !== confirm) {
-    _setHTML('reset-error', 'Les mots de passe ne correspondent pas.');
+    _setHTML('reset-error', _t('pl.reset.err.mismatch'));
     _showEl('reset-error');
     _setBtnLoading('reset-btn', false);
     return;
   }
   if (password.length < 12) {
-    _setHTML('reset-error', 'Le mot de passe doit contenir au moins 12 caractères.');
+    _setHTML('reset-error', _t('pl.reset.err.short'));
     _showEl('reset-error');
     _setBtnLoading('reset-btn', false);
     return;
@@ -390,18 +392,18 @@ async function handleResetPassword(e) {
     const data = await res.json();
 
     if (!res.ok) {
-      _setHTML('reset-error', data.detail || 'Échec de la mise à jour. Réessayez ou demandez un nouveau lien.');
+      _setHTML('reset-error', data.detail || _t('pl.reset.err.fail'));
       _showEl('reset-error');
       return;
     }
 
-    _setHTML('reset-success', 'Mot de passe mis à jour avec succès. Vous pouvez maintenant vous connecter.');
+    _setHTML('reset-success', _t('pl.reset.success'));
     _showEl('reset-success');
     document.getElementById('reset-form').style.display = 'none';
 
     setTimeout(() => switchTab('login'), 2500);
   } catch {
-    _setHTML('reset-error', 'Erreur réseau. Vérifiez votre connexion et réessayez.');
+    _setHTML('reset-error', _t('pl.network.error'));
     _showEl('reset-error');
   } finally {
     _setBtnLoading('reset-btn', false);

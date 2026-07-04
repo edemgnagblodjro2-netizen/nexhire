@@ -34,109 +34,109 @@ const icon = (name) => `<span class="ws-nav-icon">${IC[name] || IC.grid}</span>`
 const NAV = [
   {
     items: [
-      { id: 'dashboard', label: 'Tableau de bord', iconKey: 'home', route: '__dashboard__' },
+      { id: 'dashboard', i18nKey: 'ws.nav.dashboard', iconKey: 'home', route: '__dashboard__' },
     ],
   },
   {
-    section: 'Diagnostic & IA',
+    sectionKey: 'ws.section.diagnostic',
     items: [
-      { id: 'diagnostic',      label: 'Diagnostic IA IMAI', iconKey: 'chart',    appSlug: 'diagnostic-ia' },
-      { id: 'atlas',           label: 'ATLAS AI',           iconKey: 'sparkles', route: '__atlas__' },
-      { id: 'recommandations', label: 'Recommandations',    iconKey: 'zap',      appSlug: 'recommandations' },
+      { id: 'diagnostic',      i18nKey: 'ws.nav.diagnostic',      iconKey: 'chart',    appSlug: 'diagnostic-ia' },
+      { id: 'atlas',           i18nKey: 'ws.nav.atlas',           iconKey: 'sparkles', route: '__atlas__' },
+      { id: 'recommandations', i18nKey: 'ws.nav.recommandations', iconKey: 'zap',      appSlug: 'recommandations' },
     ],
   },
   {
-    section: 'Intelligence Décisionnelle',
+    sectionKey: 'ws.section.decisions',
     items: [
-      { id: 'decisions',      label: 'Décisions IA',           iconKey: 'zap',      route: '__decisions__' },
-      { id: 'initiatives',    label: 'Initiatives',            iconKey: 'chart',    route: '__initiatives__' },
-      { id: 'playbooks',      label: 'Playbooks',              iconKey: 'book',     route: '__playbooks__' },
-      { id: 'orchestrations', label: "Centre d'Orchestration", iconKey: 'zap',      route: '__orchestrations__' },
+      { id: 'decisions',      i18nKey: 'ws.nav.decisions',      iconKey: 'zap',   route: '__decisions__' },
+      { id: 'initiatives',    i18nKey: 'ws.nav.initiatives',    iconKey: 'chart', route: '__initiatives__' },
+      { id: 'playbooks',      i18nKey: 'ws.nav.playbooks',      iconKey: 'book',  route: '__playbooks__' },
+      { id: 'orchestrations', i18nKey: 'ws.nav.orchestrations', iconKey: 'zap',   route: '__orchestrations__' },
     ],
   },
   {
-    section: 'Gouvernance',
+    sectionKey: 'ws.section.governance',
     items: [
-      { id: 'gouvernance', label: 'Gouvernance & Loi 25', iconKey: 'shield', appSlug: 'gouvernance' },
-      { id: 'conformite',  label: 'Conformité Causale',   iconKey: 'check',  route: '__conformite__' },
-      { id: 'politiques',  label: 'Politiques Vivantes',  iconKey: 'file',   route: '__politiques__' },
+      { id: 'gouvernance', i18nKey: 'ws.nav.gouvernance', iconKey: 'shield', appSlug: 'gouvernance' },
+      { id: 'conformite',  i18nKey: 'ws.nav.conformite',  iconKey: 'check',  route: '__conformite__' },
+      { id: 'politiques',  i18nKey: 'ws.nav.politiques',  iconKey: 'file',   route: '__politiques__' },
     ],
   },
   {
-    section: 'Vue Direction',
+    sectionKey: 'ws.section.direction',
     items: [
-      { id: 'executive', label: 'Dashboard Exécutif', iconKey: 'building', appSlug: 'executive' },
+      { id: 'executive', i18nKey: 'ws.nav.executive', iconKey: 'building', appSlug: 'executive' },
     ],
   },
   {
-    section: 'Enterprise Intelligence',
+    sectionKey: 'ws.section.intel',
     items: [
-      { id: 'observatoire',      label: 'Observatoire',          iconKey: 'eye',      appSlug: 'observatoire' },
-      { id: 'reports',           label: 'Rapports & Exports',    iconKey: 'file',     appSlug: 'reports' },
-      { id: 'enterprise-intel',  label: 'Coûts & Optimisation',  iconKey: 'chart',    appSlug: 'enterprise-intel' },
+      { id: 'observatoire',     i18nKey: 'ws.nav.observatoire',    iconKey: 'eye',   appSlug: 'observatoire' },
+      { id: 'reports',          i18nKey: 'ws.nav.reports',         iconKey: 'file',  appSlug: 'reports' },
+      { id: 'enterprise-intel', i18nKey: 'ws.nav.enterprise-intel', iconKey: 'chart', appSlug: 'enterprise-intel' },
     ],
   },
   {
-    section: 'Sales Intelligence',
+    sectionKey: 'ws.section.sales',
     items: [
-      { id: 'sales-intelligence', label: 'Sales Intelligence', iconKey: 'target', appSlug: 'sales-intelligence' },
+      { id: 'sales-intelligence', i18nKey: 'ws.nav.sales-intelligence', iconKey: 'target', appSlug: 'sales-intelligence' },
     ],
   },
   {
-    section: 'Marketplace',
+    sectionKey: 'ws.section.marketplace',
     items: [
-      { id: 'marketplace', label: 'Workspace Marketplace', iconKey: 'store', appSlug: 'marketplace' },
+      { id: 'marketplace', i18nKey: 'ws.nav.marketplace', iconKey: 'store', appSlug: 'marketplace' },
     ],
   },
   {
-    section: 'Centre d\'intégrations',
+    sectionKey: 'ws.section.integrations',
     items: [
-      { id: 'integrations', label: 'Tous les connecteurs', iconKey: 'zap',      appSlug: 'integrations' },
-      { id: 'ms365',        label: 'Microsoft 365',        iconKey: 'building', appSlug: 'ms365' },
+      { id: 'integrations', i18nKey: 'ws.nav.integrations', iconKey: 'zap',      appSlug: 'integrations' },
+      { id: 'ms365',        i18nKey: 'ws.nav.ms365',        iconKey: 'building', appSlug: 'ms365' },
     ],
   },
   {
-    section: 'Organisation',
+    sectionKey: 'ws.section.org',
     items: [
-      { id: 'departments', label: 'Départements', iconKey: 'grid',     appSlug: 'departments' },
-      { id: 'assets',      label: 'Parc TI',      iconKey: 'building', appSlug: 'assets' },
+      { id: 'departments', i18nKey: 'ws.nav.departments', iconKey: 'grid',     appSlug: 'departments' },
+      { id: 'assets',      i18nKey: 'ws.nav.assets',      iconKey: 'building', appSlug: 'assets' },
     ],
   },
   {
-    section: 'Finance & Contrats',
+    sectionKey: 'ws.section.finance',
     items: [
-      { id: 'budget',    label: 'Budget & Finances', iconKey: 'chart',  appSlug: 'budget' },
-      { id: 'contracts', label: 'Contrats',           iconKey: 'file',   appSlug: 'contracts' },
+      { id: 'budget',    i18nKey: 'ws.nav.budget',    iconKey: 'chart', appSlug: 'budget' },
+      { id: 'contracts', i18nKey: 'ws.nav.contracts', iconKey: 'file',  appSlug: 'contracts' },
     ],
   },
   {
-    section: 'Identity & Access',
+    sectionKey: 'ws.section.identity',
     items: [
-      { id: 'identity',    label: 'Utilisateurs & Accès', iconKey: 'users',  appSlug: 'identity' },
-      { id: 'sso-mfa',     label: 'SSO & MFA',             iconKey: 'shield', appSlug: 'sso-mfa' },
+      { id: 'identity', i18nKey: 'ws.nav.identity', iconKey: 'users',  appSlug: 'identity' },
+      { id: 'sso-mfa',  i18nKey: 'ws.nav.sso-mfa',  iconKey: 'shield', appSlug: 'sso-mfa' },
     ],
   },
   {
-    section: 'Security Center',
+    sectionKey: 'ws.section.security',
     items: [
-      { id: 'security', label: 'Tableau de sécurité', iconKey: 'alert', appSlug: 'security' },
-      { id: 'audit',    label: 'Journal d\'audit',     iconKey: 'file',  appSlug: 'security' },
+      { id: 'security', i18nKey: 'ws.nav.security', iconKey: 'alert', appSlug: 'security' },
+      { id: 'audit',    i18nKey: 'ws.nav.audit',    iconKey: 'file',  appSlug: 'security' },
     ],
   },
   {
-    section: 'Productivité',
+    sectionKey: 'ws.section.productivity',
     items: [
-      { id: 'knowledge',  label: 'Knowledge Hub', iconKey: 'book', appSlug: 'knowledge' },
-      { id: 'automation', label: 'Automatisation', iconKey: 'zap',  appSlug: 'automation' },
+      { id: 'knowledge',  i18nKey: 'ws.nav.knowledge',  iconKey: 'book', appSlug: 'knowledge' },
+      { id: 'automation', i18nKey: 'ws.nav.automation',  iconKey: 'zap',  appSlug: 'automation' },
     ],
   },
   {
-    section: 'Administration',
+    sectionKey: 'ws.section.admin',
     items: [
-      { id: 'billing',          label: 'Facturation',        iconKey: 'file',     appSlug: 'billing' },
-      { id: 'service-accounts', label: 'Comptes de service', iconKey: 'key',      appSlug: 'service-accounts' },
-      { id: 'help',             label: 'Centre d\'aide',     iconKey: 'help',     appSlug: 'help' },
-      { id: 'settings',         label: 'Paramètres',         iconKey: 'settings', appSlug: 'settings' },
+      { id: 'billing',          i18nKey: 'ws.nav.billing',          iconKey: 'file',     appSlug: 'billing' },
+      { id: 'service-accounts', i18nKey: 'ws.nav.service-accounts', iconKey: 'key',      appSlug: 'service-accounts' },
+      { id: 'help',             i18nKey: 'ws.nav.help',             iconKey: 'help',     appSlug: 'help' },
+      { id: 'settings',         i18nKey: 'ws.nav.settings',         iconKey: 'settings', appSlug: 'settings' },
     ],
   },
 ];
@@ -152,21 +152,21 @@ const VOCAB = {
 
 // ── Notifications mock data ────────────────────────────────────────────────────
 let _notifications = [
-  { id: 1, icon: '📊', title: 'Nouveau rapport disponible', sub: 'Rapport de maturité IA — Juin 2026', time: 'il y a 5 min', unread: true },
-  { id: 2, icon: '✅', title: 'Diagnostic complété', sub: 'Score : 58/100 · Niveau Intermédiaire', time: 'il y a 2 h', unread: true },
-  { id: 3, icon: '🤖', title: 'ATLAS recommande une action', sub: 'Renforcer la gouvernance des données · Priorité élevée', time: 'il y a 1 j', unread: true },
-  { id: 4, icon: '🚀', title: 'Mise à jour AgentHub disponible', sub: 'AgentHub Platform v1.0 RC1', time: 'il y a 2 j', unread: false },
+  { id: 1, icon: '📊', titleKey: 'ws.notif.n1.title', subKey: 'ws.notif.n1.sub', timeKey: 'ws.notif.n1.time', unread: true },
+  { id: 2, icon: '✅', titleKey: 'ws.notif.n2.title', subKey: 'ws.notif.n2.sub', timeKey: 'ws.notif.n2.time', unread: true },
+  { id: 3, icon: '🤖', titleKey: 'ws.notif.n3.title', subKey: 'ws.notif.n3.sub', timeKey: 'ws.notif.n3.time', unread: true },
+  { id: 4, icon: '🚀', titleKey: 'ws.notif.n4.title', subKey: 'ws.notif.n4.sub', timeKey: 'ws.notif.n4.time', unread: false },
 ];
 
 // ── Search quick items ────────────────────────────────────────────────────────
 const SEARCH_ITEMS = [
-  { icon: '🏠', title: 'Tableau de bord',     sub: 'Vue d\'ensemble de votre organisation', id: 'dashboard' },
-  { icon: '📊', title: 'Diagnostic IA IMAI',  sub: 'Évaluer la maturité IA de votre organisation', id: 'diagnostic' },
-  { icon: '🤖', title: 'ATLAS AI',             sub: 'Votre conseiller IA personnel', id: 'atlas' },
-  { icon: '🛡️', title: 'Gouvernance & Loi 25', sub: 'Conformité et politiques de gouvernance', id: 'gouvernance' },
-  { icon: '🔭', title: 'Observatoire IA',      sub: 'Tableau de bord du programme partenaire', id: 'observatoire' },
-  { icon: '📄', title: 'Rapports',             sub: 'Rapports d\'analyse et de synthèse', id: 'reports' },
-  { icon: '⚙️', title: 'Paramètres',           sub: 'Configuration de l\'organisation', id: 'settings' },
+  { icon: '🏠', titleKey: 'ws.nav.dashboard',    subKey: 'ws.si.dashboard.sub',    id: 'dashboard' },
+  { icon: '📊', titleKey: 'ws.nav.diagnostic',   subKey: 'ws.si.diagnostic.sub',   id: 'diagnostic' },
+  { icon: '🤖', titleKey: 'ws.nav.atlas',         subKey: 'ws.si.atlas.sub',        id: 'atlas' },
+  { icon: '🛡️', titleKey: 'ws.nav.gouvernance',  subKey: 'ws.si.gouvernance.sub',  id: 'gouvernance' },
+  { icon: '🔭', titleKey: 'ws.nav.observatoire',  subKey: 'ws.si.observatoire.sub', id: 'observatoire' },
+  { icon: '📄', titleKey: 'ws.nav.reports',       subKey: 'ws.si.reports.sub',      id: 'reports' },
+  { icon: '⚙️', titleKey: 'ws.nav.settings',     subKey: 'ws.si.settings.sub',     id: 'settings' },
 ];
 
 // ── State ─────────────────────────────────────────────────────────────────────
@@ -396,7 +396,7 @@ async function boot() {
             const { mount } = await import('/static/workspace/onboarding/main.js');
             const ctx = { partnerSlug: slug, partner: _state.partner };
             await mount(document.body, ctx, () => {
-              _navigateTo({ id: 'dashboard', label: 'Tableau de bord', route: '__dashboard__' });
+              _navigateTo({ id: 'dashboard', i18nKey: 'ws.nav.dashboard', route: '__dashboard__' });
             });
             return;
           }
@@ -416,7 +416,7 @@ async function boot() {
       } catch {}
     }
 
-    _navigateTo({ id: 'dashboard', label: 'Tableau de bord', route: '__dashboard__' });
+    _navigateTo({ id: 'dashboard', i18nKey: 'ws.nav.dashboard', route: '__dashboard__' });
 
   } catch (err) {
     _toast(err.message, 'error');
@@ -714,122 +714,90 @@ function _setBreadcrumb(label) {
 const ATLAS_ONBOARD = {
   'sales-intelligence': {
     icon: '🎯', color: '#6d28d9',
-    title: 'Sales Intelligence',
-    desc: 'Votre centre de commande IA pour automatiser la prospection, piloter les campagnes et fermer plus de deals.',
-    benefits: [
-      'ATLAS identifie vos meilleurs leads et les classe automatiquement par potentiel',
-      'Vos agents IA prospectent et qualifient 24h/24 pendant que vous dormez',
-      'Pipeline commercial en temps réel avec prédictions de closing par IA',
-    ],
+    titleKey: 'ws.nav.sales-intelligence',
+    descKey: 'ws.ob.sales.desc',
+    benefitKeys: ['ws.ob.sales.b1', 'ws.ob.sales.b2', 'ws.ob.sales.b3'],
     actions: [
-      { label: 'Configurer', sub: 'Connecter votre CRM', icon: '⚙️', tab: 'settings' },
-      { label: 'Importer', sub: 'Charger vos prospects', icon: '📥', tab: 'prospects' },
-      { label: 'Commencer', sub: 'Voir le tableau de bord', icon: '🚀', tab: null },
+      { labelKey: 'ws.ob.sales.a1', subKey: 'ws.ob.sales.a1sub', icon: '⚙️', tab: 'settings' },
+      { labelKey: 'ws.ob.sales.a2', subKey: 'ws.ob.sales.a2sub', icon: '📥', tab: 'prospects' },
+      { labelKey: 'ws.ob.sales.a3', subKey: 'ws.ob.sales.a3sub', icon: '🚀', tab: null },
     ],
   },
   'recommandations': {
     icon: '⚡', color: '#7c3aed',
-    title: 'Recommandations IA',
-    desc: 'ATLAS analyse votre score IMAI et vous propose un plan d\'adoption IA prioritisé sur 12 semaines.',
-    benefits: [
-      'Score IMAI calculé sur 8 dimensions avec comparaison sectorielle',
-      'Plan d\'adoption en 3 phases avec jalons clairs et actions concrètes',
-      'Suivi de progression et recalcul automatique à chaque action complétée',
-    ],
+    titleKey: 'ws.nav.recommandations',
+    descKey: 'ws.ob.rec.desc',
+    benefitKeys: ['ws.ob.rec.b1', 'ws.ob.rec.b2', 'ws.ob.rec.b3'],
     actions: [
-      { label: 'Voir mon score', sub: 'Score IMAI actuel', icon: '📊', tab: null },
-      { label: 'Mon plan', sub: 'Plan 12 semaines', icon: '📅', tab: null },
-      { label: 'Commencer', sub: 'Première recommandation', icon: '🚀', tab: null },
+      { labelKey: 'ws.ob.rec.a1', subKey: 'ws.ob.rec.a1sub', icon: '📊', tab: null },
+      { labelKey: 'ws.ob.rec.a2', subKey: 'ws.ob.rec.a2sub', icon: '📅', tab: null },
+      { labelKey: 'ws.ob.rec.a3', subKey: 'ws.ob.rec.a3sub', icon: '🚀', tab: null },
     ],
   },
   'automation': {
     icon: '⚡', color: '#6d28d9',
-    title: 'Automatisation',
-    desc: 'Connectez vos processus métier à vos outils et laissez vos agents IA travailler à votre place.',
-    benefits: [
-      'Déclenchez des workflows automatiques à partir d\'événements AgentHub ou planifiés',
-      '9 modèles prêts à l\'emploi pour les cas d\'usage les plus fréquents',
-      'Connecteurs natifs Teams, Outlook, HubSpot, ServiceNow et 50+ autres',
-    ],
+    titleKey: 'ws.nav.automation',
+    descKey: 'ws.ob.aut.desc',
+    benefitKeys: ['ws.ob.aut.b1', 'ws.ob.aut.b2', 'ws.ob.aut.b3'],
     actions: [
-      { label: 'Explorer', sub: 'Bibliothèque de modèles', icon: '📚', tab: 'templates' },
-      { label: 'Configurer', sub: 'Activer les déclencheurs', icon: '⚙️', tab: 'triggers' },
-      { label: 'Créer', sub: 'Nouveau workflow', icon: '✨', tab: 'new' },
+      { labelKey: 'ws.ob.aut.a1', subKey: 'ws.ob.aut.a1sub', icon: '📚', tab: 'templates' },
+      { labelKey: 'ws.ob.aut.a2', subKey: 'ws.ob.aut.a2sub', icon: '⚙️', tab: 'triggers' },
+      { labelKey: 'ws.ob.aut.a3', subKey: 'ws.ob.aut.a3sub', icon: '✨', tab: 'new' },
     ],
   },
   'marketplace': {
     icon: '🏪', color: '#0ea5e9',
-    title: 'Workspace Marketplace',
-    desc: 'Découvrez et installez des espaces de travail préconfigurés, des agents IA et des connecteurs pour votre secteur.',
-    benefits: [
-      'Plus de 30 workspaces préconfigurés par secteur : entreprise, santé, éducation',
-      '9 agents IA spécialisés déployables en un clic',
-      '12 connecteurs certifiés pour vos outils existants',
-    ],
+    titleKey: 'ws.nav.marketplace',
+    descKey: 'ws.ob.mkt.desc',
+    benefitKeys: ['ws.ob.mkt.b1', 'ws.ob.mkt.b2', 'ws.ob.mkt.b3'],
     actions: [
-      { label: 'Workspaces', sub: 'Catalogue par secteur', icon: '🏪', tab: null },
-      { label: 'Agents IA', sub: 'Explorer les agents', icon: '🤖', tab: 'agents' },
-      { label: 'Connecteurs', sub: 'Intégrations disponibles', icon: '🔌', tab: 'connecteurs' },
+      { labelKey: 'ws.ob.mkt.a1', subKey: 'ws.ob.mkt.a1sub', icon: '🏪', tab: null },
+      { labelKey: 'ws.ob.mkt.a2', subKey: 'ws.ob.mkt.a2sub', icon: '🤖', tab: 'agents' },
+      { labelKey: 'ws.ob.mkt.a3', subKey: 'ws.ob.mkt.a3sub', icon: '🔌', tab: 'connecteurs' },
     ],
   },
   'assets': {
     icon: '🖥', color: '#7c3aed',
-    title: 'Parc TI',
-    desc: 'Inventaire centralisé de tous vos équipements informatiques avec suivi des garanties et des coûts.',
-    benefits: [
-      'Vue unifiée de tous vos actifs : serveurs, postes, réseau et imprimantes',
-      'Alertes automatiques avant l\'expiration des garanties pour éviter les surprises',
-      'Coûts mensuels par actif et département pour optimiser votre budget TI',
-    ],
+    titleKey: 'ws.nav.assets',
+    descKey: 'ws.ob.ast.desc',
+    benefitKeys: ['ws.ob.ast.b1', 'ws.ob.ast.b2', 'ws.ob.ast.b3'],
     actions: [
-      { label: 'Inventaire', sub: 'Voir tous les actifs', icon: '📋', tab: null },
-      { label: 'Ajouter', sub: 'Enregistrer un actif', icon: '➕', tab: null },
-      { label: 'Commencer', sub: 'Importer depuis CSV', icon: '📥', tab: null },
+      { labelKey: 'ws.ob.ast.a1', subKey: 'ws.ob.ast.a1sub', icon: '📋', tab: null },
+      { labelKey: 'ws.ob.ast.a2', subKey: 'ws.ob.ast.a2sub', icon: '➕', tab: null },
+      { labelKey: 'ws.ob.ast.a3', subKey: 'ws.ob.ast.a3sub', icon: '📥', tab: null },
     ],
   },
   'budget': {
     icon: '💰', color: '#059669',
-    title: 'Budget & Finances',
-    desc: 'Pilotez votre budget par catégorie et département avec un suivi alloué vs réel en temps réel.',
-    benefits: [
-      'Tableau de bord financier avec alertes de dépassement budgétaire automatiques',
-      'Prévisions IA basées sur les tendances historiques pour anticiper les besoins',
-      'Module Coûts IA pour quantifier et optimiser votre investissement en intelligence artificielle',
-    ],
+    titleKey: 'ws.nav.budget',
+    descKey: 'ws.ob.bud.desc',
+    benefitKeys: ['ws.ob.bud.b1', 'ws.ob.bud.b2', 'ws.ob.bud.b3'],
     actions: [
-      { label: 'Dashboard', sub: 'Vue consolidée', icon: '📊', tab: null },
-      { label: 'Saisir', sub: 'Ajouter une entrée', icon: '✏️', tab: null },
-      { label: 'Prévisions', sub: 'Projections N+1', icon: '📈', tab: 'previsions' },
+      { labelKey: 'ws.ob.bud.a1', subKey: 'ws.ob.bud.a1sub', icon: '📊', tab: null },
+      { labelKey: 'ws.ob.bud.a2', subKey: 'ws.ob.bud.a2sub', icon: '✏️', tab: null },
+      { labelKey: 'ws.ob.bud.a3', subKey: 'ws.ob.bud.a3sub', icon: '📈', tab: 'previsions' },
     ],
   },
   'contracts': {
     icon: '📄', color: '#0284c7',
-    title: 'Gestion des contrats',
-    desc: 'Centralisez vos contrats fournisseurs et ne manquez plus aucun renouvellement critique.',
-    benefits: [
-      'Alertes proactives 90j, 30j et 7j avant chaque renouvellement important',
-      'ATLAS identifie les opportunités de négociation et les économies potentielles',
-      'Vue Fournisseurs consolidée pour maximiser votre levier de négociation',
-    ],
+    titleKey: 'ws.nav.contracts',
+    descKey: 'ws.ob.con.desc',
+    benefitKeys: ['ws.ob.con.b1', 'ws.ob.con.b2', 'ws.ob.con.b3'],
     actions: [
-      { label: 'Mes contrats', sub: 'Voir la liste', icon: '📋', tab: null },
-      { label: 'Ajouter', sub: 'Nouveau contrat', icon: '➕', tab: null },
-      { label: 'Alertes', sub: 'Renouvellements urgents', icon: '⚠️', tab: 'alertes' },
+      { labelKey: 'ws.ob.con.a1', subKey: 'ws.ob.con.a1sub', icon: '📋', tab: null },
+      { labelKey: 'ws.ob.con.a2', subKey: 'ws.ob.con.a2sub', icon: '➕', tab: null },
+      { labelKey: 'ws.ob.con.a3', subKey: 'ws.ob.con.a3sub', icon: '⚠️', tab: 'alertes' },
     ],
   },
   'sso-mfa': {
     icon: '🔐', color: '#1d4ed8',
-    title: 'SSO & MFA',
-    desc: 'Sécurisez l\'accès à votre organisation avec la connexion unique et l\'authentification multifacteur.',
-    benefits: [
-      'Connectez Microsoft Entra ID, Google Workspace, Okta ou Auth0 en 3 minutes',
-      'Activez le MFA pour toute l\'organisation d\'un seul clic — réduit les risques de 99,9%',
-      'Surveillance complète : sessions actives, journal des connexions, alertes en temps réel',
-    ],
+    titleKey: 'ws.nav.sso-mfa',
+    descKey: 'ws.ob.sso.desc',
+    benefitKeys: ['ws.ob.sso.b1', 'ws.ob.sso.b2', 'ws.ob.sso.b3'],
     actions: [
-      { label: 'Configurer SSO', sub: 'Choisir un fournisseur', icon: '🔐', tab: 'providers' },
-      { label: 'Activer MFA', sub: 'Protéger les comptes', icon: '📱', tab: 'mfa' },
-      { label: 'Sessions', sub: 'Voir les connexions', icon: '👥', tab: 'sessions' },
+      { labelKey: 'ws.ob.sso.a1', subKey: 'ws.ob.sso.a1sub', icon: '🔐', tab: 'providers' },
+      { labelKey: 'ws.ob.sso.a2', subKey: 'ws.ob.sso.a2sub', icon: '📱', tab: 'mfa' },
+      { labelKey: 'ws.ob.sso.a3', subKey: 'ws.ob.sso.a3sub', icon: '👥', tab: 'sessions' },
     ],
   },
 };
@@ -871,6 +839,7 @@ function _showAtlasOnboard(container, navItem, ctx, onDismiss) {
   _atlasOnboardCSS();
   const cfg = ATLAS_ONBOARD[navItem.appSlug];
   if (!cfg) { onDismiss(null); return; }
+  const t = NH_I18N.t.bind(NH_I18N);
 
   container.innerHTML = `
 <div class="ws-ob">
@@ -878,25 +847,25 @@ function _showAtlasOnboard(container, navItem, ctx, onDismiss) {
     <div class="ws-ob-header">
       <div class="ws-ob-atlas">🤖</div>
       <div>
-        <div class="ws-ob-atlas-label">ATLAS vous accueille</div>
-        <div class="ws-ob-atlas-sub">Votre assistant IA personnel</div>
+        <div class="ws-ob-atlas-label">${t('ws.ob.atlas.label')}</div>
+        <div class="ws-ob-atlas-sub">${t('ws.ob.atlas.sub')}</div>
       </div>
     </div>
 
     <div class="ws-ob-module">
       <div class="ws-ob-mod-icon" style="background:${cfg.color}18;color:${cfg.color}">${cfg.icon}</div>
       <div>
-        <div class="ws-ob-mod-name">Bienvenue dans<br>${cfg.title}</div>
+        <div class="ws-ob-mod-name">${t('ws.ob.welcome')}<br>${t(cfg.titleKey)}</div>
       </div>
     </div>
 
-    <div class="ws-ob-desc">${cfg.desc}</div>
+    <div class="ws-ob-desc">${t(cfg.descKey)}</div>
 
     <div class="ws-ob-benefits">
-      ${cfg.benefits.map(b => `
+      ${cfg.benefitKeys.map(bk => `
       <div class="ws-ob-benefit">
         <div class="ws-ob-check" style="background:${cfg.color}">✓</div>
-        <span>${b}</span>
+        <span>${t(bk)}</span>
       </div>`).join('')}
     </div>
 
@@ -904,12 +873,12 @@ function _showAtlasOnboard(container, navItem, ctx, onDismiss) {
       ${cfg.actions.map(a => `
       <button class="ws-ob-action" data-tab="${a.tab || ''}" style="color:${cfg.color}">
         <div class="ws-ob-action-icon">${a.icon}</div>
-        <div class="ws-ob-action-label">${a.label}</div>
-        <div class="ws-ob-action-sub">${a.sub}</div>
+        <div class="ws-ob-action-label">${t(a.labelKey)}</div>
+        <div class="ws-ob-action-sub">${t(a.subKey)}</div>
       </button>`).join('')}
     </div>
 
-    <button class="ws-ob-skip" data-tab="">Je connais déjà ce module →</button>
+    <button class="ws-ob-skip" data-tab="">${t('ws.ob.skip')}</button>
   </div>
 </div>`;
 
@@ -1050,7 +1019,7 @@ window.addEventListener('popstate', (e) => {
   }
   if (_state.module?.unmount) _state.module.unmount($('ws-app-container'));
   _state.module = null;
-  _navigateTo({ id: 'dashboard', label: 'Tableau de bord', route: '__dashboard__' });
+  _navigateTo({ id: 'dashboard', i18nKey: 'ws.nav.dashboard', route: '__dashboard__' });
 });
 
 // ── TopBar ────────────────────────────────────────────────────────────────────
@@ -1124,7 +1093,7 @@ function _initTopbar() {
         _closeAllPanels();
         const r = _resolveNavItems().find(n => n.id === navId);
         if (r && r.enabled) _navigateTo(r);
-        else if (r) _toast(`${r.label} — module en cours de déploiement`, 'info');
+        else if (r) _toast(`${r.i18nKey ? NH_I18N.t(r.i18nKey) : r.label} — ${NH_I18N.t('ws.toast.soon')}`, 'info');
       });
     } else if (action.startsWith('help:')) {
       btn.addEventListener('click', _gotoHelp);
@@ -1174,13 +1143,14 @@ function _renderNotifications() {
   badge.textContent = unreadCount;
   badge.hidden      = unreadCount === 0;
 
+  const t = NH_I18N.t.bind(NH_I18N);
   list.innerHTML = _notifications.map(n => `
     <div class="ws-notif-item${n.unread ? ' unread' : ''}" data-id="${n.id}">
       <span class="ws-notif-ico">${n.icon}</span>
       <div class="ws-notif-body">
-        <div class="ws-notif-title">${n.title}</div>
-        <div class="ws-notif-sub">${n.sub}</div>
-        <div class="ws-notif-time">${n.time}</div>
+        <div class="ws-notif-title">${t(n.titleKey)}</div>
+        <div class="ws-notif-sub">${t(n.subKey)}</div>
+        <div class="ws-notif-time">${t(n.timeKey)}</div>
       </div>
       ${n.unread ? '<div class="ws-notif-dot"></div>' : ''}
     </div>`).join('');
@@ -1215,23 +1185,23 @@ function _initSearch() {
   function _renderSearchResults(q) {
     const query    = q.toLowerCase().trim();
     const filtered = query
-      ? SEARCH_ITEMS.filter(it => it.title.toLowerCase().includes(query) || it.sub.toLowerCase().includes(query))
+      ? SEARCH_ITEMS.filter(it => NH_I18N.t(it.titleKey).toLowerCase().includes(query) || NH_I18N.t(it.subKey).toLowerCase().includes(query))
       : SEARCH_ITEMS;
 
     if (!filtered.length) {
-      results.innerHTML = `<div style="padding:24px;text-align:center;color:var(--muted);font-size:13px">Aucun résultat pour « ${q} »</div>`;
+      results.innerHTML = `<div style="padding:24px;text-align:center;color:var(--muted);font-size:13px">${NH_I18N.t('ws.search.no_results').replace('{q}', q)}</div>`;
       return;
     }
 
     results.innerHTML = `
       <div class="ws-sr-section">
-        <div class="ws-sr-label">${query ? 'Résultats' : 'Navigation rapide'}</div>
+        <div class="ws-sr-label">${query ? NH_I18N.t('ws.search.results') : NH_I18N.t('ws.search.quick')}</div>
         ${filtered.map(it => `
           <button class="ws-sr-item" data-nav-id="${it.id}">
             <span class="ws-sr-icon">${it.icon}</span>
             <span>
-              <span class="ws-sr-title">${it.title}</span>
-              <span class="ws-sr-sub">${it.sub}</span>
+              <span class="ws-sr-title">${NH_I18N.t(it.titleKey)}</span>
+              <span class="ws-sr-sub">${NH_I18N.t(it.subKey)}</span>
             </span>
           </button>`).join('')}
       </div>`;
@@ -1241,7 +1211,7 @@ function _initSearch() {
         const r = _resolveNavItems().find(n => n.id === btn.dataset.navId);
         close();
         if (r && r.enabled) _navigateTo(r);
-        else if (r) _toast(`${r.label} — module en cours de déploiement`, 'info');
+        else if (r) _toast(`${r.i18nKey ? NH_I18N.t(r.i18nKey) : r.label} — ${NH_I18N.t('ws.toast.soon')}`, 'info');
       });
     });
   }
