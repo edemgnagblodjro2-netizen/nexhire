@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AgentHub Platform — Workspace Shell
  * Enterprise TopBar: search, notifications, help, settings, user menu, sidebar collapse
  */
@@ -260,13 +260,13 @@ function _showIdleWarning() {
 </style>
 <div class="wsio-card">
   <div class="wsio-icon">⏱️</div>
-  <div class="wsio-title">Session inactive</div>
-  <div class="wsio-sub">Vous semblez absent. Votre session sera fermée automatiquement pour protéger vos données.</div>
+  <div class="wsio-title">${NH_I18N.t('idle.title')}</div>
+  <div class="wsio-sub">${NH_I18N.t('idle.sub')}</div>
   <div class="wsio-timer" id="wsio-timer">2:00</div>
   <div class="wsio-bar-wrap"><div class="wsio-bar" id="wsio-bar" style="width:100%"></div></div>
   <div class="wsio-actions">
-    <button class="wsio-stay"   id="wsio-stay">Rester connecté</button>
-    <button class="wsio-logout" id="wsio-logout">Se déconnecter</button>
+    <button class="wsio-stay"   id="wsio-stay">${NH_I18N.t('idle.stay')}</button>
+    <button class="wsio-logout" id="wsio-logout">${NH_I18N.t('idle.logout')}</button>
   </div>
 </div>`;
   document.body.appendChild(_idleWarnEl);
@@ -462,8 +462,8 @@ function _showWelcomeScreen(profile, partner) {
     const DURATION  = 8000;
     const orgName   = profile?.organization_name || partner?.name || 'votre organisation';
     const userName  = profile?.full_name || profile?.email?.split('@')[0] || '';
-    const roleMap   = { owner: 'Propriétaire', admin: 'Administrateur', manager: 'Manager', user: 'Utilisateur' };
-    const roleLabel = roleMap[profile?.role] || 'Collaborateur';
+    const roleKeys  = { owner: 'ws.role.owner', admin: 'ws.role.admin', manager: 'ws.role.manager', user: 'ws.role.user' };
+    const roleLabel = NH_I18N.t(roleKeys[profile?.role] || 'ws.role.collaborator');
 
     const overlay = document.createElement('div');
     overlay.id = 'ws-welcome-overlay';
@@ -545,7 +545,7 @@ function _showWelcomeScreen(profile, partner) {
 <div class="wc-glow2"></div>
 <div class="wc-card">
   <div class="wc-badge"><div class="wc-badge-dot"></div>AgentHub Platform</div>
-  <div class="wc-tagline">Enterprise AI Workspace</div>
+  <div class="wc-tagline">${NH_I18N.t('welcome.tagline')}</div>
 
   <div class="wc-identity">
     <div class="wc-identity-org">&#x1F3E2; ${orgName}</div>
@@ -555,19 +555,19 @@ function _showWelcomeScreen(profile, partner) {
 
   <div class="wc-atlas-block">
     <div class="wc-atlas-header">&#x1F916; ATLAS</div>
-    <div class="wc-atlas-status">Préparation de votre environnement intelligent...</div>
+    <div class="wc-atlas-status">${NH_I18N.t('welcome.atlas.status')}</div>
   </div>
 
   <div class="wc-steps">
-    <div class="wc-step" data-step="0">Chargement de votre organisation</div>
-    <div class="wc-step" data-step="1">Initialisation des agents IA</div>
-    <div class="wc-step" data-step="2">Vérification des connecteurs</div>
-    <div class="wc-step" data-step="3">Analyse des indicateurs</div>
-    <div class="wc-step" data-step="4">Sécurisation de votre session</div>
+    <div class="wc-step" data-step="0">${NH_I18N.t('welcome.step.0')}</div>
+    <div class="wc-step" data-step="1">${NH_I18N.t('welcome.step.1')}</div>
+    <div class="wc-step" data-step="2">${NH_I18N.t('welcome.step.2')}</div>
+    <div class="wc-step" data-step="3">${NH_I18N.t('welcome.step.3')}</div>
+    <div class="wc-step" data-step="4">${NH_I18N.t('welcome.step.4')}</div>
   </div>
 
-  <div class="wc-final" id="wc-final">Bienvenue dans AgentHub.</div>
-  <button class="wc-skip" id="wc-skip">Accéder au tableau de bord →</button>
+  <div class="wc-final" id="wc-final">${NH_I18N.t('welcome.final')}</div>
+  <button class="wc-skip" id="wc-skip">${NH_I18N.t('welcome.skip')}</button>
 </div>`;
 
     document.body.appendChild(overlay);
@@ -613,8 +613,10 @@ function _applyUserInfo(profile) {
   setTxt('ws-up-name', displayName);
   setTxt('ws-up-email', profile.email || '—');
 
-  const roleMap = { owner: 'Administrateur', admin: 'Admin', user: 'Utilisateur' };
-  setTxt('ws-up-role', roleMap[profile.role] || profile.role || 'Utilisateur');
+  const roleKeys = { owner: 'ws.role.owner', admin: 'ws.role.admin', manager: 'ws.role.manager', user: 'ws.role.user' };
+  const roleKey = roleKeys[profile.role] || 'ws.role.collaborator';
+  const roleEl = $('ws-up-role');
+  if (roleEl) { roleEl.dataset.i18n = roleKey; roleEl.textContent = NH_I18N.t(roleKey); }
 }
 
 // Apps core livrées avec la plateforme — toujours disponibles sans besoin d'activation DB
@@ -650,20 +652,23 @@ function _resolveNavItems() {
 function _renderNav() {
   const nav = $('ws-nav');
   const resolved = _resolveNavItems();
+  const t = NH_I18N.t.bind(NH_I18N);
   let idx = 0;
   let html = '';
 
   for (const group of NAV) {
     html += `<div class="ws-nav-section">`;
-    if (group.section) html += `<div class="ws-nav-label">${group.section}</div>`;
+    if (group.sectionKey) html += `<div class="ws-nav-label">${t(group.sectionKey)}</div>`;
+    else if (group.section) html += `<div class="ws-nav-label">${group.section}</div>`;
 
     for (const item of group.items) {
       const r = resolved[idx++];
-      const badge = r.soon ? `<span class="ws-nav-badge ws-badge-soon">Bientôt</span>` : '';
+      const label = item.i18nKey ? t(item.i18nKey) : item.label;
+      const badge = r.soon ? `<span class="ws-nav-badge ws-badge-soon">${t('ws.nav.soon')}</span>` : '';
       html += `
-        <button class="ws-nav-item${r.soon ? ' soon' : ''}" data-id="${item.id}" aria-label="${item.label}">
+        <button class="ws-nav-item${r.soon ? ' soon' : ''}" data-id="${item.id}" aria-label="${label}">
           ${icon(item.iconKey)}
-          <span class="ws-nav-name">${item.label}</span>
+          <span class="ws-nav-name">${label}</span>
           ${badge}
         </button>`;
     }
@@ -677,10 +682,12 @@ function _renderNav() {
     btn.addEventListener('click', () => {
       const r = _resolveNavItems().find(n => n.id === btn.dataset.id);
       if (!r) return;
+      const navItem = NAV.flatMap(g => g.items).find(n => n.id === r.id);
+      const translatedLabel = navItem?.i18nKey ? NH_I18N.t(navItem.i18nKey) : (navItem?.label || r.id);
       if (r.soon) {
         _setActiveNav(r.id);
-        _setBreadcrumb(r.label);
-        _showComingSoon(r.label);
+        _setBreadcrumb(translatedLabel);
+        _showComingSoon(translatedLabel);
       } else {
         _navigateTo(r);
       }
@@ -922,7 +929,7 @@ async function _navigateTo(navItem) {
   _saveLastRoute(navItem);
 
   _setActiveNav(navItem.id);
-  _setBreadcrumb(navItem.label);
+  _setBreadcrumb(navItem.i18nKey ? NH_I18N.t(navItem.i18nKey) : navItem.label);
   _showLoading();
 
   try {
@@ -1325,6 +1332,10 @@ function _modal({ title, body, footer = '', onClose } = {}) {
 NH_I18N.on(lang => {
   _renderNav();
   _setActiveNav(_state.activeId);
+  if (_state.activeNavItem) {
+    const navItem = NAV.flatMap(g => g.items).find(n => n.id === _state.activeNavItem.id);
+    _setBreadcrumb(navItem?.i18nKey ? NH_I18N.t(navItem.i18nKey) : (_state.activeNavItem.label || _state.activeNavItem.id));
+  }
   if (_state.module?.refresh) {
     _state.module.refresh(_state.ctx);
   }

@@ -566,8 +566,8 @@
         </button>
         <div class="ws-tb-panel" id="ws-notif-panel">
           <div class="ws-panel-hd">
-            <span class="ws-panel-hd-title">Notifications</span>
-            <button class="ws-panel-hd-action" id="ws-notif-mark-all">Tout marquer lu</button>
+            <span class="ws-panel-hd-title" data-i18n="ws.notif.title">Notifications</span>
+            <button class="ws-panel-hd-action" id="ws-notif-mark-all" data-i18n="ws.notif.mark_all">Tout marquer lu</button>
           </div>
           <div class="ws-notif-scroll" id="ws-notif-list"></div>
           <div class="ws-panel-ft"><button>Voir toutes les notifications</button></div>
@@ -580,14 +580,14 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
         </button>
         <div class="ws-tb-panel ws-tb-panel-sm" id="ws-help-panel">
-          <div class="ws-panel-hd"><span class="ws-panel-hd-title">Centre d'aide</span></div>
+          <div class="ws-panel-hd"><span class="ws-panel-hd-title" data-i18n="ws.help.title">Centre d'aide</span></div>
           <div class="ws-menu-list">
-            <button class="ws-menu-item"><span class="ws-menu-item-icon">📚</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Documentation</span><span class="ws-menu-item-desc">Guides et tutoriels</span></span></button>
-            <button class="ws-menu-item"><span class="ws-menu-item-icon">🎓</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Tutoriels vidéo</span><span class="ws-menu-item-desc">Apprenez à votre rythme</span></span></button>
-            <button class="ws-menu-item" data-action="help:faq"><span class="ws-menu-item-icon">❓</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">FAQ</span><span class="ws-menu-item-desc">Questions fréquentes</span></span></button>
+            <button class="ws-menu-item"><span class="ws-menu-item-icon">📚</span><span class="ws-menu-item-body"><span class="ws-menu-item-title" data-i18n="ws.help.docs">Documentation</span><span class="ws-menu-item-desc" data-i18n="ws.help.docs.sub">Guides et tutoriels</span></span></button>
+            <button class="ws-menu-item"><span class="ws-menu-item-icon">🎓</span><span class="ws-menu-item-body"><span class="ws-menu-item-title" data-i18n="ws.help.videos">Tutoriels vidéo</span><span class="ws-menu-item-desc" data-i18n="ws.help.videos.sub">Apprenez à votre rythme</span></span></button>
+            <button class="ws-menu-item" data-action="help:faq"><span class="ws-menu-item-icon">❓</span><span class="ws-menu-item-body"><span class="ws-menu-item-title" data-i18n="ws.help.faq">FAQ</span><span class="ws-menu-item-desc" data-i18n="ws.help.faq.sub">Questions fréquentes</span></span></button>
             <div class="ws-menu-divider"></div>
-            <button class="ws-menu-item" id="ws-help-atlas-btn"><span class="ws-menu-item-icon">🤖</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Discuter avec ATLAS</span><span class="ws-menu-item-desc">Votre conseiller IA 24/7</span></span></button>
-            <button class="ws-menu-item" data-action="help:support"><span class="ws-menu-item-icon">💬</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Contacter le support</span><span class="ws-menu-item-desc">Lun–Ven 9h–17h EST</span></span></button>
+            <button class="ws-menu-item" id="ws-help-atlas-btn"><span class="ws-menu-item-icon">🤖</span><span class="ws-menu-item-body"><span class="ws-menu-item-title" data-i18n="ws.help.atlas">Discuter avec ATLAS</span><span class="ws-menu-item-desc" data-i18n="ws.help.atlas.sub">Votre conseiller IA 24/7</span></span></button>
+            <button class="ws-menu-item" data-action="help:support"><span class="ws-menu-item-icon">💬</span><span class="ws-menu-item-body"><span class="ws-menu-item-title" data-i18n="ws.help.contact">Contacter le support</span><span class="ws-menu-item-desc" data-i18n="ws.help.contact.sub">Lun–Ven 9h–17h EST</span></span></button>
           </div>
           <div class="ws-version-tag" id="ws-version-text">AgentHub Platform v1.0 RC1</div>
         </div>
@@ -599,16 +599,16 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         </button>
         <div class="ws-tb-panel ws-tb-panel-sm ws-tb-panel-right" id="ws-settings-panel">
-          <div class="ws-panel-hd"><span class="ws-panel-hd-title">Paramètres rapides</span></div>
+          <div class="ws-panel-hd"><span class="ws-panel-hd-title" data-i18n="ws.settings.title">Paramètres rapides</span></div>
           <div class="ws-menu-list">
-            <div class="ws-menu-section">Préférences</div>
-            <button class="ws-menu-item"><span class="ws-menu-item-icon">🌐</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Langue</span><span class="ws-menu-item-desc">Français (Canada)</span></span></button>
-            <button class="ws-menu-item"><span class="ws-menu-item-icon">🌙</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Thème</span><span class="ws-menu-item-desc">Clair (sombre : à venir)</span></span></button>
+            <div class="ws-menu-section" data-i18n="ws.settings.prefs">Préférences</div>
+            <button class="ws-menu-item"><span class="ws-menu-item-icon">🌐</span><span class="ws-menu-item-body"><span class="ws-menu-item-title" data-i18n="ws.user.lang">Langue</span><span class="ws-menu-item-desc">Français (Canada)</span></span></button>
+            <button class="ws-menu-item"><span class="ws-menu-item-icon">🌙</span><span class="ws-menu-item-body"><span class="ws-menu-item-title" data-i18n="ws.settings.theme">Thème</span><span class="ws-menu-item-desc" data-i18n="ws.settings.theme.sub">Clair (sombre : à venir)</span></span></button>
             <div class="ws-menu-divider"></div>
-            <div class="ws-menu-section">Organisation</div>
-            <button class="ws-menu-item" data-action="nav:settings"><span class="ws-menu-item-icon">🏢</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Mon organisation</span><span class="ws-menu-item-desc">Gérer les paramètres</span></span></button>
-            <button class="ws-menu-item" data-action="nav:identity"><span class="ws-menu-item-icon">👥</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Utilisateurs & équipes</span><span class="ws-menu-item-desc">Invitations et rôles</span></span></button>
-            <button class="ws-menu-item" data-action="nav:service-accounts"><span class="ws-menu-item-icon">🔑</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Clés API</span><span class="ws-menu-item-desc">Accès développeur (bientôt)</span></span></button>
+            <div class="ws-menu-section" data-i18n="ws.settings.org">Organisation</div>
+            <button class="ws-menu-item" data-action="nav:settings"><span class="ws-menu-item-icon">🏢</span><span class="ws-menu-item-body"><span class="ws-menu-item-title" data-i18n="ws.user.settings">Mon organisation</span><span class="ws-menu-item-desc" data-i18n="ws.settings.org.sub">Gérer les paramètres</span></span></button>
+            <button class="ws-menu-item" data-action="nav:identity"><span class="ws-menu-item-icon">👥</span><span class="ws-menu-item-body"><span class="ws-menu-item-title" data-i18n="ws.settings.teams">Utilisateurs & équipes</span><span class="ws-menu-item-desc" data-i18n="ws.settings.teams.sub">Invitations et rôles</span></span></button>
+            <button class="ws-menu-item" data-action="nav:service-accounts"><span class="ws-menu-item-icon">🔑</span><span class="ws-menu-item-body"><span class="ws-menu-item-title" data-i18n="ws.settings.apikeys">Clés API</span><span class="ws-menu-item-desc" data-i18n="ws.settings.apikeys.sub">Accès développeur (bientôt)</span></span></button>
           </div>
         </div>
       </div>
@@ -640,14 +640,14 @@
             <div class="ws-upanel-role" id="ws-up-role">Utilisateur</div>
           </div>
           <div class="ws-menu-list">
-            <button class="ws-menu-item" data-action="nav:settings"><span class="ws-menu-item-icon">👤</span><span class="ws-menu-item-title">Mon profil</span></button>
-            <button class="ws-menu-item" data-action="nav:settings"><span class="ws-menu-item-icon">🏢</span><span class="ws-menu-item-title">Mon organisation</span></button>
-            <button class="ws-menu-item" data-action="nav:settings"><span class="ws-menu-item-icon">🔔</span><span class="ws-menu-item-title">Préférences notifications</span></button>
+            <button class="ws-menu-item" data-action="nav:settings"><span class="ws-menu-item-icon">👤</span><span class="ws-menu-item-title" data-i18n="ws.user.profile">Mon profil</span></button>
+            <button class="ws-menu-item" data-action="nav:settings"><span class="ws-menu-item-icon">🏢</span><span class="ws-menu-item-title" data-i18n="ws.user.settings">Mon organisation</span></button>
+            <button class="ws-menu-item" data-action="nav:settings"><span class="ws-menu-item-icon">🔔</span><span class="ws-menu-item-title" data-i18n="ws.user.notifications">Préférences notifications</span></button>
             <div class="ws-menu-divider"></div>
-            <button class="ws-menu-item" data-action="nav:identity"><span class="ws-menu-item-icon">👥</span><span class="ws-menu-item-title">Inviter un utilisateur</span></button>
-            <button class="ws-menu-item" data-action="nav:help"><span class="ws-menu-item-icon">💬</span><span class="ws-menu-item-title">Support</span></button>
+            <button class="ws-menu-item" data-action="nav:identity"><span class="ws-menu-item-icon">👥</span><span class="ws-menu-item-title" data-i18n="ws.user.invite">Inviter un utilisateur</span></button>
+            <button class="ws-menu-item" data-action="nav:help"><span class="ws-menu-item-icon">💬</span><span class="ws-menu-item-title" data-i18n="ws.user.support">Support</span></button>
             <div class="ws-menu-divider"></div>
-            <button class="ws-menu-item danger" id="ws-logout-btn"><span class="ws-menu-item-icon">🚪</span><span class="ws-menu-item-title">Déconnexion</span></button>
+            <button class="ws-menu-item danger" id="ws-logout-btn"><span class="ws-menu-item-icon">🚪</span><span class="ws-menu-item-title" data-i18n="ws.user.logout">Déconnexion</span></button>
           </div>
         </div>
       </div>
@@ -686,7 +686,7 @@
     <div id="ws-search-box">
       <div class="ws-search-iw">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input id="ws-search-input" placeholder="Rechercher dans AgentHub…" autocomplete="off" spellcheck="false">
+        <input id="ws-search-input" data-i18n-ph="ws.search.ph" placeholder="Rechercher dans AgentHub…" autocomplete="off" spellcheck="false">
         <kbd class="ws-search-esc">Esc</kbd>
       </div>
       <div class="ws-search-results" id="ws-search-results"></div>
