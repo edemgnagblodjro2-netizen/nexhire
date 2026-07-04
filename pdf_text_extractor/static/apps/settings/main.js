@@ -7,6 +7,7 @@
 let _st = null;
 let _el = null;
 
+function _t(key) { return NH_I18N.t(key); }
 function _token() { return localStorage.getItem('nexhire_token') || ''; }
 function _h()     { const t = _token(); return t ? { Authorization: `Bearer ${t}` } : {}; }
 async function _api(path, opts = {}) {
@@ -21,16 +22,16 @@ async function _upload(path, formData) {
 }
 
 const TABS = [
-  ['organisation', '🏢', 'Organisation'],
-  ['branding',      '🎨', 'Branding'],
-  ['utilisateurs',  '👥', 'Utilisateurs'],
-  ['equipes',       '🏗️', 'Équipes'],
-  ['langue',        '🌐', 'Langue & Région'],
-  ['theme',         '🌙', 'Thème'],
-  ['notifications', '📧', 'Notifications'],
-  ['securite',      '🔒', 'Sécurité'],
-  ['api',           '⚙️', 'API & Intégrations'],
-  ['journal',       '📋', 'Journal d\'audit'],
+  ['organisation', '🏢', 'st.tab.organisation'],
+  ['branding',      '🎨', 'st.tab.branding'],
+  ['utilisateurs',  '👥', 'st.tab.utilisateurs'],
+  ['equipes',       '🏗️', 'st.tab.equipes'],
+  ['langue',        '🌐', 'st.tab.langue'],
+  ['theme',         '🌙', 'st.tab.theme'],
+  ['notifications', '📧', 'st.tab.notifications'],
+  ['securite',      '🔒', 'st.tab.securite'],
+  ['api',           '⚙️', 'st.tab.api'],
+  ['journal',       '📋', 'st.tab.journal'],
 ];
 
 function _isAdmin() { return ['admin', 'owner'].includes((_st.profile || {}).role); }
@@ -56,16 +57,16 @@ function _render() {
   _el.innerHTML = `
 <div class="set-wrap">
   <div class="set-header">
-    <h1 class="set-h1">Paramètres</h1>
-    <p class="set-sub">Configuration de votre organisation et de votre compte.</p>
+    <h1 class="set-h1">${_t('st.title')}</h1>
+    <p class="set-sub">${_t('st.sub')}</p>
   </div>
   <div id="set-msg" style="display:none;font-size:13px;font-weight:600;padding:10px 14px;border-radius:8px;border:1px solid;margin-bottom:16px"></div>
   <div class="set-layout">
     <nav class="set-nav">
-      ${visibleTabs.map(([id, icon, label]) => `
+      ${visibleTabs.map(([id, icon, i18nKey]) => `
         <button class="set-nav-item${_st.tab === id ? ' set-nav-active' : ''}" data-tab="${id}">
           <span class="set-nav-icon">${icon}</span>
-          <span>${label}</span>
+          <span>${_t(i18nKey)}</span>
         </button>`).join('')}
     </nav>
     <div class="set-panel" id="set-panel">
@@ -126,64 +127,64 @@ function _tabOrganisation() {
   const p = _st.profile || {};
   const admin = _isAdmin();
   const orgTypes = [
-    ['entreprise', 'Entreprise'],
-    ['entrepreneur', 'Entrepreneur / Freelance'],
-    ['hopital', 'Hôpital / CISSS'],
-    ['municipalite', 'Municipalité'],
-    ['universite', 'Université / Cégep'],
+    ['entreprise',    'st.org.type.entreprise'],
+    ['entrepreneur',  'st.org.type.entrepreneur'],
+    ['hopital',       'st.org.type.hopital'],
+    ['municipalite',  'st.org.type.municipalite'],
+    ['universite',    'st.org.type.universite'],
   ];
   return `
 <div class="set-section">
-  <h2 class="set-section-title">Votre organisation</h2>
+  <h2 class="set-section-title">${_t('st.org.title')}</h2>
   ${admin ? `
   <form id="set-org-form" class="set-form">
     <div class="set-field">
-      <label class="set-label" for="set-org-name">Nom de l'organisation</label>
+      <label class="set-label" for="set-org-name">${_t('st.org.name.label')}</label>
       <input type="text" id="set-org-name" class="set-input" value="${_esc(p.organization_name)}" maxlength="255" required />
     </div>
     <div class="set-field">
-      <label class="set-label" for="set-org-type">Type d'organisation</label>
+      <label class="set-label" for="set-org-type">${_t('st.org.type.label')}</label>
       <select id="set-org-type" class="set-input">
-        ${orgTypes.map(([v, l]) => `<option value="${v}"${p.org_type === v ? ' selected' : ''}>${l}</option>`).join('')}
+        ${orgTypes.map(([v, k]) => `<option value="${v}"${p.org_type === v ? ' selected' : ''}>${_t(k)}</option>`).join('')}
       </select>
     </div>
     <div class="set-field">
-      <label class="set-label">Identifiant (slug)</label>
+      <label class="set-label">${_t('st.org.slug.label')}</label>
       <input type="text" class="set-input set-input-ro" value="${_esc(p.organization_slug)}" readonly />
     </div>
     <div class="set-field">
-      <label class="set-label">Plan</label>
+      <label class="set-label">${_t('st.org.plan.label')}</label>
       <input type="text" class="set-input set-input-ro" value="${_esc(p.subscription_status || 'starter')}" readonly />
     </div>
-    <button type="submit" class="set-btn set-btn-primary">Enregistrer</button>
+    <button type="submit" class="set-btn set-btn-primary">${_t('st.org.save')}</button>
   </form>` : `
   <div class="set-info-grid">
-    ${_infoRow('Nom', p.organization_name || '—')}
-    ${_infoRow('Slug', p.organization_slug || '—', true)}
-    ${_infoRow('Plan', p.subscription_status || '—')}
+    ${_infoRow(_t('st.org.info.name'), p.organization_name || '—')}
+    ${_infoRow(_t('st.org.info.slug'), p.organization_slug || '—', true)}
+    ${_infoRow(_t('st.org.info.plan'), p.subscription_status || '—')}
   </div>`}
 </div>
 
 <div class="set-section">
-  <h2 class="set-section-title">Votre profil</h2>
+  <h2 class="set-section-title">${_t('st.profile.title')}</h2>
   <form id="set-profile-form" class="set-form">
     <div class="set-field">
-      <label class="set-label" for="set-full-name">Nom complet</label>
+      <label class="set-label" for="set-full-name">${_t('st.profile.name.label')}</label>
       <input type="text" id="set-full-name" class="set-input" value="${_esc(p.full_name)}" maxlength="255" required />
     </div>
     <div class="set-field">
-      <label class="set-label">Adresse email</label>
+      <label class="set-label">${_t('st.profile.email.label')}</label>
       <input type="email" class="set-input set-input-ro" value="${_esc(p.email)}" readonly />
     </div>
     <div class="set-field">
-      <label class="set-label">Rôle</label>
+      <label class="set-label">${_t('st.profile.role.label')}</label>
       <input type="text" class="set-input set-input-ro" value="${_esc(p.role || '—')}" readonly />
     </div>
     <div class="set-field">
-      <label class="set-label">Membre depuis</label>
+      <label class="set-label">${_t('st.profile.since.label')}</label>
       <input type="text" class="set-input set-input-ro" value="${_esc(p.member_since || '—')}" readonly />
     </div>
-    <button type="submit" class="set-btn set-btn-primary">Mettre à jour le profil</button>
+    <button type="submit" class="set-btn set-btn-primary">${_t('st.profile.save')}</button>
   </form>
 </div>`;
 }
@@ -195,29 +196,29 @@ function _tabBranding() {
   const color = p.brand_color || '#818CF8';
   return `
 <div class="set-section">
-  <h2 class="set-section-title">Logo de l'organisation</h2>
+  <h2 class="set-section-title">${_t('st.brand.logo.title')}</h2>
   <div class="set-logo-area">
     ${p.logo_url
       ? `<img src="${_esc(p.logo_url)}" alt="Logo" class="set-logo-preview" />`
-      : `<div class="set-logo-placeholder">Aucun logo</div>`}
+      : `<div class="set-logo-placeholder">${_t('st.brand.logo.none')}</div>`}
     <div class="set-logo-upload">
-      <label class="set-btn set-btn-secondary" for="set-logo-file" style="cursor:pointer">📁 Choisir un fichier</label>
+      <label class="set-btn set-btn-secondary" for="set-logo-file" style="cursor:pointer">${_t('st.brand.logo.choose')}</label>
       <input type="file" id="set-logo-file" accept="image/png,image/jpeg,image/svg+xml" style="position:absolute;opacity:0;width:1px;height:1px" />
-      <span class="set-logo-hint">PNG, JPG ou SVG · Max 2 Mo</span>
+      <span class="set-logo-hint">${_t('st.brand.logo.hint')}</span>
     </div>
   </div>
 </div>
 
 <div class="set-section">
-  <h2 class="set-section-title">Couleur principale</h2>
+  <h2 class="set-section-title">${_t('st.brand.color.title')}</h2>
   <form id="set-color-form" class="set-form">
     <div class="set-color-row">
       <input type="color" id="set-color-input" class="set-color-picker" value="${color}" />
       <input type="text" id="set-color-text" class="set-input" value="${color}" style="max-width:110px;font-family:monospace;font-size:13px" maxlength="7" />
       <div id="set-color-preview" style="width:36px;height:36px;border-radius:8px;background:${color};border:1px solid rgba(0,0,0,.12);flex-shrink:0"></div>
-      <button type="submit" class="set-btn set-btn-primary">Appliquer</button>
+      <button type="submit" class="set-btn set-btn-primary">${_t('st.brand.color.apply')}</button>
     </div>
-    <p class="set-hint">La couleur est appliquée immédiatement dans le workspace.</p>
+    <p class="set-hint">${_t('st.brand.color.hint')}</p>
   </form>
 </div>`;
 }
@@ -226,19 +227,19 @@ function _tabBranding() {
 
 function _tabUtilisateurs() {
   const members = _st.members;
-  if (members === null) return '<div class="set-loading">Chargement des membres…</div>';
+  if (members === null) return `<div class="set-loading">${_t('st.users.loading')}</div>`;
   const p = _st.profile || {};
 
   return `
 <div class="set-section">
   <div class="set-section-header">
-    <h2 class="set-section-title" style="margin:0;border:none;padding:0">${members.length} membre${members.length !== 1 ? 's' : ''}</h2>
-    <button class="set-btn set-btn-primary" id="set-invite-btn">+ Inviter</button>
+    <h2 class="set-section-title" style="margin:0;border:none;padding:0">${members.length} ${_t(members.length !== 1 ? 'st.users.member.many' : 'st.users.member.one')}</h2>
+    <button class="set-btn set-btn-primary" id="set-invite-btn">${_t('st.users.invite.btn')}</button>
   </div>
 
   <div class="set-members-list">
     <div class="set-members-header">
-      <span>Membre</span><span>Rôle</span><span>Statut</span><span>Actions</span>
+      <span>${_t('st.users.col.member')}</span><span>${_t('st.users.col.role')}</span><span>${_t('st.users.col.status')}</span><span>${_t('st.users.col.actions')}</span>
     </div>
     ${members.map(m => {
       const isSelf   = m.id === p.id;
@@ -257,18 +258,18 @@ function _tabUtilisateurs() {
       <div>
         ${canEdit ? `
         <select class="set-role-select" data-member="${m.id}" data-current="${m.role}">
-          <option value="admin"${m.role === 'admin' ? ' selected' : ''}>admin</option>
-          <option value="manager"${m.role === 'manager' ? ' selected' : ''}>manager</option>
-          <option value="user"${m.role === 'user' ? ' selected' : ''}>user</option>
+          <option value="admin"${m.role === 'admin' ? ' selected' : ''}>${_t('st.users.role.admin')}</option>
+          <option value="manager"${m.role === 'manager' ? ' selected' : ''}>${_t('st.users.role.manager')}</option>
+          <option value="user"${m.role === 'user' ? ' selected' : ''}>${_t('st.users.role.user')}</option>
         </select>` : `<span class="set-role-badge">${_esc(m.role)}</span>`}
       </div>
-      <div><span class="set-badge-${isActive ? 'ok' : 'off'}">${isActive ? 'Actif' : 'Inactif'}</span></div>
+      <div><span class="set-badge-${isActive ? 'ok' : 'off'}">${isActive ? _t('st.users.active') : _t('st.users.inactive')}</span></div>
       <div class="set-member-actions">
         ${canEdit ? `
-        <button class="set-btn-icon" title="${isActive ? 'Désactiver' : 'Réactiver'}" data-action="toggle-active" data-member="${m.id}">
+        <button class="set-btn-icon" title="${isActive ? _t('st.users.deactivate') : _t('st.users.reactivate')}" data-action="toggle-active" data-member="${m.id}">
           ${isActive ? '⏸️' : '▶️'}
         </button>
-        <button class="set-btn-icon set-btn-danger" title="Supprimer" data-action="delete" data-member="${m.id}">🗑️</button>
+        <button class="set-btn-icon set-btn-danger" title="${_t('st.users.delete')}" data-action="delete" data-member="${m.id}">🗑️</button>
         ` : '—'}
       </div>
     </div>`;
@@ -279,26 +280,26 @@ function _tabUtilisateurs() {
 <div id="set-invite-modal" class="set-modal" style="display:none">
   <div class="set-modal-box">
     <div class="set-modal-header">
-      <h3 style="margin:0;font-size:16px;font-weight:700">Inviter un utilisateur</h3>
+      <h3 style="margin:0;font-size:16px;font-weight:700">${_t('st.users.modal.title')}</h3>
       <button class="set-modal-close" id="set-modal-close">✕</button>
     </div>
     <form id="set-invite-form" class="set-form" style="margin-top:16px">
       <div class="set-field">
-        <label class="set-label" for="set-invite-email">Adresse email</label>
+        <label class="set-label" for="set-invite-email">${_t('st.users.email.label')}</label>
         <input type="email" id="set-invite-email" class="set-input" placeholder="prenom.nom@entreprise.com" required />
       </div>
       <div class="set-field">
-        <label class="set-label" for="set-invite-role">Rôle initial</label>
+        <label class="set-label" for="set-invite-role">${_t('st.users.role.label')}</label>
         <select id="set-invite-role" class="set-input">
-          <option value="user">Utilisateur</option>
-          <option value="manager">Manager</option>
-          <option value="admin">Administrateur</option>
+          <option value="user">${_t('st.users.role.user')}</option>
+          <option value="manager">${_t('st.users.role.manager')}</option>
+          <option value="admin">${_t('st.users.role.admin')}</option>
         </select>
       </div>
       <div id="set-invite-msg" style="display:none;font-size:12px;padding:8px 10px;border-radius:6px;border:1px solid;margin-bottom:8px"></div>
       <div style="display:flex;gap:8px">
-        <button type="submit" class="set-btn set-btn-primary">Envoyer l'invitation</button>
-        <button type="button" class="set-btn set-btn-secondary" id="set-modal-cancel">Annuler</button>
+        <button type="submit" class="set-btn set-btn-primary">${_t('st.users.invite.send')}</button>
+        <button type="button" class="set-btn set-btn-secondary" id="set-modal-cancel">${_t('st.cancel')}</button>
       </div>
     </form>
   </div>
@@ -309,36 +310,36 @@ function _tabUtilisateurs() {
 
 function _tabEquipes() {
   const depts = _st.departments;
-  if (depts === null) return '<div class="set-loading">Chargement des équipes…</div>';
+  if (depts === null) return `<div class="set-loading">${_t('st.teams.loading')}</div>`;
 
   return `
 <div class="set-section">
   <div class="set-section-header">
-    <h2 class="set-section-title" style="margin:0;border:none;padding:0">${depts.length} équipe${depts.length !== 1 ? 's' : ''}</h2>
-    <button class="set-btn set-btn-primary" id="set-dept-create-btn">+ Créer</button>
+    <h2 class="set-section-title" style="margin:0;border:none;padding:0">${depts.length} ${_t(depts.length !== 1 ? 'st.teams.team.many' : 'st.teams.team.one')}</h2>
+    <button class="set-btn set-btn-primary" id="set-dept-create-btn">${_t('st.teams.create.btn')}</button>
   </div>
 
   ${depts.length === 0
-    ? '<p style="color:var(--muted);font-size:13px;margin-top:8px">Aucune équipe configurée.</p>'
+    ? `<p style="color:var(--muted);font-size:13px;margin-top:8px">${_t('st.teams.empty')}</p>`
     : `<div class="set-list-card">
       ${depts.map(d => `
       <div class="set-list-row">
         <span style="font-size:20px">🏗️</span>
         <div class="set-list-info">
           <div class="set-list-name">${_esc(d.name)}</div>
-          <div class="set-list-meta">${d.member_count ?? 0} membre${d.member_count !== 1 ? 's' : ''}</div>
+          <div class="set-list-meta">${d.member_count ?? 0} ${_t((d.member_count ?? 0) !== 1 ? 'st.teams.member.many' : 'st.teams.member.one')}</div>
         </div>
       </div>`).join('')}
     </div>`}
 
   <div id="set-dept-form" class="set-form" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border-2)">
     <div class="set-field">
-      <label class="set-label" for="set-dept-name">Nom de l'équipe</label>
-      <input type="text" id="set-dept-name" class="set-input" placeholder="ex. Équipe marketing" maxlength="100" />
+      <label class="set-label" for="set-dept-name">${_t('st.teams.name.label')}</label>
+      <input type="text" id="set-dept-name" class="set-input" placeholder="${_t('st.teams.name.ph')}" maxlength="100" />
     </div>
     <div style="display:flex;gap:8px">
-      <button class="set-btn set-btn-primary" id="set-dept-save">Créer l'équipe</button>
-      <button class="set-btn set-btn-secondary" id="set-dept-cancel">Annuler</button>
+      <button class="set-btn set-btn-primary" id="set-dept-save">${_t('st.teams.create.save')}</button>
+      <button class="set-btn set-btn-secondary" id="set-dept-cancel">${_t('st.cancel')}</button>
     </div>
   </div>
 </div>`;
@@ -351,34 +352,34 @@ function _tabLangue() {
   const lang = p.language || 'fr';
   const tz   = p.timezone || 'America/Toronto';
   const tzOpts = [
-    ['America/Toronto',    'Canada — Heure de l\'Est (Montréal / Toronto / Ottawa)'],
-    ['America/Winnipeg',   'Canada — Heure du Centre (Winnipeg)'],
-    ['America/Edmonton',   'Canada — Heure des Rocheuses (Calgary / Edmonton)'],
-    ['America/Vancouver',  'Canada — Heure du Pacifique (Vancouver)'],
-    ['America/Halifax',    'Canada — Heure de l\'Atlantique (Halifax)'],
-    ['America/St_Johns',   'Canada — Heure de Terre-Neuve (St. John\'s)'],
-    ['UTC',                'UTC — Temps universel coordonné'],
-    ['Europe/Paris',       'Europe — Paris / Bruxelles / Genève'],
+    ['America/Toronto',   'st.tz.toronto'],
+    ['America/Winnipeg',  'st.tz.winnipeg'],
+    ['America/Edmonton',  'st.tz.edmonton'],
+    ['America/Vancouver', 'st.tz.vancouver'],
+    ['America/Halifax',   'st.tz.halifax'],
+    ['America/St_Johns',  'st.tz.stjohns'],
+    ['UTC',               'st.tz.utc'],
+    ['Europe/Paris',      'st.tz.paris'],
   ];
   return `
 <div class="set-section">
-  <h2 class="set-section-title">Langue & Région</h2>
+  <h2 class="set-section-title">${_t('st.lang.title')}</h2>
   <form id="set-lang-form" class="set-form">
     <div class="set-field">
-      <label class="set-label" for="set-lang-select">Langue de l'interface</label>
+      <label class="set-label" for="set-lang-select">${_t('st.lang.lang.label')}</label>
       <select id="set-lang-select" class="set-input" style="max-width:280px">
         <option value="fr"${lang === 'fr' ? ' selected' : ''}>🇫🇷 Français (Canada)</option>
         <option value="en"${lang === 'en' ? ' selected' : ''}>🇬🇧 English</option>
       </select>
     </div>
     <div class="set-field">
-      <label class="set-label" for="set-tz-select">Fuseau horaire</label>
+      <label class="set-label" for="set-tz-select">${_t('st.lang.tz.label')}</label>
       <select id="set-tz-select" class="set-input" style="max-width:440px">
-        ${tzOpts.map(([v, l]) => `<option value="${v}"${tz === v ? ' selected' : ''}>${l}</option>`).join('')}
+        ${tzOpts.map(([v, k]) => `<option value="${v}"${tz === v ? ' selected' : ''}>${_t(k)}</option>`).join('')}
       </select>
     </div>
-    <button type="submit" class="set-btn set-btn-primary">Enregistrer</button>
-    <p class="set-hint">La traduction complète de l'interface sera disponible en v1.1.</p>
+    <button type="submit" class="set-btn set-btn-primary">${_t('st.lang.save')}</button>
+    <p class="set-hint">${_t('st.lang.hint')}</p>
   </form>
 </div>`;
 }
@@ -387,19 +388,19 @@ function _tabLangue() {
 
 function _tabTheme() {
   const current = localStorage.getItem('agenthub-theme') || 'system';
-  const opts = [['light','☀️','Clair'], ['dark','🌙','Sombre'], ['system','🖥️','Système']];
+  const opts = [['light','☀️','st.theme.light'], ['dark','🌙','st.theme.dark'], ['system','🖥️','st.theme.system']];
   return `
 <div class="set-section">
-  <h2 class="set-section-title">Thème de l'interface</h2>
+  <h2 class="set-section-title">${_t('st.theme.title')}</h2>
   <div class="set-theme-options">
-    ${opts.map(([val, icon, label]) => `
+    ${opts.map(([val, icon, key]) => `
     <button class="set-theme-option${current === val ? ' set-theme-active' : ''}" data-theme="${val}">
       <span style="font-size:24px">${icon}</span>
-      <span class="set-theme-label">${label}</span>
+      <span class="set-theme-label">${_t(key)}</span>
       ${current === val ? '<span class="set-theme-check">✓</span>' : ''}
     </button>`).join('')}
   </div>
-  <p class="set-hint">Le thème s'applique immédiatement et est mémorisé pour vos prochaines visites.</p>
+  <p class="set-hint">${_t('st.theme.hint')}</p>
 </div>`;
 }
 
@@ -409,12 +410,12 @@ function _tabNotifications() {
   const enabled = (_st.profile || {}).monthly_report_enabled !== false;
   return `
 <div class="set-section">
-  <h2 class="set-section-title">Rapports automatiques par email</h2>
+  <h2 class="set-section-title">${_t('st.notif.title')}</h2>
   <div class="set-notif-list">
     <div class="set-notif-row">
       <div class="set-notif-info">
-        <div class="set-notif-title">📊 Rapport mensuel de performance</div>
-        <div class="set-notif-desc">Synthèse IA mensuelle : score IMAI, indicateurs clés, recommandations prioritaires. Envoyé le 1er de chaque mois.</div>
+        <div class="set-notif-title">${_t('st.notif.monthly.title')}</div>
+        <div class="set-notif-desc">${_t('st.notif.monthly.desc')}</div>
       </div>
       <label class="set-toggle">
         <input type="checkbox" id="set-monthly-toggle" ${enabled ? 'checked' : ''} />
@@ -423,17 +424,17 @@ function _tabNotifications() {
     </div>
     <div class="set-notif-row">
       <div class="set-notif-info">
-        <div class="set-notif-title">📋 Briefing exécutif hebdomadaire</div>
-        <div class="set-notif-desc">Résumé du lundi matin : alertes actives, contrats à renouveler, indicateurs de sécurité.</div>
+        <div class="set-notif-title">${_t('st.notif.weekly.title')}</div>
+        <div class="set-notif-desc">${_t('st.notif.weekly.desc')}</div>
       </div>
-      <span class="set-badge-ok" style="font-size:11px">Toujours actif</span>
+      <span class="set-badge-ok" style="font-size:11px">${_t('st.notif.always')}</span>
     </div>
     <div class="set-notif-row">
       <div class="set-notif-info">
-        <div class="set-notif-title">⚠️ Alertes contrats et licences</div>
-        <div class="set-notif-desc">Notification automatique 30 jours avant l'expiration d'un contrat ou d'une licence.</div>
+        <div class="set-notif-title">${_t('st.notif.contracts.title')}</div>
+        <div class="set-notif-desc">${_t('st.notif.contracts.desc')}</div>
       </div>
-      <span class="set-badge-ok" style="font-size:11px">Toujours actif</span>
+      <span class="set-badge-ok" style="font-size:11px">${_t('st.notif.always')}</span>
     </div>
   </div>
   <div id="set-notif-msg" style="display:none;font-size:12px;margin-top:10px"></div>
@@ -446,36 +447,36 @@ function _tabSecurite() {
   const p = _st.profile || {};
   return `
 <div class="set-section">
-  <h2 class="set-section-title">Accès et sécurité</h2>
+  <h2 class="set-section-title">${_t('st.sec.title')}</h2>
   <div class="set-info-grid">
-    ${_infoRow('Authentification',    '<span class="set-badge-ok">✓ Activée</span>')}
-    ${_infoRow('HTTPS / TLS',         '<span class="set-badge-ok">✓ Forcé</span>')}
-    ${_infoRow('Isolation des données','<span class="set-badge-ok">✓ Multi-tenant isolé</span>')}
-    ${_infoRow('Hébergement',          'Canada — Infrastructure sécurisée')}
-    ${_infoRow('Conformité',           'Loi 25 du Québec')}
-    ${_infoRow('SSO / Entra ID',       p.sso_enabled
-        ? '<span class="set-badge-ok">✓ Configuré</span>'
-        : '<span class="set-badge-off">Non configuré</span>')}
+    ${_infoRow(_t('st.sec.auth'),      `<span class="set-badge-ok">${_t('st.sec.auth.val')}</span>`)}
+    ${_infoRow(_t('st.sec.tls'),       `<span class="set-badge-ok">${_t('st.sec.tls.val')}</span>`)}
+    ${_infoRow(_t('st.sec.isolation'), `<span class="set-badge-ok">${_t('st.sec.isolation.val')}</span>`)}
+    ${_infoRow(_t('st.sec.host'),       _t('st.sec.host.val'))}
+    ${_infoRow(_t('st.sec.compliance'), _t('st.sec.compliance.val'))}
+    ${_infoRow(_t('st.sec.sso'),        p.sso_enabled
+        ? `<span class="set-badge-ok">${_t('st.sec.sso.ok')}</span>`
+        : `<span class="set-badge-off">${_t('st.sec.sso.off')}</span>`)}
   </div>
 </div>
 
 <div class="set-section">
-  <h2 class="set-section-title">Modifier le mot de passe</h2>
+  <h2 class="set-section-title">${_t('st.sec.pwd.title')}</h2>
   <form id="set-pwd-form" class="set-form" style="max-width:400px">
     <div class="set-field">
-      <label class="set-label" for="set-pwd-current">Mot de passe actuel</label>
+      <label class="set-label" for="set-pwd-current">${_t('st.sec.pwd.current')}</label>
       <input type="password" id="set-pwd-current" class="set-input" autocomplete="current-password" required />
     </div>
     <div class="set-field">
-      <label class="set-label" for="set-pwd-new">Nouveau mot de passe</label>
+      <label class="set-label" for="set-pwd-new">${_t('st.sec.pwd.new')}</label>
       <input type="password" id="set-pwd-new" class="set-input" autocomplete="new-password" minlength="8" required />
     </div>
     <div class="set-field">
-      <label class="set-label" for="set-pwd-confirm">Confirmer le mot de passe</label>
+      <label class="set-label" for="set-pwd-confirm">${_t('st.sec.pwd.confirm')}</label>
       <input type="password" id="set-pwd-confirm" class="set-input" autocomplete="new-password" minlength="8" required />
     </div>
     <div id="set-pwd-msg" style="display:none;font-size:12px;padding:8px 10px;border-radius:6px;border:1px solid;margin-bottom:8px"></div>
-    <button type="submit" class="set-btn set-btn-primary">Changer le mot de passe</button>
+    <button type="submit" class="set-btn set-btn-primary">${_t('st.sec.pwd.save')}</button>
   </form>
 </div>`;
 }
@@ -485,15 +486,13 @@ function _tabSecurite() {
 function _tabApi() {
   return `
 <div class="set-section">
-  <h2 class="set-section-title">API & Intégrations</h2>
-  <p style="font-size:13px;color:var(--text-sub);margin-bottom:20px">
-    Gérez vos clés d'accès API pour connecter AgentHub à vos outils externes (Zapier, Make, outils internes).
-  </p>
+  <h2 class="set-section-title">${_t('st.api.title')}</h2>
+  <p style="font-size:13px;color:var(--text-sub);margin-bottom:20px">${_t('st.api.desc')}</p>
   <div style="text-align:center;padding:32px 24px;border:1px dashed var(--border);border-radius:12px">
     <div style="font-size:36px;margin-bottom:12px">⚙️</div>
-    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px">Service Accounts & Clés API</div>
-    <div style="font-size:13px;color:var(--muted);margin-bottom:16px">Créez et gérez vos tokens depuis le module dédié.</div>
-    <button class="set-btn set-btn-primary" data-navigate="service-accounts">Gérer les accès API →</button>
+    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px">${_t('st.api.sa.title')}</div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:16px">${_t('st.api.sa.desc')}</div>
+    <button class="set-btn set-btn-primary" data-navigate="service-accounts">${_t('st.api.sa.btn')}</button>
   </div>
 </div>`;
 }
@@ -503,15 +502,13 @@ function _tabApi() {
 function _tabJournal() {
   return `
 <div class="set-section">
-  <h2 class="set-section-title">Journal d'audit</h2>
-  <p style="font-size:13px;color:var(--text-sub);margin-bottom:20px">
-    Historique complet de toutes les actions dans votre workspace : connexions, modifications, suppressions.
-  </p>
+  <h2 class="set-section-title">${_t('st.journal.title')}</h2>
+  <p style="font-size:13px;color:var(--text-sub);margin-bottom:20px">${_t('st.journal.desc')}</p>
   <div style="text-align:center;padding:32px 24px;border:1px dashed var(--border);border-radius:12px">
     <div style="font-size:36px;margin-bottom:12px">📋</div>
-    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px">Journal d'audit complet</div>
-    <div style="font-size:13px;color:var(--muted);margin-bottom:16px">Consultez l'historique détaillé depuis le module Audit.</div>
-    <button class="set-btn set-btn-primary" data-navigate="audit">Voir le journal →</button>
+    <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px">${_t('st.journal.full.title')}</div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:16px">${_t('st.journal.full.desc')}</div>
+    <button class="set-btn set-btn-primary" data-navigate="audit">${_t('st.journal.full.btn')}</button>
   </div>
 </div>`;
 }
@@ -551,7 +548,7 @@ function _bindOrganisation(panel) {
         await _api('/api/settings/org', { method: 'PATCH', body: JSON.stringify({ org_name, org_type }) });
         _st.profile.organization_name = org_name;
         _st.profile.org_type = org_type;
-        _showMsg('Organisation mise à jour.');
+        _showMsg(_t('st.msg.org.saved'));
       } catch(e) { _showMsg(e.message, true); }
     });
   }
@@ -561,7 +558,7 @@ function _bindOrganisation(panel) {
     try {
       await _api('/api/settings/profile', { method: 'PATCH', body: JSON.stringify({ full_name }) });
       _st.profile.full_name = full_name;
-      _showMsg('Profil mis à jour.');
+      _showMsg(_t('st.msg.profile.saved'));
     } catch(e) { _showMsg(e.message, true); }
   });
 }
@@ -576,7 +573,7 @@ function _bindBranding(panel) {
     try {
       const res = await _upload('/api/settings/org/logo', fd);
       _st.profile.logo_url = res.logo_url;
-      _showMsg('Logo mis à jour.');
+      _showMsg(_t('st.msg.logo.saved'));
       _rerender();
     } catch(e) { _showMsg(e.message, true); }
   });
@@ -601,7 +598,7 @@ function _bindBranding(panel) {
       await _api('/api/settings/org', { method: 'PATCH', body: JSON.stringify({ brand_color }) });
       _st.profile.brand_color = brand_color;
       document.documentElement.style.setProperty('--primary', brand_color);
-      _showMsg('Couleur mise à jour.');
+      _showMsg(_t('st.msg.color.saved'));
     } catch(e) { _showMsg(e.message, true); }
   });
 }
@@ -626,7 +623,7 @@ function _bindUtilisateurs(panel) {
       if (msgEl) {
         msgEl.style.display = 'block';
         msgEl.style.background = '#f0fdf4'; msgEl.style.borderColor = '#bbf7d0'; msgEl.style.color = '#16a34a';
-        msgEl.textContent = `Invitation envoyée à ${email}.`;
+        msgEl.textContent = `${_t('st.msg.invite.prefix')} ${email}.`;
       }
       panel.querySelector('#set-invite-email').value = '';
       _st.members = null;
@@ -650,7 +647,7 @@ function _bindUtilisateurs(panel) {
         await _api(`/api/members/${id}/role`, { method: 'PATCH', body: JSON.stringify({ role }) });
         sel.dataset.current = role;
         if (_st.members) _st.members = _st.members.map(m => m.id === id ? { ...m, role } : m);
-        _showMsg('Rôle mis à jour.');
+        _showMsg(_t('st.msg.role.saved'));
       } catch(e) { _showMsg(e.message, true); sel.value = prev; }
     });
   });
@@ -661,18 +658,18 @@ function _bindUtilisateurs(panel) {
       const id     = btn.dataset.member;
       const action = btn.dataset.action;
       if (action === 'delete') {
-        if (!confirm('Supprimer définitivement ce membre ? Cette action est irréversible.')) return;
+        if (!confirm(_t('st.msg.confirm.delete'))) return;
         try {
           await _api(`/api/members/${id}`, { method: 'DELETE' });
           if (_st.members) _st.members = _st.members.filter(m => m.id !== id);
-          _showMsg('Membre supprimé.');
+          _showMsg(_t('st.msg.member.deleted'));
           _rerender();
         } catch(e) { _showMsg(e.message, true); }
       } else if (action === 'toggle-active') {
         try {
           const res = await _api(`/api/members/${id}/active`, { method: 'PATCH' });
           if (_st.members) _st.members = _st.members.map(m => m.id === id ? { ...m, is_active: res.is_active } : m);
-          _showMsg(res.is_active ? 'Membre réactivé.' : 'Membre désactivé.');
+          _showMsg(res.is_active ? _t('st.msg.member.activated') : _t('st.msg.member.deactivated'));
           _rerender();
         } catch(e) { _showMsg(e.message, true); }
       }
@@ -696,7 +693,7 @@ function _bindEquipes(panel) {
     try {
       const dept = await _api('/api/departments', { method: 'POST', body: JSON.stringify({ name }) });
       _st.departments = [...(_st.departments || []), dept];
-      _showMsg('Équipe créée.');
+      _showMsg(_t('st.msg.team.created'));
       _rerender();
     } catch(e) { _showMsg(e.message, true); }
   });
@@ -710,7 +707,8 @@ function _bindLangue(panel) {
     try {
       await _api('/api/settings/org', { method: 'PATCH', body: JSON.stringify({ language, timezone }) });
       if (_st.profile) { _st.profile.language = language; _st.profile.timezone = timezone; }
-      _showMsg('Préférences régionales enregistrées.');
+      NH_I18N.setLang(language);
+      _showMsg(_t('st.msg.lang.saved'));
     } catch(e) { _showMsg(e.message, true); }
   });
 }
@@ -744,12 +742,12 @@ function _bindNotifications(panel) {
       if (_st.profile) _st.profile.monthly_report_enabled = enabled;
       if (msg) {
         msg.style.display = 'block'; msg.style.color = '#16a34a';
-        msg.textContent = enabled ? '✅ Rapport mensuel activé.' : '✅ Rapport mensuel désactivé.';
+        msg.textContent = enabled ? _t('st.msg.report.on') : _t('st.msg.report.off');
         setTimeout(() => { msg.style.display = 'none'; }, 3000);
       }
     } catch(e) {
       toggle.checked = !enabled;
-      if (msg) { msg.style.display = 'block'; msg.style.color = '#dc2626'; msg.textContent = `Erreur : ${e.message}`; }
+      if (msg) { msg.style.display = 'block'; msg.style.color = '#dc2626'; msg.textContent = `${_t('st.msg.error.prefix')} ${e.message}`; }
     }
   });
 }
@@ -766,7 +764,7 @@ function _bindSecurite(panel) {
       if (msgEl) {
         msgEl.style.display = 'block';
         msgEl.style.background = '#fef2f2'; msgEl.style.borderColor = '#fecaca'; msgEl.style.color = '#dc2626';
-        msgEl.textContent = 'Les mots de passe ne correspondent pas.';
+        msgEl.textContent = _t('st.msg.pwd.mismatch');
       }
       return;
     }
@@ -775,7 +773,7 @@ function _bindSecurite(panel) {
       if (msgEl) {
         msgEl.style.display = 'block';
         msgEl.style.background = '#f0fdf4'; msgEl.style.borderColor = '#bbf7d0'; msgEl.style.color = '#16a34a';
-        msgEl.textContent = '✅ Mot de passe modifié avec succès.';
+        msgEl.textContent = _t('st.msg.pwd.saved');
       }
       form.reset();
     } catch(e) {
@@ -945,7 +943,7 @@ export default {
       members: null,
       departments: null,
     };
-    _el.innerHTML = '<div class="set-loading">Chargement…</div>';
+    _el.innerHTML = `<div class="set-loading">${_t('st.loading')}</div>`;
     try {
       _st.profile = await _api('/api/settings/profile');
     } catch(e) {
