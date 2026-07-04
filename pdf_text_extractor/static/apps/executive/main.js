@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Dashboard Exécutif
  * GET /api/dashboard/executive — score org, KPIs, départements, gouvernance, finances
  * Réservé aux admins / owners
@@ -631,4 +631,5 @@ function _mount(container) {
 export default {
   mount(container)   { _mount(container); },
   unmount(container) { container.innerHTML = ''; },
+  refresh(ctx) {},
 };

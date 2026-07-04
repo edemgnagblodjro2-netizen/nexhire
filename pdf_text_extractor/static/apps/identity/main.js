@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AgentHub Platform — App: Identity & Access
  * Façade UI pure — zéro logique métier.
  * Toute l'intelligence vient du backend :
@@ -611,4 +611,5 @@ async function _load(container) {
 export default {
   mount(container) { _css(); _load(container); },
   unmount(container) { container.innerHTML = ''; },
+  refresh(ctx) {},
 };

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AgentHub Platform — SSO & MFA
  * Gestion centralisée des identités, fournisseurs SSO et authentification multifacteur.
  * API: GET /api/sso/providers  GET /api/sso/config  POST /api/sso/config
@@ -571,4 +571,5 @@ export default {
     container.innerHTML = '';
     ['_ssoConfigProvider', '_ssoSave', '_toggleMfa', '_requireMfa'].forEach(k => delete window[k]);
   },
+  refresh(ctx) { if (_st) _renderView(); },
 };

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AgentHub Platform — App: Diagnostic IA
  * Parcours IA PME · Agent Atlas · IMAI /100
  *
@@ -83,6 +83,7 @@ export default {
     container.innerHTML = "";
     _state = null;
   },
+  refresh(ctx) {},
 };
 
 // ── Render dispatcher ─────────────────────────────────────────────────────────

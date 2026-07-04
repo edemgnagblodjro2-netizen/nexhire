@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Gestion des contrats fournisseurs
  * GET  /api/contracts           — liste (filtres: status, renewing)
  * POST /api/contracts           — créer
@@ -446,4 +446,5 @@ async function _load(container) {
 export default {
   mount(container) { _load(container); },
   unmount(container) { container.innerHTML = ''; },
+  refresh(ctx) {},
 };

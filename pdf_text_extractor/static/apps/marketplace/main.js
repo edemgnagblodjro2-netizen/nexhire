@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AgentHub — Workspace Marketplace
  * Données réelles uniquement :
  *   GET /api/connectors           → connecteurs actifs de l'organisation
@@ -379,4 +379,5 @@ export default {
     _ctx  = null;
     container.innerHTML = '';
   },
+  refresh(ctx) { if (_wrap) _render(_tab); },
 };

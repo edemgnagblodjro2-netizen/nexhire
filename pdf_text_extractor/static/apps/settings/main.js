@@ -959,4 +959,6 @@ export default {
     _el = null;
     container.innerHTML = '';
   },
+
+  refresh(ctx) { if (_el && _st) _render(); },
 };

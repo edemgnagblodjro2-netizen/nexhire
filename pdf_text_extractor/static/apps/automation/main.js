@@ -510,7 +510,7 @@ window._autRun = async (id) => {
 export default {
   mount(container, ctx) {
     _css();
-    _st = { ctx, view: 'workflows', _wfCache: null };
+    _st = { ctx, view: 'workflows', _wfCache: null, container };
     _renderShell(container);
     _renderView();
   },
@@ -519,4 +519,5 @@ export default {
     container.innerHTML = '';
     ['_autRun', '_autCreate', '_autUseTemplate'].forEach(k => delete window[k]);
   },
+  refresh(ctx) { if (_st) { _st.ctx = ctx || _st.ctx; _renderView(); } },
 };

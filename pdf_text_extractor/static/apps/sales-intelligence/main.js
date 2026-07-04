@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AgentHub — Sales Intelligence
  * Connecté à /api/si/* — Aucune donnée fictive.
  * Prospects, campagnes, agents IA, conversations, pipeline, analytics.
@@ -867,4 +867,5 @@ export default {
     _ctx  = null;
     container.innerHTML = '';
   },
+  refresh(ctx) { if (_wrap) _render(_tab); },
 };

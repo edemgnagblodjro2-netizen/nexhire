@@ -595,4 +595,5 @@ export default {
     _container = null;
     _state.activeRun = null;
   },
+  refresh(ctx) { if (_container) _render(_container); },
 };

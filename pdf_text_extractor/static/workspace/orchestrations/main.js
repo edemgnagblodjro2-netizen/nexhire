@@ -485,4 +485,5 @@ export default {
   unmount(container) {
     _container = null;
   },
+  refresh(ctx) { if (_container) _render(_container); },
 };

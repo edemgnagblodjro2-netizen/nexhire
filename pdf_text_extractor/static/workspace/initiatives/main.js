@@ -486,4 +486,5 @@ export default {
     _container = null;
     document.querySelectorAll('.ini-modal-overlay').forEach(el => el.remove());
   },
+  refresh(ctx) { if (_container) _render(_container); },
 };

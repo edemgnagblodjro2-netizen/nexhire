@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Comptes de service & API Keys
  * GET    /api/service-accounts          → liste (admin+)
  * POST   /api/service-accounts          → créer (admin+) — token affiché UNE seule fois
@@ -620,4 +620,5 @@ export default {
     container.innerHTML = '';
     _list = []; _container = null;
   },
+  refresh(ctx) {},
 };

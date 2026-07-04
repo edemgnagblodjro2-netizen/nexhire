@@ -727,4 +727,6 @@ export default {
     container.innerHTML = '';
     _msgs = []; _container = null; _isTyping = false;
   },
+  // Chat history preserved on lang change — only static UI elements would update
+  refresh(ctx) {},
 };

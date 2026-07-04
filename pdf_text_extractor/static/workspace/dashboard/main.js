@@ -312,6 +312,8 @@ const DIM_GUIDANCE  = {
 
 /* ══ État global des graphiques ═══════════════════════════════════ */
 let _cs = { period: '6m', monthIdx: null, dimIdx: -1 };
+let _el = null;
+let _ctx = null;
 
 /* ══ Construction du graphique en courbes ════════════════════════ */
 function _lineChartSVG(data, labels, selMonthIdx, selDimIdx) {
@@ -794,6 +796,7 @@ function _initCharts(container, ctx) {
 }
 
 export default {
-  mount(container, ctx)   { _render(container, ctx); },
-  unmount(container)      { container.innerHTML = ''; },
+  mount(container, ctx)   { _el = container; _ctx = ctx; _render(container, ctx); },
+  unmount(container)      { _el = null; _ctx = null; container.innerHTML = ''; },
+  refresh(ctx)            { if (_el) { _ctx = ctx || _ctx; _render(_el, _ctx); } },
 };

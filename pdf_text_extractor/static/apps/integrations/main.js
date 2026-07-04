@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AgentHub Platform — App: Centre d'intégrations
  * Catalogue unifié des 24 connecteurs Enterprise.
  * API : GET /api/connectors → statuts connectés/déconnectés de l'org
@@ -402,4 +402,5 @@ export default {
   unmount(container) {
     container.innerHTML = '';
   },
+  refresh(ctx) {},
 };

@@ -499,4 +499,5 @@ export default {
     container.innerHTML = '';
     _status = null; _container = null;
   },
+  refresh(ctx) { if (_container) _render(); },
 };

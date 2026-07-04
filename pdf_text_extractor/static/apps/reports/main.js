@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AgentHub Platform — App: Rapports
  * Rapports diagnostics · Rapport régional · Exports
  */
@@ -217,10 +217,13 @@ export default {
   mount(container, ctx) {
     _css();
     _st = { slug: ctx.partnerSlug, partner: ctx.partner };
+    _el = container;
     _render(container);
   },
   unmount(container) {
     _st = null;
+    _el = null;
     container.innerHTML = '';
   },
+  refresh(ctx) { if (_el) _render(_el); },
 };

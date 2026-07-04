@@ -177,6 +177,7 @@ const _state = {
   activeApp:     null,
   activeNavItem: null,
   module:        null,
+  ctx:           null,
   vocab:         VOCAB.chamber,
   user:          null,
   userProfile:   null,
@@ -992,6 +993,7 @@ async function _navigateTo(navItem) {
       user:        _state.user        || null,
       userProfile: _state.userProfile || null,
     };
+    _state.ctx = ctx;
 
     const _doMount = (tab) => {
       $('ws-app-container').innerHTML = '';
@@ -1095,14 +1097,6 @@ function _initTopbar() {
     if (r) _navigateTo(r);
   }
 
-  // Wire topbar FAQ and "Contacter le support" buttons by text content
-  $('ws-help-panel')?.querySelectorAll('.ws-menu-item').forEach(btn => {
-    const title = btn.querySelector('.ws-menu-item-title')?.textContent?.trim();
-    if (title === 'FAQ' || title === 'Contacter le support') {
-      btn.addEventListener('click', _gotoHelp);
-    }
-  });
-
   // Logout
   $('ws-logout-btn')?.addEventListener('click', () => {
     _clearLastRoute(); // déconnexion volontaire → pas de restauration
@@ -1113,25 +1107,24 @@ function _initTopbar() {
     window.location.href = (slug && isPartner) ? `/inscription?partenaire=${slug}` : '/inscription';
   });
 
-  // User menu — navigation items
-  const _userNavMap = {
-    'Mon profil':                'settings',
-    'Mon organisation':          'settings',
-    'Préférences notifications': 'settings',
-    'Inviter un utilisateur':    'identity',
-    'Support':                   'help',
+  // data-action routing — identifiants stables, jamais le texte affiché
+  const _bindAction = (btn) => {
+    const action = btn.dataset.action;
+    if (!action) return;
+    if (action.startsWith('nav:')) {
+      btn.addEventListener('click', () => {
+        const navId = action.replace('nav:', '');
+        _closeAllPanels();
+        const r = _resolveNavItems().find(n => n.id === navId);
+        if (r && r.enabled) _navigateTo(r);
+        else if (r) _toast(`${r.label} — module en cours de déploiement`, 'info');
+      });
+    } else if (action.startsWith('help:')) {
+      btn.addEventListener('click', _gotoHelp);
+    }
   };
-  $('ws-user-panel')?.querySelectorAll('.ws-menu-item').forEach(btn => {
-    if (btn.id === 'ws-logout-btn') return;
-    const title = btn.querySelector('.ws-menu-item-title')?.textContent?.trim();
-    const navId = _userNavMap[title];
-    if (!navId) return;
-    btn.addEventListener('click', () => {
-      _closeAllPanels();
-      const r = _resolveNavItems().find(n => n.id === navId);
-      if (r && r.enabled) _navigateTo(r);
-      else if (r) _toast(`${r.label} — module en cours de déploiement`, 'info');
-    });
+  ['ws-user-panel', 'ws-help-panel', 'ws-settings-panel'].forEach(id => {
+    $(id)?.querySelectorAll('[data-action]').forEach(_bindAction);
   });
 
   // Sidebar toggle
@@ -1326,5 +1319,15 @@ function _modal({ title, body, footer = '', onClose } = {}) {
   overlay.onclick = (e) => { if (e.target === overlay) close(); };
   return close;
 }
+
+// ── Cycle LanguageChanged ──────────────────────────────────────────────────────
+// setLang(lang) → NH_I18N._cbs → ici → _renderNav() + module.refresh(ctx)
+NH_I18N.on(lang => {
+  _renderNav();
+  _setActiveNav(_state.activeId);
+  if (_state.module?.refresh) {
+    _state.module.refresh(_state.ctx);
+  }
+});
 
 boot();

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AgentHub Platform — App: Observatoire
  * Tableau de bord analytique partenaire — données agrégées Parcours IA
  */
@@ -69,6 +69,7 @@ export default {
     container.innerHTML = "";
     _state = null;
   },
+  refresh(ctx) {},
 };
 
 // ── Load ──────────────────────────────────────────────────────────────────────

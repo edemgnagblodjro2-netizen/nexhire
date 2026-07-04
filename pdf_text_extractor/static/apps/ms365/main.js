@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AgentHub Platform — App: M365 Optimizer
  * Dashboard réel : licences, économies, Intune, risques Entra
  * APIs : /api/intelligence/m365/licenses · /savings · /risks/summary · /intune/summary
@@ -306,4 +306,5 @@ export default {
   unmount(container) {
     container.innerHTML = '';
   },
+  refresh(ctx) {},
 };

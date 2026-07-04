@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Gestion des Départements
  * GET/POST/PATCH/DELETE /api/departments
  * GET /api/departments/templates | POST /api/departments/initialize
@@ -1021,4 +1021,5 @@ export default {
     container.innerHTML = '';
     _depts = []; _form = null; _formErr = null; _container = null;
   },
+  refresh(ctx) {},
 };

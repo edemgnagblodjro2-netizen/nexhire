@@ -313,4 +313,5 @@ export default {
     if (container) container.innerHTML = '';
     _container = null;
   },
+  refresh(ctx) { if (_container) _render(); },
 };

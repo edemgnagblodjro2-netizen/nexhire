@@ -435,4 +435,6 @@ async function _load(container) {
 export default {
   mount(container) { _load(container); },
   unmount(container) { container.innerHTML = ''; },
+  // _load uses closure-local state; refresh would require full reload
+  refresh(ctx) {},
 };

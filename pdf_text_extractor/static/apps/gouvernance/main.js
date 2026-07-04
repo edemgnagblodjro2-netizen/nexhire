@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AgentHub Platform — App: Gouvernance IA
  * Multi-framework : Loi 25 Québec · ISO 42001 · NIST AI RMF
  */
@@ -525,4 +525,5 @@ export default {
     _st = null;
     container.innerHTML = '';
   },
+  refresh(ctx) {},
 };

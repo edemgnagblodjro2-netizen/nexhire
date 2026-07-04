@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Centre d'aide
  * FAQ accordéon + ticket de support
  * POST /api/settings/support → { category, subject, description } (user+)
@@ -504,4 +504,5 @@ function _mount(container) {
 export default {
   mount(container)   { _mount(container); },
   unmount(container) { container.innerHTML = ''; },
+  refresh(ctx) {},
 };

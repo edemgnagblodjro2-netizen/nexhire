@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AgentHub Platform — Recommandations IA
  * Plan d'action personnalisé basé sur le diagnostic IMAI + ATLAS.
  * API: GET /api/diagnostic/rapport  GET /api/agent/recommendations
@@ -464,4 +464,5 @@ export default {
     delete window._recoFilter;
     delete window._recoNav;
   },
+  refresh(ctx) { if (_st) _renderView(); },
 };

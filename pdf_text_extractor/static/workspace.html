@@ -584,10 +584,10 @@
           <div class="ws-menu-list">
             <button class="ws-menu-item"><span class="ws-menu-item-icon">📚</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Documentation</span><span class="ws-menu-item-desc">Guides et tutoriels</span></span></button>
             <button class="ws-menu-item"><span class="ws-menu-item-icon">🎓</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Tutoriels vidéo</span><span class="ws-menu-item-desc">Apprenez à votre rythme</span></span></button>
-            <button class="ws-menu-item"><span class="ws-menu-item-icon">❓</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">FAQ</span><span class="ws-menu-item-desc">Questions fréquentes</span></span></button>
+            <button class="ws-menu-item" data-action="help:faq"><span class="ws-menu-item-icon">❓</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">FAQ</span><span class="ws-menu-item-desc">Questions fréquentes</span></span></button>
             <div class="ws-menu-divider"></div>
             <button class="ws-menu-item" id="ws-help-atlas-btn"><span class="ws-menu-item-icon">🤖</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Discuter avec ATLAS</span><span class="ws-menu-item-desc">Votre conseiller IA 24/7</span></span></button>
-            <button class="ws-menu-item"><span class="ws-menu-item-icon">💬</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Contacter le support</span><span class="ws-menu-item-desc">Lun–Ven 9h–17h EST</span></span></button>
+            <button class="ws-menu-item" data-action="help:support"><span class="ws-menu-item-icon">💬</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Contacter le support</span><span class="ws-menu-item-desc">Lun–Ven 9h–17h EST</span></span></button>
           </div>
           <div class="ws-version-tag" id="ws-version-text">AgentHub Platform v1.0 RC1</div>
         </div>
@@ -606,9 +606,9 @@
             <button class="ws-menu-item"><span class="ws-menu-item-icon">🌙</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Thème</span><span class="ws-menu-item-desc">Clair (sombre : à venir)</span></span></button>
             <div class="ws-menu-divider"></div>
             <div class="ws-menu-section">Organisation</div>
-            <button class="ws-menu-item"><span class="ws-menu-item-icon">🏢</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Mon organisation</span><span class="ws-menu-item-desc">Gérer les paramètres</span></span></button>
-            <button class="ws-menu-item"><span class="ws-menu-item-icon">👥</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Utilisateurs & équipes</span><span class="ws-menu-item-desc">Invitations et rôles</span></span></button>
-            <button class="ws-menu-item"><span class="ws-menu-item-icon">🔑</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Clés API</span><span class="ws-menu-item-desc">Accès développeur (bientôt)</span></span></button>
+            <button class="ws-menu-item" data-action="nav:settings"><span class="ws-menu-item-icon">🏢</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Mon organisation</span><span class="ws-menu-item-desc">Gérer les paramètres</span></span></button>
+            <button class="ws-menu-item" data-action="nav:identity"><span class="ws-menu-item-icon">👥</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Utilisateurs & équipes</span><span class="ws-menu-item-desc">Invitations et rôles</span></span></button>
+            <button class="ws-menu-item" data-action="nav:service-accounts"><span class="ws-menu-item-icon">🔑</span><span class="ws-menu-item-body"><span class="ws-menu-item-title">Clés API</span><span class="ws-menu-item-desc">Accès développeur (bientôt)</span></span></button>
           </div>
         </div>
       </div>
@@ -640,12 +640,12 @@
             <div class="ws-upanel-role" id="ws-up-role">Utilisateur</div>
           </div>
           <div class="ws-menu-list">
-            <button class="ws-menu-item"><span class="ws-menu-item-icon">👤</span><span class="ws-menu-item-title">Mon profil</span></button>
-            <button class="ws-menu-item"><span class="ws-menu-item-icon">🏢</span><span class="ws-menu-item-title">Mon organisation</span></button>
-            <button class="ws-menu-item"><span class="ws-menu-item-icon">🔔</span><span class="ws-menu-item-title">Préférences notifications</span></button>
+            <button class="ws-menu-item" data-action="nav:settings"><span class="ws-menu-item-icon">👤</span><span class="ws-menu-item-title">Mon profil</span></button>
+            <button class="ws-menu-item" data-action="nav:settings"><span class="ws-menu-item-icon">🏢</span><span class="ws-menu-item-title">Mon organisation</span></button>
+            <button class="ws-menu-item" data-action="nav:settings"><span class="ws-menu-item-icon">🔔</span><span class="ws-menu-item-title">Préférences notifications</span></button>
             <div class="ws-menu-divider"></div>
-            <button class="ws-menu-item"><span class="ws-menu-item-icon">👥</span><span class="ws-menu-item-title">Inviter un utilisateur</span></button>
-            <button class="ws-menu-item"><span class="ws-menu-item-icon">💬</span><span class="ws-menu-item-title">Support</span></button>
+            <button class="ws-menu-item" data-action="nav:identity"><span class="ws-menu-item-icon">👥</span><span class="ws-menu-item-title">Inviter un utilisateur</span></button>
+            <button class="ws-menu-item" data-action="nav:help"><span class="ws-menu-item-icon">💬</span><span class="ws-menu-item-title">Support</span></button>
             <div class="ws-menu-divider"></div>
             <button class="ws-menu-item danger" id="ws-logout-btn"><span class="ws-menu-item-icon">🚪</span><span class="ws-menu-item-title">Déconnexion</span></button>
           </div>

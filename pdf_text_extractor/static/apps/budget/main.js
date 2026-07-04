@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Gestion budgétaire
  * GET  /api/budget          — liste des entrées (filtres: dept_id, year, category)
  * POST /api/budget          — créer une entrée
@@ -460,4 +460,5 @@ async function _load(container) {
 export default {
   mount(container) { _load(container); },
   unmount(container) { container.innerHTML = ''; },
+  refresh(ctx) {},
 };

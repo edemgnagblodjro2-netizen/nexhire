@@ -333,4 +333,5 @@ export default {
     _mount._reload = null;
     container.innerHTML = '';
   },
+  refresh(ctx) { if (_mount._container) _render(_mount._container); },
 };

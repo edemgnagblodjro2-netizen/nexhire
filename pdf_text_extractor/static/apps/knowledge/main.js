@@ -764,4 +764,5 @@ export default {
     container.innerHTML = '';
     _docs = []; _uploadFile = null; _container = null;
   },
+  refresh(ctx) { if (_container) _mount(_container); },
 };

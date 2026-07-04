@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AgentHub Platform — App: Sécurité & Audit
  * Onglet 1 : Tableau de bord sécurité  → GET /api/security/dashboard
  * Onglet 2 : Journal d'audit (timeline) → GET /api/audit
@@ -666,4 +666,5 @@ export default {
     _root = null;
     container.innerHTML = '';
   },
+  refresh(ctx) { if (_root) { const p = _root.querySelector('#sec-panel'); if (p) _renderSecurity(p); } },
 };
