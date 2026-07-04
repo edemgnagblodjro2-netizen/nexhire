@@ -7,144 +7,109 @@
 -- ⚠️  IRRÉVERSIBLE — faire un backup Supabase avant si nécessaire
 -- ═══════════════════════════════════════════════════════════════════════════
 
--- ── Étape 1 : Désactiver temporairement les triggers pour éviter les conflits
-SET session_replication_role = replica;
+DO $$
+DECLARE
+  tbl text;
+  -- Tables à vider (dans l'ordre : feuilles d'abord, racines en dernier)
+  -- Les tables inexistantes sont ignorées silencieusement.
+  tables_to_clear text[] := ARRAY[
+    -- Sales Intelligence
+    'si_crm_syncs', 'si_agent_runs', 'si_campaign_prospects',
+    'si_messages', 'si_meetings', 'si_conversations',
+    'si_prospects', 'si_campaigns', 'si_templates', 'si_profiles',
 
--- ── Étape 2 : Vider toutes les tables de données utilisateurs/organisations
---    RESTART IDENTITY remet les séquences à zéro
---    CASCADE propage la suppression aux tables enfants
+    -- Conformité
+    'compliance_nonconformities', 'compliance_action_plans',
+    'compliance_controls', 'compliance_frameworks',
 
-TRUNCATE TABLE
-  -- ── Données Sales Intelligence ──────────────────────────────────────────
-  public.si_crm_syncs,
-  public.si_agent_runs,
-  public.si_campaign_prospects,
-  public.si_messages,
-  public.si_meetings,
-  public.si_conversations,
-  public.si_prospects,
-  public.si_campaigns,
-  public.si_templates,
-  public.si_profiles,
+    -- Workflow / automatisation
+    'policy_rule_runs', 'policy_rules', 'policies',
+    'playbook_step_runs', 'playbook_runs', 'playbooks',
+    'orchestration_runs', 'orchestrations',
+    'ai_decisions', 'initiatives', 'platform_events',
 
-  -- ── Données conformité ──────────────────────────────────────────────────
-  public.compliance_nonconformities,
-  public.compliance_action_plans,
-  public.compliance_controls,
-  public.compliance_frameworks,
+    -- Diagnostic
+    'diagnostic_answers', 'diagnostic_sessions',
 
-  -- ── Données workflow / automatisation ───────────────────────────────────
-  public.policy_rule_runs,
-  public.policy_rules,
-  public.policies,
-  public.playbook_step_runs,
-  public.playbook_runs,
-  public.playbooks,
-  public.orchestration_runs,
-  public.orchestrations,
-  public.ai_decisions,
-  public.initiatives,
-  public.platform_events,
+    -- M365 / Entra
+    'entra_signin_anomalies', 'entra_risky_users', 'entra_ca_policies',
+    'security_group_members', 'sharepoint_dept_mappings', 'connector_departments',
 
-  -- ── Données diagnostic ──────────────────────────────────────────────────
-  public.diagnostic_answers,
-  public.diagnostic_sessions,
+    -- Identité / sécurité
+    'license_usage', 'license_assignments', 'license_pools',
+    'identity_accounts', 'identities', 'security_postures', 'org_units',
 
-  -- ── Données M365 / Entra ────────────────────────────────────────────────
-  public.entra_signin_anomalies,
-  public.entra_risky_users,
-  public.entra_ca_policies,
-  public.security_group_members,
-  public.sharepoint_dept_mappings,
-  public.connector_departments,
+    -- Entreprise
+    'financial_transactions', 'vendors', 'assets', 'contracts',
+    'budget_entries', 'monthly_reports', 'it_applications',
+    'applications', 'servers', 'service_accounts',
 
-  -- ── Données identité / sécurité ─────────────────────────────────────────
-  public.license_usage,
-  public.license_assignments,
-  public.license_pools,
-  public.identity_accounts,
-  public.identities,
-  public.security_postures,
-  public.org_units,
+    -- Connecteurs
+    'connectors',
 
-  -- ── Données entreprise ──────────────────────────────────────────────────
-  public.financial_transactions,
-  public.vendors,
-  public.assets,
-  public.contracts,
-  public.budget_entries,
-  public.monthly_reports,
-  public.it_applications,
-  public.applications,
-  public.servers,
-  public.service_accounts,
+    -- Knowledge
+    'knowledge_documents',
 
-  -- ── Connecteurs ─────────────────────────────────────────────────────────
-  public.connectors,
+    -- Membres / équipes
+    'role_change_requests', 'department_members', 'departments',
+    'pending_invitations',
 
-  -- ── Knowledge ───────────────────────────────────────────────────────────
-  public.knowledge_documents,
+    -- Intelligence
+    'risk_findings', 'entity_correlations', 'entities',
 
-  -- ── Membres / équipes ───────────────────────────────────────────────────
-  public.role_change_requests,
-  public.department_members,
-  public.departments,
-  public.pending_invitations,
+    -- Facturation / Stripe
+    'stripe_processed_events', 'audit_billing', 'subscriptions',
 
-  -- ── Intelligence / corrélations ─────────────────────────────────────────
-  public.risk_findings,
-  public.entity_correlations,
-  public.entities,
+    -- RGPD / Loi 25
+    'data_deletion_requests', 'consent_records', 'mfa_factors', 'security_alerts',
 
-  -- ── Facturation / Stripe ────────────────────────────────────────────────
-  public.stripe_processed_events,
-  public.audit_billing,
-  public.subscriptions,
+    -- Usage / analytics
+    'usage_counters', 'usage_events', 'usage_events_archive',
+    'audit_logs', 'audit_logs_archive', 'conversations_archive',
 
-  -- ── Conformité RGPD / Loi 25 ────────────────────────────────────────────
-  public.data_deletion_requests,
-  public.consent_records,
-  public.mfa_factors,
-  public.security_alerts,
+    -- Conversations / documents
+    'documents', 'conversations', 'licenses',
 
-  -- ── Usage / analytics ───────────────────────────────────────────────────
-  public.usage_counters,
-  public.usage_events,
-  public.usage_events_archive,
-  public.audit_logs,
-  public.audit_logs_archive,
-  public.conversations_archive,
+    -- Racines (cascade sur tout le reste)
+    'users', 'organizations'
+  ];
+BEGIN
+  -- Désactiver les triggers FK pour éviter les conflits d'ordre
+  SET session_replication_role = replica;
 
-  -- ── Conversations / documents ────────────────────────────────────────────
-  public.documents,
-  public.conversations,
-  public.licenses,
+  FOREACH tbl IN ARRAY tables_to_clear LOOP
+    IF EXISTS (
+      SELECT 1 FROM information_schema.tables
+      WHERE table_schema = 'public' AND table_name = tbl
+    ) THEN
+      EXECUTE format('TRUNCATE TABLE public.%I RESTART IDENTITY CASCADE', tbl);
+      RAISE NOTICE 'TRUNCATED: public.%', tbl;
+    ELSE
+      RAISE NOTICE 'SKIPPED (not found): public.%', tbl;
+    END IF;
+  END LOOP;
 
-  -- ── Racines : users et organizations (cascade sur tout le reste) ─────────
-  public.users,
-  public.organizations
+  -- Réactiver les triggers
+  SET session_replication_role = DEFAULT;
 
-RESTART IDENTITY CASCADE;
+  RAISE NOTICE '✓ Reset public schema terminé.';
+END $$;
 
--- ── Étape 3 : Réactiver les triggers
-SET session_replication_role = DEFAULT;
-
--- ── Étape 4 : Supprimer tous les comptes auth.users (Supabase Auth)
---    Cela supprime définitivement les sessions, tokens JWT et comptes de connexion.
+-- ── Supprimer tous les comptes Supabase Auth ─────────────────────────────────
+-- Supprime définitivement sessions, tokens JWT et comptes de connexion.
 DELETE FROM auth.users;
 
--- ── Étape 5 : Vérification
-SELECT
-  'auth.users'       AS table_name, COUNT(*) AS remaining FROM auth.users
-UNION ALL SELECT 'public.users',         COUNT(*) FROM public.users
-UNION ALL SELECT 'public.organizations', COUNT(*) FROM public.organizations
-UNION ALL SELECT 'public.partners',      COUNT(*) FROM public.partners
-UNION ALL SELECT 'diagnostic_benchmarks (demo)', COUNT(*) FROM public.diagnostic_benchmarks WHERE is_demo = true
+-- ── Vérification ─────────────────────────────────────────────────────────────
+SELECT table_name, cnt::text AS remaining
+FROM (
+  SELECT 'auth.users'              AS table_name, (SELECT COUNT(*) FROM auth.users)              AS cnt
+  UNION ALL
+  SELECT 'public.users',                          (SELECT COUNT(*) FROM public.users)
+  UNION ALL
+  SELECT 'public.organizations',                  (SELECT COUNT(*) FROM public.organizations)
+  UNION ALL
+  SELECT 'public.partners (conservés)',           (SELECT COUNT(*) FROM public.partners)
+  UNION ALL
+  SELECT 'diagnostic_benchmarks demo',            (SELECT COUNT(*) FROM public.diagnostic_benchmarks WHERE is_demo = true)
+) t
 ORDER BY table_name;
-
--- ── Résultat attendu ────────────────────────────────────────────────────────
--- auth.users                       → 0
--- public.users                     → 0
--- public.organizations             → 0
--- public.partners                  → N (partenaires conservés, ex: demo)
--- diagnostic_benchmarks (demo)     → N (benchmarks démo conservés)
