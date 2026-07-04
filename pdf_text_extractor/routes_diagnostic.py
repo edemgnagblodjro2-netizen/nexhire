@@ -53,12 +53,53 @@ SIZE_RANGES = ["1-9", "10-49", "50-199", "200+"]
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 
+def _resolve_partner(cur, slug: str) -> dict:
+    """Résout un slug en partenaire actif — accepte un slug partenaire OU un slug d'organisation."""
+    cur.execute(
+        "SELECT id, slug FROM partners WHERE slug = %s AND is_active = true LIMIT 1",
+        (slug,),
+    )
+    r = row(cur)
+    if r:
+        return r
+    cur.execute(
+        """
+        SELECT p.id, p.slug FROM organizations o
+        JOIN partners p ON p.id = o.partner_id
+        WHERE o.slug = %s AND p.is_active = true
+        LIMIT 1
+        """,
+        (slug,),
+    )
+    r = row(cur)
+    if not r:
+        raise HTTPException(status_code=404, detail="Partenaire introuvable.")
+    return r
+
+
 def _get_partner_id(cur, partner_slug: str) -> str:
+    # 1. Slug direct vers un partenaire (workspace B2B2B)
     cur.execute(
         """
         SELECT p.id FROM partners p
         JOIN installed_apps ia ON ia.partner_id = p.id
         WHERE p.slug = %s AND p.is_active = true
+          AND ia.app_slug = 'diagnostic-ia' AND ia.is_enabled = true
+        LIMIT 1
+        """,
+        (partner_slug,),
+    )
+    r = row(cur)
+    if r:
+        return str(r["id"])
+
+    # 2. Slug d'une organisation membre (workspace B2B direct) → remonter au partenaire
+    cur.execute(
+        """
+        SELECT p.id FROM organizations o
+        JOIN partners p ON p.id = o.partner_id
+        JOIN installed_apps ia ON ia.partner_id = p.id
+        WHERE o.slug = %s AND p.is_active = true
           AND ia.app_slug = 'diagnostic-ia' AND ia.is_enabled = true
         LIMIT 1
         """,
@@ -423,10 +464,7 @@ def _get_stats_auth(authorization: str | None = Header(default=None)) -> Current
 @limiter.limit("30/minute")
 def get_stats(request: Request, partner_slug: str, user: CurrentUser | None = Depends(_get_stats_auth)):
     with get_db() as cur:
-        cur.execute("SELECT id FROM partners WHERE slug = %s AND is_active = true LIMIT 1", (partner_slug,))
-        p = row(cur)
-        if not p:
-            raise HTTPException(status_code=404, detail="Partenaire introuvable.")
+        p = _resolve_partner(cur, partner_slug)
         if _STATS_AUTH_ENFORCED and str(getattr(user, "partner_id", None)) != str(p["id"]):
             raise HTTPException(status_code=403, detail="Accès réservé à l'administrateur de ce workspace.")
 
@@ -515,10 +553,7 @@ def get_stats(request: Request, partner_slug: str, user: CurrentUser | None = De
 def get_sessions(request: Request, partner_slug: str):
     """Historique des 20 dernières sessions complétées (affichage historique, non-auth)."""
     with get_db() as cur:
-        cur.execute("SELECT id FROM partners WHERE slug = %s AND is_active = true LIMIT 1", (partner_slug,))
-        p = row(cur)
-        if not p:
-            raise HTTPException(status_code=404, detail="Partenaire introuvable.")
+        p = _resolve_partner(cur, partner_slug)
 
         cur.execute(
             """
@@ -557,10 +592,7 @@ def get_sessions(request: Request, partner_slug: str):
 @limiter.limit("30/minute")
 def get_benchmark(request: Request, partner_slug: str, user: CurrentUser = Depends(get_current_user)):
     with get_db() as cur:
-        cur.execute("SELECT id FROM partners WHERE slug = %s AND is_active = true LIMIT 1", (partner_slug,))
-        p = row(cur)
-        if not p:
-            raise HTTPException(status_code=404, detail="Partenaire introuvable.")
+        p = _resolve_partner(cur, partner_slug)
         if str(getattr(user, "partner_id", None)) != str(p["id"]):
             raise HTTPException(status_code=403, detail="Accès réservé à l'administrateur de ce workspace.")
 
