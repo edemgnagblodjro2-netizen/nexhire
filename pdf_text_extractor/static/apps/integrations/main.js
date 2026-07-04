@@ -268,7 +268,7 @@ function _renderCards(container, allConnectors, filter, connected) {
 
   grid.innerHTML = filtered.map(meta => {
     const live = connected.find(c => c.connector_type === meta.type);
-    const isConnected = live && live.status === 'active';
+    const isConnected = live && live.status === 'connected';
     const connectedAt = live ? _fmtDate(live.connected_at) : null;
 
     return `<div class="int-card ${isConnected ? 'connected' : ''}" data-type="${meta.type}">
