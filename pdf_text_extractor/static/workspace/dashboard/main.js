@@ -254,7 +254,7 @@ const CSS = `
 const IMAI_PERIODS = {
   '6m': {
     data:   [28, 35, 42, 48, 50, 44],
-    labels: ['Janv.', 'Févr.', 'Mars', 'Avr.', 'Mai', 'Juin'],
+    labels: { fr: ['Janv.', 'Févr.', 'Mars', 'Avr.', 'Mai', 'Juin'], en: ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.'] },
     // [strategie, personnes, processus, technologies, gouvernance] par mois
     dims: [
       [22, 30, 26, 35, 28],
@@ -267,7 +267,7 @@ const IMAI_PERIODS = {
   },
   '12m': {
     data:   [25, 50, 28, 35, 42, 48, 50, 44],
-    labels: ['Nov.', 'Déc.', 'Janv.', 'Févr.', 'Mars', 'Avr.', 'Mai', 'Juin'],
+    labels: { fr: ['Nov.', 'Déc.', 'Janv.', 'Févr.', 'Mars', 'Avr.', 'Mai', 'Juin'], en: ['Nov.', 'Dec.', 'Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.'] },
     dims: [
       [18, 30, 22, 32, 22],
       [45, 55, 48, 58, 48],
@@ -282,38 +282,26 @@ const IMAI_PERIODS = {
 };
 
 const DIM_DEFS = [
-  { key: 'strategie',    label: 'Stratégie',    color: '#0078D4', text: 'Définissez vos objectifs IA à 6 et 12 mois avec une feuille de route claire et des indicateurs mesurables.' },
-  { key: 'personnes',    label: 'Personnes',    color: '#00B7C3', text: 'Identifiez un champion IA dans votre équipe et planifiez la montée en compétences de votre organisation.' },
-  { key: 'processus',    label: 'Processus',    color: '#498205', text: 'Cartographiez vos tâches répétitives à fort potentiel d\'automatisation et priorisez les gains rapides.' },
-  { key: 'technologies', label: 'Technologies', color: '#7719AA', text: 'Évaluez vos outils actuels et identifiez les solutions IA adaptées à votre secteur d\'activité.' },
-  { key: 'gouvernance',  label: 'Gouvernance',  color: '#CA5010', text: 'Complétez la checklist Loi 25, rédigez votre politique d\'utilisation de l\'IA et inventoriez vos outils.' },
+  { key: 'strategie',    i18nKey: 'db.dim.strategie',    color: '#0078D4' },
+  { key: 'personnes',    i18nKey: 'db.dim.personnes',    color: '#00B7C3' },
+  { key: 'processus',    i18nKey: 'db.dim.processus',    color: '#498205' },
+  { key: 'technologies', i18nKey: 'db.dim.technologies', color: '#7719AA' },
+  { key: 'gouvernance',  i18nKey: 'db.dim.gouvernance',  color: '#CA5010' },
 ];
 
-const DEMO_RECS = [
-  { dim: 'Stratégie',   text: 'Organisez un atelier de 2 h pour cartographier 3 cas d\'usage IA à fort potentiel dans les 30 prochains jours.' },
-  { dim: 'Personnes',   text: 'Identifiez un « champion numérique » dans votre équipe et évaluez les compétences IA actuelles de l\'organisation.' },
-  { dim: 'Gouvernance', text: 'Prenez connaissance de la Loi 25 et vos obligations concernant la protection des renseignements personnels avec l\'IA.' },
+const _demoRecs = () => [
+  { dim: NH_I18N.t('db.dim.strategie'),   text: NH_I18N.t('db.rec.strategie.text') },
+  { dim: NH_I18N.t('db.dim.personnes'),   text: NH_I18N.t('db.rec.personnes.text') },
+  { dim: NH_I18N.t('db.dim.gouvernance'), text: NH_I18N.t('db.rec.gouvernance.text') },
 ];
-
-const DEMO_ACTIVITY = [
-  { icon: '📊', color: 'var(--primary-lt)',    title: 'Diagnostic IA disponible', meta: 'Évaluez la maturité IA de votre organisation', time: 'Maintenant' },
-  { icon: '🤖', color: 'var(--color-info-bg)', title: 'ATLAS est prêt',           meta: 'Votre copilote IA personnel vous attend',       time: 'Disponible' },
-  { icon: '📄', color: 'var(--color-ok-bg)',   title: 'Rapport régional',         meta: 'Synthèse de votre programme partenaire',        time: 'Disponible' },
-];
-
-const DIM_LABELS_DB = { strategie: 'Stratégie', personnes: 'Personnes', processus: 'Processus', technologies: 'Technologies', gouvernance: 'Gouvernance' };
-const DIM_GUIDANCE  = {
-  strategie:    'Définissez vos objectifs IA à 6 et 12 mois avec une feuille de route claire et des indicateurs mesurables.',
-  personnes:    'Identifiez un champion IA dans votre équipe et planifiez la montée en compétences de votre organisation.',
-  processus:    'Cartographiez vos tâches répétitives à fort potentiel d\'automatisation et priorisez les gains rapides.',
-  technologies: 'Évaluez vos outils actuels et identifiez les solutions IA adaptées à votre secteur d\'activité.',
-  gouvernance:  'Complétez la checklist Loi 25, rédigez votre politique d\'utilisation de l\'IA et inventoriez vos outils.',
-};
 
 /* ══ État global des graphiques ═══════════════════════════════════ */
 let _cs = { period: '6m', monthIdx: null, dimIdx: -1 };
 let _el = null;
 let _ctx = null;
+
+const _locale  = () => NH_I18N.lang === 'en' ? 'en-CA' : 'fr-CA';
+const _labels  = (period) => { const pd = IMAI_PERIODS[period]; return pd.labels[NH_I18N.lang] || pd.labels.fr; };
 
 /* ══ Construction du graphique en courbes ════════════════════════ */
 function _lineChartSVG(data, labels, selMonthIdx, selDimIdx) {
@@ -412,7 +400,7 @@ function _donutSVG(dimScores, selDimIdx) {
 
   const overall = Math.round(dimScores.reduce((s,v)=>s+v,0)/dimScores.length);
   const hasSel  = selDimIdx >= 0;
-  const cLabel  = hasSel ? DIM_DEFS[selDimIdx].label  : 'Score IMAI';
+  const cLabel  = hasSel ? NH_I18N.t(DIM_DEFS[selDimIdx].i18nKey) : NH_I18N.t('db.donut.center');
   const cVal    = hasSel ? dimScores[selDimIdx]         : overall;
   const cColor  = hasSel ? DIM_DEFS[selDimIdx].color   : 'var(--primary)';
 
@@ -428,34 +416,35 @@ function _donutLegend(dimScores, selDimIdx) {
   return DIM_DEFS.map((dim, i) => `
     <div class="db-dim-row${i === selDimIdx ? ' selected' : ''}" data-dim="${i}">
       <span class="db-dim-dot" style="background:${dim.color}"></span>
-      <span class="db-dim-name">${dim.label}</span>
+      <span class="db-dim-name">${NH_I18N.t(dim.i18nKey)}</span>
       <div class="db-dim-bar-wrap"><div class="db-dim-bar-fill" style="width:${dimScores[i]}%;background:${dim.color}"></div></div>
       <span class="db-dim-score">${dimScores[i]}</span>
     </div>`).join('');
 }
 
 function _dimDetail(dimScores, selDimIdx) {
+  const t = NH_I18N.t.bind(NH_I18N);
   if (selDimIdx < 0) {
     const overall = Math.round(dimScores.reduce((s,v)=>s+v,0)/dimScores.length);
     return `<div class="db-dim-detail-hd">
       <span class="db-dim-detail-score" style="color:var(--primary)">${overall}</span>
-      <span class="db-dim-detail-sub">/100 · Score global</span>
+      <span class="db-dim-detail-sub">${t('db.chart.score.global')}</span>
     </div>
     <div class="db-dim-detail-bar"><div class="db-dim-detail-fill" style="width:${overall}%;background:var(--primary)"></div></div>
-    <div class="db-dim-detail-text">Cliquez sur un segment du graphe ou une ligne de la légende pour voir le détail par dimension.</div>
-    <button class="db-obs-link" data-action="observatoire">🔭 Voir l'Observatoire complet →</button>`;
+    <div class="db-dim-detail-text">${t('db.chart.click.hint')}</div>
+    <button class="db-obs-link" data-action="observatoire">${t('db.chart.obs.full')}</button>`;
   }
   const dim = DIM_DEFS[selDimIdx];
   const sc  = dimScores[selDimIdx];
-  const lvl = sc < 30 ? 'Débutant' : sc < 55 ? 'Intermédiaire' : 'Avancé';
-  return `<div class="db-dim-detail-name">${dim.label}</div>
+  const lvl = sc < 30 ? t('db.level.debutant') : sc < 55 ? t('db.level.intermediaire') : t('db.level.avance');
+  return `<div class="db-dim-detail-name">${t(dim.i18nKey)}</div>
   <div class="db-dim-detail-hd">
     <span class="db-dim-detail-score" style="color:${dim.color}">${sc}</span>
     <span class="db-dim-detail-sub">/100 · ${lvl}</span>
   </div>
   <div class="db-dim-detail-bar"><div class="db-dim-detail-fill" style="width:${sc}%;background:${dim.color}"></div></div>
-  <div class="db-dim-detail-text">${dim.text}</div>
-  <button class="db-obs-link" data-action="observatoire">🔭 Voir dans l'Observatoire →</button>`;
+  <div class="db-dim-detail-text">${t(dim.i18nKey + '.text')}</div>
+  <button class="db-obs-link" data-action="observatoire">${t('db.chart.obs.go')}</button>`;
 }
 
 /* ══ KPI card ════════════════════════════════════════════════════ */
@@ -473,9 +462,11 @@ function _kpiCard({ label, value, icon, iconBg, delta, bar, barColor }) {
 
 /* ══ Rendu principal ═════════════════════════════════════════════ */
 function _render(container, ctx) {
+  const t           = NH_I18N.t.bind(NH_I18N);
+  const locale      = _locale();
   const partnerName = ctx?.partner?.name || 'AgentHub';
   const partnerSlug = ctx?.partnerSlug  || 'demo';
-  const today    = new Date().toLocaleDateString('fr-CA', { weekday: 'long', day: 'numeric', month: 'long' });
+  const today    = new Date().toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'long' });
   const todayCap = today.charAt(0).toUpperCase() + today.slice(1);
   const firstName = ctx?.userProfile?.full_name?.split(' ')[0] || ctx?.userProfile?.email?.split('@')[0] || null;
 
@@ -485,44 +476,49 @@ function _render(container, ctx) {
   const hasDiag = !!diag;
 
   const SCORE_COLOR = { debutant: 'var(--color-err)', intermediaire: 'var(--color-warn)', avance: 'var(--color-ok)' };
-  const NIVEAU_LBL  = { debutant: 'Débutant', intermediaire: 'Intermédiaire', avance: 'Avancé' };
   const diagScore   = hasDiag ? diag.score        : 44;
   const diagNiveau  = hasDiag ? diag.niveau        : 'intermediaire';
-  const diagLabel   = hasDiag ? (NIVEAU_LBL[diag.niveau] || '') : 'Intermédiaire';
+  const diagLabel   = t(`db.level.${diagNiveau}`) || diagNiveau;
   const scoreColor  = SCORE_COLOR[diagNiveau] || 'var(--color-warn)';
-  const dateLabel   = hasDiag ? new Date(diag.date).toLocaleDateString('fr-CA', { month: 'long', day: 'numeric' }) : null;
+  const dateLabel   = hasDiag ? new Date(diag.date).toLocaleDateString(locale, { month: 'long', day: 'numeric' }) : null;
 
   const activityItems = hasDiag
     ? [
-        { icon: '✅', color: 'var(--color-ok-bg)',   title: `Diagnostic complété · Score ${diagScore}/100`, meta: `${diag.company} · Niveau ${diagLabel}`, time: dateLabel },
-        { icon: '🤖', color: 'var(--color-info-bg)', title: 'ATLAS est prêt',                                meta: 'Consultez vos recommandations personnalisées', time: 'Disponible' },
-        { icon: '📄', color: 'var(--color-ok-bg)',   title: 'Rapport régional',                              meta: 'Synthèse de votre programme partenaire',       time: 'Disponible' },
+        { icon: '✅', color: 'var(--color-ok-bg)',   title: `${t('db.activity.diag.done')} · Score ${diagScore}/100`, meta: `${diag.company} · ${t('db.kpi.score.level')} ${diagLabel}`, time: dateLabel },
+        { icon: '🤖', color: 'var(--color-info-bg)', title: t('db.activity.atlas.title'), meta: t('db.activity.atlas.recs'), time: t('db.activity.available') },
+        { icon: '📄', color: 'var(--color-ok-bg)',   title: t('db.activity.report.title'), meta: t('db.activity.report.meta'), time: t('db.activity.available') },
       ]
-    : DEMO_ACTIVITY;
+    : [
+        { icon: '📊', color: 'var(--primary-lt)',    title: t('db.activity.diag.title'), meta: t('db.activity.diag.meta'), time: t('db.activity.now') },
+        { icon: '🤖', color: 'var(--color-info-bg)', title: t('db.activity.atlas.title'), meta: t('db.activity.atlas.meta'), time: t('db.activity.available') },
+        { icon: '📄', color: 'var(--color-ok-bg)',   title: t('db.activity.report.title'), meta: t('db.activity.report.meta'), time: t('db.activity.available') },
+      ];
 
   const atlasRecs = hasDiag
     ? Object.entries(diag.scores || {})
         .sort(([,a],[,b]) => a - b).slice(0,3)
-        .map(([dim]) => ({ dim: DIM_LABELS_DB[dim] || dim, text: DIM_GUIDANCE[dim] || '' }))
-    : DEMO_RECS;
+        .map(([dim]) => ({ dim: t(`db.dim.${dim}`) || dim, text: t(`db.dim.${dim}.text`) || '' }))
+    : _demoRecs();
 
   // Init chart state
   _cs = { period: '6m', monthIdx: null, dimIdx: -1 };
-  const pd = IMAI_PERIODS['6m'];
+  const pd      = IMAI_PERIODS['6m'];
+  const labels  = _labels('6m');
   const curDims = pd.dims[pd.dims.length - 1];
+  const latestLabel = labels[labels.length - 1];
 
   container.innerHTML = CSS + `
 <div class="db-root">
 
-  ${!hasDiag ? `<div class="db-demo-notice">ℹ️ <strong>Données de démonstration</strong> — Complétez votre premier diagnostic pour voir vos vraies métriques.</div>` : ''}
+  ${!hasDiag ? `<div class="db-demo-notice">ℹ️ <strong>${t('db.demo.notice')}</strong> — ${t('db.demo.notice.sub')}</div>` : ''}
 
   <div class="db-header">
     <div>
-      <div class="db-greeting">Bonjour${firstName ? ` ${firstName}` : ''} 👋</div>
-      <div class="db-sub">${todayCap} · Programme Accélérateur IA · ${partnerName}</div>
+      <div class="db-greeting">${t('db.greeting')}${firstName ? ` ${firstName}` : ''} 👋</div>
+      <div class="db-sub">${todayCap} · ${t('db.program')} · ${partnerName}</div>
     </div>
-    <button class="db-date-btn" title="Sélectionner une période">
-      📅 ${(() => { const d = new Date(); return new Date(d-7*86400000).toLocaleDateString('fr-CA',{day:'numeric',month:'long'}) + ' – ' + d.toLocaleDateString('fr-CA',{day:'numeric',month:'long',year:'numeric'}); })()}
+    <button class="db-date-btn" title="${t('db.program')}">
+      📅 ${(() => { const d = new Date(); return new Date(d-7*86400000).toLocaleDateString(locale,{day:'numeric',month:'long'}) + ' – ' + d.toLocaleDateString(locale,{day:'numeric',month:'long',year:'numeric'}); })()}
       <span style="opacity:.5;font-size:11px">▾</span>
     </button>
   </div>
@@ -532,35 +528,35 @@ function _render(container, ctx) {
     <div class="db-welcome-body" style="position:relative;z-index:1">
       <h3>Score IMAI <strong style="color:rgba(255,255,255,.95)">${diagScore}/100</strong> · ${diagLabel}</h3>
       <div class="db-welcome-track"><div class="db-welcome-fill" style="width:${diagScore}%"></div></div>
-      <div class="db-welcome-hint">${hasDiag ? `Évalué le ${dateLabel} · ${diag.company}` : '0 % complété · Complétez le diagnostic pour voir vos vrais résultats'}</div>
+      <div class="db-welcome-hint">${hasDiag ? `${t('db.hero.assessed.prefix')} ${dateLabel} · ${diag.company}` : t('db.hero.empty')}</div>
     </div>
     <button class="db-welcome-cta" data-action="diagnostic">
-      ${hasDiag ? 'Voir mes résultats →' : 'Démarrer le diagnostic →'}
+      ${hasDiag ? t('db.hero.cta.view') : t('db.hero.cta.start')}
     </button>
   </div>
 
   <div class="db-kpi-grid">
     ${_kpiCard({
-      label: 'Score de maturité IA (IMAI)', value: `<span style="color:${scoreColor}">${diagScore}</span><span style="font-size:16px;font-weight:500;color:var(--muted)">/100</span>`,
+      label: t('db.kpi.score'), value: `<span style="color:${scoreColor}">${diagScore}</span><span style="font-size:16px;font-weight:500;color:var(--muted)">/100</span>`,
       icon: '🎯', iconBg: 'var(--primary-lt)', bar: diagScore, barColor: scoreColor,
-      delta: `↗ Niveau ${diagLabel}` })}
+      delta: `↗ ${t('db.kpi.score.level')} ${diagLabel}` })}
     ${_kpiCard({
-      label: 'Conformité Loi 25', value: '72<span style="font-size:16px;font-weight:500;color:var(--muted)">%</span>',
+      label: t('db.kpi.compliance'), value: '72<span style="font-size:16px;font-weight:500;color:var(--muted)">%</span>',
       icon: '🛡️', iconBg: 'var(--color-info-bg)', bar: 72, barColor: 'var(--color-info)',
-      delta: '↗ +12 % vs le mois dernier' })}
+      delta: t('db.kpi.compliance.delta') })}
     ${_kpiCard({
-      label: 'Actions prioritaires', value: '7',
+      label: t('db.kpi.actions'), value: '7',
       icon: '📋', iconBg: 'var(--color-warn-bg)',
-      delta: '⚠️ À traiter · en retard' })}
+      delta: t('db.kpi.actions.delta') })}
     ${_kpiCard({
-      label: 'Utilisateurs actifs', value: '12',
+      label: t('db.kpi.users'), value: '12',
       icon: '👥', iconBg: 'var(--color-ok-bg)',
-      delta: '↗ +3 nouveaux ce mois-ci' })}
+      delta: t('db.kpi.users.delta') })}
   </div>
 
   <div class="db-grid">
     <div class="db-card">
-      <div class="db-card-hd"><span class="db-card-title">Activité récente</span></div>
+      <div class="db-card-hd"><span class="db-card-title">${t('db.activity.title')}</span></div>
       <div class="db-activity-list">
         ${activityItems.map(a => `
         <div class="db-activity-item">
@@ -574,21 +570,21 @@ function _render(container, ctx) {
       </div>
     </div>
     <div class="db-card">
-      <div class="db-card-hd"><span class="db-card-title">Actions rapides</span></div>
+      <div class="db-card-hd"><span class="db-card-title">${t('db.actions.title')}</span></div>
       <div class="db-actions-list">
         <button class="db-action-btn" data-action="diagnostic">
           <div class="db-action-icon" style="background:var(--primary-lt)">📊</div>
-          <div class="db-action-body"><strong>${hasDiag ? 'Refaire le diagnostic' : 'Démarrer le diagnostic'}</strong><span>${hasDiag ? 'Mesurer votre progression' : 'Évaluer votre maturité IA'}</span></div>
+          <div class="db-action-body"><strong>${hasDiag ? t('db.actions.diag.redo') : t('db.actions.diag.start')}</strong><span>${hasDiag ? t('db.actions.diag.sub.redo') : t('db.actions.diag.sub.start')}</span></div>
           <span class="db-action-chevron">›</span>
         </button>
         <button class="db-action-btn" data-action="observatoire">
           <div class="db-action-icon" style="background:var(--color-info-bg)">🔭</div>
-          <div class="db-action-body"><strong>Observatoire IA</strong><span>Tableau de bord du programme</span></div>
+          <div class="db-action-body"><strong>${t('db.actions.obs.title')}</strong><span>${t('db.actions.obs.sub')}</span></div>
           <span class="db-action-chevron">›</span>
         </button>
         <a class="db-action-btn" href="/rapport/regional/${partnerSlug}" target="_blank" rel="noopener">
           <div class="db-action-icon" style="background:var(--color-ok-bg)">📄</div>
-          <div class="db-action-body"><strong>Rapport régional</strong><span>Synthèse du programme</span></div>
+          <div class="db-action-body"><strong>${t('db.actions.report.title')}</strong><span>${t('db.actions.report.sub')}</span></div>
           <span class="db-action-chevron">›</span>
         </a>
       </div>
@@ -601,15 +597,15 @@ function _render(container, ctx) {
     <!-- Ligne principale -->
     <div class="db-chart-card">
       <div class="db-card-hd">
-        <span class="db-card-title">Évolution du score IMAI</span>
+        <span class="db-card-title">${t('db.chart.imai.title')}</span>
         <div class="db-chart-period">
-          <button class="active" data-period="6m">6 derniers mois</button>
-          <button data-period="12m">12 mois</button>
+          <button class="active" data-period="6m">${t('db.chart.period.6m')}</button>
+          <button data-period="12m">${t('db.chart.period.12m')}</button>
         </div>
       </div>
       <div class="db-chart-body" style="position:relative">
         <div id="db-chart-line-wrap">
-          ${_lineChartSVG(pd.data, pd.labels, null, -1)}
+          ${_lineChartSVG(pd.data, labels, null, -1)}
         </div>
         <div class="db-chart-tooltip" id="db-imai-tooltip"></div>
       </div>
@@ -620,8 +616,8 @@ function _render(container, ctx) {
 
       <div class="db-card">
         <div class="db-card-hd">
-          <span class="db-card-title">Répartition par dimension</span>
-          <span id="db-donut-month-lbl" style="font-size:11px;color:var(--muted)">Juin 2026</span>
+          <span class="db-card-title">${t('db.chart.donut.title')}</span>
+          <span id="db-donut-month-lbl" style="font-size:11px;color:var(--muted)">${latestLabel} 2026</span>
         </div>
         <div class="db-donut-body" id="db-chart-donut-wrap">
           ${_donutSVG(curDims, -1)}
@@ -631,7 +627,7 @@ function _render(container, ctx) {
 
       <div class="db-card">
         <div class="db-card-hd">
-          <span class="db-card-title" id="db-dim-detail-title">Détail dimension</span>
+          <span class="db-card-title" id="db-dim-detail-title">${t('db.chart.detail.title')}</span>
         </div>
         <div class="db-dim-detail" id="db-dim-detail">
           ${_dimDetail(curDims, -1)}
@@ -644,8 +640,8 @@ function _render(container, ctx) {
   <div class="db-atlas-wrap">
     <div class="db-atlas-hd">
       <span class="db-atlas-badge">✨ ATLAS AI</span>
-      <span class="db-atlas-title">${hasDiag ? 'Vos priorités d\'action personnalisées' : 'Recommandations prioritaires'}</span>
-      ${!hasDiag ? '<span style="font-size:11px;color:var(--muted);margin-left:auto;font-weight:500">Démo</span>' : ''}
+      <span class="db-atlas-title">${hasDiag ? t('db.atlas.title.real') : t('db.atlas.title.demo')}</span>
+      ${!hasDiag ? `<span style="font-size:11px;color:var(--muted);margin-left:auto;font-weight:500">${t('db.atlas.demo.badge')}</span>` : ''}
     </div>
     <div class="db-rec-list">
       ${atlasRecs.map((r, i) => `
@@ -679,9 +675,10 @@ function _currentDims() {
 }
 
 function _refreshLineChart(container) {
-  const pd  = IMAI_PERIODS[_cs.period];
-  const wrap = container.querySelector('#db-chart-line-wrap');
-  if (wrap) wrap.innerHTML = _lineChartSVG(pd.data, pd.labels, _cs.monthIdx, _cs.dimIdx);
+  const pd     = IMAI_PERIODS[_cs.period];
+  const labels = _labels(_cs.period);
+  const wrap   = container.querySelector('#db-chart-line-wrap');
+  if (wrap) wrap.innerHTML = _lineChartSVG(pd.data, labels, _cs.monthIdx, _cs.dimIdx);
   _wireLineChart(container);
 }
 
@@ -698,7 +695,7 @@ function _refreshDetail(container) {
   const detail = container.querySelector('#db-dim-detail');
   const title  = container.querySelector('#db-dim-detail-title');
   if (detail) detail.innerHTML = _dimDetail(dims, _cs.dimIdx);
-  if (title)  title.textContent = _cs.dimIdx >= 0 ? DIM_DEFS[_cs.dimIdx].label : 'Détail dimension';
+  if (title)  title.textContent = _cs.dimIdx >= 0 ? NH_I18N.t(DIM_DEFS[_cs.dimIdx].i18nKey) : NH_I18N.t('db.chart.detail.title');
   // Re-wire the observatoire button inside detail
   detail?.querySelectorAll('[data-action]').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -724,7 +721,7 @@ function _wireLineChart(container) {
       const chartW   = svg.clientWidth;
       const P_L      = 38, P_R = 18;
       const cx       = P_L + pct * (chartW * (560 - P_L - P_R) / 560);
-      tooltip.textContent  = `${pd.labels[idx]} · ${pd.data[idx]}/100`;
+      tooltip.textContent  = `${_labels(_cs.period)[idx]} · ${pd.data[idx]}/100`;
       tooltip.style.display = 'block';
       tooltip.style.left    = `${P_L + pct * (100 - (P_L+P_R)/560*100)}%`;
       tooltip.style.top     = '8px';
@@ -737,7 +734,8 @@ function _wireLineChart(container) {
       const pd   = IMAI_PERIODS[_cs.period];
       _cs.monthIdx = _cs.monthIdx === idx ? null : idx;
       const lbl  = container.querySelector('#db-donut-month-lbl');
-      if (lbl) lbl.textContent = _cs.monthIdx !== null ? pd.labels[_cs.monthIdx] + ' 2026' : 'Juin 2026';
+      const lbls = _labels(_cs.period);
+      if (lbl) lbl.textContent = _cs.monthIdx !== null ? lbls[_cs.monthIdx] + ' 2026' : lbls[lbls.length - 1] + ' 2026';
       _refreshLineChart(container);
       _refreshDonut(container);
       _refreshDetail(container);
@@ -759,7 +757,7 @@ function _wireDonut(container) {
       const title   = container.querySelector('#db-dim-detail-title');
       const tmpIdx  = +el.dataset.dim;
       if (detail) detail.innerHTML = _dimDetail(dims, tmpIdx);
-      if (title)  title.textContent = DIM_DEFS[tmpIdx].label;
+      if (title)  title.textContent = NH_I18N.t(DIM_DEFS[tmpIdx].i18nKey);
     });
     el.addEventListener('mouseleave', () => {
       _refreshDetail(container);
