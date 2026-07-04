@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS diagnostic_sessions (
 );
 
 COMMENT ON TABLE  diagnostic_sessions                  IS 'Sessions de diagnostic IMAI par entreprise. Une session = un parcours Atlas complet ou en cours.';
-COMMENT ON COLUMN diagnostic_sessions.partner_id       IS 'Partenaire Platform qui a déployé ce diagnostic (ex: cci3r).';
+COMMENT ON COLUMN diagnostic_sessions.partner_id       IS 'Partenaire Platform qui a déployé ce diagnostic.';
 COMMENT ON COLUMN diagnostic_sessions.company_email    IS 'Email collecté volontairement en fin de parcours — optionnel, pas obligatoire.';
 COMMENT ON COLUMN diagnostic_sessions.imai_score       IS 'Score global IMAI /100 (pondéré). NULL tant que le parcours n''est pas complété.';
 COMMENT ON COLUMN diagnostic_sessions.niveau           IS 'Niveau de maturité IA : debutant (0-33), intermediaire (34-66), avance (67-100).';
@@ -119,33 +119,7 @@ CREATE INDEX IF NOT EXISTS diag_benchmarks_lookup_idx
   ON diagnostic_benchmarks (partner_id, period_start DESC, sector, size_range);
 
 
--- ═══════════════════════════════════════════════════════════════════════════
--- DONNÉES DE DÉMONSTRATION — CCI3R
--- ═══════════════════════════════════════════════════════════════════════════
-
-INSERT INTO diagnostic_benchmarks (
-  partner_id, period_start, sector, size_range,
-  sample_size, imai_avg, imai_p25, imai_p75,
-  dim_strategie_avg, dim_personnes_avg, dim_processus_avg,
-  dim_technologies_avg, dim_gouvernance_avg, is_demo
-)
-SELECT p.id, '2026-04-01', NULL, NULL,
-  42, 38.4, 24.0, 52.0,
-  42.1, 33.8, 39.5, 49.2, 22.6, true
-FROM partners p WHERE p.slug = 'cci3r'
-ON CONFLICT DO NOTHING;
-
-INSERT INTO diagnostic_benchmarks (
-  partner_id, period_start, sector, size_range,
-  sample_size, imai_avg, imai_p25, imai_p75,
-  dim_strategie_avg, dim_personnes_avg, dim_processus_avg,
-  dim_technologies_avg, dim_gouvernance_avg, is_demo
-)
-SELECT p.id, '2026-04-01', 'Manufacturier', NULL,
-  18, 41.2, 26.0, 55.0,
-  44.5, 35.2, 43.8, 51.0, 24.1, true
-FROM partners p WHERE p.slug = 'cci3r'
-ON CONFLICT DO NOTHING;
+-- Les données de benchmark sont insérées lors de l'onboarding partenaire ou via seed_demo_partner.sql (mode DEMO uniquement).
 
 
 -- ═══════════════════════════════════════════════════════════════════════════

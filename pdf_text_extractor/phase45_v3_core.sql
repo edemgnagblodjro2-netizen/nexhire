@@ -676,7 +676,7 @@ BEGIN
   VALUES
     (v_org, 'Certification ISO 27001', 'Atteindre la certification ISO 27001 d''ici Q4 2026.', 'certification', '🏆', 'active', 90, 58, 12000, 5, 1, 3, 1),
     (v_org, 'Programme Conformité Loi 25', 'Conformité complète à la Loi 25 avant les audits de la CAI.', 'compliance', '⚖️', 'active', 95, 82, 8000, 3, 2, 2, 2),
-    (v_org, 'Adoption IA — Accélérateur CCI3R', 'Programme d''adoption IA pour les PME membres.', 'ai_adoption', '🤖', 'active', 85, 52, 15000, 3, 0, 2, 0)
+    (v_org, 'Adoption IA — Transformation numérique', 'Programme d''adoption IA pour accélérer la transformation de l''organisation.', 'ai_adoption', '🤖', 'active', 85, 52, 15000, 3, 0, 2, 0)
   ON CONFLICT DO NOTHING;
 
 END $$;

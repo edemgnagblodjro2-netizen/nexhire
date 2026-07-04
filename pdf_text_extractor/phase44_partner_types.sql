@@ -21,7 +21,7 @@ COMMENT ON COLUMN partners.partner_type IS
   'Type d''organisation du partenaire — détermine le vocabulaire du workspace (membres/startups, cohorte/promotion, etc.)';
 
 -- 2. Mettre à jour les partenaires existants
-UPDATE partners SET partner_type = 'chamber' WHERE slug IN ('cci3r', 'demo') AND partner_type = 'chamber';
+UPDATE partners SET partner_type = 'chamber' WHERE slug = 'demo' AND partner_type = 'chamber';
 
 -- 3. Index pour filtrer par type
 CREATE INDEX IF NOT EXISTS partners_type_idx ON partners (partner_type);

@@ -111,8 +111,8 @@ $$;
 GRANT EXECUTE ON FUNCTION public.get_user_profile_by_id(uuid) TO authenticated, service_role;
 
 -- ── Résultat attendu ─────────────────────────────────────────────────────
--- Signup via /inscription?partenaire=cci3r :
---   → organizations.partner_id = (id de cci3r)
---   → users.partner_id         = (id de cci3r)
+-- Signup via /inscription?partenaire=acme-corp :
+--   → organizations.partner_id = (id du partenaire résolu par slug)
+--   → users.partner_id         = (id du partenaire)
 --   → users.role               = 'owner'
 -- get_user_profile_by_id() retourne maintenant partner_id dans son résultat.

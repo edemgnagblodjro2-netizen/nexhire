@@ -819,6 +819,15 @@
       'ws.si.reports.sub':           "Rapports d'analyse et de synthèse",
       'ws.si.settings.sub':          "Configuration de l'organisation",
 
+      /* ── Shell — états d'erreur et fataux ───────────────────────── */
+      'ws.err.load':             "Impossible de charger {name}",
+      'ws.err.conn':             "Vérifiez votre connexion et réessayez.",
+      'ws.err.retry':            'Réessayer',
+      'ws.soon.desc':            "Ce module sera disponible prochainement dans votre espace de travail.",
+      'ws.fatal.title':          'Workspace introuvable',
+      'ws.fatal.back':           "Retour à l'accueil",
+      'ws.boot.notfound':        'Workspace introuvable.',
+      'ws.boot.apperr':          "Erreur chargement des applications.",
       /* ── Portail — messages erreur/succès ────────────────────────── */
       'pl.partner.sub':              "Rejoignez l'espace {name} sur AgentHub Platform.",
       'pl.partner.invalid':          "Ce lien d'invitation n'est plus valide. Contactez votre organisation partenaire.",
@@ -1682,8 +1691,17 @@
       'ws.si.reports.sub':           'Analysis and summary reports',
       'ws.si.settings.sub':          'Organisation settings',
 
+      /* ── Shell — error & fatal states ───────────────────────────── */
+      'ws.err.load':             'Unable to load {name}',
+      'ws.err.conn':             'Check your connection and try again.',
+      'ws.err.retry':            'Retry',
+      'ws.soon.desc':            'This module will be available soon in your workspace.',
+      'ws.fatal.title':          'Workspace not found',
+      'ws.fatal.back':           'Back to home',
+      'ws.boot.notfound':        'Workspace not found.',
+      'ws.boot.apperr':          'Error loading applications.',
       /* ── Portal — error/success messages ────────────────────────── */
-      ‘pl.partner.sub’:              "Join {name}’s space on AgentHub Platform.",
+      'pl.partner.sub':              "Join {name}’s space on AgentHub Platform.",
       'pl.partner.invalid':          'This invitation link is no longer valid. Contact your partner organisation.',
       'pl.invite.org':               'your organisation',
       'pl.invite.role.user':         'User',

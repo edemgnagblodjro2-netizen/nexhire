@@ -33,10 +33,10 @@ CREATE TABLE IF NOT EXISTS partners (
   updated_at      timestamptz NOT NULL DEFAULT now()
 );
 
-COMMENT ON TABLE  partners               IS 'Partenaires de la Platform (CCI3R, chambres de commerce, etc.) — distributeurs auprès de leurs membres.';
+COMMENT ON TABLE  partners               IS 'Partenaires de la Platform (chambres de commerce, associations, incubateurs, etc.) — distributeurs auprès de leurs membres.';
 COMMENT ON COLUMN partners.slug          IS 'Identifiant URL stable et immuable — utilisé dans /workspace/{slug}.';
 COMMENT ON COLUMN partners.plan          IS 'Plan de la Platform : starter, growth, enterprise — détermine les apps disponibles.';
-COMMENT ON COLUMN partners.custom_domain IS 'Domaine personnalisé du partenaire (Phase 2) — ex: agenthub.cci3r.qc.ca.';
+COMMENT ON COLUMN partners.custom_domain IS 'Domaine personnalisé du partenaire (Phase 2) — ex: agenthub.monpartenaire.ca.';
 COMMENT ON COLUMN partners.max_orgs      IS 'Nombre maximum d''organisations membres. NULL = illimité.';
 
 CREATE INDEX IF NOT EXISTS partners_slug_idx   ON partners (slug);
@@ -51,14 +51,7 @@ DROP TRIGGER IF EXISTS partners_updated_at ON partners;
 CREATE TRIGGER partners_updated_at
   BEFORE UPDATE ON partners FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 
-INSERT INTO partners (slug, name, description, primary_color, city, region)
-VALUES (
-  'cci3r',
-  'Chambre de commerce et d''industrie de Trois-Rivières',
-  'Accompagne les entreprises de la région Mauricie dans leur transformation numérique et IA.',
-  '#1d4ed8', 'Trois-Rivières', 'Mauricie'
-)
-ON CONFLICT (slug) DO NOTHING;
+-- Aucun partenaire pré-chargé en production. Les partenaires sont créés via l'interface admin ou l'API.
 
 
 -- ═══════════════════════════════════════════════════════════════════════════
@@ -260,15 +253,7 @@ COMMENT ON COLUMN installed_apps.installed_by IS 'user_id de l''admin ayant acti
 CREATE INDEX IF NOT EXISTS installed_apps_enabled_idx
   ON installed_apps (partner_id) WHERE is_enabled = true;
 
--- Diagnostic IA activé pour CCI3R
-INSERT INTO installed_apps (partner_id, app_slug)
-SELECT p.id, 'diagnostic-ia' FROM partners p WHERE p.slug = 'cci3r'
-ON CONFLICT DO NOTHING;
-
--- Observatoire activé en mode démo pour CCI3R
-INSERT INTO installed_apps (partner_id, app_slug, config)
-SELECT p.id, 'observatoire', '{"demo_mode": true}'::jsonb FROM partners p WHERE p.slug = 'cci3r'
-ON CONFLICT DO NOTHING;
+-- Les apps installées sont configurées par partenaire lors de l'onboarding — aucune installation automatique.
 
 
 -- ═══════════════════════════════════════════════════════════════════════════

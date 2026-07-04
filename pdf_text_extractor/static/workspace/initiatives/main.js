@@ -440,8 +440,8 @@ function _demoData() {
       policy_ids:['p3'],deadline:'2026-09-30',
     },
     {
-      id:'i3',name:'Adoption IA — Accélérateur CCI3R',icon:'🤖',category:'ai_adoption',
-      status:'active',description:'Programme d\'adoption IA pour les PME membres du programme.',
+      id:'i3',name:'Adoption IA — Accélérateur PME',icon:'🤖',category:'ai_adoption',
+      status:'active',description:'Programme d\'adoption IA pour les PME membres.',
       target_score:85,current_score:52,budget_estimate:15000,
       total_decisions:3,done_decisions:0,total_playbooks:2,done_playbooks:0,
       policy_ids:[],deadline:'2026-10-31',

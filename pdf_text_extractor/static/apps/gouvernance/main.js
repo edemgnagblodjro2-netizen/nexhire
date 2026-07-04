@@ -258,7 +258,7 @@ function _renderPolitique() {
     <h3 class="gov-card-title">Informations sur votre organisation</h3>
     <div class="gov-grid2">
       <div class="gov-field"><label>Nom de l'organisation *</label>
-        <input class="gov-inp" id="pn" value="${p.nom_org||''}" placeholder="Ex: CCI3R — Chambre de Commerce et d'Industries"/></div>
+        <input class="gov-inp" id="pn" value="${p.nom_org||''}" placeholder="Ex: Acme Solutions Inc."/></div>
       <div class="gov-field"><label>Secteur d'activité</label>
         <input class="gov-inp" id="ps" value="${p.secteur||''}" placeholder="Ex: Association d'affaires"/></div>
       <div class="gov-field"><label>Responsable désigné·e (RPRP)</label>

@@ -1,4 +1,4 @@
-# Architecture — AgentHub Platform
+﻿# Architecture — AgentHub Platform
 ## myportal.nexhire.ca → Plateforme modulaire Core + Apps
 
 **Version :** 3.0 — 2026-06-25  
@@ -65,7 +65,7 @@ Cette séparation permet d'enrichir le Parcours IA (ajouter Roadmap, Suivi…) s
 ## Hiérarchie métier
 
 ```
-Partner                    ← CCI3R, Chambre Québec, réseau sectoriel…
+Partner                    ← Partenaire, Chambre Québec, réseau sectoriel…
     │
     ├── Organization        ← PME membre du partenaire
     │       ├── User
@@ -87,7 +87,7 @@ Cela communique immédiatement l'identité plateforme.
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│  AgentHub Platform · CCI3R                          [Admin] │
+│  AgentHub Platform · Partenaire                          [Admin] │
 ├────────────────┬─────────────────────────────────────────────┤
 │                │                                             │
 │  Applications  │  Contenu de l'app active                   │
@@ -237,7 +237,7 @@ myportal.nexhire.ca  (aujourd'hui → demain)
 ### Chemin de migration progressive
 
 ```
-Phase 1 (maintenant) : Parcours IA PME dans /workspace — partenaires CCI3R
+Phase 1 (maintenant) : Parcours IA PME dans /workspace — partenaires Partenaire
 Phase 2              : 2e et 3e apps Workspace
 Phase 3              : Migration des premières apps Enterprise (Finance, Agent)
 Phase 4              : Dépréciation de /app — tous les clients sur /workspace
@@ -284,7 +284,7 @@ Le rythme de migration est dicté par les clients, pas par un calendrier arbitra
 | Rôle | Qui | Comment détecté |
 |------|-----|-----------------|
 | `superadmin` | CivicAI | Email dans `SUPERADMIN_EMAILS` |
-| `workspace_admin` | Admin CCI3R | `role='owner'` + `partner_id IS NOT NULL` |
+| `workspace_admin` | Admin Partenaire | `role='owner'` + `partner_id IS NOT NULL` |
 | `org_owner` | DG d'une PME | `role='owner'`, `organization_id` défini |
 | `org_user` | Employé PME | `role='user'`, `organization_id` défini |
 | `participant` | PME anonyme | Aucun compte — session UUID créée à la volée |
@@ -302,14 +302,14 @@ GET  /api/workspace/{slug}/config    → Branding (logo, couleurs, nom)
 Réponse `GET /api/workspace/{slug}/apps` :
 ```json
 {
-  "partner": { "slug": "cci3r", "name": "CCI3R", "primary_color": "#1d4ed8" },
+  "partner": { "slug": "partenaire", "name": "partenaire", "primary_color": "#1d4ed8" },
   "apps": [
     {
       "slug": "parcours-ia",
       "name": "Parcours IA PME",
       "icon": "📊",
       "catalog_status": "installed",
-      "entry_path": "/workspace/cci3r/parcours-ia",
+      "entry_path": "/workspace/partenaire/parcours-ia",
       "version": "1.0"
     },
     {
@@ -341,14 +341,14 @@ Réponse `GET /api/workspace/{slug}/apps` :
 
 ### S2 — App Parcours IA PME
 
-Agent Atlas, scoring IMAI, PDF, dashboard CCI3R.
+Agent Atlas, scoring IMAI, PDF, dashboard Partenaire.
 
 ---
 
 ## Roadmap (idées futures — ne pas implémenter maintenant)
 
 - Marketplace public d'apps (Phase 3)
-- custom_domain par partenaire (`agenthub.cci3r.qc.ca`)
+- custom_domain par partenaire (`agenthub.partenaire.ca`)
 - API webhook pour événements app (app_installed, session_completed)
 - Tableau de bord superadmin multi-partenaires
 - Facturation par app (billing à la carte)

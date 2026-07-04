@@ -1,4 +1,4 @@
-# AgentHub Platform — Design System v1.0
+﻿# AgentHub Platform — Design System v1.0
 
 > **Règle fondamentale :** Toute valeur de couleur, espacement, rayon ou ombre doit utiliser une variable CSS définie dans ce système. Aucune valeur hardcodée dans les fichiers applicatifs.
 
@@ -347,7 +347,7 @@ Structure standardisée pour tous les graphiques, quelle que soit la librairie u
   <div class="ds-chart-body">
     <canvas id="chart-imai"></canvas>
   </div>
-  <div class="ds-chart-footer">Source : 48 diagnostics complétés · CCI3R</div>
+  <div class="ds-chart-footer">Source : 48 diagnostics complétés · Partenaire</div>
 </div>
 ```
 

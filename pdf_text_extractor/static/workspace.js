@@ -340,8 +340,8 @@ async function boot() {
       window.location.href = '/inscription';
       return;
     }
-    if (!pRes.ok) { let d = 'Workspace introuvable.'; try { d = (await pRes.json()).detail || d; } catch {} throw new Error(d); }
-    if (!aRes.ok) { let d = 'Erreur chargement apps.'; try { d = (await aRes.json()).detail || d; } catch {} throw new Error(d); }
+    if (!pRes.ok) { let d = (typeof NH_I18N !== 'undefined' ? NH_I18N.t('ws.boot.notfound') : 'Workspace not found.'); try { d = (await pRes.json()).detail || d; } catch {} throw new Error(d); }
+    if (!aRes.ok) { let d = (typeof NH_I18N !== 'undefined' ? NH_I18N.t('ws.boot.apperr') : 'Error loading applications.'); try { d = (await aRes.json()).detail || d; } catch {} throw new Error(d); }
 
     const pData    = await pRes.json();
     _state.partner = pData;
@@ -957,7 +957,7 @@ async function _navigateTo(navItem) {
       if (location.pathname !== newPath) history.pushState({ id: navItem.id }, '', newPath);
 
     } else {
-      _showComingSoon(navItem.label);
+      _showComingSoon(navItem.i18nKey ? NH_I18N.t(navItem.i18nKey) : navItem.id);
       return;
     }
 
@@ -1001,8 +1001,8 @@ async function _navigateTo(navItem) {
 
   } catch (err) {
     const isNotFound = err?.name === 'TypeError' || err?.message?.includes('Failed to fetch') || err?.message?.includes('404') || err?.message?.includes('NetworkError');
-    if (isNotFound) _showComingSoon(navItem.label);
-    else _showAppError(navItem.label, err.message);
+    if (isNotFound) _showComingSoon(navItem.i18nKey ? NH_I18N.t(navItem.i18nKey) : navItem.id);
+    else _showAppError(navItem.i18nKey ? NH_I18N.t(navItem.i18nKey) : navItem.id, err.message);
   }
 }
 
@@ -1234,36 +1234,39 @@ function _showLoading() {
 }
 
 function _showAppError(name, msg) {
+  const t = NH_I18N.t.bind(NH_I18N);
   $('ws-app-container').innerHTML = `
     <div class="ws-state">
       <div class="ds-empty">
         <div class="ds-empty-icon">⚠️</div>
-        <div class="ds-empty-title">Impossible de charger ${name}</div>
-        <div class="ds-empty-desc">${msg || 'Vérifiez votre connexion et réessayez.'}</div>
-        <button class="ds-empty-action ds-empty-action-ghost" onclick="location.reload()">Réessayer</button>
+        <div class="ds-empty-title">${t('ws.err.load').replace('{name}', name)}</div>
+        <div class="ds-empty-desc">${msg || t('ws.err.conn')}</div>
+        <button class="ds-empty-action ds-empty-action-ghost" onclick="location.reload()">${t('ws.err.retry')}</button>
       </div>
     </div>`;
 }
 
 function _showComingSoon(name) {
+  const t = NH_I18N.t.bind(NH_I18N);
   $('ws-app-container').innerHTML = `
     <div class="ws-state">
       <div class="ds-empty">
         <div class="ds-empty-icon">🚀</div>
         <div class="ds-empty-title">${name}</div>
-        <div class="ds-empty-desc">Ce module sera disponible prochainement dans votre espace de travail.</div>
+        <div class="ds-empty-desc">${t('ws.soon.desc')}</div>
       </div>
     </div>`;
 }
 
 function _showFatal(msg) {
+  const t = (typeof NH_I18N !== 'undefined') ? NH_I18N.t.bind(NH_I18N) : (k => k);
   document.body.innerHTML = `
     <div style="height:100dvh;display:flex;align-items:center;justify-content:center;background:var(--bg,#f8fafc);font-family:system-ui,sans-serif">
       <div class="ds-empty">
         <div class="ds-empty-icon">🔒</div>
-        <div class="ds-empty-title">Workspace introuvable</div>
+        <div class="ds-empty-title">${t('ws.fatal.title')}</div>
         <div class="ds-empty-desc">${msg}</div>
-        <a href="/" class="ds-empty-action ds-empty-action-ghost">Retour à l'accueil</a>
+        <a href="/" class="ds-empty-action ds-empty-action-ghost">${t('ws.fatal.back')}</a>
       </div>
     </div>`;
 }

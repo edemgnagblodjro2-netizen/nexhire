@@ -8,10 +8,10 @@
 INSERT INTO partners (slug, name, hero_title, hero_subtitle, primary_color, plan, is_active)
 VALUES (
   'demo',
-  'CCI3R',
+  'AgentHub Demo',
   'AgentHub Platform',
   'L''Enterprise Intelligence Platform propulsée par ATLAS AI.',
-  '#7c3aed',   -- violet — distinct du bleu CCI3R pour reconnaître visuellement le mode démo
+  '#7c3aed',
   'starter',
   true
 )
@@ -21,12 +21,6 @@ ON CONFLICT (slug) DO UPDATE SET
   hero_subtitle  = EXCLUDED.hero_subtitle,
   primary_color  = EXCLUDED.primary_color,
   is_active      = true;
-
--- Mettre à jour cci3r également
-UPDATE partners SET
-  hero_title    = 'AgentHub Platform',
-  hero_subtitle = 'L''Enterprise Intelligence Platform propulsée par ATLAS AI.'
-WHERE slug = 'cci3r';
 
 -- 2. Enregistrer les apps Sprint 2 dans le catalogue (idempotent)
 INSERT INTO app_registry
@@ -46,7 +40,7 @@ VALUES
   (
     'reports',
     'Rapports',
-    'Rapports individuels et régionaux de cohorte, exports CSV.',
+    'Rapports individuels et de cohorte, exports CSV.',
     '📊', 'analytics', 'app', '1.0', 'available',
     '{"min_role": "user", "min_plan": "starter"}',
     '{"core": [], "apps": ["diagnostic-ia"]}',
@@ -115,7 +109,7 @@ FROM p, (VALUES
 ) AS apps(app_slug)
 ON CONFLICT (partner_id, app_slug) DO UPDATE SET is_enabled = true;
 
--- 4. Benchmark de démonstration (mêmes données que CCI3R)
+-- 4. Benchmark de démonstration (données fictives — mode DEMO isolé)
 WITH p AS (SELECT id FROM partners WHERE slug = 'demo')
 INSERT INTO diagnostic_benchmarks (
   partner_id, period_start, sector, size_range, sample_size,
@@ -140,7 +134,4 @@ DO UPDATE SET
   is_demo    = true;
 
 -- ── Résultat attendu ────────────────────────────────────────────────
--- /workspace/demo  →  Accélérateur IA CCI3R (violet — mode démo)
--- /workspace/cci3r →  Accélérateur IA CCI3R (bleu — production)
-
-
+-- /workspace/demo  →  AgentHub Demo (violet — mode démo isolé)

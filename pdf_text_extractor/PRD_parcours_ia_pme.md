@@ -1,4 +1,4 @@
-# PRD — Parcours IA PME
+﻿# PRD — Parcours IA PME
 ## Plateforme d'évaluation, de gouvernance et d'accompagnement de la transformation IA
 
 **Version :** 0.3 — VALIDÉ · Prêt pour S2  
@@ -30,7 +30,7 @@ Un parcours guidé — l'**Indice de Maturité IA (IMAI)** — qui s'adapte au p
 **Positionnement**
 > « Pas un formulaire. Pas un chatbot générique. Un parcours de transformation IA qui s'adapte à votre réalité, vous compare à vos pairs et mesure vos progrès dans le temps. »
 
-**Nom programme pilote :** Parcours IA PME — CCI3R  
+**Nom programme pilote :** Parcours IA PME  
 **Moteur :** AgentHub / CivicAI  
 **Nom de l'agent :** **Atlas**
 
@@ -44,7 +44,7 @@ Un parcours guidé — l'**Indice de Maturité IA (IMAI)** — qui s'adapte au p
 - Motivations : compétitivité, réduction de coûts, ne pas manquer la vague IA
 - Freins : manque de temps, peur du risque, ne sait pas par où commencer
 
-### Persona 2 — L'administrateur partenaire (CCI3R)
+### Persona 2 — L'administrateur partenaire (Partenaire)
 - DG, directeur des services aux membres
 - Motivations : valoriser l'adhésion, créer des programmes différenciants, mesurer l'impact territorial
 - Besoin : vision agrégée, données pour orienter formations et événements
@@ -60,7 +60,7 @@ Un parcours guidé — l'**Indice de Maturité IA (IMAI)** — qui s'adapte au p
 ### 3.1 Parcours PME — Vue complète
 
 ```
-Invitation CCI3R (email / URL / QR code)
+Invitation Partenaire (email / URL / QR code)
           ↓
 Atlas — Introduction conversationnelle (2 min)
   · Recueille : nom entreprise, secteur, taille, défi prioritaire
@@ -101,7 +101,7 @@ Rapport comparatif : IMAI actuel vs IMAI précédent
 Plan d'action mis à jour
 ```
 
-### 3.3 Parcours administrateur CCI3R
+### 3.3 Parcours administrateur Partenaire
 
 ```
 Connexion dashboard partenaire
@@ -125,7 +125,7 @@ Avant les questions d'évaluation, Atlas engage une conversation de 2 minutes po
 
 ```
 Atlas :
-Bonjour ! Je suis Atlas, votre guide pour le Parcours IA PME de la CCI3R.
+Bonjour ! Je suis Atlas, votre guide pour le Parcours IA PME de la Partenaire.
 En moins de 10 minutes, nous allons évaluer ensemble où en est votre
 entreprise avec l'intelligence artificielle — et je vais vous proposer
 un plan d'action concret.
@@ -158,7 +158,7 @@ avec [taille] employés. Commençons !
 **Utilisation des données de l'introduction :**
 - Sector + taille → sélection des branches adaptatives
 - Défi prioritaire → personnalisation du rapport et de la feuille de route
-- Données CCI3R → enrichissement du benchmark sectoriel
+- Données Partenaire → enrichissement du benchmark sectoriel
 
 ---
 
@@ -289,7 +289,7 @@ Le benchmark permet à l'entreprise de se situer par rapport à ses pairs.
 
 | Axe | Description |
 |-----|-------------|
-| Benchmark régional | Toutes les PME participantes de la CCI3R |
+| Benchmark régional | Toutes les PME participantes de la Partenaire |
 | Benchmark sectoriel | PME du même secteur (min. 5 participants) |
 | Benchmark par taille | PME de la même tranche d'employés (min. 5 participants) |
 
@@ -312,7 +312,7 @@ Personnes                38      32       36       40
 
 ### Évolution du benchmark dans le temps
 
-Le tableau de bord CCI3R montre l'évolution du benchmark trimestriel, permettant de mesurer l'impact de leurs programmes de formation et d'accompagnement.
+Le tableau de bord Partenaire montre l'évolution du benchmark trimestriel, permettant de mesurer l'impact de leurs programmes de formation et d'accompagnement.
 
 ---
 
@@ -341,7 +341,7 @@ Une entreprise peut reprendre son évaluation tous les trimestres. Atlas compare
 Atlas :
 Bienvenue ! Vous aviez obtenu un score de 42/100 en mars 2026.
 
-Depuis votre dernière évaluation, de nombreuses PME de la CCI3R
+Depuis votre dernière évaluation, de nombreuses PME de la Partenaire
 ont progressé sur la gouvernance et la formation.
 
 Je vais concentrer nos questions sur les dimensions où vous pouvez
@@ -368,7 +368,7 @@ Dimension à travailler : Personnes (-2 pts)
 **Structure (5 pages — v0.2)**
 
 **Page 1 — Couverture**
-- Logo CCI3R + Parcours IA PME · Logo AgentHub (discret)
+- Logo Partenaire + Parcours IA PME · Logo AgentHub (discret)
 - Nom de l'entreprise · Secteur · Date
 - Score IMAI : **XX / 100**
 - Niveau : Débutant / Intermédiaire / Avancé
@@ -390,14 +390,14 @@ Dimension à travailler : Personnes (-2 pts)
 - Actions complétées (auto-déclarées)
 
 **Page 5 — Aller plus loin**
-- Prochains événements CCI3R recommandés (selon dimensions faibles)
+- Prochains événements Partenaire recommandés (selon dimensions faibles)
 - Présentation AgentHub en 3 lignes
 - QR code vers la plateforme
 - Mentions légales et confidentialité
 
 ---
 
-## 10. Tableau de bord partenaire (Observatoire CCI3R)
+## 10. Tableau de bord partenaire (Observatoire Partenaire)
 
 ### Métriques affichées
 
@@ -415,7 +415,7 @@ Dimension à travailler : Personnes (-2 pts)
 | Benchmark d'évolution | Delta | Score actuel vs T-1 |
 
 ### Règles de confidentialité
-- Aucune donnée individuelle visible par la CCI3R
+- Aucune donnée individuelle visible par la Partenaire
 - Statistiques visibles uniquement à partir de **5 participants minimum** par catégorie
 - Consentement explicite de l'entreprise au moment de l'évaluation
 - Conformité PIPEDA / Loi 25
@@ -427,7 +427,7 @@ Dimension à travailler : Personnes (-2 pts)
 ### Architecture — AgentHub Workspace
 
 Le module diagnostique est la **première application** d'une plateforme modulaire.  
-Chaque partenaire (CCI3R, autre chambre, ODE) dispose de son propre **Workspace**.  
+Chaque partenaire (Partenaire, autre chambre, ODE) dispose de son propre **Workspace**.  
 Chaque Workspace peut activer une ou plusieurs **Apps** (Diagnostic IA, Analyse RH, Revue financière…).
 
 ```
@@ -438,7 +438,7 @@ AgentHub Workspace
 └── /workspace/{slug}/apps/          → Catalogue apps (Phase 2+)
 ```
 
-Cette architecture permet de reproduire le modèle CCI3R pour tout nouveau partenaire en créant un simple enregistrement `diagnostic_partners` sans redéploiement.
+Cette architecture permet de reproduire le modèle Partenaire pour tout nouveau partenaire en créant un simple enregistrement `diagnostic_partners` sans redéploiement.
 
 ### Stack
 - **Backend :** FastAPI (Python) — `routes_diagnostic.py`
@@ -451,10 +451,10 @@ Cette architecture permet de reproduire le modèle CCI3R pour tout nouveau parte
 ### Nouvelles tables SQL
 
 ```sql
--- Partenaires (CCI3R, autres chambres, ODE…)
+-- Partenaires (Partenaire, autres chambres, ODE…)
 diagnostic_partners (
   id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  slug          text UNIQUE NOT NULL,       -- 'cci3r', 'cciqs', etc.
+  slug          text UNIQUE NOT NULL,       -- 'partenaire', 'cciqs', etc.
   name          text NOT NULL,
   logo_url      text,
   primary_color text DEFAULT '#2563eb',
@@ -539,7 +539,7 @@ POST /api/diagnostic/benchmark/refresh            → Recalcul benchmark (cron q
 
 ### Écran 1 — Accueil partenaire
 ```
-[Logo CCI3R]
+[Logo Partenaire]
 Parcours IA PME · Chambre de commerce de Trois-Rivières
 
 Évaluez la maturité IA de votre entreprise en 10 minutes.
@@ -620,9 +620,9 @@ Prochaine action recommandée :
 [📧 Recevoir un suivi dans 3 mois]
 ```
 
-### Écran 5 — Dashboard CCI3R (Observatoire)
+### Écran 5 — Dashboard Partenaire (Observatoire)
 ```
-Observatoire IA PME — CCI3R                         [Export CSV ↓]
+Observatoire IA PME — Partenaire                         [Export CSV ↓]
 Mise à jour : aujourd'hui à 14h32
 
 [42 entreprises]  [IMAI moyen : 38/100]  [Taux retour : 31%]
@@ -656,7 +656,7 @@ Top 5 défis déclarés       Top 5 actions recommandées
 | Questions adaptatives | Tronc 10 questions + jusqu'à 5 branches selon profil |
 | Scoring pondéré | IMAI /100 calculé selon poids par dimension, résultat en < 1 s |
 | Benchmark | Affiché uniquement si ≥ 5 participants dans la catégorie (sinon masqué) |
-| Rapport PDF | Généré en < 30 s, A4, lisible sur mobile, logo CCI3R en couverture |
+| Rapport PDF | Généré en < 30 s, A4, lisible sur mobile, logo Partenaire en couverture |
 | Suivi longitudinal | Email + lien magique fonctionnel, rapport comparatif généré si ≥ 2 sessions |
 | Dashboard partenaire | Données agrégées exactes, aucune donnée individuelle exposée |
 | Confidentialité | Consentement explicite avant démarrage, PIPEDA conforme |
@@ -688,7 +688,7 @@ Top 5 défis déclarés       Top 5 actions recommandées
 | 1 | Les poids par dimension (Gouvernance 30 %, etc.) sont-ils validés ? | Oui / Ajuster |
 | 2 | Le score sur 100 est-il préférable au score sur 30 de la v0.1 ? | Confirmé |
 | 3 | Le suivi longitudinal est-il dans le MVP ou en Phase 2 ? | MVP / Phase 2 |
-| 4 | Le benchmark s'affiche-t-il en mode démo (données fictives) pour la démo CCI3R ? | Oui / Non |
+| 4 | Le benchmark s'affiche-t-il en mode démo (données fictives) pour la démo Partenaire ? | Oui / Non |
 | 5 | L'email pour le suivi longitudinal est-il obligatoire ou optionnel ? | Obligatoire / Optionnel |
 | 6 | Combien de secteurs dans le menu Atlas ? (Liste fermée ou saisie libre ?) | Fermée / Libre |
 | 7 | Le nom "Atlas" pour l'agent est-il retenu ? | Oui / Autre |
@@ -701,8 +701,8 @@ Top 5 défis déclarés       Top 5 actions recommandées
 |---------|----------|---------|
 | **S1** | Conception | PRD validé · Questions finalisées · Maquettes approuvées · Tables SQL créées |
 | **S2** | Core engine | Agent Atlas · Logique adaptative · Scoring pondéré · Base de données |
-| **S3** | Rapport & Dashboard | Génération PDF · Dashboard CCI3R · Suivi longitudinal (email) |
-| **S4** | Finition | Données démo · Tests complets · Déploiement staging · Répétition démo CCI3R |
+| **S3** | Rapport & Dashboard | Génération PDF · Dashboard Partenaire · Suivi longitudinal (email) |
+| **S4** | Finition | Données démo · Tests complets · Déploiement staging · Répétition démo Partenaire |
 
 ---
 
