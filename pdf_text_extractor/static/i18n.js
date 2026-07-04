@@ -533,6 +533,160 @@
       /* Erreurs */
       'kh.error.prefix':           'Erreur',
 
+
+      /* ── Automation ──────────────────────────────────────────────── */
+      'at.title':                  'Automatisation',
+      'at.sub':                    'Workflows intelligents, déclencheurs et intégrations automatiques',
+      'at.loading':                'Chargement des workflows…',
+      'at.library.btn':            '📚 Bibliothèque',
+      'at.new.btn':                '+ Nouveau workflow',
+      'at.cancel':                 'Annuler',
+
+      /* KPIs */
+      'at.kpi.workflows':          'Workflows',
+      'at.kpi.success':            'Exécutions réussies',
+      'at.kpi.total.runs':         'Total exécutions',
+      'at.kpi.last.run':           'Dernière exécution',
+      'at.kpi.loading':            'Chargement…',
+      'at.kpi.total.sub':          'Total',
+      'at.kpi.since':              "Depuis l'activation",
+      'at.kpi.wf.active':          'Workflow actif',
+      'at.kpi.active.one':         'actif',
+      'at.kpi.active.many':        'actifs',
+      'at.kpi.never':              'Aucune',
+
+      /* Onglets */
+      'at.tab.workflows':          'Workflows',
+      'at.tab.runs':               'Exécutions',
+      'at.tab.templates':          'Bibliothèque de modèles',
+      'at.tab.new':                '+ Nouveau workflow',
+
+      /* Statuts */
+      'at.status.active':          'Actif',
+      'at.status.paused':          'En pause',
+      'at.status.draft':           'Brouillon',
+      'at.status.error':           'Erreur',
+
+      /* Carte workflow */
+      'at.wf.untitled':            'Workflow sans titre',
+      'at.wf.trigger.label':       'Déclencheur :',
+      'at.wf.last.run.label':      'Dernière exécution :',
+      'at.wf.run.now':             'Exécuter maintenant',
+
+      /* Liste workflows */
+      'at.wf.search.ph':           'Rechercher un workflow...',
+      'at.wf.filter.all':          'Tous les états',
+      'at.wf.export':              'Exporter',
+      'at.wf.empty.title':         'Aucun workflow configuré',
+      'at.wf.empty.desc':          'Automatisez vos processus répétitifs pour gagner du temps et réduire les erreurs. Commencez avec un modèle ou créez votre propre workflow.',
+      'at.wf.browse':              'Parcourir les modèles',
+      'at.wf.create':              'Créer un workflow',
+
+      /* Déclencheurs */
+      'at.triggers.desc':          "Les déclencheurs définissent quand un workflow s'exécute automatiquement. Activez ceux dont vous avez besoin.",
+      'at.triggers.cat.label':     'Catégorie :',
+
+      /* Historique exécutions */
+      'at.runs.loading':           'Chargement…',
+      'at.runs.title':             'Exécutions',
+      'at.runs.prefix':            'Exécutions —',
+      'at.runs.empty.title':       'Aucun workflow à afficher',
+      'at.runs.empty.desc':        "Créez un workflow pour commencer à voir son historique d'exécutions ici.",
+      'at.runs.none':              'Aucune exécution enregistrée pour ce workflow.',
+      'at.runs.col.date':          'Date',
+      'at.runs.col.trigger':       'Déclencheur',
+      'at.runs.col.duration':      'Durée',
+      'at.runs.col.result':        'Résultat',
+      'at.runs.col.detail':        'Détail',
+      'at.runs.ok':                '✓ Succès',
+      'at.runs.err':               '✕ Erreur',
+
+      /* Modèles */
+      'at.tmpl.search.ph':         'Rechercher un modèle...',
+      'at.tmpl.filter.all':        'Toutes les catégories',
+      'at.tmpl.use':               'Utiliser ce modèle →',
+
+      /* Nouveau workflow */
+      'at.new.form.title':         '⚡ Nouveau workflow',
+      'at.new.name.label':         'Nom du workflow *',
+      'at.new.name.ph':            'Ex: Notification après diagnostic',
+      'at.new.trigger.label':      'Déclencheur *',
+      'at.new.trigger.ph':         '-- Sélectionner --',
+      'at.new.status.label':       'État initial',
+      'at.new.desc.label':         'Description',
+      'at.new.desc.ph':            'Décrivez ce que fait ce workflow...',
+      'at.new.tip':                "💡 <strong>Prochaine étape :</strong> Après avoir créé le workflow, vous pourrez ajouter des actions (envoyer un courriel, créer un ticket, appeler une API, etc.) via l'éditeur visuel.",
+      'at.new.create.btn':         'Créer le workflow',
+      'at.new.validate':           'Veuillez remplir le nom et le déclencheur.',
+
+      /* Actions */
+      'at.run.success':            'Workflow lancé avec succès.',
+      'at.error.prefix':           'Erreur :',
+
+      /* ATLAS */
+      'at.atlas.title':            'ATLAS recommande',
+      'at.atlas.rec1':             'Commencez par le workflow <strong>Notification après diagnostic</strong> — il élimine la communication manuelle la plus fréquente et prend moins de 3 minutes à configurer.',
+      'at.atlas.rec2':             "Activez l'export hebdomadaire pour la direction — les données cohorte livrées automatiquement chaque lundi augmentent l'engagement des parties prenantes.",
+      'at.atlas.rec3':             "Configurez l'alerte de score IMAI pour détecter les PME en difficulté avant qu'elles abandonnent leur parcours d'adoption IA.",
+
+      /* Modèles — données */
+      'at.tmpl.notif.name':        'Notification après diagnostic',
+      'at.tmpl.notif.desc':        "Envoie automatiquement le rapport PDF à l'entreprise dès que le diagnostic est complété.",
+      'at.tmpl.notif.tag':         'Diagnostic',
+      'at.tmpl.reminder.name':     'Rappel relance cohorte',
+      'at.tmpl.reminder.desc':     'Rappelle aux entreprises non complétées de finir leur diagnostic 7 jours avant la clôture de la cohorte.',
+      'at.tmpl.reminder.tag':      'Cohorte',
+      'at.tmpl.crm.name':          'Synchronisation CRM',
+      'at.tmpl.crm.desc':          "Crée une fiche dans HubSpot / Salesforce dès qu'un membre complète le diagnostic.",
+      'at.tmpl.crm.tag':           'CRM',
+      'at.tmpl.gov.name':          'Approbation gouvernance',
+      'at.tmpl.gov.desc':          "Déclenche un flux d'approbation Teams quand une politique IA est générée et soumise pour révision.",
+      'at.tmpl.gov.tag':           'Gouvernance',
+      'at.tmpl.alert.name':        'Alerte anomalie score IMAI',
+      'at.tmpl.alert.desc':        "Alerte l'équipe si un score IMAI passe sous le seuil critique (< 20) pour intervention rapide.",
+      'at.tmpl.alert.tag':         'Risque',
+      'at.tmpl.export.name':       'Export hebdomadaire cohorte',
+      'at.tmpl.export.desc':       'Génère et envoie chaque lundi un rapport CSV consolidé de la cohorte avec les indicateurs clés.',
+      'at.tmpl.export.tag':        'Rapport',
+      'at.tmpl.welcome.name':      'Accueil nouveau membre',
+      'at.tmpl.welcome.desc':      "Envoie un courriel de bienvenue personnalisé et crée le workspace dès qu'un nouveau membre s'inscrit.",
+      'at.tmpl.welcome.tag':       'Onboarding',
+      'at.tmpl.summary.name':      'Résumé hebdomadaire',
+      'at.tmpl.summary.desc':      'Génère et distribue chaque vendredi un résumé IA des décisions, actions et alertes de la semaine.',
+      'at.tmpl.summary.tag':       'IA',
+      'at.tmpl.security.name':     'Alerte sécurité',
+      'at.tmpl.security.desc':     "Notifie l'administrateur et ouvre un ticket ServiceNow lors de la détection d'un incident de sécurité.",
+      'at.tmpl.security.tag':      'Sécurité',
+
+      /* Déclencheurs — données */
+      'at.trig.diag.label':        'Diagnostic complété',
+      'at.trig.diag.cat':          'AgentHub',
+      'at.trig.weekly.label':      'Planification hebdomadaire',
+      'at.trig.weekly.cat':        'Planification',
+      'at.trig.user.label':        'Nouveau membre inscrit',
+      'at.trig.user.cat':          'AgentHub',
+      'at.trig.policy.label':      'Politique soumise pour révision',
+      'at.trig.policy.cat':        'Gouvernance',
+      'at.trig.score.label':       'Score sous le seuil critique',
+      'at.trig.score.cat':         'Alertes',
+      'at.trig.sec.label':         'Incident de sécurité détecté',
+      'at.trig.sec.cat':           'Sécurité',
+      'at.trig.budget.label':      'Dépassement budgétaire',
+      'at.trig.budget.cat':        'Finance',
+      'at.trig.contract.label':    'Contrat expirant bientôt',
+      'at.trig.contract.cat':      'Contrats',
+
+      /* Catégories modèles */
+      'at.cat.diagnostic':         'Diagnostic',
+      'at.cat.cohorte':            'Cohorte',
+      'at.cat.crm':                'CRM',
+      'at.cat.gouvernance':        'Gouvernance',
+      'at.cat.risque':             'Risque',
+      'at.cat.rapport':            'Rapport',
+      'at.cat.onboarding':         'Onboarding',
+      'at.cat.securite':           'Sécurité',
+      'at.cat.ia':                 'IA',
+
       /* ── Écran de bienvenue ───────────────────────────────────────────── */
       'welcome.tagline':          'Enterprise AI Workspace',
       'welcome.atlas.status':     'Préparation de votre environnement intelligent…',
@@ -1078,6 +1232,160 @@
 
       /* Errors */
       'kh.error.prefix':           'Error',
+
+
+      /* ── Automation ──────────────────────────────────────────────── */
+      'at.title':                  'Automation',
+      'at.sub':                    'Intelligent workflows, triggers, and automatic integrations',
+      'at.loading':                'Loading workflows…',
+      'at.library.btn':            '📚 Library',
+      'at.new.btn':                '+ New workflow',
+      'at.cancel':                 'Cancel',
+
+      /* KPIs */
+      'at.kpi.workflows':          'Workflows',
+      'at.kpi.success':            'Successful runs',
+      'at.kpi.total.runs':         'Total runs',
+      'at.kpi.last.run':           'Last run',
+      'at.kpi.loading':            'Loading…',
+      'at.kpi.total.sub':          'Total',
+      'at.kpi.since':              'Since activation',
+      'at.kpi.wf.active':          'Active workflow',
+      'at.kpi.active.one':         'active',
+      'at.kpi.active.many':        'active',
+      'at.kpi.never':              'None',
+
+      /* Tabs */
+      'at.tab.workflows':          'Workflows',
+      'at.tab.runs':               'Runs',
+      'at.tab.templates':          'Template library',
+      'at.tab.new':                '+ New workflow',
+
+      /* Statuses */
+      'at.status.active':          'Active',
+      'at.status.paused':          'Paused',
+      'at.status.draft':           'Draft',
+      'at.status.error':           'Error',
+
+      /* Workflow card */
+      'at.wf.untitled':            'Untitled workflow',
+      'at.wf.trigger.label':       'Trigger:',
+      'at.wf.last.run.label':      'Last run:',
+      'at.wf.run.now':             'Run now',
+
+      /* Workflows list */
+      'at.wf.search.ph':           'Search a workflow...',
+      'at.wf.filter.all':          'All statuses',
+      'at.wf.export':              'Export',
+      'at.wf.empty.title':         'No workflows configured',
+      'at.wf.empty.desc':          'Automate your repetitive processes to save time and reduce errors. Start with a template or create your own workflow.',
+      'at.wf.browse':              'Browse templates',
+      'at.wf.create':              'Create a workflow',
+
+      /* Triggers */
+      'at.triggers.desc':          'Triggers define when a workflow runs automatically. Enable the ones you need.',
+      'at.triggers.cat.label':     'Category:',
+
+      /* Runs */
+      'at.runs.loading':           'Loading…',
+      'at.runs.title':             'Runs',
+      'at.runs.prefix':            'Runs —',
+      'at.runs.empty.title':       'No workflows to display',
+      'at.runs.empty.desc':        'Create a workflow to start seeing its run history here.',
+      'at.runs.none':              'No runs recorded for this workflow.',
+      'at.runs.col.date':          'Date',
+      'at.runs.col.trigger':       'Trigger',
+      'at.runs.col.duration':      'Duration',
+      'at.runs.col.result':        'Result',
+      'at.runs.col.detail':        'Detail',
+      'at.runs.ok':                '✓ Success',
+      'at.runs.err':               '✕ Error',
+
+      /* Templates */
+      'at.tmpl.search.ph':         'Search a template...',
+      'at.tmpl.filter.all':        'All categories',
+      'at.tmpl.use':               'Use this template →',
+
+      /* New workflow */
+      'at.new.form.title':         '⚡ New workflow',
+      'at.new.name.label':         'Workflow name *',
+      'at.new.name.ph':            'E.g.: Notification after diagnostic',
+      'at.new.trigger.label':      'Trigger *',
+      'at.new.trigger.ph':         '-- Select --',
+      'at.new.status.label':       'Initial status',
+      'at.new.desc.label':         'Description',
+      'at.new.desc.ph':            'Describe what this workflow does...',
+      'at.new.tip':                '💡 <strong>Next step:</strong> After creating the workflow, you can add actions (send an email, create a ticket, call an API, etc.) via the visual editor.',
+      'at.new.create.btn':         'Create workflow',
+      'at.new.validate':           'Please fill in the name and trigger.',
+
+      /* Actions */
+      'at.run.success':            'Workflow started successfully.',
+      'at.error.prefix':           'Error:',
+
+      /* ATLAS */
+      'at.atlas.title':            'ATLAS recommends',
+      'at.atlas.rec1':             'Start with the <strong>Notification after diagnostic</strong> workflow — it eliminates the most frequent manual communication and takes less than 3 minutes to configure.',
+      'at.atlas.rec2':             'Enable the weekly export for management — cohort data delivered automatically every Monday increases stakeholder engagement.',
+      'at.atlas.rec3':             'Set up the IMAI score alert to detect struggling SMEs before they abandon their AI adoption journey.',
+
+      /* Templates — data */
+      'at.tmpl.notif.name':        'Notification after diagnostic',
+      'at.tmpl.notif.desc':        'Automatically sends the PDF report to the company as soon as the diagnostic is completed.',
+      'at.tmpl.notif.tag':         'Diagnosis',
+      'at.tmpl.reminder.name':     'Cohort follow-up reminder',
+      'at.tmpl.reminder.desc':     'Reminds companies that have not completed their diagnostic to do so 7 days before the cohort closes.',
+      'at.tmpl.reminder.tag':      'Cohort',
+      'at.tmpl.crm.name':          'CRM synchronisation',
+      'at.tmpl.crm.desc':          'Creates a record in HubSpot / Salesforce as soon as a member completes the diagnostic.',
+      'at.tmpl.crm.tag':           'CRM',
+      'at.tmpl.gov.name':          'Governance approval',
+      'at.tmpl.gov.desc':          'Triggers a Teams approval flow when an AI policy is generated and submitted for review.',
+      'at.tmpl.gov.tag':           'Governance',
+      'at.tmpl.alert.name':        'IMAI score anomaly alert',
+      'at.tmpl.alert.desc':        'Alerts the team if an IMAI score drops below the critical threshold (< 20) for rapid intervention.',
+      'at.tmpl.alert.tag':         'Risk',
+      'at.tmpl.export.name':       'Weekly cohort export',
+      'at.tmpl.export.desc':       'Generates and sends a consolidated CSV cohort report with key indicators every Monday.',
+      'at.tmpl.export.tag':        'Report',
+      'at.tmpl.welcome.name':      'New member welcome',
+      'at.tmpl.welcome.desc':      'Sends a personalised welcome email and creates the workspace as soon as a new member signs up.',
+      'at.tmpl.welcome.tag':       'Onboarding',
+      'at.tmpl.summary.name':      'Weekly summary',
+      'at.tmpl.summary.desc':      'Generates and distributes an AI summary of the week\'s decisions, actions, and alerts every Friday.',
+      'at.tmpl.summary.tag':       'AI',
+      'at.tmpl.security.name':     'Security alert',
+      'at.tmpl.security.desc':     'Notifies the administrator and opens a ServiceNow ticket when a security incident is detected.',
+      'at.tmpl.security.tag':      'Security',
+
+      /* Triggers — data */
+      'at.trig.diag.label':        'Diagnostic completed',
+      'at.trig.diag.cat':          'AgentHub',
+      'at.trig.weekly.label':      'Weekly schedule',
+      'at.trig.weekly.cat':        'Scheduling',
+      'at.trig.user.label':        'New member registered',
+      'at.trig.user.cat':          'AgentHub',
+      'at.trig.policy.label':      'Policy submitted for review',
+      'at.trig.policy.cat':        'Governance',
+      'at.trig.score.label':       'Score below critical threshold',
+      'at.trig.score.cat':         'Alerts',
+      'at.trig.sec.label':         'Security incident detected',
+      'at.trig.sec.cat':           'Security',
+      'at.trig.budget.label':      'Budget overrun',
+      'at.trig.budget.cat':        'Finance',
+      'at.trig.contract.label':    'Contract expiring soon',
+      'at.trig.contract.cat':      'Contracts',
+
+      /* Template categories */
+      'at.cat.diagnostic':         'Diagnosis',
+      'at.cat.cohorte':            'Cohort',
+      'at.cat.crm':                'CRM',
+      'at.cat.gouvernance':        'Governance',
+      'at.cat.risque':             'Risk',
+      'at.cat.rapport':            'Report',
+      'at.cat.onboarding':         'Onboarding',
+      'at.cat.securite':           'Security',
+      'at.cat.ia':                 'AI',
 
       /* ── Welcome screen ──────────────────────────────────────────────── */
       'welcome.tagline':          'Enterprise AI Workspace',

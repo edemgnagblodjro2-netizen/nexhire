@@ -5,6 +5,8 @@
  */
 
 const _CSS_ID = 'aut-css';
+const _t   = (k) => NH_I18N.t(k);
+const _loc = () => NH_I18N.lang === 'en' ? 'en-CA' : 'fr-CA';
 const _tok = () => localStorage.getItem('nexhire_token') || '';
 const _api = async (path, opts = {}) => {
   const r = await fetch(path, {
@@ -15,7 +17,9 @@ const _api = async (path, opts = {}) => {
   if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.detail || r.statusText); }
   return r.json();
 };
-const _fmtDate = (s) => s ? new Date(s).toLocaleDateString('fr-CA', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+const _fmtDate = (s) => s
+  ? new Date(s).toLocaleDateString(_loc(), { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+  : '—';
 
 function _css() {
   if (document.getElementById(_CSS_ID)) return;
@@ -129,38 +133,51 @@ function _css() {
 
 let _st = null;
 
+// TEMPLATES: identifiants stables, labels résolus via _t() au rendu
 const TEMPLATES = [
-  { icon: '📧', name: 'Notification après diagnostic', desc: 'Envoie automatiquement le rapport PDF à l\'entreprise dès que le diagnostic est complété.', tag: 'Diagnostic', trigger: 'diagnostic.completed' },
-  { icon: '📅', name: 'Rappel relance cohorte', desc: 'Rappelle aux entreprises non complétées de finir leur diagnostic 7 jours avant la clôture de la cohorte.', tag: 'Cohorte', trigger: 'schedule.weekly' },
-  { icon: '📊', name: 'Synchronisation CRM', desc: 'Crée une fiche dans HubSpot / Salesforce dès qu\'un membre complète le diagnostic.', tag: 'CRM', trigger: 'diagnostic.completed' },
-  { icon: '✅', name: 'Approbation gouvernance', desc: 'Déclenche un flux d\'approbation Teams quand une politique IA est générée et soumise pour révision.', tag: 'Gouvernance', trigger: 'policy.submitted' },
-  { icon: '🔔', name: 'Alerte anomalie score IMAI', desc: 'Alerte l\'équipe si un score IMAI passe sous le seuil critique (< 20) pour intervention rapide.', tag: 'Risque', trigger: 'score.threshold' },
-  { icon: '🔄', name: 'Export hebdomadaire cohorte', desc: 'Génère et envoie chaque lundi un rapport CSV consolidé de la cohorte avec les indicateurs clés.', tag: 'Rapport', trigger: 'schedule.weekly' },
-  { icon: '👋', name: 'Accueil nouveau membre', desc: 'Envoie un courriel de bienvenue personnalisé et crée le workspace dès qu\'un nouveau membre s\'inscrit.', tag: 'Onboarding', trigger: 'user.created' },
-  { icon: '📝', name: 'Résumé hebdomadaire', desc: 'Génère et distribue chaque vendredi un résumé IA des décisions, actions et alertes de la semaine.', tag: 'IA', trigger: 'schedule.weekly' },
-  { icon: '🛡️', name: 'Alerte sécurité', desc: 'Notifie l\'administrateur et ouvre un ticket ServiceNow lors de la détection d\'un incident de sécurité.', tag: 'Sécurité', trigger: 'security.incident' },
+  { icon: '📧', nameKey: 'at.tmpl.notif.name',    descKey: 'at.tmpl.notif.desc',    tagKey: 'at.tmpl.notif.tag',    trigger: 'diagnostic.completed' },
+  { icon: '📅', nameKey: 'at.tmpl.reminder.name', descKey: 'at.tmpl.reminder.desc', tagKey: 'at.tmpl.reminder.tag', trigger: 'schedule.weekly' },
+  { icon: '📊', nameKey: 'at.tmpl.crm.name',      descKey: 'at.tmpl.crm.desc',      tagKey: 'at.tmpl.crm.tag',      trigger: 'diagnostic.completed' },
+  { icon: '✅', nameKey: 'at.tmpl.gov.name',      descKey: 'at.tmpl.gov.desc',      tagKey: 'at.tmpl.gov.tag',      trigger: 'policy.submitted' },
+  { icon: '🔔', nameKey: 'at.tmpl.alert.name',    descKey: 'at.tmpl.alert.desc',    tagKey: 'at.tmpl.alert.tag',    trigger: 'score.threshold' },
+  { icon: '🔄', nameKey: 'at.tmpl.export.name',   descKey: 'at.tmpl.export.desc',   tagKey: 'at.tmpl.export.tag',   trigger: 'schedule.weekly' },
+  { icon: '👋', nameKey: 'at.tmpl.welcome.name',  descKey: 'at.tmpl.welcome.desc',  tagKey: 'at.tmpl.welcome.tag',  trigger: 'user.created' },
+  { icon: '📝', nameKey: 'at.tmpl.summary.name',  descKey: 'at.tmpl.summary.desc',  tagKey: 'at.tmpl.summary.tag',  trigger: 'schedule.weekly' },
+  { icon: '🛡️', nameKey: 'at.tmpl.security.name', descKey: 'at.tmpl.security.desc', tagKey: 'at.tmpl.security.tag', trigger: 'security.incident' },
 ];
 
-// Pas de données fictives — les exécutions viennent de /api/orchestrations/{id}/runs
-
+// TRIGGERS: identifiants stables, labels résolus via _t() au rendu
 const TRIGGERS = [
-  { id: 'diagnostic.completed', label: 'Diagnostic complété', icon: '📋', category: 'AgentHub', active: false },
-  { id: 'schedule.weekly', label: 'Planification hebdomadaire', icon: '📅', category: 'Planification', active: false },
-  { id: 'user.created', label: 'Nouveau membre inscrit', icon: '👤', category: 'AgentHub', active: false },
-  { id: 'policy.submitted', label: 'Politique soumise pour révision', icon: '📝', category: 'Gouvernance', active: false },
-  { id: 'score.threshold', label: 'Score sous le seuil critique', icon: '⚠️', category: 'Alertes', active: false },
-  { id: 'security.incident', label: 'Incident de sécurité détecté', icon: '🛡️', category: 'Sécurité', active: false },
-  { id: 'budget.overrun', label: 'Dépassement budgétaire', icon: '💰', category: 'Finance', active: false },
-  { id: 'contract.expiring', label: 'Contrat expirant bientôt', icon: '📜', category: 'Contrats', active: false },
+  { id: 'diagnostic.completed', labelKey: 'at.trig.diag.label',     catKey: 'at.trig.diag.cat',      icon: '📋', active: false },
+  { id: 'schedule.weekly',      labelKey: 'at.trig.weekly.label',    catKey: 'at.trig.weekly.cat',     icon: '📅', active: false },
+  { id: 'user.created',         labelKey: 'at.trig.user.label',      catKey: 'at.trig.user.cat',       icon: '👤', active: false },
+  { id: 'policy.submitted',     labelKey: 'at.trig.policy.label',    catKey: 'at.trig.policy.cat',     icon: '📝', active: false },
+  { id: 'score.threshold',      labelKey: 'at.trig.score.label',     catKey: 'at.trig.score.cat',      icon: '⚠️', active: false },
+  { id: 'security.incident',    labelKey: 'at.trig.sec.label',       catKey: 'at.trig.sec.cat',        icon: '🛡️', active: false },
+  { id: 'budget.overrun',       labelKey: 'at.trig.budget.label',    catKey: 'at.trig.budget.cat',     icon: '💰', active: false },
+  { id: 'contract.expiring',    labelKey: 'at.trig.contract.label',  catKey: 'at.trig.contract.cat',   icon: '📜', active: false },
+];
+
+// Catégories pour le filtre modèles (tagId → i18n key)
+const CATS = [
+  ['diagnostic',  'at.cat.diagnostic'],
+  ['cohorte',     'at.cat.cohorte'],
+  ['crm',         'at.cat.crm'],
+  ['gouvernance', 'at.cat.gouvernance'],
+  ['risque',      'at.cat.risque'],
+  ['rapport',     'at.cat.rapport'],
+  ['onboarding',  'at.cat.onboarding'],
+  ['securite',    'at.cat.securite'],
+  ['ia',          'at.cat.ia'],
 ];
 
 function _renderAtlas() {
   return `<div class="aut-atlas">
-  <div class="aut-atlas-hd"><span class="aut-atlas-icon">🤖</span><div class="aut-atlas-title">ATLAS recommande</div></div>
+  <div class="aut-atlas-hd"><span class="aut-atlas-icon">🤖</span><div class="aut-atlas-title">${_t('at.atlas.title')}</div></div>
   <div class="aut-atlas-list">
-    <div class="aut-atlas-item"><span class="aut-atlas-dot"></span>Commencez par le workflow <strong>Notification après diagnostic</strong> — il élimine la communication manuelle la plus fréquente et prend moins de 3 minutes à configurer.</div>
-    <div class="aut-atlas-item"><span class="aut-atlas-dot"></span>Activez l'export hebdomadaire pour la direction — les données cohorte livrées automatiquement chaque lundi augmentent l'engagement des parties prenantes.</div>
-    <div class="aut-atlas-item"><span class="aut-atlas-dot"></span>Configurez l'alerte de score IMAI pour détecter les PME en difficulté avant qu'elles abandonnent leur parcours d'adoption IA.</div>
+    <div class="aut-atlas-item"><span class="aut-atlas-dot"></span>${_t('at.atlas.rec1')}</div>
+    <div class="aut-atlas-item"><span class="aut-atlas-dot"></span>${_t('at.atlas.rec2')}</div>
+    <div class="aut-atlas-item"><span class="aut-atlas-dot"></span>${_t('at.atlas.rec3')}</div>
   </div>
 </div>`;
 }
@@ -173,54 +190,61 @@ async function _loadWorkflows() {
 }
 
 function _wfCard(wf) {
-  const statusMap = { active: 'Actif', paused: 'En pause', draft: 'Brouillon', error: 'Erreur' };
+  const statusMap = {
+    active: _t('at.status.active'),
+    paused: _t('at.status.paused'),
+    draft:  _t('at.status.draft'),
+    error:  _t('at.status.error'),
+  };
   const st = wf.status || 'draft';
   return `<div class="aut-wf-card">
     <div class="aut-wf-icon">⚡</div>
     <div class="aut-wf-body">
-      <div class="aut-wf-name">${wf.name || wf.title || 'Workflow sans titre'}</div>
+      <div class="aut-wf-name">${wf.name || wf.title || _t('at.wf.untitled')}</div>
       <div class="aut-wf-meta">
-        <span>Déclencheur : ${wf.trigger_type || wf.trigger || '—'}</span>
-        <span>Dernière exécution : ${_fmtDate(wf.last_run_at || wf.updated_at)}</span>
+        <span>${_t('at.wf.trigger.label')} ${wf.trigger_type || wf.trigger || '—'}</span>
+        <span>${_t('at.wf.last.run.label')} ${_fmtDate(wf.last_run_at || wf.updated_at)}</span>
       </div>
     </div>
     <div class="aut-wf-status">
       <span class="aut-status ${st}">${statusMap[st] || st}</span>
-      <button class="aut-btn aut-btn-ghost" title="Exécuter maintenant" onclick="window._autRun('${wf.id}')">▶</button>
+      <button class="aut-btn aut-btn-ghost" title="${_t('at.wf.run.now')}" onclick="window._autRun('${wf.id}')">▶</button>
     </div>
   </div>`;
 }
 
 function _renderWorkflows(container, workflows) {
+  const newBtn  = `<button class="aut-btn aut-btn-primary" onclick="document.querySelector('[data-tab=new]')?.click()">${_t('at.new.btn')}</button>`;
+  const tmplBtn = `<button class="aut-btn aut-btn-primary" onclick="document.querySelector('[data-tab=templates]')?.click()">${_t('at.wf.browse')}</button>`;
+  const wfBtn   = `<button class="aut-btn aut-btn-outline" onclick="document.querySelector('[data-tab=new]')?.click()">${_t('at.wf.create')}</button>`;
+
   if (!workflows.length) {
     container.innerHTML = `${_renderAtlas()}
 <div class="aut-toolbar">
-  <input class="aut-search" placeholder="Rechercher un workflow..." type="text">
-  <button class="aut-btn aut-btn-primary" onclick="document.querySelector('[data-tab=new]')?.click()">+ Nouveau workflow</button>
+  <input class="aut-search" placeholder="${_t('at.wf.search.ph')}" type="text">
+  ${newBtn}
 </div>
 <div class="aut-empty">
   <div class="aut-empty-icon">⚡</div>
-  <div class="aut-empty-title">Aucun workflow configuré</div>
-  <div class="aut-empty-desc">Automatisez vos processus répétitifs pour gagner du temps et réduire les erreurs. Commencez avec un modèle ou créez votre propre workflow.</div>
-  <div class="aut-empty-btns">
-    <button class="aut-btn aut-btn-primary" onclick="document.querySelector('[data-tab=templates]')?.click()">Parcourir les modèles</button>
-    <button class="aut-btn aut-btn-outline" onclick="document.querySelector('[data-tab=new]')?.click()">Créer un workflow</button>
-  </div>
+  <div class="aut-empty-title">${_t('at.wf.empty.title')}</div>
+  <div class="aut-empty-desc">${_t('at.wf.empty.desc')}</div>
+  <div class="aut-empty-btns">${tmplBtn}${wfBtn}</div>
 </div>`;
     return;
   }
+
   container.innerHTML = `${_renderAtlas()}
 <div class="aut-toolbar">
-  <input class="aut-search" placeholder="Rechercher un workflow..." type="text" id="aut-wf-search">
+  <input class="aut-search" placeholder="${_t('at.wf.search.ph')}" type="text" id="aut-wf-search">
   <select class="aut-select">
-    <option value="">Tous les états</option>
-    <option value="active">Actif</option>
-    <option value="paused">En pause</option>
-    <option value="draft">Brouillon</option>
-    <option value="error">Erreur</option>
+    <option value="">${_t('at.wf.filter.all')}</option>
+    <option value="active">${_t('at.status.active')}</option>
+    <option value="paused">${_t('at.status.paused')}</option>
+    <option value="draft">${_t('at.status.draft')}</option>
+    <option value="error">${_t('at.status.error')}</option>
   </select>
-  <button class="aut-btn aut-btn-outline">Exporter</button>
-  <button class="aut-btn aut-btn-primary" onclick="document.querySelector('[data-tab=new]')?.click()">+ Nouveau workflow</button>
+  <button class="aut-btn aut-btn-outline">${_t('at.wf.export')}</button>
+  ${newBtn}
 </div>
 <div class="aut-wf-grid" id="aut-wf-list">
   ${workflows.map(_wfCard).join('')}
@@ -230,19 +254,19 @@ function _renderWorkflows(container, workflows) {
 function _renderTriggers(container) {
   container.innerHTML = `${_renderAtlas()}
 <p style="font-size:13px;color:var(--muted);margin:0 0 20px;line-height:1.6">
-  Les déclencheurs définissent quand un workflow s'exécute automatiquement. Activez ceux dont vous avez besoin.
+  ${_t('at.triggers.desc')}
 </p>
 <div style="display:flex;flex-direction:column;gap:10px">
-  ${TRIGGERS.map(t => `
+  ${TRIGGERS.map(trig => `
   <div class="aut-wf-card">
-    <div class="aut-wf-icon">${t.icon}</div>
+    <div class="aut-wf-icon">${trig.icon}</div>
     <div class="aut-wf-body">
-      <div class="aut-wf-name">${t.label}</div>
-      <div class="aut-wf-meta"><span>Catégorie : ${t.category}</span><span>ID : <code style="font-size:11px;color:var(--muted)">${t.id}</code></span></div>
+      <div class="aut-wf-name">${_t(trig.labelKey)}</div>
+      <div class="aut-wf-meta"><span>${_t('at.triggers.cat.label')} ${_t(trig.catKey)}</span><span>ID : <code style="font-size:11px;color:var(--muted)">${trig.id}</code></span></div>
     </div>
     <div class="aut-wf-status">
-      <div class="sso-toggle-track ${t.active ? 'on' : ''}" style="width:36px;height:20px;border-radius:99px;background:${t.active ? 'var(--primary)' : 'var(--bg-2)'};cursor:pointer;position:relative;border:1px solid var(--border)" onclick="this.classList.toggle('on');this.style.background=this.classList.contains('on')?'var(--primary)':'var(--bg-2)'">
-        <div style="width:14px;height:14px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2);transform:${t.active ? 'translateX(16px)' : 'none'}"></div>
+      <div class="sso-toggle-track ${trig.active ? 'on' : ''}" style="width:36px;height:20px;border-radius:99px;background:${trig.active ? 'var(--primary)' : 'var(--bg-2)'};cursor:pointer;position:relative;border:1px solid var(--border)" onclick="this.classList.toggle('on');this.style.background=this.classList.contains('on')?'var(--primary)':'var(--bg-2)'">
+        <div style="width:14px;height:14px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2);transform:${trig.active ? 'translateX(16px)' : 'none'}"></div>
       </div>
     </div>
   </div>`).join('')}
@@ -250,7 +274,7 @@ function _renderTriggers(container) {
 }
 
 async function _renderRuns(container) {
-  container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)"><div class="ds-spinner"></div><div style="margin-top:10px;font-size:13px">Chargement des workflows…</div></div>';
+  container.innerHTML = `<div style="text-align:center;padding:40px;color:var(--muted)"><div class="ds-spinner"></div><div style="margin-top:10px;font-size:13px">${_t('at.loading')}</div></div>`;
 
   let workflows = _st._wfCache;
   if (!workflows) { workflows = await _loadWorkflows(); _st._wfCache = workflows; }
@@ -258,37 +282,38 @@ async function _renderRuns(container) {
   if (!workflows.length) {
     container.innerHTML = `<div class="aut-empty">
       <div class="aut-empty-icon">⚡</div>
-      <div class="aut-empty-title">Aucun workflow à afficher</div>
-      <div class="aut-empty-desc">Créez un workflow pour commencer à voir son historique d'exécutions ici.</div>
-      <div class="aut-empty-btns"><button class="aut-btn aut-btn-primary" onclick="document.querySelector('[data-tab=new]')?.click()">+ Nouveau workflow</button></div>
+      <div class="aut-empty-title">${_t('at.runs.empty.title')}</div>
+      <div class="aut-empty-desc">${_t('at.runs.empty.desc')}</div>
+      <div class="aut-empty-btns"><button class="aut-btn aut-btn-primary" onclick="document.querySelector('[data-tab=new]')?.click()">${_t('at.new.btn')}</button></div>
     </div>`;
     return;
   }
 
-  const firstId = workflows[0].id;
-  const firstName = workflows[0].name || workflows[0].title || 'Workflow';
+  const firstId   = workflows[0].id;
+  const firstName = workflows[0].name || workflows[0].title || _t('at.tab.workflows');
+  const loadingRow = `<tr><td colspan="5" style="padding:24px;text-align:center;color:var(--muted)">${_t('at.runs.loading')}</td></tr>`;
 
   const _loadRuns = async (wfId, wfName) => {
     const tbody = document.getElementById('aut-runs-tbody');
     const title = document.getElementById('aut-runs-title');
     if (!tbody) return;
-    tbody.innerHTML = '<tr><td colspan="5" style="padding:24px;text-align:center;color:var(--muted)">Chargement…</td></tr>';
+    tbody.innerHTML = loadingRow;
     try {
       const data = await _api(`/api/orchestrations/${wfId}/runs`);
       const runs = data.runs || [];
-      if (title) title.textContent = `Exécutions — ${wfName} (${runs.length})`;
+      if (title) title.textContent = `${_t('at.runs.prefix')} ${wfName} (${runs.length})`;
       if (!runs.length) {
-        tbody.innerHTML = '<tr><td colspan="5" style="padding:24px;text-align:center;color:var(--muted)">Aucune exécution enregistrée pour ce workflow.</td></tr>';
+        tbody.innerHTML = `<tr><td colspan="5" style="padding:24px;text-align:center;color:var(--muted)">${_t('at.runs.none')}</td></tr>`;
         return;
       }
       tbody.innerHTML = runs.map(r => {
         const isOk = r.status === 'success' || r.status === 'ok';
-        const dur = (r.duration_ms != null) ? (r.duration_ms / 1000).toFixed(1) + 's' : '—';
+        const dur  = (r.duration_ms != null) ? (r.duration_ms / 1000).toFixed(1) + 's' : '—';
         return `<tr>
           <td style="color:var(--muted);white-space:nowrap">${_fmtDate(r.created_at || r.started_at)}</td>
           <td style="color:var(--muted);font-family:monospace;font-size:11px">${r.trigger_type || '—'}</td>
           <td style="color:var(--muted)">${dur}</td>
-          <td><span style="display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;background:${isOk ? '#dcfce7' : '#fee2e2'};color:${isOk ? '#16a34a' : '#dc2626'}">${isOk ? '✓ Succès' : '✕ Erreur'}</span></td>
+          <td><span style="display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;background:${isOk ? '#dcfce7' : '#fee2e2'};color:${isOk ? '#16a34a' : '#dc2626'}">${isOk ? _t('at.runs.ok') : _t('at.runs.err')}</span></td>
           <td style="color:var(--muted);font-size:11px">${r.error_message ? r.error_message.slice(0,60) : '—'}</td>
         </tr>`;
       }).join('');
@@ -300,15 +325,21 @@ async function _renderRuns(container) {
   container.innerHTML = `
 <div class="aut-toolbar" style="margin-bottom:18px">
   <select class="aut-select" id="aut-runs-wf-select" style="flex:1;max-width:340px">
-    ${workflows.map(w => `<option value="${w.id}">${w.name || w.title || 'Workflow'}</option>`).join('')}
+    ${workflows.map(w => `<option value="${w.id}">${w.name || w.title || _t('at.tab.workflows')}</option>`).join('')}
   </select>
 </div>
 <div class="aut-table-card">
-  <div class="aut-table-card-hd"><h3 id="aut-runs-title">Exécutions</h3></div>
+  <div class="aut-table-card-hd"><h3 id="aut-runs-title">${_t('at.runs.title')}</h3></div>
   <div style="overflow-x:auto">
     <table class="aut-table">
-      <thead><tr><th>Date</th><th>Déclencheur</th><th>Durée</th><th>Résultat</th><th>Détail</th></tr></thead>
-      <tbody id="aut-runs-tbody"><tr><td colspan="5" style="padding:24px;text-align:center;color:var(--muted)">Chargement…</td></tr></tbody>
+      <thead><tr>
+        <th>${_t('at.runs.col.date')}</th>
+        <th>${_t('at.runs.col.trigger')}</th>
+        <th>${_t('at.runs.col.duration')}</th>
+        <th>${_t('at.runs.col.result')}</th>
+        <th>${_t('at.runs.col.detail')}</th>
+      </tr></thead>
+      <tbody id="aut-runs-tbody">${loadingRow}</tbody>
     </table>
   </div>
 </div>`;
@@ -325,100 +356,102 @@ async function _renderRuns(container) {
 function _renderTemplates(container) {
   container.innerHTML = `${_renderAtlas()}
 <div class="aut-toolbar" style="margin-bottom:18px">
-  <input class="aut-search" placeholder="Rechercher un modèle..." type="text" style="flex:1">
+  <input class="aut-search" placeholder="${_t('at.tmpl.search.ph')}" type="text" style="flex:1">
   <select class="aut-select">
-    <option value="">Toutes les catégories</option>
-    <option>Diagnostic</option>
-    <option>Cohorte</option>
-    <option>CRM</option>
-    <option>Gouvernance</option>
-    <option>Risque</option>
-    <option>Rapport</option>
-    <option>Onboarding</option>
-    <option>Sécurité</option>
-    <option>IA</option>
+    <option value="">${_t('at.tmpl.filter.all')}</option>
+    ${CATS.map(([, k]) => `<option>${_t(k)}</option>`).join('')}
   </select>
 </div>
 <div class="aut-tmpl-grid">
-  ${TEMPLATES.map(t => `
-  <div class="aut-tmpl" onclick="window._autUseTemplate('${t.trigger}','${t.name.replace(/'/g,"\\'")}')">
-    <div class="aut-tmpl-icon">${t.icon}</div>
-    <div class="aut-tmpl-name">${t.name}</div>
-    <div class="aut-tmpl-desc">${t.desc}</div>
+  ${TEMPLATES.map(tmpl => {
+    const name = _t(tmpl.nameKey);
+    return `
+  <div class="aut-tmpl" data-trigger="${tmpl.trigger}" data-name="${name.replace(/"/g,'&quot;')}">
+    <div class="aut-tmpl-icon">${tmpl.icon}</div>
+    <div class="aut-tmpl-name">${name}</div>
+    <div class="aut-tmpl-desc">${_t(tmpl.descKey)}</div>
     <div style="display:flex;align-items:center;justify-content:space-between">
-      <span class="aut-tmpl-tag">${t.tag}</span>
-      <button class="aut-btn aut-btn-primary" style="font-size:11px;padding:5px 12px">Utiliser ce modèle →</button>
+      <span class="aut-tmpl-tag">${_t(tmpl.tagKey)}</span>
+      <button class="aut-btn aut-btn-primary" style="font-size:11px;padding:5px 12px">${_t('at.tmpl.use')}</button>
     </div>
-  </div>`).join('')}
+  </div>`; }).join('')}
 </div>`;
 
-  window._autUseTemplate = (trigger, name) => {
-    _st.view = 'new';
-    _renderView();
-    requestAnimationFrame(() => {
-      const ni = document.getElementById('aut-new-name');
-      const ti = document.getElementById('aut-new-trigger');
-      if (ni) ni.value = name;
-      if (ti) ti.value = trigger;
+  container.querySelectorAll('.aut-tmpl').forEach(card => {
+    card.addEventListener('click', () => {
+      const trigger = card.dataset.trigger;
+      const name    = card.dataset.name;
+      if (_st) _st.view = 'new';
+      _renderView();
+      requestAnimationFrame(() => {
+        const ni = document.getElementById('aut-new-name');
+        const ti = document.getElementById('aut-new-trigger');
+        if (ni) ni.value = name;
+        if (ti) ti.value = trigger;
+      });
     });
-  };
+  });
 }
 
 function _renderNew(container) {
   container.innerHTML = `
 <div class="aut-new-card">
-  <div class="aut-new-card-hd">⚡ Nouveau workflow</div>
+  <div class="aut-new-card-hd">${_t('at.new.form.title')}</div>
   <div class="aut-new-card-body">
     <div class="aut-form-grid">
       <div class="aut-form-field aut-form-full">
-        <label class="aut-form-label">Nom du workflow *</label>
-        <input class="aut-form-input" id="aut-new-name" placeholder="Ex: Notification après diagnostic">
+        <label class="aut-form-label">${_t('at.new.name.label')}</label>
+        <input class="aut-form-input" id="aut-new-name" placeholder="${_t('at.new.name.ph')}">
       </div>
       <div class="aut-form-field">
-        <label class="aut-form-label">Déclencheur *</label>
+        <label class="aut-form-label">${_t('at.new.trigger.label')}</label>
         <select class="aut-form-select" id="aut-new-trigger">
-          <option value="">-- Sélectionner --</option>
-          ${TRIGGERS.map(t => `<option value="${t.id}">${t.icon} ${t.label}</option>`).join('')}
+          <option value="">${_t('at.new.trigger.ph')}</option>
+          ${TRIGGERS.map(trig => `<option value="${trig.id}">${trig.icon} ${_t(trig.labelKey)}</option>`).join('')}
         </select>
       </div>
       <div class="aut-form-field">
-        <label class="aut-form-label">État initial</label>
+        <label class="aut-form-label">${_t('at.new.status.label')}</label>
         <select class="aut-form-select" id="aut-new-status">
-          <option value="draft">Brouillon</option>
-          <option value="active">Actif</option>
-          <option value="paused">En pause</option>
+          <option value="draft">${_t('at.status.draft')}</option>
+          <option value="active">${_t('at.status.active')}</option>
+          <option value="paused">${_t('at.status.paused')}</option>
         </select>
       </div>
       <div class="aut-form-field aut-form-full">
-        <label class="aut-form-label">Description</label>
-        <textarea class="aut-form-textarea" id="aut-new-desc" placeholder="Décrivez ce que fait ce workflow..."></textarea>
+        <label class="aut-form-label">${_t('at.new.desc.label')}</label>
+        <textarea class="aut-form-textarea" id="aut-new-desc" placeholder="${_t('at.new.desc.ph')}"></textarea>
       </div>
     </div>
     <div style="margin:20px 0 0;padding:14px;background:var(--bg-2);border-radius:var(--r);font-size:12px;color:var(--muted);line-height:1.5">
-      💡 <strong>Prochaine étape :</strong> Après avoir créé le workflow, vous pourrez ajouter des actions (envoyer un courriel, créer un ticket, appeler une API, etc.) via l'éditeur visuel.
+      ${_t('at.new.tip')}
     </div>
     <div class="aut-form-actions">
-      <button class="aut-btn aut-btn-primary" onclick="window._autCreate()">Créer le workflow</button>
-      <button class="aut-btn aut-btn-outline" onclick="_st.view='workflows';_renderView()">Annuler</button>
+      <button class="aut-btn aut-btn-primary" id="aut-create-btn">${_t('at.new.create.btn')}</button>
+      <button class="aut-btn aut-btn-outline" id="aut-cancel-btn">${_t('at.cancel')}</button>
     </div>
   </div>
 </div>`;
 
-  window._autCreate = async () => {
-    const name = document.getElementById('aut-new-name')?.value?.trim();
+  container.querySelector('#aut-cancel-btn')?.addEventListener('click', () => {
+    if (_st) _st.view = 'workflows';
+    _renderView();
+  });
+
+  container.querySelector('#aut-create-btn')?.addEventListener('click', async () => {
+    const name    = document.getElementById('aut-new-name')?.value?.trim();
     const trigger = document.getElementById('aut-new-trigger')?.value;
-    const status = document.getElementById('aut-new-status')?.value || 'draft';
-    const desc = document.getElementById('aut-new-desc')?.value?.trim();
-    if (!name || !trigger) { alert('Veuillez remplir le nom et le déclencheur.'); return; }
+    const status  = document.getElementById('aut-new-status')?.value || 'draft';
+    const desc    = document.getElementById('aut-new-desc')?.value?.trim();
+    if (!name || !trigger) { alert(_t('at.new.validate')); return; }
     try {
       await _api('/api/orchestrations', { method: 'POST', body: JSON.stringify({ name, trigger_type: trigger, status, description: desc }) });
-      _st.view = 'workflows';
-      _st._wfCache = null;
+      if (_st) { _st.view = 'workflows'; _st._wfCache = null; }
       _renderView();
     } catch (err) {
-      alert('Erreur : ' + err.message);
+      alert(`${_t('at.error.prefix')} ${err.message}`);
     }
-  };
+  });
 }
 
 async function _renderView() {
@@ -428,7 +461,7 @@ async function _renderView() {
   document.querySelectorAll('.aut-tab[data-tab]').forEach(t => t.classList.toggle('active', t.dataset.tab === view));
 
   if (view === 'workflows') {
-    area.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)"><div class="ds-spinner"></div><div style="margin-top:10px;font-size:13px">Chargement des workflows…</div></div>';
+    area.innerHTML = `<div style="text-align:center;padding:40px;color:var(--muted)"><div class="ds-spinner"></div><div style="margin-top:10px;font-size:13px">${_t('at.loading')}</div></div>`;
     if (!_st._wfCache) _st._wfCache = await _loadWorkflows();
     _renderWorkflows(area, _st._wfCache);
   } else if (view === 'triggers') {
@@ -449,28 +482,28 @@ function _renderShell(container) {
     <div class="aut-hd-left">
       <div class="aut-logo">⚡</div>
       <div>
-        <div class="aut-title">Automatisation</div>
-        <div class="aut-sub">Workflows intelligents, déclencheurs et intégrations automatiques</div>
+        <div class="aut-title">${_t('at.title')}</div>
+        <div class="aut-sub">${_t('at.sub')}</div>
       </div>
     </div>
     <div class="aut-hd-actions">
-      <button class="aut-btn aut-btn-outline" onclick="document.querySelector('[data-tab=templates]')?.click()">📚 Bibliothèque</button>
-      <button class="aut-btn aut-btn-primary" onclick="document.querySelector('[data-tab=new]')?.click()">+ Nouveau workflow</button>
+      <button class="aut-btn aut-btn-outline" onclick="document.querySelector('[data-tab=templates]')?.click()">${_t('at.library.btn')}</button>
+      <button class="aut-btn aut-btn-primary"  onclick="document.querySelector('[data-tab=new]')?.click()">${_t('at.new.btn')}</button>
     </div>
   </div>
 
   <div class="aut-kpis">
-    <div class="aut-kpi"><div class="aut-kpi-icon">⚡</div><div class="aut-kpi-val" id="aut-kpi-total">—</div><div class="aut-kpi-lbl">Workflows</div><div class="aut-kpi-sub" id="aut-kpi-active-sub">Chargement…</div></div>
-    <div class="aut-kpi"><div class="aut-kpi-icon">✅</div><div class="aut-kpi-val" id="aut-kpi-success">—</div><div class="aut-kpi-lbl">Exécutions réussies</div><div class="aut-kpi-sub ok" id="aut-kpi-runs-sub">Total</div></div>
-    <div class="aut-kpi"><div class="aut-kpi-icon">🔄</div><div class="aut-kpi-val" id="aut-kpi-total-runs">—</div><div class="aut-kpi-lbl">Total exécutions</div><div class="aut-kpi-sub ok">Depuis l'activation</div></div>
-    <div class="aut-kpi"><div class="aut-kpi-icon">🕐</div><div class="aut-kpi-val" id="aut-last-run">—</div><div class="aut-kpi-lbl">Dernière exécution</div><div class="aut-kpi-sub ok">Workflow actif</div></div>
+    <div class="aut-kpi"><div class="aut-kpi-icon">⚡</div><div class="aut-kpi-val" id="aut-kpi-total">—</div><div class="aut-kpi-lbl">${_t('at.kpi.workflows')}</div><div class="aut-kpi-sub" id="aut-kpi-active-sub">${_t('at.kpi.loading')}</div></div>
+    <div class="aut-kpi"><div class="aut-kpi-icon">✅</div><div class="aut-kpi-val" id="aut-kpi-success">—</div><div class="aut-kpi-lbl">${_t('at.kpi.success')}</div><div class="aut-kpi-sub ok" id="aut-kpi-runs-sub">${_t('at.kpi.total.sub')}</div></div>
+    <div class="aut-kpi"><div class="aut-kpi-icon">🔄</div><div class="aut-kpi-val" id="aut-kpi-total-runs">—</div><div class="aut-kpi-lbl">${_t('at.kpi.total.runs')}</div><div class="aut-kpi-sub ok">${_t('at.kpi.since')}</div></div>
+    <div class="aut-kpi"><div class="aut-kpi-icon">🕐</div><div class="aut-kpi-val" id="aut-last-run">—</div><div class="aut-kpi-lbl">${_t('at.kpi.last.run')}</div><div class="aut-kpi-sub ok">${_t('at.kpi.wf.active')}</div></div>
   </div>
 
   <div class="aut-tabs">
-    <button class="aut-tab active" data-tab="workflows">Workflows</button>
-    <button class="aut-tab" data-tab="runs">Exécutions</button>
-    <button class="aut-tab" data-tab="templates">Bibliothèque de modèles</button>
-    <button class="aut-tab" data-tab="new">+ Nouveau workflow</button>
+    <button class="aut-tab active" data-tab="workflows">${_t('at.tab.workflows')}</button>
+    <button class="aut-tab" data-tab="runs">${_t('at.tab.runs')}</button>
+    <button class="aut-tab" data-tab="templates">${_t('at.tab.templates')}</button>
+    <button class="aut-tab" data-tab="new">${_t('at.tab.new')}</button>
   </div>
 
   <div id="aut-content"></div>
@@ -488,23 +521,30 @@ function _renderShell(container) {
     _loadWorkflows(),
   ]).then(([summary, wfs]) => {
     if (wfs.length) _st._wfCache = wfs;
-    const s = summary || {};
+    const s    = summary || {};
     const _set = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
-    _set('aut-kpi-total', s.total ?? wfs.length);
-    _set('aut-kpi-success', s.total_success ?? '—');
+    _set('aut-kpi-total',      s.total ?? wfs.length);
+    _set('aut-kpi-success',    s.total_success ?? '—');
     _set('aut-kpi-total-runs', s.total_runs ?? '—');
     const activeSub = document.getElementById('aut-kpi-active-sub');
-    if (activeSub) { activeSub.textContent = `${s.active ?? 0} actif${(s.active ?? 0) > 1 ? 's' : ''}`; activeSub.className = 'aut-kpi-sub ok'; }
+    if (activeSub) {
+      const n = s.active ?? 0;
+      activeSub.textContent = `${n} ${_t(n > 1 ? 'at.kpi.active.many' : 'at.kpi.active.one')}`;
+      activeSub.className = 'aut-kpi-sub ok';
+    }
     const lastEl = document.getElementById('aut-last-run');
-    if (lastEl) { const last = wfs.find(w => w.last_run_at); lastEl.textContent = last ? _fmtDate(last.last_run_at) : 'Aucune'; }
+    if (lastEl) {
+      const last = wfs.find(w => w.last_run_at);
+      lastEl.textContent = last ? _fmtDate(last.last_run_at) : _t('at.kpi.never');
+    }
   });
 }
 
 window._autRun = async (id) => {
   try {
     await _api(`/api/orchestrations/${id}/run`, { method: 'POST' });
-    alert('Workflow lancé avec succès.');
-  } catch (err) { alert('Erreur : ' + err.message); }
+    alert(_t('at.run.success'));
+  } catch (err) { alert(`${_t('at.error.prefix')} ${err.message}`); }
 };
 
 export default {
@@ -517,7 +557,12 @@ export default {
   unmount(container) {
     _st = null;
     container.innerHTML = '';
-    ['_autRun', '_autCreate', '_autUseTemplate'].forEach(k => delete window[k]);
+    ['_autRun'].forEach(k => delete window[k]);
   },
-  refresh(ctx) { if (_st) { _st.ctx = ctx || _st.ctx; _renderView(); } },
+  refresh(ctx) {
+    if (!_st) return;
+    _st.ctx = ctx || _st.ctx;
+    _renderShell(_st.container);
+    _renderView();
+  },
 };
