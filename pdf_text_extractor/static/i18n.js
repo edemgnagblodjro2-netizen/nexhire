@@ -471,6 +471,68 @@
       'st.msg.confirm.delete':     'Supprimer définitivement ce membre ? Cette action est irréversible.',
       'st.msg.error.prefix':       'Erreur :',
 
+
+      /* ── Knowledge Hub ───────────────────────────────────────────── */
+      'kh.title':                  'Knowledge Hub',
+      'kh.sub':                    'Base de connaissance organisationnelle — documents indexés, recherche sémantique, synchronisation M365',
+      'kh.tab.search':             'Recherche IA',
+      'kh.tab.docs':               'Documents',
+      'kh.tab.m365':               'Microsoft 365',
+
+      /* Recherche */
+      'kh.search.placeholder':     'Ex. : Quelle est notre politique de télétravail ?',
+      'kh.search.btn':             'Rechercher',
+      'kh.search.loading':         'Recherche…',
+      'kh.search.answer.label':    '✨ Réponse ATLAS Knowledge',
+      'kh.search.sources':         'Sources utilisées',
+
+      /* Documents — formulaire upload */
+      'kh.docs.file.label':        'Fichier sélectionné',
+      'kh.docs.file.unit':         'Ko',
+      'kh.docs.title.label':       'Titre (optionnel)',
+      'kh.docs.title.ph':          'Laisser vide pour utiliser le nom du fichier',
+      'kh.docs.index.btn':         'Indexer le document',
+      'kh.docs.index.loading':     'Indexation…',
+      'kh.docs.cancel':            'Annuler',
+      'kh.docs.drop.title':        'Glissez un fichier ici ou cliquez pour sélectionner',
+      'kh.docs.drop.formats':      'Formats supportés : PDF, TXT, MD',
+
+      /* Documents — liste */
+      'kh.docs.doc.one':           'document indexé',
+      'kh.docs.doc.many':          'documents indexés',
+      'kh.docs.empty.title':       'Aucun document indexé',
+      'kh.docs.empty.hint':        'Uploadez des PDF ou synchronisez SharePoint pour alimenter la base de connaissance.',
+      'kh.docs.chunk.one':         'fragment',
+      'kh.docs.chunk.many':        'fragments',
+      'kh.docs.delete.title':      'Supprimer',
+      'kh.docs.indexed.ok':        'indexé',
+      'kh.docs.confirm.del.pre':   'Supprimer «',
+      'kh.docs.confirm.del.suf':   '» de la base de connaissance ?',
+
+      /* M365 */
+      'kh.m365.section':           'Sites SharePoint',
+      'kh.m365.discover.btn':      '🔍 Découvrir les sites',
+      'kh.m365.discover.loading':  'Détection…',
+      'kh.m365.sync.btn':          '🔄 Synchroniser M365',
+      'kh.m365.sync.loading':      'Synchronisation…',
+      'kh.m365.save.btn':          '💾 Sauvegarder',
+      'kh.m365.empty.title':       'Mappages SharePoint',
+      'kh.m365.empty.hint':        'Cliquez sur « Découvrir les sites » pour détecter vos bibliothèques et les associer aux départements.',
+      'kh.m365.col.site':          'Site SharePoint',
+      'kh.m365.col.dept':          'Département associé',
+      'kh.m365.all.org':           '— Organisation entière —',
+      'kh.m365.nosites.title':     'Aucun site détecté.',
+      'kh.m365.nosites.hint':      'Vérifiez que votre connecteur M365 est actif dans le module Intégrations.',
+      'kh.m365.confirm.sync':      'Lancer la synchronisation M365 ? Les documents SharePoint seront ré-indexés.',
+      'kh.m365.saved.ok':          '✅ Mappages enregistrés.',
+      'kh.m365.site.one':          'site détecté',
+      'kh.m365.site.many':         'sites détectés',
+      'kh.m365.synced.done':       'Terminé',
+      'kh.m365.indexed':           'indexé',
+
+      /* Erreurs */
+      'kh.error.prefix':           'Erreur',
+
       /* ── Écran de bienvenue ───────────────────────────────────────────── */
       'welcome.tagline':          'Enterprise AI Workspace',
       'welcome.atlas.status':     'Préparation de votre environnement intelligent…',
@@ -954,6 +1016,68 @@
       'st.msg.invite.prefix':      'Invitation sent to',
       'st.msg.confirm.delete':     'Permanently delete this member? This action is irreversible.',
       'st.msg.error.prefix':       'Error:',
+
+
+      /* ── Knowledge Hub ───────────────────────────────────────────── */
+      'kh.title':                  'Knowledge Hub',
+      'kh.sub':                    'Organisational knowledge base — indexed documents, semantic search, M365 sync',
+      'kh.tab.search':             'AI Search',
+      'kh.tab.docs':               'Documents',
+      'kh.tab.m365':               'Microsoft 365',
+
+      /* Search */
+      'kh.search.placeholder':     'E.g.: What is our remote work policy?',
+      'kh.search.btn':             'Search',
+      'kh.search.loading':         'Searching…',
+      'kh.search.answer.label':    '✨ ATLAS Knowledge Answer',
+      'kh.search.sources':         'Sources used',
+
+      /* Documents — upload form */
+      'kh.docs.file.label':        'Selected file',
+      'kh.docs.file.unit':         'KB',
+      'kh.docs.title.label':       'Title (optional)',
+      'kh.docs.title.ph':          'Leave blank to use the file name',
+      'kh.docs.index.btn':         'Index document',
+      'kh.docs.index.loading':     'Indexing…',
+      'kh.docs.cancel':            'Cancel',
+      'kh.docs.drop.title':        'Drag a file here or click to select',
+      'kh.docs.drop.formats':      'Supported formats: PDF, TXT, MD',
+
+      /* Documents — list */
+      'kh.docs.doc.one':           'indexed document',
+      'kh.docs.doc.many':          'indexed documents',
+      'kh.docs.empty.title':       'No indexed documents',
+      'kh.docs.empty.hint':        'Upload PDFs or sync SharePoint to populate the knowledge base.',
+      'kh.docs.chunk.one':         'chunk',
+      'kh.docs.chunk.many':        'chunks',
+      'kh.docs.delete.title':      'Delete',
+      'kh.docs.indexed.ok':        'indexed',
+      'kh.docs.confirm.del.pre':   'Delete «',
+      'kh.docs.confirm.del.suf':   '» from the knowledge base?',
+
+      /* M365 */
+      'kh.m365.section':           'SharePoint Sites',
+      'kh.m365.discover.btn':      '🔍 Discover sites',
+      'kh.m365.discover.loading':  'Detecting…',
+      'kh.m365.sync.btn':          '🔄 Sync M365',
+      'kh.m365.sync.loading':      'Syncing…',
+      'kh.m365.save.btn':          '💾 Save',
+      'kh.m365.empty.title':       'SharePoint Mappings',
+      'kh.m365.empty.hint':        'Click "Discover sites" to detect your libraries and map them to departments.',
+      'kh.m365.col.site':          'SharePoint Site',
+      'kh.m365.col.dept':          'Associated department',
+      'kh.m365.all.org':           '— Entire organisation —',
+      'kh.m365.nosites.title':     'No sites detected.',
+      'kh.m365.nosites.hint':      'Check that your M365 connector is active in the Integrations module.',
+      'kh.m365.confirm.sync':      'Start M365 sync? SharePoint documents will be re-indexed.',
+      'kh.m365.saved.ok':          '✅ Mappings saved.',
+      'kh.m365.site.one':          'site detected',
+      'kh.m365.site.many':         'sites detected',
+      'kh.m365.synced.done':       'Done',
+      'kh.m365.indexed':           'indexed',
+
+      /* Errors */
+      'kh.error.prefix':           'Error',
 
       /* ── Welcome screen ──────────────────────────────────────────────── */
       'welcome.tagline':          'Enterprise AI Workspace',

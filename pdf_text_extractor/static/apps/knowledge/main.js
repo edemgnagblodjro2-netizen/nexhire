@@ -382,8 +382,10 @@ let _docs       = [];
 let _container  = null;
 let _uploadFile = null;
 
-// ── API ────────────────────────────────────────────────────────────────────────
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
+function _t(key) { return NH_I18N.t(key); }
+function _locale() { return NH_I18N.lang === 'en' ? 'en-CA' : 'fr-CA'; }
 function _token() { return localStorage.getItem('nexhire_token') || ''; }
 function _hdrs(json = false) {
   const h = { Authorization: `Bearer ${_token()}` };
@@ -395,7 +397,7 @@ async function _apiFetch(url, opts = {}) {
   const r = await fetch(url, { credentials: 'include', ...opts });
   if (!r.ok) {
     const e = await r.json().catch(() => ({}));
-    throw new Error(e.detail || `Erreur ${r.status}`);
+    throw new Error(e.detail || `${_t('kh.error.prefix')} ${r.status}`);
   }
   return r.status === 204 ? null : r.json();
 }
@@ -428,7 +430,7 @@ function _esc(s) {
 
 function _fmtDate(iso) {
   if (!iso) return '—';
-  try { return new Date(iso).toLocaleDateString('fr-CA', { year:'numeric', month:'short', day:'numeric' }); }
+  try { return new Date(iso).toLocaleDateString(_locale(), { year:'numeric', month:'short', day:'numeric' }); }
   catch (_) { return iso; }
 }
 
@@ -441,8 +443,8 @@ function _mountSearch(panel) {
   panel.innerHTML = `
     <div class="kh-search-bar">
       <input class="kh-search-input" id="kh-q"
-        placeholder="Ex. : Quelle est notre politique de télétravail ?" maxlength="500">
-      <button class="kh-btn kh-btn-primary" id="kh-search-btn">Rechercher</button>
+        placeholder="${_esc(_t('kh.search.placeholder'))}" maxlength="500">
+      <button class="kh-btn kh-btn-primary" id="kh-search-btn">${_t('kh.search.btn')}</button>
     </div>
     <div id="kh-result"></div>`;
 
@@ -454,7 +456,7 @@ function _mountSearch(panel) {
     const q = input.value.trim();
     if (!q) return;
     btn.disabled = true;
-    btn.innerHTML = '<span class="kh-spin"></span>Recherche…';
+    btn.innerHTML = `<span class="kh-spin"></span>${_t('kh.search.loading')}`;
     result.innerHTML = '';
 
     try {
@@ -464,7 +466,7 @@ function _mountSearch(panel) {
       );
       const srcHtml = data.sources?.length
         ? `<div class="kh-sources">
-            <div class="kh-sources-label">Sources utilisées</div>
+            <div class="kh-sources-label">${_t('kh.search.sources')}</div>
             ${[...new Set(data.sources.map(s => s.title))].map(t =>
               `<span class="kh-source-chip">${_srcIcon(data.sources.find(s=>s.title===t)?.source_type)} ${_esc(t)}</span>`
             ).join('')}
@@ -472,7 +474,7 @@ function _mountSearch(panel) {
         : '';
       result.innerHTML = `
         <div class="kh-answer-card">
-          <div class="kh-answer-label">✨ Réponse ATLAS Knowledge</div>
+          <div class="kh-answer-label">${_t('kh.search.answer.label')}</div>
           <div class="kh-answer-text">${_md(data.answer)}</div>
           ${srcHtml}
         </div>`;
@@ -481,7 +483,7 @@ function _mountSearch(panel) {
     }
 
     btn.disabled = false;
-    btn.textContent = 'Rechercher';
+    btn.textContent = _t('kh.search.btn');
   }
 
   btn.addEventListener('click', _doSearch);
@@ -491,52 +493,55 @@ function _mountSearch(panel) {
 // ── Tab 2: Documents ──────────────────────────────────────────────────────────
 
 function _renderDocPanel(panel) {
+  const n = _docs.length;
   const formHtml = _uploadFile
     ? `<div class="kh-upload-form">
         <div class="kh-field" style="margin-bottom:10px">
-          <label>Fichier sélectionné</label>
-          <div class="kh-upload-filename">📎 ${_esc(_uploadFile.name)} (${((_uploadFile.size)/1024).toFixed(0)} Ko)</div>
+          <label>${_t('kh.docs.file.label')}</label>
+          <div class="kh-upload-filename">📎 ${_esc(_uploadFile.name)} (${((_uploadFile.size)/1024).toFixed(0)} ${_t('kh.docs.file.unit')})</div>
         </div>
         <div class="kh-field">
-          <label>Titre (optionnel)</label>
-          <input class="kh-input" id="kh-up-title" placeholder="Laisser vide pour utiliser le nom du fichier">
+          <label>${_t('kh.docs.title.label')}</label>
+          <input class="kh-input" id="kh-up-title" placeholder="${_esc(_t('kh.docs.title.ph'))}">
         </div>
         <div class="kh-upload-actions">
-          <button class="kh-btn kh-btn-primary"    id="kh-up-confirm">Indexer le document</button>
-          <button class="kh-btn kh-btn-secondary"  id="kh-up-cancel">Annuler</button>
+          <button class="kh-btn kh-btn-primary"   id="kh-up-confirm">${_t('kh.docs.index.btn')}</button>
+          <button class="kh-btn kh-btn-secondary" id="kh-up-cancel">${_t('kh.docs.cancel')}</button>
           <span id="kh-up-status"></span>
         </div>
       </div>`
     : `<div class="kh-upload-zone" id="kh-drop">
         <div class="icon">📤</div>
-        <p>Glissez un fichier ici ou cliquez pour sélectionner</p>
-        <small>Formats supportés : PDF, TXT, MD</small>
+        <p>${_t('kh.docs.drop.title')}</p>
+        <small>${_t('kh.docs.drop.formats')}</small>
       </div>`;
 
   panel.innerHTML = `
     ${formHtml}
     <div class="kh-toolbar">
-      <span class="kh-count">${_docs.length} document(s) indexé(s)</span>
+      <span class="kh-count">${n} ${_t(n !== 1 ? 'kh.docs.doc.many' : 'kh.docs.doc.one')}</span>
     </div>
     <div class="kh-doc-list">
-      ${_docs.length === 0
+      ${n === 0
         ? `<div class="kh-empty">
             <div class="icon">📂</div>
-            <strong>Aucun document indexé</strong>
-            Uploadez des PDF ou synchronisez SharePoint pour alimenter la base de connaissance.
+            <strong>${_t('kh.docs.empty.title')}</strong>
+            ${_t('kh.docs.empty.hint')}
           </div>`
-        : _docs.map(d => `
+        : _docs.map(d => {
+            const chunks = d.chunk_count ?? 0;
+            return `
           <div class="kh-doc-row">
             <div class="kh-doc-icon">${_srcIcon(d.source_type)}</div>
             <div class="kh-doc-info">
               <div class="kh-doc-name" title="${_esc(d.title)}">${_esc(d.title)}</div>
-              <div class="kh-doc-meta">${d.chunk_count} fragment(s) · ${_fmtDate(d.synced_at)}</div>
+              <div class="kh-doc-meta">${chunks} ${_t(chunks !== 1 ? 'kh.docs.chunk.many' : 'kh.docs.chunk.one')} · ${_fmtDate(d.synced_at)}</div>
             </div>
             <span class="kh-doc-badge">${_srcLabel(d.source_type)}</span>
             <button class="kh-icon-btn del"
               data-title="${_esc(d.title)}" data-type="${_esc(d.source_type)}"
-              title="Supprimer">🗑️</button>
-          </div>`).join('')}
+              title="${_t('kh.docs.delete.title')}">🗑️</button>
+          </div>`;}).join('')}
     </div>`;
 
   if (!_uploadFile) {
@@ -566,7 +571,7 @@ function _renderDocPanel(panel) {
       const status     = panel.querySelector('#kh-up-status');
       const title      = panel.querySelector('#kh-up-title')?.value.trim() || '';
       confirmBtn.disabled = true;
-      confirmBtn.innerHTML = '<span class="kh-spin"></span>Indexation…';
+      confirmBtn.innerHTML = `<span class="kh-spin"></span>${_t('kh.docs.index.loading')}`;
 
       const fd = new FormData();
       fd.append('file', _uploadFile);
@@ -579,21 +584,22 @@ function _renderDocPanel(panel) {
         _uploadFile = null;
         await _loadDocs();
         _renderDocPanel(panel);
+        const chunks = res.chunks ?? 0;
         panel.insertAdjacentHTML('afterbegin',
-          `<div class="kh-alert ok">✅ « ${_esc(res.title)} » indexé — ${res.chunks} fragment(s).</div>`);
+          `<div class="kh-alert ok">✅ « ${_esc(res.title)} » ${_t('kh.docs.indexed.ok')} — ${chunks} ${_t(chunks !== 1 ? 'kh.docs.chunk.many' : 'kh.docs.chunk.one')}.</div>`);
       } catch (e) {
         status.innerHTML = `<span style="font-size:12px;color:#dc2626">${_esc(e.message)}</span>`;
         confirmBtn.disabled = false;
-        confirmBtn.textContent = 'Indexer le document';
+        confirmBtn.textContent = _t('kh.docs.index.btn');
       }
     });
   }
 
   panel.querySelectorAll('.kh-icon-btn.del').forEach(btn => {
     btn.addEventListener('click', async () => {
-      const t = btn.dataset.title;
+      const t  = btn.dataset.title;
       const tp = btn.dataset.type;
-      if (!confirm(`Supprimer « ${t} » de la base de connaissance ?`)) return;
+      if (!confirm(`${_t('kh.docs.confirm.del.pre')} ${t} ${_t('kh.docs.confirm.del.suf')}`)) return;
       try {
         await _apiFetch(
           `/api/knowledge/documents?title=${encodeURIComponent(t)}&source_type=${encodeURIComponent(tp)}`,
@@ -614,18 +620,18 @@ function _mountM365Panel(panel) {
 
   panel.innerHTML = `
     <div class="kh-m365-section">
-      <div class="kh-section-title">Sites SharePoint</div>
+      <div class="kh-section-title">${_t('kh.m365.section')}</div>
       <div class="kh-m365-actions">
-        <button class="kh-btn kh-btn-secondary" id="kh-discover">🔍 Découvrir les sites</button>
-        <button class="kh-btn kh-btn-primary"   id="kh-sync">🔄 Synchroniser M365</button>
-        <button class="kh-btn kh-btn-secondary" id="kh-save" style="display:none">💾 Sauvegarder</button>
+        <button class="kh-btn kh-btn-secondary" id="kh-discover">${_t('kh.m365.discover.btn')}</button>
+        <button class="kh-btn kh-btn-primary"   id="kh-sync">${_t('kh.m365.sync.btn')}</button>
+        <button class="kh-btn kh-btn-secondary" id="kh-save" style="display:none">${_t('kh.m365.save.btn')}</button>
       </div>
       <div id="kh-m365-status"></div>
       <div id="kh-m365-table">
         <div class="kh-empty">
           <div class="icon">☁️</div>
-          <strong>Mappages SharePoint</strong>
-          Cliquez sur "Découvrir les sites" pour détecter vos bibliothèques et les associer aux départements.
+          <strong>${_t('kh.m365.empty.title')}</strong>
+          ${_t('kh.m365.empty.hint')}
         </div>
       </div>
     </div>`;
@@ -640,20 +646,20 @@ function _mountM365Panel(panel) {
 
   function _renderTable() {
     if (!_mappings.length) {
-      tableEl.innerHTML = `<div class="kh-empty"><div class="icon">☁️</div><strong>Aucun site détecté.</strong>Vérifiez que votre connecteur M365 est actif dans le module Intégrations.</div>`;
+      tableEl.innerHTML = `<div class="kh-empty"><div class="icon">☁️</div><strong>${_t('kh.m365.nosites.title')}</strong>${_t('kh.m365.nosites.hint')}</div>`;
       saveBtn.style.display = 'none';
       return;
     }
     tableEl.innerHTML = `
       <table class="kh-mapping-table">
-        <thead><tr><th>Site SharePoint</th><th>Département associé</th></tr></thead>
+        <thead><tr><th>${_t('kh.m365.col.site')}</th><th>${_t('kh.m365.col.dept')}</th></tr></thead>
         <tbody>
           ${_mappings.map(m => `
             <tr>
               <td>${_esc(m.site_name || m.site_id)}</td>
               <td>
                 <select class="kh-mapping-select" data-site="${_esc(m.site_id)}">
-                  <option value="">— Organisation entière —</option>
+                  <option value="">${_t('kh.m365.all.org')}</option>
                   ${_depts.map(d =>
                     `<option value="${_esc(d.id)}" ${m.dept_id === d.id ? 'selected' : ''}>${_esc(d.name)}</option>`
                   ).join('')}
@@ -665,7 +671,6 @@ function _mountM365Panel(panel) {
     saveBtn.style.display = 'inline-flex';
   }
 
-  // Load existing mappings
   (async () => {
     try {
       const d = await _apiFetch('/api/knowledge/sharepoint-mappings', { headers: _hdrs() });
@@ -676,16 +681,19 @@ function _mountM365Panel(panel) {
 
   panel.querySelector('#kh-discover')?.addEventListener('click', async () => {
     const btn = panel.querySelector('#kh-discover');
-    btn.disabled = true; btn.innerHTML = '<span class="kh-spin"></span>Détection…';
+    btn.disabled = true;
+    btn.innerHTML = `<span class="kh-spin"></span>${_t('kh.m365.discover.loading')}`;
     statusEl.innerHTML = '';
     try {
       await _apiFetch('/api/knowledge/discover-sharepoint-sites', { method: 'POST', headers: _hdrs() });
       const d = await _apiFetch('/api/knowledge/sharepoint-mappings', { headers: _hdrs() });
       _mappings = d.mappings || []; _depts = d.departments || [];
       _renderTable();
-      _showStatus(`✅ ${_mappings.length} site(s) détecté(s).`, 'ok');
+      const n = _mappings.length;
+      _showStatus(`✅ ${n} ${_t(n !== 1 ? 'kh.m365.site.many' : 'kh.m365.site.one')}.`, 'ok');
     } catch (e) { _showStatus(e.message, 'err'); }
-    btn.disabled = false; btn.textContent = '🔍 Découvrir les sites';
+    btn.disabled = false;
+    btn.textContent = _t('kh.m365.discover.btn');
   });
 
   saveBtn.addEventListener('click', async () => {
@@ -696,21 +704,24 @@ function _mountM365Panel(panel) {
       await _apiFetch('/api/knowledge/sharepoint-mappings', {
         method: 'PUT', headers: _hdrs(true), body: JSON.stringify(payload),
       });
-      _showStatus('✅ Mappages enregistrés.', 'ok');
+      _showStatus(_t('kh.m365.saved.ok'), 'ok');
     } catch (e) { _showStatus(e.message, 'err'); }
   });
 
   panel.querySelector('#kh-sync')?.addEventListener('click', async () => {
     const btn = panel.querySelector('#kh-sync');
-    if (!confirm('Lancer la synchronisation M365 ? Les documents SharePoint seront ré-indexés.')) return;
-    btn.disabled = true; btn.innerHTML = '<span class="kh-spin"></span>Synchronisation…';
+    if (!confirm(_t('kh.m365.confirm.sync'))) return;
+    btn.disabled = true;
+    btn.innerHTML = `<span class="kh-spin"></span>${_t('kh.m365.sync.loading')}`;
     statusEl.innerHTML = '';
     try {
       const res = await _apiFetch('/api/knowledge/sync-m365', { method: 'POST', headers: _hdrs() });
-      _showStatus(`✅ Terminé — ${res.indexed ?? 0} document(s) indexé(s).`, 'ok');
+      const n = res.indexed ?? 0;
+      _showStatus(`✅ ${_t('kh.m365.synced.done')} — ${n} ${_t(n !== 1 ? 'kh.docs.doc.many' : 'kh.docs.doc.one')}.`, 'ok');
       await _loadDocs();
     } catch (e) { _showStatus(e.message, 'err'); }
-    btn.disabled = false; btn.textContent = '🔄 Synchroniser M365';
+    btn.disabled = false;
+    btn.textContent = _t('kh.m365.sync.btn');
   });
 }
 
@@ -722,14 +733,14 @@ async function _mount(container) {
   container.innerHTML = CSS + `
   <div class="kh-root">
     <div class="kh-header">
-      <h1>📚 Knowledge Hub</h1>
-      <p>Base de connaissance organisationnelle — documents indexés, recherche sémantique, synchronisation M365</p>
+      <h1>📚 ${_t('kh.title')}</h1>
+      <p>${_t('kh.sub')}</p>
     </div>
 
     <div class="kh-tabs">
-      <button class="kh-tab active" data-tab="search">Recherche IA</button>
-      <button class="kh-tab" data-tab="docs">Documents</button>
-      <button class="kh-tab" data-tab="m365">Microsoft 365</button>
+      <button class="kh-tab active" data-tab="search">${_t('kh.tab.search')}</button>
+      <button class="kh-tab" data-tab="docs">${_t('kh.tab.docs')}</button>
+      <button class="kh-tab" data-tab="m365">${_t('kh.tab.m365')}</button>
     </div>
 
     <div id="kh-panel-search" class="kh-panel active"></div>
