@@ -6,6 +6,7 @@
 const API = '/api/diagnostic';
 
 let _st = null;
+let _el = null;
 
 function _render(el) {
   el.innerHTML = `
