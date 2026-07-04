@@ -354,8 +354,30 @@ async function _reload(container) {
 async function _load(container) {
   container.innerHTML = `<div class="int"><div class="int-loader"><div class="int-spinner"></div><span>Chargement des connecteurs…</span></div></div>`;
 
+  if (!_token()) {
+    container.innerHTML = `<div class="int"><div class="ds-empty" style="padding:64px 24px;text-align:center">
+      <div class="ds-empty-icon">🔒</div>
+      <div class="ds-empty-title">Connexion requise</div>
+      <div class="ds-empty-desc">Connectez-vous pour accéder aux intégrations et connecteurs de votre organisation.</div>
+      <a href="/inscription" class="ds-empty-action">Se connecter</a>
+    </div></div>`;
+    return;
+  }
+
   let connected = [];
-  try { connected = await _api('/api/connectors') || []; } catch {}
+  try {
+    connected = await _api('/api/connectors') || [];
+  } catch (e) {
+    if (String(e.message) === '401') {
+      container.innerHTML = `<div class="int"><div class="ds-empty" style="padding:64px 24px;text-align:center">
+        <div class="ds-empty-icon">🔒</div>
+        <div class="ds-empty-title">Session expirée</div>
+        <div class="ds-empty-desc">Votre session a expiré. Reconnectez-vous pour accéder aux intégrations.</div>
+        <a href="/inscription" class="ds-empty-action">Se reconnecter</a>
+      </div></div>`;
+      return;
+    }
+  }
 
   const connectedCount = CONNECTORS.filter(c => connected.find(l => l.connector_type === c.type && l.status === 'active')).length;
   let activeFilter = 'Tous';

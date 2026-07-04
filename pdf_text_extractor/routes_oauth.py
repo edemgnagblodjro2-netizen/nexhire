@@ -30,6 +30,7 @@ router = APIRouter(prefix="/api/connectors", tags=["connectors-oauth"])
 
 _STATE_TTL = 10  # minutes
 APP_URL = os.environ.get("APP_URL", "https://myportal.nexhire.ca")
+PORTAL_URL = os.environ.get("PORTAL_URL", APP_URL)
 # URL de callback unique pour tous les connecteurs OAuth
 OAUTH_CALLBACK_URL = os.environ.get("BASE_URL", APP_URL) + "/api/connectors/oauth/callback"
 
@@ -481,9 +482,9 @@ def oauth_callback(
     )
     _slug = state_data.get("partner_slug", "")
     _dest = (
-        f"/workspace/{_slug}/integrations?connected={connector_type}"
+        f"{PORTAL_URL}/workspace/{_slug}/integrations?connected={connector_type}"
         if _slug
-        else f"/?connected={connector_type}&tab=connectors"
+        else f"{PORTAL_URL}/?connected={connector_type}&tab=connectors"
     )
     return RedirectResponse(url=_dest, status_code=302)
 
