@@ -44,6 +44,10 @@ python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
 addopts = "-v --tb=short"
+markers = [
+    "auth: tests nécessitant NEXHIRE_TEST_TOKEN ou EMAIL+PASSWORD",
+    "slow: tests longs (navigation multi-modules)",
+]
 
 [tool.coverage.run]
 source = ["."]
