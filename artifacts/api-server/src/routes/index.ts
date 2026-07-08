@@ -23,6 +23,8 @@ import tenantAuthRouter from "./tenant-auth";
 import queueRouter from "./queue";
 import attentezeroRouter from "./attentezero";
 import endorsementsRouter from "./endorsements";
+import fairrentRouter from "./fairrent";
+import mobileAuthRouter from "./mobile-auth";
 
 // Pivot v1.0.33 — sensitive-data modules retired:
 // `clients`, `appointments`, `team`, and the activity-feed endpoints have been
@@ -58,5 +60,7 @@ router.use("/tenant-auth", tenantAuthRouter);
 router.use(queueRouter);
 router.use("/", attentezeroRouter);
 router.use(endorsementsRouter);
+router.use(fairrentRouter);
+router.use(mobileAuthRouter);
 
 export default router;
