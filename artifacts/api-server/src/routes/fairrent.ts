@@ -2,6 +2,7 @@ import { Router } from "express";
 import { sql } from "drizzle-orm";
 import { db } from "@workspace/db";
 import { logger } from "../lib/logger";
+import { runLogisQuebecScraper, LQ_CITIES } from "../scrapers/logisquebec.js";
 
 const router = Router();
 
@@ -1442,6 +1443,48 @@ router.get("/fairrent/admin/pipeline", async (req, res) => {
     logger.error({ err }, "admin/pipeline error");
     return res.status(500).json({ error: "server_error" });
   }
+});
+
+// ── POST /api/fairrent/scrape/logisquebec — Lance le scraper en arrière-plan ─
+// Authentification : header x-fairrent-key = process.env.FAIRRENT_SCRAPER_KEY
+// Body (optionnel) : { max_pages?: number, cities?: string[] }
+// Ex: curl -X POST .../api/fairrent/scrape/logisquebec \
+//   -H "x-fairrent-key: $KEY" -H "Content-Type: application/json" \
+//   -d '{"max_pages":50,"cities":["Montréal"]}'
+router.post("/fairrent/scrape/logisquebec", (req, res) => {
+  const apiKey = req.headers["x-fairrent-key"] as string | undefined;
+  if (!apiKey || apiKey !== process.env.FAIRRENT_SCRAPER_KEY) {
+    return res.status(401).json({ error: "unauthorized" });
+  }
+
+  const maxPages = Math.min(
+    parseInt(String((req.body as Record<string, unknown>)?.max_pages ?? "30"), 10) || 30,
+    500,
+  );
+  const citiesRaw = (req.body as Record<string, unknown>)?.cities;
+  const cities    = Array.isArray(citiesRaw) ? (citiesRaw as string[]) : undefined;
+  const available = LQ_CITIES.map(c => c.city);
+
+  // Respond immediately — scraper runs in background
+  res.json({
+    status:    "started",
+    maxPages,
+    cities:    cities ?? "all",
+    available,
+    engine:    "logisquebec-v1",
+    note:      "Résultats loggés côté serveur. Vérifier /api/fairrent/health ou /api/fairrent/admin/stats.",
+  });
+
+  // Fire and forget
+  runLogisQuebecScraper({ maxPages, cities })
+    .then(results => {
+      const total = results.reduce(
+        (a, r) => ({ inserted: a.inserted + r.inserted, updated: a.updated + r.updated, skipped: a.skipped + r.skipped }),
+        { inserted: 0, updated: 0, skipped: 0 },
+      );
+      logger.info({ results, total }, "logisquebec scraper completed");
+    })
+    .catch(err => logger.error({ err }, "logisquebec scraper fatal error"));
 });
 
 // ── GET /api/fairrent/health — Public system status (no auth required) ───────
