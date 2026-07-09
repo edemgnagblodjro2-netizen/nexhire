@@ -129,6 +129,16 @@ const MARKET_REFERENCE: Record<string, MarketRef> = {
     evolution_pct: 2.2, avg_score: 72, source: "SCHL 2025",
     neighborhoods: [],
   },
+  hamilton: {
+    display_name: "Hamilton", province: "ON",
+    avg_price: 1780, p25_price: 1320, p50_price: 1700, p75_price: 2100,
+    evolution_pct: 3.4, avg_score: 70, source: "SCHL / Rentals.ca 2025",
+    neighborhoods: [
+      { name: "Durand",         avg_price: 1850, avg_score: 71, listing_count: 48 },
+      { name: "Strathcona",     avg_price: 1650, avg_score: 73, listing_count: 39 },
+      { name: "Kirkendall",     avg_price: 1720, avg_score: 72, listing_count: 44 },
+    ],
+  },
   halifax: {
     display_name: "Halifax", province: "NS",
     avg_price: 1870, p25_price: 1400, p50_price: 1800, p75_price: 2250,
