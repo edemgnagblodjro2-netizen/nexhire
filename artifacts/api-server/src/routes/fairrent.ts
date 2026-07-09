@@ -3,6 +3,7 @@ import { sql } from "drizzle-orm";
 import { db } from "@workspace/db";
 import { logger } from "../lib/logger";
 import { runLogisQuebecScraper, LQ_CITIES } from "../scrapers/logisquebec.js";
+import Stripe from "stripe";
 
 const router = Router();
 
@@ -611,10 +612,58 @@ router.get("/fairrent/market", async (req, res) => {
   }
 });
 
+// ── FairRent Subscription Middleware ─────────────────────────────────────────
+
+const PLAN_TIER: Record<string, number> = { locataire: 1, proprietaire: 2, pro: 3 };
+
+async function fairRentAuth(req: any, res: any, next: () => void, minPlan?: string): Promise<void> {
+  const authHeader = req.headers["authorization"] as string | undefined;
+  const token = authHeader?.startsWith("Bearer ") ? authHeader.slice(7) : null;
+  if (!token) { res.status(401).json({ error: "auth_required" }); return; }
+
+  const supaUrl = process.env.SUPABASE_URL;
+  const supaKey = process.env.SUPABASE_SERVICE_KEY;
+  if (!supaUrl || !supaKey) { res.status(503).json({ error: "auth_unavailable" }); return; }
+
+  let userId: string | null = null;
+  let email: string | null  = null;
+  try {
+    const r = await fetch(`${supaUrl}/auth/v1/user`, {
+      headers: { "apikey": supaKey, "Authorization": `Bearer ${token}` },
+    });
+    if (!r.ok) { res.status(401).json({ error: "token_invalid" }); return; }
+    const u = await r.json() as { id?: string; email?: string };
+    userId = u.id ?? null;
+    email  = u.email ?? null;
+  } catch { res.status(503).json({ error: "auth_unavailable" }); return; }
+
+  if (!userId || !email) { res.status(401).json({ error: "token_invalid" }); return; }
+
+  try {
+    const result = await db.execute(sql`
+      SELECT plan, status FROM fr_subscriptions
+      WHERE email = ${email} AND status IN ('active', 'trialing')
+      LIMIT 1
+    `);
+    const sub = (result as unknown as { rows?: { plan: string; status: string }[] }).rows?.[0];
+    if (!sub) { res.status(403).json({ error: "subscription_required" }); return; }
+    if (minPlan && (PLAN_TIER[sub.plan] ?? 0) < (PLAN_TIER[minPlan] ?? 1)) {
+      res.status(403).json({ error: "plan_upgrade_required", required: minPlan, current: sub.plan });
+      return;
+    }
+    req.fairRentUser = { id: userId, email, plan: sub.plan, status: sub.status };
+    next();
+  } catch { res.status(503).json({ error: "db_unavailable" }); }
+}
+
+function requireSub(minPlan?: string) {
+  return (req: any, res: any, next: () => void) => fairRentAuth(req, res, next, minPlan);
+}
+
 // GET /api/fairrent/discover — Discovery Engine (Sprint 3)
 // Discovery Score = 40% FairRent + 25% Budget + 15% Quartier + 10% Transport (placeholder 50) + 10% Fraîcheur
 // Performance : fonctionne de 10 à 100k annonces sans modification de code (index fr_listings_discover_*)
-router.get("/fairrent/discover", async (req, res) => {
+router.get("/fairrent/discover", requireSub("locataire"), async (req: any, res: any) => {
   try {
     const pageNum = Math.max(1, parseInt(String(req.query.page ?? "1"), 10) || 1);
     const LIMIT = 20;
@@ -705,7 +754,7 @@ router.get("/fairrent/discover", async (req, res) => {
     const total = Number(rows[0]?.total_count ?? 0);
 
     // Fire-and-forget : enregistrement dans search_history (anonyme ou authentifié)
-    const searchUserId = req.isAuthenticated() ? ((req.user as any)?.id ?? null) : null;
+    const searchUserId = (req as any).fairRentUser?.id ?? null;
     db.execute(sql`
       INSERT INTO search_history
         (user_id, city, neighborhood, min_price, max_price, bedrooms, parking, pets, result_count)
@@ -726,12 +775,9 @@ router.get("/fairrent/discover", async (req, res) => {
   }
 });
 
-// POST /api/fairrent/saved-properties — Sauvegarder une annonce (auth requise)
-router.post("/fairrent/saved-properties", async (req, res) => {
-  if (!req.isAuthenticated() || !(req.user as any)?.id) {
-    return res.status(401).json({ error: "non_authentifie" });
-  }
-  const userId   = (req.user as any).id as string;
+// POST /api/fairrent/saved-properties — Sauvegarder une annonce (abonnement requis)
+router.post("/fairrent/saved-properties", requireSub(), async (req: any, res: any) => {
+  const userId = req.fairRentUser.id as string;
   const listingId = typeof req.body?.listing_id === "string" ? req.body.listing_id.trim() : null;
 
   if (!listingId || !/^[0-9a-f-]{36}$/i.test(listingId)) {
@@ -761,11 +807,8 @@ router.post("/fairrent/saved-properties", async (req, res) => {
 });
 
 // GET /api/fairrent/saved-properties — Lister les annonces sauvegardées (auth requise)
-router.get("/fairrent/saved-properties", async (req, res) => {
-  if (!req.isAuthenticated() || !(req.user as any)?.id) {
-    return res.status(401).json({ error: "non_authentifie" });
-  }
-  const userId = (req.user as any).id as string;
+router.get("/fairrent/saved-properties", requireSub(), async (req: any, res: any) => {
+  const userId = req.fairRentUser.id as string;
   const page   = Math.max(1, parseInt(String(req.query.page ?? "1"), 10) || 1);
   const limit  = 20;
   const offset = (page - 1) * limit;
@@ -799,12 +842,9 @@ router.get("/fairrent/saved-properties", async (req, res) => {
 });
 
 // POST /api/fairrent/search-alerts — Créer une alerte (auth requise)
-router.post("/fairrent/search-alerts", async (req, res) => {
-  if (!req.isAuthenticated() || !(req.user as any)?.id) {
-    return res.status(401).json({ error: "non_authentifie" });
-  }
-  const userId    = (req.user as any).id    as string;
-  const userEmail = (req.user as any).email as string | null ?? null;
+router.post("/fairrent/search-alerts", requireSub(), async (req: any, res: any) => {
+  const userId    = req.fairRentUser.id    as string;
+  const userEmail = req.fairRentUser.email as string;
 
   const str2 = (v: unknown, max = 200): string | null =>
     typeof v === "string" && v.trim() ? v.trim().slice(0, max) : null;
@@ -845,12 +885,9 @@ router.post("/fairrent/search-alerts", async (req, res) => {
   }
 });
 
-// GET /api/fairrent/search-alerts — Lister les alertes (auth requise)
-router.get("/fairrent/search-alerts", async (req, res) => {
-  if (!req.isAuthenticated() || !(req.user as any)?.id) {
-    return res.status(401).json({ error: "non_authentifie" });
-  }
-  const userId = (req.user as any).id as string;
+// GET /api/fairrent/search-alerts — Lister les alertes (abonnement requis)
+router.get("/fairrent/search-alerts", requireSub(), async (req: any, res: any) => {
+  const userId = req.fairRentUser.id as string;
   try {
     const result = await db.execute(sql`
       SELECT id, city, neighborhood, province, query_text,
@@ -869,11 +906,8 @@ router.get("/fairrent/search-alerts", async (req, res) => {
 });
 
 // PATCH /api/fairrent/search-alerts/:id/toggle — Activer / désactiver
-router.patch("/fairrent/search-alerts/:id/toggle", async (req, res) => {
-  if (!req.isAuthenticated() || !(req.user as any)?.id) {
-    return res.status(401).json({ error: "non_authentifie" });
-  }
-  const userId = (req.user as any).id as string;
+router.patch("/fairrent/search-alerts/:id/toggle", requireSub(), async (req: any, res: any) => {
+  const userId = req.fairRentUser.id as string;
   const { id } = req.params;
   if (!id || !/^[0-9a-f-]{36}$/i.test(id)) {
     return res.status(400).json({ error: "id_invalide" });
@@ -894,12 +928,9 @@ router.patch("/fairrent/search-alerts/:id/toggle", async (req, res) => {
   }
 });
 
-// DELETE /api/fairrent/search-alerts/:id — Supprimer (soft delete, auth requise)
-router.delete("/fairrent/search-alerts/:id", async (req, res) => {
-  if (!req.isAuthenticated() || !(req.user as any)?.id) {
-    return res.status(401).json({ error: "non_authentifie" });
-  }
-  const userId = (req.user as any).id as string;
+// DELETE /api/fairrent/search-alerts/:id — Supprimer (soft delete, abonnement requis)
+router.delete("/fairrent/search-alerts/:id", requireSub(), async (req: any, res: any) => {
+  const userId = req.fairRentUser.id as string;
   const { id } = req.params;
   if (!id || !/^[0-9a-f-]{36}$/i.test(id)) {
     return res.status(400).json({ error: "id_invalide" });
@@ -917,12 +948,9 @@ router.delete("/fairrent/search-alerts/:id", async (req, res) => {
   }
 });
 
-// DELETE /api/fairrent/saved-properties/:listingId — Unsave (soft delete, auth requise)
-router.delete("/fairrent/saved-properties/:listingId", async (req, res) => {
-  if (!req.isAuthenticated() || !(req.user as any)?.id) {
-    return res.status(401).json({ error: "non_authentifie" });
-  }
-  const userId    = (req.user as any).id as string;
+// DELETE /api/fairrent/saved-properties/:listingId — Unsave (soft delete, abonnement requis)
+router.delete("/fairrent/saved-properties/:listingId", requireSub(), async (req: any, res: any) => {
+  const userId = req.fairRentUser.id as string;
   const { listingId } = req.params;
   if (!listingId || !/^[0-9a-f-]{36}$/i.test(listingId)) {
     return res.status(400).json({ error: "listing_id_invalide" });
@@ -1574,5 +1602,195 @@ router.get("/fairrent/health", async (_req, res) => {
   });
 });
 
-export default router;
+// ── Stripe FairRent ──────────────────────────────────────────────────────────
 
+const FAIRRENT_PLANS: Record<string, string | undefined> = {
+  locataire:    process.env.Plan_Locataire_KEY,
+  proprietaire: process.env.Plan_Proprietaire_KEY,
+  pro:          process.env.Plan_Pro_KEY,
+};
+
+function getStripe(): Stripe {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) throw new Error("STRIPE_SECRET_KEY not set");
+  return new Stripe(key, { apiVersion: "2025-11-17.clover" });
+}
+
+// POST /api/fairrent/checkout
+router.post("/fairrent/checkout", async (req: any, res: any) => {
+  const { plan, success_url, cancel_url, customer_email } = req.body ?? {};
+  const priceId = FAIRRENT_PLANS[plan as string];
+  if (!priceId) {
+    return res.status(400).json({ error: "plan_invalid", valid: Object.keys(FAIRRENT_PLANS) });
+  }
+  if (!success_url || !cancel_url) {
+    return res.status(400).json({ error: "success_url et cancel_url requis" });
+  }
+  try {
+    const stripe = getStripe();
+    const session = await stripe.checkout.sessions.create({
+      mode: "subscription",
+      line_items: [{ price: priceId, quantity: 1 }],
+      success_url,
+      cancel_url,
+      ...(customer_email ? { customer_email } : {}),
+      metadata: { plan, source: "fairrent" },
+    });
+    return res.json({ url: session.url, session_id: session.id });
+  } catch (err) {
+    logger.error({ err, plan }, "fairrent/checkout error");
+    return res.status(500).json({ error: "stripe_error" });
+  }
+});
+
+// ── Helpers Supabase Auth ────────────────────────────────────────────────────
+
+async function sendMagicLink(email: string): Promise<void> {
+  const supaUrl = process.env.SUPABASE_URL;
+  const supaKey = process.env.SUPABASE_SERVICE_KEY;
+  if (!supaUrl || !supaKey) {
+    logger.warn({ email }, "SUPABASE_URL / SUPABASE_SERVICE_KEY manquants — magic link non envoyé");
+    return;
+  }
+  const r = await fetch(`${supaUrl}/auth/v1/admin/generate_link`, {
+    method: "POST",
+    headers: {
+      "Content-Type":  "application/json",
+      "apikey":        supaKey,
+      "Authorization": `Bearer ${supaKey}`,
+    },
+    body: JSON.stringify({
+      type:    "magiclink",
+      email,
+      options: { redirect_to: "https://attentezero.ca/fairrent-login.html" },
+    }),
+  });
+  if (!r.ok) {
+    const body = await r.text().catch(() => "");
+    logger.error({ email, status: r.status, body }, "magic link generation failed");
+  } else {
+    logger.info({ email }, "magic link envoyé");
+  }
+}
+
+function stripeStatusToLocal(s: unknown): string {
+  if (s === "active" || s === "trialing" || s === "past_due" || s === "canceled") return s as string;
+  return "active";
+}
+
+// GET /api/fairrent/auth/me — info de l'abonné authentifié (valide le token)
+router.get("/fairrent/auth/me", requireSub(), (req: any, res: any) => {
+  const u = req.fairRentUser as { email: string; plan: string; status: string };
+  return res.json({ email: u.email, plan: u.plan, status: u.status });
+});
+
+// POST /api/fairrent/auth/magic-link — envoie un lien de connexion à l'abonné actif
+// Rate limited : 3 req / IP / 10 min (géré dans app.ts)
+router.post("/fairrent/auth/magic-link", async (req: any, res: any) => {
+  const raw = req.body?.email;
+  const email = typeof raw === "string" ? raw.trim().toLowerCase() : null;
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ error: "email_invalide" });
+  }
+  try {
+    const result = await db.execute(sql`
+      SELECT plan FROM fr_subscriptions
+      WHERE email = ${email} AND status IN ('active', 'trialing')
+      LIMIT 1
+    `);
+    const sub = (result as unknown as { rows?: { plan: string }[] }).rows?.[0];
+    if (sub) await sendMagicLink(email);
+    // Toujours 200 — ne pas révéler si l'email est inscrit
+    return res.json({ ok: true });
+  } catch (err) {
+    logger.error({ err }, "fairrent/auth/magic-link error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// POST /api/fairrent/stripe/webhook
+// Configurer dans le dashboard Stripe : .../api/fairrent/stripe/webhook
+router.post("/fairrent/stripe/webhook", async (req: any, res: any) => {
+  const sig    = req.headers["stripe-signature"] as string;
+  const secret = process.env.STRIPE_WEBHOOK_SECRET;
+
+  let event: Stripe.Event;
+  try {
+    const stripe = getStripe();
+    event = secret
+      ? stripe.webhooks.constructEvent(req.body, sig, secret)
+      : JSON.parse(req.body.toString()) as Stripe.Event;
+  } catch (err) {
+    logger.warn({ err }, "fairrent webhook signature invalid");
+    return res.status(400).json({ error: "webhook_signature_invalid" });
+  }
+
+  // Répondre immédiatement à Stripe avant le traitement DB
+  res.json({ received: true });
+
+  const obj = event.data.object as unknown as Record<string, unknown>;
+
+  try {
+    switch (event.type) {
+
+      case "checkout.session.completed": {
+        const email      = obj["customer_email"] as string | null;
+        const customerId = obj["customer"]        as string | null;
+        const subId      = obj["subscription"]    as string | null;
+        const plan       = (obj["metadata"] as Record<string, string> | null)?.["plan"] ?? "locataire";
+
+        if (!email) {
+          logger.warn({ session_id: obj["id"] }, "fairrent checkout completed sans email");
+          break;
+        }
+
+        await db.execute(sql`
+          INSERT INTO fr_subscriptions (email, stripe_customer_id, stripe_sub_id, plan, status)
+          VALUES (${email}, ${customerId}, ${subId}, ${plan}, 'active')
+          ON CONFLICT (email) DO UPDATE SET
+            stripe_customer_id = EXCLUDED.stripe_customer_id,
+            stripe_sub_id      = EXCLUDED.stripe_sub_id,
+            plan               = EXCLUDED.plan,
+            status             = 'active',
+            updated_at         = NOW()
+        `);
+        logger.info({ email, plan, customerId }, "fr_subscriptions upserted");
+
+        await sendMagicLink(email);
+        break;
+      }
+
+      case "customer.subscription.updated": {
+        const subId  = obj["id"]     as string | null;
+        const status = stripeStatusToLocal(obj["status"]);
+        if (!subId) break;
+        await db.execute(sql`
+          UPDATE fr_subscriptions
+          SET status = ${status}, updated_at = NOW()
+          WHERE stripe_sub_id = ${subId}
+        `);
+        logger.info({ subId, status }, "fr_subscriptions status updated");
+        break;
+      }
+
+      case "customer.subscription.deleted": {
+        const subId = obj["id"] as string | null;
+        if (!subId) break;
+        await db.execute(sql`
+          UPDATE fr_subscriptions
+          SET status = 'canceled', updated_at = NOW()
+          WHERE stripe_sub_id = ${subId}
+        `);
+        logger.info({ subId }, "fr_subscriptions canceled");
+        break;
+      }
+
+      default:
+        logger.debug({ type: event.type }, "fairrent webhook unhandled event");
+    }
+  } catch (err) {
+    logger.error({ err, event_type: event.type }, "fairrent webhook processing error");
+  }
+});
+
+export default router;

@@ -27,6 +27,11 @@ app.post(
   express.raw({ type: "application/json" }),
   handleStripeWebhook
 );
+app.post(
+  "/api/fairrent/stripe/webhook",
+  express.raw({ type: "application/json" }),
+  (req, res, next) => { next(); }
+);
 
 app.use(
   pinoHttp({
@@ -194,6 +199,15 @@ const captchaLimiter = rateLimit({
   message: { error: "Trop de demandes de captcha." },
 });
 app.use("/api/captcha/challenge", captchaLimiter);
+
+const fairrentMagicLinkLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 3,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Trop de demandes. Réessayez dans 10 minutes." },
+});
+app.use("/api/fairrent/auth/magic-link", fairrentMagicLinkLimiter);
 
 // nexhire.ca domain: serve the Nexhire SPA directly at root so the URL
 // stays nexhire.ca/ (no visible /nexhire/ path in the browser bar).
@@ -610,5 +624,20 @@ if (erpDist) {
   app.get("/constructpro-erp", sendErpIndex);
   app.get(/^\/constructpro-erp\/.*$/, sendErpIndex);
 }
+
+// FairRent — page de connexion
+const fairrentLoginHtmlCandidates = [
+  path.resolve(__dirname, "../../tenant-portal/dist/public/fairrent-login.html"),
+  path.resolve(process.cwd(), "../tenant-portal/dist/public/fairrent-login.html"),
+  path.resolve(process.cwd(), "tenant-portal/dist/public/fairrent-login.html"),
+];
+const fairrentLoginHtmlPath = fairrentLoginHtmlCandidates.find((p) => fs.existsSync(p));
+app.get("/fairrent/login", (_req, res) => {
+  if (fairrentLoginHtmlPath) {
+    res.sendFile(fairrentLoginHtmlPath);
+  } else {
+    res.status(404).send("FairRent login page not found.");
+  }
+});
 
 export default app;
