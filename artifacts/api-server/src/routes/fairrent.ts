@@ -931,6 +931,202 @@ router.delete("/fairrent/saved-properties/:listingId", async (req, res) => {
   }
 });
 
+// ═══════════════════════════════════════════════════════════════════════════
+// GET /api/fairrent/trends — Tendances hebdomadaires des loyers par ville
+// Retourne avg/p25/median/p75/count par semaine — 12 semaines par défaut
+// ═══════════════════════════════════════════════════════════════════════════
+router.get("/fairrent/trends", async (req, res) => {
+  try {
+    const str2 = (v: unknown): string | null =>
+      typeof v === "string" && v.trim() ? v.trim() : null;
+    const cityRaw  = str2(req.query.city) ?? "Montreal";
+    const typeF    = str2(req.query.type);
+    const weeksBack = Math.min(26, Math.max(4, parseInt(String(req.query.weeks ?? "12"), 10) || 12));
+
+    const result = await db.execute(sql`
+      SELECT
+        TO_CHAR(DATE_TRUNC('week', created_at), 'YYYY-MM-DD')         AS week_start,
+        ROUND(AVG(price))::int                                          AS avg_price,
+        MIN(price)::int                                                 AS min_price,
+        MAX(price)::int                                                 AS max_price,
+        PERCENTILE_CONT(0.5)  WITHIN GROUP (ORDER BY price)::int       AS median_price,
+        PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY price)::int       AS p25_price,
+        PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY price)::int       AS p75_price,
+        COUNT(*)::int                                                   AS listing_count,
+        ROUND(AVG(fairrent_score))::int                                AS avg_score
+      FROM fr_listings
+      WHERE deleted_at IS NULL
+        AND is_active   = true
+        AND price BETWEEN 400 AND 10000
+        AND city ILIKE ${'%' + cityRaw + '%'}
+        AND created_at > NOW() - (${weeksBack} || ' weeks')::interval
+        AND (${typeF}::text IS NULL OR listing_type ILIKE ${typeF}::text)
+      GROUP BY DATE_TRUNC('week', created_at)
+      ORDER BY week_start ASC
+    `);
+
+    const rows = (result as { rows?: unknown[] }).rows ?? [];
+    const cityKey = _normalizeCity(cityRaw);
+    const ref = MARKET_REFERENCE[cityKey] ?? MARKET_REFERENCE["montreal"];
+
+    return res.json({
+      city:        cityRaw,
+      type:        typeF,
+      data_source: rows.length >= 2 ? "fairrent" : "reference",
+      weeks_back:  weeksBack,
+      periods:     rows,
+      reference: {
+        avg_price:      ref.avg_price,
+        p25_price:      ref.p25_price,
+        p50_price:      ref.p50_price,
+        p75_price:      ref.p75_price,
+        evolution_pct:  ref.evolution_pct,
+        source:         ref.source,
+      },
+    });
+  } catch (err) {
+    logger.error({ err }, "fairrent/trends GET error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// POST /api/fairrent/portfolio — Score un portefeuille d'unités locatives
+// Body: { units: [{ address, city, current_rent, bedrooms?, type? }] }
+// Retourne chaque unité avec fairrent_score, delta vs marché, opportunité
+// ═══════════════════════════════════════════════════════════════════════════
+router.post("/fairrent/portfolio", async (req, res) => {
+  try {
+    const raw = Array.isArray(req.body?.units) ? req.body.units.slice(0, 200) : [];
+    if (raw.length === 0)
+      return res.status(400).json({ error: "units_requis" });
+
+    const str2 = (v: unknown, max = 300): string | null =>
+      typeof v === "string" && v.trim() ? v.trim().slice(0, max) : null;
+
+    // Charger les stats de marché une seule fois par ville unique
+    const cities = [...new Set(raw.map((u: any) => String(u.city ?? "").trim().toLowerCase()).filter(Boolean))];
+    const mktCache: Record<string, any> = {};
+
+    for (const city of cities) {
+      try {
+        const r = await db.execute(sql`
+          SELECT
+            ROUND(AVG(price))::int                                          AS avg_price,
+            PERCENTILE_CONT(0.5)  WITHIN GROUP (ORDER BY price)::int       AS median_price,
+            PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY price)::int       AS p25_price,
+            PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY price)::int       AS p75_price,
+            COUNT(*)::int                                                   AS listing_count
+          FROM fr_listings
+          WHERE is_active = true AND deleted_at IS NULL
+            AND city ILIKE ${'%' + city + '%'}
+            AND price BETWEEN 400 AND 10000
+        `);
+        const s = (r as { rows?: Record<string, any>[] }).rows?.[0];
+        if (s && Number(s.listing_count) >= 5) {
+          mktCache[city] = { ...s, source: "fairrent" };
+        } else {
+          const key = _normalizeCity(city);
+          const ref  = MARKET_REFERENCE[key];
+          if (ref) mktCache[city] = { avg_price: ref.avg_price, median_price: ref.p50_price, p25_price: ref.p25_price, p75_price: ref.p75_price, listing_count: 0, source: "reference" };
+        }
+      } catch {}
+    }
+
+    const scored = raw.map((u: any, i: number) => {
+      const rent   = Number(u.current_rent) || 0;
+      const cityK  = String(u.city ?? "").trim().toLowerCase();
+      const mkt    = mktCache[cityK];
+      const median = Number(mkt?.median_price ?? mkt?.avg_price ?? 0);
+
+      let score = 50, decision = "UNKNOWN", reval = 0;
+      if (median > 0 && rent > 0) {
+        const ratio = rent / median;
+        if      (ratio < 0.88)  { score = Math.min(95, Math.round(88 - ratio * 30)); decision = "UNDERVALUED"; reval = Math.round(median - rent); }
+        else if (ratio <= 1.05) { score = Math.round(78 - (ratio - 0.88) * 40); decision = "FAIR"; reval = Math.max(0, Math.round(median - rent)); }
+        else if (ratio <= 1.18) { score = Math.round(58 - (ratio - 1.05) * 60); decision = "HIGH"; }
+        else                    { score = Math.max(10, Math.round(42 - (ratio - 1.18) * 80)); decision = "OVERPRICED"; }
+        score = Math.max(0, Math.min(100, score));
+      }
+
+      return {
+        index:               i + 1,
+        address:             str2(u.address) ?? `Unité ${i + 1}`,
+        city:                u.city ?? "",
+        current_rent:        rent,
+        bedrooms:            u.bedrooms ?? null,
+        type:                u.type ?? null,
+        market_avg:          Number(mkt?.avg_price    ?? 0) || null,
+        market_median:       Number(mkt?.median_price ?? 0) || null,
+        market_p25:          Number(mkt?.p25_price    ?? 0) || null,
+        market_p75:          Number(mkt?.p75_price    ?? 0) || null,
+        delta:               median > 0 ? Math.round(rent - median) : null,
+        delta_pct:           median > 0 ? Number(((rent - median) / median * 100).toFixed(1)) : null,
+        revaluation_monthly: reval,
+        revaluation_annual:  reval * 12,
+        fairrent_score:      score,
+        decision,
+        data_source:         mkt?.source ?? "none",
+      };
+    });
+
+    const totalAnnual   = scored.reduce((s: number, u: any) => s + (u.revaluation_annual || 0), 0);
+    const undervalued   = scored.filter((u: any) => u.revaluation_monthly > 0).length;
+    const avgScore      = Math.round(scored.reduce((s: number, u: any) => s + u.fairrent_score, 0) / scored.length);
+
+    return res.json({
+      ok: true,
+      unit_count:            scored.length,
+      undervalued_count:     undervalued,
+      total_annual_opportunity: totalAnnual,
+      avg_score:             avgScore,
+      units:                 scored,
+      generated_at:          new Date().toISOString(),
+    });
+  } catch (err) {
+    logger.error({ err }, "fairrent/portfolio POST error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// GET /api/fairrent/webhook-check — Alertes marché déclenchées (x-fairrent-key requis)
+router.get("/fairrent/webhook-check", async (req, res) => {
+  const apiKey     = req.headers["x-fairrent-key"];
+  const expectedKey = process.env.FAIRRENT_API_KEY ?? "";
+  if (!expectedKey || apiKey !== expectedKey)
+    return res.status(401).json({ error: "unauthorized" });
+  try {
+    const result = await db.execute(sql`
+      SELECT sa.id, sa.user_email, sa.city, sa.neighborhood, sa.max_price, sa.bedrooms,
+             COUNT(fl.id)::int AS matching_count,
+             ROUND(AVG(fl.price))::int AS market_avg
+      FROM search_alerts sa
+      LEFT JOIN fr_listings fl ON (
+        fl.city ILIKE sa.city AND fl.is_active = true AND fl.deleted_at IS NULL
+        AND fl.price BETWEEN 400 AND COALESCE(sa.max_price, 10000)
+        AND (sa.neighborhood IS NULL OR fl.neighborhood ILIKE sa.neighborhood)
+        AND (sa.bedrooms IS NULL OR fl.bedrooms = sa.bedrooms)
+      )
+      WHERE sa.is_active = true AND sa.deleted_at IS NULL AND sa.city IS NOT NULL
+        AND (sa.last_checked_at IS NULL OR sa.last_checked_at < NOW() - INTERVAL '6 hours')
+      GROUP BY sa.id, sa.user_email, sa.city, sa.neighborhood, sa.max_price, sa.bedrooms
+      HAVING COUNT(fl.id) > 0
+      LIMIT 100
+    `);
+    const alerts = (result as { rows?: unknown[] }).rows ?? [];
+    if (alerts.length > 0) {
+      const ids = alerts.map((a: any) => a.id);
+      await db.execute(sql`
+        UPDATE search_alerts SET last_checked_at = NOW() WHERE id = ANY(${ids}::uuid[])
+      `);
+    }
+    return res.json({ ok: true, triggered_count: alerts.length, alerts });
+  } catch (err) {
+    logger.error({ err }, "fairrent/webhook-check GET error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
 // ── Admin helpers ────────────────────────────────────────────────────────────
 const ADMIN_EMAILS = (process.env.ADMIN_EMAILS ?? "")
   .split(",").map((e: string) => e.trim().toLowerCase()).filter(Boolean);
