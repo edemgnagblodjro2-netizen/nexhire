@@ -1137,6 +1137,129 @@ router.get("/fairrent/webhook-check", async (req, res) => {
   }
 });
 
+// ═══════════════════════════════════════════════════════════════════════════
+// GET /api/fairrent/market-snapshot — Snapshot temps réel pour le terminal live
+// Retourne prix/Δ24h/Δ7j/nouvelles annonces/délai/FairRent™ par ville
+// Fallback MARKET_REFERENCE si < 3 annonces dans la fenêtre active
+// ═══════════════════════════════════════════════════════════════════════════
+router.get("/fairrent/market-snapshot", async (_req, res) => {
+  try {
+    const result = await db.execute(sql`
+      WITH
+      window_now AS (
+        SELECT
+          city,
+          PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY price)::int        AS median_now,
+          ROUND(AVG(fairrent_score) FILTER (WHERE fairrent_score IS NOT NULL))::int AS avg_score,
+          COUNT(*)::int                                                    AS total_count,
+          COUNT(*) FILTER (WHERE created_at >= NOW() - INTERVAL '24 hours')::int AS new_24h,
+          ROUND(AVG(EXTRACT(EPOCH FROM (NOW() - created_at)) / 86400))::int AS avg_days_active
+        FROM fr_listings
+        WHERE deleted_at IS NULL
+          AND is_active = true
+          AND price BETWEEN 400 AND 10000
+          AND created_at >= NOW() - INTERVAL '30 days'
+        GROUP BY city
+        HAVING COUNT(*) >= 3
+      ),
+      window_7d_prev AS (
+        SELECT
+          city,
+          PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY price)::int AS median_prev
+        FROM fr_listings
+        WHERE deleted_at IS NULL
+          AND price BETWEEN 400 AND 10000
+          AND created_at BETWEEN NOW() - INTERVAL '21 days' AND NOW() - INTERVAL '7 days'
+        GROUP BY city
+        HAVING COUNT(*) >= 2
+      ),
+      window_24h_prev AS (
+        SELECT
+          city,
+          PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY price)::int AS median_prev
+        FROM fr_listings
+        WHERE deleted_at IS NULL
+          AND price BETWEEN 400 AND 10000
+          AND created_at BETWEEN NOW() - INTERVAL '48 hours' AND NOW() - INTERVAL '24 hours'
+        GROUP BY city
+        HAVING COUNT(*) >= 2
+      )
+      SELECT
+        n.city,
+        n.median_now                                                        AS price,
+        CASE WHEN p24.median_prev > 0
+          THEN ROUND(((n.median_now - p24.median_prev)::numeric / p24.median_prev * 100), 1)
+          ELSE NULL END                                                     AS change24h,
+        CASE WHEN p7.median_prev > 0
+          THEN ROUND(((n.median_now - p7.median_prev)::numeric / p7.median_prev * 100), 1)
+          ELSE NULL END                                                     AS change7d,
+        n.new_24h,
+        n.avg_days_active                                                   AS avg_days,
+        COALESCE(n.avg_score, 0)                                           AS fair_index,
+        n.total_count
+      FROM window_now n
+      LEFT JOIN window_7d_prev  p7  ON n.city ILIKE p7.city
+      LEFT JOIN window_24h_prev p24 ON n.city ILIKE p24.city
+      ORDER BY n.total_count DESC
+    `);
+
+    const rows = ((result as { rows?: Record<string, unknown>[] }).rows ?? []) as Record<string, unknown>[];
+
+    const CITY_ORDER = ["montreal","toronto","vancouver","calgary","ottawa","winnipeg","hamilton","halifax"];
+
+    const snapshot = CITY_ORDER.map(key => {
+      const ref = MARKET_REFERENCE[key];
+      if (!ref) return null;
+
+      const dbRow = rows.find(r => {
+        const norm = _normalizeCity(String(r.city ?? ""));
+        return norm.includes(key) || key.split("-").every(p => norm.includes(p));
+      });
+
+      const price     = Number(dbRow?.price ?? ref.p50_price);
+      const change7d  = dbRow?.change7d  != null
+        ? Number(dbRow.change7d)
+        : +((ref.evolution_pct / 52 * 7)).toFixed(1);
+      const change24h = dbRow?.change24h != null
+        ? Number(dbRow.change24h)
+        : +(change7d / 7).toFixed(2);
+      const new_listings  = Number(dbRow?.new_24h ?? 0);
+      const avg_days      = Math.max(1, Number(dbRow?.avg_days ?? 21));
+      const fair_index    = Number(dbRow?.fair_index ?? ref.avg_score);
+      const total_count   = Number(dbRow?.total_count ?? 0);
+
+      let demand: string;
+      if (new_listings >= 15 || total_count >= 100) demand = "Très élevée";
+      else if (new_listings >= 8  || total_count >= 50)  demand = "Élevée";
+      else if (new_listings >= 3  || total_count >= 20)  demand = "Modérée";
+      else demand = "Faible";
+
+      return {
+        key,
+        name:        ref.display_name,
+        prov:        ref.province,
+        price,
+        change24h,
+        change7d,
+        new_listings,
+        avg_days,
+        fair_index,
+        demand,
+        data_source: dbRow ? "fairrent" : "reference",
+      };
+    }).filter(Boolean);
+
+    return res.json({
+      snapshot,
+      db_cities_found: rows.length,
+      generated_at:    new Date().toISOString(),
+    });
+  } catch (err) {
+    logger.error({ err }, "fairrent/market-snapshot GET error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
 // ── Admin helpers ────────────────────────────────────────────────────────────
 const ADMIN_EMAILS = (process.env.ADMIN_EMAILS ?? "")
   .split(",").map((e: string) => e.trim().toLowerCase()).filter(Boolean);
