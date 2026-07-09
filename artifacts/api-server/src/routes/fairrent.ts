@@ -3,6 +3,7 @@ import { sql } from "drizzle-orm";
 import { db } from "@workspace/db";
 import { logger } from "../lib/logger";
 import { runLogisQuebecScraper, LQ_CITIES } from "../scrapers/logisquebec.js";
+import { runLesPACScraper, probeLesPAC, LP_CITIES } from "../scrapers/lespac.js";
 import Stripe from "stripe";
 
 const router = Router();
@@ -867,6 +868,29 @@ router.post("/fairrent/search-alerts", requireSub(), async (req: any, res: any) 
   if (!city && !queryText) {
     return res.status(400).json({ error: "city_ou_query_requis" });
   }
+
+  // Limite par plan : locataire = 1 alerte active max
+  const userPlan = (req.fairRentUser.plan as string) ?? "locataire";
+  if (userPlan === "locataire") {
+    try {
+      const cntRes = await db.execute(sql`
+        SELECT COUNT(*)::int AS cnt FROM search_alerts
+        WHERE user_id = ${userId} AND deleted_at IS NULL AND is_active = true
+      `);
+      const cnt = Number((cntRes as unknown as { rows?: { cnt: number }[] }).rows?.[0]?.cnt ?? 0);
+      if (cnt >= 1) {
+        return res.status(403).json({
+          error:   "alert_limit_reached",
+          current: cnt,
+          limit:   1,
+          message: "Le plan Locataire est limité à 1 alerte active. Supprimez votre alerte existante ou passez au plan Propriétaire.",
+        });
+      }
+    } catch (err) {
+      logger.error({ err }, "fairrent/search-alerts plan-limit check error");
+    }
+  }
+
   try {
     const result = await db.execute(sql`
       INSERT INTO search_alerts
@@ -1033,12 +1057,15 @@ router.get("/fairrent/trends", async (req, res) => {
 // POST /api/fairrent/portfolio — Score un portefeuille d'unités locatives
 // Body: { units: [{ address, city, current_rent, bedrooms?, type? }] }
 // Retourne chaque unité avec fairrent_score, delta vs marché, opportunité
+// Plan limits : proprietaire=10 unités, pro=25 unités
 // ═══════════════════════════════════════════════════════════════════════════
-router.post("/fairrent/portfolio", async (req, res) => {
+router.post("/fairrent/portfolio", requireSub("proprietaire"), async (req: any, res: any) => {
+  const PLAN_UNIT_LIMITS: Record<string, number> = { locataire: 0, proprietaire: 10, pro: 25 };
+  const unitLimit = PLAN_UNIT_LIMITS[req.fairRentUser.plan as string] ?? 0;
   try {
-    const raw = Array.isArray(req.body?.units) ? req.body.units.slice(0, 200) : [];
+    const raw = Array.isArray(req.body?.units) ? req.body.units.slice(0, unitLimit) : [];
     if (raw.length === 0)
-      return res.status(400).json({ error: "units_requis" });
+      return res.status(400).json({ error: "units_requis", max_units: unitLimit });
 
     const str2 = (v: unknown, max = 300): string | null =>
       typeof v === "string" && v.trim() ? v.trim().slice(0, max) : null;
@@ -1124,6 +1151,65 @@ router.post("/fairrent/portfolio", async (req, res) => {
     });
   } catch (err) {
     logger.error({ err }, "fairrent/portfolio POST error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// GET /api/fairrent/discover/export-csv — Export CSV des annonces (plan Pro requis)
+// ?city=Montreal&max_price=1800&bedrooms=2
+router.get("/fairrent/discover/export-csv", requireSub("pro"), async (req: any, res: any) => {
+  try {
+    const str2 = (v: unknown): string | null =>
+      typeof v === "string" && v.trim() ? v.trim() : null;
+    const int2 = (v: unknown): number | null => {
+      const n = parseInt(String(v ?? ""), 10);
+      return isFinite(n) ? n : null;
+    };
+    const cityF = str2(req.query.city);
+    const nbhF  = str2(req.query.neighborhood);
+    const maxP  = int2(req.query.max_price);
+    const minP  = int2(req.query.min_price);
+    const bdF   = int2(req.query.bedrooms);
+
+    const result = await db.execute(sql`
+      SELECT
+        id, url, title, source, city, province, neighborhood,
+        price, bedrooms, listing_type, sqft,
+        pets, parking, available_from,
+        fairrent_score, decision, last_seen_at
+      FROM fr_listings
+      WHERE is_active = true AND deleted_at IS NULL
+        AND (${cityF}::text IS NULL OR city        ILIKE ${cityF}::text)
+        AND (${nbhF}::text  IS NULL OR neighborhood ILIKE ${nbhF}::text)
+        AND (${maxP}::int   IS NULL OR price IS NULL OR price <= ${maxP}::int)
+        AND (${minP}::int   IS NULL OR price IS NULL OR price >= ${minP}::int)
+        AND (${bdF}::smallint IS NULL OR bedrooms = ${bdF}::smallint)
+      ORDER BY fairrent_score DESC NULLS LAST, last_seen_at DESC
+      LIMIT 2000
+    `);
+
+    const rows = (result as { rows?: Record<string, unknown>[] }).rows ?? [];
+    const COLS = ["id","url","title","source","city","province","neighborhood","price","bedrooms","listing_type","sqft","pets","parking","available_from","fairrent_score","decision","last_seen_at"] as const;
+
+    const csvEscape = (v: unknown): string => {
+      if (v === null || v === undefined) return "";
+      const s = String(v);
+      return (s.includes(",") || s.includes('"') || s.includes("\n"))
+        ? '"' + s.replace(/"/g, '""') + '"'
+        : s;
+    };
+
+    const csv = [
+      COLS.join(","),
+      ...rows.map(r => COLS.map(c => csvEscape(r[c])).join(",")),
+    ].join("\n");
+
+    const ts = new Date().toISOString().slice(0, 10);
+    res.setHeader("Content-Type", "text/csv; charset=utf-8");
+    res.setHeader("Content-Disposition", `attachment; filename="fairrent-export-${ts}.csv"`);
+    return res.send(csv);
+  } catch (err) {
+    logger.error({ err }, "fairrent/discover/export-csv GET error");
     return res.status(500).json({ error: "server_error" });
   }
 });
@@ -1513,6 +1599,57 @@ router.post("/fairrent/scrape/logisquebec", (req, res) => {
       logger.info({ results, total }, "logisquebec scraper completed");
     })
     .catch(err => logger.error({ err }, "logisquebec scraper fatal error"));
+});
+
+// ── GET /api/fairrent/scrape/lespac/probe — Inspecter la réponse JSON brute ──
+router.get("/fairrent/scrape/lespac/probe", async (req, res) => {
+  const apiKey = req.headers["x-fairrent-key"] as string | undefined;
+  if (!apiKey || apiKey !== process.env.FAIRRENT_SCRAPER_KEY) {
+    return res.status(401).json({ error: "unauthorized" });
+  }
+  try {
+    const page = parseInt(String((req.query as Record<string, string>).page ?? "1"), 10) || 1;
+    const data = await probeLesPAC(page);
+    return res.json({ probe: true, page, data });
+  } catch (err) {
+    return res.status(500).json({ error: String(err) });
+  }
+});
+
+// ── POST /api/fairrent/scrape/lespac — Lance le scraper LesPAC en arrière-plan
+// Body (optionnel) : { max_pages?: number, cities?: string[] }
+router.post("/fairrent/scrape/lespac", (req, res) => {
+  const apiKey = req.headers["x-fairrent-key"] as string | undefined;
+  if (!apiKey || apiKey !== process.env.FAIRRENT_SCRAPER_KEY) {
+    return res.status(401).json({ error: "unauthorized" });
+  }
+
+  const maxPages = Math.min(
+    parseInt(String((req.body as Record<string, unknown>)?.max_pages ?? "50"), 10) || 50,
+    500,
+  );
+  const citiesRaw = (req.body as Record<string, unknown>)?.cities;
+  const cities    = Array.isArray(citiesRaw) ? (citiesRaw as string[]) : undefined;
+  const available = LP_CITIES.map(c => c.city);
+
+  res.json({
+    status:    "started",
+    maxPages,
+    cities:    cities ?? "all",
+    available,
+    engine:    "lespac-v1",
+    note:      "Résultats loggés côté serveur. Utiliser /probe pour inspecter le JSON brut d'abord.",
+  });
+
+  runLesPACScraper({ maxPages, cities })
+    .then(results => {
+      const total = results.reduce(
+        (a, r) => ({ inserted: a.inserted + r.inserted, updated: a.updated + r.updated, skipped: a.skipped + r.skipped }),
+        { inserted: 0, updated: 0, skipped: 0 },
+      );
+      logger.info({ results, total }, "lespac scraper completed");
+    })
+    .catch(err => logger.error({ err }, "lespac scraper fatal error"));
 });
 
 // ── GET /api/fairrent/health — Public system status (no auth required) ───────
