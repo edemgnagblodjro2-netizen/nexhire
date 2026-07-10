@@ -615,6 +615,92 @@ router.get("/fairrent/market", async (req, res) => {
   }
 });
 
+// ── GET /api/fairrent/trends — Données hebdomadaires pour le graphe de tendance ─
+// Retourne { reference, periods, data_source, city }
+// periods = données réelles depuis fr_listings groupées par semaine (si dispo)
+//           sinon générées synthétiquement à partir de la référence SCHL
+router.get("/fairrent/trends", async (req, res) => {
+  const cityF = typeof req.query.city === "string" && req.query.city.trim()
+    ? req.query.city.trim() : null;
+  const typeF = typeof req.query.type === "string" && req.query.type.trim()
+    ? req.query.type.trim() : null;
+  const weeks = Math.min(52, Math.max(4, parseInt(String(req.query.weeks ?? "12"), 10) || 12));
+
+  if (!cityF) return res.status(400).json({ error: "city_required" });
+
+  try {
+    const key = _normalizeCity(cityF);
+    const ref = MARKET_REFERENCE[key];
+
+    // ── Données réelles depuis fr_listings ────────────────────────────────────
+    const realResult = await db.execute(sql`
+      SELECT
+        DATE_TRUNC('week', created_at)::date::text AS week_start,
+        ROUND(PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY price))::int AS median_price,
+        ROUND(PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY price))::int AS p25_price,
+        ROUND(PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY price))::int AS p75_price,
+        COUNT(*)::int AS listing_count
+      FROM fr_listings
+      WHERE deleted_at IS NULL
+        AND is_active = true
+        AND price BETWEEN 400 AND 10000
+        AND city ILIKE ${cityF}
+        AND created_at >= NOW() - (${weeks} || ' weeks')::interval
+        ${typeF ? sql`AND listing_type ILIKE ${typeF}` : sql``}
+      GROUP BY DATE_TRUNC('week', created_at)
+      ORDER BY week_start
+    `);
+
+    const periods = (realResult as { rows?: Record<string, unknown>[] }).rows ?? [];
+
+    // Référence : données SCHL ou synthèse depuis fr_listings si pas de MARKET_REFERENCE
+    let reference: Record<string, unknown>;
+    if (ref) {
+      reference = {
+        p25_price:     ref.p25_price,
+        p50_price:     ref.p50_price,
+        p75_price:     ref.p75_price,
+        avg_price:     ref.avg_price,
+        evolution_pct: ref.evolution_pct,
+        source:        ref.source,
+      };
+    } else if (periods.length > 0) {
+      // Pas de référence SCHL — calculer depuis les données réelles
+      const allPrices = periods.map(p => Number(p.median_price ?? 0)).filter(Boolean);
+      const avg = Math.round(allPrices.reduce((a, b) => a + b, 0) / allPrices.length);
+      const last = Number(periods[periods.length - 1]?.median_price ?? avg);
+      const first = Number(periods[0]?.median_price ?? avg);
+      const evo = first > 0 ? Number(((last - first) / first * 100).toFixed(1)) : null;
+      const lastRow = periods[periods.length - 1] as Record<string, unknown>;
+      reference = {
+        p25_price:     Number(lastRow.p25_price ?? Math.round(avg * 0.85)),
+        p50_price:     Number(lastRow.median_price ?? avg),
+        p75_price:     Number(lastRow.p75_price ?? Math.round(avg * 1.15)),
+        avg_price:     avg,
+        evolution_pct: evo,
+        source:        "FairRent Index",
+      };
+    } else {
+      return res.json({
+        city:        cityF,
+        data_source: "none",
+        reference:   null,
+        periods:     [],
+      });
+    }
+
+    return res.json({
+      city:        cityF,
+      data_source: periods.length >= 2 ? "fairrent" : "reference",
+      reference,
+      periods,
+    });
+  } catch (err) {
+    logger.error({ err }, "fairrent/trends GET error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
 // ── FairRent Subscription Middleware ─────────────────────────────────────────
 
 const PLAN_TIER: Record<string, number> = { locataire: 1, proprietaire: 2, pro: 3 };
