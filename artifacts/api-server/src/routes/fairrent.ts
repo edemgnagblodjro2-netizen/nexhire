@@ -3,7 +3,9 @@ import { sql } from "drizzle-orm";
 import { db } from "@workspace/db";
 import { logger } from "../lib/logger";
 import { runLogisQuebecScraper, LQ_CITIES } from "../scrapers/logisquebec.js";
-import { runLesPACScraper, probeLesPAC, LP_CITIES } from "../scrapers/lespac.js";
+import { runLesPACScraper, probeLesPAC, discoverGeoCodes, LP_CITIES } from "../scrapers/lespac.js";
+import { runRentalsScraper, RENTALS_CITIES } from "../scrapers/rentals.js";
+import { runRentolaScraper, RENTOLA_CITIES } from "../scrapers/rentola.js";
 import Stripe from "stripe";
 
 const router = Router();
@@ -617,6 +619,23 @@ router.get("/fairrent/market", async (req, res) => {
 
 const PLAN_TIER: Record<string, number> = { locataire: 1, proprietaire: 2, pro: 3 };
 
+// Plan Gratuit : accès limité aux 8 villes du snapshot public
+const FREE_CITIES = ["montreal","toronto","vancouver","calgary","ottawa","winnipeg","hamilton","halifax"];
+
+function normalizeForCityCheck(s: string): string {
+  return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[-\s]/g, "");
+}
+
+function isCityAllowedForPlan(city: string, plan: string): boolean {
+  if (plan !== "locataire") return true;
+  const norm = normalizeForCityCheck(city);
+  return FREE_CITIES.some(c => norm.includes(c) || c.includes(norm));
+}
+
+const PLAN_WEEKS_LIMIT: Record<string, number> = { locataire: 4, proprietaire: 26, pro: 26 };
+const PLAN_UNIT_LIMITS: Record<string, number> = { locataire: 0, proprietaire: 10, pro: 25 };
+const SUPPORT_TIER: Record<string, string>     = { locataire: "standard", proprietaire: "standard", pro: "priority" };
+
 async function fairRentAuth(req: any, res: any, next: () => void, minPlan?: string): Promise<void> {
   const authHeader = req.headers["authorization"] as string | undefined;
   const token = authHeader?.startsWith("Bearer ") ? authHeader.slice(7) : null;
@@ -684,6 +703,18 @@ router.get("/fairrent/discover", requireSub("locataire"), async (req: any, res: 
     const bdF    = int2(req.query.bedrooms);
     const parkF  = req.query.parking === "true" ? true : null;
     const petsF  = req.query.pets    === "true" ? true : null;
+
+    // Plan Gratuit : villes limitées aux 8 du snapshot public
+    const discoverPlan = (req.fairRentUser.plan as string) ?? "locataire";
+    if (cityF && !isCityAllowedForPlan(cityF, discoverPlan)) {
+      return res.status(403).json({
+        error: "city_not_in_free_plan",
+        city: cityF,
+        allowed_cities: FREE_CITIES,
+        upgrade_required: "proprietaire",
+        message: "Le plan Locataire donne accès aux 8 villes du snapshot. Passez au plan Propriétaire pour toutes les villes.",
+      });
+    }
 
     const result = await db.execute(sql`
       WITH market_medians AS (
@@ -875,7 +906,9 @@ router.post("/fairrent/search-alerts", requireSub(), async (req: any, res: any) 
     try {
       const cntRes = await db.execute(sql`
         SELECT COUNT(*)::int AS cnt FROM search_alerts
-        WHERE user_id = ${userId} AND deleted_at IS NULL AND is_active = true
+        WHERE user_id = ${userId}
+          AND deleted_at IS NULL
+          AND created_at >= DATE_TRUNC('month', NOW())
       `);
       const cnt = Number((cntRes as unknown as { rows?: { cnt: number }[] }).rows?.[0]?.cnt ?? 0);
       if (cnt >= 1) {
@@ -883,7 +916,8 @@ router.post("/fairrent/search-alerts", requireSub(), async (req: any, res: any) 
           error:   "alert_limit_reached",
           current: cnt,
           limit:   1,
-          message: "Le plan Locataire est limité à 1 alerte active. Supprimez votre alerte existante ou passez au plan Propriétaire.",
+          reset:   "début du mois prochain",
+          message: "Le plan Locataire est limité à 1 alerte par mois. Passez au plan Propriétaire pour des alertes illimitées.",
         });
       }
     } catch (err) {
@@ -998,13 +1032,15 @@ router.delete("/fairrent/saved-properties/:listingId", requireSub(), async (req:
 // GET /api/fairrent/trends — Tendances hebdomadaires des loyers par ville
 // Retourne avg/p25/median/p75/count par semaine — 12 semaines par défaut
 // ═══════════════════════════════════════════════════════════════════════════
-router.get("/fairrent/trends", async (req, res) => {
+router.get("/fairrent/trends", requireSub("locataire"), async (req: any, res: any) => {
   try {
     const str2 = (v: unknown): string | null =>
       typeof v === "string" && v.trim() ? v.trim() : null;
+    const trendPlan = (req.fairRentUser.plan as string) ?? "locataire";
     const cityRaw  = str2(req.query.city) ?? "Montreal";
     const typeF    = str2(req.query.type);
-    const weeksBack = Math.min(26, Math.max(4, parseInt(String(req.query.weeks ?? "12"), 10) || 12));
+    const maxWeeks = PLAN_WEEKS_LIMIT[trendPlan] ?? 4;
+    const weeksBack = Math.min(maxWeeks, Math.max(4, parseInt(String(req.query.weeks ?? "12"), 10) || 12));
 
     const result = await db.execute(sql`
       SELECT
@@ -1060,7 +1096,6 @@ router.get("/fairrent/trends", async (req, res) => {
 // Plan limits : proprietaire=10 unités, pro=25 unités
 // ═══════════════════════════════════════════════════════════════════════════
 router.post("/fairrent/portfolio", requireSub("proprietaire"), async (req: any, res: any) => {
-  const PLAN_UNIT_LIMITS: Record<string, number> = { locataire: 0, proprietaire: 10, pro: 25 };
   const unitLimit = PLAN_UNIT_LIMITS[req.fairRentUser.plan as string] ?? 0;
   try {
     const raw = Array.isArray(req.body?.units) ? req.body.units.slice(0, unitLimit) : [];
@@ -1332,12 +1367,10 @@ router.get("/fairrent/market-snapshot", async (_req, res) => {
       });
 
       const price     = Number(dbRow?.price ?? ref.p50_price);
-      const change7d  = dbRow?.change7d  != null
-        ? Number(dbRow.change7d)
-        : +((ref.evolution_pct / 52 * 7)).toFixed(1);
-      const change24h = dbRow?.change24h != null
-        ? Number(dbRow.change24h)
-        : +(change7d / 7).toFixed(2);
+      // Retourner null si pas de données historiques réelles — le client préserve alors
+      // les valeurs de seed (SCHL) plutôt que d'appliquer un fallback synthétique.
+      const change7d  = dbRow?.change7d  != null ? Number(dbRow.change7d)  : null;
+      const change24h = dbRow?.change24h != null ? Number(dbRow.change24h) : null;
       const new_listings  = Number(dbRow?.new_24h ?? 0);
       const avg_days      = Math.max(1, Number(dbRow?.avg_days ?? 21));
       const fair_index    = Number(dbRow?.fair_index ?? ref.avg_score);
@@ -1612,7 +1645,25 @@ router.get("/fairrent/scrape/lespac/probe", async (req, res) => {
     const data = await probeLesPAC(page);
     return res.json({ probe: true, page, data });
   } catch (err) {
-    return res.status(500).json({ error: String(err) });
+    const msg = err instanceof Error ? err.message : String(err);
+    logger.error({ err: msg }, "lespac probe error");
+    return res.status(500).json({ error: msg });
+  }
+});
+
+// ── GET /api/fairrent/scrape/lespac/discover-cities — Trouve les geo codes par ville
+router.get("/fairrent/scrape/lespac/discover-cities", async (req, res) => {
+  const apiKey = req.headers["x-fairrent-key"] as string | undefined;
+  if (!apiKey || apiKey !== process.env.FAIRRENT_SCRAPER_KEY) {
+    return res.status(401).json({ error: "unauthorized" });
+  }
+  try {
+    const data = await discoverGeoCodes();
+    return res.json({ ok: true, data });
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    logger.error({ err: msg }, "lespac discover-cities error");
+    return res.status(500).json({ error: msg });
   }
 });
 
@@ -1650,6 +1701,42 @@ router.post("/fairrent/scrape/lespac", (req, res) => {
       logger.info({ results, total }, "lespac scraper completed");
     })
     .catch(err => logger.error({ err }, "lespac scraper fatal error"));
+});
+
+// ── POST /api/fairrent/scrape/rentals — Lance le scraper Rentals.ca ──────────
+router.post("/fairrent/scrape/rentals", (req: any, res: any) => {
+  const apiKey = req.headers["x-fairrent-key"] as string | undefined;
+  if (!apiKey || apiKey !== process.env.FAIRRENT_SCRAPER_KEY) {
+    res.status(401).json({ error: "unauthorized" }); return;
+  }
+  const maxPages = Math.min(parseInt(String((req.body as any)?.max_pages ?? "20"), 10) || 20, 100);
+  const citiesRaw = (req.body as any)?.cities;
+  const cities    = Array.isArray(citiesRaw) ? (citiesRaw as string[]) : undefined;
+  res.json({ status: "started", maxPages, cities: cities ?? "all", available: RENTALS_CITIES.map(c => c.city), engine: "rentals-v1" });
+  void runRentalsScraper({ maxPages, cities })
+    .then(results => {
+      const total = results.reduce((a, r) => ({ inserted: a.inserted + r.inserted, updated: a.updated + r.updated, skipped: a.skipped + r.skipped }), { inserted: 0, updated: 0, skipped: 0 });
+      logger.info({ results, total }, "rentals scraper completed");
+    })
+    .catch(err => logger.error({ err }, "rentals scraper fatal error"));
+});
+
+// ── POST /api/fairrent/scrape/rentola — Lance le scraper Rentola.ca ──────────
+router.post("/fairrent/scrape/rentola", (req: any, res: any) => {
+  const apiKey = req.headers["x-fairrent-key"] as string | undefined;
+  if (!apiKey || apiKey !== process.env.FAIRRENT_SCRAPER_KEY) {
+    res.status(401).json({ error: "unauthorized" }); return;
+  }
+  const maxPages = Math.min(parseInt(String((req.body as any)?.max_pages ?? "20"), 10) || 20, 100);
+  const citiesRaw = (req.body as any)?.cities;
+  const cities    = Array.isArray(citiesRaw) ? (citiesRaw as string[]) : undefined;
+  res.json({ status: "started", maxPages, cities: cities ?? "all", available: RENTOLA_CITIES.map(c => c.city), engine: "rentola-v1" });
+  void runRentolaScraper({ maxPages, cities })
+    .then(results => {
+      const total = results.reduce((a, r) => ({ inserted: a.inserted + r.inserted, updated: a.updated + r.updated, skipped: a.skipped + r.skipped }), { inserted: 0, updated: 0, skipped: 0 });
+      logger.info({ results, total }, "rentola scraper completed");
+    })
+    .catch(err => logger.error({ err }, "rentola scraper fatal error"));
 });
 
 // ── GET /api/fairrent/health — Public system status (no auth required) ───────
@@ -1815,10 +1902,160 @@ function stripeStatusToLocal(s: unknown): string {
   return "active";
 }
 
+// POST /api/fairrent/admin/seed — Crée un abonnement de test (admin uniquement, à supprimer après)
+router.post("/fairrent/admin/seed", async (req: any, res: any) => {
+  const secret = req.headers["x-admin-secret"];
+  const adminSecret = process.env.ADMIN_SECRET ?? process.env.SUPABASE_SERVICE_KEY?.slice(-12);
+  if (!secret || secret !== adminSecret) {
+    return res.status(403).json({ error: "forbidden" });
+  }
+  const { email, plan = "pro" } = req.body ?? {};
+  if (!email) return res.status(400).json({ error: "email requis" });
+  try {
+    await db.execute(sql`
+      INSERT INTO fr_subscriptions (email, plan, status)
+      VALUES (${email.toLowerCase().trim()}, ${plan}, 'active')
+      ON CONFLICT (email) DO UPDATE SET plan = ${plan}, status = 'active'
+    `);
+    const result = await db.execute(sql`
+      SELECT email, plan, status FROM fr_subscriptions WHERE email = ${email.toLowerCase().trim()}
+    `);
+    return res.json({ ok: true, row: (result as any).rows?.[0] });
+  } catch (err) {
+    logger.error({ err }, "fairrent/admin/seed error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// POST /api/fairrent/auth/login — Supabase email+password → retourne access_token Supabase
+// C'est CE token que citizen.html doit stocker comme fr_jwt (pas le session ID de mobile-auth)
+router.post("/fairrent/auth/login", async (req: any, res: any) => {
+  const { email, password } = req.body ?? {};
+  if (!email || !password) {
+    return res.status(400).json({ error: "email_et_password_requis" });
+  }
+  const supaUrl = process.env.SUPABASE_URL;
+  const supaKey = process.env.SUPABASE_ANON_KEY ?? process.env.SUPABASE_SERVICE_KEY;
+  if (!supaUrl || !supaKey) {
+    return res.status(503).json({ error: "auth_unavailable" });
+  }
+  try {
+    const r = await fetch(`${supaUrl.replace(/\/$/, "")}/auth/v1/token?grant_type=password`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": supaKey,
+      },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await r.json() as { access_token?: string; user?: { email?: string }; error?: string; error_description?: string };
+    if (!r.ok || !data.access_token) {
+      return res.status(401).json({ error: "identifiants_invalides", detail: data.error_description ?? data.error });
+    }
+    // Vérifier que l'abonné a bien un plan actif
+    const result = await db.execute(sql`
+      SELECT plan, status FROM fr_subscriptions
+      WHERE email = ${email.toLowerCase().trim()} AND status IN ('active', 'trialing')
+      LIMIT 1
+    `);
+    const sub = (result as unknown as { rows?: { plan: string; status: string }[] }).rows?.[0];
+    return res.json({
+      token:        data.access_token,
+      email:        data.user?.email ?? email,
+      plan:         sub?.plan ?? null,
+      status:       sub?.status ?? null,
+      subscribed:   !!sub,
+    });
+  } catch (err) {
+    logger.error({ err }, "fairrent/auth/login error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// POST /api/fairrent/auth/register — Supabase signup + row fr_subscriptions plan locataire
+router.post("/fairrent/auth/register", async (req: any, res: any) => {
+  const { email, password, full_name } = req.body ?? {};
+  if (!email || !password) {
+    return res.status(400).json({ error: "email_et_password_requis" });
+  }
+  if (password.length < 8) {
+    return res.status(400).json({ error: "password_trop_court", min: 8 });
+  }
+  const supaUrl = process.env.SUPABASE_URL;
+  const supaKey = process.env.SUPABASE_SERVICE_KEY;
+  if (!supaUrl || !supaKey) {
+    return res.status(503).json({ error: "auth_unavailable" });
+  }
+  try {
+    // Créer l'utilisateur Supabase via signup public
+    const supaAnonKey = process.env.SUPABASE_ANON_KEY ?? supaKey;
+    const r = await fetch(`${supaUrl.replace(/\/$/, "")}/auth/v1/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey":       supaAnonKey,
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        data: { full_name: full_name ?? "" },
+      }),
+    });
+    const data = await r.json() as { id?: string; email?: string; user?: { id?: string; email?: string }; error?: string; message?: string; error_description?: string };
+    if (!r.ok) {
+      const msg = data.error_description ?? data.message ?? data.error ?? "signup_failed";
+      if (msg.toLowerCase().includes("already") || msg.toLowerCase().includes("registered")) {
+        return res.status(409).json({ error: "email_deja_utilise" });
+      }
+      return res.status(400).json({ error: msg });
+    }
+    // Supabase signup retourne l'user dans data.user ou data directement
+    const userId = data.user?.id ?? data.id ?? null;
+    // Créer la souscription locataire gratuite
+    await db.execute(sql`
+      INSERT INTO fr_subscriptions (email, plan, status)
+      VALUES (${email.toLowerCase().trim()}, 'locataire', 'active')
+      ON CONFLICT (email) DO NOTHING
+    `);
+    // Auto-login pour retourner le token immédiatement
+    const loginR = await fetch(`${supaUrl.replace(/\/$/, "")}/auth/v1/token?grant_type=password`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "apikey": supaAnonKey },
+      body: JSON.stringify({ email, password }),
+    });
+    const loginData = await loginR.json() as { access_token?: string };
+    return res.status(201).json({
+      token:      loginData.access_token ?? null,
+      email:      email.toLowerCase().trim(),
+      plan:       "locataire",
+      status:     "active",
+      subscribed: true,
+    });
+  } catch (err) {
+    logger.error({ err }, "fairrent/auth/register error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
 // GET /api/fairrent/auth/me — info de l'abonné authentifié (valide le token)
 router.get("/fairrent/auth/me", requireSub(), (req: any, res: any) => {
   const u = req.fairRentUser as { email: string; plan: string; status: string };
-  return res.json({ email: u.email, plan: u.plan, status: u.status });
+  const plan = u.plan;
+  return res.json({
+    email:        u.email,
+    plan:         plan,
+    status:       u.status,
+    support_tier: SUPPORT_TIER[plan] ?? "standard",
+    features: {
+      city_limit:               plan === "locataire" ? 8 : null,
+      alert_limit_per_month:    plan === "locataire" ? 1 : null,
+      portfolio_limit:          PLAN_UNIT_LIMITS[plan] ?? 0,
+      trends_weeks:             PLAN_WEEKS_LIMIT[plan] ?? 4,
+      csv_export:               PLAN_TIER[plan] >= PLAN_TIER["pro"],
+      advanced_analytics:       PLAN_TIER[plan] >= PLAN_TIER["pro"],
+      neighborhood_comparison:  PLAN_TIER[plan] >= PLAN_TIER["proprietaire"],
+    },
+  });
 });
 
 // POST /api/fairrent/auth/magic-link — envoie un lien de connexion à l'abonné actif
@@ -1927,6 +2164,210 @@ router.post("/fairrent/stripe/webhook", async (req: any, res: any) => {
     }
   } catch (err) {
     logger.error({ err, event_type: event.type }, "fairrent webhook processing error");
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// GET /api/fairrent/score — FairRent Score sur demande (locataire+)
+// Query: city, price, bedrooms?, listing_type?
+// Retourne score, decision, fair_value_estimate, potential_savings
+// ═══════════════════════════════════════════════════════════════════════════
+router.get("/fairrent/score", requireSub("locataire"), async (req: any, res: any) => {
+  const city  = typeof req.query.city  === "string" && req.query.city.trim()  ? req.query.city.trim()  : null;
+  const price = parseInt(String(req.query.price ?? ""), 10);
+
+  if (!city || !isFinite(price) || price <= 0) {
+    return res.status(400).json({ error: "city_et_price_requis" });
+  }
+
+  const bedrooms    = parseInt(String(req.query.bedrooms ?? ""), 10) || null;
+  const listingType = typeof req.query.listing_type === "string" ? req.query.listing_type.trim() : null;
+
+  try {
+    const medRes = await db.execute(sql`
+      SELECT
+        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY price)::int AS median_price,
+        COUNT(*)::int AS sample_size
+      FROM fr_listings
+      WHERE is_active = true AND deleted_at IS NULL
+        AND city ILIKE ${"%" + city + "%"}
+        AND price BETWEEN 400 AND 10000
+        AND (${bedrooms}::smallint IS NULL OR bedrooms = ${bedrooms}::smallint)
+        AND (${listingType}::text IS NULL OR listing_type ILIKE ${listingType}::text)
+    `);
+    const medRow = (medRes as { rows?: { median_price: number | null; sample_size: number }[] }).rows?.[0];
+
+    const ref      = MARKET_REFERENCE[_normalizeCity(city)];
+    const median   = medRow?.median_price ?? ref?.p50_price ?? price;
+    const sampleSz = medRow?.sample_size ?? 0;
+
+    const ratio = price / (median || price);
+    let score: number;
+    let decision: string;
+    if (ratio <= 0.88)        { score = Math.round(85 + (0.88 - ratio) / 0.88 * 15); decision = "VISIT"; }
+    else if (ratio <= 1.08)   { score = Math.round(70 - (ratio - 0.88) / 0.20 * 15); decision = "NEGOTIATE"; }
+    else                      { score = Math.round(Math.max(15, 55 - (ratio - 1.08) / 0.20 * 40)); decision = "AVOID"; }
+
+    return res.json({
+      city,
+      price,
+      bedrooms:            bedrooms ?? null,
+      listing_type:        listingType ?? null,
+      fairrent_score:      Math.min(100, Math.max(0, score)),
+      decision,
+      fair_value_estimate: median,
+      potential_savings:   median - price,
+      price_ratio:         Math.round(ratio * 100) / 100,
+      data_source:         sampleSz >= 3 ? "fairrent" : "reference",
+      sample_size:         sampleSz,
+    });
+  } catch (err) {
+    logger.error({ err }, "fairrent/score GET error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// GET /api/fairrent/neighborhood-comparison — Comparaison des quartiers (proprietaire+)
+// Query: city (requis), bedrooms?, listing_type?
+// Retourne les quartiers de la ville triés par score, prix médian, disponibilité
+// ═══════════════════════════════════════════════════════════════════════════
+router.get("/fairrent/neighborhood-comparison", requireSub("proprietaire"), async (req: any, res: any) => {
+  const city = typeof req.query.city === "string" && req.query.city.trim() ? req.query.city.trim() : null;
+  if (!city) return res.status(400).json({ error: "city_requis" });
+
+  const bedrooms    = parseInt(String(req.query.bedrooms ?? ""), 10) || null;
+  const listingType = typeof req.query.listing_type === "string" ? req.query.listing_type.trim() : null;
+
+  try {
+    const result = await db.execute(sql`
+      SELECT
+        COALESCE(NULLIF(TRIM(neighborhood), ''), 'Non précisé') AS neighborhood,
+        COUNT(*)::int                                             AS listing_count,
+        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY price)::int  AS median_price,
+        PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY price)::int AS p25_price,
+        PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY price)::int AS p75_price,
+        ROUND(AVG(price))::int                                   AS avg_price,
+        ROUND(AVG(fairrent_score) FILTER (WHERE fairrent_score IS NOT NULL))::int AS avg_score,
+        ROUND(AVG(
+          EXTRACT(EPOCH FROM (NOW() - last_seen_at)) / 86400.0
+        ))::int                                                  AS avg_days_listed,
+        COUNT(*) FILTER (WHERE decision = 'VISIT')::int          AS visit_count,
+        COUNT(*) FILTER (WHERE decision = 'NEGOTIATE')::int      AS negotiate_count,
+        COUNT(*) FILTER (WHERE decision = 'AVOID')::int          AS avoid_count
+      FROM fr_listings
+      WHERE is_active = true
+        AND deleted_at IS NULL
+        AND city ILIKE ${"%" + city + "%"}
+        AND price BETWEEN 400 AND 10000
+        AND (${bedrooms}::smallint IS NULL OR bedrooms = ${bedrooms}::smallint)
+        AND (${listingType}::text IS NULL OR listing_type ILIKE ${listingType}::text)
+      GROUP BY COALESCE(NULLIF(TRIM(neighborhood), ''), 'Non précisé')
+      HAVING COUNT(*) >= 2
+      ORDER BY avg_score DESC NULLS LAST, listing_count DESC
+      LIMIT 12
+    `);
+
+    const rows = (result as { rows?: unknown[] }).rows ?? [];
+    const ref  = MARKET_REFERENCE[_normalizeCity(city)];
+
+    return res.json({
+      city,
+      bedrooms:     bedrooms ?? null,
+      listing_type: listingType ?? null,
+      data_source:  rows.length >= 2 ? "fairrent" : "reference",
+      neighborhoods: rows.length >= 2 ? rows : (ref?.neighborhoods ?? []),
+      reference_median: ref?.p50_price ?? null,
+      generated_at: new Date().toISOString(),
+    });
+  } catch (err) {
+    logger.error({ err }, "fairrent/neighborhood-comparison GET error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// GET /api/fairrent/analytics — Analytics avancés (pro)
+// Query: city?, weeks? (1–26)
+// Retourne : distribution des prix, scores, vélocité marché, densité deals
+// ═══════════════════════════════════════════════════════════════════════════
+router.get("/fairrent/analytics", requireSub("pro"), async (req: any, res: any) => {
+  const cityRaw  = typeof req.query.city === "string" && req.query.city.trim() ? req.query.city.trim() : null;
+  const weeksBack = Math.min(26, Math.max(1, parseInt(String(req.query.weeks ?? "12"), 10) || 12));
+
+  try {
+    const cityClause = cityRaw ? sql`AND city ILIKE ${"%" + cityRaw + "%"}` : sql``;
+
+    const [distRes, velocityRes, dealRes, typeRes] = await Promise.all([
+      // Distribution des prix par tranches de 200$
+      db.execute(sql`
+        SELECT
+          (FLOOR(price / 200) * 200)::int AS bucket,
+          COUNT(*)::int                   AS count
+        FROM fr_listings
+        WHERE is_active = true AND deleted_at IS NULL
+          AND price BETWEEN 400 AND 10000
+          AND created_at > NOW() - (${weeksBack} || ' weeks')::interval
+          ${cityClause}
+        GROUP BY FLOOR(price / 200)
+        ORDER BY bucket ASC
+        LIMIT 40
+      `),
+      // Vélocité : nouvelles annonces par jour sur la période
+      db.execute(sql`
+        SELECT
+          DATE(created_at)  AS day,
+          COUNT(*)::int     AS new_listings
+        FROM fr_listings
+        WHERE is_active = true AND deleted_at IS NULL
+          AND created_at > NOW() - (${weeksBack} || ' weeks')::interval
+          ${cityClause}
+        GROUP BY DATE(created_at)
+        ORDER BY day ASC
+      `),
+      // Répartition des décisions + score moyen par décision
+      db.execute(sql`
+        SELECT
+          COALESCE(decision, 'UNKNOWN') AS decision,
+          COUNT(*)::int                 AS count,
+          ROUND(AVG(fairrent_score))::int AS avg_score,
+          ROUND(AVG(price))::int          AS avg_price
+        FROM fr_listings
+        WHERE is_active = true AND deleted_at IS NULL
+          AND created_at > NOW() - (${weeksBack} || ' weeks')::interval
+          ${cityClause}
+        GROUP BY COALESCE(decision, 'UNKNOWN')
+        ORDER BY count DESC
+      `),
+      // Prix médian par type de logement
+      db.execute(sql`
+        SELECT
+          COALESCE(NULLIF(listing_type, ''), 'autre') AS listing_type,
+          COUNT(*)::int                                AS count,
+          PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY price)::int AS median_price,
+          ROUND(AVG(fairrent_score))::int                          AS avg_score
+        FROM fr_listings
+        WHERE is_active = true AND deleted_at IS NULL
+          AND created_at > NOW() - (${weeksBack} || ' weeks')::interval
+          ${cityClause}
+        GROUP BY COALESCE(NULLIF(listing_type, ''), 'autre')
+        HAVING COUNT(*) >= 3
+        ORDER BY count DESC
+      `),
+    ]);
+
+    return res.json({
+      city:              cityRaw ?? "all",
+      weeks_back:        weeksBack,
+      generated_at:      new Date().toISOString(),
+      price_distribution: (distRes as { rows?: unknown[] }).rows ?? [],
+      market_velocity:    (velocityRes as { rows?: unknown[] }).rows ?? [],
+      deal_breakdown:     (dealRes as { rows?: unknown[] }).rows ?? [],
+      by_listing_type:    (typeRes as { rows?: unknown[] }).rows ?? [],
+    });
+  } catch (err) {
+    logger.error({ err }, "fairrent/analytics GET error");
+    return res.status(500).json({ error: "server_error" });
   }
 });
 

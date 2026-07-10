@@ -114,6 +114,7 @@ app.use(
           hostname.endsWith(".repl.co") ||
           hostname.endsWith(".attentezero.ca") ||
           hostname === "attentezero.ca" ||
+          hostname === "attentezero.onrender.com" ||
           hostname === "localhost" ||
           hostname === "127.0.0.1"
         ) {
@@ -208,6 +209,16 @@ const fairrentMagicLinkLimiter = rateLimit({
   message: { error: "Trop de demandes. Réessayez dans 10 minutes." },
 });
 app.use("/api/fairrent/auth/magic-link", fairrentMagicLinkLimiter);
+
+const fairrentAuthLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Trop de tentatives. Réessayez dans 15 minutes." },
+});
+app.use("/api/fairrent/auth/login",    fairrentAuthLimiter);
+app.use("/api/fairrent/auth/register", fairrentAuthLimiter);
 
 // nexhire.ca domain: serve the Nexhire SPA directly at root so the URL
 // stays nexhire.ca/ (no visible /nexhire/ path in the browser bar).
@@ -624,6 +635,16 @@ if (erpDist) {
   app.get("/constructpro-erp", sendErpIndex);
   app.get(/^\/constructpro-erp\/.*$/, sendErpIndex);
 }
+
+// Global JSON error handler — doit être APRÈS toutes les routes
+// Sans ça, next(err) (ex. tenantMiddleware) retourne du HTML par défaut
+app.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  const status = typeof err?.status === "number" ? err.status : 500;
+  const message = err?.message ?? "Internal server error";
+  if (!res.headersSent) {
+    res.status(status).json({ error: message });
+  }
+});
 
 // FairRent — page de connexion
 const fairrentLoginHtmlCandidates = [

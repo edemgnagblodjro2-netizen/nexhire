@@ -1,5 +1,7 @@
 import app from "./app";
 import { logger } from "./lib/logger";
+import { runLogisQuebecScraper } from "./scrapers/logisquebec.js";
+import { runLesPACScraper } from "./scrapers/lespac.js";
 import bcrypt from "bcryptjs";
 import { eq, sql, inArray, notInArray } from "drizzle-orm";
 import { db, servicesTable, usersTable } from "@workspace/db";
@@ -310,6 +312,50 @@ async function autoSeedServicesIfEmpty() {
   }
 }
 
+// ── Cron quotidien — scrapers (02h00 UTC = 22h00 EST) ────────────────────────
+function scheduleDailyScrapers(): void {
+  function msUntilNextRun(): number {
+    const now  = new Date();
+    const next = new Date(now);
+    next.setUTCHours(7, 0, 0, 0); // 02:00 EST = 07:00 UTC
+    if (next.getTime() <= now.getTime()) {
+      next.setUTCDate(next.getUTCDate() + 1);
+    }
+    return next.getTime() - now.getTime();
+  }
+
+  function runAndReschedule(): void {
+    const ms = msUntilNextRun();
+    logger.info({ nextRunIn: `${Math.round(ms / 60000)}min` }, "daily scrapers scheduled");
+
+    setTimeout(async () => {
+      logger.info("daily scraper cron start");
+      try {
+        const lqResults = await runLogisQuebecScraper({ maxPages: 50 });
+        const lqTotal   = lqResults.reduce((a, r) => ({
+          inserted: a.inserted + r.inserted,
+          updated:  a.updated  + r.updated,
+        }), { inserted: 0, updated: 0 });
+        logger.info({ lqTotal }, "daily cron: logisquebec done");
+
+        await new Promise(r => setTimeout(r, 5000));
+
+        const lpResults = await runLesPACScraper({ maxPages: 50 });
+        const lpTotal   = lpResults.reduce((a, r) => ({
+          inserted: a.inserted + r.inserted,
+          updated:  a.updated  + r.updated,
+        }), { inserted: 0, updated: 0 });
+        logger.info({ lpTotal }, "daily cron: lespac done");
+      } catch (err) {
+        logger.error({ err }, "daily scraper cron error");
+      }
+      runAndReschedule();
+    }, ms);
+  }
+
+  runAndReschedule();
+}
+
 validateAuthKeysOrExit();
 
 runStartupMigrations().then(async () => {
@@ -327,4 +373,7 @@ runStartupMigrations().then(async () => {
 
   // Initialize Stripe in the background (non-blocking)
   initStripe();
+
+  // Scrapers quotidiens (LogisQuébec + LesPAC) — se déclenchent à 02h00 EST
+  scheduleDailyScrapers();
 });

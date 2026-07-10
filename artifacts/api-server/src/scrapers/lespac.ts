@@ -1,45 +1,33 @@
 import https from "node:https";
+import zlib from "node:zlib";
 import { sql } from "drizzle-orm";
 import { db } from "@workspace/db";
 import { logger } from "../lib/logger.js";
 
-// ── LesPAC (lespac.com) scraper ───────────────────────────────────────────────
-//
-// API JSON : https://www.lespac.com/{region}/immobilier-location-logements_{cat}{geo}k{page}R{sort}.jsa
-//   cat  = b457  (logements à louer)
-//   geo  = code régional (g15398 = Québec province ; trouver les autres via DevTools)
-//   page = k1, k2, k3 …
-//   sort = R2 (plus récents en premier)
-//
-// L'endpoint retourne JSON quand le header X-Requested-With: XMLHttpRequest est présent.
-// Le cookie `experienceMode=beta` active le format beta (JSON enrichi).
-
-const BASE            = "https://www.lespac.com";
-const ENGINE_VERSION  = "lespac-v1";
+const BASE             = "https://www.lespac.com";
+const ENGINE_VERSION   = "lespac-v1";
 const DEFAULT_DELAY_MS = 1500;
-const CAT             = "b457"; // Immobilier — Location / Logements
-const SORT            = "R2";   // Plus récents
-
-// ── Config par ville ──────────────────────────────────────────────────────────
-//
-// geo codes : naviguer sur lespac.com par ville et inspecter les requêtes XHR
-// pour trouver le gXXXXX correspondant à chaque municipalité.
+const CAT              = "b457"; // Immobilier — Location / Logements
+const SORT             = "R2";   // Plus récents
 
 export interface CityConfig {
-  geoCode:    string; // ex. "g15398"
-  regionSlug: string; // ex. "quebec"
-  city:       string; // nom FairRent
+  geoCode:    string;
+  regionSlug: string;
+  city:       string; // used as DB fallback if cityLabel absent from JSON
   province:   string;
 }
 
+// Province QC entière : g15398 — retourne toutes les villes QC.
+// Les annonces sont ensuite labellisées par leur propre cityLabel JSON.
+// Pour ajouter une ville : naviguer lespac.com, filtrer par ville, copier le
+// code gXXXXX dans l'URL (ex. https://www.lespac.com/montreal/..._b457g14981k1R2.jsa)
 export const LP_CITIES: CityConfig[] = [
-  // g15398 = Québec (province entière) — confirmé depuis session navigateur utilisateur
-  // Décomposer par ville une fois les geo codes identifiés via DevTools LesPAC :
-  { geoCode: "g15398", regionSlug: "quebec", city: "Montréal", province: "QC" },
-  // { geoCode: "gXXXXX", regionSlug: "quebec", city: "Québec",    province: "QC" },
-  // { geoCode: "gXXXXX", regionSlug: "quebec", city: "Laval",     province: "QC" },
-  // { geoCode: "gXXXXX", regionSlug: "quebec", city: "Longueuil", province: "QC" },
-  // { geoCode: "gXXXXX", regionSlug: "quebec", city: "Gatineau",  province: "QC" },
+  { geoCode: "g17567", regionSlug: "montreal", city: "Montréal", province: "QC" },
+  // Ajouter les codes des autres villes au fur et à mesure :
+  // { geoCode: "gXXXXX", regionSlug: "quebec",   city: "Québec",    province: "QC" },
+  // { geoCode: "gXXXXX", regionSlug: "laval",    city: "Laval",     province: "QC" },
+  // { geoCode: "gXXXXX", regionSlug: "longueuil",city: "Longueuil", province: "QC" },
+  // { geoCode: "gXXXXX", regionSlug: "gatineau", city: "Gatineau",  province: "QC" },
 ];
 
 export interface ScrapeResult {
@@ -57,39 +45,55 @@ function delay(ms: number): Promise<void> {
   return new Promise(r => setTimeout(r, ms));
 }
 
-function fetchJson(url: string): Promise<unknown> {
+function getSessionCookies(): string {
+  const raw = process.env.LESPAC_COOKIES ?? "";
+  if (!raw) return "LpcWebCurrentLanguage=fr_CA; experienceMode=beta";
+
+  const clean = raw.replace(/[^\x20-\x7E]/g, "").replace(/[\r\n]+/g, " ").trim();
+
+  const KEEP = ["AWSALB", "AWSALBCORS", "routewaf", "SID",
+                "LpcWebCurrentLanguage", "experienceMode"];
+  const parts = clean.split(/;\s*/)
+    .filter(p => KEEP.some(k => p.trimStart().startsWith(k + "=")));
+
+  return parts.length > 0 ? parts.join("; ") : clean;
+}
+
+function fetchHtml(url: string): Promise<{ html: string; status: number }> {
   return new Promise((resolve, reject) => {
     const req = https.get(url, {
       headers: {
-        "User-Agent":       "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:120.0) Gecko/20100101 Firefox/120.0",
-        "Accept":           "application/json, text/plain, */*",
-        "Accept-Language":  "fr-CA,fr;q=0.9,en-CA;q=0.8",
-        "Accept-Encoding":  "gzip, deflate, br",
-        "X-Requested-With": "XMLHttpRequest",
-        "Cache-Control":    "no-cache",
-        "Pragma":           "no-cache",
-        // Cookies minimaux : langue + mode beta pour déclencher l'API JSON
-        // Pas de SID (session) — les annonces publiques sont accessibles sans auth
-        "Cookie": "LpcWebCurrentLanguage=fr_CA; experienceMode=beta",
-        "Connection":       "keep-alive",
+        "User-Agent":      "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:120.0) Gecko/20100101 Firefox/120.0",
+        "Accept":          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "fr-CA,fr;q=0.9,en-CA;q=0.8",
+        "Accept-Encoding": "gzip, deflate",
+        "Cache-Control":   "no-cache",
+        "Cookie":          getSessionCookies(),
+        "Connection":      "keep-alive",
       },
     }, (res) => {
       const status = res.statusCode ?? 200;
-      if (status === 301 || status === 302) {
+      const enc    = res.headers["content-encoding"] ?? "";
+
+      if ((status === 301 || status === 302) && res.headers.location) {
         res.resume();
-        reject(new Error(`redirect:${res.headers.location}`));
+        fetchHtml(res.headers.location).then(resolve).catch(reject);
         return;
       }
+
+      let stream: NodeJS.ReadableStream = res;
+      if (enc === "gzip" || enc === "x-gzip") {
+        stream = res.pipe(zlib.createGunzip());
+      } else if (enc === "deflate") {
+        stream = res.pipe(zlib.createInflate());
+      } else if (enc === "br") {
+        stream = res.pipe(zlib.createBrotliDecompress());
+      }
+
       const chunks: Buffer[] = [];
-      res.on("data", (c: Buffer) => chunks.push(c));
-      res.on("end", () => {
-        try {
-          const body = Buffer.concat(chunks).toString("utf8");
-          resolve(JSON.parse(body));
-        } catch {
-          reject(new Error(`json_parse:status=${status}`));
-        }
-      });
+      stream.on("data", (c: Buffer) => chunks.push(c));
+      stream.on("end", () => resolve({ html: Buffer.concat(chunks).toString("utf8"), status }));
+      stream.on("error", reject);
     });
     req.on("error", reject);
     req.setTimeout(25000, () => { req.destroy(); reject(new Error("timeout")); });
@@ -100,170 +104,108 @@ function pageUrl(cfg: CityConfig, page: number): string {
   return `${BASE}/${cfg.regionSlug}/immobilier-location-logements_${CAT}${cfg.geoCode}k${page}${SORT}.jsa`;
 }
 
-// ── Parsers JSON ─────────────────────────────────────────────────────────────
+// ── Parser JSON ───────────────────────────────────────────────────────────────
 //
-// Format LesPAC (à vérifier sur la première réponse — ajuster selon réalité) :
-//
-//   { ads: [ { id, subject, price, formattedPrice,
-//              category: { name }, location: { name, regionName },
-//              attributes: [ { name, value } ],
-//              url, isActive } ],
-//     totalCount, currentPage, pageSize }
-//
-// OU format alternatif :
-//   { result: { listings: [...], count } }
-//
-// La fonction extractAds gère les deux formes les plus courantes.
+// LesPAC embeds listing data as JSON blobs in the HTML.
+// Each listing starts with "listingPublicId":"NNNN" and contains
+// price, title, listingDisplayUrl, cityLabel in the ~4000 chars following.
 
-type RawAd = Record<string, unknown>;
-
-function extractAds(raw: unknown): RawAd[] {
-  if (!raw || typeof raw !== "object") return [];
-  const r = raw as Record<string, unknown>;
-
-  // Forme 1 : { ads: [...] }
-  if (Array.isArray(r["ads"])) return r["ads"] as RawAd[];
-
-  // Forme 2 : { result: { ads: [...] } }
-  const result = r["result"];
-  if (result && typeof result === "object") {
-    const inner = result as Record<string, unknown>;
-    if (Array.isArray(inner["ads"])) return inner["ads"] as RawAd[];
-    if (Array.isArray(inner["listings"])) return inner["listings"] as RawAd[];
-  }
-
-  // Forme 3 : { listings: [...] }
-  if (Array.isArray(r["listings"])) return r["listings"] as RawAd[];
-
-  return [];
+interface ListingStub {
+  url:          string;
+  listing_type: string;
+  bedrooms:     number | null;
+  price:        number | null;
+  city:         string | null; // part before " / " in cityLabel, e.g. "Montréal"
+  neighborhood: string | null; // part after " / " in cityLabel, e.g. "Plateau Mont-Royal"
+  title:        string;
 }
 
-function hasMorePages(raw: unknown, page: number): boolean {
-  if (!raw || typeof raw !== "object") return false;
-  const r = raw as Record<string, unknown>;
-
-  const total     = Number(r["totalCount"] ?? r["total"] ?? r["count"] ?? 0);
-  const pageSize  = Number(r["pageSize"]   ?? r["size"]  ?? 20);
-  const ads       = extractAds(raw);
-
-  // Critère 1 : totalCount > page * pageSize
-  if (total > 0 && pageSize > 0) return page * pageSize < total;
-
-  // Critère 2 : on a reçu des annonces cette page
-  return ads.length > 0;
-}
-
-// "1 450 $" ou "1450$" → 1450
-function parsePrice(raw: string | number | null | undefined): number | null {
-  if (raw == null) return null;
-  if (typeof raw === "number") return raw >= 400 && raw <= 15000 ? raw : null;
-  const s = String(raw).replace(/[\s $,]/g, "");
-  const n = parseInt(s, 10);
-  return n >= 400 && n <= 15000 ? n : null;
-}
-
-// "4½" ou "4 pièces" → bedrooms (QC convention: pièces − 2)
-function parseBedrooms(raw: string | null | undefined): number | null {
-  if (!raw) return null;
-  const m = String(raw).match(/(\d+)/);
-  if (!m) return null;
-  const rooms = parseInt(m[1], 10);
-  // Si la valeur ressemble déjà à des chambres (1–6) sans ½ → garder tel quel
-  if (!String(raw).includes("½") && !String(raw).includes("pièce") && rooms <= 6) return rooms;
-  return Math.max(0, rooms - 2); // convention QC : 4½ → 2 chambres
-}
-
-// Déduire le type d'annonce depuis le titre/catégorie
-function parseListingType(ad: RawAd): string {
-  const haystack = [
-    String(ad["subject"] ?? ""),
-    String(ad["title"]   ?? ""),
-    String((ad["category"] as Record<string, unknown>)?.["name"] ?? ""),
-  ].join(" ").toLowerCase();
-
-  if (haystack.includes("maison"))           return "maison";
-  if (haystack.includes("condo"))            return "condo";
-  if (haystack.includes("studio"))           return "studio";
-  if (haystack.includes("chambre") || haystack.includes("colocation")) return "chambre";
-  if (haystack.includes("chalet") || haystack.includes("cottage"))    return "chalet";
+function typeFromText(title: string): string {
+  const t = title.toLowerCase();
+  if (t.includes("maison"))                           return "maison";
+  if (t.includes("condo"))                            return "condo";
+  if (t.includes("studio"))                           return "studio";
+  if (t.includes("chambre") || t.includes("coloc"))  return "chambre";
+  if (t.includes("chalet"))                           return "chalet";
   return "appartement";
 }
 
-function parseNeighborhood(ad: RawAd): string | null {
-  const loc = ad["location"];
-  if (!loc || typeof loc !== "object") return null;
-  const l = loc as Record<string, unknown>;
-  const name = String(l["name"] ?? l["city"] ?? l["municipality"] ?? "").trim();
-  return name.length > 2 ? name.slice(0, 200) : null;
+function parseBedrooms(title: string): number | null {
+  const halfM = title.match(/(\d+)\s*(?:½|1\/2|1-2)\s*pi[eè]/i);
+  if (halfM) return Math.max(0, parseInt(halfM[1], 10) - 2);
+  const roomsM = title.match(/(\d+)\s*pi[eè]/i);
+  if (roomsM) return Math.max(0, parseInt(roomsM[1], 10) - 2);
+  const chambreM = title.match(/(\d+)\s*(?:chambre|bedroom)/i);
+  if (chambreM) return parseInt(chambreM[1], 10);
+  return null;
 }
 
-interface ListingStub {
-  externalId:    string;
-  url:           string;
-  title:         string;
-  listing_type:  string;
-  bedrooms:      number | null;
-  price:         number | null;
-  neighborhood:  string | null;
+function decodeJsonStr(s: string): string {
+  try {
+    return JSON.parse(`"${s}"`);
+  } catch {
+    return s
+      .replace(/\\n/g, " ")
+      .replace(/\\t/g, " ")
+      .replace(/\\"/g, '"')
+      .replace(/\\\\/g, "\\");
+  }
 }
 
-function adToStub(ad: RawAd): ListingStub | null {
-  const id = String(ad["id"] ?? ad["adId"] ?? "").trim();
-  if (!id) return null;
+function parsePage(html: string): ListingStub[] {
+  const results: ListingStub[] = [];
+  const seen = new Set<string>();
 
-  // Prix : champ direct ou objet { amount, currency }
-  let rawPrice: string | number | null = null;
-  if (ad["price"] != null) {
-    const p = ad["price"];
-    if (typeof p === "object" && p !== null) {
-      rawPrice = (p as Record<string, unknown>)["amount"] as number ?? null;
-    } else {
-      rawPrice = p as string | number;
-    }
-  } else if (ad["formattedPrice"]) {
-    rawPrice = ad["formattedPrice"] as string;
+  const RE = /"listingPublicId":"(\d+)"/g;
+  let m: RegExpExecArray | null;
+
+  while ((m = RE.exec(html)) !== null) {
+    const id = m[1];
+    if (seen.has(id)) continue;
+    seen.add(id);
+
+    // 4000-char window — cityLabel is typically ~2000–3500 chars after the listingPublicId
+    const ctx = html.slice(m.index, m.index + 4000);
+
+    const priceM = ctx.match(/"price":(\d+(?:\.\d+)?)/);
+    if (!priceM) continue;
+    const price = Math.round(parseFloat(priceM[1]));
+    if (price < 400 || price > 15000) continue;
+
+    const titleM = ctx.match(/"title":"([^"]{3,300})"/);
+    const title = titleM ? decodeJsonStr(titleM[1]) : "Logement à louer";
+
+    const urlM = ctx.match(/"listingDisplayUrl":"(https:[^"?\\]+)/);
+    const url = urlM ? urlM[1] : `${BASE}/annonce/${id}`;
+
+    const cityM = ctx.match(/"cityLabel":"([^"]+)"/);
+    // "Montréal / Plateau Mont-Royal" → city="Montréal", neighborhood="Plateau Mont-Royal"
+    // "Longueuil" → city="Longueuil", neighborhood=null
+    const [cityPart, nbhPart] = cityM
+      ? cityM[1].split(" / ").map(s => s.trim())
+      : [null, null];
+
+    results.push({
+      url,
+      listing_type: typeFromText(title),
+      bedrooms:     parseBedrooms(title),
+      price,
+      city:         cityPart ?? null,
+      neighborhood: nbhPart  ?? null,
+      title:        title.slice(0, 500),
+    });
   }
 
-  const price = parsePrice(rawPrice);
-  if (!price) return null; // ignorer les annonces sans prix
-
-  // URL : relative ou absolue
-  let url = String(ad["url"] ?? ad["link"] ?? "").trim();
-  if (!url) url = `${BASE}/annonce/${id}`;
-  else if (url.startsWith("/")) url = `${BASE}${url}`;
-
-  // Chambres : chercher dans attributes[] { name: "Nombre de pièces", value: "4½" }
-  let bedroomsRaw: string | null = null;
-  const attrs = ad["attributes"];
-  if (Array.isArray(attrs)) {
-    for (const a of attrs as RawAd[]) {
-      const n = String(a["name"] ?? "").toLowerCase();
-      if (n.includes("pièce") || n.includes("chambre") || n.includes("room")) {
-        bedroomsRaw = String(a["value"] ?? "");
-        break;
-      }
-    }
-  }
-  if (!bedroomsRaw && ad["rooms"])     bedroomsRaw = String(ad["rooms"]);
-  if (!bedroomsRaw && ad["bedrooms"])  bedroomsRaw = String(ad["bedrooms"]);
-
-  return {
-    externalId:   id,
-    url,
-    title:        String(ad["subject"] ?? ad["title"] ?? "Logement à louer").slice(0, 500),
-    listing_type: parseListingType(ad),
-    bedrooms:     parseBedrooms(bedroomsRaw),
-    price,
-    neighborhood: parseNeighborhood(ad),
-  };
+  return results;
 }
 
 // ── DB upsert ─────────────────────────────────────────────────────────────────
 
 async function upsertListing(
-  stub:   ListingStub,
-  cfg:    CityConfig,
+  stub: ListingStub,
+  cfg:  CityConfig,
 ): Promise<"inserted" | "updated" | "skipped"> {
+  const city = stub.city ?? cfg.city;
   try {
     const result = await db.execute(sql`
       INSERT INTO fr_listings (
@@ -272,28 +214,18 @@ async function upsertListing(
         price, bedrooms, listing_type, title,
         is_active, last_seen_at, engine_version, extraction_quality
       ) VALUES (
-        ${stub.url},
-        'lespac',
-        'lespac',
-        ${cfg.city},
-        ${cfg.province},
-        ${stub.neighborhood},
-        ${stub.price},
-        ${stub.bedrooms},
-        ${stub.listing_type},
-        ${stub.title},
-        true,
-        NOW(),
-        ${ENGINE_VERSION},
-        75
+        ${stub.url}, 'lespac', 'lespac',
+        ${city}, ${cfg.province}, ${stub.neighborhood},
+        ${stub.price}, ${stub.bedrooms}, ${stub.listing_type}, ${stub.title},
+        true, NOW(), ${ENGINE_VERSION}, 65
       )
       ON CONFLICT (url) WHERE url IS NOT NULL DO UPDATE SET
-        price              = COALESCE(EXCLUDED.price,          fr_listings.price),
+        price              = COALESCE(EXCLUDED.price,        fr_listings.price),
         city               = EXCLUDED.city,
         province           = EXCLUDED.province,
-        neighborhood       = COALESCE(EXCLUDED.neighborhood,   fr_listings.neighborhood),
-        bedrooms           = COALESCE(EXCLUDED.bedrooms,       fr_listings.bedrooms),
-        listing_type       = COALESCE(EXCLUDED.listing_type,   fr_listings.listing_type),
+        neighborhood       = COALESCE(EXCLUDED.neighborhood, fr_listings.neighborhood),
+        bedrooms           = COALESCE(EXCLUDED.bedrooms,     fr_listings.bedrooms),
+        listing_type       = COALESCE(EXCLUDED.listing_type, fr_listings.listing_type),
         title              = EXCLUDED.title,
         is_active          = true,
         last_seen_at       = NOW(),
@@ -325,26 +257,26 @@ export async function scrapeCity(
   for (let page = 1; page <= maxPages; page++) {
     const url = pageUrl(cfg, page);
     try {
-      const raw = await fetchJson(url);
-      const ads = extractAds(raw);
+      const { html, status } = await fetchHtml(url);
 
-      if (ads.length === 0) break; // fin de pagination
+      if (status === 404 || status >= 500) break;
+      if (html.length < 500) break;
+      if (html.includes("Aucun résultat") || html.includes("aucune annonce")) break;
+
+      const stubs = parsePage(html);
+      if (stubs.length === 0) break;
 
       result.pages_fetched++;
 
-      for (const ad of ads) {
-        const stub = adToStub(ad);
-        if (!stub) { result.skipped++; continue; }
+      for (const stub of stubs) {
         const outcome = await upsertListing(stub, cfg);
         result[outcome]++;
       }
 
       logger.debug(
-        { city: cfg.city, page, found: ads.length, inserted: result.inserted },
+        { city: cfg.city, page, found: stubs.length, inserted: result.inserted },
         "lespac page scraped",
       );
-
-      if (!hasMorePages(raw, page)) break;
 
       if (page < maxPages) {
         await delay(delayMs + Math.random() * 600);
@@ -360,13 +292,90 @@ export async function scrapeCity(
   return result;
 }
 
-// ── Sonde : inspecter la structure JSON brute (utile pour debug) ──────────────
+// ── Probe ─────────────────────────────────────────────────────────────────────
 
-export async function probeLesPAC(page = 1): Promise<unknown> {
+export async function probeLesPAC(page = 1): Promise<Record<string, unknown>> {
   const cfg = LP_CITIES[0];
   const url = pageUrl(cfg, page);
   logger.info({ url }, "lespac probe");
-  return fetchJson(url);
+  const { html, status } = await fetchHtml(url);
+  const stubs = parsePage(html);
+
+  const hrefRe = /href="([^"]{5,120})"/gi;
+  const hrefs = new Set<string>();
+  let hm: RegExpExecArray | null;
+  while ((hm = hrefRe.exec(html)) !== null) {
+    const h = hm[1];
+    if (!h.startsWith("http") && !h.startsWith("#") && !h.startsWith("javascript")) {
+      hrefs.add(h);
+    }
+  }
+
+  const mid = Math.floor(html.length / 2);
+  const html_mid = html.slice(Math.max(0, mid - 1500), mid + 1500);
+
+  const cookieEnv = process.env.LESPAC_COOKIES ?? "";
+  return {
+    url, status,
+    cookies_env_set:    cookieEnv.length > 0,
+    cookies_env_length: cookieEnv.length,
+    cookies_has_sid:    cookieEnv.includes("SID="),
+    cookies_has_awsalb: cookieEnv.includes("AWSALB="),
+    parsed_count:  stubs.length,
+    parsed_sample: stubs.slice(0, 3),
+    hrefs_sample:  [...hrefs].slice(0, 40),
+    html_mid,
+  };
+}
+
+// ── Discover geo codes ────────────────────────────────────────────────────────
+// Récupère la page de recherche sans filtre geo et extrait les liens de villes
+// pour identifier les codes gXXXXX à ajouter dans LP_CITIES.
+
+export async function discoverGeoCodes(): Promise<{
+  page_url: string;
+  status: number;
+  city_options: { label: string; geo_code: string; url: string }[];
+  raw_filter_html: string;
+}> {
+  // Province-wide without geo sub-filter to see the city picker
+  const url = `${BASE}/quebec/immobilier-location-logements_${CAT}k1${SORT}.jsa`;
+  const { html, status } = await fetchHtml(url);
+
+  // LesPAC embeds filter options as JSON or as links like:
+  // href="/quebec/..._b457gXXXXXk1R2.jsa">Montréal</a>
+  const geoLinkRe = /href="([^"]*?_b457(g\d{4,7})[^"]*?)"[^>]*>([^<]{2,60})<\/a>/gi;
+  const city_options: { label: string; geo_code: string; url: string }[] = [];
+  const seen = new Set<string>();
+  let m: RegExpExecArray | null;
+
+  while ((m = geoLinkRe.exec(html)) !== null) {
+    const geoCode = m[2];
+    const label   = m[3].trim().replace(/\s+/g, " ");
+    if (!seen.has(geoCode) && label.length > 1 && geoCode !== "g15398") {
+      seen.add(geoCode);
+      city_options.push({ label, geo_code: geoCode, url: `${BASE}${m[1]}` });
+    }
+  }
+
+  // Also look for geo codes embedded in JSON filter state
+  const jsonGeoRe = /"geoCode"\s*:\s*"(g\d{4,7})"\s*,\s*"label"\s*:\s*"([^"]{2,60})"/gi;
+  while ((m = jsonGeoRe.exec(html)) !== null) {
+    const geoCode = m[1];
+    const label   = m[2].trim();
+    if (!seen.has(geoCode) && geoCode !== "g15398") {
+      seen.add(geoCode);
+      city_options.push({ label, geo_code: geoCode, url: `${BASE}/quebec/immobilier-location-logements_${CAT}${geoCode}k1${SORT}.jsa` });
+    }
+  }
+
+  // Return a chunk of HTML likely to contain the filter sidebar
+  const filterIdx = html.indexOf("b457");
+  const raw_filter_html = filterIdx >= 0
+    ? html.slice(Math.max(0, filterIdx - 200), filterIdx + 3000)
+    : html.slice(0, 3000);
+
+  return { page_url: url, status, city_options, raw_filter_html };
 }
 
 // ── Entry point ───────────────────────────────────────────────────────────────
@@ -381,18 +390,13 @@ export async function runLesPACScraper(opts: {
     : LP_CITIES;
 
   const all: ScrapeResult[] = [];
-
   for (let i = 0; i < targets.length; i++) {
     const cfg = targets[i];
-    logger.info({ city: cfg.city, geoCode: cfg.geoCode, maxPages: opts.maxPages ?? 50 }, "lespac scraper city start");
+    logger.info({ city: cfg.city, geoCode: cfg.geoCode }, "lespac city start");
     const r = await scrapeCity(cfg, opts);
     all.push(r);
-    logger.info(
-      { city: cfg.city, inserted: r.inserted, updated: r.updated, pages: r.pages_fetched, errors: r.errors.length },
-      "lespac scraper city done",
-    );
+    logger.info({ city: cfg.city, inserted: r.inserted, updated: r.updated, pages: r.pages_fetched }, "lespac city done");
     if (i < targets.length - 1) await delay(3000);
   }
-
   return all;
 }
