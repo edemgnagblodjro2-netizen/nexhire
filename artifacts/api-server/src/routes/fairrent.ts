@@ -734,7 +734,8 @@ async function fairRentAuth(req: any, res: any, next: () => void, minPlan?: stri
   let userId: string | null = null;
   let email: string | null  = null;
   try {
-    const r = await fetch(`${supaUrl}/auth/v1/user`, {
+    const supaBase = supaUrl.replace(/\/$/, "").replace(/\/rest\/v1$/, "").replace(/\/auth\/v1$/, "");
+    const r = await fetch(`${supaBase}/auth/v1/user`, {
       headers: { "apikey": supaKey, "Authorization": `Bearer ${token}` },
     });
     if (!r.ok) { res.status(401).json({ error: "token_invalid" }); return; }
@@ -782,6 +783,7 @@ router.get("/fairrent/discover", requireSub("locataire"), async (req: any, res: 
       return isFinite(n) ? n : null;
     };
 
+    const provF  = str2(req.query.province);
     const cityF  = str2(req.query.city);
     const nbhF   = str2(req.query.neighborhood);
     const maxP   = int2(req.query.max_price);
@@ -842,6 +844,7 @@ router.get("/fairrent/discover", requireSub("locataire"), async (req: any, res: 
         FROM fr_listings l
         LEFT JOIN market_medians m ON m.city = l.city AND m.bedrooms = l.bedrooms
         WHERE l.is_active = true AND l.deleted_at IS NULL
+          AND (${provF}::text IS NULL    OR l.province    ILIKE ${provF}::text)
           AND (${cityF}::text IS NULL    OR l.city        ILIKE ${cityF}::text)
           AND (${nbhF}::text IS NULL     OR l.neighborhood ILIKE ${nbhF}::text)
           AND (${maxP}::int  IS NULL     OR l.price IS NULL OR l.price <= ${maxP}::int * 1.25)
@@ -2026,7 +2029,8 @@ router.post("/fairrent/auth/login", async (req: any, res: any) => {
     return res.status(503).json({ error: "auth_unavailable" });
   }
   try {
-    const r = await fetch(`${supaUrl.replace(/\/$/, "")}/auth/v1/token?grant_type=password`, {
+    const supaBase = supaUrl.replace(/\/$/, "").replace(/\/rest\/v1$/, "").replace(/\/auth\/v1$/, "");
+    const r = await fetch(`${supaBase}/auth/v1/token?grant_type=password`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -2036,7 +2040,7 @@ router.post("/fairrent/auth/login", async (req: any, res: any) => {
     });
     const data = await r.json() as { access_token?: string; user?: { email?: string }; error?: string; error_description?: string };
     if (!r.ok || !data.access_token) {
-      return res.status(401).json({ error: "identifiants_invalides", detail: data.error_description ?? data.error });
+      return res.status(401).json({ error: "identifiants_invalides" });
     }
     // Vérifier que l'abonné a bien un plan actif
     const result = await db.execute(sql`
@@ -2172,7 +2176,7 @@ router.post("/fairrent/auth/magic-link", async (req: any, res: any) => {
 // Configurer dans le dashboard Stripe : .../api/fairrent/stripe/webhook
 router.post("/fairrent/stripe/webhook", async (req: any, res: any) => {
   const sig    = req.headers["stripe-signature"] as string;
-  const secret = process.env.STRIPE_WEBHOOK_SECRET;
+  const secret = process.env.STRIPE_WEBHOOK_SECRET ?? process.env.STRIPE_WEBHOOK_SECRET_AZ;
 
   let event: Stripe.Event;
   try {
@@ -2453,6 +2457,213 @@ router.get("/fairrent/analytics", requireSub("pro"), async (req: any, res: any) 
     });
   } catch (err) {
     logger.error({ err }, "fairrent/analytics GET error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// ── PORTFOLIO ────────────────────────────────────────────────────────────────
+
+// GET /api/fairrent/portfolio — liste des logements sauvegardés + stats
+router.get("/fairrent/portfolio", requireSub("locataire"), async (req: any, res: any) => {
+  try {
+    const userId = req.fairRentUser?.id;
+    const result = await db.execute(sql`
+      SELECT
+        id::text, user_id::text, listing_id::text,
+        listing_url, title, price, city, province, neighborhood,
+        listing_type, bedrooms, fairrent_score, decision, platform,
+        status, notes, contact_name, visit_date, created_at, updated_at
+      FROM fr_portfolio_units
+      WHERE user_id = ${userId}::uuid
+      ORDER BY created_at DESC
+    `);
+    const units = (result as { rows?: Record<string, unknown>[] }).rows ?? [];
+
+    const total       = units.length;
+    const withScore   = units.filter((u: any) => u.fairrent_score != null);
+    const scoreAvg    = withScore.length > 0
+      ? Math.round(withScore.reduce((s: number, u: any) => s + Number(u.fairrent_score), 0) / withScore.length)
+      : null;
+
+    const stats = {
+      total,
+      candidatures: units.filter((u: any) => !["saved", "rejected"].includes(u.status as string)).length,
+      en_attente:   units.filter((u: any) => ["to_contact", "contacted"].includes(u.status as string)).length,
+      visites:      units.filter((u: any) => u.status === "visit").length,
+      score_moyen:  scoreAvg,
+    };
+
+    return res.json({ units, stats });
+  } catch (err) {
+    logger.error({ err }, "fairrent/portfolio GET error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// POST /api/fairrent/portfolio — sauvegarder un logement
+router.post("/fairrent/portfolio", requireSub("locataire"), async (req: any, res: any) => {
+  try {
+    const userId = req.fairRentUser?.id;
+    const {
+      listing_url, listing_id, title, price, city, province, neighborhood,
+      listing_type, bedrooms, fairrent_score, decision, platform,
+    } = req.body ?? {};
+
+    if (!listing_url) return res.status(400).json({ error: "listing_url_required" });
+
+    const priceN = price != null ? parseInt(String(price), 10) : null;
+    const bedsN  = bedrooms != null ? parseInt(String(bedrooms), 10) : null;
+    const scoreN = fairrent_score != null ? parseInt(String(fairrent_score), 10) : null;
+    const lid    = listing_id && String(listing_id).match(/^[0-9a-f-]{36}$/) ? listing_id : null;
+
+    const result = await db.execute(sql`
+      INSERT INTO fr_portfolio_units (
+        user_id, listing_url, listing_id, title, price, city, province, neighborhood,
+        listing_type, bedrooms, fairrent_score, decision, platform
+      ) VALUES (
+        ${userId}::uuid, ${listing_url}, ${lid ? sql`${lid}::uuid` : sql`NULL`},
+        ${title ?? null}, ${priceN}, ${city ?? null}, ${province ?? null}, ${neighborhood ?? null},
+        ${listing_type ?? null}, ${bedsN}, ${scoreN},
+        ${decision ?? null}, ${platform ?? null}
+      )
+      ON CONFLICT (user_id, listing_url) DO UPDATE SET
+        title          = COALESCE(EXCLUDED.title, fr_portfolio_units.title),
+        price          = COALESCE(EXCLUDED.price, fr_portfolio_units.price),
+        fairrent_score = COALESCE(EXCLUDED.fairrent_score, fr_portfolio_units.fairrent_score),
+        updated_at     = NOW()
+      RETURNING id::text, status
+    `);
+    const row = (result as { rows?: { id: string; status: string }[] }).rows?.[0];
+    return res.json({ id: row?.id, status: row?.status });
+  } catch (err) {
+    logger.error({ err }, "fairrent/portfolio POST error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// PATCH /api/fairrent/portfolio/:id — mettre à jour statut / notes / contact
+router.patch("/fairrent/portfolio/:id", requireSub("locataire"), async (req: any, res: any) => {
+  try {
+    const userId = req.fairRentUser?.id;
+    const { id } = req.params;
+    const body = req.body ?? {};
+
+    const validStatuses = ["saved","to_contact","contacted","visit","documents","analysis","accepted","signed","rejected"];
+    if (body.status !== undefined && !validStatuses.includes(body.status)) {
+      return res.status(400).json({ error: "invalid_status" });
+    }
+
+    const hasStatus  = body.status       !== undefined;
+    const hasNotes   = "notes"           in body;
+    const hasContact = "contact_name"    in body;
+    const hasVisit   = "visit_date"      in body;
+
+    const sStatus  = hasStatus  ? (body.status       ?? null) : null;
+    const sNotes   = hasNotes   ? (body.notes        ?? null) : null;
+    const sContact = hasContact ? (body.contact_name ?? null) : null;
+    const sVisit   = hasVisit   ? (body.visit_date   ?? null) : null;
+
+    await db.execute(sql`
+      UPDATE fr_portfolio_units SET
+        status       = CASE WHEN ${hasStatus}::boolean  THEN ${sStatus}::text        ELSE status       END,
+        notes        = CASE WHEN ${hasNotes}::boolean   THEN ${sNotes}::text         ELSE notes        END,
+        contact_name = CASE WHEN ${hasContact}::boolean THEN ${sContact}::text       ELSE contact_name END,
+        visit_date   = CASE WHEN ${hasVisit}::boolean   THEN ${sVisit}::timestamptz  ELSE visit_date   END,
+        updated_at   = NOW()
+      WHERE id = ${id}::uuid AND user_id = ${userId}::uuid
+    `);
+    return res.json({ ok: true });
+  } catch (err) {
+    logger.error({ err }, "fairrent/portfolio PATCH error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// DELETE /api/fairrent/portfolio/:id — retirer un logement
+router.delete("/fairrent/portfolio/:id", requireSub("locataire"), async (req: any, res: any) => {
+  try {
+    const userId = req.fairRentUser?.id;
+    const { id } = req.params;
+    await db.execute(sql`
+      DELETE FROM fr_portfolio_units
+      WHERE id = ${id}::uuid AND user_id = ${userId}::uuid
+    `);
+    return res.json({ ok: true });
+  } catch (err) {
+    logger.error({ err }, "fairrent/portfolio DELETE error");
+    return res.status(500).json({ error: "server_error" });
+  }
+});
+
+// GET /api/fairrent/discover/export-csv — Export CSV des résultats discover (max 1000 lignes)
+router.get("/fairrent/discover/export-csv", requireSub("locataire"), async (req: any, res: any) => {
+  try {
+    const str2 = (v: unknown): string | null =>
+      typeof v === "string" && v.trim() ? v.trim() : null;
+    const int2 = (v: unknown): number | null => {
+      const n = parseInt(String(v ?? ""), 10);
+      return isFinite(n) ? n : null;
+    };
+
+    const provF  = str2(req.query.province);
+    const cityF  = str2(req.query.city);
+    const nbhF   = str2(req.query.neighborhood);
+    const maxP   = int2(req.query.max_price);
+    const minP   = int2(req.query.min_price);
+    const bdF    = int2(req.query.bedrooms);
+    const parkF  = req.query.parking === "true" ? true : null;
+    const petsF  = req.query.pets    === "true" ? true : null;
+
+    const result = await db.execute(sql`
+      SELECT
+        l.city, l.province, l.neighborhood,
+        l.price, l.bedrooms, l.listing_type, l.sqft,
+        l.pets, l.parking,
+        l.fairrent_score, l.decision,
+        l.url, l.title, l.platform,
+        l.last_seen_at
+      FROM fr_listings l
+      WHERE l.is_active = true AND l.deleted_at IS NULL
+        AND (${provF}::text IS NULL    OR l.province    ILIKE ${provF}::text)
+        AND (${cityF}::text IS NULL    OR l.city        ILIKE ${cityF}::text)
+        AND (${nbhF}::text IS NULL     OR l.neighborhood ILIKE ${nbhF}::text)
+        AND (${maxP}::int  IS NULL     OR l.price IS NULL OR l.price <= ${maxP}::int * 1.25)
+        AND (${minP}::int  IS NULL     OR l.price IS NULL OR l.price >= ${minP}::int)
+        AND (${bdF}::smallint IS NULL  OR l.bedrooms = ${bdF}::smallint)
+        AND (${parkF}::boolean IS NULL OR l.parking  = ${parkF}::boolean)
+        AND (${petsF}::boolean IS NULL OR l.pets     = ${petsF}::boolean)
+      ORDER BY l.fairrent_score DESC NULLS LAST, l.last_seen_at DESC
+      LIMIT 1000
+    `);
+
+    const rows = (result as { rows?: Record<string, unknown>[] }).rows ?? [];
+
+    const headers = ["Ville","Province","Quartier","Prix","Chambres","Type","Sqft","Animaux","Stationnement","FairRent Score","Décision","URL","Titre","Plateforme","Dernière mise à jour"];
+    const escape  = (v: unknown) => {
+      if (v == null) return "";
+      const s = String(v).replace(/"/g, '""');
+      return s.includes(",") || s.includes('"') || s.includes("\n") ? `"${s}"` : s;
+    };
+
+    const lines = [
+      headers.join(","),
+      ...rows.map(r => [
+        r.city, r.province, r.neighborhood,
+        r.price, r.bedrooms, r.listing_type, r.sqft,
+        r.pets ? "Oui" : r.pets === false ? "Non" : "",
+        r.parking ? "Oui" : r.parking === false ? "Non" : "",
+        r.fairrent_score, r.decision,
+        r.url, r.title, r.platform,
+        r.last_seen_at ? new Date(r.last_seen_at as string).toISOString().slice(0, 10) : "",
+      ].map(escape).join(","))
+    ];
+
+    const date = new Date().toISOString().slice(0, 10);
+    res.setHeader("Content-Type", "text/csv; charset=utf-8");
+    res.setHeader("Content-Disposition", `attachment; filename="fairrent-export-${date}.csv"`);
+    res.send("﻿" + lines.join("\r\n")); // BOM pour Excel
+  } catch (err) {
+    logger.error({ err }, "fairrent/discover/export-csv error");
     return res.status(500).json({ error: "server_error" });
   }
 });
